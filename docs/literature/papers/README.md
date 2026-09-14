@@ -10,7 +10,7 @@
 
 | ID | 논문 | 이번 원문 정독 작업의 상태 | 상세 노트 |
 | --- | --- | --- | --- |
-| R1 | Force Push: Robust Single-Point Pushing With Force Feedback | 이번 작업용 원문 미제공 | — |
+| R1 | Force Push: Robust Single-Point Pushing With Force Feedback | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료 | [2024 · Heins & Schoellig](2024-heins-force-push.md) |
 | R2 | Pushing in the Dark: A Reactive Pushing Strategy for Mobile Robots Using Tactile Feedback | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료 | [2024 · Ozdamar et al.](2024-ozdamar-pushing-in-the-dark.md) |
 | R3 | Pose-and-shear-based tactile servoing | 이번 작업용 원문 미제공 | — |
 | R4 | Sim-to-Real Model-Based and Model-Free Deep Reinforcement Learning for Tactile Pushing | 이번 작업용 원문 미제공 | — |
@@ -27,7 +27,7 @@
 | 논문 정보·출처 | 제목, 저자, 게재 정보, DOI, 읽은 버전·페이지, 확인하지 않은 자료 |
 | 제시하는 문제 상황 | 저자들의 동기와 실제 해결 과업, 가정, 범위 밖의 목표 |
 | Related Works | 원문이 구성한 비교 구도. 독립 절이 없으면 해당 내용을 담은 절을 명시 |
-| 환경·센서 | 로봇, 과업 환경, 센서 원리·배치·측정량, 시뮬레이션/실물의 차이 |
+| 환경·센서 | 로봇·제어 DOF, 과업 환경, 센서 원리·배치·측정량. 원문에 명시된 최대 측정 범위·분해능·공간 해상도·정확도·감도·주파수·커버리지와 로봇 상세 사양을 기록하고, 장비 사양·실험 설정·시뮬레이션/실물을 구분 |
 | 힘·접촉 처리 | raw signal → 전처리 → 특징·상태 → 행동의 연결. 힘 측정과 접촉 위치 검출을 구분 |
 | 핵심 메소드 | 수식의 변수·좌표계, 제어·정책 구조, 상태 전환, 명령·종료 조건 |
 | 실험·결과 | 조건, 비교군, 지표, 수치, 그 결과가 뒷받침하는 범위 |
@@ -35,6 +35,10 @@
 | 원문 위치 | 절·페이지·식·그림·표 번호를 연결하여 다시 확인할 수 있게 기록 |
 
 관련 연구는 해당 논문의 설명을 정리한 것인지, 인용된 선행논문을 별도로 읽은 것인지 구분한다. 본문 수식을 대수적으로 풀어 설명할 때에는 원문 식의 해설임을 밝힌다. 미기재 파라미터·센서 사양·성능값을 임의로 보완하지 않는다.
+
+센서의 해상도·최대 측정 범위 등이 원문에 없으면 ‘미명시’로 남긴다. 제어용 접촉 threshold를 센서 최소 검출 성능으로, admittance threshold를 최대 측정 범위로, 실험 측정 제공률을 제조사 최대 샘플링률로 바꾸어 기록하지 않는다. 외부 데이터시트는 별도로 확인한 경우에만 별도 출처로 구분한다.
+
+수식은 블록에 `math` 코드 펜스를, 인라인에는 달러 기호 안의 백틱으로 수식 소스를 보호하는 표기를 사용한다. 원문 식 번호는 블록 밖에 표시하고, 구문 검사와 렌더링 확인 범위를 기록한다. 로컬 검사 통과와 실제 GitHub 웹페이지 표시 확인을 구분한다.
 
 ## 파일 관리
 
