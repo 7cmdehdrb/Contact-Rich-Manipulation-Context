@@ -54,9 +54,11 @@ Sider Scholar의 OpenAlex 기반 검색과 Scholar 검색으로 `tactile pushing
 
 **정보 → 행동:** 실제 F/T의 **평면 힘 벡터**를 평활화하고, 힘 방향과 경로 방향의 차이 및 pusher 횡오차로 조향한다.
 
+$$
 \[
 \theta_p=\theta_d+(k_f+1)(\theta_f-\theta_d)+k_c\Delta_c
 \]
+$$
 
 단순히 힘 방향을 따라가는 것이 아니라, 방향 편차를 증폭한 조향으로 접촉 기하를 바꾸어 경로로 복귀시킨다. 약한 힘에서는 접촉 회복으로 전환하고, 과도한 힘에서는 admittance 보정으로 감속·역방향 성분을 만든다. Cartesian 속도가 관절 속도로 변환된다. [R1, §III]
 
