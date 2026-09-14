@@ -44,7 +44,7 @@
 ## 다른 에이전트에 전달할 시작 요청
 
 ```text
-이 저장소는 석사생 1의 Blind Sweeping 연구 인계 문서다.
+이 저장소는 Blind Sweeping 연구 인계 문서다.
 AGENTS.md와 docs/00_HANDOFF_BRIEF.md를 먼저 읽고,
 docs/03_DECISIONS_AND_OPEN_QUESTIONS.md와 docs/04_NEXT_ACTIONS.md를 확인하라.
 현재 확정 방향, 미정 사양, 다음 우선 작업을 구분한 뒤 내가 요청한 작업을 수행하라.
