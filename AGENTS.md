@@ -6,7 +6,7 @@
 
 대상은 **석사생 1의 초기 시각 정보 이후 힘·촉각 기반 Blind Sweeping 하위 정책**이다. 플랫폼 계획은 UR5e–손목 6축 F/T–Inspire Hand다. 상위 탐색·판단, 접근 계획, 석사생 2의 시각 기반 접근·회전·밀기 연구는 관련 배경일 뿐 본 작업의 자동 포함 범위가 아니다.
 
-작업 전에 `docs/00_HANDOFF_BRIEF.md`, `docs/03_DECISIONS_AND_OPEN_QUESTIONS.md`, `docs/04_NEXT_ACTIONS.md`를 읽어라. 코드 수정이면 `docs/05_IMPLEMENTATION_AND_EVALUATION.md`와 `docs/07_CODE_AND_HARDWARE_STATUS.md`도 읽어라.
+작업 전에 `docs/00_HANDOFF_BRIEF.md`, `docs/03_DECISIONS_AND_OPEN_QUESTIONS.md`, `docs/04_NEXT_ACTIONS.md`를 읽어라. 문서를 새로 작성하거나 수정할 때는 `.agents/rules/document-formatting.md`도 읽고 따른다. 코드 수정이면 `docs/05_IMPLEMENTATION_AND_EVALUATION.md`와 `docs/07_CODE_AND_HARDWARE_STATUS.md`도 읽어라.
 
 ## 2. 사실·방향·설계·성과를 분리하라
 
