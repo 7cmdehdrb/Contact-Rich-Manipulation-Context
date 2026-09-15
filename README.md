@@ -30,7 +30,10 @@
 
 주제별 비교 보고서는 `docs/literature/reviews/`에 **조사 기준일 + 주제명**으로 저장한다. 목록과 관리 규칙은 [문헌조사 색인](docs/literature/README.md)에 정리한다. 기존 `docs/00_...`부터 `docs/07_...`까지는 인계·현재 상태 문서로 유지하며, 문헌조사 보고서의 제안을 자동으로 확정 사양에 반영하지 않는다.
 
-현재 등록된 보고서: [2026-09-14 — Blind Sweep을 위한 F/T·촉각 기반 Pushing 문헌 조사](docs/literature/reviews/2026-09-14_blind-sweep-force-torque-tactile.md).
+현재 등록된 보고서는 다음과 같다.
+
+- [2026-09-14 — Blind Sweep을 위한 F/T·촉각 기반 Pushing 문헌 조사](docs/literature/reviews/2026-09-14_blind-sweep-force-torque-tactile.md)
+- [2026-09-15 — IROS 2023–2025 Tactile·F/T 기반 RL 관련 논문 제목 선별](docs/literature/reviews/2026-09-15_iros-2023-2025-tactile-force-torque-rl-title-screening.md)
 
 ## 현재 상태를 오해하지 않기 위한 핵심
 
