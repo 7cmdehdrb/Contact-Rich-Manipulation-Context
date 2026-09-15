@@ -6,13 +6,13 @@
 
 ## 원문 정독 진행 현황
 
-기준일: 2026-09-14. `R1`–`R7`은 위 종합 조사본에서 부여한 식별자다. 다른 조사본의 같은 번호와 혼용하지 않는다. 아래 제목은 해당 조사본과의 대응을 위한 것이다.
+기준일: 2026-09-15. `R1`–`R7`은 위 종합 조사본에서 부여한 식별자다. 다른 조사본의 같은 번호와 혼용하지 않는다. 아래 제목은 해당 조사본과의 대응을 위한 것이다.
 
 | ID | 논문 | 이번 원문 정독 작업의 상태 | 상세 노트 |
 | --- | --- | --- | --- |
 | R1 | Force Push: Robust Single-Point Pushing With Force Feedback | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료 | [2024 · Heins & Schoellig](2024-heins-force-push.md) |
 | R2 | Pushing in the Dark: A Reactive Pushing Strategy for Mobile Robots Using Tactile Feedback | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료 | [2024 · Ozdamar et al.](2024-ozdamar-pushing-in-the-dark.md) |
-| R3 | Pose-and-shear-based tactile servoing | 이번 작업용 원문 미제공 | — |
+| R3 | Pose-and-shear-based tactile servoing | 제공된 출판본 PDF 32쪽, 본문·Appendix A–D 정독·정리 완료 | [2024 · Lloyd & Lepora](2024-lloyd-pose-and-shear-based-tactile-servoing.md) |
 | R4 | Sim-to-Real Model-Based and Model-Free Deep Reinforcement Learning for Tactile Pushing | 이번 작업용 원문 미제공 | — |
 | R5 | Tactile Gym 2.0: Sim-to-Real Deep Reinforcement Learning for Comparing Low-Cost High-Resolution Robot Touch | 이번 작업용 원문 미제공 | — |
 | R6 | Bi-Touch: Bimanual Tactile Manipulation With Sim-to-Real Deep Reinforcement Learning | 이번 작업용 원문 미제공 | — |
@@ -38,7 +38,7 @@
 
 센서의 해상도·최대 측정 범위 등이 원문에 없으면 ‘미명시’로 남긴다. 제어용 접촉 threshold를 센서 최소 검출 성능으로, admittance threshold를 최대 측정 범위로, 실험 측정 제공률을 제조사 최대 샘플링률로 바꾸어 기록하지 않는다. 외부 데이터시트는 별도로 확인한 경우에만 별도 출처로 구분한다.
 
-수식은 블록에 `math` 코드 펜스를, 인라인에는 달러 기호 안의 백틱으로 수식 소스를 보호하는 표기를 사용한다. 원문 식 번호는 블록 밖에 표시하고, 구문 검사와 렌더링 확인 범위를 기록한다. 로컬 검사 통과와 실제 GitHub 웹페이지 표시 확인을 구분한다.
+문서 형식은 [최신 Markdown 규칙](../../../.agents/rules/document-formatting.md)을 따른다. 현재 규칙은 블록 수식을 별도 줄의 `$$`로, 인라인 수식을 `$…$`로 작성하며, 수식용 코드 펜스와 백틱을 섞은 인라인 수식을 사용하지 않는다. 원문 식 번호는 블록 밖에 표시하고, 구문 검사와 렌더링 확인 범위를 기록한다. 로컬 검사 통과와 실제 GitHub 웹페이지 표시 확인을 구분한다.
 
 ## 파일 관리
 
