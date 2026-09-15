@@ -23,8 +23,9 @@
 | 2026-09-14 | R2 | [Pushing in the Dark — 정전용량 접촉 검출부터 RPS 속도 제어·재정렬·실험까지](papers/2024-ozdamar-pushing-in-the-dark.md) |
 | 2026-09-15 | R3 | [Pose-and-shear-based tactile servoing — TacTip 사양·GDN·SE(3) Bayesian filter·과업별 제어와 부록](papers/2024-lloyd-pose-and-shear-based-tactile-servoing.md) |
 | 2026-09-15 | R4 | [Sim-to-Real Tactile Pushing — GAN·PoseNet·관측/보상·SAC·PETS/MPC·장비 사양과 실험](papers/2023-yang-sim-to-real-tactile-pushing.md) |
+| 2026-09-15 | R5 | [Tactile Gym 2.0 — 세 센서의 접촉 특성·영상 변환·PPO·하중 실험·한계와 향후 연구](papers/2022-lin-tactile-gym-2-0.md) |
 
-R1–R7 전체의 제공·정독 상태는 개별 논문 색인을 따른다. 현재 R1·R2·R3·R4 네 편의 정리가 완료되었다는 사실을 일곱 편 전체의 원문 정독 완료로 해석하지 않는다.
+R1–R7 전체의 제공·정독 상태는 개별 논문 색인을 따른다. 현재 R1·R2·R3·R4·R5 다섯 편의 정리가 완료되었다는 사실을 일곱 편 전체의 원문 정독 완료로 해석하지 않는다.
 
 ## 폴더와 파일명 규칙
 
