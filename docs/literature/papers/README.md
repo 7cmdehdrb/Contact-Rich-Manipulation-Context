@@ -13,7 +13,7 @@
 | R1 | Force Push: Robust Single-Point Pushing With Force Feedback | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료 | [2024 · Heins & Schoellig](2024-heins-force-push.md) |
 | R2 | Pushing in the Dark: A Reactive Pushing Strategy for Mobile Robots Using Tactile Feedback | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료 | [2024 · Ozdamar et al.](2024-ozdamar-pushing-in-the-dark.md) |
 | R3 | Pose-and-shear-based tactile servoing | 제공된 출판본 PDF 32쪽, 본문·Appendix A–D 정독·정리 완료 | [2024 · Lloyd & Lepora](2024-lloyd-pose-and-shear-based-tactile-servoing.md) |
-| R4 | Sim-to-Real Model-Based and Model-Free Deep Reinforcement Learning for Tactile Pushing | 이번 작업용 원문 미제공 | — |
+| R4 | Sim-to-Real Model-Based and Model-Free Deep Reinforcement Learning for Tactile Pushing | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료 | [2023 · Yang et al.](2023-yang-sim-to-real-tactile-pushing.md) |
 | R5 | Tactile Gym 2.0: Sim-to-Real Deep Reinforcement Learning for Comparing Low-Cost High-Resolution Robot Touch | 이번 작업용 원문 미제공 | — |
 | R6 | Bi-Touch: Bimanual Tactile Manipulation With Sim-to-Real Deep Reinforcement Learning | 이번 작업용 원문 미제공 | — |
 | R7 | Framework for Robot Door Opening Based on Visual, Force, and Tactile Integration | 이번 작업용 원문 미제공 | — |
