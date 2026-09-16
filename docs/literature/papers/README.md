@@ -6,7 +6,7 @@
 
 ## 원문 정독 진행 현황
 
-기준일: 2026-09-15. `R1`–`R7`은 위 종합 조사본에서 부여한 식별자다. 다른 조사본의 같은 번호와 혼용하지 않는다. 아래 제목은 해당 조사본과의 대응을 위한 것이다.
+기준일: 2026-09-16. `R1`–`R7`은 위 종합 조사본에서 부여한 식별자다. 다른 조사본의 같은 번호와 혼용하지 않는다. 아래 제목은 해당 조사본과의 대응을 위한 것이다.
 
 | ID | 논문 | 이번 원문 정독 작업의 상태 | 상세 노트 |
 | --- | --- | --- | --- |
@@ -15,7 +15,7 @@
 | R3 | Pose-and-shear-based tactile servoing | 제공된 출판본 PDF 32쪽, 본문·Appendix A–D 정독·정리 완료 | [2024 · Lloyd & Lepora](2024-lloyd-pose-and-shear-based-tactile-servoing.md) |
 | R4 | Sim-to-Real Model-Based and Model-Free Deep Reinforcement Learning for Tactile Pushing | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료 | [2023 · Yang et al.](2023-yang-sim-to-real-tactile-pushing.md) |
 | R5 | Tactile Gym 2.0: Sim-to-Real Deep Reinforcement Learning for Comparing Low-Cost High-Resolution Robot Touch | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료. Limitation·Future Work 포함 | [2022 · Lin et al.](2022-lin-tactile-gym-2-0.md) |
-| R6 | Bi-Touch: Bimanual Tactile Manipulation With Sim-to-Real Deep Reinforcement Learning | 이번 작업용 원문 미제공 | — |
+| R6 | Bi-Touch: Bimanual Tactile Manipulation With Sim-to-Real Deep Reinforcement Learning | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료. Limitation·Future Work 포함 | [2023 · Lin et al.](2023-lin-bi-touch.md) |
 | R7 | Framework for Robot Door Opening Based on Visual, Force, and Tactile Integration | 이번 작업용 원문 미제공 | — |
 
 ‘이번 작업용 원문 미제공’은 새로 요청된 첨부 원문 기반 정독 작업의 상태다. 이전 종합 조사에서 어떤 출처도 읽지 않았다는 의미는 아니다. 정독 완료 역시 논문의 코드 실행·실험 재현 완료를 뜻하지 않는다. 제공되지 않은 논문에 빈 노트나 내용이 있는 것처럼 보이는 링크를 만들지 않는다.
