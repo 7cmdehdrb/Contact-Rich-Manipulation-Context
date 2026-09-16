@@ -16,7 +16,7 @@
 | R4 | Sim-to-Real Model-Based and Model-Free Deep Reinforcement Learning for Tactile Pushing | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료 | [2023 · Yang et al.](2023-yang-sim-to-real-tactile-pushing.md) |
 | R5 | Tactile Gym 2.0: Sim-to-Real Deep Reinforcement Learning for Comparing Low-Cost High-Resolution Robot Touch | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료. Limitation·Future Work 포함 | [2022 · Lin et al.](2022-lin-tactile-gym-2-0.md) |
 | R6 | Bi-Touch: Bimanual Tactile Manipulation With Sim-to-Real Deep Reinforcement Learning | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료. Limitation·Future Work 포함 | [2023 · Lin et al.](2023-lin-bi-touch.md) |
-| R7 | Framework for Robot Door Opening Based on Visual, Force, and Tactile Integration | 이번 작업용 원문 미제공 | — |
+| R7 | Framework for Robot Door Opening Based on Visual, Force, and Tactile Integration | 제공된 출판본 PDF 19쪽, 본문·Appendix A–B 정독·정리 완료. Limitation·Future Work 포함 | [2026 · Šimundić et al.](2026-simundic-visuo-force-tactile-door-opening.md) |
 
 ‘이번 작업용 원문 미제공’은 새로 요청된 첨부 원문 기반 정독 작업의 상태다. 이전 종합 조사에서 어떤 출처도 읽지 않았다는 의미는 아니다. 정독 완료 역시 논문의 코드 실행·실험 재현 완료를 뜻하지 않는다. 제공되지 않은 논문에 빈 노트나 내용이 있는 것처럼 보이는 링크를 만들지 않는다.
 
