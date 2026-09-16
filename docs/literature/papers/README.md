@@ -32,6 +32,14 @@
 | IROS-S04 | Multi-Fingered Dragging of Unknown Objects and Orientations Using Distributed Tactile Information Through Vision-Transformer and LSTM | 이번 후속 정독용 원문 미제공 | — |
 | IROS-S05 | Tactile Active Inference Reinforcement Learning for Efficient Robotic Manipulation Skill Acquisition | 이번 후속 정독용 원문 미제공 | — |
 
+## 사용자 별도 발굴 논문
+
+기존 일괄 조사 후보군에 없었으며 사용자가 별도로 제공한 논문은 [별도 발굴 누적 목록](../collections/user-found-papers.md)에 등록한다. 아래 `USER-P` 식별자는 R1–R7·IROS-S01–S05와 독립적이며, 등록 경로를 나타낼 뿐 방법론·연구 적합성의 확정을 뜻하지 않는다.
+
+| ID | 논문 | 원문 정독 상태 | 상세 노트 |
+| --- | --- | --- | --- |
+| USER-P001 | Gentle Object Retraction in Dense Clutter Using Multimodal Force Sensing and Imitation Learning | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료. Limitation·Future Work 포함 | [2026 · Brouwer et al.](2026-brouwer-gentle-object-retraction.md) |
+
 ## 공통 정리 구조
 
 | 항목 | 기록 내용 |

@@ -39,17 +39,29 @@ R1–R7 전체의 제공·정독 상태는 개별 논문 색인을 따른다. �
 | 2026-09-16 | IROS-S02 | [Pseudo-Tactile Gripper State — 빈 파지 판정·재개방 override·시뮬레이션 시연·DP·admittance·ablation과 한계](papers/2025-yang-pseudo-tactile-gripper-state.md) |
 | 2026-09-16 | IROS-S03 | [Location-Based Attention Pushing — 실시간 pose·occupancy grid·categorical PPO·리워드·randomization·DFT·실물 검증과 한계](papers/2025-dengler-location-based-attention-pushing.md) |
 
+### 사용자 별도 발굴 논문
+
+기존 일괄 조사 후보군 밖에서 사용자가 별도로 찾아 제공한 논문은 [사용자 별도 발굴 누적 목록](collections/user-found-papers.md)으로 관리한다. 발굴 경로·서지·정독 상태를 유지하며, 기존 R1–R7 및 IROS-S01–S05의 분류와 집계를 소급 변경하지 않는다.
+
+| 정리일 | 관리 ID | 논문·상세 정리 |
+| --- | --- | --- |
+| 2026-09-16 | USER-P001 | [Gentle Object Retraction — 분포형 3축 힘 영상·관절 토크 기반 wrench·Diffusion Policy·impulse 기준·실물 ablation·한계와 향후 연구](papers/2026-brouwer-gentle-object-retraction.md) |
+
 ## 폴더와 파일명 규칙
 
 ```text
 docs/literature/
 ├── README.md
+├── collections/
+│   └── user-found-papers.md
 ├── reviews/
 │   └── YYYY-MM-DD_topic-slug.md
 └── papers/
     ├── README.md
     └── YYYY-firstauthor-paper-slug.md
 ```
+
+`collections/`에는 발굴 경로별 누적 목록을 둔다. `user-found-papers.md`는 사용자 별도 발굴 논문을 계속 추가하는 고정 경로이며, 개별 등록일·상태·상세 노트 링크를 관리한다. 비교 보고서나 개별 정리 본문을 복제하지 않는다.
 
 `reviews/`에는 여러 논문을 비교한 주제별 보고서를 둔다. 파일명은 **조사 기준일 + 영문 소문자 주제명**으로 작성하고, 주제명 내부는 하이픈으로 구분한다. `final`, `latest`, `수정본(2)`처럼 시점과 내용을 알기 어려운 이름은 사용하지 않는다.
 
