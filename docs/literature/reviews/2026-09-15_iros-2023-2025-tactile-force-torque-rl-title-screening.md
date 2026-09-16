@@ -241,14 +241,14 @@ Pushing, scooping, dragging, cleaning, retrieval은 세 연도에 걸쳐 반복�
 | 관리 ID | 논문 | 기존 제목 선별 위치 | 선정 상태 | 후속 원문 정독 상태 |
 | --- | --- | --- | --- | --- |
 | IROS-S01 | Attention for Robot Touch: Tactile Saliency Prediction for Robust Sim-to-Real Tactile Control | 2023 CSV #1128, §4.2 | 사용자 임시 선정 | 제공된 출판본 PDF 7쪽 정독·정리 완료. [상세 노트](../papers/2023-lin-attention-for-robot-touch.md) |
-| IROS-S02 | Disambiguate Gripper State in Grasp-Based Tasks: Pseudo-Tactile as Feedback Enables Pure Simulation Learning | 2025 CSV #1371, §6.1 | 사용자 임시 선정 | 이번 후속 정독용 원문 미제공. 사용자 제공 서지만 기록 |
+| IROS-S02 | Disambiguate Gripper State in Grasp-Based Tasks: Pseudo-Tactile as Feedback Enables Pure Simulation Learning | 2025 CSV #1371, §6.1 | 사용자 임시 선정 | 제공된 출판본 PDF 8쪽 정독·정리 완료. [상세 노트](../papers/2025-yang-pseudo-tactile-gripper-state.md) |
 | IROS-S03 | Learning Goal-Directed Object Pushing in Cluttered Scenes With Location-Based Attention | 2025 CSV #727, §6.2 | 사용자 임시 선정 | 이번 후속 정독용 원문 미제공. 사용자 제공 서지만 기록 |
 | IROS-S04 | Multi-Fingered Dragging of Unknown Objects and Orientations Using Distributed Tactile Information Through Vision-Transformer and LSTM | 2024 CSV #711, §5.2 | 사용자 임시 선정 | 이번 후속 정독용 원문 미제공. 사용자 제공 서지만 기록 |
 | IROS-S05 | Tactile Active Inference Reinforcement Learning for Efficient Robotic Manipulation Skill Acquisition | 2024 CSV #1146, §5.1 | 사용자 임시 선정 | 이번 후속 정독용 원문 미제공. 사용자 제공 서지만 기록 |
 
 ### 11.2 사용자 제공 서지
 
-다음 서지는 사용자가 제공한 내용이다. IROS-S01은 첨부 출판본의 제목·저자·DOI·게재 페이지와 대조했다. 나머지 네 편은 이번에 원문이나 출판사 자료를 별도로 검증하지 않았으며, `et al.`을 임의의 저자 목록으로 확장하지 않는다.
+다음 서지는 사용자가 제공한 내용이다. IROS-S01·IROS-S02는 각각의 첨부 출판본의 제목·저자·DOI·게재 페이지와 대조했다. IROS-S03–S05 세 편은 이번에 원문이나 출판사 자료를 별도로 검증하지 않았으며, `et al.`을 임의의 저자 목록으로 확장하지 않는다. 사용자 제공 서지의 표기는 유지하며, IROS-S02의 전체 저자 목록은 개별 정독 노트에 기록했다.
 
 **IROS-S01 / 사용자 [1]** — Y. Lin, M. Comi, A. Church, D. Zhang, and N. F. Lepora, “Attention for Robot Touch: Tactile Saliency Prediction for Robust Sim-to-Real Tactile Control,” in *2023 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)*, Detroit, MI, USA: IEEE, Oct. 2023, pp. 10806–10812. DOI: [10.1109/IROS55552.2023.10341888](https://doi.org/10.1109/IROS55552.2023.10341888).
 
@@ -266,4 +266,15 @@ Pushing, scooping, dragging, cleaning, retrieval은 세 연도에 걸쳐 반복�
 
 GAN·VAE의 손실식과 대응/합성 데이터 생성법은 본문에 있지만, GAN/VAE의 상세 hyperparameter 및 RL reward·전체 학습 설정은 [2]나 보충자료에 의존하거나 본문에 미제시다. 정적 pose 평가에는 prediction drift calibration이 포함되며, 가까운 distractor를 target 일부로 포함하는 실패도 보고한다. 자세한 수식·사양·실험·Limitation·Future Work는 [개별 정독 노트](../papers/2023-lin-attention-for-robot-touch.md)를 따른다.
 
-이 원문 확인 결과는 IROS-S01에만 적용한다. 나머지 네 편의 실제 센서 구성, RL 채택 여부, 관측·행동·성과를 이름이나 임시 선정 사실만으로 확정하지 않는다.
+이 절의 원문 확인 결과는 IROS-S01에만 적용한다. IROS-S02의 확인 결과는 아래 §11.4에 별도로 기록한다. 원문 미제공인 IROS-S03–S05의 실제 센서 구성, RL 채택 여부, 관측·행동·성과를 이름이나 임시 선정 사실만으로 확정하지 않는다.
+
+
+### 11.4 IROS-S02에서 원문으로 확인한 사항 — 2026-09-16
+
+*Disambiguate Gripper State in Grasp-Based Tasks*는 **RL이 아니라 Diffusion Policy 기반 모방학습** 연구다. Force-controlled Robotiq 2F-85의 힘 평형 시 관절각을 pseudo-tactile로 사용하고, 빈 파지로 최대 닫힘에 도달하면 저수준 제어기가 정책 명령을 override하여 그리퍼를 실제로 다시 연다. 정책은 RGB·EEF pose·binary gripper state를 관측한다. 따라서 전용 tactile array의 분포 관측이나 외부 시각 없는 정책으로 분류하지 않는다. [첨부 출판본 §III–IV-C, Fig. 2–3, PDF pp. 2–5]
+
+시뮬레이터 정답 상태를 사용하는 수작업 expert로 성공 시연을 생성하고, 과업당 2,000개 시연을 이용해 학습한다. 현실적인 asset·시각 randomization과 별도로, 외력·토크에 반응하는 admittance가 EEF 궤적을 보정한다. 이 외력의 측정·추정 장치, threshold·gain·필터, DP 최적화 세부는 원문에 미명시다. GAN은 제시하지 않는다. [첨부 출판본 §IV-B–C·V-A, 식 (1), PDF pp. 4–6]
+
+세 실물 과업의 전체 task 성공률은 90%·90%·80%이며, SR-R 100%는 재개방·파지 재시도에 대한 복구율이지 task 전체 성공률이 아니다. 원문에는 별도 Limitation 절이나 구체적인 Future Work 계획이 없으며, 본문이 인정하는 준비 비용·잔여 sim-to-real 문제와 실험 결과의 범위를 구분해 기록했다. 자세한 메소드·전체 결과·ablation·미명시 사항은 [개별 정독 노트](../papers/2025-yang-pseudo-tactile-gripper-state.md)를 따른다. [첨부 출판본 §V–VI, Table I–IV, PDF pp. 6–8]
+
+이 원문 분류는 사용자의 임시 선정을 삭제하거나 부적합으로 확정하는 결정이 아니다. 최초 제목 선별과 후속 원문 확인을 구분하기 위한 기록이며, IROS-S03–S05의 정독 완료를 뜻하지 않는다.
