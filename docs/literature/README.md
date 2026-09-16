@@ -25,8 +25,9 @@
 | 2026-09-15 | R4 | [Sim-to-Real Tactile Pushing — GAN·PoseNet·관측/보상·SAC·PETS/MPC·장비 사양과 실험](papers/2023-yang-sim-to-real-tactile-pushing.md) |
 | 2026-09-15 | R5 | [Tactile Gym 2.0 — 세 센서의 접촉 특성·영상 변환·PPO·하중 실험·한계와 향후 연구](papers/2022-lin-tactile-gym-2-0.md) |
 | 2026-09-16 | R6 | [Bi-Touch — 양팔 촉각·과업별 reward·압착 문제·GUM·curriculum·한계와 향후 연구](papers/2023-lin-bi-touch.md) |
+| 2026-09-16 | R7 | [Handleless Door Opening — 힘·촉각 실패 검출·카메라 보정·접촉/miss 제약·재계획·한계와 향후 연구](papers/2026-simundic-visuo-force-tactile-door-opening.md) |
 
-R1–R7 전체의 제공·정독 상태는 개별 논문 색인을 따른다. 현재 R1·R2·R3·R4·R5·R6 여섯 편의 정리가 완료되었다는 사실을 일곱 편 전체의 원문 정독 완료로 해석하지 않는다.
+R1–R7 전체의 제공·정독 상태는 개별 논문 색인을 따른다. 현재 일곱 편 모두의 첨부 원문 정독·정리가 완료되었다. 이는 각 논문의 코드 실행·실험 재현이나 외부 보충자료 전체의 확인을 뜻하지 않는다.
 
 ## 폴더와 파일명 규칙
 
