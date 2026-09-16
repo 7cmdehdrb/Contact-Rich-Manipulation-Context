@@ -34,6 +34,8 @@
 
 - [2026-09-14 — Blind Sweep을 위한 F/T·촉각 기반 Pushing 문헌 조사](docs/literature/reviews/2026-09-14_blind-sweep-force-torque-tactile.md)
 - [2026-09-15 — IROS 2023–2025 Tactile·F/T 기반 RL 관련 논문 제목 선별](docs/literature/reviews/2026-09-15_iros-2023-2025-tactile-force-torque-rl-title-screening.md)
+- [2026-09-16 — Binary Tactile·F/T 기반 RL 신규 문헌 조사](docs/literature/reviews/2026-09-16_binary-tactile-wrench-rl.md)
+- [2026-09-16 — Binary Tactile·Wrench 입력 처리 및 비교 실험 제안](docs/literature/reviews/2026-09-16_binary-tactile-wrench-design-notes.md)
 
 ## 현재 상태를 오해하지 않기 위한 핵심
 

@@ -10,6 +10,8 @@
 | --- | --- | --- |
 | 2026-09-14 | [Blind Sweep을 위한 F/T·촉각 기반 Pushing 문헌 조사](reviews/2026-09-14_blind-sweep-force-torque-tactile.md) | 2022년 이후 SCIE 저널을 대상으로 한 선별 조사. F/T, tactile, 병용을 구분하고 관측→표현→행동의 연결을 비교한다. 직접 pushing과 인접 과업, 원문 확인 범위와 한계를 구분한다. |
 | 2026-09-15 | [IROS 2023–2025 Tactile·F/T 기반 RL 관련 논문 제목 선별](reviews/2026-09-15_iros-2023-2025-tactile-force-torque-rl-title-screening.md) | 제공된 연도별 CSV의 제목 레코드 4,762건, 고유 제목 4,761개를 의미 기반으로 1차 선별했다. 엄격 일치와 원문 확인 후보를 구분하며, 센서 사용·RL 채택·성과는 원문 검증 전까지 미확정이다. 2026-09-16 사용자 임시 선정 5편과 후속 정독 현황을 §11에 추가했다. |
+| 2026-09-16 | [Binary Tactile·F/T 기반 RL 신규 문헌 조사](reviews/2026-09-16_binary-tactile-wrench-rl.md) | 기존 발견 문헌을 제외한 주요 참고 5편·제한적 방법 참고 3편과 Binary 정보 손실 반대 근거 1편. 저항식 센서 이진화, history, force/wrench의 관측·보상·action·controller 연결을 비교한다. RL/POMDP/IL, 실물/sim-only, 직접 pushing/인접 과업을 구분한다. |
+| 2026-09-16 | [Binary Tactile·Wrench 입력 처리 및 비교 실험 제안](reviews/2026-09-16_binary-tactile-wrench-design-notes.md) | 위 신규 조사에서 도출한 PROPOSED 문서. 필터·영역 축약·threshold·hysteresis·validity, wrench 보정·좌표계·정규화, actor/critic 경계와 동일 조건의 센서 표현 비교를 구체화한다. 구현·최종 사양·장비 실측 결과가 아니다. |
 
 2026-09-14 보고서의 **7–8절은 문헌에서 도출한 해석·연구 제안**이다. 프로젝트의 확정 사양이나 구현 성과로 승격하지 않는다. 각 논문의 본래 목적, 센서 구성, 시각 사용 조건, 제어 방식, 적용 한계는 보고서 본문과 참고문헌을 함께 확인한다. 특정 범주의 직접 사례를 확보하지 못했다는 사실은 그 연구가 존재하지 않는다는 증명이나 신규성 확정이 아니다.
 
