@@ -2,8 +2,10 @@
 
 - **조사 기준일:** 2026년 9월 15일
 - **자료 범위:** 제공된 IROS 2023·2024·2025 논문 제목 CSV 전체
-- **작업 상태:** 제목 기반 1차 선별 완료. 초록·본문 검증 미수행
+- **1차 선별 당시 상태:** 제목 기반 1차 선별 완료. 초록·본문 검증 미수행
 - **용도:** 원문 정독 우선순위를 정하기 위한 후보군이며, 실제 센서 구성·학습 방식·성과를 확정하지 않음
+
+**후속 갱신 — 2026-09-16:** 사용자가 관련 논문 5편을 임시 선정했다. 선정 목록·서지·원문 정독 상태는 [§11](#11-사용자-임시-선정-및-후속-원문-정독--2026-09-16-추가)에 별도 기록한다. 1–10절은 2026-09-15 제목 기반 조사 기록이다.
 
 ## 1. 결론
 
@@ -225,3 +227,43 @@ Pushing, scooping, dragging, cleaning, retrieval은 세 연도에 걸쳐 반복�
 - `learning`, `policy`, `ACT`, `diffusion`, `active inference`가 모두 reinforcement learning을 뜻하는 것은 아니다.
 - 제목 기반 추세는 원문 정독 대상을 정하기 위한 가설이다. 논문 내용, 저자들이 밝힌 Limitation과 Future Work, 프로젝트 적용 가능성은 원문 정독 단계에서 별도로 기록한다.
 - 후보가 적거나 제목에서 F/T–tactile 결합이 드러나지 않는다는 사실은 연구 공백이나 신규성을 확정하지 않는다.
+
+## 11. 사용자 임시 선정 및 후속 원문 정독 — 2026-09-16 추가
+
+### 11.1 선정의 의미와 기존 조사본의 관계
+
+사용자는 아래 5편을 **현재 연구 주제와 관련 있는 논문으로 임시 선정**했다. 이 기록은 사용자가 제공한 선정 결정과 서지 정보를 반영한 것이며, 제목 기반 1차 선별을 수행한 정리자의 최종 적합성 판정이 아니다. **임시 선정, 원문 정독 완료, 실제 방법의 프로젝트 적용 가능성 확정은 서로 다른 상태**다.
+
+1–10절의 31편 후보군, 연도별 집계, 문자상 엄격 일치와 원문 확인 후보의 구분, 당시 정독 우선순위는 최초 조사 기록으로 보존한다. 아래 5편은 그 후보군의 후속 선택 목록이며, 나머지 26편을 부적합으로 확정하거나 삭제한 것이 아니다. 향후 작업 대상은 사용자의 최신 요청을 따른다.
+
+`IROS-S01`–`IROS-S05`는 이번 사용자 목록의 순서를 유지한 관리 식별자다. 우열 순위가 아니며, [2026-09-14 종합 조사본](2026-09-14_blind-sweep-force-torque-tactile.md)의 `R1`–`R7` 및 각 원문 내부의 참고문헌 번호와 혼용하지 않는다. 이 목록은 **IROS 학술대회 논문** 목록이며, 이전 SCIE 저널 중심 조사 범주와 구분한다.
+
+| 관리 ID | 논문 | 기존 제목 선별 위치 | 선정 상태 | 후속 원문 정독 상태 |
+| --- | --- | --- | --- | --- |
+| IROS-S01 | Attention for Robot Touch: Tactile Saliency Prediction for Robust Sim-to-Real Tactile Control | 2023 CSV #1128, §4.2 | 사용자 임시 선정 | 제공된 출판본 PDF 7쪽 정독·정리 완료. [상세 노트](../papers/2023-lin-attention-for-robot-touch.md) |
+| IROS-S02 | Disambiguate Gripper State in Grasp-Based Tasks: Pseudo-Tactile as Feedback Enables Pure Simulation Learning | 2025 CSV #1371, §6.1 | 사용자 임시 선정 | 이번 후속 정독용 원문 미제공. 사용자 제공 서지만 기록 |
+| IROS-S03 | Learning Goal-Directed Object Pushing in Cluttered Scenes With Location-Based Attention | 2025 CSV #727, §6.2 | 사용자 임시 선정 | 이번 후속 정독용 원문 미제공. 사용자 제공 서지만 기록 |
+| IROS-S04 | Multi-Fingered Dragging of Unknown Objects and Orientations Using Distributed Tactile Information Through Vision-Transformer and LSTM | 2024 CSV #711, §5.2 | 사용자 임시 선정 | 이번 후속 정독용 원문 미제공. 사용자 제공 서지만 기록 |
+| IROS-S05 | Tactile Active Inference Reinforcement Learning for Efficient Robotic Manipulation Skill Acquisition | 2024 CSV #1146, §5.1 | 사용자 임시 선정 | 이번 후속 정독용 원문 미제공. 사용자 제공 서지만 기록 |
+
+### 11.2 사용자 제공 서지
+
+다음 서지는 사용자가 제공한 내용이다. IROS-S01은 첨부 출판본의 제목·저자·DOI·게재 페이지와 대조했다. 나머지 네 편은 이번에 원문이나 출판사 자료를 별도로 검증하지 않았으며, `et al.`을 임의의 저자 목록으로 확장하지 않는다.
+
+**IROS-S01 / 사용자 [1]** — Y. Lin, M. Comi, A. Church, D. Zhang, and N. F. Lepora, “Attention for Robot Touch: Tactile Saliency Prediction for Robust Sim-to-Real Tactile Control,” in *2023 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)*, Detroit, MI, USA: IEEE, Oct. 2023, pp. 10806–10812. DOI: [10.1109/IROS55552.2023.10341888](https://doi.org/10.1109/IROS55552.2023.10341888).
+
+**IROS-S02 / 사용자 [2]** — Y. Yang et al., “Disambiguate Gripper State in Grasp-Based Tasks: Pseudo-Tactile as Feedback Enables Pure Simulation Learning,” in *2025 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)*, Hangzhou, China: IEEE, Oct. 2025, pp. 14899–14906. DOI: [10.1109/IROS60139.2025.11246513](https://doi.org/10.1109/IROS60139.2025.11246513).
+
+**IROS-S03 / 사용자 [3]** — N. Dengler, J. D. Aguila Ferrandis, J. Moura, S. Vijayakumar, and M. Bennewitz, “Learning Goal-Directed Object Pushing in Cluttered Scenes With Location-Based Attention,” in *2025 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)*, Hangzhou, China: IEEE, Oct. 2025, pp. 7600–7606. DOI: [10.1109/IROS60139.2025.11246809](https://doi.org/10.1109/IROS60139.2025.11246809).
+
+**IROS-S04 / 사용자 [4]** — T. Ueno et al., “Multi-Fingered Dragging of Unknown Objects and Orientations Using Distributed Tactile Information Through Vision-Transformer and LSTM,” in *2024 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)*, Abu Dhabi, United Arab Emirates: IEEE, Oct. 2024, pp. 7445–7452. DOI: [10.1109/IROS58592.2024.10802283](https://doi.org/10.1109/IROS58592.2024.10802283).
+
+**IROS-S05 / 사용자 [5]** — Z. Liu, X. Liu, Y. Zhang, Z. Liu, and P. Huang, “Tactile Active Inference Reinforcement Learning for Efficient Robotic Manipulation Skill Acquisition,” in *2024 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)*, Abu Dhabi, United Arab Emirates: IEEE, Oct. 2024, pp. 10884–10889. DOI: [10.1109/IROS58592.2024.10802750](https://doi.org/10.1109/IROS58592.2024.10802750).
+
+### 11.3 IROS-S01에서 원문으로 확인한 사항
+
+*Attention for Robot Touch*는 **새로운 pushing 정책보다, 목표 edge와 distractor가 동시에 닿았을 때 목표 접촉 표현을 분리하는 방법**이 중심이다. ConDepNet은 real tactile image를 contact depth로 변환하고, TacSalNet은 목표 saliency를 예측하며, TacNGen은 VAE로 학습용 접촉 잡음을 생성한다. 이 표현을 PoseNet–PID 또는 image-based deep-RL edge-following에 연결한다. 별도 손목 F/T, 물리 단위 힘 추종, 물체 운반의 목표 도달을 검증한 논문으로 분류하지 않는다. [첨부 출판본 §III–IV, Fig. 2·5, PDF pp. 2–6]
+
+GAN·VAE의 손실식과 대응/합성 데이터 생성법은 본문에 있지만, GAN/VAE의 상세 hyperparameter 및 RL reward·전체 학습 설정은 [2]나 보충자료에 의존하거나 본문에 미제시다. 정적 pose 평가에는 prediction drift calibration이 포함되며, 가까운 distractor를 target 일부로 포함하는 실패도 보고한다. 자세한 수식·사양·실험·Limitation·Future Work는 [개별 정독 노트](../papers/2023-lin-attention-for-robot-touch.md)를 따른다.
+
+이 원문 확인 결과는 IROS-S01에만 적용한다. 나머지 네 편의 실제 센서 구성, RL 채택 여부, 관측·행동·성과를 이름이나 임시 선정 사실만으로 확정하지 않는다.

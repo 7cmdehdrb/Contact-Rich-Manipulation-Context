@@ -20,6 +20,18 @@
 
 ‘이번 작업용 원문 미제공’은 새로 요청된 첨부 원문 기반 정독 작업의 상태다. 이전 종합 조사에서 어떤 출처도 읽지 않았다는 의미는 아니다. 정독 완료 역시 논문의 코드 실행·실험 재현 완료를 뜻하지 않는다. 제공되지 않은 논문에 빈 노트나 내용이 있는 것처럼 보이는 링크를 만들지 않는다.
 
+## IROS 2023–2025 후속 사용자 임시 선정
+
+기준일: 2026-09-16. 아래 목록은 [IROS 제목 선별 보고서 §11](../reviews/2026-09-15_iros-2023-2025-tactile-force-torque-rl-title-screening.md#11-사용자-임시-선정-및-후속-원문-정독--2026-09-16-추가)의 사용자 임시 선정 5편이다. `IROS-S01`–`IROS-S05`는 위 `R1`–`R7`과 별개이며, 임시 선정은 직접적인 과업 적합성이나 센서·RL 사용의 검증 완료를 뜻하지 않는다. 번호는 사용자 목록의 순서다.
+
+| ID | 논문 | 원문 정독 상태 | 상세 노트 |
+| --- | --- | --- | --- |
+| IROS-S01 | Attention for Robot Touch: Tactile Saliency Prediction for Robust Sim-to-Real Tactile Control | 제공된 출판본 PDF 7쪽 전체 정독·정리 완료. Limitation·Future Work 포함 | [2023 · Lin et al.](2023-lin-attention-for-robot-touch.md) |
+| IROS-S02 | Disambiguate Gripper State in Grasp-Based Tasks: Pseudo-Tactile as Feedback Enables Pure Simulation Learning | 이번 후속 정독용 원문 미제공 | — |
+| IROS-S03 | Learning Goal-Directed Object Pushing in Cluttered Scenes With Location-Based Attention | 이번 후속 정독용 원문 미제공 | — |
+| IROS-S04 | Multi-Fingered Dragging of Unknown Objects and Orientations Using Distributed Tactile Information Through Vision-Transformer and LSTM | 이번 후속 정독용 원문 미제공 | — |
+| IROS-S05 | Tactile Active Inference Reinforcement Learning for Efficient Robotic Manipulation Skill Acquisition | 이번 후속 정독용 원문 미제공 | — |
+
 ## 공통 정리 구조
 
 | 항목 | 기록 내용 |
