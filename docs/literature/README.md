@@ -31,13 +31,14 @@ R1–R7 전체의 제공·정독 상태는 개별 논문 색인을 따른다. �
 
 ### IROS 후속 선정 논문 정독
 
-[2026-09-15 제목 선별 보고서](reviews/2026-09-15_iros-2023-2025-tactile-force-torque-rl-title-screening.md)에 2026-09-16 사용자 임시 선정 5편을 기록했다. 아래 ID는 R1–R7과 별개다. 현재 해당 5편 중 3편의 정독이 완료되었으며, 나머지 상태는 [개별 논문 색인](papers/README.md)을 따른다.
+[2026-09-15 제목 선별 보고서](reviews/2026-09-15_iros-2023-2025-tactile-force-torque-rl-title-screening.md)에 2026-09-16 사용자 임시 선정 5편을 기록했다. 아래 ID는 R1–R7과 별개다. 현재 해당 5편 중 4편의 정독이 완료되었으며, 나머지 상태는 [개별 논문 색인](papers/README.md)을 따른다.
 
 | 정리일 | 후속 선정 ID | 논문·상세 정리 |
 | --- | --- | --- |
 | 2026-09-16 | IROS-S01 | [Attention for Robot Touch — ConDepNet·TacSalNet·VAE 잡음 생성·GAN 손실·PID/DRL 연결·한계와 향후 연구](papers/2023-lin-attention-for-robot-touch.md) |
 | 2026-09-16 | IROS-S02 | [Pseudo-Tactile Gripper State — 빈 파지 판정·재개방 override·시뮬레이션 시연·DP·admittance·ablation과 한계](papers/2025-yang-pseudo-tactile-gripper-state.md) |
 | 2026-09-16 | IROS-S03 | [Location-Based Attention Pushing — 실시간 pose·occupancy grid·categorical PPO·리워드·randomization·DFT·실물 검증과 한계](papers/2025-dengler-location-based-attention-pushing.md) |
+| 2026-09-16 | IROS-S05 | [Tactile-AIRL — 접촉 깊이·optical-flow entropy·FEEF·모델 앙상블·CEM·과업별 reward·실물 학습과 한계](papers/2024-liu-tactile-active-inference-rl.md) |
 
 ### 사용자 별도 발굴 논문
 

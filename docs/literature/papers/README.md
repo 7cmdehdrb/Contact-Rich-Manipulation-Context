@@ -30,7 +30,7 @@
 | IROS-S02 | Disambiguate Gripper State in Grasp-Based Tasks: Pseudo-Tactile as Feedback Enables Pure Simulation Learning | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료. 저자 명시 제약·Future Work 확인 결과 포함 | [2025 · Yang et al.](2025-yang-pseudo-tactile-gripper-state.md) |
 | IROS-S03 | Learning Goal-Directed Object Pushing in Cluttered Scenes With Location-Based Attention | 제공된 출판본 PDF 7쪽 전체 정독·정리 완료. 저자 명시 제약·Future Work 확인 결과 포함 | [2025 · Dengler et al.](2025-dengler-location-based-attention-pushing.md) |
 | IROS-S04 | Multi-Fingered Dragging of Unknown Objects and Orientations Using Distributed Tactile Information Through Vision-Transformer and LSTM | 이번 후속 정독용 원문 미제공 | — |
-| IROS-S05 | Tactile Active Inference Reinforcement Learning for Efficient Robotic Manipulation Skill Acquisition | 이번 후속 정독용 원문 미제공 | — |
+| IROS-S05 | Tactile Active Inference Reinforcement Learning for Efficient Robotic Manipulation Skill Acquisition | 제공된 출판본 PDF 6쪽 전체 정독·정리 완료. 저자 명시 제약·Future Work 확인 결과 포함 | [2024 · Liu et al.](2024-liu-tactile-active-inference-rl.md) |
 
 ## 사용자 별도 발굴 논문
 

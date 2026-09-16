@@ -244,11 +244,11 @@ Pushing, scooping, dragging, cleaning, retrieval은 세 연도에 걸쳐 반복�
 | IROS-S02 | Disambiguate Gripper State in Grasp-Based Tasks: Pseudo-Tactile as Feedback Enables Pure Simulation Learning | 2025 CSV #1371, §6.1 | 사용자 임시 선정 | 제공된 출판본 PDF 8쪽 정독·정리 완료. [상세 노트](../papers/2025-yang-pseudo-tactile-gripper-state.md) |
 | IROS-S03 | Learning Goal-Directed Object Pushing in Cluttered Scenes With Location-Based Attention | 2025 CSV #727, §6.2 | 사용자 임시 선정 | 제공된 출판본 PDF 7쪽 정독·정리 완료. [상세 노트](../papers/2025-dengler-location-based-attention-pushing.md) |
 | IROS-S04 | Multi-Fingered Dragging of Unknown Objects and Orientations Using Distributed Tactile Information Through Vision-Transformer and LSTM | 2024 CSV #711, §5.2 | 사용자 임시 선정 | 이번 후속 정독용 원문 미제공. 사용자 제공 서지만 기록 |
-| IROS-S05 | Tactile Active Inference Reinforcement Learning for Efficient Robotic Manipulation Skill Acquisition | 2024 CSV #1146, §5.1 | 사용자 임시 선정 | 이번 후속 정독용 원문 미제공. 사용자 제공 서지만 기록 |
+| IROS-S05 | Tactile Active Inference Reinforcement Learning for Efficient Robotic Manipulation Skill Acquisition | 2024 CSV #1146, §5.1 | 사용자 임시 선정 | 제공된 출판본 PDF 6쪽 정독·정리 완료. [상세 노트](../papers/2024-liu-tactile-active-inference-rl.md) |
 
 ### 11.2 사용자 제공 서지
 
-다음 서지는 사용자가 제공한 내용이다. IROS-S01–S03은 각각의 첨부 출판본의 제목·저자·DOI·게재 페이지와 대조했다. IROS-S04–S05 두 편은 이번에 원문이나 출판사 자료를 별도로 검증하지 않았으며, `et al.`을 임의의 저자 목록으로 확장하지 않는다. 사용자 제공 서지의 표기는 유지하며, IROS-S02의 전체 저자 목록은 개별 정독 노트에 기록했다.
+다음 서지는 사용자가 제공한 내용이다. IROS-S01–S03·S05는 각각의 첨부 출판본의 제목·저자·DOI·게재 페이지와 대조했다. IROS-S04는 이번에 원문이나 출판사 자료를 별도로 검증하지 않았으며, `et al.`을 임의의 저자 목록으로 확장하지 않는다. 사용자 제공 서지의 표기는 유지하며, IROS-S02의 전체 저자 목록은 개별 정독 노트에 기록했다.
 
 **IROS-S01 / 사용자 [1]** — Y. Lin, M. Comi, A. Church, D. Zhang, and N. F. Lepora, “Attention for Robot Touch: Tactile Saliency Prediction for Robust Sim-to-Real Tactile Control,” in *2023 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)*, Detroit, MI, USA: IEEE, Oct. 2023, pp. 10806–10812. DOI: [10.1109/IROS55552.2023.10341888](https://doi.org/10.1109/IROS55552.2023.10341888).
 
@@ -266,7 +266,7 @@ Pushing, scooping, dragging, cleaning, retrieval은 세 연도에 걸쳐 반복�
 
 GAN·VAE의 손실식과 대응/합성 데이터 생성법은 본문에 있지만, GAN/VAE의 상세 hyperparameter 및 RL reward·전체 학습 설정은 [2]나 보충자료에 의존하거나 본문에 미제시다. 정적 pose 평가에는 prediction drift calibration이 포함되며, 가까운 distractor를 target 일부로 포함하는 실패도 보고한다. 자세한 수식·사양·실험·Limitation·Future Work는 [개별 정독 노트](../papers/2023-lin-attention-for-robot-touch.md)를 따른다.
 
-이 절의 원문 확인 결과는 IROS-S01에만 적용한다. IROS-S02·S03의 확인 결과는 아래 §11.4–11.5에 별도로 기록한다. 원문 미제공인 IROS-S04–S05의 실제 센서 구성, RL 채택 여부, 관측·행동·성과를 이름이나 임시 선정 사실만으로 확정하지 않는다.
+이 절의 원문 확인 결과는 IROS-S01에만 적용한다. IROS-S02·S03·S05의 확인 결과는 아래 §11.4–11.6에 별도로 기록한다. 원문 미제공인 IROS-S04의 실제 센서 구성, RL 채택 여부, 관측·행동·성과를 이름이나 임시 선정 사실만으로 확정하지 않는다.
 
 
 ### 11.4 IROS-S02에서 원문으로 확인한 사항 — 2026-09-16
@@ -277,7 +277,7 @@ GAN·VAE의 손실식과 대응/합성 데이터 생성법은 본문에 있지�
 
 세 실물 과업의 전체 task 성공률은 90%·90%·80%이며, SR-R 100%는 재개방·파지 재시도에 대한 복구율이지 task 전체 성공률이 아니다. 원문에는 별도 Limitation 절이나 구체적인 Future Work 계획이 없으며, 본문이 인정하는 준비 비용·잔여 sim-to-real 문제와 실험 결과의 범위를 구분해 기록했다. 자세한 메소드·전체 결과·ablation·미명시 사항은 [개별 정독 노트](../papers/2025-yang-pseudo-tactile-gripper-state.md)를 따른다. [첨부 출판본 §V–VI, Table I–IV, PDF pp. 6–8]
 
-이 원문 분류는 사용자의 임시 선정을 삭제하거나 부적합으로 확정하는 결정이 아니다. 최초 제목 선별과 후속 원문 확인을 구분하기 위한 기록이며, IROS-S03의 확인 결과는 아래 §11.5에 별도로 기록한다. IROS-S04–S05의 정독 완료를 뜻하지 않는다.
+이 원문 분류는 사용자의 임시 선정을 삭제하거나 부적합으로 확정하는 결정이 아니다. 최초 제목 선별과 후속 원문 확인을 구분하기 위한 기록이며, IROS-S03의 확인 결과는 아래 §11.5에 별도로 기록한다. IROS-S05의 확인 결과는 §11.6에 기록하며, IROS-S04의 정독 완료를 뜻하지 않는다.
 
 ### 11.5 IROS-S03에서 원문으로 확인한 사항 — 2026-09-16
 
@@ -287,4 +287,16 @@ GAN·VAE의 손실식과 대응/합성 데이터 생성법은 본문에 있지�
 
 단일 장애물 정책의 두 장애물 직접 적용은 성공률 48.1%·충돌률 50.7%로 CNN보다 낮았고, 두 장애물 환경에서 5 × 10^8 steps 추가 학습한 뒤 91.2%·3.54%로 개선되었다. 이 결과를 모든 clutter에 대한 즉시 일반화로 확대하지 않는다. 실물 정량 결과는 MoCap의 세 장면에서 100%·100%·90%이며, dynamic·3Cam은 별도 정성 시연이다. 목표 pose도 실물에서는 고정했다. [첨부 출판본 §IV-D–E, Table II, PDF pp. 5–7]
 
-원문에는 구체적인 Future Work 계획이 없으며, 단일→두 장애물 성능 저하·잔여 실패·실물 평가 범위 등 저자 명시 제약을 따로 정리했다. Grid100 × 140과 patch16 × 16의 가장자리 처리, Table I의 discount/GAE 기호, Table II caption의 포괄 주장과 예외도 기록했다. 자세한 내용은 [개별 정독 노트](../papers/2025-dengler-location-based-attention-pushing.md)를 따른다. 이 분류는 사용자의 임시 선정을 삭제하거나 부적합으로 확정하는 결정이 아니며, IROS-S04–S05는 아직 후속 정독용 원문 미제공 상태다.
+원문에는 구체적인 Future Work 계획이 없으며, 단일→두 장애물 성능 저하·잔여 실패·실물 평가 범위 등 저자 명시 제약을 따로 정리했다. Grid100 × 140과 patch16 × 16의 가장자리 처리, Table I의 discount/GAE 기호, Table II caption의 포괄 주장과 예외도 기록했다. 자세한 내용은 [개별 정독 노트](../papers/2025-dengler-location-based-attention-pushing.md)를 따른다. 이 분류는 사용자의 임시 선정을 삭제하거나 부적합으로 확정하는 결정이 아니며, IROS-S05는 아래 §11.6에서 별도로 다룬다. IROS-S04는 아직 후속 정독용 원문 미제공 상태다.
+
+### 11.6 IROS-S05에서 원문으로 확인한 사항 — 2026-09-16
+
+*Tactile Active Inference Reinforcement Learning for Efficient Robotic Manipulation Skill Acquisition*는 **handcrafted tactile features와 모델 앙상블·reward model을 결합하고, 예상 보상과 state information gain을 평가하는 CEM으로 행동 시퀀스를 계획하는 연구**다. 이 논문의 AIRL은 Active Inference RL이며 inverse RL이나 모방학습이 아니다. SAC는 내부 학습기가 아니라 비교군이다. [첨부 출판본 §II-B·III-A, 식 (1)–(6), Fig. 1, PDF pp. 2–3]
+
+촉각 정적 특징은 Poisson 기반 깊이 영상의 중심과 pixel sum이고, 동적 특징은 Lucas–Kanade optical flow의 축별 histogram entropy다. 이들은 접촉 위치·intensity·변형 추세의 대리 표현이지, N 단위 힘이나 signed shear vector를 복원한 값은 아니다. 시뮬레이션 pushing에서는 optical flow를 쓰지 못해 정적 특징만 사용하며, 현재 로봇·물체의 위치·속도·자세·각속도도 관측한다. 따라서 물체 상태를 모르는 tactile-only pushing으로 분류하지 않는다. [첨부 출판본 §III-B·IV-B, 식 (7)–(10), PDF pp. 3–5]
+
+실물은 KUKA iiwa7·BackYard gripper·GelSight mini로 너트를 돌리는 별도 학습 실험이다. 고정 하강 속도에서 회전 증분만 학습하고, 하강 방향 flow entropy의 음수를 reward로 사용한다. 시뮬레이션 pushing 정책의 실물 이전이나 GAN은 제시하지 않는다. Dense/sparse/실물 reward 식은 있지만 모델 학습 loss·hyperparameter, CEM horizon·후보 수, 센서 해상도·측정 범위·주파수 등은 미명시다. [첨부 출판본 §IV-A–B, 식 (11), Fig. 3–4, PDF pp. 4–5]
+
+Dense 조건에서 Tactile-AIRL과 origin AIRL 모두 약 100 episodes, SAC 약 1,000 episodes라는 본문 결과를 보고한다. 약 15 episodes의 실물 수렴은 제안 방법만의 reward curve이며, 실제 전단력 감소량이나 체결 성공률을 측정한 수치가 아니다. 단순 연결 접촉, 시뮬레이션 flow 부재, 너트 각도 정답·실물 비교 비용의 한계를 기록했고, 구체적 Future Work는 원문에 없다. 상세 수식·결과·미명시 사항은 [개별 정독 노트](../papers/2024-liu-tactile-active-inference-rl.md)를 따른다. [첨부 출판본 §III-B·IV-C·V, Fig. 5–7, PDF pp. 3–6]
+
+IROS-S01–S03·S05 네 편의 첨부 원문 정독이 완료되었고 IROS-S04는 원문 미제공 상태다. 이는 코드 실행·실험 재현이나 프로젝트 적용 판단의 완료를 뜻하지 않으며, 기존 임시 선정과 1–10절의 제목 선별 기록은 유지한다.
