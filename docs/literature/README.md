@@ -55,11 +55,12 @@ R1–R7 전체의 제공·정독 상태는 개별 논문 색인을 따른다. �
 
 ### Binary Tactile·F/T 조사 후속 원문 정독
 
-[2026-09-16 신규 문헌 조사](reviews/2026-09-16_binary-tactile-wrench-rl.md)에 포함된 논문의 첨부 출판본 후속 정독이다. 기존 조사 ID를 유지하며, 새 논문 발굴 건수로 중복 집계하지 않는다.
+[2026-09-16 신규 문헌 조사](reviews/2026-09-16_binary-tactile-wrench-rl.md)에 포함된 논문의 첨부 원문(PDF) 후속 정독이다. 기존 조사 ID를 유지하며, 새 논문 발굴 건수로 중복 집계하지 않는다.
 
 | 정리일 | 조사본 ID | 논문·상세 정리 |
 | --- | --- | --- |
 | 2026-09-17 | B1 | [DexTouch — FSR 16bit·LPF/threshold·비대칭 PPO·관절 제어·보상식·감도/배치/F/T ablation·실물 평가·한계와 향후 연구](papers/2024-lee-dextouch.md) |
+| 2026-09-17 | B3 | [Rotating without Seeing — arXiv v4·FSR 이진화·4프레임 관측·비대칭 PPO·상대 관절 목표·보상식·binary/continuous 실물 비교·한계와 향후 연구](papers/2023-yin-rotating-without-seeing.md) |
 
 ## 폴더와 파일명 규칙
 

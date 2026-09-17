@@ -11,7 +11,7 @@ ID는 [원문 조사](2026-09-16_binary-tactile-wrench-rl.md)의 논문 구분�
 | 조사 ID | 논문 | 상세노트 |
 | --- | --- | --- |
 | [B1](2026-09-16_binary-tactile-wrench-rl.md#b1) | DexTouch | [상세노트](../papers/2024-lee-dextouch.md) |
-| [B3](2026-09-16_binary-tactile-wrench-rl.md#b3) | Rotating without Seeing | 미작성 |
+| [B3](2026-09-16_binary-tactile-wrench-rl.md#b3) | Rotating without Seeing | [상세노트](../papers/2023-yin-rotating-without-seeing.md) |
 | [W1](2026-09-16_binary-tactile-wrench-rl.md#w1) | CHEQ-ing the Box | 미작성 |
 | [W2](2026-09-16_binary-tactile-wrench-rl.md#w2) | SRL-VIC | 미작성 |
 | [W3](2026-09-16_binary-tactile-wrench-rl.md#w3) | High-quality Wiping | 미작성 |

@@ -4,7 +4,7 @@
 
 [조사 그룹](README.md) · [전체 논문](../papers/README.md) · [문헌 색인](../README.md) · [구체적인 입력 처리·실험 제안](2026-09-16_binary-tactile-wrench-design-notes.md) · [현재 연구 범위](../../00_HANDOFF_BRIEF.md)
 
-**상세노트 바로가기:** [B1 · DexTouch](../papers/2024-lee-dextouch.md). 다른 논문의 작성 상태는 아래 [신규 연구 비교표](#3-신규-연구-비교표)에서 확인한다.
+**상세노트 바로가기:** [B1 · DexTouch](../papers/2024-lee-dextouch.md) · [B3 · Rotating without Seeing](../papers/2023-yin-rotating-without-seeing.md). 다른 논문의 작성 상태는 아래 [신규 연구 비교표](#3-신규-연구-비교표)에서 확인한다.
 
 ## 1. 핵심 답변
 
@@ -55,7 +55,7 @@ Force Push, Pushing in the Dark, Tactile Gym 2.0, Bi-Touch, Yang의 tactile push
 | --- | --- | --- | --- | --- | --- |
 | [B1](#b1) | DexTouch, 2024 | 저항식 FSR 16bit | PPO, 실물 Blind seek/grasp/door/valve | LPF·threshold·coverage 비교. Sweeping 실험은 없음 | [상세노트](../papers/2024-lee-dextouch.md) |
 | [B2](#b2) | Koval et al., 2016 | strain-gauge threshold의 접촉 bits | POMDP 계획, 실물 planar pushing | 접촉 이력으로 belief 갱신. **RL 아님**, 알려진 geometry 필요 | 미작성 |
-| [B3](#b3) | Rotating without Seeing, 2023 | 저항식 FSR 16bit | PPO, 실물 in-hand rotation | Binary/continuous 직접 비교·history·dropout. 표현 참고에 한정 | 미작성 |
+| [B3](#b3) | Rotating without Seeing, 2023 | 저항식 FSR 16bit | PPO, 실물 in-hand rotation | Binary/continuous 직접 비교·history·dropout. 표현 참고에 한정 | [상세노트](../papers/2023-yin-rotating-without-seeing.md) |
 | [B4](#b4) | Enhancing Tactile-based RL, 2025 | 시뮬레이션 sparse binary contact | PPO+보조 표현학습, sim-only | bits가 무시되는 조건·이력 학습. 실물 전이 근거 아님 | 미작성 |
 | [W1](#w1) | CHEQ-ing the Box, 2025 | F/T의 **힘 3D만** actor에 입력 | SAC 계열+prior 혼합, 실물 polishing | 수치 concat·필터·motion/impedance. 고정 경로/표면 전제 | 미작성 |
 | [W2](#w2) | SRL-VIC, 2024 | 6D wrench | SAC+recovery, 실물 Blind maze | wrench 기반 motion/stiffness 선택. 자유 물체 이동 목표와 다름 | 미작성 |
@@ -104,6 +104,8 @@ Force Push, Pushing in the Dark, Tactile Gym 2.0, Bi-Touch, Yang의 tactile push
 <a id="b3"></a>
 
 ### B3. Rotating without Seeing: Towards In-hand Dexterity through Touch
+
+**2026-09-17 후속 정독:** 사용자가 제공한 **arXiv:2303.10880v4 (2023-03-27), 15쪽**을 기준으로 [상세 논문 노트](../papers/2023-yin-rotating-without-seeing.md)를 추가했다. 본문·부록의 식 (1)–(9), Table I–VI, 저자 Limitation·Future Work와 미명시 구현 정보를 정리했다. 4프레임 관측의 204차원은 원문의 명시 성분을 합산한 해설로 구분한다.
 
 **Zhao-Heng Yin, Binghao Huang, Yuzhe Qin, Qifeng Chen, Xiaolong Wang. RSS 2023.** [DOI](https://doi.org/10.15607/RSS.2023.XIX.036) · [확인 PDF](https://arxiv.org/pdf/2303.10880) · [저자 프로젝트](https://touchdexterity.github.io/)
 
@@ -275,4 +277,4 @@ Binary 후처리의 hysteresis·debounce, wrench의 하중 보정·프레임 변
 | Enhancing Tactile-based RL | `e51421f53cd0d4b333b05f64adf74fc0f7a52e8ee48c4bbc1c07276a1d0573b2` |
 | Beyond Binary | `f022d8c38412db7bbb55839a936b1a11caa9af4fbf4c3b0ffd701da60731e508` |
 
-본 보고서는 신규 문헌을 두 질문에 맞춰 비교한 조사본이다. 첨부 출판본 전체를 대상으로 기존 `papers/` 형식의 개별 정독 노트를 새로 작성한 작업, 코드 재현, 실제 장비 성능 검증과는 구분한다.
+본 보고서는 신규 문헌을 두 질문에 맞춰 비교한 조사본이다. 첨부 원문(PDF) 전체를 대상으로 기존 `papers/` 형식의 개별 정독 노트를 새로 작성한 작업, 코드 재현, 실제 장비 성능 검증과는 구분한다.

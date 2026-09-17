@@ -4,7 +4,7 @@
 
 이 폴더는 제공된 논문 원문을 읽고 **그 논문 자체의 문제 상황, 관련 연구, 환경·센서, 핵심 메소드, 실험, 저자들이 밝힌 Limitation과 Future Work**를 정리하는 곳이다. 여러 논문을 비교하거나 프로젝트 적용안을 제안하는 `reviews/`와 구분한다. 개별 노트에는 별도 연구 주제에 억지로 대응시킨 설명을 넣지 않는다.
 
-현재 상세 노트는 **13편**이다(2026-09-17). 제목으로 찾거나 아래 조사 그룹으로 이동한다. 각 표의 **ID를 누르면 원래 조사 항목**, 마지막 열을 누르면 상세 노트가 열린다.
+현재 상세 노트는 **14편**이다(2026-09-17). 제목으로 찾거나 아래 조사 그룹으로 이동한다. 각 표의 **ID를 누르면 원래 조사 항목**, 마지막 열을 누르면 상세 노트가 열린다.
 
 [Blind Pushing · R1–R7](#blind-pushing) · [IROS 후속 선정](#iros-selected) · [사용자 발굴](#user-found) · [Binary·F/T 후속 정독](#binary-wrench) · [작성 지침](#paper-guidelines)
 
@@ -54,11 +54,12 @@
 
 ## Binary Tactile·F/T 조사 후속 원문 정독
 
-기준일: 2026-09-17. 아래 ID는 [2026-09-16 신규 문헌 조사](../reviews/2026-09-16_binary-tactile-wrench-rl.md) 안에서 부여한 식별자다. 기존 조사에 포함된 논문을 사용자가 출판본으로 제공한 후속 정독이며, 사용자 별도 발굴 논문으로 중복 등록하지 않는다.
+기준일: 2026-09-17. 아래 ID는 [2026-09-16 신규 문헌 조사](../reviews/2026-09-16_binary-tactile-wrench-rl.md) 안에서 부여한 식별자다. 기존 조사에 포함된 논문을 사용자가 원문 PDF로 제공한 후속 정독이며, 사용자 별도 발굴 논문으로 중복 등록하지 않는다.
 
 | 조사본 ID | 논문 | 원문 정독 상태 | 상세 노트 |
 | --- | --- | --- | --- |
 | [B1](../reviews/2026-09-16_binary-tactile-wrench-rl.md#b1) | DexTouch: Learning to Seek and Manipulate Objects With Tactile Dexterity | 제공된 IEEE 출판본 PDF 8쪽 전체 정독·정리 완료. 식 (1)–(4), Table I–III, Limitation·Future Work와 미명시 사항 포함 | [2024 · Lee et al.](2024-lee-dextouch.md) |
+| [B3](../reviews/2026-09-16_binary-tactile-wrench-rl.md#b3) | Rotating without Seeing: Towards In-hand Dexterity through Touch | 제공된 arXiv:2303.10880v4 (2023-03-27) PDF 15쪽 전체 정독·정리 완료. 식 (1)–(9), Table I–VI, Limitation·Future Work와 미명시 사항 포함 | [2023 · Yin et al.](2023-yin-rotating-without-seeing.md) |
 
 <a id="paper-guidelines"></a>
 
