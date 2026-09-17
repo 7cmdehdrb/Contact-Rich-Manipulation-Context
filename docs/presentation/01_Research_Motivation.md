@@ -44,9 +44,174 @@
 
 ---
 
-# 2. Previous Works — References 
+# 2. Previous Works — References
 
-(내용 개선 필요)
+선행연구는 **시각 제한 상황의 접촉 기반 조작**, **촉각 표현과 Sim-to-Real**, **촉각·Wrench의 상보성**, **불완전한 접촉 관측과 이력 활용**, **접촉·하중을 고려한 학습 목적**으로 구분한다. 각 항목에서 현재 확보한 논문이 제공하는 근거를 정리하고, 연구 주장을 보강하기 위한 추가 문헌조사 방향과 검색 키워드를 제시한다.
+
+## 2.1. 시각 관측이 제한되는 상황에서의 접촉 기반 조작
+
+### 현재 확보한 논문과 근거
+
+| 논문 | 확인된 내용 | 본 연구에서 뒷받침하는 논점 |
+| --- | --- | --- |
+| [**DexTouch: Learning to Seek and Manipulate Objects with Tactile Dexterity**](../literature/papers/2024-lee-dextouch.md) — Lee et al., 2024 | 사전 정보를 제공한 상태에서 Binary 촉각과 고유감각을 이용하여, 실행 중 시각 없이 물체 파지·문 열기·밸브 회전을 수행한다. 시뮬레이션에서 학습한 정책을 실물에 이전했다. | **시각으로 갱신하지 못하는 상호작용 정보를 접촉 피드백으로 보완하는 조작이 가능하다.** |
+| [**Sim-to-Real Model-Based and Model-Free Deep Reinforcement Learning for Tactile Pushing**](../literature/papers/2023-yang-sim-to-real-tactile-pushing.md) — Yang et al., 2023 | 외부 시각 입력 없이 촉각 정보를 이용하여 목표 지향적 물체 밀기를 수행하고, 학습에 포함되지 않은 물체와 외란이 가해지는 상황에 적용했다. | **물체 밀기에서도 촉각 피드백을 이용한 폐루프 조작이 유효하다.** |
+
+### 추가 문헌조사 방향
+
+현재 논문들은 **시각 없이 접촉 피드백으로 조작하는 접근의 유효성**을 뒷받침한다. 추가 조사에서는 로봇 팔·Hand·주변 물체에 의한 가림을 직접 다루고, **초기 시각 관측 이후 접촉 피드백으로 조작을 이어가는 연구**를 확보한다. 특히 시각 정보의 제한이 물체 상태 추정과 행동 보정에 어떤 문제를 발생시키는지 확인한다.
+
+**검색 키워드 및 대표 검색식**
+
+| 조사 목적 | 검색식 |
+| --- | --- |
+| 가림과 부분 관측 아래의 접촉 기반 조작 | `("visual occlusion" OR "partial observability") AND manipulation AND (tactile OR "force feedback")` |
+| 실행 중 시각을 사용하지 않는 밀기 | `("blind manipulation" OR "vision-free manipulation") AND (pushing OR sweeping)` |
+
+---
+
+## 2.2. 촉각 표현의 단순화와 Sim-to-Real Transfer
+
+### 현재 확보한 논문과 근거
+
+| 논문 | 확인된 내용 | 본 연구에서 뒷받침하는 논점 |
+| --- | --- | --- |
+| [**Bi-Touch: Bimanual Tactile Manipulation with Sim-to-Real Deep Reinforcement Learning**](../literature/papers/2023-lin-bi-touch.md) — Lin et al., 2023 | 촉각 영상을 정책에 사용하고, 실물 영상을 시뮬레이션 영상으로 변환하는 Pix2Pix 기반 Real-to-Sim 과정을 구성했다. 실물 재정렬 과정에서는 접촉 동역학 차이에 따른 과도한 압착을 보고했다. | **고해상도 촉각을 사용하는 정책의 전이에는 영상 표현과 접촉 동역학의 정합이 필요하다.** |
+| [**Sim-to-Real Model-Based and Model-Free Deep Reinforcement Learning for Tactile Pushing**](../literature/papers/2023-yang-sim-to-real-tactile-pushing.md) — Yang et al., 2023 | 촉각 영상을 사용하는 경로에서는 GAN 기반 영상 변환을, 접촉 Pose를 사용하는 경로에서는 CNN 기반 접촉 깊이·각도 추정을 적용했다. | **촉각의 표현 방식에 따라 실물 데이터를 정책 입력에 연결하는 전처리·학습 과정이 달라진다.** |
+| [**Rotating without Seeing: Towards In-hand Dexterity through Touch**](../literature/papers/2023-yin-rotating-without-seeing.md) — Yin et al., 2023 | FSR의 연속 출력을 Binary 접촉으로 변환하여 실물 전이를 단순화했다. 실물 비교에서 Binary 입력이 연속값 촉각 입력보다 전반적으로 우수한 성능을 보였다. | **정밀한 힘 값을 직접 정합하는 대신 접촉 여부를 사용하는 것이 실물 전이에 유효하다.** |
+| [**DexTouch**](../literature/papers/2024-lee-dextouch.md) — Lee et al., 2024 | 실물 FSR 출력과 시뮬레이션 접촉력을 각각 임계값으로 Binary화하여 동일한 형태의 접촉 벡터를 구성했다. 저자들은 이를 Sim-to-Real 차이와 전이 절차를 줄이기 위한 설계로 명시했다. | **영역별 Binary 표현을 선택하는 직접적인 설계 근거를 제공한다.** |
+
+### 추가 문헌조사 방향
+
+추가 조사에서는 **촉각 표현을 단순화했을 때 줄어드는 정합 부담과 제거되는 정보**를 함께 다룬 연구를 확보한다. 영상·접촉 Pose·연속 힘·Binary 표현을 비교한 논문을 중심으로, 표현별 전이 방법과 실물 성능 차이를 정리한다.
+
+특히 다음 두 근거를 보강한다. 첫째는 **촉각 신호의 정밀한 재현이 전이에 미치는 영향**이고, 둘째는 **Binary화가 접촉력의 크기·방향 정보를 제거하면서도 접촉 영역 정보를 유지하는 효과**다.
+
+**검색 키워드 및 대표 검색식**
+
+| 조사 목적 | 검색식 |
+| --- | --- |
+| 촉각 영상의 도메인 차이와 정합 방법 | `tactile AND "sim-to-real" AND ("domain adaptation" OR "image translation")` |
+| Binary와 연속 촉각 표현의 비교 | `("binary tactile" OR "binary contact") AND ("continuous force" OR "tactile representation")` |
+| 저차원 접촉 표현과 실물 전이 | `("low-dimensional" OR "contact representation") AND tactile AND "sim-to-real"` |
+
+**이 문헌군은 Contribution 1의 출발점인 ‘정밀한 촉각 분포에 대한 의존도를 낮추는 접촉 표현’의 근거로 사용한다.**
+
+---
+
+## 2.3. 하중 정보의 보완과 촉각–Wrench의 상보성
+
+### 현재 확보한 논문과 근거
+
+| 논문 | 확인된 내용 | 본 연구에서 뒷받침하는 논점 |
+| --- | --- | --- |
+| [**Force Push: Robust Single-Point Pushing with Force Feedback**](../literature/papers/2024-heins-force-push.md) — Heins and Schoellig, 2024 | 물체의 현재 Pose와 정확한 물성 모델 없이 접촉력 피드백으로 밀기를 수행한다. 힘의 방향으로 조향하고, 크기에 따라 접촉 회복과 과부하 시 속도 보정을 수행한다. | **힘의 크기와 방향은 접촉 여부를 넘어 행동을 조절하는 데 사용되는 정보다.** |
+| [**Gentle Object Retraction in Dense Clutter Using Multimodal Force Sensing and Imitation Learning**](../literature/papers/2026-brouwer-gentle-object-retraction.md) — Brouwer et al. | 분포형 촉각과 관절 토크 기반 추정 Wrench를 정책에 함께 사용한다. 저자들은 Wrench가 여러 접촉의 개별 하중을 구분하지 못하고, 촉각은 센서가 덮지 못한 접촉을 놓친다는 차이를 설명한다. | **촉각의 국소 접촉 정보와 Wrench의 전체 하중 정보는 서로 다른 관측 한계를 보완한다.** |
+
+### 추가 문헌조사 방향
+
+현재 확보한 연구는 **연속적인 힘 피드백의 유용성**과 **촉각·Wrench의 역할 차이**를 뒷받침한다. 추가 조사에서는 이 역할 분담을 **Binary 또는 희소 촉각과 손목 F/T의 결합**으로 구체화한 연구를 우선 확보한다.
+
+조사할 핵심은 **촉각에서 잃는 하중 정보를 손목 Wrench가 어떻게 보완하는가**, 그리고 **접촉 영역 정보가 없는 Wrench-only 접근에 촉각이 어떤 정보를 추가하는가**이다. 촉각과 힘 센서를 단순히 함께 사용한 사례뿐 아니라, 두 센서가 제공하는 정보의 차이를 분석한 연구를 찾는다.
+
+**검색 키워드 및 대표 검색식**
+
+| 조사 목적 | 검색식 |
+| --- | --- |
+| Binary·희소 촉각과 손목 힘 센서의 결합 | `("binary tactile" OR "sparse tactile") AND ("wrist force" OR "force torque sensor" OR wrench)` |
+| 국소 접촉 정보와 전체 하중 정보의 역할 분담 | `tactile AND wrench AND ("sensor fusion" OR complementary OR "contact estimation")` |
+
+**이 문헌군은 Contribution 1의 핵심인 ‘접촉 정보와 하중 정보의 상보적 표현’에 직접 연결한다.**
+
+---
+
+## 2.4. 불완전한 접촉 관측과 상호작용 이력의 필요성
+
+### 현재 확보한 논문과 근거
+
+| 연구 논점 | 현재 확보한 근거 | 추가로 확보할 근거 |
+| --- | --- | --- |
+| **접촉 감도와 센서 배치의 영향** | [**DexTouch**](../literature/papers/2024-lee-dextouch.md)는 촉각 감도와 센서 위치를 구분하여 비교했다. 감도가 낮아지면 접촉 검출에 더 큰 힘이 필요하며, 그 과정에서 물체가 떨어지거나 튀어나가는 현상을 보고했다. | 감지 임계값, 약한 접촉, 센서 간 공간적 공백이 접촉 인식에 미치는 영향을 분석한 연구 |
+| **촉각 무출력과 실제 무접촉의 차이** | [**Gentle Object Retraction**](../literature/papers/2026-brouwer-gentle-object-retraction.md)은 촉각 커버리지 밖의 접촉을 놓치지 않기 위해 전체 하중 정보가 필요하다고 설명한다. [**Rotating without Seeing**](../literature/papers/2023-yin-rotating-without-seeing.md)은 학습 중 활성 센서 출력을 일부 제거하고 신호 지연을 반영한다. | 실제 비센서 부위 접촉, 약한 접촉, 신호 누락을 구분하거나 다른 센서로 보완한 연구 |
+| **현재 관측만으로 부족한 상호작용 정보** | [**Rotating without Seeing**](../literature/papers/2023-yin-rotating-without-seeing.md)은 한 시점의 상태만으로 제어에 필요한 정보가 충분하지 않다는 이유로 촉각·관절 상태·이전 목표의 이력을 입력한다. [**FORGE**](./01_Research_Motivation.md#ref-forge)는 부분 관측 문제를 다루기 위해 순환 정책을 사용한다. | 행동–로봇 상태–힘 이력으로 접촉 상태나 물성에 따른 반응 차이를 파악하는 연구 |
+
+### 추가 문헌조사 방향
+
+이 항목은 **촉각 신호를 획득하는 것과 실제 접촉 상태를 파악하는 것의 차이**를 뒷받침하기 위한 조사다.
+
+센서가 없는 위치에서 발생하는 접촉, 감지 임계값보다 작은 접촉, 통신·센서 출력의 일시적 누락을 구분하여 문헌을 찾는다. 이력 관련 연구에서는 특정 네트워크 구조보다, **현재값만 사용할 때 부족한 정보가 무엇이며 과거 행동과 센서 반응이 무엇을 보완하는지**에 집중한다.
+
+**검색 키워드 및 대표 검색식**
+
+| 조사 목적 | 검색식 |
+| --- | --- |
+| 희소 센서 배치와 접촉 관측 공백 | `("sparse tactile" OR "tactile coverage") AND ("contact detection" OR "contact estimation")` |
+| 촉각의 감도와 관측 누락 | `tactile AND ("detection threshold" OR "sensor dropout" OR "missing observations") AND manipulation` |
+| 행동·힘 이력을 이용한 상호작용 해석 | `("force history" OR "tactile history") AND ("contact state" OR "dynamics adaptation" OR manipulation)` |
+
+---
+
+## 2.5. 접촉 지속성과 하중 조절을 고려한 학습 목적
+
+### 현재 확보한 논문과 근거
+
+| 논문 | 확인된 내용 | 본 연구에서 뒷받침하는 논점 |
+| --- | --- | --- |
+| [**FORGE: Force-Guided Exploration for Robust Contact-Rich Manipulation under Uncertainty**](./01_Research_Motivation.md#ref-forge) — Noseworthy et al. | 힘 관측과 과도한 힘에 대한 페널티를 강화학습에 포함하고, 각각을 제거한 비교를 수행했다. 힘 관측과 보상 설계가 접촉 조작 성능과 하중 조절에 기여했다. | **힘을 관측하는 것과 바람직한 힘 사용을 학습시키는 것은 구분하여 설계해야 한다.** |
+| [**Learning Gentle Object Manipulation with Curiosity-Driven Deep Reinforcement Learning**](./01_Research_Motivation.md#ref-learning-gentle) — Huang et al., 2019 | 과도한 충격에 대한 페널티만 추가하면 모든 접촉을 회피하는 정책으로 학습이 정체되는 문제를 보고하고, 접촉을 시도하면서도 부드럽게 조작하도록 학습 신호를 구성했다. | **하중 감소만을 목표로 삼지 않고, 필요한 접촉과 조작 수행을 함께 고려해야 한다.** |
+| [**Bi-Touch**](../literature/papers/2023-lin-bi-touch.md) — Lin et al., 2023 | 목표 위치·방향 외에 접촉 위치와 자세를 고려하는 보상을 사용했다. 실물에서 발생한 과도한 압착에 대응하여 접촉 깊이에 대한 페널티와 접촉 모델 등을 조정했다. | **목표 상태의 달성과 접촉 과정의 안정성을 함께 학습 목표에 반영할 필요가 있다.** |
+| [**Gentle Object Retraction**](../literature/papers/2026-brouwer-gentle-object-retraction.md) — Brouwer et al. | Wrench와 촉각 기반 충격량 한계를 초과한 시연을 종료하고 다시 수집하여, 과도한 하중을 억제하는 시연으로 모방학습을 수행했다. | **하중을 고려하는 행동을 학습 과정에 반영한 사례다. 이 연구에서는 보상함수가 아니라 시연 선별을 통해 반영한다.** |
+
+### 추가 문헌조사 방향
+
+추가 조사에서는 **접촉을 유지하면서 목표 조작을 수행하고, 동시에 과도한 하중을 억제하는 강화학습 연구**를 확보한다.
+
+특히 **고정된 목표 힘을 추종하는 Force Tracking**, **최대 허용 힘을 제한하는 Force Limitation**, **과도한 충격과 불필요한 접촉 소실을 억제하는 Interaction-aware Learning**을 구분하여 조사한다. 이를 통해 본 연구의 보상 설계를 단순한 힘 최소화가 아니라 **필요한 접촉과 적절한 하중 사용을 함께 고려하는 학습 목적**으로 정리한다.
+
+**검색 키워드 및 대표 검색식**
+
+| 조사 목적 | 검색식 |
+| --- | --- |
+| 힘을 고려하는 강화학습 | `("force-aware" OR "force-guided" OR "gentle manipulation") AND "reinforcement learning"` |
+| 접촉 유지·손실을 고려하는 학습 목적 | `("contact maintenance" OR "contact loss" OR "sustained contact") AND ("reinforcement learning" OR "reward shaping")` |
+| 과도한 힘·충격에 대한 학습 설계 | `("contact force" OR wrench) AND ("force penalty" OR "impact penalty" OR "force constraint") AND manipulation` |
+
+**이 문헌군은 Contribution 2의 ‘접촉 지속성과 하중 조절을 고려한 강화학습 보상 설계’에 직접 연결한다.**
+
+---
+
+## 2.6. 추가 문헌조사의 우선순위
+
+추가 조사는 논문 수를 늘리는 것보다 **현재 연구 논리에서 직접적인 근거를 보강해야 하는 연결 관계**에 집중한다.
+
+| 우선 조사 항목 | 확보할 근거 | 연결되는 내용 |
+| --- | --- | --- |
+| **Binary 촉각과 연속 Wrench의 결합** | 저차원 촉각의 하중 정보 손실을 전체 힘·토크 정보로 보완한 방법 | Contribution 1 |
+| **촉각 관측 공백과 다른 센서의 보완** | 촉각 무출력과 실제 무접촉을 구분하는 센싱 근거 | Motivation 1.3 |
+| **접촉 유지와 과도한 하중 억제의 양립** | 접촉 회피로 수렴하지 않으면서 하중을 조절하는 학습 목적 | Contribution 2 |
+| **행동–로봇 상태–하중 이력의 활용** | 현재 접촉 여부만으로 부족한 상호작용 정보를 시간적 맥락으로 보완한 근거 | Motivation 1.3 |
+
+기존 핵심 논문의 참고문헌과 후속 인용 논문을 함께 추적하고, **2024년 이후 연구를 중심으로 보완하되 센싱·보상 설계의 직접적인 근거가 되는 이전 연구도 포함한다.** 이 과정에서 각 논문이 제공하는 근거를 **관측 정보**, **실물 전이**, **센서 상보성**, **학습 목적**으로 구분하여 정리한다.
+
+### 상세 노트 미작성 논문의 원문 안내
+
+논문명은 저장소의 기존 상세 노트로 상대경로 연결한다. 별도 상세 노트가 없는 다음 두 논문은 이 문서의 원문 안내 항목으로 연결한다. 아래 항목은 서지·원문 안내이며 개별 논문 정독 노트를 대체하지 않는다.
+
+<a id="ref-forge"></a>
+
+**FORGE: Force-Guided Exploration for Robust Contact-Rich Manipulation under Uncertainty** — Noseworthy et al.
+
+[원문: arXiv:2408.04587v2](https://arxiv.org/html/2408.04587v2) · **상세 노트 미작성**
+
+이 문서에서는 부분 관측을 다루는 순환 정책, 힘 관측, 과도한 힘에 대한 페널티의 근거로 인용한다.
+
+<a id="ref-learning-gentle"></a>
+
+**Learning Gentle Object Manipulation with Curiosity-Driven Deep Reinforcement Learning** — Huang et al., 2019.
+
+[원문: arXiv:1903.08542](https://arxiv.org/abs/1903.08542) · **상세 노트 미작성**
+
+이 문서에서는 충격 페널티만으로 인한 접촉 회피 문제와, 필요한 접촉 및 조작 수행을 함께 고려하는 학습 목적의 근거로 인용한다.
 
 ---
 
