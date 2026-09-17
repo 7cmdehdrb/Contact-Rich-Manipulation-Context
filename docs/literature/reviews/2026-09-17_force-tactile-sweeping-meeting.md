@@ -50,67 +50,174 @@
 **F/T 관련 추가 조사는 필요하다.** Contact 기반 Manipulation으로 조사한 연구들에서는 대부분 Tactile 정보를 활용하는 경우가 많아, Wrench 정보를 다루는 경우를 확인하지 못했다. 
 **Wrench로 접촉 손실·미끄러짐·물체 진행을 어떻게 판단하는지**, 그리고 **미지 질량·마찰에 어떻게 적응하는지**를 우선 보완할 예정이다.
 
-## 3. RL 결합 — 접촉 이력과 동역학 보조학습 검토
+## 3. RL 결합과 Reward — Task 중심의 보상 설계
 
 ### 선행연구에서는 어떻게 학습에 반영하는가?
 
-| 연구 | RL에 연결하는 방법 | 이번 연구와의 연결 |
+아래 세 연구에서는 **촉각을 정책의 관측으로 제공하고, Reward는 Task의 목표 달성과 필요한 접촉 자세를 중심으로 구성**한다. 촉각 신호를 많이 발생시키거나 특정 Wrench를 만드는 것 자체가 주목적은 아니다.
+
+| 연구 | 정책에 제공하는 정보 | Reward의 중심 |
 | --- | --- | --- |
-| **[DexTouch](../papers/2024-lee-dextouch.md)** | Binary Tactile과 로봇 상태를 MLP 기반 PPO에 입력 | 센서 결합 정책의 기본 비교 기준 |
-| **[Rotating without Seeing](../papers/2023-yin-rotating-without-seeing.md)** | 현재·과거의 접촉, 관절 상태, 이전 관절 목표를 함께 입력 | 순간 접촉값이 담지 못하는 시간적 변화를 활용 |
-| **Enhancing Tactile-based Reinforcement Learning for Robotic Control**, Miller et al., 2025 (확인 필요), §3·§5 | 촉각·고유감각·행동 이력을 Encoder로 표현하고, **촉각 재구성 또는 행동 조건부 Forward Dynamics 보조학습**을 PPO와 함께 수행 | 센서를 관측에 추가하는 데서 나아가, 접촉 정보를 표현에 보존하고 제어에 활용하도록 학습 목적을 설계 |
+| [DexTouch](../papers/2024-lee-dextouch.md) | Binary Tactile, 로봇 상태, 초기 물체 범위·과업 목표 | 접근 → 들어 올리기·운반 / 손잡이 회전·문 열기 |
+| [Bi-Touch](../papers/2023-lin-bi-touch.md) | 양쪽 Tactile Image와 고유감각·목표 정보 | 물체 위치·방향, 접촉면에 대한 TCP 정렬, 접촉 위치 |
+| [Tactile Pushing](../papers/2023-yang-sim-to-real-tactile-pushing.md) | Tactile Image 또는 추정한 접촉면 Pose와 목표 정보 | 목표 방향·거리, Pusher와 접촉면의 정렬 |
 
-Miller 등(확인 필요)의 연구에서는 Binary 촉각을 추가했을 때의 이득이 과업에 따라 달랐으며, 재구성·동역학 보조학습이 RL-only보다 유리한 결과를 보였다. 다만 **실물 검증은 수행하지 않았다**. (§5–7)
+**위치·방향·정렬 오차는 Reward 계산 항이며, 모두 정책 관측에 직접 들어간다는 뜻은 아니다.** 특히 영상 기반 정책에서는 촉각 특징과 행동이 Task 성과에 어떤 영향을 주는지를 RL 학습으로 연결한다.
 
-### 적용 검토안과 근거
+### 3.1. [DexTouch](../papers/2024-lee-dextouch.md) — 접근 보상 + Gate를 둔 Task-specific 보상
 
-**검토안: Miller 등(확인 필요)의 ‘관측·행동 이력 Encoder + Forward Dynamics 보조학습’ 적용.**
+Sweep은 아니지만, **Grasping·운반과 Door Opening에서 접근 보상과 과업별 실행 보상을 함께 사용**한다. 관절속도의 L1 Penalty도 추가한다. Gate는 보상 항의 활성 조건이며, 별도 정책으로 전환하는 규칙은 아니다. 원문 §IV-B, 식 (1)–(3).
 
-촉각과 Wrench의 최근 이력, 로봇 상태, 행동을 함께 표현하고, **행동 이후의 접촉 상태 변화를 예측하는 데 유용한 잠재표현**을 학습하여 Sweeping 정책에 입력하는 구성을 검토한다. 원논문의 예측 대상은 잠재표현이며, 여기에 손목 Wrench를 포함하는 것은 우리 과업에서 검토할 확장이다.
+**공통 접근 보상 — 손끝이 대상에 더 가까이 도달했을 때 보상**
 
-이 방법을 검토하는 이유는 **같은 순간 힘이라도 최근에 어떻게 움직였고 어느 접촉 영역이 변했는지에 따라 필요한 행동이 달라질 수 있기 때문**이다. 예를 들어 하중 증가와 함께 접촉 영역이 이동하는 경우, 하중만 증가하고 접촉 분포는 유지되는 경우를 구분할 단서가 이력에 있다. 이것이 곧 마찰·충돌 원인의 완전한 식별을 뜻하지는 않는다.
+$$
+r_{\mathrm{reach}}
+=\sum_{\mathrm{finger}}\alpha_{\mathrm{reach}}
+\max(d_{\mathrm{closest}}-d,0).
+$$
 
-효과 확인 방법은 **동일한 센서·이력·Encoder를 사용하는 PPO에서 보조학습의 유무를 비교**하는 안이다. 이를 통해 ‘이력을 더 넣어서 좋아진 것’과 ‘같은 정보를 더 유용하게 학습한 것’을 구분한다.
+$d$는 손끝–대상 거리, $d_{\mathrm{closest}}$는 에피소드에서 달성한 최소거리 기록이다. **직전 step보다 가까워지는 것보다 엄격하게, 기존 최소거리 기록을 갱신할 때 보상**한다.
 
-**연구에서 확인할 핵심:** 제한된 촉각과 Wrench의 시간적 관계를 학습하면, 접촉 위치 변화·접촉 손실 상황에서 단순 결합 정책보다 실제 물체 이동을 개선할 수 있는가?
+**Grasping·운반 — 들어 올린 뒤 목표점으로 이동**
 
-## 4. Reward — 물체 진행 중심의 보상 구성 검토
+$$
+\begin{aligned}
+r_{\mathrm{execute}}^{\mathrm{grasp}}
+={}&(1-\mathbf{1}_{\mathrm{picked}})\alpha_{\mathrm{pick}}h_{\mathrm{obj}}
++r_{\mathrm{picked}}\\
+&+\mathbf{1}_{\mathrm{picked}}\alpha_{\mathrm{goal}}
+\max(\tilde d_{\mathrm{closest}}-\tilde d,0).
+\end{aligned}
+$$
 
-### 선행연구에서는 어떻게 구성하는가?
+| 항 | 의미 |
+| --- | --- |
+| $(1-\mathbf{1}_{\mathrm{picked}})\alpha_{\mathrm{pick}}h_{\mathrm{obj}}$ | 물체를 들어 올리기 전에는 테이블 기준 높이를 보상 |
+| $\mathbf{1}_{\mathrm{picked}}$ | 물체 높이 **10 cm 초과** 시 활성화되는 Gate |
+| $\mathbf{1}_{\mathrm{picked}}\alpha_{\mathrm{goal}}\max(\tilde d_{\mathrm{closest}}-\tilde d,0)$ | 들어 올린 후에는 물체–목표점 거리 $\tilde d$의 최소기록 갱신을 보상 |
+| $r_{\mathrm{picked}}$ | 들어 올리기 조건 달성 Bonus |
 
-[DexTouch](../papers/2024-lee-dextouch.md)는 식(1–4), [Yang의 Tactile Pushing](../papers/2023-yang-sim-to-real-tactile-pushing.md)은 식(4), [Bi-Touch](../papers/2023-lin-bi-touch.md)는 식(1–4), CHEQ(확인 필요)는 본문·부록에 보상 항을 공개한다. 이들에서 **과업 진행과 조작 품질을 구분하는 구성**을 참고할 수 있다.
+**Door Opening — 손잡이를 돌린 뒤 문을 열기**
 
-| 연구 | 보상의 구성·설계 원리 | 적용 후보 |
-| --- | --- | --- |
-| **[DexTouch](../papers/2024-lee-dextouch.md) / [Yang의 Tactile Pushing](../papers/2023-yang-sim-to-real-tactile-pushing.md)** | 과업 진행 또는 목표 방향·거리 관련 항을 사용 | **물체의 목표 이동**을 주목표로 설정 |
-| **[Bi-Touch](../papers/2023-lin-bi-touch.md)**, §III-C | 목표 위치·방향과 접촉 정렬·유지 관련 항을 구분 | **목표 달성과 미는 자세·접촉의 품질을 분리**하여 보상 |
-| **High-quality Wiping(확인 필요)**, 2025, §III | 접촉·힘 보상을 매 시점 지급할 때 생기는 정체 문제를 다루고, 새로운 Checkpoint에 도달할 때 제한적으로 지급 | **접촉 유지 보상이 실제 진행을 대체하지 않도록 지급 조건을 설계** |
+$$
+\begin{aligned}
+r_{\mathrm{execute}}^{\mathrm{door}}
+={}&(1-\mathbf{1}_{\mathrm{rotated}})\alpha_{\mathrm{rot}}
+\max(\phi-\phi_{\max},0)\\
+&+\mathbf{1}_{\mathrm{rotated}}\alpha_{\mathrm{open}}
+\max(\psi-\psi_{\max},0)
++r_{\mathrm{rotated}}+r_{\mathrm{opened}}.
+\end{aligned}
+$$
 
-### 적용 검토안과 근거
+$\phi$는 손잡이 각도, $\psi$는 문 열림 각도이며, 아래첨자 $\max$는 각각의 최대기록이다. 손잡이를 **약 60°** 돌리기 전에는 손잡이 회전을, 이후에는 문 열림을 보상한다. 두 Bonus는 손잡이 회전 조건과 **문 약 50° 열림**에 대응한다. $\alpha$와 Bonus의 구체적인 수치는 원문에 명시되지 않는다.
 
-**검토안: [Bi-Touch](../papers/2023-lin-bi-touch.md)의 목표·접촉 보조항 구분과 High-quality Wiping(확인 필요)의 진행 연계 원리를 참고.** Sweeping에 적용할 보상 후보는 다음과 같다.
+**특징은 Privileged Information의 적극적인 활용이다.** Critic에는 물체 Pose·속도·물성·거리·과업 상태를 추가하고, Reward는 물체 거리·높이·각도 등 시뮬레이션 상태로 계산한다. Actor에는 실행 가능한 로봇 상태·촉각·과업 사전정보를 제공하며, **현재 물체의 GT Pose를 계속 입력하지 않는다.** 원문 §IV-A, §IV-C.
 
-| 역할 | 우리 과업의 보상 후보 | 이유 |
-| --- | --- | --- |
-| **Main Reward** | 대상 물체의 목표 오차 감소·목표 도달 | Hand가 아니라 물체가 지정한 위치로 이동하는 것이 과업의 목적 |
-| **정렬·경로 보조** | 미는 EEF 자세와 목표 경로의 과도한 이탈 억제 | 접촉이 유지되는 자세를 유도하면서 필요한 보정 운동은 허용 |
-| **하중 제한** | 허용 범위를 넘는 힘·모멘트에 Penalty | 물체 진행을 위해 필요한 하중을 허용하면서 과도한 밀기를 억제 |
-| **접촉 보조** | 필요할 경우 새로운 물체 진행 구간과 연결해 접촉 품질 보상 | 접촉만 유지하며 멈춰 있는 정책을 방지 |
+### 3.2. [Bi-Touch](../papers/2023-lin-bi-touch.md) — 위치·방향·접촉 자세를 Task별로 조합
 
-정렬·경로는 EEF와 물체를 구분한다. **[Force Push](../papers/2024-heins-force-push.md)의 경로 보정은 푸셔 기준점의 오차를 이용하며, 물체 중심을 추적하는 방식이 아니다.** 우리 학습에서 물체 중심 경로를 보상한다면 Simulation 정답으로 계산하는 별도 설계다. 이 정답은 Reward·평가에만 사용하고 실행 정책에는 넣지 않는다.
+양쪽 촉각 영상을 함께 받는 PPO 정책에, 과업별 위치·방향·접촉 기하 보상을 제공한다. **영상 특징에서 어떤 접촉 상태가 좋은 행동으로 이어지는지는 정책이 학습**한다. 아래는 원문 §III-C, 식 (1)–(4)의 구성이다.
 
-Clutter 충돌 회피보다 **기본 Sweeping의 진행·접촉·하중 조절을 우선 검토**한다. 상위 판단기가 조작 가능한 시작 조건을 제공한다는 전제다. 이는 전체 경로의 무충돌을 보장한다는 뜻은 아니다.
+$p$는 위치, $\theta$는 평면 방향각, $o$는 물체, $g$는 목표, $e_i$는 $i$번째 TCP다. $S$는 Cosine Distance이며, $w_j>0$의 구체적인 수치는 원문에 명시되지 않는다.
 
-## 5. 적용 후보와 검토할 질문
+**Bi-pushing — 목표 위치·방향으로 밀면서 접촉면에 수직 정렬**
+
+$$
+R_t^{\mathrm{BP}}
+=-w_1\lVert p_t^g-p_t^o\rVert_2
+-w_2S(\theta_t^g,\theta_t^o)
+-w_3\sum_{i=1}^{2}S(\theta_t^{e_i},\theta_t^o).
+$$
+
+**Bi-reorienting — 중심 위치를 유지하면서 목표 방향으로 회전**
+
+$$
+\begin{aligned}
+R_t^{\mathrm{BR}}
+={}&-w_1\lVert p_0^o-p_t^o\rVert_2
+-w_2S(\theta^g,\theta_t^o)\\
+&-w_3\sum_{i=1}^{2}
+S\!\left(\theta_t^{e_i},(-1)^i(\pi/2+\theta_t^o)\right)\\
+&-w_4\sum_{i=1}^{2}
+\lVert p_{\mathrm{ctrl}_i}^{o}-p_t^{e_i}\rVert_2.
+\end{aligned}
+$$
+
+$p_{\mathrm{ctrl}_i}^{o}$는 원하는 접촉 위치다. **중심 유지 + 목표 회전 + 접촉면 정렬 + 접촉 위치 유지**로 구성한다. 여기서 수직 정렬은 세계 좌표계의 수직축이 아니라 **접촉면 법선 방향 정렬**이다. 각도의 좌우 부호는 원문 표기를 따른다.
+
+**Bi-gathering — 두 물체 사이의 거리를 줄이면서 접촉 유지**
+
+$$
+\begin{aligned}
+R_t^{\mathrm{BG}}
+={}&-w_1\lVert p_t^{o_1}-p_t^{o_2}\rVert_2
+-w_2\sum_{i=1}^{2}S(\theta_t^{e_i},\theta_t^{o_i})\\
+&-w_3\sum_{i=1}^{2}
+\lVert p_{\mathrm{ctrl}}^{o_i}-p_t^{e_i}\rVert_2.
+\end{aligned}
+$$
+
+여기에 GUM(Goal-update Mechanism)을 적용해 **중간 목표까지의 거리와 Target Line 방향 정렬**을 추가한다.
+
+$$
+\begin{aligned}
+R_t^{\mathrm{BG\text{-}GUM}}
+={}&R_t^{\mathrm{BG}}
+-w_4\sum_{i=1}^{N}\lVert p_t^{g_i}-p_t^{o_i}\rVert_2\\
+&-w_5\sum_{i=1}^{N}S(\theta_t^{o_i},(-1)^i\theta_t^c).
+\end{aligned}
+$$
+
+$p_t^{g_i}$는 중간 목표이며, $\theta_t^c$는 본문의 설명상 Target Line 방향이다. 원문의 $N$은 두 물체에 대한 합산 문맥이며, 중간 목표 후보 개수와 구분한다.
+
+**세 과업 모두 목표 상태와 접촉 기하를 보상으로 정한다.** 다만 회전 과업에서는 실물의 과도한 압착을 줄이기 위해 큰 Contact Depth에 대한 Penalty도 강화했다. 따라서 ‘위치·방향만 사용하고 접촉을 전혀 유도하지 않는다’고 해석하는 것은 부정확하다.
+
+### 3.3. [Tactile Pushing](../papers/2023-yang-sim-to-real-tactile-pushing.md) — 멀 때는 방향, 가까울 때는 거리
+
+Model-free SAC와 Model-based PETS/MPC를 비교하며, 다음 보상으로 **목표 진행과 접촉면 정렬**을 평가한다. 원문 §III-B-3, 식 (4).
+
+$$
+r=
+\begin{cases}
+-\bigl(g(o_\theta,g_\theta)+g(p_\theta,o_\theta)\bigr),
+&\lVert o_{xy}-g_{xy}\rVert>d,\\
+-\bigl(f(o_{xy},g_{xy})+g(p_\theta,o_\theta)\bigr),
+&\lVert o_{xy}-g_{xy}\rVert\le d.
+\end{cases}
+$$
+
+| 항 | 의미 |
+| --- | --- |
+| $f(o_{xy},g_{xy})$ | **물체 접촉 위치**와 목표 사이의 Euclidean Distance |
+| $g(o_\theta,g_\theta)$ | 접촉면 방향과 목표를 향하는 방향의 Cosine Distance |
+| $g(p_\theta,o_\theta)$ | Pusher가 접촉면에 수직으로 밀도록 유도하는 정렬 오차 |
+| $d=100\,\mathrm{mm}$ | 방향 보상에서 거리 보상으로 바꾸는 경계 |
+
+먼 구간에서는 고정 전진 동작에 **목표 방향 정렬**을 결합하고, 가까운 구간에서는 **음의 목표거리**를 보상으로 사용한다. 두 구간 모두 접촉면 정렬 항을 유지한다. 힘 크기나 6축 Wrench 추종 항은 없다. 목표의 기준은 물체 중심이 아닌 접촉 위치다.
+
+### 적용 검토안
+
+요약하면, 조사한 세 연구는 **Task를 달성한 상태와 필요한 접촉 자세를 Reward로 정의하고, 촉각에서 행동으로 이어지는 관계를 학습**한다. 촉각·Wrench 활용만을 위한 별도 보조학습이 필수라는 근거로 읽을 필요는 없다.
+
+**검토안: Sweeping의 목표 방향·거리 달성을 Main Reward로 두고, 필요한 미는 자세·접촉 정렬을 Sub Reward로 구성.**
+
+- **Task 목표:** 대상 물체의 목표 오차 감소와 목표 도달을 보상하는 방향.
+- **접촉 자세:** 목표 진행을 유지하는 범위에서 EEF 자세·경로의 과도한 이탈을 억제하는 방향.
+- **학습 정보:** 물체 GT는 Reward와 필요시 Critic에 활용하고, 실행 정책에는 초기 정보·로봇 상태·촉각·F/T를 제공하는 구성.
+- **F/T 반영:** 성분별 힘 보상과 하중 제한은 추가 문헌 확인 후 검토. 위 세 연구에서 6축 Wrench 보상 설계까지 검증한 것은 아님.
+
+Task 중심 Reward를 사용하더라도 **동일한 보상 조건에서 촉각·F/T의 유무를 비교**하면, 각 센서가 목표 이동과 접촉 유지에 기여하는지를 확인할 수 있다.
+
+## 4. 적용 후보와 검토할 질문
 
 | 항목 | 적용 후보 | 우리 연구에서 검토할 질문 |
 | --- | --- | --- |
 | **촉각 표현** | [DexTouch](../papers/2024-lee-dextouch.md)의 영역별 Binary | 17개 영역의 접촉 분포만으로 충분한가? Scalar를 보존해야 하는 조건은 무엇인가? |
-| **F/T 활용** | SRL-VIC(확인 필요)의 Wrench6 + [Force Push](../papers/2024-heins-force-push.md)의 방향·크기 활용 | 촉각과 전체 하중 정보가 서로의 모호성을 보완하는가? |
-| **학습 방법** | Miller 등(확인 필요)의 이력 Encoder·Forward Dynamics 보조학습 | 같은 입력의 PPO보다 접촉 변화에 적응하여 물체 이동을 개선하는가? |
-| **보상 구성** | [Bi-Touch](../papers/2023-lin-bi-touch.md)의 목표·정렬 분리 + High-quality Wiping(확인 필요)의 진행 연계 | 자세·접촉 점수만 얻는 정체를 막고 실제 목표 이동을 유도하는가? |
+| **F/T 활용** | 6축 Wrench 관측과 방향·크기별 Reward 검토 | 어떤 힘 성분이 목표 진행과 안정적인 접촉에 유효한가? |
+| **학습 정보** | [DexTouch](../papers/2024-lee-dextouch.md)의 Actor–Privileged Critic 구분 | 실행 중 물체 GT 없이도 센서 정보로 목표 조작이 가능한가? |
+| **보상 구성** | [Bi-Touch](../papers/2023-lin-bi-touch.md)·[Tactile Pushing](../papers/2023-yang-sim-to-real-tactile-pushing.md)의 Task 목표와 접촉 정렬 | 목표 이동을 우선하면서 필요한 미는 자세를 유도할 수 있는가? |
 
-**논의할 구성안: 영역별 Binary 접촉 + 연속 Wrench + 행동·관측 이력의 표현학습.** 센서 결합 자체를 기여로 두기보다, 접촉 위치와 센싱 조건이 달라질 때 **어떤 정보가 물체의 진행·접촉 유지에 필요하며, 그 정보를 정책이 어떻게 활용하게 할 것인지**에 초점을 둔다. F/T를 이용한 자유 물체 조작의 선행연구는 추가 확인이 필요하다.
+**논의할 구성안: 영역별 Binary 접촉 + 연속 Wrench 관측 + Task 중심 Reward.** 같은 보상 조건에서 센서별 기여를 비교하고, F/T를 이용한 자유 물체 조작의 보상 설계는 추가 확인할 예정이다.
 
 ---
 
