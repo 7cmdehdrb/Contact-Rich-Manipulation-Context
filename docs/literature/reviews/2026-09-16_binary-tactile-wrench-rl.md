@@ -65,6 +65,8 @@ Force Push, Pushing in the Dark, Tactile Gym 2.0, Bi-Touch, Yang의 tactile push
 
 ### B1. DexTouch: Learning to Seek and Manipulate Objects with Tactile Dexterity
 
+**2026-09-17 후속 정독:** 사용자가 제공한 IEEE 출판본 8쪽을 기준으로 [상세 논문 노트](../papers/2024-lee-dextouch.md)를 추가했다. 아래 최초 조사 요약은 arXiv v2 기준이며, 상세 노트에서는 출판본의 명시 범위를 따로 확인한다. 원문 식 (1)–(4), Table I–III 전체 수치, 실물 시행 수의 해석 범위와 미명시 구현 정보를 정리했다.
+
 **Kang-Won Lee, Yuzhe Qin, Xiaolong Wang, Soo-Chul Lim. IEEE RA-L 9(12):10772–10779, 2024.** [DOI](https://doi.org/10.1109/LRA.2024.3478571) · [확인 원문 v2](https://arxiv.org/html/2401.12496v2) · [저자 프로젝트](https://lee-kangwon.github.io/dextouch/)
 
 **문제·센서:** 시각 없이 물체를 찾고 조작한다. UR5e+Allegro의 손가락에 각각 3개, 손바닥에 4개의 FSR을 부착한다. 실물 전압을 STM32F103에서 **125 Hz로 획득→LPF→전송→threshold→16bit**로 처리한다. Simulation은 독립 센서 영역의 net-contact-force norm을 **0.01 N**으로 이진화한다. 실물 전압 threshold·LPF 차수/cutoff·hysteresis·debounce는 미명시다. [§III-A, IV-A]

@@ -50,6 +50,14 @@ R1–R7 전체의 제공·정독 상태는 개별 논문 색인을 따른다. �
 | --- | --- | --- |
 | 2026-09-16 | USER-P001 | [Gentle Object Retraction — 분포형 3축 힘 영상·관절 토크 기반 wrench·Diffusion Policy·impulse 기준·실물 ablation·한계와 향후 연구](papers/2026-brouwer-gentle-object-retraction.md) |
 
+### Binary Tactile·F/T 조사 후속 원문 정독
+
+[2026-09-16 신규 문헌 조사](reviews/2026-09-16_binary-tactile-wrench-rl.md)에 포함된 논문의 첨부 출판본 후속 정독이다. 기존 조사 ID를 유지하며, 새 논문 발굴 건수로 중복 집계하지 않는다.
+
+| 정리일 | 조사본 ID | 논문·상세 정리 |
+| --- | --- | --- |
+| 2026-09-17 | B1 | [DexTouch — FSR 16bit·LPF/threshold·비대칭 PPO·관절 제어·보상식·감도/배치/F/T ablation·실물 평가·한계와 향후 연구](papers/2024-lee-dextouch.md) |
+
 ## 폴더와 파일명 규칙
 
 ```text

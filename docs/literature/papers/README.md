@@ -40,6 +40,14 @@
 | --- | --- | --- | --- |
 | USER-P001 | Gentle Object Retraction in Dense Clutter Using Multimodal Force Sensing and Imitation Learning | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료. Limitation·Future Work 포함 | [2026 · Brouwer et al.](2026-brouwer-gentle-object-retraction.md) |
 
+## Binary Tactile·F/T 조사 후속 원문 정독
+
+기준일: 2026-09-17. 아래 ID는 [2026-09-16 신규 문헌 조사](../reviews/2026-09-16_binary-tactile-wrench-rl.md) 안에서 부여한 식별자다. 기존 조사에 포함된 논문을 사용자가 출판본으로 제공한 후속 정독이며, 사용자 별도 발굴 논문으로 중복 등록하지 않는다.
+
+| 조사본 ID | 논문 | 원문 정독 상태 | 상세 노트 |
+| --- | --- | --- | --- |
+| B1 | DexTouch: Learning to Seek and Manipulate Objects With Tactile Dexterity | 제공된 IEEE 출판본 PDF 8쪽 전체 정독·정리 완료. 식 (1)–(4), Table I–III, Limitation·Future Work와 미명시 사항 포함 | [2024 · Lee et al.](2024-lee-dextouch.md) |
+
 ## 공통 정리 구조
 
 | 항목 | 기록 내용 |
