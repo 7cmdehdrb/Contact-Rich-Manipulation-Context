@@ -26,7 +26,9 @@
 
 - **후처리:** 동일한 접촉 Pose에서 얻은 실물·Simulation 영상 쌍으로 Pix2Pix GAN을 학습하여, 실물 TacTip 영상을 Simulation의 촉각 영상으로 변환.
 - **정책 입력:** 양쪽 센서 영상을 각각 변환한 뒤 연결하고, 고유감각·목표 정보와 함께 PPO에 입력.
-- **역할 분담:** GAN은 영상 도메인 차이를 줄이고, 제어에 필요한 촉각 특징과 행동의 관계는 RL 정책에서 학습. 원문 §III-B, Fig. 1.
+- **역할 분담:** GAN은 영상 도메인 차이를 줄이고, 제어에 필요한 촉각 특징과 행동의 관계는 RL 정책에서 학습. 
+
+![[../../../img/bi-touch_fig1.png]]
 
 ### 1.2. [Tactile Pushing](../papers/2023-yang-sim-to-real-tactile-pushing.md) — Image 입력과 Pose 입력 비교
 
@@ -41,18 +43,24 @@
 
 *각 방법의 최고 Reward에서 10% 이내 성능에 도달하기까지의 샘플 수. Reward는 높을수록 좋음.*
 
-**같은 SAC에서는 Pose 입력이 샘플 효율과 최고 Reward에서 소폭 우세했다.** Pose 기반 Model-based 방식은 약 100배 적은 샘플을 사용했지만, 충분히 학습한 SAC보다 최고 Reward는 낮았다. 원문 §III-C, §IV-A, Table II.
+**Pose 입력이 샘플 효율과 최고 Reward에서 소폭 우세했다.** Pose 기반 Model-based 방식은 약 100배 적은 샘플을 사용했지만, 충분히 학습한 SAC보다 최고 Reward는 낮았다. 
+
+![[../../../img/tactile_pushing_fig1.png]]
 
 ### 1.3. [Gentle Object Retraction](../papers/2026-brouwer-gentle-object-retraction.md) — 3축 힘을 영상으로 표현하고 인코딩
 
 - **영상화:** 좌우 각 49개 Taxel에 무접촉 값 1개씩을 채워 총 100픽셀로 구성. **X 힘→B, Y 힘→G, Z 힘→R**의 색상 강도로 변환하여 **20×5×3 RGB 힘 영상** 생성. 오른쪽 센서의 Y축 부호는 좌우 방향이 일치하도록 반전.
-- **인코딩:** 힘 영상을 **촉각 전용 사전학습 ResNet-18**에 입력. 별도 ResNet-18의 Camera 특징과 정규화한 Wrench·TCP Pose·흡착 상태를 연결해 **Diffusion Policy 모방학습**에 사용. 원문 §III-B, Fig. 2–3.
+- **인코딩:** 힘 영상을 **촉각 전용 사전학습 ResNet-18**에 입력. 별도 ResNet-18의 Camera 특징과 정규화한 Wrench·TCP Pose·흡착 상태를 연결해 **Diffusion Policy 모방학습**에 사용. 
+
+![[../../../img/gentle_object_fig1.png]]
 
 ### 1.4. [DexTouch](../papers/2024-lee-dextouch.md) — Binary 접촉과 Isaac Gym 구현
 
 - **실물:** 손의 FSR 16개(손가락 각 3개 + 손바닥 4개) 전압 → Low-pass Filter → Threshold → **16bit 접촉 여부**.
 - **Isaac Gym:** 실물 센서 위치에 대응하는 **가상 접촉 센서 16개** 구성 → 매 step 센서별 Net Contact Force $\mathbf F_i=[F_{x,i},F_{y,i},F_{z,i}]$ 취득 → 크기 $\lVert\mathbf F_i\rVert_2$를 **0.01 N 임계값**으로 Binary 변환.
 - **정책 연결:** 실물과 Simulation에서 같은 형태의 접촉 벡터를 만들고, 로봇 상태·과업 정보와 함께 MLP 기반 PPO에 입력. 힘 크기를 Binary로 축약해 Sim-to-Real 차이를 줄이는 구성. 원문 §III-A, §IV-C, Fig. 2.
+
+![[../../../img/dex_touch_fig1.png]]
 
 ### 적용 검토안
 
