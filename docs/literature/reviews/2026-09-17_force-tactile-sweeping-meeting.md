@@ -80,7 +80,53 @@
 | 연구                                                                             | F/T 활용                                                                                                                    | 참고할 점                                                                    |
 | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
 | [Force Push](../papers/2024-heins-force-push.md)                               | 힘 **방향**으로 미는 방향을 보정하고, **크기**로 접촉 손실·회복과 과부하 대응을 수행하는 비학습 제어                                                             | Force를 단순한 충돌 감지값이 아니라 연속적인 조작 Feedback으로 사용한다.                          |
-| [Gentle Object Retraction](../papers/2026-brouwer-gentle-object-retraction.md) | Encoded Camera Image, Tactile Image, **6-Axis Wrench** 정보를 관측에 포함하고, Imitation Learning을 통해 장애물들을 밀치는 Diffusion Policy 학습 | Wrench 정보를 활용하여 특정 방향으로 밀 수 없음으로 판단한다. (임계점 이상의 Impulse에 대하여 Failure 처리) |
+| [Gentle Object Retraction](../papers/2026-brouwer-gentle-object-retraction.md) | Encoded Camera Image, Tactile Image, **6-Axis Wrench** 정보를 관측에 포함하고, Imitation Learning을 통해 장애물들을 밀치는 Diffusion Policy 학습 | Wrench를 정책 입력으로 사용하고, Net·Peak Impulse 한계를 넘는 시연은 종료 후 재수집한다. |
+
+### 2.1. [Force Push](../papers/2024-heins-force-push.md) — 힘 조건별 Rule-Based 제어
+
+평활화한 **평면 접촉력** $\mathbf f$를 사용한다. $\theta_d$는 경로 방향, $\Delta_f=\theta_f-\theta_d$는 힘 방향 오차, $\Delta_c$는 **Pusher 접촉점의 경로 횡오차**다. $k_f,k_c,k_a>0$는 제어 Gain이다. [원문 §IV, 식 (1)–(4)]
+
+**① 접촉력이 충분한 경우** ($f_{\min}\leq\lVert\mathbf f\rVert\leq f_{\max}$): 힘 방향과 경로 횡오차로 미는 방향을 보정한다. 힘 방향보다 더 틀어 미는 $(k_f+1)$ 항을 통해 물체가 경로 방향으로 돌아오도록 유도한다.
+
+$
+\theta_{\mathrm{ee}}=\theta_d+(k_f+1)\Delta_f+k_c\Delta_c
+$
+
+**② 접촉력이 부족한 경우** ($\lVert\mathbf f\rVert<f_{\min}$): 접촉 소실로 판단하고, Pusher가 경로로 복귀하는 방향 $\theta_o$로 조금씩 회전한다. 재접촉하면 ①로 돌아간다.
+
+$
+\theta_o=\theta_d-k_c\Delta_c,\qquad
+\theta_{\mathrm{ee}}=\theta_{\mathrm{ee}}^{-}
++\operatorname{clip}\!\left(\theta_o-\theta_{\mathrm{ee}}^{-},-\gamma_{\max},\gamma_{\max}\right)
+$
+
+$\theta_{\mathrm{ee}}^{-}$는 이전 제어 방향, $\gamma_{\max}$는 한 iteration의 회전량 제한이다.
+
+**③ 접촉력이 과도한 경우** ($\lVert\mathbf f\rVert>f_{\max}$): ①의 조향에 **Admittance 속도 보정**을 더한다. 힘 초과량에 비례해 힘 방향 속도를 줄이며, 초과량이 크면 반대 방향으로 물러날 수 있다.
+
+$
+\mathbf v_{\mathrm{cmd}}
+=\mathbf v_{\mathrm{ee}}+k_a\!\left(f_{\max}-\lVert\mathbf f\rVert\right)\hat{\mathbf f},
+\qquad
+\mathbf v_{\mathrm{ee}}=v
+\begin{bmatrix}\cos\theta_{\mathrm{ee}}\\ \sin\theta_{\mathrm{ee}}\end{bmatrix}
+$
+
+$\hat{\mathbf f}$는 힘의 단위벡터, $v$는 기준 속력이다. 최종 속력은 $v$ 이하로 제한한다.
+
+### 2.2. [Gentle Object Retraction](../papers/2026-brouwer-gentle-object-retraction.md) — Wrench 입력과 Impulse 기반 시연 선별
+
+- **학습 입력:** 관절 Torque에서 동역학을 보상해 추정한 **TCP 좌표계의 6축 Wrench**를 정규화한다. 이를 Camera·Tactile의 Encoded Feature, TCP Pose, 흡착 상태와 결합해 **Diffusion Policy의 모방학습·실행 관측**으로 사용한다. [원문 §III, Fig. 3]
+- **Task Setup:** 최근 반응 시간 $\delta t_{\mathrm{react}}$ 동안 평균한 힘으로 두 Impulse를 계산한다. $F_{\mathrm{net}}$은 Wrench의 힘 3성분 norm의 시간 평균, $F_{\mathrm{peak}}$는 각 시점의 최대 Taxel 힘 norm의 시간 평균이다. [원문 §IV-B, 식 (2)–(3)]
+
+$
+I_{\mathrm{net}}=F_{\mathrm{net}}\delta t_{\mathrm{react}}<20.8\,\mathrm{N\,s},
+\qquad
+I_{\mathrm{peak}}=F_{\mathrm{peak}}\delta t_{\mathrm{react}}<4.8\,\mathrm{N\,s}
+$
+
+- **선별 기준:** 둘 중 하나라도 한계를 넘으면 시연을 자동 종료하고 **같은 장면의 시연을 다시 수집**한다. 이 방식으로 수집한 **100개 시연**으로 학습한다. [원문 §V-A]
+- **이유:** Clutter에서는 접촉이 불가피하므로, 접촉에 반응할 시간을 허용하면서 과도한 힘의 지속을 제한한다. $\delta t_{\mathrm{react}}=0.8\,\mathrm{s}$는 **8 Action Steps / 10 Hz**, 한계값은 해당 물체의 손상 시험에서 얻은 **26 N·6 N**을 기준으로 정했다. **Peak Tactile**은 국소 손상 위험을, **Net Wrench**는 Tactile이 덮지 못한 접촉을 함께 감시한다. [원문 §IV-B]
 
 ### 적용 검토안과 근거
 
