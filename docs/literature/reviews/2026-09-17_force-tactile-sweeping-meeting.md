@@ -15,12 +15,44 @@
 | -------------------- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | **광학 촉각 영상 활용**      | [Bi-Touch](../papers/2023-lin-bi-touch.md), [Tactile Pushing](../papers/2023-yang-sim-to-real-tactile-pushing.md) | 촉각 영상을 학습 정책에 연결하거나, CNN으로 접촉 깊이·방향을 추정한다. 일부 영상 기반 경로에서는 GAN으로 실물 영상을 Simulation 표현에 맞춘다.        |
 | **분포형 힘의 영상 표현**     | [Gentle Object Retraction](../papers/2026-brouwer-gentle-object-retraction.md)                                    | 분포형 3축 힘을 RGB 영상으로 변환해 ResNet-18로 인코딩하고, Diffusion Policy 기반 모방학습에 활용한다. 광학 촉각 영상과는 구분한다.         |
-| **영역별 Binary 접촉 활용** | [DexTouch](../papers/2024-lee-dextouch.md)                                                                        | FSR 출력을 필터·Threshold로 처리하여 영역별 접촉 여부를 만들고, 고유감각과 함께 PPO에 입력한다. 후자는 관측 이력과 Binary/연속값의 실물 비교도 다룬다. |
+| **영역별 Binary 접촉 활용** | [DexTouch](../papers/2024-lee-dextouch.md)                                                                        | FSR 출력을 필터·Threshold로 처리하여 영역별 접촉 여부를 만들고, 고유감각과 함께 PPO에 입력한다. |
 
 요약하면, 조사한 선행 연구들에서는 다음과 같은 방법이 주로 사용된다.
 
 - **영상 자체를 학습하는 방식 (Encoding)**
 - **접촉에 필요한 물리 정보로 축약하는 방식 (Binary)**  
+
+### 1.1. [Bi-Touch](../papers/2023-lin-bi-touch.md) — 실물 촉각 영상을 Simulation 영상으로 변환
+
+- **후처리:** 동일한 접촉 Pose에서 얻은 실물·Simulation 영상 쌍으로 Pix2Pix GAN을 학습하여, 실물 TacTip 영상을 Simulation의 촉각 영상으로 변환.
+- **정책 입력:** 양쪽 센서 영상을 각각 변환한 뒤 연결하고, 고유감각·목표 정보와 함께 PPO에 입력.
+- **역할 분담:** GAN은 영상 도메인 차이를 줄이고, 제어에 필요한 촉각 특징과 행동의 관계는 RL 정책에서 학습. 원문 §III-B, Fig. 1.
+
+### 1.2. [Tactile Pushing](../papers/2023-yang-sim-to-real-tactile-pushing.md) — Image 입력과 Pose 입력 비교
+
+- **Image:** 실물 촉각 영상 → Real-to-Sim GAN → Simulation 촉각 영상 → SAC.
+- **Pose:** 실물 촉각 영상 → PoseNet(CNN)으로 **접촉 깊이·각도** 추정 → 접촉면 Pose와 목표 정보 구성 → SAC 또는 PETS/MPC. 물체 중심 Pose를 추정하는 방식과는 구분.
+
+| 구성 | 학습 샘플 수* | 최고 Reward |
+| --- | ---: | ---: |
+| Image + SAC | 320만 | −124.86 |
+| Pose + SAC | 280만 | **−122.85** |
+| Pose + PETS/MPC | **2.5만** | −144.70 |
+
+*각 방법의 최고 Reward에서 10% 이내 성능에 도달하기까지의 샘플 수. Reward는 높을수록 좋음.*
+
+**같은 SAC에서는 Pose 입력이 샘플 효율과 최고 Reward에서 소폭 우세했다.** Pose 기반 Model-based 방식은 약 100배 적은 샘플을 사용했지만, 충분히 학습한 SAC보다 최고 Reward는 낮았다. 원문 §III-C, §IV-A, Table II.
+
+### 1.3. [Gentle Object Retraction](../papers/2026-brouwer-gentle-object-retraction.md) — 3축 힘을 영상으로 표현하고 인코딩
+
+- **영상화:** 좌우 각 49개 Taxel에 무접촉 값 1개씩을 채워 총 100픽셀로 구성. **X 힘→B, Y 힘→G, Z 힘→R**의 색상 강도로 변환하여 **20×5×3 RGB 힘 영상** 생성. 오른쪽 센서의 Y축 부호는 좌우 방향이 일치하도록 반전.
+- **인코딩:** 힘 영상을 **촉각 전용 사전학습 ResNet-18**에 입력. 별도 ResNet-18의 Camera 특징과 정규화한 Wrench·TCP Pose·흡착 상태를 연결해 **Diffusion Policy 모방학습**에 사용. 원문 §III-B, Fig. 2–3.
+
+### 1.4. [DexTouch](../papers/2024-lee-dextouch.md) — Binary 접촉과 Isaac Gym 구현
+
+- **실물:** 손의 FSR 16개(손가락 각 3개 + 손바닥 4개) 전압 → Low-pass Filter → Threshold → **16bit 접촉 여부**.
+- **Isaac Gym:** 실물 센서 위치에 대응하는 **가상 접촉 센서 16개** 구성 → 매 step 센서별 Net Contact Force $\mathbf F_i=[F_{x,i},F_{y,i},F_{z,i}]$ 취득 → 크기 $\lVert\mathbf F_i\rVert_2$를 **0.01 N 임계값**으로 Binary 변환.
+- **정책 연결:** 실물과 Simulation에서 같은 형태의 접촉 벡터를 만들고, 로봇 상태·과업 정보와 함께 MLP 기반 PPO에 입력. 힘 크기를 Binary로 축약해 Sim-to-Real 차이를 줄이는 구성. 원문 §III-A, §IV-C, Fig. 2.
 
 ### 적용 검토안
 
