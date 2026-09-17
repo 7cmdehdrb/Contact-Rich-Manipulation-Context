@@ -1,5 +1,7 @@
 # Sim-to-Real Model-Based and Model-Free Deep Reinforcement Learning for Tactile Pushing — 원문 상세 정리
 
+[문서 안내](../../README.md) · [문헌 색인](../README.md) · [전체 논문](README.md) · [원래 조사 · R4](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md#r4)
+
 ## 0. 논문 정보와 확인 범위
 
 | 항목 | 내용 |
@@ -8,13 +10,11 @@
 | 저자 | Max Yang, Yijiong Lin, Alex Church, John Lloyd, Dandan Zhang, David A. W. Barton, Nathan F. Lepora |
 | 출판 | IEEE Robotics and Automation Letters, 8(9), 5480–5487, September 2023 |
 | DOI | [10.1109/LRA.2023.3295236](https://doi.org/10.1109/LRA.2023.3295236) |
-| 기존 조사본 식별자 | [2026-09-14 문헌조사](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md)의 **R4** |
+| 기존 조사본 식별자 | [2026-09-14 문헌조사](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md#r4)의 **R4** |
 | 정리일 | 2026-09-15 |
 | 확인한 원문 | 제공된 출판본 PDF 8쪽 전체. 본문 §I–V, 식 (1)–(4), 번호 없는 모델·계획 수식, Fig. 1–7, Table I–III, References |
 | 확인하지 않은 자료 | 인용된 선행논문의 개별 원문, 저자 구현 코드·설정 파일·체크포인트, 보충 영상, 제조사 데이터시트 |
 | 원문 PDF SHA-256 | `924f25a41346a6146e2861bc126197364149d66da79797d19145906af4a77652` |
-
-[개별 논문 색인](README.md) · [문헌조사 자료](../README.md)
 
 이 문서는 해당 논문 자체의 문제 상황, 관련 연구, 플랫폼·센서, 촉각 정보 처리, 강화학습 방법과 실험을 정리한다. 다른 연구 주제에 대한 적용안은 포함하지 않는다. `[원문 §…, PDF p.…]`는 첨부 출판본의 위치이며, **PDF 1–8쪽은 인쇄 페이지 5480–5487**에 대응한다. `[10]`과 같은 번호는 원문의 참고문헌 번호이고, 기존 조사본의 R 번호와 다르다. 수식의 해설·흐름 재구성은 원문에 근거한 설명이지 별도 구현·재현 결과가 아니다.
 

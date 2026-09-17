@@ -1,5 +1,7 @@
 # Attention for Robot Touch — 원문 상세 정리
 
+[문서 안내](../../README.md) · [문헌 색인](../README.md) · [전체 논문](README.md) · [원래 조사 · IROS-S01](../reviews/2026-09-15_iros-2023-2025-tactile-force-torque-rl-title-screening.md#iros-s01)
+
 ## 0. 논문 정보와 확인 범위
 
 | 항목 | 내용 |
@@ -8,13 +10,11 @@
 | 저자 | Yijiong Lin, Mauro Comi, Alex Church, Dandan Zhang, Nathan F. Lepora |
 | 출판 | 2023 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), Detroit, USA, October 1–5, 2023, pp. 10806–10812 |
 | DOI | [10.1109/IROS55552.2023.10341888](https://doi.org/10.1109/IROS55552.2023.10341888) |
-| 문헌 관리 식별자 | [IROS 2023–2025 제목 선별 보고서](../reviews/2026-09-15_iros-2023-2025-tactile-force-torque-rl-title-screening.md)의 **IROS-S01**. 2026-09-16 사용자 임시 선정 목록의 첫 번째 논문이며, 이전 조사본의 R1–R7과 별개다. |
+| 문헌 관리 식별자 | [IROS 2023–2025 제목 선별 보고서](../reviews/2026-09-15_iros-2023-2025-tactile-force-torque-rl-title-screening.md#iros-s01)의 **IROS-S01**. 2026-09-16 사용자 임시 선정 목록의 첫 번째 논문이며, 이전 조사본의 R1–R7과 별개다. |
 | 정리일 | 2026-09-16 |
 | 확인한 원문 | 제공된 출판본 PDF 7쪽 전체. 본문 §I–V, 식 (1)–(10), Fig. 1–6, Table I–II, References [1]–[24] |
 | 확인하지 않은 자료 | 보충 파일·영상, 저자 코드·설정·데이터·체크포인트, 이 논문이 인용한 선행연구의 세부 구현, 제조사 데이터시트. 기존에 다른 논문을 정리한 내용으로 본문의 빈칸을 채우지 않았다. |
 | 원문 PDF SHA-256 | `806a84c298a9045f891ef497c4605430841524753a285b7f65dcad9ca5405690` |
-
-[개별 논문 색인](README.md) · [문헌조사 자료](../README.md)
 
 이 문서는 해당 논문 자체의 문제 상황, 관련 연구, 환경·센서, 학습·제어 방법, 실험, 저자들이 밝힌 한계와 향후 연구를 정리한다. 프로젝트 적용안은 포함하지 않는다. `[원문 §…, PDF p.…]`는 첨부 출판본의 위치이며, **PDF 1–7쪽은 인쇄 페이지 10806–10812**에 대응한다. `[2]` 등의 번호는 원문 참고문헌 번호다. 수식·표·그림은 실제 PDF 표시와 대조했다.
 

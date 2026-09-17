@@ -1,5 +1,7 @@
 # Blind Sweeping — 단일 파일 인계 요약
 
+[문서 안내](README.md) · [문헌조사](literature/README.md) · [조사 그룹](literature/reviews/README.md)
+
 **기준일: 2026-09-14. 이 문서만 전달해도 현재 연구 방향을 파악할 수 있도록 작성했다.**
 
 ## 연구가 무엇인가

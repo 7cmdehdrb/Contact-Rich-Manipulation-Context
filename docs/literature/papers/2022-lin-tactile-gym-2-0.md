@@ -1,5 +1,7 @@
 # Tactile Gym 2.0 — 원문 상세 정리
 
+[문서 안내](../../README.md) · [문헌 색인](../README.md) · [전체 논문](README.md) · [원래 조사 · R5](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md#r5)
+
 ## 0. 논문 정보와 확인 범위
 
 | 항목 | 내용 |
@@ -8,13 +10,11 @@
 | 저자 | Yijiong Lin, John Lloyd, Alex Church, Nathan F. Lepora |
 | 출판 | IEEE Robotics and Automation Letters, 7(4), 10754–10761, October 2022 |
 | DOI | [10.1109/LRA.2022.3195195](https://doi.org/10.1109/LRA.2022.3195195) |
-| 기존 조사본 식별자 | [2026-09-14 문헌조사](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md)의 **R5** |
+| 기존 조사본 식별자 | [2026-09-14 문헌조사](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md#r5)의 **R5** |
 | 정리일 | 2026-09-15 |
 | 확인한 원문 | 제공된 출판본 PDF 8쪽 전체. 본문 §I–V, Fig. 1–7, Table I–VII, 본문의 궤적 수식, References [1]–[34] |
 | 확인하지 않은 자료 | 인용된 선행논문의 개별 원문, 본문이 언급한 동반 하드웨어 논문, 저자 코드·설정·데이터·체크포인트, 보충 영상, 제조사 데이터시트 |
 | 원문 PDF SHA-256 | `e2d99c8f078d3c46b3f3032a2fc5c1c2bb319804de050bfa13cb62fccad0761b` |
-
-[개별 논문 색인](README.md) · [문헌조사 자료](../README.md)
 
 이 문서는 해당 논문 자체의 문제 상황, Related Work, 환경·센서, 촉각 처리·학습 방법, 실험, 저자들이 밝힌 Limitation과 Future Work를 정리한다. 다른 연구 주제에 대한 적용안은 포함하지 않는다. `[원문 §…, PDF p.…]`는 첨부 출판본의 위치이며, **PDF 1–8쪽은 인쇄 페이지 10754–10761**에 대응한다. `[1]` 등의 번호는 원문의 참고문헌 번호다. 표와 그림은 PDF의 실제 표시를 확인했으며, 계산 과정의 재구성은 원문 설명과 구분한다.
 

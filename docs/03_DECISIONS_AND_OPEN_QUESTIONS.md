@@ -1,5 +1,7 @@
 # 결정·변경·미정 목록
 
+[문서 안내](README.md) · [문헌조사](literature/README.md) · [조사 그룹](literature/reviews/README.md)
+
 기준일: 2026-09-14. 출처는 [출처 목록](06_SOURCE_REGISTER.md)을 따른다. 이 문서는 현재 요구사항을 판별할 때의 기준이며 실험 검증 완료를 뜻하지 않는다.
 
 ## 1. 상태 정의

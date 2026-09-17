@@ -1,5 +1,7 @@
 # Bi-Touch — 원문 상세 정리
 
+[문서 안내](../../README.md) · [문헌 색인](../README.md) · [전체 논문](README.md) · [원래 조사 · R6](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md#r6)
+
 ## 0. 논문 정보와 확인 범위
 
 | 항목 | 내용 |
@@ -8,13 +10,11 @@
 | 저자 | Yijiong Lin, Alex Church, Max Yang, Haoran Li, John Lloyd, Dandan Zhang, Nathan F. Lepora |
 | 출판 | IEEE Robotics and Automation Letters, 8(9), 5472–5479, September 2023 |
 | DOI | [10.1109/LRA.2023.3295991](https://doi.org/10.1109/LRA.2023.3295991) |
-| 기존 조사본 식별자 | [2026-09-14 문헌조사](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md)의 **R6** |
+| 기존 조사본 식별자 | [2026-09-14 문헌조사](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md#r6)의 **R6** |
 | 정리일 | 2026-09-16 |
 | 확인한 원문 | 제공된 출판본 PDF 8쪽 전체. 본문 §I–V, 식 (1)–(4), Fig. 1–7, Table I–III, References [1]–[28] |
 | 확인하지 않은 자료 | 인용된 선행논문의 개별 원문, 저자 코드·설정·체크포인트·데이터, 보충 영상, 제조사 데이터시트 |
 | 원문 PDF SHA-256 | `fb86020254380573343786b260ca7dd8849ef0ad1fde7a2c306aef4bff0be953` |
-
-[개별 논문 색인](README.md) · [문헌조사 자료](../README.md)
 
 이 문서는 논문 자체의 문제 상황, 관련 연구, 장비·센서, 촉각 처리, 학습·제어 방법, 실험, 저자들이 밝힌 Limitation과 Future Work를 정리한다. 다른 연구 주제에 대한 적용안은 포함하지 않는다. `[원문 §…, PDF p.…]`는 첨부 출판본의 위치이며, **PDF 1–8쪽은 인쇄 페이지 5472–5479**에 대응한다. `[7]` 등은 원문의 참고문헌 번호다. 그림·표·수식은 PDF의 실제 표시와 대조했다. 설명을 위해 재구성한 흐름과 원문에 명시되지 않은 세부사항을 구분한다.
 

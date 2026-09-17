@@ -1,5 +1,7 @@
 # Pushing in the Dark — 원문 상세 정리
 
+[문서 안내](../../README.md) · [문헌 색인](../README.md) · [전체 논문](README.md) · [원래 조사 · R2](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md#r2)
+
 ## 0. 논문 정보와 확인 범위
 
 | 항목 | 내용 |
@@ -8,14 +10,12 @@
 | 저자 | Idil Ozdamar, Doganay Sirintuna, Robin Arbaud, Arash Ajoudani |
 | 출판 | IEEE Robotics and Automation Letters, 9(8), 6824–6831, August 2024 |
 | DOI | [10.1109/LRA.2024.3414279](https://doi.org/10.1109/LRA.2024.3414279) |
-| 기존 조사본 식별자 | [2026-09-14 문헌조사](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md)의 **R2** |
+| 기존 조사본 식별자 | [2026-09-14 문헌조사](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md#r2)의 **R2** |
 | 정리 기준일 | 2026-09-14 |
 | 문서 보완 | GitHub 수식·표 표기 정비, 원문에 명시된 플랫폼·센서 사양과 미명시 항목 보완 |
 | 정독 대상 | 제공된 출판본 PDF 8쪽 전체. Fig. 1–7, Table I–II, Algorithm 1, 식 (1)–(10)을 본문과 대조 |
 | 확인하지 않은 자료 | 인용된 개별 선행논문의 원문, 저자 구현 코드, 보충 영상의 실제 내용 |
 | 원문 PDF SHA-256 | `d42a4eca50357a08a1a86bffb30ccc018149062627dd0ddd46fabdd495b4e76f` |
-
-[개별 논문 색인](README.md) · [문헌조사 자료](../README.md)
 
 이 문서는 논문 자체의 문제 설정, 관련 연구, 환경, 센서 처리, 제어법과 실험을 정리한다. 별도 연구 주제에 대한 적용안이나 연구 제안은 포함하지 않는다. 아래의 `[원문 §…, PDF p.…]`는 제공된 논문의 위치다. PDF 1–8쪽은 인쇄 페이지 6824–6831에 대응한다. 관련 연구의 `[3]`, `[24]` 등은 **원문의 참고문헌 번호**이며, 기존 조사본의 R 번호와 다르다.
 

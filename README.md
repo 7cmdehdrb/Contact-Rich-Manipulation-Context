@@ -6,6 +6,8 @@
 
 이 저장소는 연구 맥락을 인계하는 문서 저장소다. 로봇 제어·강화학습 구현 저장소가 아니며, 문서에 등장하는 설계안을 구현 완료로 간주해서는 안 된다.
 
+[문서 안내](docs/README.md) · [조사 그룹](docs/literature/reviews/README.md) · [전체 논문](docs/literature/papers/README.md)
+
 ## 처음 읽는 사람과 에이전트
 
 1. [AGENTS.md](AGENTS.md): 작업 원칙, 범위 이탈 방지, 증거 취급 방식.
@@ -30,12 +32,13 @@
 
 주제별 비교 보고서는 `docs/literature/reviews/`에 **조사 기준일 + 주제명**으로 저장한다. 목록과 관리 규칙은 [문헌조사 색인](docs/literature/README.md)에 정리한다. 기존 `docs/00_...`부터 `docs/07_...`까지는 인계·현재 상태 문서로 유지하며, 문헌조사 보고서의 제안을 자동으로 확정 사양에 반영하지 않는다.
 
-현재 등록된 보고서는 다음과 같다.
+각 그룹의 논문별 바로가기는 [조사 그룹 안내](docs/literature/reviews/README.md), 전체 상세 노트는 [논문 색인](docs/literature/papers/README.md)에서 찾는다. 현재 등록된 보고서·목록은 다음과 같다.
 
 - [2026-09-14 — Blind Sweep을 위한 F/T·촉각 기반 Pushing 문헌 조사](docs/literature/reviews/2026-09-14_blind-sweep-force-torque-tactile.md)
 - [2026-09-15 — IROS 2023–2025 Tactile·F/T 기반 RL 관련 논문 제목 선별](docs/literature/reviews/2026-09-15_iros-2023-2025-tactile-force-torque-rl-title-screening.md)
 - [2026-09-16 — Binary Tactile·F/T 기반 RL 신규 문헌 조사](docs/literature/reviews/2026-09-16_binary-tactile-wrench-rl.md)
 - [2026-09-16 — Binary Tactile·Wrench 입력 처리 및 비교 실험 제안](docs/literature/reviews/2026-09-16_binary-tactile-wrench-design-notes.md)
+- [사용자 발굴 논문 — 누적 목록](docs/literature/reviews/user-found-papers.md)
 
 ## 현재 상태를 오해하지 않기 위한 핵심
 

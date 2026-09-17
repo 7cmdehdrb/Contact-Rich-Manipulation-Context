@@ -1,5 +1,7 @@
 # 코드·학습·장비 현황
 
+[문서 안내](README.md) · [문헌조사](literature/README.md) · [조사 그룹](literature/reviews/README.md)
+
 기준일: 2026-09-14. 출처는 [출처 목록](06_SOURCE_REGISTER.md)을 따른다. **과거 구현 보고, 별도 센서 시험, 설정 코드, 구매 계획, 실제 설치·성능을 분리한다.**
 
 ## 1. 현재 확인 수준

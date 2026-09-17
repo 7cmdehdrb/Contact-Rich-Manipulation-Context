@@ -2,7 +2,9 @@
 
 조사 기준일: **2026-09-16**. 기존 저장소 문헌과 중복되는 연구를 제외한 추가 조사다.
 
-[문헌 색인](../README.md) · [구체적인 입력 처리·실험 제안](2026-09-16_binary-tactile-wrench-design-notes.md) · [현재 연구 범위](../../00_HANDOFF_BRIEF.md)
+[조사 그룹](README.md) · [전체 논문](../papers/README.md) · [문헌 색인](../README.md) · [구체적인 입력 처리·실험 제안](2026-09-16_binary-tactile-wrench-design-notes.md) · [현재 연구 범위](../../00_HANDOFF_BRIEF.md)
+
+**상세노트 바로가기:** [B1 · DexTouch](../papers/2024-lee-dextouch.md). 다른 논문의 작성 상태는 아래 [신규 연구 비교표](#3-신규-연구-비교표)에서 확인한다.
 
 ## 1. 핵심 답변
 
@@ -32,7 +34,7 @@
 
 - [2026-09-14 조사](2026-09-14_blind-sweep-force-torque-tactile.md)의 R1–R7과 대조 문헌.
 - [IROS 2023–2025 제목 선별](2026-09-15_iros-2023-2025-tactile-force-torque-rl-title-screening.md)의 후보·제외표·후속 선정.
-- [개별 정독 노트](../papers/README.md)와 [사용자 별도 발굴 목록](../collections/user-found-papers.md).
+- [개별 정독 노트](../papers/README.md)와 [사용자 별도 발굴 목록](user-found-papers.md).
 - 대화에서 이미 검토한 MAT 등 기존 문헌.
 
 Force Push, Pushing in the Dark, Tactile Gym 2.0, Bi-Touch, Yang의 tactile pushing, Tactile-AIRL, Gentle Object Retraction 등은 신규에 포함하지 않았다. 제목만 선별됐던 SAVR·ProSIP·distributed tactile dragging 등도 재등록하지 않았다. preprint·학회·저널 확장판은 동일 연구 계열을 확인해 중복 계수하지 않는다.
@@ -49,19 +51,21 @@ Force Push, Pushing in the Dark, Tactile Gym 2.0, Bi-Touch, Yang의 tactile push
 
 ## 3. 신규 연구 비교표
 
-| ID | 연구·연도 | 확인한 접촉 표현 | 정책·실행 조건 | Blind Sweeping에 가져올 것 / 경계 |
-| --- | --- | --- | --- | --- |
-| B1 | DexTouch, 2024 | 저항식 FSR 16bit | PPO, 실물 Blind seek/grasp/door/valve | LPF·threshold·coverage 비교. Sweeping 실험은 없음 |
-| B2 | Koval et al., 2016 | strain-gauge threshold의 접촉 bits | POMDP 계획, 실물 planar pushing | 접촉 이력으로 belief 갱신. **RL 아님**, 알려진 geometry 필요 |
-| B3 | Rotating without Seeing, 2023 | 저항식 FSR 16bit | PPO, 실물 in-hand rotation | Binary/continuous 직접 비교·history·dropout. 표현 참고에 한정 |
-| B4 | Enhancing Tactile-based RL, 2025 | 시뮬레이션 sparse binary contact | PPO+보조 표현학습, sim-only | bits가 무시되는 조건·이력 학습. 실물 전이 근거 아님 |
-| W1 | CHEQ-ing the Box, 2025 | F/T의 **힘 3D만** actor에 입력 | SAC 계열+prior 혼합, 실물 polishing | 수치 concat·필터·motion/impedance. 고정 경로/표면 전제 |
-| W2 | SRL-VIC, 2024 | 6D wrench | SAC+recovery, 실물 Blind maze | wrench 기반 motion/stiffness 선택. 자유 물체 이동 목표와 다름 |
-| W3 | High-quality Wiping, 2025 | F/T 포함 46D 관측 | Blind RL, sim-only | 접촉/힘과 진행의 보상 충돌 방지. 세부 RL optimizer 미명시 |
-| W4 | AFORCE, 2021 | 목표 wrench action·측정/추정 wrench 제어 | SAC는 simulation; 실물은 expert | 고주파 force loop 분리. 실물 learned-RL 전이로 분류 금지 |
-| C1 | Beyond Binary, 2026 | binary 대 힘+접촉 중심 | PPO, 실물 blind insertion/balancing | 정보 손실 반대 근거만 사용. Sweeping 직접 비교군 아님 |
+| ID | 연구·연도 | 확인한 접촉 표현 | 정책·실행 조건 | Blind Sweeping에 가져올 것 / 경계 | 상세노트 |
+| --- | --- | --- | --- | --- | --- |
+| [B1](#b1) | DexTouch, 2024 | 저항식 FSR 16bit | PPO, 실물 Blind seek/grasp/door/valve | LPF·threshold·coverage 비교. Sweeping 실험은 없음 | [상세노트](../papers/2024-lee-dextouch.md) |
+| [B2](#b2) | Koval et al., 2016 | strain-gauge threshold의 접촉 bits | POMDP 계획, 실물 planar pushing | 접촉 이력으로 belief 갱신. **RL 아님**, 알려진 geometry 필요 | 미작성 |
+| [B3](#b3) | Rotating without Seeing, 2023 | 저항식 FSR 16bit | PPO, 실물 in-hand rotation | Binary/continuous 직접 비교·history·dropout. 표현 참고에 한정 | 미작성 |
+| [B4](#b4) | Enhancing Tactile-based RL, 2025 | 시뮬레이션 sparse binary contact | PPO+보조 표현학습, sim-only | bits가 무시되는 조건·이력 학습. 실물 전이 근거 아님 | 미작성 |
+| [W1](#w1) | CHEQ-ing the Box, 2025 | F/T의 **힘 3D만** actor에 입력 | SAC 계열+prior 혼합, 실물 polishing | 수치 concat·필터·motion/impedance. 고정 경로/표면 전제 | 미작성 |
+| [W2](#w2) | SRL-VIC, 2024 | 6D wrench | SAC+recovery, 실물 Blind maze | wrench 기반 motion/stiffness 선택. 자유 물체 이동 목표와 다름 | 미작성 |
+| [W3](#w3) | High-quality Wiping, 2025 | F/T 포함 46D 관측 | Blind RL, sim-only | 접촉/힘과 진행의 보상 충돌 방지. 세부 RL optimizer 미명시 | 미작성 |
+| [W4](#w4) | AFORCE, 2021 | 목표 wrench action·측정/추정 wrench 제어 | SAC는 simulation; 실물은 expert | 고주파 force loop 분리. 실물 learned-RL 전이로 분류 금지 | 미작성 |
+| [C1](#c1) | Beyond Binary, 2026 | binary 대 힘+접촉 중심 | PPO, 실물 blind insertion/balancing | 정보 손실 반대 근거만 사용. Sweeping 직접 비교군 아님 | 미작성 |
 
 ## 4. Binary tactile: 방법과 근거
+
+<a id="b1"></a>
 
 ### B1. DexTouch: Learning to Seek and Manipulate Objects with Tactile Dexterity
 
@@ -79,6 +83,8 @@ Force Push, Pushing in the Dark, Tactile Gym 2.0, Bi-Touch, Yang의 tactile push
 
 **프로젝트 해석:** 가장 우선해서 읽을 저항식 binary 구현 사례다. **0.01 N을 FSR 제품의 검출 성능이나 Inspire 설정으로 옮기지 않는다.** 파지와 자유 물체 Sweeping의 힘·이동 요구가 다르므로 F/T의 일반적 열세도 결론낼 수 없다.
 
+<a id="b2"></a>
+
 ### B2. Pre- and post-contact policy decomposition for planar contact manipulation under uncertainty
 
 **Michael C. Koval, Nancy S. Pollard, Siddhartha S. Srinivasa. IJRR 35(1–3):244–264, 2016; online 2015.** [DOI](https://doi.org/10.1177/0278364915594474) · [저자 공개 PDF](https://personalrobotics.cs.washington.edu/publications/koval2015pomdp.pdf)
@@ -95,6 +101,8 @@ Force Push, Pushing in the Dark, Tactile Gym 2.0, Bi-Touch, Yang의 tactile push
 
 기존 IROS 목록의 *Pre-and Post-Contact Policy Decomposition for Non-Prehensile Manipulation with Zero-Shot Sim-To-Real Transfer*는 **Minchan Kim 등, 2023, DOI 10.1109/IROS55552.2023.10341657**의 별도 연구다. B2와 제목 일부가 유사하지만 저자·DOI·방법이 다르다. [기존 후보의 원문](https://arxiv.org/abs/2309.02754)
 
+<a id="b3"></a>
+
 ### B3. Rotating without Seeing: Towards In-hand Dexterity through Touch
 
 **Zhao-Heng Yin, Binghao Huang, Yuzhe Qin, Qifeng Chen, Xiaolong Wang. RSS 2023.** [DOI](https://doi.org/10.15607/RSS.2023.XIX.036) · [확인 PDF](https://arxiv.org/pdf/2303.10880) · [저자 프로젝트](https://touchdexterity.github.io/)
@@ -108,6 +116,8 @@ FSR 전압을 threshold해 16bit로 만든다. Simulation은 센서용 링크의
 **저자 Limitation:** x/y 회전에서는 finger-side 접촉이 현재 센서로 관측되지 않아 실패한다. [§V-I, p.10] **Future Work:** 더 촘촘한 배열과 다양한 과업. [§VI]
 
 **프로젝트 해석:** 이진화의 전이상 이점을 지지하지만 threshold·dropout 수치를 그대로 복사할 근거는 아니다. 접촉 영역을 누락하면 bit의 단순성만으로 해결되지 않는다.
+
+<a id="b4"></a>
 
 ### B4. Enhancing Tactile-based Reinforcement Learning for Robotic Control
 
@@ -125,6 +135,8 @@ FSR 전압을 threshold해 16bit로 만든다. Simulation은 센서용 링크의
 
 ## 5. F/T·Wrench: RL에 들어가는 경로
 
+<a id="w1"></a>
+
 ### W1. CHEQ-ing the Box: Safe Variable Impedance Learning for Robotic Polishing
 
 **Emma Cramer, Lukas Jäschke, Sebastian Trimpe, 2025.** 분석은 [arXiv 2501.07985v1 및 부록](https://arxiv.org/html/2501.07985v1) 기준. [저자 코드](https://github.com/Data-Science-in-Mechanical-Engineering/polishing-cheq). 출판사 최종본은 이번에 확인하지 못해 preprint 방법·설정을 기준으로 기록한다.
@@ -141,6 +153,8 @@ FSR 전압을 threshold해 16bit로 만든다. Simulation은 센서용 링크의
 
 **프로젝트 해석:** 측정 힘→수치 관측→motion/impedance 선택의 구체적 구현 참고다. 고정 표면의 경로 오차는 자유 물체의 이동 오차와 다르다. 35 Hz는 원시 센서 sampling rate가 아니라 필터 설정이며, 20 Hz 샘플열에 그대로 적용할 수치가 아니다.
 
+<a id="w2"></a>
+
 ### W2. SRL-VIC: A Variable Stiffness-Based Safe Reinforcement Learning for Contact-Rich Robotic Tasks
 
 **Heng Zhang, Gokhan Solak, Gustavo J. G. Lahr, Arash Ajoudani. IEEE RA-L 9(6):5631–5638, 2024.** [DOI](https://doi.org/10.1109/LRA.2024.3396368) · [원문 v1](https://arxiv.org/html/2406.13744v1)
@@ -152,6 +166,8 @@ FSR 전압을 threshold해 16bit로 만든다. Simulation은 센서용 링크의
 **저자 Limitation:** single maze 학습은 새로운 일부 형태의 출구를 찾지 못한다. 안전 모델 일반화와 task 일반화는 다르며, sensing/dynamics 차이도 전이 실패 원인이었다. [§IV-C] **Future Work:** 더 일반적인 과업, model-based RL 통합. [§V]
 
 **프로젝트 해석:** 저항 증가 시 감속만 하는 대신 motion과 stiffness를 함께 바꾸는 근거다. 미로 탐색은 저자가 extended peg-in-hole로도 설명하는 경계 과업이며, 지정 물체를 목표 거리만큼 Sweep하는 검증은 아니다. Safety/recovery 모델을 현 프로젝트의 필수 기여로 추가하지 않는다.
+
+<a id="w3"></a>
 
 ### W3. Learning a High-quality Robotic Wiping Policy Using Systematic Reward Analysis and Visual-Language Model Based Curriculum
 
@@ -166,6 +182,8 @@ FSR 전압을 threshold해 16bit로 만든다. Simulation은 센서용 링크의
 **저자 Limitation:** 실물 성능과 wiping 밖 복잡한 과업에서의 VLM 시스템 일반화가 미검증이며 사전 waypoint 제공을 가정한다. **Future Work:** hardware 검증, 관측으로부터 waypoint 자동 생성, VLM의 다른 복잡한 과업 적용을 검토한다. [§VI]
 
 **프로젝트 해석:** ‘힘을 낮추거나 접촉만 유지하면서 진행하지 않는 정책’을 방지하는 보상 설계가 직접 유용하다. 다만 wiping waypoint 완료를 물체 변위 성공으로 바꾸어 해석하면 안 된다.
+
+<a id="w4"></a>
 
 ### W4. AFORCE — Learning Robotic Manipulation Skills Using an Adaptive Force-Impedance Action Space
 
@@ -182,6 +200,8 @@ Simulation wiping에서 **SAC 20 Hz→desired pose+wrench→adaptive force/imped
 **프로젝트 해석:** Sensor actor 입력을 바꾸는 실험과 force action/controller를 바꾸는 실험을 분리하는 참고다. 실물 Blind learned-RL Sweeping의 근거로 세지 않는다.
 
 ## 6. 반대 근거: Binary가 항상 충분하지는 않다
+
+<a id="c1"></a>
 
 ### C1. Beyond Binary: Sim-to-Real Dexterous Manipulation with Physics-Grounded Contact Representation
 

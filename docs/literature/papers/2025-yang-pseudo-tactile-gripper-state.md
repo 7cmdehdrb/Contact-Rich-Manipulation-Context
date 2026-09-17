@@ -1,5 +1,7 @@
 # Disambiguate Gripper State in Grasp-Based Tasks — 원문 상세 정리
 
+[문서 안내](../../README.md) · [문헌 색인](../README.md) · [전체 논문](README.md) · [원래 조사 · IROS-S02](../reviews/2026-09-15_iros-2023-2025-tactile-force-torque-rl-title-screening.md#iros-s02)
+
 ## 0. 논문 정보와 확인 범위
 
 | 항목 | 내용 |
@@ -8,13 +10,11 @@
 | 저자 | Yifei Yang, Lu Chen, Zherui Song, Yenan Chen, Wentao Sun, Zhongxiang Zhou, Rong Xiong, Yue Wang |
 | 출판 | 2025 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), Hangzhou, China, October 19–25, 2025, pp. 14899–14906 |
 | DOI | [10.1109/IROS60139.2025.11246513](https://doi.org/10.1109/IROS60139.2025.11246513) |
-| 문헌 관리 식별자 | [IROS 제목 선별 보고서](../reviews/2026-09-15_iros-2023-2025-tactile-force-torque-rl-title-screening.md)의 **IROS-S02**. 사용자 임시 선정 목록의 두 번째 논문이며 R1–R7과 별개다. |
+| 문헌 관리 식별자 | [IROS 제목 선별 보고서](../reviews/2026-09-15_iros-2023-2025-tactile-force-torque-rl-title-screening.md#iros-s02)의 **IROS-S02**. 사용자 임시 선정 목록의 두 번째 논문이며 R1–R7과 별개다. |
 | 정리일 | 2026-09-16 |
 | 확인한 원문 | 제공된 출판본 PDF 8쪽 전체. 본문 §I–VI, 식 (1), 번호 없는 pose 변환식, Fig. 1–5, Table I–IV, References [1]–[27] |
 | 확인하지 않은 자료 | 저자 프로젝트 페이지·보충 영상·코드·설정·체크포인트·원시 데이터, 인용된 선행논문의 개별 원문, 제조사 데이터시트 |
 | 원문 PDF SHA-256 | `1cfd60398be38d346147936354116d017f7fafdc026c6df0e917debdd1e49393` |
-
-[개별 논문 색인](README.md) · [문헌조사 자료](../README.md)
 
 이 문서는 해당 논문 자체의 문제 상황, Related Works, 환경·센서, 힘·접촉 처리, 학습·제어, 실험, 저자 명시 한계와 향후 연구를 정리한다. 다른 연구의 적용안은 포함하지 않는다. `[원문 §…, PDF p.…]`는 첨부 출판본의 위치이며, **PDF 1–8쪽은 인쇄 페이지 14899–14906**에 대응한다. `[6]` 같은 번호는 원문 참고문헌 번호다. 그림·표·수식은 PDF 렌더링과 대조했으며, 해설용 재구성과 원문에 직접 제시된 내용을 구분한다.
 

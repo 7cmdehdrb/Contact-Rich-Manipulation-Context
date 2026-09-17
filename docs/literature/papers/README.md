@@ -1,24 +1,32 @@
 # 개별 논문 원문 정독 노트
 
-[문헌조사 자료](../README.md) · [2026-09-14 종합 조사본](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md)
+[문서 안내](../../README.md) · [문헌 색인](../README.md) · [조사 그룹](../reviews/README.md)
 
 이 폴더는 제공된 논문 원문을 읽고 **그 논문 자체의 문제 상황, 관련 연구, 환경·센서, 핵심 메소드, 실험, 저자들이 밝힌 Limitation과 Future Work**를 정리하는 곳이다. 여러 논문을 비교하거나 프로젝트 적용안을 제안하는 `reviews/`와 구분한다. 개별 노트에는 별도 연구 주제에 억지로 대응시킨 설명을 넣지 않는다.
 
+현재 상세 노트는 **13편**이다(2026-09-17). 제목으로 찾거나 아래 조사 그룹으로 이동한다. 각 표의 **ID를 누르면 원래 조사 항목**, 마지막 열을 누르면 상세 노트가 열린다.
+
+[Blind Pushing · R1–R7](#blind-pushing) · [IROS 후속 선정](#iros-selected) · [사용자 발굴](#user-found) · [Binary·F/T 후속 정독](#binary-wrench) · [작성 지침](#paper-guidelines)
+
+<a id="blind-pushing"></a>
+
 ## 원문 정독 진행 현황
 
-기준일: 2026-09-16. `R1`–`R7`은 위 종합 조사본에서 부여한 식별자다. 다른 조사본의 같은 번호와 혼용하지 않는다. 아래 제목은 해당 조사본과의 대응을 위한 것이다.
+기준일: 2026-09-16. `R1`–`R7`은 [2026-09-14 종합 조사본](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md)에서 부여한 식별자다. 다른 조사본의 같은 번호와 혼용하지 않는다. 아래 제목은 해당 조사본과의 대응을 위한 것이다.
 
 | ID | 논문 | 이번 원문 정독 작업의 상태 | 상세 노트 |
 | --- | --- | --- | --- |
-| R1 | Force Push: Robust Single-Point Pushing With Force Feedback | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료 | [2024 · Heins & Schoellig](2024-heins-force-push.md) |
-| R2 | Pushing in the Dark: A Reactive Pushing Strategy for Mobile Robots Using Tactile Feedback | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료 | [2024 · Ozdamar et al.](2024-ozdamar-pushing-in-the-dark.md) |
-| R3 | Pose-and-shear-based tactile servoing | 제공된 출판본 PDF 32쪽, 본문·Appendix A–D 정독·정리 완료 | [2024 · Lloyd & Lepora](2024-lloyd-pose-and-shear-based-tactile-servoing.md) |
-| R4 | Sim-to-Real Model-Based and Model-Free Deep Reinforcement Learning for Tactile Pushing | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료 | [2023 · Yang et al.](2023-yang-sim-to-real-tactile-pushing.md) |
-| R5 | Tactile Gym 2.0: Sim-to-Real Deep Reinforcement Learning for Comparing Low-Cost High-Resolution Robot Touch | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료. Limitation·Future Work 포함 | [2022 · Lin et al.](2022-lin-tactile-gym-2-0.md) |
-| R6 | Bi-Touch: Bimanual Tactile Manipulation With Sim-to-Real Deep Reinforcement Learning | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료. Limitation·Future Work 포함 | [2023 · Lin et al.](2023-lin-bi-touch.md) |
-| R7 | Framework for Robot Door Opening Based on Visual, Force, and Tactile Integration | 제공된 출판본 PDF 19쪽, 본문·Appendix A–B 정독·정리 완료. Limitation·Future Work 포함 | [2026 · Šimundić et al.](2026-simundic-visuo-force-tactile-door-opening.md) |
+| [R1](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md#r1) | Force Push: Robust Single-Point Pushing With Force Feedback | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료 | [2024 · Heins & Schoellig](2024-heins-force-push.md) |
+| [R2](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md#r2) | Pushing in the Dark: A Reactive Pushing Strategy for Mobile Robots Using Tactile Feedback | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료 | [2024 · Ozdamar et al.](2024-ozdamar-pushing-in-the-dark.md) |
+| [R3](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md#r3) | Pose-and-shear-based tactile servoing | 제공된 출판본 PDF 32쪽, 본문·Appendix A–D 정독·정리 완료 | [2024 · Lloyd & Lepora](2024-lloyd-pose-and-shear-based-tactile-servoing.md) |
+| [R4](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md#r4) | Sim-to-Real Model-Based and Model-Free Deep Reinforcement Learning for Tactile Pushing | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료 | [2023 · Yang et al.](2023-yang-sim-to-real-tactile-pushing.md) |
+| [R5](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md#r5) | Tactile Gym 2.0: Sim-to-Real Deep Reinforcement Learning for Comparing Low-Cost High-Resolution Robot Touch | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료. Limitation·Future Work 포함 | [2022 · Lin et al.](2022-lin-tactile-gym-2-0.md) |
+| [R6](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md#r6) | Bi-Touch: Bimanual Tactile Manipulation With Sim-to-Real Deep Reinforcement Learning | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료. Limitation·Future Work 포함 | [2023 · Lin et al.](2023-lin-bi-touch.md) |
+| [R7](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md#r7) | Framework for Robot Door Opening Based on Visual, Force, and Tactile Integration | 제공된 출판본 PDF 19쪽, 본문·Appendix A–B 정독·정리 완료. Limitation·Future Work 포함 | [2026 · Šimundić et al.](2026-simundic-visuo-force-tactile-door-opening.md) |
 
 ‘이번 작업용 원문 미제공’은 새로 요청된 첨부 원문 기반 정독 작업의 상태다. 이전 종합 조사에서 어떤 출처도 읽지 않았다는 의미는 아니다. 정독 완료 역시 논문의 코드 실행·실험 재현 완료를 뜻하지 않는다. 제공되지 않은 논문에 빈 노트나 내용이 있는 것처럼 보이는 링크를 만들지 않는다.
+
+<a id="iros-selected"></a>
 
 ## IROS 2023–2025 후속 사용자 임시 선정
 
@@ -26,19 +34,23 @@
 
 | ID | 논문 | 원문 정독 상태 | 상세 노트 |
 | --- | --- | --- | --- |
-| IROS-S01 | Attention for Robot Touch: Tactile Saliency Prediction for Robust Sim-to-Real Tactile Control | 제공된 출판본 PDF 7쪽 전체 정독·정리 완료. Limitation·Future Work 포함 | [2023 · Lin et al.](2023-lin-attention-for-robot-touch.md) |
-| IROS-S02 | Disambiguate Gripper State in Grasp-Based Tasks: Pseudo-Tactile as Feedback Enables Pure Simulation Learning | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료. 저자 명시 제약·Future Work 확인 결과 포함 | [2025 · Yang et al.](2025-yang-pseudo-tactile-gripper-state.md) |
-| IROS-S03 | Learning Goal-Directed Object Pushing in Cluttered Scenes With Location-Based Attention | 제공된 출판본 PDF 7쪽 전체 정독·정리 완료. 저자 명시 제약·Future Work 확인 결과 포함 | [2025 · Dengler et al.](2025-dengler-location-based-attention-pushing.md) |
-| IROS-S04 | Multi-Fingered Dragging of Unknown Objects and Orientations Using Distributed Tactile Information Through Vision-Transformer and LSTM | 이번 후속 정독용 원문 미제공 | — |
-| IROS-S05 | Tactile Active Inference Reinforcement Learning for Efficient Robotic Manipulation Skill Acquisition | 제공된 출판본 PDF 6쪽 전체 정독·정리 완료. 저자 명시 제약·Future Work 확인 결과 포함 | [2024 · Liu et al.](2024-liu-tactile-active-inference-rl.md) |
+| [IROS-S01](../reviews/2026-09-15_iros-2023-2025-tactile-force-torque-rl-title-screening.md#iros-s01) | Attention for Robot Touch: Tactile Saliency Prediction for Robust Sim-to-Real Tactile Control | 제공된 출판본 PDF 7쪽 전체 정독·정리 완료. Limitation·Future Work 포함 | [2023 · Lin et al.](2023-lin-attention-for-robot-touch.md) |
+| [IROS-S02](../reviews/2026-09-15_iros-2023-2025-tactile-force-torque-rl-title-screening.md#iros-s02) | Disambiguate Gripper State in Grasp-Based Tasks: Pseudo-Tactile as Feedback Enables Pure Simulation Learning | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료. 저자 명시 제약·Future Work 확인 결과 포함 | [2025 · Yang et al.](2025-yang-pseudo-tactile-gripper-state.md) |
+| [IROS-S03](../reviews/2026-09-15_iros-2023-2025-tactile-force-torque-rl-title-screening.md#iros-s03) | Learning Goal-Directed Object Pushing in Cluttered Scenes With Location-Based Attention | 제공된 출판본 PDF 7쪽 전체 정독·정리 완료. 저자 명시 제약·Future Work 확인 결과 포함 | [2025 · Dengler et al.](2025-dengler-location-based-attention-pushing.md) |
+| [IROS-S04](../reviews/2026-09-15_iros-2023-2025-tactile-force-torque-rl-title-screening.md#iros-s04) | Multi-Fingered Dragging of Unknown Objects and Orientations Using Distributed Tactile Information Through Vision-Transformer and LSTM | 이번 후속 정독용 원문 미제공 | — |
+| [IROS-S05](../reviews/2026-09-15_iros-2023-2025-tactile-force-torque-rl-title-screening.md#iros-s05) | Tactile Active Inference Reinforcement Learning for Efficient Robotic Manipulation Skill Acquisition | 제공된 출판본 PDF 6쪽 전체 정독·정리 완료. 저자 명시 제약·Future Work 확인 결과 포함 | [2024 · Liu et al.](2024-liu-tactile-active-inference-rl.md) |
+
+<a id="user-found"></a>
 
 ## 사용자 별도 발굴 논문
 
-기존 일괄 조사 후보군에 없었으며 사용자가 별도로 제공한 논문은 [별도 발굴 누적 목록](../collections/user-found-papers.md)에 등록한다. 아래 `USER-P` 식별자는 R1–R7·IROS-S01–S05와 독립적이며, 등록 경로를 나타낼 뿐 방법론·연구 적합성의 확정을 뜻하지 않는다.
+기존 일괄 조사 후보군에 없었으며 사용자가 별도로 제공한 논문은 [별도 발굴 누적 목록](../reviews/user-found-papers.md)에 등록한다. 아래 `USER-P` 식별자는 R1–R7·IROS-S01–S05와 독립적이며, 등록 경로를 나타낼 뿐 방법론·연구 적합성의 확정을 뜻하지 않는다.
 
 | ID | 논문 | 원문 정독 상태 | 상세 노트 |
 | --- | --- | --- | --- |
-| USER-P001 | Gentle Object Retraction in Dense Clutter Using Multimodal Force Sensing and Imitation Learning | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료. Limitation·Future Work 포함 | [2026 · Brouwer et al.](2026-brouwer-gentle-object-retraction.md) |
+| [USER-P001](../reviews/user-found-papers.md#user-p001) | Gentle Object Retraction in Dense Clutter Using Multimodal Force Sensing and Imitation Learning | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료. Limitation·Future Work 포함 | [2026 · Brouwer et al.](2026-brouwer-gentle-object-retraction.md) |
+
+<a id="binary-wrench"></a>
 
 ## Binary Tactile·F/T 조사 후속 원문 정독
 
@@ -46,7 +58,9 @@
 
 | 조사본 ID | 논문 | 원문 정독 상태 | 상세 노트 |
 | --- | --- | --- | --- |
-| B1 | DexTouch: Learning to Seek and Manipulate Objects With Tactile Dexterity | 제공된 IEEE 출판본 PDF 8쪽 전체 정독·정리 완료. 식 (1)–(4), Table I–III, Limitation·Future Work와 미명시 사항 포함 | [2024 · Lee et al.](2024-lee-dextouch.md) |
+| [B1](../reviews/2026-09-16_binary-tactile-wrench-rl.md#b1) | DexTouch: Learning to Seek and Manipulate Objects With Tactile Dexterity | 제공된 IEEE 출판본 PDF 8쪽 전체 정독·정리 완료. 식 (1)–(4), Table I–III, Limitation·Future Work와 미명시 사항 포함 | [2024 · Lee et al.](2024-lee-dextouch.md) |
+
+<a id="paper-guidelines"></a>
 
 ## 공통 정리 구조
 
@@ -82,6 +96,6 @@ Limitation과 Future Work를 각각 식별 가능한 항목 또는 하위 절로
 
 ## 파일 관리
 
-파일명은 `게재연도-첫저자-논문주제.md`를 사용한다. R 번호는 기존 종합 조사본에 종속되므로 파일의 고유 이름으로 사용하지 않는다. 동일 논문의 보완·정정은 해당 파일과 Git 이력으로 관리하고, 새 원문을 정리할 때 이 색인의 상태와 링크를 함께 갱신한다.
+파일명은 `게재연도-첫저자-논문주제.md`를 사용한다. R 번호는 기존 종합 조사본에 종속되므로 파일의 고유 이름으로 사용하지 않는다. 동일 논문의 보완·정정은 해당 파일과 Git 이력으로 관리하고, 새 원문을 정리할 때 이 색인의 상태·링크와 상단의 상세 노트 수를 함께 갱신한다. 원래 보고서와 상세 노트 사이의 양방향 연결, 조사 그룹 안내 갱신, 링크 검증은 [문서 연결 관리](../README.md#literature-navigation)를 따른다.
 
 원문 PDF는 이 저장소에 복제하지 않는다. DOI 등 원문 위치와 확인한 파일의 해시를 노트에 남긴다. 자료를 읽었다는 이유로 프로젝트 결정·구현·실험 상태를 변경하지 않는다.

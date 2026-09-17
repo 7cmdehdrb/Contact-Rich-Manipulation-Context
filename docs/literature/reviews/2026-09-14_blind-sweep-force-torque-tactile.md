@@ -3,6 +3,20 @@
 **조사 기준일: 2026년 9월 14일**  
 **범위: 2022년 이후 SCIE 저널 논문. 직접 pushing 연구와 인접 조작 연구를 구분.**
 
+[조사 그룹](README.md) · [전체 논문](../papers/README.md)
+
+**논문별 상세노트 바로가기**
+
+| 조사 ID | 논문 | 상세노트 |
+| --- | --- | --- |
+| [R1](#r1) | Force Push | [상세노트](../papers/2024-heins-force-push.md) |
+| [R2](#r2) | Pushing in the Dark | [상세노트](../papers/2024-ozdamar-pushing-in-the-dark.md) |
+| [R3](#r3) | Pose-and-shear-based tactile servoing | [상세노트](../papers/2024-lloyd-pose-and-shear-based-tactile-servoing.md) |
+| [R4](#r4) | Sim-to-Real Model-Based and Model-Free Deep RL for Tactile Pushing | [상세노트](../papers/2023-yang-sim-to-real-tactile-pushing.md) |
+| [R5](#r5) | Tactile Gym 2.0 | [상세노트](../papers/2022-lin-tactile-gym-2-0.md) |
+| [R6](#r6) | Bi-Touch | [상세노트](../papers/2023-lin-bi-touch.md) |
+| [R7](#r7) | Framework for Robot Door Opening Based on Visual, Force, and Tactile Integration | [상세노트](../papers/2026-simundic-visuo-force-tactile-door-opening.md) |
+
 ## 1. 결론
 
 초기 정보 이후 물체의 시각적 자세를 계속 관측하지 않고 미는 방법은 이미 존재한다. 따라서 현재 연구에서 먼저 밝힐 것은 ‘Blind로 밀 수 있는가’라는 단일 성공 여부보다, **어떤 힘·접촉 정보를 어떤 표현으로 바꾸어 어떤 운동을 수정하는가**, 그리고 그 연결이 어느 센싱 조건에서 무너지는가다. [R1, R2]
@@ -46,7 +60,11 @@ Sider Scholar의 OpenAlex 기반 검색과 Scholar 검색으로 `tactile pushing
 
 ## 3. F/T 센서를 사용하는 경우
 
+<a id="r1"></a>
+
 ### R1. Force Push: Robust Single-Point Pushing With Force Feedback
+
+[논문 상세노트](../papers/2024-heins-force-push.md)
 
 **Heins & Schoellig, IEEE RA-L 9(8):6856–6863, 2024.** DOI: `10.1109/LRA.2024.3414180`
 
@@ -66,7 +84,11 @@ $$
 
 ## 4. Tactile 센서를 사용하는 경우
 
+<a id="r2"></a>
+
 ### R2. Pushing in the Dark: A Reactive Pushing Strategy for Mobile Robots Using Tactile Feedback
+
+[논문 상세노트](../papers/2024-ozdamar-pushing-in-the-dark.md)
 
 **Ozdamar et al., IEEE RA-L 9(8):6824–6831, 2024.** DOI: `10.1109/LRA.2024.3414279`
 
@@ -76,7 +98,11 @@ $$
 
 **경계:** 영역별 scalar/Boolean의 활용 사례지만 베이스의 커버리지와 부분 촉각 손은 다르다. 종료도 대표 접촉점 기준이므로 물체 전체 pose 달성으로 해석하지 않는다.
 
+<a id="r3"></a>
+
 ### R3. Pose-and-shear-based tactile servoing
+
+[논문 상세노트](../papers/2024-lloyd-pose-and-shear-based-tactile-servoing.md)
 
 **Lloyd & Lepora, IJRR 43(7), 2024.** DOI: `10.1177/02783649231225811`
 
@@ -86,7 +112,11 @@ $$
 
 **경계:** 물체 전체 pose보다 제어에 필요한 국소 접촉 상태를 추정한다. 고해상도 피부 변형에서 얻는 pose/shear가 17개 압력 scalar에서도 복원된다는 보장은 없다. 지지면·물체 형태에 따른 실패도 있어 보편적인 전도 방지 성능으로 확대할 수 없다.
 
+<a id="r4"></a>
+
 ### R4. Sim-to-Real Model-Based and Model-Free Deep Reinforcement Learning for Tactile Pushing
+
+[논문 상세노트](../papers/2023-yang-sim-to-real-tactile-pushing.md)
 
 **Yang et al., IEEE RA-L 8(9):5480–5487, 2023.** DOI: `10.1109/LRA.2023.3295236`
 
@@ -96,7 +126,11 @@ $$
 
 **경계:** Tactile pose는 물체 중심 pose가 아니다. 안정적인 초기 접촉을 전제하며 고정 전진 때문에 일부 가까운 목표는 도달하기 어렵다. 외부 ArUco는 평가용이지 actor 입력이 아니다.
 
+<a id="r5"></a>
+
 ### R5. Tactile Gym 2.0: Sim-to-Real Deep Reinforcement Learning for Comparing Low-Cost High-Resolution Robot Touch
+
+[논문 상세노트](../papers/2022-lin-tactile-gym-2-0.md)
 
 **Lin et al., IEEE RA-L 7(4):10754–10761, 2022.** DOI: `10.1109/LRA.2022.3195195`
 
@@ -108,7 +142,11 @@ $$
 
 **경계:** 물체를 무겁게 하는 것은 진단용 조건 변경이지, 가벼운 물체를 조작해야 하는 프로젝트의 해결책 자체는 아니다.
 
+<a id="r6"></a>
+
 ### R6. Bi-Touch: Bimanual Tactile Manipulation With Sim-to-Real Deep Reinforcement Learning
+
+[논문 상세노트](../papers/2023-lin-bi-touch.md)
 
 **Lin et al., IEEE RA-L 8(9):5472–5479, 2023.** DOI: `10.1109/LRA.2023.3295991`
 
@@ -130,7 +168,11 @@ R3–R6은 저자·연구실이 겹치는 계열이다. 네 독립 연구팀의 
 - 두 TacTip을 사용하는 R6을 ‘F/T+tactile’로 재분류하지 않는다.
 - F/T가 tactile 학습용 정답이나 보상 계산에만 사용되는 경우를 실행 중 융합으로 보지 않는다.
 
+<a id="r7"></a>
+
 ### R7. Framework for Robot Door Opening Based on Visual, Force, and Tactile Integration — 인접 연구
+
+[논문 상세노트](../papers/2026-simundic-visuo-force-tactile-door-opening.md)
 
 **Šimundić et al., IEEE Access 14:11110–11128, 2026.** DOI: `10.1109/ACCESS.2026.3655617`
 

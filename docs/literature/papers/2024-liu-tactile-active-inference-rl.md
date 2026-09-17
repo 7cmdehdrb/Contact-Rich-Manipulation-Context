@@ -1,5 +1,7 @@
 # Tactile Active Inference Reinforcement Learning — 원문 상세 정리
 
+[문서 안내](../../README.md) · [문헌 색인](../README.md) · [전체 논문](README.md) · [원래 조사 · IROS-S05](../reviews/2026-09-15_iros-2023-2025-tactile-force-torque-rl-title-screening.md#iros-s05)
+
 ## 0. 논문 정보와 확인 범위
 
 | 항목 | 내용 |
@@ -8,13 +10,11 @@
 | 저자 | Zihao Liu, Xing Liu, Yizhai Zhang, Zhengxiong Liu, Panfeng Huang |
 | 출판 | 2024 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), Abu Dhabi, UAE, October 14–18, 2024, pp. 10884–10889 |
 | DOI | [10.1109/IROS58592.2024.10802750](https://doi.org/10.1109/IROS58592.2024.10802750) |
-| 문헌 관리 식별자 | [IROS 제목 선별 보고서](../reviews/2026-09-15_iros-2023-2025-tactile-force-torque-rl-title-screening.md)의 **IROS-S05**. 기존 선정 논문이며 사용자 별도 발굴 목록의 새 항목이 아니다. |
+| 문헌 관리 식별자 | [IROS 제목 선별 보고서](../reviews/2026-09-15_iros-2023-2025-tactile-force-torque-rl-title-screening.md#iros-s05)의 **IROS-S05**. 기존 선정 논문이며 사용자 별도 발굴 목록의 새 항목이 아니다. |
 | 정리일 | 2026-09-16 |
 | 확인한 원문 | 첨부 출판본 PDF 6쪽 전체. 본문 §I–V, 식 (1)–(11), Fig. 1–7, References [1]–[22]. 번호가 부여된 표·알고리즘·부록은 없다. |
 | 확인하지 않은 자료 | 저자 코드·설정·원시 데이터·보충자료, 인용된 선행논문의 개별 원문, 제조사 데이터시트. 다른 논문이나 일반적인 구현 관행으로 미기재 내용을 채우지 않았다. |
 | 원문 PDF SHA-256 | `3fbd7187e4c38f2304ea421fe7979f896e82a815fee4f5cd11a811e3f4f7d8fc` |
-
-[개별 논문 색인](README.md) · [문헌조사 자료](../README.md)
 
 이 문서는 해당 논문 자체의 문제 상황, Related Work, 환경·센서, 촉각 처리, 학습·계획 방법, 실험, 저자 명시 한계와 향후 연구를 정리한다. 별도 연구 주제에 대한 적용안은 포함하지 않는다. `[원문 §…, PDF p.…]`는 첨부 출판본의 위치이며, **PDF 1–6쪽은 인쇄 페이지 10884–10889**에 대응한다. `[18]` 같은 표기는 원문 참고문헌 번호다. 수식과 그림은 PDF의 실제 표시를 확인했으며, 원문 식의 해설과 원문이 제시하지 않은 구현 정보를 구분한다.
 

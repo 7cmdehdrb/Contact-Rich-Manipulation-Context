@@ -67,3 +67,9 @@ EEF 이동 거리를 물체 이동 거리로 대체하여 성공했다고 쓰지
 결과는 한국어의 직접적이고 전문적인 문장으로 작성한다. 현재 상태, 새로 확인한 사실, 수정한 결정, 다음 행동을 구분한다. 논의만 진행했다면 ‘구현했다’고 쓰지 않는다.
 
 새 결정은 `docs/03_DECISIONS_AND_OPEN_QUESTIONS.md`에, 미팅은 `docs/02_MEETING_HISTORY.md`에, 실험은 `templates/RESEARCH_LOG.md` 형식의 별도 기록에 남긴다. 범위가 바뀌면 brief와 next actions도 갱신한다. 공개 저장소에 원본 녹취 전체, 무관한 개인 정보, 인증 정보, 센서 접속 비밀정보를 추가하지 않는다.
+
+### 문서 구조와 양방향 연결 — 2026-09-17 추가
+
+문서 탐색은 [문서 안내](docs/README.md)에서 시작한다. 문헌의 조사·선별·사용자 발굴 목록은 `docs/literature/reviews/`에, 개별 상세 정리는 `docs/literature/papers/`에 둔다. 사용자 발굴 목록의 고정 경로는 `docs/literature/reviews/user-found-papers.md`다.
+
+논문 노트를 추가할 때 원래 보고서의 상단 바로가기·해당 논문 항목에서 노트로 연결하고, 노트 상단에서 원래 조사 항목으로 돌아오도록 한다. 조사 그룹 안내·전체 논문 색인·문헌 색인도 함께 갱신한다. 상세 파일이 없는 항목에는 가짜 링크나 빈 노트를 만들지 않는다. 경로를 옮기면 모든 참조와 관리 규칙을 갱신하고 파일·anchor·도달성을 검사한다. 구체적인 절차는 [문서 연결 관리](docs/literature/README.md#literature-navigation)를 따른다.

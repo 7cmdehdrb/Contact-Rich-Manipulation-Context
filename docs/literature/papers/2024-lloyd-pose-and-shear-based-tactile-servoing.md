@@ -1,5 +1,7 @@
 # Pose-and-shear-based tactile servoing — 원문 상세 정리
 
+[문서 안내](../../README.md) · [문헌 색인](../README.md) · [전체 논문](README.md) · [원래 조사 · R3](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md#r3)
+
 ## 0. 논문 정보와 확인 범위
 
 | 항목 | 내용 |
@@ -8,13 +10,11 @@
 | 저자 | John Lloyd, Nathan F. Lepora |
 | 출판 | The International Journal of Robotics Research, 43(7), 1024–1055, 2024 |
 | DOI | [10.1177/02783649231225811](https://doi.org/10.1177/02783649231225811) |
-| 기존 조사본 식별자 | [2026-09-14 문헌조사](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md)의 **R3** |
+| 기존 조사본 식별자 | [2026-09-14 문헌조사](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md#r3)의 **R3** |
 | 정리일 | 2026-09-15 |
 | 확인한 원문 | 제공된 출판본 PDF 32쪽 전체. 본문 §1–6, Appendix A–D, 식 (1)–(54), Algorithm 1–3, Figure 1–20, Table 1–9 |
 | 확인하지 않은 자료 | 인용된 선행논문의 개별 원문, 저자 코드·데이터의 구현 및 실행 결과, 보충 영상, 제조사 데이터시트 |
 | 원문 PDF SHA-256 | `bddb6ee52583f7d9cfb43bae9e9df4e5d8ea61d27296cb41f2cb6b52c9f6d391` |
-
-[개별 논문 색인](README.md) · [문헌조사 자료](../README.md)
 
 이 문서는 논문 자체의 문제 설정, 관련 연구, 플랫폼·센서, 계산 방법, 제어, 실험과 한계를 정리한다. 별도 연구 주제에 대한 적용안은 포함하지 않는다. `[원문 §…, PDF p.…]`는 첨부 출판본의 위치이며, **PDF 1–32쪽은 인쇄 페이지 1024–1055**에 대응한다. 그림과 표는 PDF의 실제 표시를 기준으로 확인했다. 수식에서 직접 따라 나오는 해설과 표의 비교는 원문 결과에 대한 설명이며, 별도의 재현 실험 결과가 아니다.
 

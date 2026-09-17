@@ -1,5 +1,7 @@
 # 미팅·프로젝트 논의 이력
 
+[문서 안내](README.md) · [문헌조사](literature/README.md) · [조사 그룹](literature/reviews/README.md)
+
 기준일: 2026-09-14. 출처 ID와 첨부 행 위치는 [출처 목록](06_SOURCE_REGISTER.md)을 따른다. **회의 날짜와 문서 수정 날짜를 구분한다.** 당시 제안은 이력으로 보존하며 현재 사양은 [결정 목록](03_DECISIONS_AND_OPEN_QUESTIONS.md)을 따른다.
 
 ## 1. 시간순 요약

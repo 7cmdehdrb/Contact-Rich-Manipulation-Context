@@ -1,5 +1,7 @@
 # 프로젝트 개요 — 힘·촉각 기반 Blind Sweeping
 
+[문서 안내](README.md) · [문헌조사](literature/README.md) · [조사 그룹](literature/reviews/README.md)
+
 기준일: 2026-09-14. 출처 ID는 [출처 목록](06_SOURCE_REGISTER.md)을 따른다. 이 문서의 현재 방향은 S-0914를 우선하며, 설계 후보는 별도로 표시한다.
 
 ## 1. 연구 목적과 동기

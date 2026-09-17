@@ -1,5 +1,7 @@
 # Framework for Robot Door Opening Based on Visual, Force, and Tactile Integration — 원문 상세 정리
 
+[문서 안내](../../README.md) · [문헌 색인](../README.md) · [전체 논문](README.md) · [원래 조사 · R7](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md#r7)
+
 ## 0. 논문 정보와 확인 범위
 
 | 항목 | 내용 |
@@ -9,13 +11,11 @@
 | 출판 | IEEE Access, Volume 14, 11110–11128, 2026 |
 | DOI | [10.1109/ACCESS.2026.3655617](https://doi.org/10.1109/ACCESS.2026.3655617) |
 | 출판 이력 | 접수 2025-11-28, 승인 2026-01-08, 온라인 출판 2026-01-19, current version 2026-01-23 |
-| 기존 조사본 식별자 | [2026-09-14 문헌조사](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md)의 **R7** |
+| 기존 조사본 식별자 | [2026-09-14 문헌조사](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md#r7)의 **R7** |
 | 정리일 | 2026-09-16 |
 | 확인한 원문 | 제공된 출판본 PDF 19쪽 전체. 본문 §I–VIII, Appendix A–B, 식 (1)–(33), Algorithm 1–2, Fig. 1–14, Table 1–5, References [1]–[39] |
 | 확인하지 않은 자료 | 인용된 선행논문의 개별 원문, 저자 공개 코드·실행 설정·원시 실험 로그, 보충 영상, 제조사 데이터시트 |
 | 원문 PDF SHA-256 | `bd087fc82028a8d1b677ef51dcaaecc814c89d493347214d020002ff04e8f227` |
-
-[개별 논문 색인](README.md) · [문헌조사 자료](../README.md)
 
 이 문서는 논문 자체의 문제 상황, Related Research, 환경·센서, 힘·촉각 처리, 카메라 보정·계획 방법, 실험, 저자 명시 Limitation과 Future Work를 정리한다. 다른 연구 주제에 대한 적용안은 포함하지 않는다. `[원문 §…, PDF p.…]`는 첨부 출판본의 위치이며, **PDF 1–19쪽은 인쇄 페이지 11110–11128**에 대응한다. 참고문헌 번호 `[36]` 등과 기존 조사본의 R 번호를 구분한다.
 

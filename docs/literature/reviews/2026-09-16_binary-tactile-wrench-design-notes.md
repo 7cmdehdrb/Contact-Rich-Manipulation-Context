@@ -2,7 +2,20 @@
 
 기준일: 2026-09-16. **상태: PROPOSED. 구현 완료·최종 관측 사양·장비 실측 결과가 아니다.**
 
-[신규 문헌 조사](2026-09-16_binary-tactile-wrench-rl.md) · [문헌 색인](../README.md) · [프로젝트 결정과 미정 사항](../../03_DECISIONS_AND_OPEN_QUESTIONS.md)
+[조사 그룹](README.md) · [전체 논문](../papers/README.md) · [신규 문헌 조사](2026-09-16_binary-tactile-wrench-rl.md) · [문헌 색인](../README.md) · [프로젝트 결정과 미정 사항](../../03_DECISIONS_AND_OPEN_QUESTIONS.md)
+
+**이 설계안에서 인용한 근거 문헌**
+
+ID는 [원문 조사](2026-09-16_binary-tactile-wrench-rl.md)의 논문 구분을 따른다.
+
+| 조사 ID | 논문 | 상세노트 |
+| --- | --- | --- |
+| [B1](2026-09-16_binary-tactile-wrench-rl.md#b1) | DexTouch | [상세노트](../papers/2024-lee-dextouch.md) |
+| [B3](2026-09-16_binary-tactile-wrench-rl.md#b3) | Rotating without Seeing | 미작성 |
+| [W1](2026-09-16_binary-tactile-wrench-rl.md#w1) | CHEQ-ing the Box | 미작성 |
+| [W2](2026-09-16_binary-tactile-wrench-rl.md#w2) | SRL-VIC | 미작성 |
+| [W3](2026-09-16_binary-tactile-wrench-rl.md#w3) | High-quality Wiping | 미작성 |
+| [W4](2026-09-16_binary-tactile-wrench-rl.md#w4) | AFORCE | 미작성 |
 
 ## 1. 이번 조사에서 검증할 설계 가설
 
@@ -25,7 +38,7 @@
 | 이진화 | 대표값 → 영역별 접촉 bit | 영역별 threshold와 hysteresis 후보 비교 |
 | 시간 정렬 | 비동기 센서 → policy tick의 observation | 오래된 값을 새 측정으로 취급하지 않음 |
 
-DexTouch의 확인된 처리 순서는 **FSR → low-pass filter → threshold → binary vector**다. 아래 hysteresis·validity mask·시간창 통계는 본 프로젝트에 대한 추가 제안이며 그 논문의 구현이라고 쓰지 않는다. [문헌 조사 B1]
+DexTouch의 확인된 처리 순서는 **FSR → low-pass filter → threshold → binary vector**다. 아래 hysteresis·validity mask·시간창 통계는 본 프로젝트에 대한 추가 제안이며 그 논문의 구현이라고 쓰지 않는다. [문헌 조사 B1](2026-09-16_binary-tactile-wrench-rl.md#b1)
 
 ### 2.2 필터와 영역 축약
 
@@ -72,9 +85,9 @@ $$
 4. 영역별 차이가 크면 동일 threshold를 강제하지 않는다.
 5. 시뮬레이션에도 검출확률·threshold 오차·지연을 대응시킨 뒤 정책을 비교한다.
 
-논문의 **시뮬레이션 threshold**를 실물의 최소 감지 힘이나 제품 분해능으로 사용하지 않는다. DexTouch와 Yin 등의 0.01 N은 해당 논문 설정의 근거이며 Inspire Hand에 그대로 복사할 값이 아니다. 검출 가능한 신호가 없으면 이진화가 해당 채널에 없던 직접 관측을 만들어 주지는 않는다. 다른 센서·이력을 이용한 접촉 추정은 별도 문제다. [문헌 조사 B1, B3]
+논문의 **시뮬레이션 threshold**를 실물의 최소 감지 힘이나 제품 분해능으로 사용하지 않는다. DexTouch와 Yin 등의 0.01 N은 해당 논문 설정의 근거이며 Inspire Hand에 그대로 복사할 값이 아니다. 검출 가능한 신호가 없으면 이진화가 해당 채널에 없던 직접 관측을 만들어 주지는 않는다. 다른 센서·이력을 이용한 접촉 추정은 별도 문제다. [문헌 조사 B1](2026-09-16_binary-tactile-wrench-rl.md#b1), [B3](2026-09-16_binary-tactile-wrench-rl.md#b3)
 
-가상 tactile은 실제 센서가 덮는 패치의 접촉만 반영해야 한다. 센서가 없는 부모 손가락 링크 전체의 접촉으로 대체하면 실물보다 넓은 coverage를 준다. 또한 실제 저항식 센서의 normal-force 반응과 simulation의 net-force norm은 shear 포함 여부·다중접촉 상쇄 때문에 같지 않을 수 있다. 측정축과 힘을 모으는 규칙을 맞춘 뒤 threshold를 비교한다. [문헌 조사 B3 및 본 프로젝트 설계 해석]
+가상 tactile은 실제 센서가 덮는 패치의 접촉만 반영해야 한다. 센서가 없는 부모 손가락 링크 전체의 접촉으로 대체하면 실물보다 넓은 coverage를 준다. 또한 실제 저항식 센서의 normal-force 반응과 simulation의 net-force norm은 shear 포함 여부·다중접촉 상쇄 때문에 같지 않을 수 있다. 측정축과 힘을 모으는 규칙을 맞춘 뒤 threshold를 비교한다. [문헌 조사 B3](2026-09-16_binary-tactile-wrench-rl.md#b3) 및 본 프로젝트 설계 해석
 
 ### 2.4 Sensor rate와 policy rate의 차이
 
@@ -154,7 +167,7 @@ $\xi_0$는 허용된 초기 정보, $g$는 목표 방향·거리, $c_t$는 영�
 
 첫 센서 비교에서는 이미 검증할 Cartesian action→controller 경로를 고정한다. 정책이 속도나 Δpose를 출력하고 OSC/impedance 등의 저수준 제어기가 실행하는 구성이 가능하다. 구현 저장소를 읽기 전에는 현재 controller를 확정하지 않는다.
 
-SRL-VIC의 Δposition+stiffness, polishing 연구의 motion+impedance는 **추가 action-space 선택지**다. Binary의 효용을 검증하는 동시에 stiffness 자유도까지 바꾸면 성능 차이의 원인을 구분하기 어렵다. 초기 센서 표현 비교 후 별도 ablation으로 검토한다. AFORCE처럼 measured force가 주로 저수준 controller에 들어가는 경우도 있으므로, ‘힘을 썼다’와 ‘actor가 힘을 관측했다’를 기록에서 구분한다. [문헌 조사 W1–W4]
+SRL-VIC의 Δposition+stiffness, polishing 연구의 motion+impedance는 **추가 action-space 선택지**다. Binary의 효용을 검증하는 동시에 stiffness 자유도까지 바꾸면 성능 차이의 원인을 구분하기 어렵다. 초기 센서 표현 비교 후 별도 ablation으로 검토한다. AFORCE처럼 measured force가 주로 저수준 controller에 들어가는 경우도 있으므로, ‘힘을 썼다’와 ‘actor가 힘을 관측했다’를 기록에서 구분한다. [문헌 조사 W1](2026-09-16_binary-tactile-wrench-rl.md#w1), [W2](2026-09-16_binary-tactile-wrench-rl.md#w2), [W3](2026-09-16_binary-tactile-wrench-rl.md#w3), [W4](2026-09-16_binary-tactile-wrench-rl.md#w4)
 
 ### 4.4 Reward와 종료
 

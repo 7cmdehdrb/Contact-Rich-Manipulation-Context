@@ -1,8 +1,10 @@
 # DexTouch: Learning to Seek and Manipulate Objects With Tactile Dexterity
 
-정리일: **2026-09-17**. 사용자가 제공한 **IEEE Robotics and Automation Letters 출판본 PDF 8쪽 전체**를 기준으로 작성한 개별 논문 정독 노트다. 기존 [Binary Tactile·F/T 신규 조사](../reviews/2026-09-16_binary-tactile-wrench-rl.md)의 **B1**에 해당한다. 해당 조사에서 사용한 arXiv 판본의 내용을 출판본에 자동 합치지 않았다.
+[문서 안내](../../README.md) · [문헌 색인](../README.md) · [전체 논문](README.md) · [원래 조사 · B1](../reviews/2026-09-16_binary-tactile-wrench-rl.md#b1)
 
-[개별 논문 색인](README.md) · [문헌조사 자료](../README.md) · [DOI](https://doi.org/10.1109/LRA.2024.3478571) · [저자 프로젝트](https://lee-kangwon.github.io/dextouch/) · [공개 원문 식별자](https://arxiv.org/abs/2401.12496)
+정리일: **2026-09-17**. 사용자가 제공한 **IEEE Robotics and Automation Letters 출판본 PDF 8쪽 전체**를 기준으로 작성한 개별 논문 정독 노트다. 기존 [Binary Tactile·F/T 신규 조사](../reviews/2026-09-16_binary-tactile-wrench-rl.md#b1)의 **B1**에 해당한다. 해당 조사에서 사용한 arXiv 판본의 내용을 출판본에 자동 합치지 않았다.
+
+[DOI](https://doi.org/10.1109/LRA.2024.3478571) · [저자 프로젝트](https://lee-kangwon.github.io/dextouch/) · [공개 원문 식별자](https://arxiv.org/abs/2401.12496)
 
 ## 0. 논문 정보와 확인 범위
 

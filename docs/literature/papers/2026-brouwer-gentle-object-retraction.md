@@ -1,5 +1,7 @@
 # Gentle Object Retraction in Dense Clutter — 원문 상세 정리
 
+[문서 안내](../../README.md) · [문헌 색인](../README.md) · [전체 논문](README.md) · [원래 조사 · USER-P001](../reviews/user-found-papers.md#user-p001)
+
 ## 0. 논문 정보와 확인 범위
 
 | 항목 | 내용 |
@@ -9,13 +11,11 @@
 | 출판 | IEEE Robotics and Automation Letters, Vol. 11, No. 2, February 2026, pp. 1578–1585 |
 | DOI | [10.1109/LRA.2025.3643332](https://doi.org/10.1109/LRA.2025.3643332) |
 | 출판 이력 | 접수 2025-06-17, 승인 2025-11-28, 온라인 출판 2025-12-11, current version 2025-12-19. 권·호의 게재연도 2026과 온라인 출판연도 2025를 구분한다. |
-| 문헌 관리 ID | [사용자 별도 발굴 논문 목록](../collections/user-found-papers.md)의 **USER-P001**. 기존 조사본의 R1–R7 및 IROS-S01–S05에 추가한 항목이 아니다. |
+| 문헌 관리 ID | [사용자 별도 발굴 논문 목록](../reviews/user-found-papers.md#user-p001)의 **USER-P001**. 기존 조사본의 R1–R7 및 IROS-S01–S05에 추가한 항목이 아니다. |
 | 정리일 | 2026-09-16 |
 | 확인한 원문 | 첨부 출판본 PDF 8쪽 전체. 본문 §I–VII, 식 (1)–(3), Fig. 1–7, References [1]–[46]. 번호가 부여된 표와 부록은 없다. |
 | 확인하지 않은 자료 | 보충 영상·다운로드 자료, 코드·설정·체크포인트·원시 로그, 인용된 선행논문의 개별 원문, 제조사 데이터시트 |
 | 원문 PDF SHA-256 | `aea8d5dca5fa450d5ca5385d33cfde6963921726202723eee2fd916b24ff093d` |
-
-[개별 논문 색인](README.md) · [문헌조사 자료](../README.md)
 
 이 문서는 해당 논문 자체의 문제, Related Work, 환경·센서, 힘 처리, 모방학습, 실험, 저자 명시 Limitation 및 Future Work를 정리한다. 다른 연구에 대한 적용안은 포함하지 않는다. `[원문 §…, PDF p.…]`는 첨부 출판본의 위치이며, **PDF 1–8쪽은 인쇄 페이지 1578–1585**에 대응한다. `[35]` 같은 번호는 원문의 참고문헌 번호다. 수식 해설과 비율 계산은 원문에서 출발한 재구성이며 새로운 실험 결과가 아니다.
 

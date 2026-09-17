@@ -1,5 +1,7 @@
 # Force Push — 원문 상세 정리
 
+[문서 안내](../../README.md) · [문헌 색인](../README.md) · [전체 논문](README.md) · [원래 조사 · R1](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md#r1)
+
 ## 0. 논문 정보와 확인 범위
 
 | 항목 | 내용 |
@@ -8,13 +10,11 @@
 | 저자 | Adam Heins, Angela P. Schoellig |
 | 출판 | IEEE Robotics and Automation Letters, 9(8), 6856–6863, August 2024 |
 | DOI | [10.1109/LRA.2024.3414180](https://doi.org/10.1109/LRA.2024.3414180) |
-| 기존 조사본 식별자 | [2026-09-14 문헌조사](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md)의 **R1** |
+| 기존 조사본 식별자 | [2026-09-14 문헌조사](../reviews/2026-09-14_blind-sweep-force-torque-tactile.md#r1)의 **R1** |
 | 정리 기준일 | 2026-09-14 |
 | 정독 대상 | 제공된 출판본 PDF 8쪽 전체. 식 (1)–(5), 번호 없는 정의·필터 수식, Table I–II, Fig. 1–14를 본문과 대조 |
 | 확인하지 않은 자료 | 인용된 개별 선행논문의 원문, 저자 코드의 구현·실행 결과, 보충 영상, 제조사 데이터시트 |
 | 원문 PDF SHA-256 | `93c06694fda20a300d07bb12d3cee8ae06a5edfcc724ccf40ad9fa5410a1f6a7` |
-
-[개별 논문 색인](README.md) · [문헌조사 자료](../README.md)
 
 이 문서는 논문의 문제 설정, Related Work, 환경·센서, 힘 처리, 제어법, 실험과 한계를 정리한다. 별도 연구 주제에 대한 적용안은 포함하지 않는다. `[원문 §…, PDF p.…]`는 첨부 출판본의 위치이며, PDF 1–8쪽은 인쇄 페이지 6856–6863에 대응한다. `[3]`, `[26]` 등은 **원문의 참고문헌 번호**다. 장비의 미기재 사양을 외부 데이터시트에서 보충하지 않았으며, 수식에서 직접 풀어 쓴 설명은 별도로 표시한다.
 

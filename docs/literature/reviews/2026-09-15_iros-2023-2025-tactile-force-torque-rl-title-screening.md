@@ -7,6 +7,18 @@
 
 **후속 갱신 — 2026-09-16:** 사용자가 관련 논문 5편을 임시 선정했다. 선정 목록·서지·원문 정독 상태는 [§11](#11-사용자-임시-선정-및-후속-원문-정독--2026-09-16-추가)에 별도 기록한다. 1–10절은 2026-09-15 제목 기반 조사 기록이다.
 
+[조사 그룹](README.md) · [전체 논문](../papers/README.md)
+
+**후속 정독 바로가기**
+
+| 선정 ID | 논문 | 상세노트 상태 |
+| --- | --- | --- |
+| [IROS-S01](#iros-s01) | Attention for Robot Touch | [상세노트](../papers/2023-lin-attention-for-robot-touch.md) · 완료 |
+| [IROS-S02](#iros-s02) | Disambiguate Gripper State in Grasp-Based Tasks: Pseudo-Tactile as Feedback | [상세노트](../papers/2025-yang-pseudo-tactile-gripper-state.md) · 완료 |
+| [IROS-S03](#iros-s03) | Learning Goal-Directed Object Pushing in Cluttered Scenes With Location-Based Attention | [상세노트](../papers/2025-dengler-location-based-attention-pushing.md) · 완료 |
+| [IROS-S04](#iros-s04) | Multi-Fingered Dragging of Unknown Objects and Orientations Using Distributed Tactile Information Through Vision-Transformer and LSTM | 미작성 — 후속 정독용 원문 미제공 |
+| [IROS-S05](#iros-s05) | Tactile Active Inference Reinforcement Learning | [상세노트](../papers/2024-liu-tactile-active-inference-rl.md) · 완료 |
+
 ## 1. 결론
 
 제공된 CSV에 수록된 제목 레코드 **4,762건**을 대상으로, 초기 시각 관측 이후 손목 F/T와 손의 촉각 피드백으로 수행하는 Blind Sweeping 연구에 연결될 가능성이 있는 제목을 선별했다. 완전히 같은 제목 1건을 제외한 고유 제목은 4,761개이며, 최종 후보는 **31편**이다.
@@ -97,7 +109,7 @@
 | 1103 | **Contact-Aware Non-Prehensile Manipulation for Object Retrieval in Cluttered Environments.** | clutter, contact-aware, non-prehensile retrieval이 결합됨 | learned policy 여부, contact 정보의 측정 방식, 온라인 vision 사용 여부 |
 | 1108 | **Pre-and Post-Contact Policy Decomposition for Non-Prehensile Manipulation with Zero-Shot Sim-To-Real Transfer.** | contact 전후 policy 분해와 non-prehensile sim-to-real이 명시됨 | policy 학습법, 접촉 관측, 전환 조건, 실물 센서 구성 |
 | 1123 | **Deep Functional Predictive Control (deep-FPC): Robot Pushing 3-D Cluster Using Tactile Prediction.** | tactile prediction이 pushing control에 연결됨 | RL 여부, tactile prediction의 입력·출력, 예측에서 행동까지의 연결 |
-| 1128 | **Attention for Robot Touch: Tactile Saliency Prediction for Robust Sim-to-Real Tactile Control.** | tactile prediction, control, sim-to-real이 명시됨 | manipulation policy인지 여부, saliency가 행동 결정에 사용되는 방식 |
+| 1128 | **Attention for Robot Touch: Tactile Saliency Prediction for Robust Sim-to-Real Tactile Control.** [상세노트](../papers/2023-lin-attention-for-robot-touch.md) | tactile prediction, control, sim-to-real이 명시됨 | manipulation policy인지 여부, saliency가 행동 결정에 사용되는 방식 |
 
 ## 5. IROS 2024
 
@@ -105,7 +117,7 @@
 
 | CSV # | 논문 제목 | 제목에서 확인되는 단서 | 원문에서 확인할 사항 |
 | ---: | --- | --- | --- |
-| 1146 | **Tactile Active Inference Reinforcement Learning for Efficient Robotic Manipulation Skill Acquisition.** | tactile, reinforcement learning, manipulation이 모두 명시됨 | 실제 tactile 관측, active inference와 RL의 결합, 행동 공간과 실물 검증 |
+| 1146 | **Tactile Active Inference Reinforcement Learning for Efficient Robotic Manipulation Skill Acquisition.** [상세노트](../papers/2024-liu-tactile-active-inference-rl.md) | tactile, reinforcement learning, manipulation이 모두 명시됨 | 실제 tactile 관측, active inference와 RL의 결합, 행동 공간과 실물 검증 |
 
 ### 5.2 원문 확인 후보 — 9편
 
@@ -131,7 +143,7 @@
 | ---: | --- | --- | --- |
 | 171 | **VDTF-ACT: ACT-based Multimodal Space Fine Manipulation Method with Visual Depth Tactile Fusion.** | visual-depth–tactile fusion과 ACT 기반 manipulation이 결합됨 | ACT가 imitation policy인지, tactile의 실행 중 사용, 외부 vision 의존성 |
 | 728 | **Learning Gentle Grasping Using Vision, Sound, and Touch.** | touch를 포함한 multimodal 입력으로 gentle grasping을 학습함 | RL 여부, touch의 행동 기여, 힘 제한과 feedback 구조 |
-| 1371 | **Disambiguate Gripper State in Grasp-Based Tasks: Pseudo-Tactile as Feedback Enables Pure Simulation Learning.** | pseudo-tactile feedback과 simulation learning이 결합됨 | pseudo-tactile의 정의, 실물 센서 사용 여부, actor 입력과 sim-to-real 방식 |
+| 1371 | **Disambiguate Gripper State in Grasp-Based Tasks: Pseudo-Tactile as Feedback Enables Pure Simulation Learning.** [상세노트](../papers/2025-yang-pseudo-tactile-gripper-state.md) | pseudo-tactile feedback과 simulation learning이 결합됨 | pseudo-tactile의 정의, 실물 센서 사용 여부, actor 입력과 sim-to-real 방식 |
 | 1788 | **UltraDP: Generalizable Carotid Ultrasound Scanning with Force-Aware Diffusion Policy.** | force-aware 정보와 diffusion policy가 직접 결합됨 | 실제 force sensing, diffusion policy의 관측·행동, 의료 scanning과 sweeping의 공통 제어 요소 |
 
 ### 6.2 그 밖의 원문 확인 후보 — 8편
@@ -140,7 +152,7 @@
 | ---: | --- | --- | --- |
 | 331 | **Adaptive Visuo-Tactile Fusion with Predictive Force Attention for Dexterous Manipulation.** | visuo-tactile fusion과 predictive force attention이 명시됨 | perception module인지 policy인지, 실행 중 센서와 행동의 연결 |
 | 662 | **High-dynamic Tactile Sensing for Tactile Servo Manipulation: Let Robots Swing a Hammer.** | 고속 tactile sensing과 tactile servo manipulation이 결합됨 | 학습 policy 여부, tactile update rate와 행동 제어 구조 |
-| 727 | **Learning Goal-Directed Object Pushing in Cluttered Scenes With Location-Based Attention.** | cluttered pushing을 직접 학습함 | tactile/F/T 사용 여부, location attention의 입력, 온라인 vision 의존성 |
+| 727 | **Learning Goal-Directed Object Pushing in Cluttered Scenes With Location-Based Attention.** [상세노트](../papers/2025-dengler-location-based-attention-pushing.md) | cluttered pushing을 직접 학습함 | tactile/F/T 사용 여부, location attention의 입력, 온라인 vision 의존성 |
 | 811 | **CATCH-FORM-3D: Compliance-Aware Tactile Control and Hybrid Deformation Regulation for 3D Viscoelastic Object Manipulation.** | tactile control과 compliance-aware manipulation이 명시됨 | learned policy 여부, tactile·force 표현, 저수준 제어와 행동 정책의 경계 |
 | 1150 | **VibeCheck: Using Active Acoustic Tactile Sensing for Contact-Rich Manipulation.** | active acoustic tactile sensing과 contact-rich manipulation이 결합됨 | 학습 policy 여부, 센서 관측에서 행동까지의 연결 |
 | 1813 | **Augmenting robotic disassembly skill: combining compliance control strategy with reinforcement learning for twist-pulling disassembly \*.** | compliance control과 reinforcement learning이 결합됨 | 실제 tactile/F/T 관측, compliance와 RL action의 역할 분담 |
@@ -243,7 +255,7 @@ Pushing, scooping, dragging, cleaning, retrieval은 세 연도에 걸쳐 반복�
 | IROS-S01 | Attention for Robot Touch: Tactile Saliency Prediction for Robust Sim-to-Real Tactile Control | 2023 CSV #1128, §4.2 | 사용자 임시 선정 | 제공된 출판본 PDF 7쪽 정독·정리 완료. [상세 노트](../papers/2023-lin-attention-for-robot-touch.md) |
 | IROS-S02 | Disambiguate Gripper State in Grasp-Based Tasks: Pseudo-Tactile as Feedback Enables Pure Simulation Learning | 2025 CSV #1371, §6.1 | 사용자 임시 선정 | 제공된 출판본 PDF 8쪽 정독·정리 완료. [상세 노트](../papers/2025-yang-pseudo-tactile-gripper-state.md) |
 | IROS-S03 | Learning Goal-Directed Object Pushing in Cluttered Scenes With Location-Based Attention | 2025 CSV #727, §6.2 | 사용자 임시 선정 | 제공된 출판본 PDF 7쪽 정독·정리 완료. [상세 노트](../papers/2025-dengler-location-based-attention-pushing.md) |
-| IROS-S04 | Multi-Fingered Dragging of Unknown Objects and Orientations Using Distributed Tactile Information Through Vision-Transformer and LSTM | 2024 CSV #711, §5.2 | 사용자 임시 선정 | 이번 후속 정독용 원문 미제공. 사용자 제공 서지만 기록 |
+| <a id="iros-s04"></a>IROS-S04 | Multi-Fingered Dragging of Unknown Objects and Orientations Using Distributed Tactile Information Through Vision-Transformer and LSTM | 2024 CSV #711, §5.2 | 사용자 임시 선정 | 이번 후속 정독용 원문 미제공. 사용자 제공 서지만 기록 |
 | IROS-S05 | Tactile Active Inference Reinforcement Learning for Efficient Robotic Manipulation Skill Acquisition | 2024 CSV #1146, §5.1 | 사용자 임시 선정 | 제공된 출판본 PDF 6쪽 정독·정리 완료. [상세 노트](../papers/2024-liu-tactile-active-inference-rl.md) |
 
 ### 11.2 사용자 제공 서지
@@ -260,6 +272,8 @@ Pushing, scooping, dragging, cleaning, retrieval은 세 연도에 걸쳐 반복�
 
 **IROS-S05 / 사용자 [5]** — Z. Liu, X. Liu, Y. Zhang, Z. Liu, and P. Huang, “Tactile Active Inference Reinforcement Learning for Efficient Robotic Manipulation Skill Acquisition,” in *2024 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)*, Abu Dhabi, United Arab Emirates: IEEE, Oct. 2024, pp. 10884–10889. DOI: [10.1109/IROS58592.2024.10802750](https://doi.org/10.1109/IROS58592.2024.10802750).
 
+<a id="iros-s01"></a>
+
 ### 11.3 IROS-S01에서 원문으로 확인한 사항
 
 *Attention for Robot Touch*는 **새로운 pushing 정책보다, 목표 edge와 distractor가 동시에 닿았을 때 목표 접촉 표현을 분리하는 방법**이 중심이다. ConDepNet은 real tactile image를 contact depth로 변환하고, TacSalNet은 목표 saliency를 예측하며, TacNGen은 VAE로 학습용 접촉 잡음을 생성한다. 이 표현을 PoseNet–PID 또는 image-based deep-RL edge-following에 연결한다. 별도 손목 F/T, 물리 단위 힘 추종, 물체 운반의 목표 도달을 검증한 논문으로 분류하지 않는다. [첨부 출판본 §III–IV, Fig. 2·5, PDF pp. 2–6]
@@ -268,6 +282,8 @@ GAN·VAE의 손실식과 대응/합성 데이터 생성법은 본문에 있지�
 
 이 절의 원문 확인 결과는 IROS-S01에만 적용한다. IROS-S02·S03·S05의 확인 결과는 아래 §11.4–11.6에 별도로 기록한다. 원문 미제공인 IROS-S04의 실제 센서 구성, RL 채택 여부, 관측·행동·성과를 이름이나 임시 선정 사실만으로 확정하지 않는다.
 
+
+<a id="iros-s02"></a>
 
 ### 11.4 IROS-S02에서 원문으로 확인한 사항 — 2026-09-16
 
@@ -279,6 +295,8 @@ GAN·VAE의 손실식과 대응/합성 데이터 생성법은 본문에 있지�
 
 이 원문 분류는 사용자의 임시 선정을 삭제하거나 부적합으로 확정하는 결정이 아니다. 최초 제목 선별과 후속 원문 확인을 구분하기 위한 기록이며, IROS-S03의 확인 결과는 아래 §11.5에 별도로 기록한다. IROS-S05의 확인 결과는 §11.6에 기록하며, IROS-S04의 정독 완료를 뜻하지 않는다.
 
+<a id="iros-s03"></a>
+
 ### 11.5 IROS-S03에서 원문으로 확인한 사항 — 2026-09-16
 
 *Learning Goal-Directed Object Pushing in Cluttered Scenes With Location-Based Attention*는 **현재 물체 pose·목표 pose·pusher 위치와 binary occupancy grid를 사용하는 PPO pushing 연구**다. F/T·tactile이 actor 관측으로 제시되지 않으며, 실물에서는 Vicon 또는 RealSense D435 3대·AprilTags·point-cloud fusion으로 실행 중 지각 정보를 얻는다. `Guidance-free`는 global path·그 경로상의 subgoal이 없다는 뜻이지 초기 관측만 사용하는 Blind 제어라는 뜻이 아니다. [첨부 출판본 §III, §IV-E, Fig. 2, PDF pp. 2–3, 6]
@@ -288,6 +306,8 @@ GAN·VAE의 손실식과 대응/합성 데이터 생성법은 본문에 있지�
 단일 장애물 정책의 두 장애물 직접 적용은 성공률 48.1%·충돌률 50.7%로 CNN보다 낮았고, 두 장애물 환경에서 5 × 10^8 steps 추가 학습한 뒤 91.2%·3.54%로 개선되었다. 이 결과를 모든 clutter에 대한 즉시 일반화로 확대하지 않는다. 실물 정량 결과는 MoCap의 세 장면에서 100%·100%·90%이며, dynamic·3Cam은 별도 정성 시연이다. 목표 pose도 실물에서는 고정했다. [첨부 출판본 §IV-D–E, Table II, PDF pp. 5–7]
 
 원문에는 구체적인 Future Work 계획이 없으며, 단일→두 장애물 성능 저하·잔여 실패·실물 평가 범위 등 저자 명시 제약을 따로 정리했다. Grid100 × 140과 patch16 × 16의 가장자리 처리, Table I의 discount/GAE 기호, Table II caption의 포괄 주장과 예외도 기록했다. 자세한 내용은 [개별 정독 노트](../papers/2025-dengler-location-based-attention-pushing.md)를 따른다. 이 분류는 사용자의 임시 선정을 삭제하거나 부적합으로 확정하는 결정이 아니며, IROS-S05는 아래 §11.6에서 별도로 다룬다. IROS-S04는 아직 후속 정독용 원문 미제공 상태다.
+
+<a id="iros-s05"></a>
 
 ### 11.6 IROS-S05에서 원문으로 확인한 사항 — 2026-09-16
 
