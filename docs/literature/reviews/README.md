@@ -20,6 +20,7 @@
 | 문서 | 근거 조사 | 읽을 때의 구분 |
 | --- | --- | --- |
 | [Binary Tactile·Wrench 입력 처리 및 비교 실험 제안](2026-09-16_binary-tactile-wrench-design-notes.md) | [Binary Tactile·F/T 조사](2026-09-16_binary-tactile-wrench-rl.md) | PROPOSED. 문헌의 방법과 프로젝트에 대한 제안을 구분하며, 구현 완료·최종 사양으로 읽지 않음 |
+| [힘·촉각 기반 Sweeping — 9월 18일 미팅 검토 자료](2026-09-17_force-tactile-sweeping-meeting.md) | [F/T·촉각 Pushing 조사](2026-09-14_blind-sweep-force-torque-tactile.md) · [Binary Tactile·F/T 조사](2026-09-16_binary-tactile-wrench-rl.md) | 기존 접근과 적용 후보·검토 이유를 정리한 논의 자료. 확정 사양·미팅 결과와 구분 |
 
 ## 추가·갱신 원칙
 

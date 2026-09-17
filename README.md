@@ -38,6 +38,7 @@
 - [2026-09-15 — IROS 2023–2025 Tactile·F/T 기반 RL 관련 논문 제목 선별](docs/literature/reviews/2026-09-15_iros-2023-2025-tactile-force-torque-rl-title-screening.md)
 - [2026-09-16 — Binary Tactile·F/T 기반 RL 신규 문헌 조사](docs/literature/reviews/2026-09-16_binary-tactile-wrench-rl.md)
 - [2026-09-16 — Binary Tactile·Wrench 입력 처리 및 비교 실험 제안](docs/literature/reviews/2026-09-16_binary-tactile-wrench-design-notes.md)
+- [2026-09-18 미팅 검토 자료 — 힘·촉각 기반 Sweeping의 선행연구와 적용 후보](docs/literature/reviews/2026-09-17_force-tactile-sweeping-meeting.md) — 2026-09-17까지의 문헌을 바탕으로 한 논의 자료이며 확정 사양·미팅 결과가 아님.
 - [사용자 발굴 논문 — 누적 목록](docs/literature/reviews/user-found-papers.md)
 
 ## 현재 상태를 오해하지 않기 위한 핵심

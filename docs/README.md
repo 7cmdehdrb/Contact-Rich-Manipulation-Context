@@ -13,6 +13,7 @@
 | 방향이 바뀐 이유와 교수 피드백 | [미팅 이력](02_MEETING_HISTORY.md) | [출처와 확인 범위](06_SOURCE_REGISTER.md) |
 | 구현·실험 설계와 실제 준비 상태 | [구현·평가 설계](05_IMPLEMENTATION_AND_EVALUATION.md) | [코드·장비 현황](07_CODE_AND_HARDWARE_STATUS.md) |
 | 특정 조사에서 선정한 논문 | [조사 그룹 안내](literature/reviews/README.md) | [문헌조사 전체 색인](literature/README.md) |
+| 선행연구를 바탕으로 논의할 적용 후보 | [9월 18일 미팅 검토 자료](literature/reviews/2026-09-17_force-tactile-sweeping-meeting.md) | 촉각·F/T·RL 결합·보상별 검토안과 근거 |
 | 제목을 아는 논문의 상세 정리 | [전체 논문 색인](literature/papers/README.md) | 각 노트 상단의 원래 조사 링크 |
 | 직접 제공한 논문의 등록·정독 상태 | [사용자 발굴 논문](literature/reviews/user-found-papers.md) | [전체 논문 색인](literature/papers/README.md) |
 | 새 실험 기록 작성 | [연구 로그 템플릿](../templates/RESEARCH_LOG.md) | [다음 작업의 완료 기준](04_NEXT_ACTIONS.md) |
