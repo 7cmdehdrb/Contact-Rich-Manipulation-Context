@@ -16,11 +16,14 @@
 | **광학 촉각 영상 활용**      | [Bi-Touch](../papers/2023-lin-bi-touch.md), [Tactile Pushing](../papers/2023-yang-sim-to-real-tactile-pushing.md) | 촉각 영상을 학습 정책에 연결하거나, CNN으로 접촉 깊이·방향을 추정한다. 일부 영상 기반 경로에서는 GAN으로 실물 영상을 Simulation 표현에 맞춘다.        |
 | **분포형 힘의 영상 표현**     | [Gentle Object Retraction](../papers/2026-brouwer-gentle-object-retraction.md)                                    | 분포형 3축 힘을 RGB 영상으로 변환해 ResNet-18로 인코딩하고, Diffusion Policy 기반 모방학습에 활용한다. 광학 촉각 영상과는 구분한다.         |
 | **영역별 Binary 접촉 활용** | [DexTouch](../papers/2024-lee-dextouch.md)                                                                        | FSR 출력을 필터·Threshold로 처리하여 영역별 접촉 여부를 만들고, 고유감각과 함께 PPO에 입력한다. |
+| **픽셀별 Binary 접촉 패턴** | [Sim2Real Tactile Manipulation — Su et al.](../papers/2024-su-sim2real-tactile-manipulation.md) | DIGIT 영상의 무접촉 기준 차분에 Threshold를 적용해 픽셀별 접촉 패턴을 만들고, 고유감각·목표 각도와 함께 PPO Pivoting 정책에 입력한다. |
 
 요약하면, 조사한 선행 연구들에서는 다음과 같은 방법이 주로 사용된다.
 
 - **영상 자체를 학습하는 방식 (Encoding)**
 - **접촉에 필요한 물리 정보로 축약하는 방식 (Binary)**  
+
+두 방식은 배타적이지 않다. Su et al.은 **Binary 접촉 이미지를 다시 Encoder에 입력**한다. 따라서 Binary화의 효과와 공간 해상도를 줄이는 효과는 구분하여 검토한다. [Su et al., arXiv v1, §III-B·IV, PDF p. 3]
 
 ### 1.1. [Bi-Touch](../papers/2023-lin-bi-touch.md) — 실물 촉각 영상을 Simulation 영상으로 변환
 
@@ -62,9 +65,31 @@
 
 ![[../../../img/dex_touch_fig1.png]]
 
+### 1.5. [Sim2Real Tactile Manipulation — Su et al.](../papers/2024-su-sim2real-tactile-manipulation.md) — RGB·Diff·Binary 비교를 통한 전이 근거
+
+**확인 버전: arXiv:2403.12170v1 (2024-03-18).** 과업은 물체를 잡은 상태에서 **지지면을 이용해 목표 상대 각도로 회전시키는 Pivoting**이다. Sweeping이나 손목 Wrench 제어를 검증한 연구는 아니다. [원문 §III–IV, PDF pp. 2–3]
+
+- **표현:** RGB는 원래 촉각 영상, Diff는 **무접촉 기준 영상에서 현재 영상을 뺀 뒤 RGB 평균으로 회색조화한 차분**, Binary는 그 Diff를 Threshold로 나눈 접촉·비접촉 픽셀이다. 직전 프레임과의 차분이나 센서별 1bit가 아니다.
+- **정책 연결:** 양 손끝 DIGIT의 **각 64×64 영상**을 처리하고, 오른쪽 영상은 좌우 방향을 맞추도록 수평 반전한다. 두 영상은 가중치를 공유하는 Encoder를 거쳐 관절 고유감각 Feature와 결합하며, 목표 각도도 관측에 포함한다. PPO는 xz 평면 병진·y축 회전을 출력하고, 그리퍼 폭은 고정한다.
+- **전이 방식:** 시뮬레이션에서 학습한 정책을 실물 추가 학습 없이 사용한다. 제안 방법에 GAN 학습은 없지만, 무접촉 기준 영상과 **센서별 Threshold의 grid search**가 사용된다. 따라서 실물 정책 fine-tuning이 없다는 것과 센서별 준비·보정이 없다는 것은 다르다. [원문 §III-B·IV·V, PDF pp. 3–4]
+
+**Table I의 실물 성공률 — 같은 표현의 증강 유무를 함께 비교**
+
+| 촉각 표현 | 영상 증강 없음 | 영상 증강 적용 |
+| --- | ---: | ---: |
+| RGB | 50% | 76% |
+| Diff | 60% | 66% |
+| Binary | **80%** | **80%** |
+
+위 결과는 **조명·색상·픽셀 세부값에 대한 의존을 낮추고 접촉 패턴을 유지하는 단순화가 전이에 유효할 수 있다**는 근거다. 다만 증강 RGB는 76%이며, Binary도 증강으로 성공률 평균이 더 높아진 것은 아니다. 모든 조건에서 Binary가 크게 우수하다는 주장으로 확대하지 않는다. [원문 §V-B, Table I, PDF pp. 5–6]
+
+**남는 정보와 사라지는 정보를 구분해야 한다.** 이 Binary는 공간적인 접촉 윤곽·위치를 남기는 이미지다. 원문은 Threshold 조정에 따른 잡음 감소와 유효한 접촉 정보 누락 사이의 trade-off를 설명한다. 따라서 **17개 영역을 각각 1bit로 축약해도 충분하다는 직접 근거는 아니며**, 연속 하중 정보가 불필요하다는 결과도 아니다. [원문 §III-B·IV, PDF p. 3]
+
 ### 적용 검토안
 
 **검토안: [DexTouch](../papers/2024-lee-dextouch.md)를 참고해, 17개 Grid 영역을 각각 하나의 접촉 여부로 축약.** 전체 손을 하나의 bit로 합치지 않고 **17bit의 접촉 분포를 유지하는 구성**.
+
+**근거의 역할:** DexTouch는 영역별 접촉 벡터의 선례이고, [Su et al.](../papers/2024-su-sim2real-tactile-manipulation.md)은 RGB·Diff·Binary 비교를 통해 **촉각 표현 단순화의 전이 효과**를 보강한다. 두 논문을 함께 참고하되, 본 Hand에서 영역 내부 패턴을 제거하는 추가 축약의 영향은 별도 비교할 **검토안(PROPOSED)**으로 남긴다.
 
 - **전이의 단순화:** 정밀한 접촉력 크기를 맞추는 부담을 줄일 수 있다. 다만 영역 내부 위치·힘 크기와 같은 정보들이 소실되지만, Sim-to-Real Transfer 까지 포함하면 더 높은 성공률을 가질 수 있을 것으로 예상된다.
 - **F/T와의 역할 분담:** 촉각에서는 ‘어느 센서 영역이 닿았는가’를, 손목 Wrench에서는 ‘전체 하중이 얼마나·어느 방향으로 작용하는가’에 대한 정보를 담을 수 있기 때문에, 저차원화를 해도 정책 학습이 가능할 것으로 예상된다.
@@ -139,13 +164,14 @@ $
 
 ### 선행연구에서는 어떻게 학습에 반영하는가?
 
-아래 세 연구에서는 **촉각을 정책의 관측으로 제공하고, Reward는 Task의 목표 달성과 필요한 접촉 자세를 중심으로 구성**한다. 촉각 신호를 많이 발생시키거나 특정 Wrench를 만드는 것 자체가 주목적은 아니다.
+아래 네 연구에서는 **촉각을 정책의 관측으로 제공하고, Reward는 Task의 목표 달성과 필요한 접촉 유지·자세를 중심으로 구성**한다. 촉각 신호를 많이 발생시키거나 특정 Wrench를 만드는 것 자체가 주목적은 아니다.
 
 | 연구 | 정책에 제공하는 정보 | Reward의 중심 |
 | --- | --- | --- |
 | [DexTouch](../papers/2024-lee-dextouch.md) | Binary Tactile, 로봇 상태, 초기 물체 범위·과업 목표 | 접근 → 들어 올리기·운반 / 손잡이 회전·문 열기 |
 | [Bi-Touch](../papers/2023-lin-bi-touch.md) | 양쪽 Tactile Image와 고유감각·목표 정보 | 물체 위치·방향, 접촉면에 대한 TCP 정렬, 접촉 위치 |
 | [Tactile Pushing](../papers/2023-yang-sim-to-real-tactile-pushing.md) | Tactile Image 또는 추정한 접촉면 Pose와 목표 정보 | 목표 방향·거리, Pusher와 접촉면의 정렬 |
+| [Sim2Real Tactile Manipulation — Su et al.](../papers/2024-su-sim2real-tactile-manipulation.md) | RGB·Diff·Binary 촉각 이미지, 관절 고유감각·목표 각도 | 손끝 접촉 유지 + 목표 위치·각도 + 행동 크기 Penalty |
 
 **위치·방향·정렬 오차는 Reward 계산 항이며, 모두 정책 관측에 직접 들어간다는 뜻은 아니다.** 특히 영상 기반 정책에서는 촉각 특징과 행동이 Task 성과에 어떤 영향을 주는지를 RL 학습으로 연결한다.
 
@@ -280,11 +306,37 @@ $$
 
 먼 구간에서는 고정 전진 동작에 **목표 방향 정렬**을 결합하고, 가까운 구간에서는 **음의 목표거리**를 보상으로 사용한다. 두 구간 모두 접촉면 정렬 항을 유지한다. 힘 크기나 6축 Wrench 추종 항은 없다. 목표의 기준은 물체 중심이 아닌 접촉 위치다.
 
+### 3.4. [Sim2Real Tactile Manipulation — Su et al.](../papers/2024-su-sim2real-tactile-manipulation.md) — 접촉 유지 + 목표 위치·각도 + 행동 크기 Penalty
+
+**원문 §IV Reward Function의 번호 없는 식**은 다음 네 항으로 구성된다. 목표는 초기 파지를 유지하면서 지지면을 이용해 물체를 목표 상대 각도로 회전시키는 것이다. [arXiv v1, PDF p. 3]
+
+$$
+R=w_{\mathrm{contact}}r_{\mathrm{contact}}
++w_{\mathrm{position}}r_{\mathrm{position}}
++w_{\mathrm{angle}}r_{\mathrm{angle}}
+-w_{\mathrm{penalty}}r_{\mathrm{penalty}}.
+$$
+
+| 항 | 원문이 제시한 정의·계수 | 유도하는 행동과 확인 범위 |
+| --- | --- | --- |
+| **Contact** | 기본 보상 $r_{\mathrm{contact}}=0.5$, 접촉 센서 수에 따라 $w_{\mathrm{contact}}\in\{0,1,2\}$ | 양 손끝의 초기 접촉을 유지하여 회전 중 접촉 소실을 줄인다. 명시된 값으로 계산하면 이 항의 기여는 0·0.5·1이다. 접촉 픽셀 수를 보상하는 것이 아니다. |
+| **Position** | $r_{\mathrm{position}}=1-\mathrm{curdist}/\mathrm{initdist}$, gripper contact가 있을 때 $w_{\mathrm{position}}=10$ | 목표 위치까지의 현재 거리를 초기 거리로 정규화한다. 직전 step 대비 진전량이나 EEF 이동량과는 다르다. |
+| **Angle** | 현재 각도와 목표 각도의 차이를 사용하며, Position 항과 비슷한 구조라고 설명 | 목표 상대 각도 도달을 유도한다. **전체 계산식·정규화 방식·가중치 수치는 미명시**이므로 임의로 완성하지 않는다. |
+| **Action penalty** | $r_{\mathrm{penalty}}=\lVert a\rVert^{2}$, $w_{\mathrm{penalty}}=0.01$ | **행동 출력의 크기**를 억제한다. 연속 시점의 행동 차이·jerk나 실제 접촉력 크기에 대한 Penalty는 아니다. |
+
+$\mathrm{curdist}$와 $\mathrm{initdist}$는 목표 위치까지의 현재·초기 거리다. 원문은 Position 보상이 −1~1이라고 설명하지만 **clipping, 초기 거리 0 처리, 비접촉 시 가중치 처리, 물체의 기준점과 목표 위치 생성법**은 구체적으로 제시하지 않는다. 접촉 센서 수를 판단하는 세부 시뮬레이션 기준도 미명시다. 표의 계수를 완전한 재현 설정으로 취급하지 않는다. [원문 §IV, PDF p. 3]
+
+**핵심은 ‘관측의 Binary화’와 ‘학습 목표의 Binary화’가 다르다는 점이다.** Binary 정책은 픽셀별 접촉 패턴을 입력받지만, Reward에는 접촉 유지뿐 아니라 **물체의 목표 위치·각도에 대한 연속적인 오차 정보**가 들어간다. 학습용 시뮬레이션 상태로 보상을 계산하는 것과 그 상태를 Actor의 실시간 관측으로 제공하는 것은 구분한다. Actor가 촉각·고유감각·목표를 사용한다는 이유로 Reward까지 Binary 접촉만으로 계산하는 구조는 아니다. [원문 §IV Observation Space·Reward Function, PDF p. 3]
+
+**이 보상에는 목표 힘·6축 Wrench 추종 항이 없다.** 또한 원문은 촉각 표현·관측·물체 다양성을 비교하며, Contact 보상만 제거한 별도 ablation은 제시하지 않는다. 따라서 접촉 유지 항을 포함한 설계의 선례로 참고하되, Binary의 실물 성공률 80%를 이 보상 항 하나의 효과로 해석하지 않는다. [원문 §IV–V, Table I–III, PDF pp. 3–6]
+
 ### 적용 검토안
 
-요약하면, 조사한 세 연구는 **Task를 달성한 상태와 필요한 접촉 자세를 Reward로 정의하고, 촉각에서 행동으로 이어지는 관계를 학습**한다. 
+요약하면, 조사한 네 연구는 **Task를 달성한 상태와 필요한 접촉 유지·자세를 Reward로 정의하고, 촉각에서 행동으로 이어지는 관계를 학습**한다.
 
-**검토안: Sweeping의 목표 방향·거리 달성을 Main Reward로 두고, 필요한 미는 자세·접촉 정렬을 Sub Reward로 구성.**
+**검토안(PROPOSED): Sweeping의 목표 방향·거리 달성을 Main Reward로 두고, 필요한 접촉 유지·미는 자세·접촉 정렬을 Sub Reward로 구성.**
+
+[Su et al.](../papers/2024-su-sim2real-tactile-manipulation.md)을 참고할 부분은 **목표 달성, 접촉 유지, 행동 크기 억제를 분리해 함께 보상하는 구성**이다. 다만 두 손끝의 파지를 유지하는 원문의 접촉 개수 보상을 그대로 17개 Hand 영역의 활성 개수 최대화로 옮기지는 않는다. 어떤 접촉이 목표 물체를 미는 데 필요한지와 보상을 적용할 조건은 Sweeping에 맞춰 정의하고 검증한다. Wrench 기반 하중 조절을 추가하는 것은 이 논문이 검증한 방법이 아니라 **별도의 설계·평가 항목**이다.
 
 Task 중심 Reward를 사용하더라도 **동일한 보상 조건에서 촉각·F/T의 유무를 비교**하면, 각 센서가 목표 이동과 접촉 유지에 기여하는지를 확인할 수 있다.
 
@@ -294,4 +346,4 @@ Task 중심 Reward를 사용하더라도 **동일한 보상 조건에서 촉각�
 
 ---
 
-검토 범위: 2026.09.17까지 확보한 프로젝트 문헌과 원문 확인 내용. 위 요소의 Sweeping 적용 효과는 비교 실험으로 확인할 항목이다. 연구 범위는 [프로젝트 결정 사항](https://github.com/7cmdehdrb/Contact-Rich-Manipulation-Context/blob/3fe9c881799b82c927e89983ce0709ec3f713689/docs/03_DECISIONS_AND_OPEN_QUESTIONS.md)을 따른다.
+검토 범위: 2026.09.17까지 확보한 프로젝트 문헌과 원문 확인 내용. **2026.09.18에 Su et al.의 arXiv v1을 Tactile 표현과 Reward Formulation의 근거로 추가했다.** 위 요소의 Sweeping 적용 효과는 비교 실험으로 확인할 항목이다. 연구 범위는 [프로젝트 결정 사항](https://github.com/7cmdehdrb/Contact-Rich-Manipulation-Context/blob/3fe9c881799b82c927e89983ce0709ec3f713689/docs/03_DECISIONS_AND_OPEN_QUESTIONS.md)을 따른다.
