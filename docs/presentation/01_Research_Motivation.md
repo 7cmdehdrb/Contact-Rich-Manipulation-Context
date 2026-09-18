@@ -146,6 +146,8 @@
 
 # Research Motivation 보강을 위한 문헌조사 계획
 
+![overview](../../img/research_motivation_fig2.png)
+
 ## 1. 논리 전개
 
 **(1) 물체 상태를 지속적으로 관측할 수 없는 조작에서는, 초기 정보 이후의 변화를 다른 피드백으로 파악해야 한다.**
