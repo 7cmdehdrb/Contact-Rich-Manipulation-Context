@@ -4,7 +4,7 @@
 
 이 폴더는 제공된 논문 원문을 읽고 **그 논문 자체의 문제 상황, 관련 연구, 환경·센서, 핵심 메소드, 실험, 저자들이 밝힌 Limitation과 Future Work**를 정리하는 곳이다. 여러 논문을 비교하거나 프로젝트 적용안을 제안하는 `reviews/`와 구분한다. 개별 노트에는 별도 연구 주제에 억지로 대응시킨 설명을 넣지 않는다.
 
-현재 상세 노트는 **14편**이다(2026-09-17). 제목으로 찾거나 아래 조사 그룹으로 이동한다. 각 표의 **ID를 누르면 원래 조사 항목**, 마지막 열을 누르면 상세 노트가 열린다.
+현재 상세 노트는 **15편**이다(2026-09-18). 제목으로 찾거나 아래 조사 그룹으로 이동한다. 각 표의 **ID를 누르면 원래 조사 항목**, 마지막 열을 누르면 상세 노트가 열린다.
 
 [Blind Pushing · R1–R7](#blind-pushing) · [IROS 후속 선정](#iros-selected) · [사용자 발굴](#user-found) · [Binary·F/T 후속 정독](#binary-wrench) · [작성 지침](#paper-guidelines)
 
@@ -49,6 +49,7 @@
 | ID | 논문 | 원문 정독 상태 | 상세 노트 |
 | --- | --- | --- | --- |
 | [USER-P001](../reviews/user-found-papers.md#user-p001) | Gentle Object Retraction in Dense Clutter Using Multimodal Force Sensing and Imitation Learning | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료. Limitation·Future Work 포함 | [2026 · Brouwer et al.](2026-brouwer-gentle-object-retraction.md) |
+| [USER-P002](../reviews/user-found-papers.md#user-p002) | Sim2Real Manipulation on Unknown Objects with Tactile-based Reinforcement Learning | 제공된 arXiv:2403.12170v1 (2024-03-18) PDF 8쪽 전체 정독·정리 완료. 촉각 표현·PPO/reward·Table I–III·한계·향후 공개 계획 포함 | [2024 · Su et al.](2024-su-sim2real-tactile-manipulation.md) |
 
 <a id="binary-wrench"></a>
 

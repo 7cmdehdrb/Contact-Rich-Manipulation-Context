@@ -1,8 +1,10 @@
 # 사용자 별도 발굴 논문 — 누적 목록
 
-**최초 작성일: 2026-09-16 · 최근 갱신일: 2026-09-17**
+**최초 작성일: 2026-09-16 · 최근 갱신일: 2026-09-18**
 
 [문서 안내](../../README.md) · [문헌 색인](../README.md) · [조사 그룹](README.md) · [전체 논문](../papers/README.md)
+
+**상세 노트 바로가기:** [USER-P001 · Gentle Object Retraction](../papers/2026-brouwer-gentle-object-retraction.md) · [USER-P002 · Sim2Real Tactile Manipulation](../papers/2024-su-sim2real-tactile-manipulation.md)
 
 ## 1. 이 목록의 범위
 
@@ -17,18 +19,33 @@
 | 관리 ID | 등록일 | 논문·게재 정보 | 출처와 정독 상태 | 상세 정리 |
 | --- | --- | --- | --- | --- |
 | USER-P001 | 2026-09-16 | **Gentle Object Retraction in Dense Clutter Using Multimodal Force Sensing and Imitation Learning** — Brouwer et al., IEEE RA-L 11(2), 1578–1585, 2026. [DOI](https://doi.org/10.1109/LRA.2025.3643332) | 사용자 별도 발굴·출판본 PDF 제공. 8쪽 전체 정독 완료. Limitation·Future Work 포함. 코드·보충 영상 미확인 | [2026 · Brouwer et al.](../papers/2026-brouwer-gentle-object-retraction.md) |
+| USER-P002 | 2026-09-18 | **Sim2Real Manipulation on Unknown Objects with Tactile-based Reinforcement Learning** — Su et al., arXiv:2403.12170v1, 2024-03-18. [v1 원문](https://arxiv.org/abs/2403.12170v1) | 사용자 별도 발굴·arXiv v1 PDF 제공. 8쪽 전체 정독 완료. 저자 명시 한계·향후 공개 계획 포함. 이후 출판본·코드 미확인 | [2024 · Su et al.](../papers/2024-su-sim2real-tactile-manipulation.md) |
 
-현재 등록 1편, 첨부 원문 정독 완료 1편이다. 코드 실행·정책 재학습·실험 재현 완료 수를 뜻하지 않는다.
+현재 등록 2편, 첨부 원문 정독 완료 2편이다. 코드 실행·정책 재학습·실험 재현 완료 수를 뜻하지 않는다.
+
+## 3. 등록 논문별 확인 내용
 
 <a id="user-p001"></a>
 
-## 3. USER-P001 — 확인된 내용과 분류 주의
+### 3.1. USER-P001 — 확인된 내용과 분류 주의
 
 **서지:** D. Brouwer, J. Citron, H. Nolte, J. Bohg, and M. Cutkosky, “Gentle Object Retraction in Dense Clutter Using Multimodal Force Sensing and Imitation Learning,” *IEEE Robotics and Automation Letters*, vol. 11, no. 2, pp. 1578–1585, Feb. 2026. DOI: [10.1109/LRA.2025.3643332](https://doi.org/10.1109/LRA.2025.3643332). 권·호의 게재연도는 2026이며 온라인 출판일은 2025-12-11이다. [첨부 출판본 첫 페이지]
 
 고밀도 캐비닛에서 접촉을 활용해 빨간 목표를 찾아 흡착·인출하는 **실물 시연 기반 Diffusion Policy 연구**다. 실행 중 eye-in-hand vision, TCP pose, binary suction-pressure 관측을 사용하고, 여기에 관절 토크에서 추정한 wrench와 도구 양측의 분포형 3축 tactile을 제공하거나 masking하여 비교한다. **별도 손목 F/T 센서, RL 학습, GAN, 초기 시각 관측만을 사용하는 정책으로 분류하지 않는다.** [첨부 출판본 §III–V, PDF pp. 2–6]
 
 100개 시연으로 네 정책을 학습하고, 같은 40개 신규 장면에서 평가한다. 병용의 전체 성공은 27/40으로 가장 높지만, 과도한 힘 실패는 두 단일 감각 정책보다 많고 완료 시간도 가장 짧지는 않다. ‘80% 향상’은 baseline 15/40 대비 **상대 개선**이다. 센서 사양, 힘 영상 매핑, impulse 기준, 결과의 해석 범위는 [상세 노트](../papers/2026-brouwer-gentle-object-retraction.md)에 기록했다. [첨부 출판본 §V–VII, Fig. 6–7, PDF pp. 5–7]
+
+<a id="user-p002"></a>
+
+### 3.2. USER-P002 — 확인된 내용과 분류 주의
+
+**서지:** E. Su, C. Jia, Y. Qin, W. Zhou, A. Macaluso, B. Huang, and X. Wang, “Sim2Real Manipulation on Unknown Objects with Tactile-based Reinforcement Learning,” arXiv:2403.12170v1, 18 Mar. 2024. [제공 버전](https://arxiv.org/abs/2403.12170v1). 첨부 v1에 없는 학술대회·저널 게재 정보나 DOI는 이후 버전에서 보충하지 않았다.
+
+두 손끝 DIGIT 영상을 **RGB·무접촉 기준 Diff·픽셀별 Binary**로 표현하여, 관절 고유감각·목표 각도와 함께 PPO에 제공하는 pivoting 연구다. Binary는 **각 센서의 64×64 접촉 패턴**이며 센서당 1비트가 아니다. 물체는 처음부터 잡고 있고 gripper width는 고정하며, 정책은 xz 평면 병진과 y축 회전을 제어한다. 제안 방법에 외부 object pose 추정·별도 F/T 입력·GAN은 없다. [첨부 v1 §III–IV, Fig. 1–2, PDF pp. 2–3]
+
+시뮬레이션에서는 접촉력을 선형 매핑으로 변형 깊이에 연결한 뒤 Phong/PyTorch3D로 영상을 만든다. 원문이 주장하는 실물 학습 데이터 불필요와 별개로, 전처리에는 canonical image와 DIGIT별 threshold grid search가 있다. 정책 실물 fine-tuning 부재를 센서별 준비·조정 부재로 확대하지 않는다. [첨부 v1 §III, §V 도입, PDF pp. 2–4]
+
+22개 훈련 물체와 16개 미지 실물 물체를 사용한다. Table I에서 비증강 RGB·Diff·Binary의 실물 성공률은 0.50·0.60·0.80이며, Binary(Aug)도 평균 성공률은 0.80이다. 성공 기준은 **angle deviation 15% 미만이지 15° 미만이 아니다**. Table I·II의 ± 불일치, 불완전 접촉 실패, SB3 기본값만 언급한 학습 설정과 누락된 angle reward 세부는 [상세 노트](../papers/2024-su-sim2real-tactile-manipulation.md)에 분리해 기록했다. 구체적인 후속 연구 확장 대신 환경·학습 코드 공개 계획만 명시한다. [첨부 v1 §IV–VI, Table I–III, PDF pp. 3–6]
 
 ## 4. 이후 추가·갱신 규칙
 
@@ -50,3 +67,4 @@
 | --- | --- |
 | 2026-09-16 | 누적 목록 생성. USER-P001 등록 및 원문 8쪽 상세 정리 연결. 기존 R1–R7·IROS-S01–S05 분류와 분리 |
 | 2026-09-17 | 목록을 `reviews/user-found-papers.md`로 이동하고 조사 그룹 안내·상세 노트와 양방향으로 연결. 등록 ID와 기존 내용·정독 상태 유지 |
+| 2026-09-18 | USER-P002 등록. arXiv:2403.12170v1 8쪽 상세 정리·고정 anchor·상단 바로가기와 색인 연결 추가. 기존 등록·조사 분류 유지 |

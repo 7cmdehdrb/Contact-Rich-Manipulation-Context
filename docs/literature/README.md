@@ -53,6 +53,7 @@ R1–R7 전체의 제공·정독 상태는 개별 논문 색인을 따른다. �
 | 정리일 | 관리 ID | 논문·상세 정리 |
 | --- | --- | --- |
 | 2026-09-16 | USER-P001 | [Gentle Object Retraction — 분포형 3축 힘 영상·관절 토크 기반 wrench·Diffusion Policy·impulse 기준·실물 ablation·한계와 향후 연구](papers/2026-brouwer-gentle-object-retraction.md) |
+| 2026-09-18 | USER-P002 | [Sim2Real Tactile Manipulation — arXiv v1·DIGIT 접촉 패턴 이진화·힘 기반 렌더링·PPO/reward·다종 물체·실물 전이·한계와 공개 계획](papers/2024-su-sim2real-tactile-manipulation.md) |
 
 ### Binary Tactile·F/T 조사 후속 원문 정독
 
