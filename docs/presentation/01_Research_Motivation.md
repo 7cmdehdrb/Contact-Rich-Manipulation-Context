@@ -14,7 +14,9 @@
 
 이에 대한 다른 접근은 **촉각 정보를 센서 영역별 접촉 여부로 단순화하는 Binary 표현**이다. 정밀한 힘의 크기나 센서 내부의 세부 분포 대신 접촉의 유무를 전달하여, 촉각 신호의 Sim-to-Real Transfer를 용이하게 한다.
 
-**그러나 Binary 표현은 접촉 정보를 단순화하는 동시에, 하중의 크기와 방향에 관한 정보를 제거한다.** 어느 센서 영역이 닿았는지는 남지만, 그 접촉에 얼마나 큰 힘이 작용하는지, 어느 방향으로 힘이 작용하는지는 소실된다.
+촉각 표현의 Binary화를 뒷받침하는 추가 근거로, [**Su et al. (2024)**](../literature/papers/2024-su-sim2real-tactile-manipulation.md)는 두 DIGIT 촉각 영상의 RGB·Diff·Binary 표현을 비교하여 **접촉 패턴을 유지하는 Binary 표현의 실물 전이 이점**을 보고했다. 다만 이 연구의 Binary는 **64×64 픽셀의 접촉 이미지**이며, 본 연구의 **센서 영역별 1비트 접촉 벡터**와는 공간 정보량이 다르다. [arXiv v1, §III-B·IV·V-B, PDF pp. 3·5–6]
+
+**그러나 영역별 Binary 표현은 접촉 정보를 단순화하는 동시에, 하중의 크기와 방향에 관한 정보를 제거한다.** 어느 센서 영역이 닿았는지는 남지만, 그 접촉에 얼마나 큰 힘이 작용하는지, 어느 방향으로 힘이 작용하는지는 소실된다.
 
 ## 1.3. 제한된 촉각 관측에서 발생하는 세 가지 센싱 문제
 
@@ -73,6 +75,9 @@
 | [**Sim-to-Real Model-Based and Model-Free Deep Reinforcement Learning for Tactile Pushing**](../literature/papers/2023-yang-sim-to-real-tactile-pushing.md) — Yang et al., 2023 | 촉각 영상을 사용하는 경로에서는 GAN 기반 영상 변환을, 접촉 Pose를 사용하는 경로에서는 CNN 기반 접촉 깊이·각도 추정을 적용했다. | **촉각의 표현 방식에 따라 실물 데이터를 정책 입력에 연결하는 전처리·학습 과정이 달라진다.** |
 | [**Rotating without Seeing: Towards In-hand Dexterity through Touch**](../literature/papers/2023-yin-rotating-without-seeing.md) — Yin et al., 2023 | FSR의 연속 출력을 Binary 접촉으로 변환하여 실물 전이를 단순화했다. 실물 비교에서 Binary 입력이 연속값 촉각 입력보다 전반적으로 우수한 성능을 보였다. | **정밀한 힘 값을 직접 정합하는 대신 접촉 여부를 사용하는 것이 실물 전이에 유효하다.** |
 | [**DexTouch**](../literature/papers/2024-lee-dextouch.md) — Lee et al., 2024 | 실물 FSR 출력과 시뮬레이션 접촉력을 각각 임계값으로 Binary화하여 동일한 형태의 접촉 벡터를 구성했다. 저자들은 이를 Sim-to-Real 차이와 전이 절차를 줄이기 위한 설계로 명시했다. | **영역별 Binary 표현을 선택하는 직접적인 설계 근거를 제공한다.** |
+| [**Sim2Real Manipulation on Unknown Objects with Tactile-based Reinforcement Learning**](../literature/papers/2024-su-sim2real-tactile-manipulation.md) — Su et al., 2024 (arXiv v1) | 무접촉 기준 영상과의 차분(Diff)에 임계값을 적용하여 픽셀별 접촉 패턴(Binary)을 만들고, 촉각·고유감각·목표 각도를 사용하는 PPO Pivoting 정책을 실물 추가 학습 없이 이전했다. 비증강 RGB·Diff·Binary의 실물 성공률은 각각 **50%·60%·80%**였다. | **영상의 조명·색상 등 세부값에 대한 의존도를 낮추면서 접촉 패턴을 유지하는 표현 단순화가 Sim-to-Real에 유효할 수 있다.** 영역별 Binary 축약의 충분성을 직접 검증한 것은 아니다. |
+
+**Su et al.의 비교 조건과 한계:** 위 수치는 **영상 증강이 없는 조건**의 결과다. 증강된 RGB의 실물 성공률은 76%, Binary는 증강 유무 모두 80%이므로 Binary가 모든 처리 조건보다 크게 우수하다는 뜻은 아니다. 저자들은 센서별 임계값을 grid search로 정하며, **잡음 감소와 유효한 접촉 정보 누락 사이의 trade-off**를 명시한다. 이 논문은 Binary 표현을 통한 전이 부담 완화의 근거이지만, 영역별 접촉만으로 안정적인 Sweeping이 충분하다거나 연속 하중 정보가 불필요하다는 결과는 아니다. [원문: arXiv:2403.12170v1](https://arxiv.org/abs/2403.12170v1), §III-B·IV·V-B, Table I, PDF pp. 3–6.
 
 ### 추가 문헌조사 방향
 
