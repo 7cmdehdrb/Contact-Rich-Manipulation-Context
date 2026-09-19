@@ -78,6 +78,7 @@ R1–R7 전체의 제공·정독 상태는 개별 논문 색인을 따른다. �
 | 정리일 | 원래 조사 | 논문·상세 정리 |
 | --- | --- | --- |
 | 2026-09-19 | ICRA 2025 후보 선별 | [Dynamic Object Goal Pushing — continuous object pose·54D actor / 73D asymmetric critic·GT reward·contact switching·object balance·domain randomization·실물 success·한계와 Future Work](papers/2025-dadiotis-dynamic-object-goal-pushing.md) |
+| 2026-09-19 | ICRA 2025 후보 선별 | [The Role of Tactile Sensing — B/M/V/BK/MK/VK·vision noise·memory·global/local force·object generalization·sim-to-real·Limitation/Future Work](papers/2025-zhang-role-of-tactile-sensing.md) |
 
 ## 폴더와 파일명 규칙
 
