@@ -71,3 +71,11 @@ docs/03_DECISIONS_AND_OPEN_QUESTIONS.md와 docs/04_NEXT_ACTIONS.md를 확인하�
 ## 갱신 원칙
 
 새 미팅이 생기면 먼저 이력과 결정 목록을 갱신하고, 현재 요약·다음 작업·관련 기술 문서를 함께 수정한다. 이전 결정을 삭제해 역사를 지우지 말고 대체된 이유를 남긴다. 실험 성과는 코드 커밋·설정·로그·평가 조건과 연결될 때에만 완료 상태로 올린다.
+
+---
+
+### `reference.bib`
+
+```bash
+python scripts/copy_bib_attachments.py ref.bib --destination "260918"
+```

@@ -13,6 +13,7 @@
 | 방향이 바뀐 이유와 교수 피드백 | [미팅 이력](02_MEETING_HISTORY.md) | [출처와 확인 범위](06_SOURCE_REGISTER.md) |
 | 구현·실험 설계와 실제 준비 상태 | [구현·평가 설계](05_IMPLEMENTATION_AND_EVALUATION.md) | [코드·장비 현황](07_CODE_AND_HARDWARE_STATUS.md) |
 | Research Motivation의 물체 정보·축약 촉각 근거 | [2.1 신규 문헌 조사: 4편 비교](literature/reviews/2026-09-18_reduced-tactile-compensation-survey.md) | [Research Motivation 발표 자료](presentation/01_Research_Motivation.md) |
+| 동일 schema의 Review용 PDF 재분석 | [260918 Review Dataset: 첫 15개 검토 및 검증본](literature/review_dataset/260918/README.md) | [Batch 001 질문별 횡단 비교](literature/review_dataset/260918/batch_001/synthesis/literature-synthesis.md) |
 | 특정 조사에서 선정한 논문 | [조사 그룹 안내](literature/reviews/README.md) | [문헌조사 전체 색인](literature/README.md) |
 | 선행연구를 바탕으로 논의할 적용 후보 | [9월 18일 미팅 검토 자료](literature/reviews/2026-09-17_force-tactile-sweeping-meeting.md) | 촉각·F/T·RL 결합·보상별 검토안과 근거 |
 | 제목을 아는 논문의 상세 정리 | [전체 논문 색인](literature/papers/README.md) | 각 노트 상단의 원래 조사 링크 |
