@@ -4,9 +4,9 @@
 
 이 폴더는 제공된 논문 원문을 읽고 **그 논문 자체의 문제 상황, 관련 연구, 환경·센서, 핵심 메소드, 실험, 저자들이 밝힌 Limitation과 Future Work**를 정리하는 곳이다. 여러 논문을 비교하거나 프로젝트 적용안을 제안하는 `reviews/`와 구분한다. 개별 노트에는 별도 연구 주제에 억지로 대응시킨 설명을 넣지 않는다.
 
-현재 상세 노트는 **15편**이다(2026-09-18). 제목으로 찾거나 아래 조사 그룹으로 이동한다. 각 표의 **ID를 누르면 원래 조사 항목**, 마지막 열을 누르면 상세 노트가 열린다.
+현재 상세 노트는 **16편**이다(2026-09-19). 제목으로 찾거나 아래 조사 그룹으로 이동한다. 각 표의 **ID를 누르면 원래 조사 항목**, 마지막 열을 누르면 상세 노트가 열린다.
 
-[Blind Pushing · R1–R7](#blind-pushing) · [IROS 후속 선정](#iros-selected) · [사용자 발굴](#user-found) · [Binary·F/T 후속 정독](#binary-wrench) · [작성 지침](#paper-guidelines)
+[Blind Pushing · R1–R7](#blind-pushing) · [IROS 후속 선정](#iros-selected) · [사용자 발굴](#user-found) · [Binary·F/T 후속 정독](#binary-wrench) · [ICRA 후보 선별 후속 정독](#icra-screening-followup) · [작성 지침](#paper-guidelines)
 
 <a id="blind-pushing"></a>
 
@@ -61,6 +61,16 @@
 | --- | --- | --- | --- |
 | [B1](../reviews/2026-09-16_binary-tactile-wrench-rl.md#b1) | DexTouch: Learning to Seek and Manipulate Objects With Tactile Dexterity | 제공된 IEEE 출판본 PDF 8쪽 전체 정독·정리 완료. 식 (1)–(4), Table I–III, Limitation·Future Work와 미명시 사항 포함 | [2024 · Lee et al.](2024-lee-dextouch.md) |
 | [B3](../reviews/2026-09-16_binary-tactile-wrench-rl.md#b3) | Rotating without Seeing: Towards In-hand Dexterity through Touch | 제공된 arXiv:2303.10880v4 (2023-03-27) PDF 15쪽 전체 정독·정리 완료. 식 (1)–(9), Table I–VI, Limitation·Future Work와 미명시 사항 포함 | [2023 · Yin et al.](2023-yin-rotating-without-seeing.md) |
+
+<a id="icra-screening-followup"></a>
+
+## ICRA 후보 선별 후속 원문 정독
+
+[ICRA 2023–2025 후보 선별 보고서](../reviews/README.md)에서 사용자가 원문 PDF를 제공하여 후속 정독한 항목이다. 선별 당시의 제목·초록 판단과 원문 전체 정독 결과를 구분하며, 상세 노트는 논문 자체의 방법·실험·한계만 정리한다.
+
+| 원래 조사 | 논문 | 원문 정독 상태 | 상세 노트 |
+| --- | --- | --- | --- |
+| [ICRA 2025 후보 선별](../reviews/2026-09-19_icra-2025-contact-sensing-screening.md#icra25-dadiotis-pushing) | Dynamic Object Goal Pushing with Mobile Manipulators Through Model-Free Constrained Reinforcement Learning | 제공된 IEEE 출판본 PDF 7쪽 전체 정독·정리 완료. Actor/critic 정보 경계, reward/constraint, domain randomization, Table I–V, Limitation·Future Work 포함 | [2025 · Dadiotis et al.](2025-dadiotis-dynamic-object-goal-pushing.md) |
 
 <a id="paper-guidelines"></a>
 
