@@ -4,7 +4,7 @@
 
 이 폴더는 제공된 논문 원문을 읽고 **그 논문 자체의 문제 상황, 관련 연구, 환경·센서, 핵심 메소드, 실험, 저자들이 밝힌 Limitation과 Future Work**를 정리하는 곳이다. 여러 논문을 비교하거나 프로젝트 적용안을 제안하는 `reviews/`와 구분한다. 개별 노트에는 별도 연구 주제에 억지로 대응시킨 설명을 넣지 않는다.
 
-현재 상세 노트는 **17편**이다(2026-09-19). 제목으로 찾거나 아래 조사 그룹으로 이동한다. 각 표의 **ID를 누르면 원래 조사 항목**, 마지막 열을 누르면 상세 노트가 열린다.
+현재 상세 노트는 **18편**이다(2026-09-19). 제목으로 찾거나 아래 조사 그룹으로 이동한다. 각 표의 **ID를 누르면 원래 조사 항목**, 마지막 열을 누르면 상세 노트가 열린다.
 
 [Blind Pushing · R1–R7](#blind-pushing) · [IROS 후속 선정](#iros-selected) · [사용자 발굴](#user-found) · [Binary·F/T 후속 정독](#binary-wrench) · [ICRA 후보 선별 후속 정독](#icra-screening-followup) · [작성 지침](#paper-guidelines)
 
@@ -72,6 +72,7 @@
 | --- | --- | --- | --- |
 | [ICRA 2025 후보 선별](../reviews/2026-09-19_icra-2025-contact-sensing-screening.md#icra25-dadiotis-pushing) | Dynamic Object Goal Pushing with Mobile Manipulators Through Model-Free Constrained Reinforcement Learning | 제공된 IEEE 출판본 PDF 7쪽 전체 정독·정리 완료. Actor/critic 정보 경계, reward/constraint, domain randomization, Table I–V, Limitation·Future Work 포함 | [2025 · Dadiotis et al.](2025-dadiotis-dynamic-object-goal-pushing.md) |
 | [ICRA 2025 후보 선별](../reviews/2026-09-19_icra-2025-contact-sensing-screening.md#icra25-zhang-tactile-role) | The Role of Tactile Sensing for Learning Reach and Grasp | 제공된 IEEE 출판본 PDF 8쪽 전체 정독·정리 완료. B/M/V/BK/MK/VK, visual noise·memory, sensing area, generalization, sim-to-real, Limitation·Future Work 포함 | [2025 · Zhang et al.](2025-zhang-role-of-tactile-sensing.md) |
+| [ICRA 2025 후보 선별](../reviews/2026-09-19_icra-2025-contact-sensing-screening.md#icra25-chen-vividex) | ViViDex: Learning Vision-Based Dexterous Manipulation from Human Videos | 제공된 IEEE 출판본 PDF 8쪽 전체 정독·정리 완료. human-video retargeting, privileged state PPO, trajectory-guided reward, point-cloud visual policy, seen/unseen·real-robot 평가 포함 | [2025 · Chen et al.](2025-chen-vividex.md) |
 
 <a id="paper-guidelines"></a>
 
