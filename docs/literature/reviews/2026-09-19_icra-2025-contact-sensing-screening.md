@@ -30,13 +30,17 @@
 
 **원문에서 확인할 핵심:** binary normal과 ternary shear의 encoding, object pose·shape 제공 조건, actor/critic의 privileged information, 각 ablation의 정확한 observation 구성.
 
+<a id="icra25-zhang-tactile-role"></a>
+
 ## 2.2. The Role of Tactile Sensing for Learning Reach and Grasp
 
 **저자:** B. Zhang; I. Andrussow; A. Zell; G. Martius
 
+**상세 원문 정독:** [2025 · Zhang et al. — The Role of Tactile Sensing for Learning Reach and Grasp](../papers/2025-zhang-role-of-tactile-sensing.md)
+
 **선별 이유:** force-based tactile sensing의 complexity가 RL 학습에 미치는 영향을 체계적으로 비교한다. 초록에서는 imperfect visual perception 아래에서 tactile feature가 학습을 개선하지만, 지나치게 복잡한 tactile input은 학습을 어렵게 만들 수 있다고 보고한다. **촉각 표현을 얼마나 단순화할 것인가**라는 현재 연구 질문과 직접 맞닿아 있다.
 
-**원문에서 확인할 핵심:** 비교한 tactile representation, force magnitude/contact location/binary 여부, visual/object state 제공 조건, tactile complexity와 성능의 관계.
+**원문 정독 결과:** tactile을 overall binary(B), overall magnitude(M), overall 3D force vector(V), region-wise binary(BK), magnitude(MK), 3D force vector(VK)로 분해하여 비교한다. Perfect vision에서는 tactile의 추가 이점이 거의 없지만, noisy vision에서는 tactile이 성능을 개선하고 특히 **V와 VK가 반복적으로 강한 결과**를 보인다. Sensor-area 실험에서는 local VK에 **concise global force vector V를 추가한 조건이 local-only보다 좋아졌고**, 저자들은 sensing quantity가 단순한 area 증가보다 중요하다고 결론낸다. Binary tactile은 contact를 알려주지만 **internal/external touch ambiguity**가 남는다고 분석한다. 다만 V는 fingertip당 3D overall force vector이며 wrist 6-axis F/T와 동일하지 않다.
 
 ## 2.3. LEMMo-Plan: LLM-Enhanced Learning from Multi-Modal Demonstration for Planning Sequential Contact-Rich Manipulation Tasks
 
