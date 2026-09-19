@@ -14,7 +14,7 @@
 | 정리일 | 2026-09-19 |
 | 확인한 원문 | 사용자 제공 IEEE 출판본 PDF 8쪽 전체. 본문 §I–V, 식 (1)–(3), Fig. 1–4, Table I–VI, References [1]–[82] |
 | 확인하지 않은 자료 | 프로젝트 웹사이트·코드·체크포인트·원시 실험 데이터, DexYCB/DexMV 원본 영상, 인용된 선행논문의 개별 원문, supplementary material |
-| 원문 PDF SHA-256 | \`f745a7921f5601a78e3d4a7eadf2092b378d69a123b9ce0515fb75a4b8bec2c7\` |
+| 원문 PDF SHA-256 | `f745a7921f5601a78e3d4a7eadf2092b378d69a123b9ce0515fb75a4b8bec2c7` |
 
 이 문서는 첨부 출판본 자체의 human-video trajectory extraction, state-based PPO, trajectory-guided reward, privileged object-state 사용, visual-policy distillation, 3D point-cloud representation, simulation·real-robot 평가와 원문이 명시한 제약을 정리한다. 다른 연구에 대한 적용안은 포함하지 않는다.
 
