@@ -14,7 +14,7 @@
 | 정리일 | 2026-09-19 |
 | 확인한 원문 | 사용자 제공 IEEE 출판본 PDF 8쪽 전체. 본문 §I–V, Fig. 1–11, Table I–V, References [1]–[49] |
 | 확인하지 않은 자료 | 코드·체크포인트·원시 데이터·추가 실험 로그, 인용된 선행논문의 개별 원문, 제조사 데이터시트, 다른 공개 버전과의 차이 |
-| 원문 PDF SHA-256 | \`070ebe5e7df074ef9a601b53d48bf0b83cd29984cacac3b00c2f3d7f8ec118e9\` |
+| 원문 PDF SHA-256 | `070ebe5e7df074ef9a601b53d48bf0b83cd29984cacac3b00c2f3d7f8ec118e9` |
 
 이 문서는 첨부 출판본 자체의 문제 정의, tactile representation, RL 환경, vision-noise 실험, sensor area/quantity 비교, generalization, sim-to-real, Limitation과 Future Work를 정리한다. 다른 연구에 대한 적용안은 포함하지 않는다.
 
