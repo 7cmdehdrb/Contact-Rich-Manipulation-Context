@@ -70,6 +70,15 @@ R1–R7 전체의 제공·정독 상태는 개별 논문 색인을 따른다. �
 | 2026-09-17 | B1 | [DexTouch — FSR 16bit·LPF/threshold·비대칭 PPO·관절 제어·보상식·감도/배치/F/T ablation·실물 평가·한계와 향후 연구](papers/2024-lee-dextouch.md) |
 | 2026-09-17 | B3 | [Rotating without Seeing — arXiv v4·FSR 이진화·4프레임 관측·비대칭 PPO·상대 관절 목표·보상식·binary/continuous 실물 비교·한계와 향후 연구](papers/2023-yin-rotating-without-seeing.md) |
 
+
+### ICRA 후보 선별 후속 원문 정독
+
+[ICRA 2023–2025 후보 선별](reviews/README.md)에서 원문 PDF가 제공된 논문의 후속 정독이다. 제목·초록 선별과 원문 전체 확인 상태를 구분한다.
+
+| 정리일 | 원래 조사 | 논문·상세 정리 |
+| --- | --- | --- |
+| 2026-09-19 | ICRA 2025 후보 선별 | [Dynamic Object Goal Pushing — continuous object pose·54D actor / 73D asymmetric critic·GT reward·contact switching·object balance·domain randomization·실물 success·한계와 Future Work](papers/2025-dadiotis-dynamic-object-goal-pushing.md) |
+
 ## 폴더와 파일명 규칙
 
 | 경로 | 역할·파일명 |
