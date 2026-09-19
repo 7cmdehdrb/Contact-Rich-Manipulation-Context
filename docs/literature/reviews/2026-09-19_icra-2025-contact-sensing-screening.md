@@ -114,11 +114,17 @@
 
 **선별 이유:** simulation에서 plug와 socket의 SE(3) pose를 모두 입력으로 사용하고, 실제 환경에서도 visual SE(3) tracker를 사용한다. contact-rich insertion이지만 **continuous object state tracking을 유지하는 경우**이므로 Tracking / Initial / 미제공 분류의 좋은 비교군이다.
 
+<a id="icra25-chen-vividex"></a>
+
 ## 3.4. ViViDex: Learning Vision-Based Dexterous Manipulation from Human Videos
 
 **저자:** Z. Chen; S. Chen; E. Arlaud; I. Laptev; C. Schmid
 
+**상세 원문 정독:** [2025 · Chen et al. — ViViDex](../papers/2025-chen-vividex.md)
+
 **선별 이유:** 먼저 privileged object state를 사용하는 state-based RL policy를 학습하고, successful rollout으로 privileged information 없이 동작하는 visual policy를 다시 학습한다. **학습 전용 GT state와 실행 observation을 분리**하는 사례로 중요하다.
+
+**원문 정독 결과:** state-based PPO는 **robot state + object state**를 입력으로 받고, human-video reference의 hand/object trajectory를 reward에 사용하여 physically plausible rollout을 생성한다. Final visual policy는 이 성공 rollout에서 만든 dataset으로 **robot proprioception + 3D scene point cloud**를 입력받아 BC 또는 3D Diffusion Policy로 학습되며 explicit GT object pose를 입력으로 사용하지 않는다. 다만 point cloud는 매 step 갱신되므로 object geometry·spatial configuration을 online vision으로 계속 관측한다. Real-robot 평가에서도 simulation visual policy를 zero-shot으로 옮기지 않고 object당 5개의 real trajectory를 추가 수집하여 visual policy를 학습한다.
 
 ## 3.5. Learning Coordinated Bimanual Manipulation Policies Using State Diffusion and Inverse Dynamics Models
 
