@@ -45,7 +45,7 @@
 
 ### 1.2 목표는 position뿐 아니라 yaw와 object balance를 포함한다
 
-과업 성공 조건은 object frame과 goal frame의 위치 오차가 **10 cm 이하**, yaw orientation 오차가 **10 deg 이하**인 것이다. Object goal position은 반경 2 m의 영역에서, object·goal·robot base yaw는 전체 $[-\\pi,\\pi]$ 범위에서 무작위화한다. [원문 §III-B, Fig. 3, PDF p. 3]
+과업 성공 조건은 object frame과 goal frame의 위치 오차가 **10 cm 이하**, yaw orientation 오차가 **10 deg 이하**인 것이다. Object goal position은 반경 2 m의 영역에서, object·goal·robot base yaw는 전체 $[-\pi,\pi]$ 범위에서 무작위화한다. [원문 §III-B, Fig. 3, PDF p. 3]
 
 얇은 물체나 높은 마찰 바닥에서는 잘못된 높이에서 밀면 toppling이 발생할 수 있으므로, 저자들은 **object balance를 별도 constraint**로 넣는다. 이 때문에 policy는 base의 높이·roll·pitch와 arm contact height를 함께 조절할 수 있다. [원문 §I, §III-D, Fig. 7, PDF pp. 1, 4, 6]
 
@@ -93,7 +93,7 @@ Actor에는 object의 mass, dimensions, inertia, shape class, CoM 위치가 제�
 | Mobile platform | ANYmal quadruped |
 | Mounted arm | 6-DoF robotic arm. 제조사·모델명은 본문 미명시 |
 | Push policy가 직접 제어하는 arm DOF | 첫 5개 joint. 6번째 joint는 gripper 사용 시 필요하다는 이유로 고정 |
-| Base command | $v_x$, $v_y$, yaw rate $\\omega_z$, roll $\\zeta$, pitch $\\theta$, base height $h$ |
+| Base command | $v_x$, $v_y$, yaw rate $\omega_z$, roll $\zeta$, pitch $\theta$, base height $h$ |
 | Locomotion controller | 사전 학습된 student locomotion policy. Push-policy 학습 중 frozen |
 | Push policy 주기 | 50 Hz |
 | Locomotion policy 주기 | 50 Hz |
@@ -110,26 +110,26 @@ Push policy가 생성한 6D base command는 사전 학습 locomotion policy가 l
 
 Actor observation에는 arm joint position·velocity, base linear/angular velocity, projected gravity도 포함된다. 하지만 이 값들을 어떤 IMU·encoder·state estimator로 구성하는지, 센서 모델·주파수·정확도는 본문에 별도로 명시하지 않는다. 따라서 일반적인 ANYmal 사양으로 보완하지 않는다. [원문 Table I, PDF p. 3]
 
-Simulation의 EE–object contact state $\\lambda_e$는 **critic privileged input**이다. 이를 실물 tactile/contact sensor 측정으로 해석하면 안 된다. [원문 Table I, §III-C, PDF p. 3]
+Simulation의 EE–object contact state $\lambda_e$는 **critic privileged input**이다. 이를 실물 tactile/contact sensor 측정으로 해석하면 안 된다. [원문 Table I, §III-C, PDF p. 3]
 
 ## 4. Actor Observation, Critic Privileged Information, Training-only State
 
 ### 4.1 Actor observation
 
-Actor observation은 $\\mathbf{o}_t\\in\\mathbb{R}^{54}$이다. Table I의 구성은 다음과 같다.
+Actor observation은 $\mathbf{o}_t\in\mathbb{R}^{54}$이다. Table I의 구성은 다음과 같다.
 
 | 입력 | 차원 | actor noise |
 | --- | ---: | --- |
-| EE–object relative position, base frame | 3 | $\\mathcal U(\\pm0.02)$ |
-| Object rotation matrix w.r.t. base | 9 | $\\mathcal U(\\pm0.01)$ |
-| Arm joint position relative to default | 5 | $\\mathcal U(\\pm0.01)$ |
-| Robot base linear velocity | 3 | $\\mathcal U(\\pm0.01)$ |
-| Robot base angular velocity | 3 | $\\mathcal U(\\pm0.20)$ |
-| Arm joint velocity | 5 | $\\mathcal U(\\pm0.50)$ |
-| Projected gravity unit vector | 3 | $\\mathcal U(\\pm0.05)$ |
-| Object–goal relative position w.r.t. base | 3 | $\\mathcal U(\\pm0.02)$ |
-| Goal orientation w.r.t. object | 9 | $\\mathcal U(\\pm0.01)$ |
-| Previous action $\\mathbf a_{t-1}$ | 11 | noise 없음 |
+| EE–object relative position, base frame | 3 | $\mathcal U(\pm0.02)$ |
+| Object rotation matrix w.r.t. base | 9 | $\mathcal U(\pm0.01)$ |
+| Arm joint position relative to default | 5 | $\mathcal U(\pm0.01)$ |
+| Robot base linear velocity | 3 | $\mathcal U(\pm0.01)$ |
+| Robot base angular velocity | 3 | $\mathcal U(\pm0.20)$ |
+| Arm joint velocity | 5 | $\mathcal U(\pm0.50)$ |
+| Projected gravity unit vector | 3 | $\mathcal U(\pm0.05)$ |
+| Object–goal relative position w.r.t. base | 3 | $\mathcal U(\pm0.02)$ |
+| Goal orientation w.r.t. object | 9 | $\mathcal U(\pm0.01)$ |
+| Previous action $\mathbf a_{t-1}$ | 11 | noise 없음 |
 
 [원문 Table I, §III-C, PDF p. 3]
 
@@ -137,11 +137,11 @@ Actor observation은 $\\mathbf{o}_t\\in\\mathbb{R}^{54}$이다. Table I의 구�
 
 ### 4.2 Critic privileged information
 
-Critic은 actor observation에 다음 privileged information $\\mathbf{o}^{pr}_t$를 더 받아 총 $\\mathbb{R}^{73}$ 입력을 사용한다.
+Critic은 actor observation에 다음 privileged information $\mathbf{o}^{pr}_t$를 더 받아 총 $\mathbb{R}^{73}$ 입력을 사용한다.
 
 | Privileged input | 차원 |
 | --- | ---: |
-| EE–object contact state $\\lambda_e$ | 1 |
+| EE–object contact state $\lambda_e$ | 1 |
 | Object CoM position w.r.t. robot base | 3 |
 | Object mass | 1 |
 | Object dimensions | 3 |
@@ -169,14 +169,14 @@ Actor에 dimensions·velocity가 없더라도 training reward는 simulation의 �
 
 Push policy action은
 
-$
-\\mathbf a_t=
-\\left(
-\\Delta\\mathbf u^{\\mathrm{cmd}}_{\\mathrm{base}},
-\\Delta\\mathbf q^{\\mathrm{cmd}}_j
-\\right)
-\\in\\mathbb R^{11}
-$
+$$
+\mathbf a_t=
+\left(
+\Delta\mathbf u^{\mathrm{cmd}}_{\mathrm{base}},
+\Delta\mathbf q^{\mathrm{cmd}}_j
+\right)
+\in\mathbb R^{11}
+$$
 
 이다.
 
@@ -186,7 +186,7 @@ Base command는 6차원이고 arm joint target은 첫 5개 joint에 대한 5차�
 
 Actor action에는 “contact 유지 / contact 해제 / face switch” 같은 명시적 mode가 없다. 정책이 mobile base와 arm을 연속적으로 움직이면서 결과적으로 contact를 끊고, robot이 object 주위를 돌아 다른 면이나 높이에서 다시 접촉한다. [원문 §I, §III-C, Fig. 4, §IV-C, PDF pp. 1, 3, 5]
 
-이때 actor는 contact state $\\lambda_e$를 직접 보지 않는다. Contact가 끊겨도 object pose와 EE–object relative position은 계속 관측되므로, contact-only feedback 방식과 달리 observation 자체가 사라지지 않는다. [원문 §II-B, Table I, §III-E, PDF pp. 2–4]
+이때 actor는 contact state $\lambda_e$를 직접 보지 않는다. Contact가 끊겨도 object pose와 EE–object relative position은 계속 관측되므로, contact-only feedback 방식과 달리 observation 자체가 사라지지 않는다. [원문 §II-B, Table I, §III-E, PDF pp. 2–4]
 
 ## 6. RL Environment와 Constrained PPO
 
@@ -203,8 +203,8 @@ Actor action에는 “contact 유지 / contact 해제 / face switch” 같은 �
 | Object initial position | environment origin |
 | Robot base initial position | object-centered annulus, radius 1.2–2.5 m |
 | Goal position | object-centered circular area, radius 2 m |
-| Object·goal·base yaw | 각각 $[-\\pi,\\pi]$ 전체 범위 random |
-| Success | position error $\\le 10$ cm, orientation error $\\le 10$ deg |
+| Object·goal·base yaw | 각각 $[-\pi,\pi]$ 전체 범위 random |
+| Success | position error $\le 10$ cm, orientation error $\le 10$ deg |
 
 [원문 §III-B, Fig. 3, PDF p. 3]
 
@@ -212,7 +212,7 @@ Actor action에는 “contact 유지 / contact 해제 / face switch” 같은 �
 
 ### 6.2 Surface reach target을 이용한 exploration shaping
 
-각 reset마다 object의 vertical surface에서 reach target $\\mathbf p_r$를 무작위로 샘플링하고, $r_2$로 EE를 그쪽으로 유도한다. 목적은 특정 centroid만 밀도록 고정하는 것이 아니라 **object surface의 여러 위치를 경험하게 하는 것**이다. [원문 §III-B·D, Fig. 3B, PDF pp. 3–4]
+각 reset마다 object의 vertical surface에서 reach target $\mathbf p_r$를 무작위로 샘플링하고, $r_2$로 EE를 그쪽으로 유도한다. 목적은 특정 centroid만 밀도록 고정하는 것이 아니라 **object surface의 여러 위치를 경험하게 하는 것**이다. [원문 §III-B·D, Fig. 3B, PDF pp. 3–4]
 
 이 reach target은 actor observation으로 주어지는 task goal이 아니라 reward shaping용 training signal이다. 저자들은 정확히 그 sampled point를 맞히게 할 의도는 없으며, $r_2$ weight를 1500 iteration 뒤 1/4로 줄인다. [원문 §III-D, PDF p. 4]
 
@@ -225,15 +225,15 @@ Total reward는 네 항의 가중합이다.
 $$
 r^{mathrm{tot}}_t
 =
-\\sum_{i=1}^{4} w_i r_{i,t}
+\sum_{i=1}^{4} w_i r_{i,t}
 $$
 
 원문 weight는
 
 $$
-w_1=2.5,\\quad
-w_2=1.25,\\quad
-w_3=0.156,\\quad
+w_1=2.5,\quad
+w_2=1.25,\quad
+w_3=0.156,\quad
 w_4=0.3
 $$
 
@@ -248,13 +248,13 @@ $$
 
 $r_3$에는 object velocity magnitude를 직접 보상하지 않는다. 저자들은 이를 통해 robot이 object를 지나치게 공격적으로 밀지 않도록 한다고 설명한다. [원문 §III-D, Table II, PDF p. 4]
 
-성공하면 $r_1$을 2로 올리고, 이후에는 object velocity나 EE interaction을 더 유도하지 않도록 $r_3=0$으로 두며 reach reward도 직전 값에 유지한다. 원문에 reward scale $\\sigma_1,\\sigma_2,\\sigma_3,\\sigma_{4,a},\\sigma_{4,b}$의 수치는 제시되지 않는다. [원문 §III-D, Table II, PDF p. 4]
+성공하면 $r_1$을 2로 올리고, 이후에는 object velocity나 EE interaction을 더 유도하지 않도록 $r_3=0$으로 두며 reach reward도 직전 값에 유지한다. 원문에 reward scale $\sigma_1,\sigma_2,\sigma_3,\sigma_{4,a},\sigma_{4,b}$의 수치는 제시되지 않는다. [원문 §III-D, Table II, PDF p. 4]
 
 ### 7.2 Constraint
 
 Constrained PPO는 다음 task·actuation constraint를 사용한다.
 
-| Constraint | 차원 | CAT의 $p_i^{\\max}$ |
+| Constraint | 차원 | CAT의 $p_i^{\max}$ |
 | --- | ---: | --- |
 | Base command limit | 6 | 0.01 → 0.2 |
 | Arm command limit | 5 | 0.05 → 0.9 |
@@ -266,9 +266,9 @@ Constrained PPO는 다음 task·actuation constraint를 사용한다.
 | Undesired robot-object & self-collision | 18 | 1.0, curriculum 없음 |
 | Object balance | 1 | 0.25, curriculum 없음 |
 
-대부분의 constraint는 첫 12000 iteration 동안 $p_i^{\\max}$를 증가시키는 curriculum을 사용한다. 초반에는 constraint violation이 reward termination probability에 미치는 영향을 낮춰 exploration을 허용하고, 뒤로 갈수록 constraint satisfaction을 강화한다. [원문 §III-D, Table II, PDF p. 4]
+대부분의 constraint는 첫 12000 iteration 동안 $p_i^{\max}$를 증가시키는 curriculum을 사용한다. 초반에는 constraint violation이 reward termination probability에 미치는 영향을 낮춰 exploration을 허용하고, 뒤로 갈수록 constraint satisfaction을 강화한다. [원문 §III-D, Table II, PDF p. 4]
 
-Object balance constraint는 robot base가 움직이는 동안 object inclination이 $\\theta^{\\mathrm{lim}}=10^\\circ$를 넘지 않도록 구성한다. 저자들은 undesired collision, arm joint position, velocity limits는 특히 strict하게 만족시키려 한다고 설명한다. [원문 §III-D, Table II, PDF p. 4]
+Object balance constraint는 robot base가 움직이는 동안 object inclination이 $\theta^{\mathrm{lim}}=10^\circ$를 넘지 않도록 구성한다. 저자들은 undesired collision, arm joint position, velocity limits는 특히 strict하게 만족시키려 한다고 설명한다. [원문 §III-D, Table II, PDF p. 4]
 
 CAT 알고리즘에서 violation이 실제 termination probability로 변환되는 세부식은 본 논문이 아니라 [7]을 참조하도록 되어 있으므로 여기서 재구성하지 않는다.
 
@@ -283,7 +283,7 @@ Zero-shot hardware transfer를 위해 다음을 randomize한다.
 | Object–floor static/dynamic friction의 combined coefficient | 0.4–1.25 |
 | Object mass | 1–10 kg |
 | Object CoM x/y | centroid 기준 각 dimension의 ±25% |
-| Object CoM z | centroid 기준 $[-0.6d_z,\\;0.25d_z]$ |
+| Object CoM z | centroid 기준 $[-0.6d_z,\;0.25d_z]$ |
 | Object x/y dimensions | 각각 0.25–0.75 m |
 | Object z dimension | 0.4–1.0 m |
 | Object shape | cuboid, cylinder |
@@ -355,7 +355,7 @@ Table V의 결과는 다음과 같다.
 | Cardboard cuboid | 4.5 kg | 100×50×53 cm | 0° | 0.14 | 80.0% |
 | Wood cuboid | 6.30 kg | 40×40×60 cm | 180° | 1.00 | 91.6% |
 | Cardboard cuboid on caster wheels | 13.30 kg | 50×50×60 cm | 0° | 4.80 | 83.3% |
-| Cardboard cylinder | 2.45 kg | $\\Phi 30\\times 40$ cm | 0° | — | 83.3% |
+| Cardboard cylinder | 2.45 kg | $\Phi 30\times 40\,\mathrm{cm}$ | 0° | — | 83.3% |
 
 [원문 Table V, §IV-C, PDF p. 5]
 
@@ -408,7 +408,7 @@ Conclusion에서 두 가지 future direction을 명시한다.
 | --- | --- |
 | Actor/critic neural-network architecture | 미명시 |
 | PPO learning rate, batch/minibatch, epoch, entropy, clip, gamma, lambda | 본문 미명시. [25], [7]의 설정을 그대로 사용했다고 단정하지 않음 |
-| Reward scale $\\sigma_1,\\sigma_2,\\sigma_3,\\sigma_{4,a},\\sigma_{4,b}$ | Table II에 기호는 있으나 수치 미명시 |
+| Reward scale $\sigma_1,\sigma_2,\sigma_3,\sigma_{4,a},\sigma_{4,b}$ | Table II에 기호는 있으나 수치 미명시 |
 | External motion-capture 제조사·주파수·정확도·latency | 미명시 |
 | Arm 모델명·payload·reach | 미명시 |
 | Joint impedance gain·저수준 주기 | 미명시 |
