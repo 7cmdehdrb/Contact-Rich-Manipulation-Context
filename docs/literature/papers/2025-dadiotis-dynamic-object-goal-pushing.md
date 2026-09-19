@@ -223,9 +223,7 @@ Actor action에는 “contact 유지 / contact 해제 / face switch” 같은 �
 Total reward는 네 항의 가중합이다.
 
 $$
-r^{mathrm{tot}}_t
-=
-\sum_{i=1}^{4} w_i r_{i,t}
+r^{mathrm{tot}}_t=\sum_{i=1}^{4} w_i r_{i,t}
 $$
 
 원문 weight는
