@@ -18,6 +18,7 @@
 | 2026-09-16 | [Binary Tactile·Wrench 입력 처리 및 비교 실험 제안](reviews/2026-09-16_binary-tactile-wrench-design-notes.md) | 위 신규 조사에서 도출한 PROPOSED 문서. 필터·영역 축약·threshold·hysteresis·validity, wrench 보정·좌표계·정규화, actor/critic 경계와 동일 조건의 센서 표현 비교를 구체화한다. 구현·최종 사양·장비 실측 결과가 아니다. |
 | 2026-09-17 | [힘·촉각 기반 Sweeping: 선행연구 검토와 적용 방향](reviews/2026-09-17_force-tactile-sweeping-meeting.md) | 9월 18일 미팅 검토 자료. 기존 연구의 접근 → 적용 후보 → 검토 이유를 촉각·F/T·RL 결합·보상별로 정리한다. 확정 사양이나 미팅 결과가 아니며, 상세 노트가 있는 논문은 해당 문서로 연결한다. |
 | 2026-09-18 | [Research Motivation 보강: 신규 문헌에서 본 축약 촉각의 보완 구조](reviews/2026-09-18_reduced-tactile-compensation-survey.md) | 기존 저장소에 없던 신규 문헌 4편을 Sider Scholar로 발굴해 비교. Pose·Shape 제공 조건, Binary/저차원 tactile과 함께 쓰는 load·proprioception·history·kinematic prior·privileged information을 분리해 정리한다. |
+| 2026-09-19 | [ICRA 2025 후보 논문 선별 — 축약 촉각 보완 구조와 F/T·촉각 역할 분담](reviews/2026-09-19_icra-2025-contact-sensing-screening.md) | 사용자 제공 ICRA 2025 CSV 238개 레코드의 제목·초록을 검토하여 31편을 후속 정독 후보로 선별. Binary/축약 tactile, F/T·tactile 역할, object state 제공 조건, history·privileged information, pushing 비교군을 우선도별로 정리한다. |
 | 2026-09-16부터 누적 | [사용자 발굴 논문](reviews/user-found-papers.md) | 사용자가 별도로 제공한 논문의 등록·서지·정독 상태와 상세 노트. USER-P 식별자를 유지하며 조사 그룹의 하나로 관리한다. |
 
 2026-09-14 보고서의 **7–8절은 문헌에서 도출한 해석·연구 제안**이다. 프로젝트의 확정 사양이나 구현 성과로 승격하지 않는다. 각 논문의 본래 목적, 센서 구성, 시각 사용 조건, 제어 방식, 적용 한계는 보고서 본문과 참고문헌을 함께 확인한다. 특정 범주의 직접 사례를 확보하지 못했다는 사실은 그 연구가 존재하지 않는다는 증명이나 신규성 확정이 아니다.
