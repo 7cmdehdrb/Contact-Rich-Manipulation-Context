@@ -14,6 +14,7 @@
 | [Research Motivation 보강 — 신규 문헌에서 본 축약 촉각의 보완 구조](2026-09-18_reduced-tactile-compensation-survey.md) | 2026-09-18 신규 조사, N1–N4 | Melnik et al. 2021 · Liang et al. 2022 · Luo et al. 2026 · Ahn et al. 2026. 기존 저장소 제목 검색에서 중복되지 않은 문헌만 포함 |
 | [ICRA 2025 후보 논문 선별 — 축약 촉각 보완 구조와 F/T·촉각 역할 분담](2026-09-19_icra-2025-contact-sensing-screening.md) | 2026-09-19 조사, 사용자 제공 CSV 238개 레코드 | 제목·초록 기준 31편을 넓게 선별. 직접 근거와 본문 추가 확인 후보를 구분하며, object state 제공·history·privileged information·tactile/F/T 역할을 후속 정독 관점에서 정리 |
 | [ICRA 2024 후보 논문 선별 — 축약 촉각 보완 구조와 F/T·촉각 역할 분담](2026-09-19_icra-2024-contact-sensing-screening.md) | 2026-09-19 조사, 사용자 제공 CSV 263개 레코드 | 제목·초록 기준 34편을 넓게 선별. tactile partial observability·history, sparse Binary tactile, sensing reduction, force/haptic adaptation, object-state·privileged information과 비교군을 후속 정독 관점에서 정리 |
+| [ICRA 2023 후보 논문 선별 — 축약 촉각 보완 구조와 F/T·촉각 역할 분담](2026-09-19_icra-2023-contact-sensing-screening.md) | 2026-09-19 조사, 사용자 제공 CSV 190개 레코드 | 제목·초록 기준 30편을 넓게 선별. 저정보 tactile force control, tactile partial observability·history, tactile state estimation, F/T safety sensing, object-state·vision 비교군을 후속 정독 관점에서 정리 |
 | [사용자 발굴 논문](user-found-papers.md) | 등록일별 누적, USER-P 식별자 | [USER-P001 · Gentle Object Retraction](../papers/2026-brouwer-gentle-object-retraction.md) · [USER-P002 · Sim2Real Tactile Manipulation](../papers/2024-su-sim2real-tactile-manipulation.md) |
 
 논문 제목은 [전체 논문 색인](../papers/README.md)에서도 검색할 수 있다. R·IROS-S·B/W/C·USER-P·T는 각 조사·목록에서 부여한 식별자이며, 새로운 논문 순위나 재분류가 아니다.
