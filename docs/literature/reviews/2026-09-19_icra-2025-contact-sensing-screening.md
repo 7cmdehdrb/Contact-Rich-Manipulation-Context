@@ -60,13 +60,17 @@
 
 **선별 이유:** time-series tactile data에서 temporal tactile representation을 학습한다. 실제 deployment에서는 tactile sensor input을 요구하지 않는 구조이므로 본 연구의 직접적인 sensor fusion 사례는 아니지만, **tactile history가 어떤 representation을 형성할 수 있는지** 확인할 가치가 있다.
 
+<a id="icra25-dadiotis-pushing"></a>
+
 ## 2.6. Dynamic Object Goal Pushing with Mobile Manipulators Through Model-Free Constrained Reinforcement Learning
 
 **저자:** I. Dadiotis; M. Mittal; N. Tsagarakis; M. Hutter
 
+**상세 원문 정독:** [2025 · Dadiotis et al. — Dynamic Object Goal Pushing](../papers/2025-dadiotis-dynamic-object-goal-pushing.md)
+
 **선별 이유:** 다양한 mass, material, size, shape를 가진 unknown object를 실제로 pushing하지만 초록에서는 policy가 **object pose를 계속 관측**한다고 명시한다. 따라서 “unknown physical property를 다루는 pushing”이라는 점보다, **continuous pose tracking이 어떤 정보를 대신 제공하는가**를 비교하기 좋은 사례다.
 
-**원문에서 확인할 핵심:** object pose의 측정 방식과 갱신 주기, proprioception/contact observation 여부, toppling avoidance가 어떤 정보에서 학습되는지.
+**원문 정독 결과:** actor는 current object pose에서 계산한 EE–object·object–goal 관계, robot proprioception, previous action을 사용한다. **EE–object contact state, object CoM, mass, dimensions, inertia, linear/angular velocity, shape는 critic의 simulation-only privileged information**이다. Reward도 OBB keypoint, object surface reach target, object velocity 등 actor보다 많은 GT state를 사용한다. Hardware에서는 external motion-capture system으로 object와 robot base의 6D pose를 계속 측정한다. F/T·tactile sensor는 제안 actor observation에 사용하지 않는다. Toppling 회피는 object dimensions를 직접 추정한 결과라기보다 **관측되는 object inclination에 반응하여 더 낮은 접촉 위치를 선택하는 행동**으로 설명된다.
 
 ## 2.7. Da-Vil: Adaptive Dual-Arm Manipulation with Reinforcement Learning and Variable Impedance Control
 
