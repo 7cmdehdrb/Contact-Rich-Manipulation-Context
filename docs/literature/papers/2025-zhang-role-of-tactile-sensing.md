@@ -270,13 +270,7 @@ $$
 
 각 local VK에 overall force vector V를 추가한 조건도 비교한다. 결과는 원문의 표현대로 대략
 
-$$
-\{\mathrm{VK}^{5},\mathrm{VK}^{9},\mathrm{VK}^{12}\}+V
-\ge
-V
->
-\mathrm{VK}^{5},\mathrm{VK}^{9},\mathrm{VK}^{12}
-$$
+$$\{\mathrm{VK}^{5},\mathrm{VK}^{9},\mathrm{VK}^{12}\}+V\geV>\mathrm{VK}^{5},\mathrm{VK}^{9},\mathrm{VK}^{12}$$
 
 의 경향을 보인다. 저자들은 **concise global force를 추가하면 global-only 또는 local-only보다 더 좋은 성능**을 얻는다고 해석한다. [원문 §IV-C, Fig. 8, PDF p. 5]
 
