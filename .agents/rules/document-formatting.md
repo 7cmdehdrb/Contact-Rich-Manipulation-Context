@@ -4,29 +4,29 @@
 
 ## 블록 수식
 
-독립된 블록 수식은 여는 줄과 닫는 줄에 각각 `$`를 사용한다.
+독립된 블록 수식은 여는 줄과 닫는 줄에 각각 `$$`를 사용한다.
 
-$
+$$
 \mathbf{d}=\mathbf{p}_T^W-\left(\mathbf{p}_R^W+\mathbf{R}_R^W\mathbf{p}_C^R\right).
-$
+$$
 
-언어 식별자가 `math`인 fenced code block으로 수식을 작성하지 않는다. 블록 수식의 두 `$` 구분자는 각각 별도 줄에 둔다.
+언어 식별자가 `math`인 fenced code block으로 수식을 작성하지 않는다. 블록 수식의 두 `$$` 구분자는 각각 별도 줄에 둔다.
 
 ### GitHub 렌더링 안전 규칙 — 2026-09-20 추가
 
-GitHub Markdown에서는 `$` 사이의 내용도 Markdown 파서와 충돌할 수 있다. 특히 수식 내부에서 `=` 또는 `-`를 **독립된 물리적 줄**로 두면, 바로 위 줄을 Setext heading으로 해석하여 display math가 깨질 수 있다.
+GitHub Markdown에서는 `$$` 사이의 내용도 Markdown 파서와 충돌할 수 있다. 특히 수식 내부에서 `=` 또는 `-`를 **독립된 물리적 줄**로 두면, 바로 위 줄을 Setext heading으로 해석하여 display math가 깨질 수 있다.
 
 다음 형태는 사용하지 않는다.
 
 ~~~markdown
-$
+$$
 \mathbf{s}
 =
 [
 \mathbf{s}_{pp},
 \mathbf{s}_{visual}
 ]
-$
+$$
 ~~~
 
 위 예시에서 `=` 줄은 Markdown의 Setext heading underline으로 오인될 수 있다.
@@ -34,17 +34,17 @@ $
 **기본 원칙은 하나의 display equation을 한 개의 Markdown 물리적 줄에 작성하는 것이다.**
 
 ~~~markdown
-$
+$$
 \mathbf{s}=[\mathbf{s}_{pp},\mathbf{s}_{visual},\mathbf{s}_{tactile},s_{step}].
-$
+$$
 ~~~
 
 긴 수식에서 시각적 줄바꿈이 필요하면 Markdown 줄 자체를 쪼개기보다 LaTeX의 정렬 문법을 사용하되, Markdown 구조 문법이 단독 줄의 시작에 나타나지 않게 한다. 가장 안전한 방식은 `aligned` 전체도 한 물리적 줄 안에 두는 것이다.
 
 ~~~markdown
-$
+$$
 \begin{aligned}\mathbf{x}&=f(\mathbf{q})\\\mathbf{y}&=g(\mathbf{x})\end{aligned}
-$
+$$
 ~~~
 
 블록 수식 내부에서 다음 패턴을 독립된 Markdown 줄로 만들지 않는다.
@@ -73,7 +73,7 @@ $l=p_{C,y}^R$
 - 기존 Markdown 문서에 수식을 추가하거나 기존 블록 수식을 수정할 때도 이 규칙을 적용한다.
 - 문서 작업 후 언어 식별자가 `math`인 fenced code block이나 백틱을 섞은 인라인 수식이 새로 생기지 않았는지 확인한다.
 - 새로 작성하거나 수정한 Markdown 파일은 Push 전에 `python scripts/check_markdown_math.py <changed-file.md> [...]`로 검사한다.
-- 검사기는 `$` 블록 안의 독립된 Setext underline(`=`, `-`)과 Markdown 구조 문법, 닫히지 않은 `$` 블록을 오류로 처리한다.
+- 검사기는 `$$` 블록 안의 독립된 Setext underline(`=`, `-`)과 Markdown 구조 문법, 닫히지 않은 `$$` 블록을 오류로 처리한다.
 - `git diff --check`만으로는 GitHub 렌더링 충돌을 검출할 수 없으므로 위 수식 검사를 별도로 수행한다.
 - 요청 범위 밖의 기존 표기까지 자동으로 일괄 수정하지 않는다.
 
