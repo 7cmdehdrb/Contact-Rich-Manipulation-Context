@@ -21,7 +21,7 @@
 
 | 관리 ID | Dataset ID | 논문·Review 분석 | Review 판정 |
 | --- | --- | --- | --- |
-| CHECK-A01 | B007 | [Learning Force Control for Contact-Rich Manipulation Tasks With Rigid Position-Controlled Robots](../review_dataset/260918/batch_001/papers/2020-beltran-hernandez-learning-force-control.md) | Relevant |
+| CHECK-A01 | B007 | [Learning Force Control for Contact-Rich Manipulation Tasks With Rigid Position-Controlled Robots](../review_dataset/260918/batch_001/papers/2020-beltran-hernandez-learning-force-control.md) · [정식 상세 노트](../papers/2020-beltran-hernandez-learning-force-control.md) | Relevant |
 | CHECK-A02 | B008 | [Precision-Focused Reinforcement Learning Model for Robotic Object Pushing](../review_dataset/260918/batch_001/papers/2025-bergmann-precision-focused-pushing.md) · [정식 상세 노트](../papers/2025-bergmann-precision-focused-pushing.md) | Partially Relevant |
 | CHECK-A03 | B013 | [CHEQ-ing the Box: Safe Variable Impedance Learning for Robotic Polishing](../review_dataset/260918/batch_001/papers/2025-cramer-cheq-safe-variable-impedance.md) | Relevant |
 | CHECK-A04 | B025 | [Visuotactile-RL: Learning Multimodal Manipulation Policies with Deep Reinforcement Learning](../review_dataset/260918/batch_002/papers/2022-hansen-visuotactile-rl.md) | Relevant |
