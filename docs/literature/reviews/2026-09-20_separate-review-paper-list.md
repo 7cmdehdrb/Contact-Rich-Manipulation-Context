@@ -53,7 +53,7 @@
 | 관리 ID | Dataset ID | 논문·Review 분석 | Review 판정 |
 | --- | --- | --- | --- |
 | CHECK-B01 | B001 | [Dexterous Functional Grasping](../review_dataset/260918/batch_001/papers/2023-agarwal-dexterous-functional-grasping.md) | Relevant |
-| CHECK-B02 | B086 | [MAT: Multi-Fingered Adaptive Tactile Grasping via Deep Reinforcement Learning](../review_dataset/260918/batch_003/papers/2019-wu-mat-adaptive-tactile-grasping.md) | Relevant |
+| CHECK-B02 | B086 | [MAT: Multi-Fingered Adaptive Tactile Grasping via Deep Reinforcement Learning](../review_dataset/260918/batch_003/papers/2019-wu-mat-adaptive-tactile-grasping.md) · [정식 상세 노트](../papers/2019-wu-mat-adaptive-tactile-grasping.md) | Relevant |
 | CHECK-B03 | B093 | [SAVR: Scooping Adaptation for Variable Food Properties via Reinforcement Learning](../review_dataset/260918/batch_003/papers/2025-yow-savr-variable-food-scooping.md) | Relevant |
 
 ## 4. 관리 원칙
