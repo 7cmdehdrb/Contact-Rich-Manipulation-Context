@@ -51,8 +51,8 @@ MCP-EP(Multi-Contact Particle Filter with Exploration Particles), QP(qpSWIFT), o
 
 | 정보 | 조건 | 획득 방식 | 실행 중 갱신 | 비고 |
 | --- | --- | --- | --- | --- |
-| Position | 해당 없음 | 대상 object pose를 추정하지 않음 | 해당 없음 | 대신 robot surface상의 contact point를 추적 |
-| Orientation | 해당 없음 | Object orientation 해당 없음 | 해당 없음 | q/qdot로 robot configuration 사용 |
+| Position | 기타 | 대상 object pose를 추정하지 않음 | 해당 없음 | 대신 robot surface상의 contact point를 추적 |
+| Orientation | 기타 | Object orientation 해당 없음 | 해당 없음 | q/qdot로 robot configuration 사용 |
 | Shape / Geometry | 기타 | Known robot-link mesh, contactable surfaces, face normals, precomputed geodesic distances | mesh고정; robot configuration 갱신 | 접촉하는 외부 object geometry가 아니라 robot contact surface model |
 | Physical Parameters | 기타 | Robot inertia/Coriolis/gravity model; friction-cone constraint | 동역학 보정 갱신 | 외부 object 물성 없음; friction coefficient 수치는 미명시 |
 

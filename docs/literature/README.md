@@ -6,7 +6,7 @@
 
 ## 보고서 색인
 
-공통 질문에 맞춘 독립 재분석 데이터셋은 [260918 Review Dataset](review_dataset/260918/README.md)에서 관리한다. [알파벳순 첫 15개 PDF 검토본](review_dataset/260918/batch_001/README.md)과 [test_pdfs 3편 검증본](review_dataset/260918/test_pdfs/README.md)이 작성되어 있으며 기존 개별 논문 노트와 별개다.
+공통 질문에 맞춘 독립 재분석 데이터셋은 [260918 Review Dataset](review_dataset/260918/README.md)에서 관리한다. [Batch 001: 1–15번](review_dataset/260918/batch_001/README.md), [Batch 002: 16–65번](review_dataset/260918/batch_002/README.md), [Batch 003: 66–106번](review_dataset/260918/batch_003/README.md)과 [전체 질문별 횡단 비교](review_dataset/260918/synthesis/literature-synthesis.md)가 작성되어 있다. `260918/`의 106개 PDF 전체 검토를 완료했으며 [test_pdfs 3편 검증본](review_dataset/260918/test_pdfs/README.md)은 전체 통계에서 제외한다. 이 데이터셋은 기존 개별 논문 노트와 별개다.
 
 [조사 그룹 안내](reviews/README.md)에는 각 보고서와 그 안의 상세 논문 노트를 함께 모았다. 아래 보고서에서도 상단의 논문 바로가기를 이용할 수 있다.
 

@@ -53,8 +53,8 @@ Non-RL POMDP planning: SARSOP postcontact policy precomputed per hand-object pai
 
 | 정보 | 조건 | 획득 방식 | 실행 중 갱신 | 비고 |
 | --- | --- | --- | --- | --- |
-| Position | Initial; Tracking | Initial pose distribution; contact-action MPF posterior | Belief updated each action | Prior can come from vision in formulation; reported experiments initialize simulated Gaussian beliefs. 근거: §III-A, p.3; §V-A/C, pp.6–7 |
-| Orientation | Initial; Tracking | SE(2) belief includes planar object orientation relative to hand | Belief update | Not a numerical vision pose stream or 6D tracker. 근거: §III-A, p.3; §V-A, p.6 |
+| Position | Tracking | Initial pose distribution; contact-action MPF posterior | Belief updated each action | Prior can come from vision in formulation; reported experiments initialize simulated Gaussian beliefs. 근거: §III-A, p.3; §V-A/C, pp.6–7 |
+| Orientation | Tracking | SE(2) belief includes planar object orientation relative to hand | Belief update | Not a numerical vision pose stream or 6D tracker. 근거: §III-A, p.3; §V-A, p.6 |
 | Shape / Geometry | 기타 | Known polygonal hand/object geometry; fixed hand configuration | Static model | Post-contact policy is computed once per hand-object pair. 근거: §IV-A, pp.4–5; §V-A, p.6 |
 | Physical Parameters | 기타 | Quasistatic transition model with friction/pressure-radius stochastic uncertainty | Sampled model, no measured true parameter updates | Unknown physical properties treated as noise; no actor physical-parameter estimator. 근거: §III-A, p.3; §V-A, p.6 |
 

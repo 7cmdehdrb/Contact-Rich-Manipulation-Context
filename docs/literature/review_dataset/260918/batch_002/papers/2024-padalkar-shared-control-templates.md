@@ -52,7 +52,7 @@ Simulation pouring에서 SAC/TQC를 비교하고 실제 SARA에서는 SAC를 사
 | 정보 | 조건 | 획득 방식 | 실행 중 갱신 | 비고 |
 | --- | --- | --- | --- | --- |
 | Position | Tracking | Thermos/clamp pose를 robot FK로 추정; target mug/hole frame은 사전 설정 | 매 실행 state | Tracked value는 실제 물체를 독립 관측한 GT가 아니며 grasp/calibration 오차가 남는다 (§5.1 p.9; §5.2 pp.11–12) |
-| Orientation | Tracking | Pouring thermos orientation은 FK estimate; grid-clamp에서는 orientation uncertainty를 무시하고 constraint로 고정 | Pouring state 갱신; clamp actor에는 orientation 없음 | Task별 입력을 분리한다 (§5.1 p.9; §5.2.1 p.12) |
+| Orientation | 기타 | Pouring thermos orientation은 FK estimate; grid-clamp에서는 orientation uncertainty를 무시하고 constraint로 고정 | Pouring state 갱신; clamp actor에는 orientation 없음 | Task별 입력을 분리한다 (§5.1 p.9; §5.2.1 p.12) |
 | Shape / Geometry | 기타 | Known mug/hole frame, phase-specific geometric constraints, cuboid exploration bounds | 고정 task prior | Mesh/CAD를 actor에 직접 제공하지 않지만 known task geometry가 SCT 설계에 사용됨 (§3–4 pp.3–8; §5.2.1 p.12) |
 | Physical Parameters | 미제공 | Actor에 object mass/friction 입력 명시 없음 | 없음 | Controller와 constraint 설계 조건은 별도 (§5 pp.8–13) |
 

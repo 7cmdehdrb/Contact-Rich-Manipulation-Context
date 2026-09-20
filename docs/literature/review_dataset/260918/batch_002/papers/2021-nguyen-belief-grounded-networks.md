@@ -9,13 +9,13 @@
 - Year: 2021 (PDF version); CoRL 2020
 - Venue: CoRL 2020
 - DOI / arXiv: Not stated / 2010.09170v5
-- PDF version: arXiv v5, 21 October 2021; CoRL2020 header; Appendix A–E
+- PDF version: arXiv v5, 21 October 2021; CoRL 2020 header; Appendix A–E
 - Page count: 14
 - SHA-256: 8e3be2a708c8895163badb862df69b46c9be7eba05a5b575744368219a51f9f9
 - PDF filename: Nguyen 등 - 2021 - Belief-Grounded Networks for Accelerated Robot Learning under Partial Observability.pdf
 - 읽은 범위: PDF pp.1–14 본문 및 포함된 부록을 새로 확인; 핵심 표·그림 렌더링 확인
 
-근거는 이번 배치의 PDF 원문이며 기존 상세 노트는 사용하지 않았다. 페이지는 PDF의 1-based page다.
+근거는 이번 배치의 PDF 원문이며 기존 상세 노트는 사용하지 않았다. 페이지는 PDF의 1-based page이다.
 
 ## 2. Relevance to This Review
 
@@ -23,21 +23,21 @@
 
 ## 3. Task
 
-UR5e+2DoF compliant gripper로 stack의 top plate 찾기/잡기, 두 bump 중 오른쪽만 밀기(1D), 두 bump를 접촉 탐색한 뒤 큰 것을 잡기(2D)를 수행한다. TopPlate/2D는 grasp action으로 끝나며1D는 어느 bump든 움직이면 종료한다. (§5.2–5.3 pp.5–7)
+UR5e+2DoF compliant gripper로 stack의 top plate 찾기/잡기, 두 bump 중 오른쪽만 밀기(1D), 두 bump를 접촉 탐색한 뒤 큰 것을 잡기(2D)를 수행한다. TopPlate/2D는 grasp action으로 끝나며, 1D는 어느 bump든 움직이면 종료한다. (§5.2–5.3 pp.5–7)
 
 ## 4. Method
 
 ### 4.1. Overall Pipeline
 
-Finger coordinate/angle + previous action → GRU history features → A2C action distribution → discrete direction/compliance or grasp → impedance-controlled finger/robot motion. 별도 belief reconstruction head는 학습용이다. (Fig.1 p.4; Table3 p.12)
+Finger coordinate/angle + previous action → GRU history features → A2C action distribution → discrete direction/compliance or grasp → impedance-controlled finger/robot motion. 별도 belief reconstruction head는 학습용이다. (Fig. 1 p.4; Table 3 p.12)
 
 ### 4.2. Observation
 
-Main Ah-Ch+BGN actor와 critic 모두 normalized observation-action history를 받으며 finger coordinate/angle는 관측 가능, object locations는 보이지 않는다. True belief는 input이 아니라 actor/critic representation의 auxiliary target이다. 비교 Ah-Cs는 critic state, Ah-Cb는 critic belief, Ab-Cb는 actor/critic belief를 직접 받는다. (§3 pp.3–4; §5 p.4; Appendix B p.12)
+Main Ah-Ch+BGN actor와 critic 모두 normalized observation-action history를 받으며 finger coordinate/angle은 관측 가능, object locations는 보이지 않는다. True belief는 input이 아니라 actor/critic representation의 auxiliary target이다. 비교 Ah-Cs는 critic state, Ah-Cb는 critic belief, Ab-Cb는 actor/critic belief를 직접 받는다. (§3 pp.3–4; §5 p.4; Appendix B p.12)
 
 ### 4.3. Action
 
-TopPlate: up/down/grasp3개. TwoBumps1D: left/right × compliant/stiff4개. TwoBumps2D: cardinal4방향+grasp5개. (§5.2 pp.5–6; Table5 p.13)
+TopPlate: up/down/grasp 3개. TwoBumps1D: left/right × compliant/stiff 4개. TwoBumps2D: cardinal 4방향+grasp 5개. (§5.2 pp.5–6; Table 5 p.13)
 
 ### 4.4. Controller
 
@@ -45,7 +45,7 @@ Finger impedance controller가 compliant/stiff mode를 바꾼다. 실제 arm tra
 
 ### 4.5. Learning / Optimization Method
 
-A2C+true/reconstructed belief cross-entropy, actor·critic에 각각 적용. GRU256→FC256. Belief는 discretized simulation transition/observation model로 계산한다. Simulation10seeds; sparse success+1 외0. 실물 finetuning 없이100% 보고하나 실물 trial 분모는 본문/부록에서 확인되지 않는다. (§3 p.3; §5 pp.5–8; Appendix A–C pp.11–13)
+A2C+true/reconstructed belief cross-entropy, actor·critic에 각각 적용. GRU 256→FC 256. Belief는 discretized simulation transition/observation model로 계산한다. Simulation 10 seeds; sparse success+1 외 0. 실물 finetuning 없이 100% 보고하나 실물 trial 분모는 본문/부록에서 확인되지 않는다. (§3 p.3; §5 pp.5–8; Appendix A–C pp.11–13)
 
 ## 5. Object Information
 
@@ -53,7 +53,7 @@ A2C+true/reconstructed belief cross-entropy, actor·critic에 각각 적용. GRU
 | --- | --- | --- | --- | --- |
 | Position | 미제공 | Main policy에는 current object position 없음 | 없음 | Actor history에서 object belief 관련 feature 학습; exact belief input과 다름 (§5.2 pp.5–6) |
 | Orientation | 미제공 | Object orientation 입력 없음 | 없음 | Finger angle은 robot contact deflection cue (§5.2 pp.5–6) |
-| Shape / Geometry | 기타 | Discrete task geometry: fixed motion plane/line, plate range,2D grid,ordered bumps | 고정 | Full unknown geometry manipulation이 아니라 constrained MOMDP (§5.2 pp.5–6; Appendix C/E pp.13–14) |
+| Shape / Geometry | 기타 | Discrete task geometry: fixed motion plane/line, plate range, 2D grid, ordered bumps | 고정 | Full unknown geometry manipulation이 아니라 constrained MOMDP (§5.2 pp.5–6; Appendix C/E pp.13–14) |
 | Physical Parameters | 미명시 | Object physical parameter explicit input은 없음 | 미명시 | Belief transition/observation model에 대한 simulator knowledge를 학습에 사용 (§2–3 pp.2–3) |
 
 ## 6. Missing Object Information and Compensation
@@ -86,7 +86,7 @@ Object locations 미관측 → compliant finger position/angle + action/observat
 
 ### 8.1. Sensor Source
 
-별도 wrist6D F/T/force sensor 출력은 명시되지 않는다. Force-feedback이라는 명칭은 compliant finger coordinate/angle의 접촉 반응을 가리킨다. (§5.2–5.3 pp.5–6)
+별도 wrist 6D F/T/force sensor 출력은 명시되지 않는다. Force-feedback이라는 명칭은 compliant finger coordinate/angle의 접촉 반응을 가리킨다. (§5.2–5.3 pp.5–6)
 
 ### 8.2. Representation
 
@@ -98,7 +98,7 @@ Finger deflection으로 contact/relative size를 추론; stiffness를 전환해 
 
 ### 8.4. Required Assumptions
 
-F/T-only localization은 해당 없음. 손가락이bump를 놓치지 않는1D motion, known bump order/size task, discrete model 및 관측 가능한 finger state를 가정. (§5.2 pp.5–6; Appendix E p.14)
+F/T-only localization은 해당 없음. 손가락이 bump를 놓치지 않는 1D motion, known bump order/size task, discrete model 및 관측 가능한 finger state를 가정. (§5.2 pp.5–6; Appendix E p.14)
 
 ### 8.5. Reported Limitation / Ambiguity
 
@@ -106,7 +106,7 @@ F/T-only localization은 해당 없음. 손가락이bump를 놓치지 않는1D m
 
 ## 9. Other Observations
 
-Proprioception의 contact-induced finger angle이 핵심이다. Vision, object pose, tactile image는 사용하지 않는다. Previous action과 GRU recurrent hidden state를 사용하며 finite fixed-history 길이로 대체하지 않는다. Auxiliary reconstructed belief를 정책 입력으로 되먹이는 runtime estimator도 아니다. (Table3 p.12)
+Proprioception의 contact-induced finger angle이 핵심이다. Vision, object pose, tactile image는 사용하지 않는다. Previous action과 GRU recurrent hidden state를 사용하며 finite fixed-history 길이로 대체하지 않는다. Auxiliary reconstructed belief를 정책 입력으로 되먹이는 runtime estimator도 아니다. (Table 3 p.12)
 
 ## 10. Tactile–Other Modality Relationship
 
@@ -116,23 +116,23 @@ Proprioception의 contact-induced finger angle이 핵심이다. Vision, object p
 
 | 구분 | GT 사용 여부 | 정보 | 실행 시 필요 여부·비고 |
 | --- | --- | --- | --- |
-| Actor | No input; Yes training supervision | History input; GT belief reconstruction target | 실행 때 belief/GT 없이 sensor/action history 필요 (§3 p.3; Table3 p.12) |
-| Critic | No input; Yes training supervision | Main BGN history input+true-belief loss; Ah-Cs baseline만 GT state input | Critic-only privileged input으로 main method를 오기하지 않음 (§5 p.4; Table3 p.12) |
-| Reward | Yes | Success+1: target plate/bump identity, correct move/grasp | Simulator hidden task state로 학습; 실제 policy입력 아님 (§5.2 pp.5–6) |
-| Termination | Yes / action-based | 1D bump movement; plate/2D grasp action; timeout | Object movement와 action-trigger를 구분 (§5.2 pp.5–6; Table5 p.13) |
+| Actor | No input; Yes training supervision | History input; GT belief reconstruction target | 실행 때 belief/GT 없이 sensor/action history 필요 (§3 p.3; Table 3 p.12) |
+| Critic | No input; Yes training supervision | Main BGN history input+true-belief loss; Ah-Cs baseline만 GT state input | Critic-only privileged input으로 main method를 오기하지 않음 (§5 p.4; Table 3 p.12) |
+| Reward | Yes | Success+1: target plate/bump identity, correct move/grasp | Simulator hidden task state로 학습; 실제 policy 입력 아님 (§5.2 pp.5–6) |
+| Termination | Yes / action-based | 1D bump movement; plate/2D grasp action; timeout | Object movement와 action-trigger를 구분 (§5.2 pp.5–6; Table 5 p.13) |
 | Curriculum | Yes (data/reset/supervision) | Random hidden object initial states; exact belief computation | 별도 curriculum 미명시; simulator model을 auxiliary target 생성에 사용 (§3 p.3; §5.2 pp.5–6; Appendix E p.14) |
 
 ## 12. Evidence for the Added Information
 
 | 주장/역할 | Evidence Type | 비교 조건 | 결과 | 원문 위치 |
 | --- | --- | --- | --- | --- |
-| Belief supervision 효용 | Controlled comparison | Ah-Ch+BGN vs Ah-Ch/Ah-Cs/Ah-Cb/Ab-Cb | 10seed 평균에서 BGN만 세robot task 모두perfect success 도달 | Fig.4 p.6 |
-| Representation 역할 | Controlled comparison | Ab-Cb vs Ab-Cb+BGN; reconstructed vs true belief | Auxiliary loss가 belief-input baseline도 개선; main history-based BGN에는 못미침 | §5.4 pp.7–8; Figs.6–7 p.8 |
-| 실물 전이 | Controlled comparison | Simulation-trained main policy를 UR5e에 finetuning 없이 실행 | 세task100% 보고, 평가 trial수 미명시; simulatorbaseline과실물통계동일시금지 | §5.3 pp.6–7 |
+| Belief supervision 효용 | Controlled comparison | Ah-Ch+BGN vs Ah-Ch/Ah-Cs/Ah-Cb/Ab-Cb | 10-seed 평균에서 BGN만 세 robot task 모두 perfect success 도달 | Fig. 4 p.6 |
+| Representation 역할 | Controlled comparison | Ab-Cb vs Ab-Cb+BGN; reconstructed vs true belief | Auxiliary loss가 belief-input baseline도 개선; main history-based BGN에는 못 미침 | §5.4 pp.7–8; Figs. 6–7 p.8 |
+| 실물 전이 | Controlled comparison | Simulation-trained main policy를 UR5e에 finetuning 없이 실행 | 세 task에서 100% 보고, 평가 trial 수 미명시; simulator baseline 통계와 실물 통계를 동일시하지 않음 | §5.3 pp.6–7 |
 
 ## 13. Author-stated Limitations
 
-검증 범위는 discrete-state environments이며 online belief tracking의 계산 부담과 unstructured belief representation의 학습 어려움을 논의한다. 별도 Limitations절은 없다. (§3 p.3; §6 p.8)
+검증 범위는 discrete-state environments이며 online belief tracking의 계산 부담과 unstructured belief representation의 학습 어려움을 논의한다. 별도 Limitations 절은 없다. (§3 p.3; §6 p.8)
 
 ## 14. Author-stated Future Work
 
@@ -149,9 +149,9 @@ Continuous-state task로 확장하고 Gaussian-mixture 등의 parametric belief 
 
 | 내용 | 원문 위치 |
 | --- | --- |
-| Observation/Object pose | §5.2 pp.5–6; Table3 p.12 |
+| Observation/Object pose | §5.2 pp.5–6; Table 3 p.12 |
 | Tactile/F/T | §5.2–5.3 pp.5–6: finger feedback |
-| Reward/Termination | §5.2 pp.5–6; Table5 p.13 |
+| Reward/Termination | §5.2 pp.5–6; Table 5 p.13 |
 | Critic/Belief GT | §3 p.3; §5 p.4; Appendix B p.12 |
-| Ablation | Figs.4,6,7 pp.6,8 |
+| Ablation | Figs. 4, 6, 7 pp.6,8 |
 | Limitation/Future | §6 p.8 |
