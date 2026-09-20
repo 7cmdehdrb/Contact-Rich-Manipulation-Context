@@ -4,7 +4,7 @@
 
 이 폴더는 제공된 논문 원문을 읽고 **그 논문 자체의 문제 상황, 관련 연구, 환경·센서, 핵심 메소드, 실험, 저자들이 밝힌 Limitation과 Future Work**를 정리하는 곳이다. 여러 논문을 비교하거나 프로젝트 적용안을 제안하는 `reviews/`와 구분한다. 개별 노트에는 별도 연구 주제에 억지로 대응시킨 설명을 넣지 않는다.
 
-현재 상세 노트는 **21편**이다(2026-09-20). 제목으로 찾거나 아래 조사 그룹으로 이동한다. 각 표의 **ID를 누르면 원래 조사 항목**, 마지막 열을 누르면 상세 노트가 열린다.
+현재 상세 노트는 **22편**이다(2026-09-20). 제목으로 찾거나 아래 조사 그룹으로 이동한다. 각 표의 **ID를 누르면 원래 조사 항목**, 마지막 열을 누르면 상세 노트가 열린다.
 
 [Blind Pushing · R1–R7](#blind-pushing) · [IROS 후속 선정](#iros-selected) · [사용자 발굴](#user-found) · [Binary·F/T 후속 정독](#binary-wrench) · [ICRA 후보 선별 후속 정독](#icra-screening-followup) · [작성 지침](#paper-guidelines)
 
@@ -76,6 +76,14 @@
 | [ICRA 2025 후보 선별](../reviews/2026-09-19_icra-2025-contact-sensing-screening.md#icra25-chen-vividex) | ViViDex: Learning Vision-Based Dexterous Manipulation from Human Videos | 제공된 IEEE 출판본 PDF 8쪽 전체 정독·정리 완료. human-video retargeting, privileged state PPO, trajectory-guided reward, point-cloud visual policy, seen/unseen·real-robot 평가 포함 | [2025 · Chen et al.](2025-chen-vividex.md) |
 | [ICRA 2024 후보 선별](../reviews/2026-09-19_icra-2024-contact-sensing-screening.md#icra24-wu-1khz-tactile-insertion) | 1 kHz Behavior Tree for Self-adaptable Tactile Insertion | 제공된 IEEE 출판본 PDF 7쪽 전체 정독·정리 완료. 1 kHz BT, adaptive impedance, Lissajous wiggle, Blackman filtering, moving z-score, residual-force alignment, PIBB, transferability, Limitation·Future Work 포함 | [2024 · Wu et al.](2024-wu-1khz-tactile-insertion.md) |
 | [ICRA 2024 후보 선별](../reviews/2026-09-19_icra-2024-contact-sensing-screening.md#icra24-zhao-unknown-object-retrieval) | Unknown Object Retrieval in Confined Space through Reinforcement Learning with Tactile Exploration | 제공된 IEEE 출판본 PDF 7쪽 전체 정독·정리 완료. XELA 4×4×3축·9D tactile feature, hybrid action, OptiTrack training reward, SAC on-hardware training, curriculum, heuristic baseline·ablation, Limitation·Future Work 포함 | [2024 · Zhao et al.](2024-zhao-unknown-object-retrieval.md) |
+
+### 260918 Review Dataset · 별도 확인 후속 원문 정독
+
+[260918 Review Dataset](../review_dataset/260918/README.md)에서 이미 공통 schema로 재분석된 논문 중, 사용자가 [별도 확인 목록](../reviews/2026-09-20_separate-review-paper-list.md)으로 지정하고 원문 PDF를 다시 제공하여 정식 상세 노트를 연결한 항목이다. 데이터셋의 B-ID와 CHECK-ID를 유지하며 새 발굴 논문으로 중복 집계하지 않는다.
+
+| 정리일 | Dataset / 관리 ID | 논문 | 원문 정독 상태 | 상세 노트 |
+| --- | --- | --- | --- | --- |
+| 2026-09-20 | B086 / CHECK-B02 | MAT: Multi-Fingered Adaptive Tactile Grasping via Deep Reinforcement Learning | 제공된 arXiv v2 / CoRL 2019 PDF 20쪽 전체 정독·정리 완료. 96-cell binary tactile, 20-step history, contact Cartesian position, Soft PPO, action-resolution curriculum, regrasp planning, sim-to-real, tactile baseline·ablation, calibration-noise 실험, Limitation·Future Work 포함 | [2019 · Wu et al.](2019-wu-mat-adaptive-tactile-grasping.md) |
 
 <a id="paper-guidelines"></a>
 
