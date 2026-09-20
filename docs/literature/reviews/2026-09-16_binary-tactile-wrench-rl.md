@@ -123,7 +123,7 @@ FSR 전압을 threshold해 16bit로 만든다. Simulation은 센서용 링크의
 
 ### B4. Enhancing Tactile-based Reinforcement Learning for Robotic Control
 
-**Elle Miller, Trevor McInroe, David Abel, Oisin Mac Aodha, Sethu Vijayakumar. NeurIPS 2025.** [원문 v1](https://arxiv.org/html/2510.21609v1) · [저자 프로젝트](https://elle-miller.github.io/tactile_rl/)
+**Elle Miller, Trevor McInroe, David Abel, Oisin Mac Aodha, Sethu Vijayakumar. NeurIPS 2025.** [원문 v1](https://arxiv.org/html/2510.21609v1) · [저자 프로젝트](https://elle-miller.github.io/tactile_rl/) · [상세 노트](../papers/2025-miller-enhancing-tactile-rl.md)
 
 **문제:** Sparse binary 정보를 추가해도 RL이 자동으로 활용하지 않는다. Isaac Lab의 Find·Bounce·Baoding에서 이를 비교한다. Find는 독립 finger plate 2개, Shadow 계열은 link 17개의 simulated contact를 이진화한다. **실물 센서 실험은 없다.** [§3–4]
 
