@@ -32,7 +32,7 @@
 | CHECK-A09 | B043 | [Tactile Gym 2.0: Sim-to-Real Deep Reinforcement Learning for Comparing Low-Cost High-Resolution Robot Touch](../review_dataset/260918/batch_002/papers/2022-lin-tactile-gym-2.md) | Relevant |
 | CHECK-A10 | B045 | [Bi-Touch: Bimanual Tactile Manipulation With Sim-to-Real Deep Reinforcement Learning](../review_dataset/260918/batch_002/papers/2023-lin-bi-touch.md) | Relevant |
 | CHECK-A11 | B050 | [Learning a High-quality Robotic Wiping Policy Using Systematic Reward Analysis and Visual-Language Model Based Curriculum](../review_dataset/260918/batch_002/papers/2025-liu-high-quality-robotic-wiping.md) | Relevant |
-| CHECK-A12 | B057 | [Enhancing Tactile-based Reinforcement Learning for Robotic Control](../review_dataset/260918/batch_002/papers/2025-miller-enhancing-tactile-rl.md) | Relevant |
+| CHECK-A12 | B057 | [Enhancing Tactile-based Reinforcement Learning for Robotic Control](../review_dataset/260918/batch_002/papers/2025-miller-enhancing-tactile-rl.md) · [정식 상세 노트](../papers/2025-miller-enhancing-tactile-rl.md) | Relevant |
 | CHECK-A13 | B060 | [Belief-Grounded Networks for Accelerated Robot Learning under Partial Observability](../review_dataset/260918/batch_002/papers/2021-nguyen-belief-grounded-networks.md) | Relevant |
 | CHECK-A14 | B065 | [Towards Safe and Efficient Learning in the Wild: Guiding RL With Constrained Uncertainty-Aware Movement Primitives](../review_dataset/260918/batch_002/papers/2025-padalkar-kernelized-guided-rl.md) | Relevant |
 | CHECK-A15 | B066 | [Beyond Binary: Sim-to-Real Dexterous Manipulation with Physics-Grounded Contact Representation](../review_dataset/260918/batch_003/papers/2026-pan-beyond-binary-cop-tactile.md) | Relevant |
