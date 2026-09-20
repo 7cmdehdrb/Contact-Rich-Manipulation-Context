@@ -20,6 +20,7 @@ SETEXT_UNDERLINE = re.compile(r"^\s*(?:=+|-+)\s*$")
 MARKDOWN_STRUCTURE = re.compile(
     r"^\s{0,3}(?:#{1,6}(?:\s|$)|>\s?|(?:[*+-]|\d+[.)])\s+)"
 )
+FENCE_OPEN = re.compile(r"^\s{0,3}((?:\x60){3,}|~{3,})")
 
 
 def iter_markdown_paths(args: list[str]) -> list[Path]:
@@ -33,6 +34,12 @@ def iter_markdown_paths(args: list[str]) -> list[Path]:
     return paths
 
 
+def is_fence_close(line: str, fence: str) -> bool:
+    marker = re.escape(fence[0])
+    min_len = len(fence)
+    return bool(re.fullmatch(rf"\s{{0,3}}{marker}{{{min_len},}}\s*", line))
+
+
 def check_file(path: Path) -> list[str]:
     errors: list[str] = []
     try:
@@ -43,9 +50,20 @@ def check_file(path: Path) -> list[str]:
     in_display_math = False
     block_start = 0
     nonempty_content = 0
+    code_fence: str | None = None
 
     for lineno, line in enumerate(lines, start=1):
         stripped = line.strip()
+
+        if code_fence is not None:
+            if is_fence_close(line, code_fence):
+                code_fence = None
+            continue
+
+        fence_match = FENCE_OPEN.match(line)
+        if fence_match:
+            code_fence = fence_match.group(1)
+            continue
 
         if stripped == "$$":
             if not in_display_math:
@@ -82,9 +100,7 @@ def check_file(path: Path) -> list[str]:
             )
 
     if in_display_math:
-        errors.append(
-            f"{path}:{block_start}: unclosed $$ display-math block"
-        )
+        errors.append(f"{path}:{block_start}: unclosed $$ display-math block")
 
     return errors
 
