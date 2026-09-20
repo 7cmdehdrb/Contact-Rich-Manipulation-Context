@@ -1,10 +1,10 @@
 # 사용자 별도 발굴 논문 — 누적 목록
 
-**최초 작성일: 2026-09-16 · 최근 갱신일: 2026-09-18**
+**최초 작성일: 2026-09-16 · 최근 갱신일: 2026-09-20**
 
 [문서 안내](../../README.md) · [문헌 색인](../README.md) · [조사 그룹](README.md) · [전체 논문](../papers/README.md)
 
-**상세 노트 바로가기:** [USER-P001 · Gentle Object Retraction](../papers/2026-brouwer-gentle-object-retraction.md) · [USER-P002 · Sim2Real Tactile Manipulation](../papers/2024-su-sim2real-tactile-manipulation.md)
+**상세 노트 바로가기:** [USER-P001 · Gentle Object Retraction](../papers/2026-brouwer-gentle-object-retraction.md) · [USER-P002 · Sim2Real Tactile Manipulation](../papers/2024-su-sim2real-tactile-manipulation.md) · [USER-P003 · Tactile Sim-to-Real Door Opening](../papers/2021-ding-sim-to-real-tactile-manipulation.md)
 
 ## 1. 이 목록의 범위
 
@@ -20,8 +20,9 @@
 | --- | --- | --- | --- | --- |
 | USER-P001 | 2026-09-16 | **Gentle Object Retraction in Dense Clutter Using Multimodal Force Sensing and Imitation Learning** — Brouwer et al., IEEE RA-L 11(2), 1578–1585, 2026. [DOI](https://doi.org/10.1109/LRA.2025.3643332) | 사용자 별도 발굴·출판본 PDF 제공. 8쪽 전체 정독 완료. Limitation·Future Work 포함. 코드·보충 영상 미확인 | [2026 · Brouwer et al.](../papers/2026-brouwer-gentle-object-retraction.md) |
 | USER-P002 | 2026-09-18 | **Sim2Real Manipulation on Unknown Objects with Tactile-based Reinforcement Learning** — Su et al., arXiv:2403.12170v1, 2024-03-18. [v1 원문](https://arxiv.org/abs/2403.12170v1) | 사용자 별도 발굴·arXiv v1 PDF 제공. 8쪽 전체 정독 완료. 저자 명시 한계·향후 공개 계획 포함. 이후 출판본·코드 미확인 | [2024 · Su et al.](../papers/2024-su-sim2real-tactile-manipulation.md) |
+| USER-P003 | 2026-09-20 | **Sim-to-Real Transfer for Robotic Manipulation with Tactile Sensory** — Ding et al., IROS 2021, pp. 6778–6785. [DOI](https://doi.org/10.1109/IROS51168.2021.9636259) | 사용자 제공 IEEE 출판본 PDF 8쪽 전체 정독 완료. 30-element binary tactile, TD3, zero-shot sim-to-real, Limitation·Future Work 포함. 코드·보충자료 미확인 | [2021 · Ding et al.](../papers/2021-ding-sim-to-real-tactile-manipulation.md) |
 
-현재 등록 2편, 첨부 원문 정독 완료 2편이다. 코드 실행·정책 재학습·실험 재현 완료 수를 뜻하지 않는다.
+현재 등록 3편, 첨부 원문 정독 완료 3편이다. 코드 실행·정책 재학습·실험 재현 완료 수를 뜻하지 않는다.
 
 ## 3. 등록 논문별 확인 내용
 
@@ -47,6 +48,16 @@
 
 22개 훈련 물체와 16개 미지 실물 물체를 사용한다. Table I에서 비증강 RGB·Diff·Binary의 실물 성공률은 0.50·0.60·0.80이며, Binary(Aug)도 평균 성공률은 0.80이다. 성공 기준은 **angle deviation 15% 미만이지 15° 미만이 아니다**. Table I·II의 ± 불일치, 불완전 접촉 실패, SB3 기본값만 언급한 학습 설정과 누락된 angle reward 세부는 [상세 노트](../papers/2024-su-sim2real-tactile-manipulation.md)에 분리해 기록했다. 구체적인 후속 연구 확장 대신 환경·학습 코드 공개 계획만 명시한다. [첨부 v1 §IV–VI, Table I–III, PDF pp. 3–6]
 
+<a id="user-p003"></a>
+
+### 3.3. USER-P003 — 확인된 내용과 분류 주의
+
+**서지:** Z. Ding, Y.-Y. Tsai, W. W. Lee, and B. Huang, “Sim-to-Real Transfer for Robotic Manipulation with Tactile Sensory,” *2021 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)*, pp. 6778–6785, 2021. DOI: [10.1109/IROS51168.2021.9636259](https://doi.org/10.1109/IROS51168.2021.9636259).
+
+Franka Panda gripper 양 finger pad에 총 30개의 in-house resistive tactile element를 부착하고, MuJoCo의 normal-force approximation과 실물 electrical response를 모두 **binary contact pattern**으로 축약하여 TD3 observation에 제공하는 door-opening 연구다. Actor는 tactile 외에도 proprioception, knob relative position, door hinge angle을 계속 받으므로 blind/initial-only vision 연구로 분류하지 않는다. Simulation에서 학습한 policy는 domain randomization, observation/action noise, 1-step delay, tactile bit flipping을 적용한 뒤 real robot으로 zero-shot transfer한다. [첨부 출판본 §IV–V, PDF pp. 4–7]
+
+저자들은 joint-based force/torque sensing이 kinematic chain과 multiple contact force의 entanglement 때문에 **contact area를 직접 제공하기 어렵고**, tactile은 local/direct contact detail을 제공할 수 있다고 명시한다. 실물에서 tactile policy의 평균 door angle은 21.5°에서 31.2°로 증가하고 step 수는 275.6에서 176.3으로 감소했다. 단, proposed actor에 별도 F/T input은 없으며 tactile-vs-F/T ablation도 아니다. Sensor modeling, 25D+30D observation, reward, randomization, calibration, 결과·한계·Future Work는 [상세 노트](../papers/2021-ding-sim-to-real-tactile-manipulation.md)에 기록했다. [첨부 출판본 §I, §IV–VI, Table III, PDF pp. 1, 4–8]
+
 ## 4. 이후 추가·갱신 규칙
 
 `USER-P001`, `USER-P002`, …처럼 **등록 순서의 고유 ID**를 부여한다. 이 번호는 우선순위나 논문 평가 점수가 아니며, R 번호·IROS-S 번호·논문 자체의 참고문헌 번호와 섞지 않는다. 등록 후 순서를 바꾸어도 ID를 재사용하거나 재번호화하지 않는다.
@@ -68,3 +79,4 @@
 | 2026-09-16 | 누적 목록 생성. USER-P001 등록 및 원문 8쪽 상세 정리 연결. 기존 R1–R7·IROS-S01–S05 분류와 분리 |
 | 2026-09-17 | 목록을 `reviews/user-found-papers.md`로 이동하고 조사 그룹 안내·상세 노트와 양방향으로 연결. 등록 ID와 기존 내용·정독 상태 유지 |
 | 2026-09-18 | USER-P002 등록. arXiv:2403.12170v1 8쪽 상세 정리·고정 anchor·상단 바로가기와 색인 연결 추가. 기존 등록·조사 분류 유지 |
+| 2026-09-20 | USER-P003 등록. IROS 2021 IEEE 출판본 8쪽 상세 정리·binary tactile sim-to-real·F/T contact-area motivation·TD3/door-opening 실험·고정 anchor와 색인 연결 추가 |
