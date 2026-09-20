@@ -84,6 +84,7 @@ R1–R7 전체의 제공·정독 상태는 개별 논문 색인을 따른다. �
 | 2026-09-19 | ICRA 2025 후보 선별 | [ViViDex — human-video retargeting·state-based PPO·privileged object state·trajectory-guided reward·3D point-cloud BC/Diffusion·seen/unseen·real-robot 평가](papers/2025-chen-vividex.md) |
 | 2026-09-20 | ICRA 2024 후보 선별 | [1 kHz Tactile Insertion — contact-state estimation·1 kHz Behavior Tree·Wiggle/Push switching·evolution strategy·transferability·한계/Future Work](papers/2024-wu-1khz-tactile-insertion.md) |
 | 2026-09-20 | ICRA 2024 후보 선별 | [Unknown Object Retrieval — XELA 4×4×3축 tactile·9D observation·SAC·hybrid action·OptiTrack reward·goal curriculum·unseen-object 평가·한계/Future Work](papers/2024-zhao-unknown-object-retrieval.md) |
+| 2026-09-20 | B086 / CHECK-B02 · 260918 Review Dataset 후속 | [MAT — 96-cell binary tactile·20-step history·contact Cartesian positions·Soft PPO·finger-action curriculum·regrasp planning·calibration-noise robustness·한계/Future Work](papers/2019-wu-mat-adaptive-tactile-grasping.md) |
 
 ## 폴더와 파일명 규칙
 
