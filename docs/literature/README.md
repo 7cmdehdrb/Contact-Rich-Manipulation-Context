@@ -88,6 +88,7 @@ R1–R7 전체의 제공·정독 상태는 개별 논문 색인을 따른다. �
 | 2026-09-20 | B086 / CHECK-B02 · 260918 Review Dataset 후속 | [MAT — 96-cell binary tactile·20-step history·contact Cartesian positions·Soft PPO·finger-action curriculum·regrasp planning·calibration-noise robustness·한계/Future Work](papers/2019-wu-mat-adaptive-tactile-grasping.md) |
 | 2026-09-20 | B008 / CHECK-A02 · 260918 Review Dataset 후속 | [Precision-Focused Pushing — binary vision·14D observation·episode GRU memory·SAC+HER·action duration·friction sampling·1 cm precision·실물 평가·한계/Future Work](papers/2025-bergmann-precision-focused-pushing.md) |
 | 2026-09-20 | B057 / CHECK-A12 · 260918 Review Dataset 후속 | [Enhancing Tactile RL — sparse binary contact·proprioception/history·self-supervised representation learning·RoTO·sensor ablation·simulation physical metrics·한계/Future Work](papers/2025-miller-enhancing-tactile-rl.md) |
+| 2026-09-20 | B007 / CHECK-A01 · 260918 Review Dataset 후속 | [Learning Force Control — filtered F/T·EEF goal error·SAC·parallel/admittance force control·action-space trade-off·fail-safe·safety reward·실물 precision insertion·한계/Future Work](papers/2020-beltran-hernandez-learning-force-control.md) |
 
 ## 폴더와 파일명 규칙
 
