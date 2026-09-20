@@ -1,6 +1,6 @@
 # MAT: Multi-Fingered Adaptive Tactile Grasping via Deep Reinforcement Learning
 
-[Batch 안내](../README.md) · [Manifest](../manifest.csv) · [비교표](../tables/paper_comparison.csv) · [횡단 종합](../synthesis/literature-synthesis.md)
+[Batch 안내](../README.md) · [Manifest](../manifest.csv) · [비교표](../tables/paper_comparison.csv) · [횡단 종합](../synthesis/literature-synthesis.md) · [정식 상세 노트](../../../../papers/2019-wu-mat-adaptive-tactile-grasping.md)
 
 분석 ID: `B086`. 제공 PDF 원문을 이번 작업에서 새로 읽었다. 원문 위치는 PDF의 1-based page이며 기존 상세 노트는 근거로 사용하지 않았다.
 
