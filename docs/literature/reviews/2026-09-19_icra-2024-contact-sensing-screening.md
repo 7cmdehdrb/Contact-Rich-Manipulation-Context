@@ -94,11 +94,17 @@
 
 **주의:** 초록만으로 wrist 6-axis F/T인지 다른 force sensing인지 확정하지 않는다.
 
+<a id="icra24-wu-1khz-tactile-insertion"></a>
+
 ## 2.10. 1 kHz Behavior Tree for Self-adaptable Tactile Insertion
 
 **저자:** Y. Wu; F. Wu; L. Chen; K. Chen; S. Schneider; L. Johannsmeier; Z. Bing; F. J. Abu-Dakka; A. Knoll; S. Haddadin
 
+**상세 노트:** [2024 · Wu et al.](../papers/2024-wu-1khz-tactile-insertion.md)
+
 **선별 이유:** 기존 force-domain wiggle motion이 **변화하는 contact state에 따라 behavior를 바꾸지 못하는 한계**를 지적하고, high-frequency tactile data로 contact state를 추정하여 behavior-tree primitive를 전환한다. 단순 force-domain 제어에 tactile contact-state estimation을 추가하는 구조이므로 **force와 tactile의 역할 차이**를 확인할 가치가 높다.
+
+**원문 정독 보완:** 제공된 7쪽 원문에서 별도 taxel/tactile array의 모델·배치·해상도는 제시되지 않는다. 실제 online estimator는 EE z-position·velocity와 joint-torque 기반 force/residual force를 이용해 Searching / Stuck / Unstuck / Aligned를 판정하고, 1 kHz BT가 Wiggle/Push를 전환한다. 따라서 제목의 tactile을 분포형 tactile skin 사용으로 단정하지 않는다.
 
 ## 2.11. Robot Synesthesia: In-Hand Manipulation with Visuotactile Sensing
 
