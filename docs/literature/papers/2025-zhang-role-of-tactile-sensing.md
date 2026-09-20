@@ -75,16 +75,7 @@ Minsight, Insight, DenseTact, BioTac, GelSight, GelSlim, uSkin, binary taxel arr
 
 정책 state는 네 부분으로 구성된다.
 
-$$
-\mathbf{s}
-=
-[
-\mathbf{s}_{pp},
-\mathbf{s}_{visual},
-\mathbf{s}_{tactile},
-s_{step}
-].
-$$
+$$\mathbf{s}=[\mathbf{s}_{pp},\mathbf{s}_{visual},\mathbf{s}_{tactile},s_{step}].$$
 
 - $\mathbf{s}_{pp}$: TCP Cartesian pose와 gripper opening size를 포함한 proprioception
 - $\mathbf{s}_{visual}$: object type encoding과 object Cartesian pose
@@ -99,14 +90,7 @@ $$
 
 Action은 arm의 모든 joint position과 gripper opening width다.
 
-$$
-\mathbf{a}_t
-=
-[
-j_1,\ldots,j_{n_{\mathrm{arm}}},
-j_{\mathrm{gripper}}
-].
-$$
+$$\mathbf{a}_t=[j_1,\ldots,j_{n_{\mathrm{arm}}},j_{\mathrm{gripper}}].$$
 
 Franka Panda에서는 $n_{\mathrm{arm}}=7$이다. 저자들은 operational-space control 대신 joint-level target을 직접 policy action으로 사용한다. [원문 §III-A·B, PDF pp. 2–3]
 
@@ -114,12 +98,7 @@ Franka Panda에서는 $n_{\mathrm{arm}}=7$이다. 저자들은 operational-space
 
 Main success reward $r_{\mathrm{grasp}}$는 policy rollout 뒤 **grasp stability check**에서 계산한다. Robot은 arm을 들어 올리고 orientation을 유지한 채 object에 random force를 가하고 기다린다. 이 동안 양 finger contact가 유지되는 시간을 $t_{\mathrm{inhand}}$로 누적한다.
 
-$$
-r_{\mathrm{grasp}}
-=
-1000
-\frac{t_{\mathrm{inhand}}}{t_{\mathrm{total}}}.
-$$
+$$r_{\mathrm{grasp}}=1000\frac{t_{\mathrm{inhand}}}{t_{\mathrm{total}}}.$$
 
 [원문 §III-A, PDF p. 2]
 
