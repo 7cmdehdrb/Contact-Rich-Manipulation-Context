@@ -4,7 +4,7 @@
 
 이 폴더는 제공된 논문 원문을 읽고 **그 논문 자체의 문제 상황, 관련 연구, 환경·센서, 핵심 메소드, 실험, 저자들이 밝힌 Limitation과 Future Work**를 정리하는 곳이다. 여러 논문을 비교하거나 프로젝트 적용안을 제안하는 `reviews/`와 구분한다. 개별 노트에는 별도 연구 주제에 억지로 대응시킨 설명을 넣지 않는다.
 
-현재 상세 노트는 **23편**이다(2026-09-20). 제목으로 찾거나 아래 조사 그룹으로 이동한다. 각 표의 **ID를 누르면 원래 조사 항목**, 마지막 열을 누르면 상세 노트가 열린다.
+현재 상세 노트는 **24편**이다(2026-09-20). 제목으로 찾거나 아래 조사 그룹으로 이동한다. 각 표의 **ID를 누르면 원래 조사 항목**, 마지막 열을 누르면 상세 노트가 열린다.
 
 [Blind Pushing · R1–R7](#blind-pushing) · [IROS 후속 선정](#iros-selected) · [사용자 발굴](#user-found) · [Binary·F/T 후속 정독](#binary-wrench) · [ICRA 후보 선별 후속 정독](#icra-screening-followup) · [작성 지침](#paper-guidelines)
 
@@ -62,6 +62,7 @@
 | --- | --- | --- | --- |
 | [B1](../reviews/2026-09-16_binary-tactile-wrench-rl.md#b1) | DexTouch: Learning to Seek and Manipulate Objects With Tactile Dexterity | 제공된 IEEE 출판본 PDF 8쪽 전체 정독·정리 완료. 식 (1)–(4), Table I–III, Limitation·Future Work와 미명시 사항 포함 | [2024 · Lee et al.](2024-lee-dextouch.md) |
 | [B3](../reviews/2026-09-16_binary-tactile-wrench-rl.md#b3) | Rotating without Seeing: Towards In-hand Dexterity through Touch | 제공된 arXiv:2303.10880v4 (2023-03-27) PDF 15쪽 전체 정독·정리 완료. 식 (1)–(9), Table I–VI, Limitation·Future Work와 미명시 사항 포함 | [2023 · Yin et al.](2023-yin-rotating-without-seeing.md) |
+| [B4](../reviews/2026-09-16_binary-tactile-wrench-rl.md#b4) | Enhancing Tactile-based Reinforcement Learning for Robotic Control | 제공된 arXiv v1 / NeurIPS 2025 PDF 28쪽 전체 정독·정리 완료. 2/17-link binary contact, proprioception/action history, PPO+TR/FR/FD/TFD, separated auxiliary memory, sensor ablation, MI·tactile prediction 분석, Limitation·Future Work 포함 | [2025 · Miller et al.](2025-miller-enhancing-tactile-rl.md) |
 
 <a id="icra-screening-followup"></a>
 
@@ -85,6 +86,7 @@
 | --- | --- | --- | --- | --- |
 | 2026-09-20 | B086 / CHECK-B02 | MAT: Multi-Fingered Adaptive Tactile Grasping via Deep Reinforcement Learning | 제공된 arXiv v2 / CoRL 2019 PDF 20쪽 전체 정독·정리 완료. 96-cell binary tactile, 20-step history, contact Cartesian position, Soft PPO, action-resolution curriculum, regrasp planning, sim-to-real, tactile baseline·ablation, calibration-noise 실험, Limitation·Future Work 포함 | [2019 · Wu et al.](2019-wu-mat-adaptive-tactile-grasping.md) |
 | 2026-09-20 | B008 / CHECK-A02 | Precision-Focused Reinforcement Learning Model for Robotic Object Pushing | 제공된 IEEE 출판본 PDF 8쪽 전체 정독·정리 완료. 14D vision-proprioception observation, full-episode GRU memory, SAC+HER, action-duration output, friction-force sampling, 1 cm reward, simulation/real evaluation, Limitation·Future Work 포함 | [2025 · Bergmann et al.](2025-bergmann-precision-focused-pushing.md) |
+| 2026-09-20 | B057 / CHECK-A12 | Enhancing Tactile-based Reinforcement Learning for Robotic Control | 제공된 arXiv v1 / NeurIPS 2025 PDF 28쪽 전체 정독·정리 완료. sparse binary tactile, sensor/proprioception ablation, four SSL objectives, auxiliary memory, RoTO, representation analysis, simulation-only limitation·Future Work 포함 | [2025 · Miller et al.](2025-miller-enhancing-tactile-rl.md) |
 
 <a id="paper-guidelines"></a>
 
