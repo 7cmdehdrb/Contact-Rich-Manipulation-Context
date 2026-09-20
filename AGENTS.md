@@ -68,6 +68,16 @@ EEF 이동 거리를 물체 이동 거리로 대체하여 성공했다고 쓰지
 
 새 결정은 `docs/03_DECISIONS_AND_OPEN_QUESTIONS.md`에, 미팅은 `docs/02_MEETING_HISTORY.md`에, 실험은 `templates/RESEARCH_LOG.md` 형식의 별도 기록에 남긴다. 범위가 바뀌면 brief와 next actions도 갱신한다. 공개 저장소에 원본 녹취 전체, 무관한 개인 정보, 인증 정보, 센서 접속 비밀정보를 추가하지 않는다.
 
+### Markdown 수식 렌더링 검사 — 2026-09-20 추가
+
+Markdown 문서를 새로 작성하거나 수정할 때는 [Markdown 문서 형식 규칙](.agents/rules/document-formatting.md)을 따른다. 특히 `$` display math 내부에서 `=`·`-` 같은 Markdown 구조 문법을 독립된 물리적 줄로 두지 않는다. GitHub가 이를 Setext heading 등으로 해석하여 수식 블록을 깨뜨릴 수 있다.
+
+Push 전에 **이번 작업에서 생성·수정한 Markdown 파일만** 다음 검사기에 전달한다.
+
+`python scripts/check_markdown_math.py <changed-file.md> [more.md ...]`
+
+검사가 실패하면 수식 블록을 한 Markdown 물리적 줄로 합치거나 LaTeX 내부 정렬 문법을 사용하여 수정한다. `git diff --check` 통과만으로 수식 렌더링이 안전하다고 판단하지 않는다. 기존 문서를 일괄 수정하기 위해 검사기를 저장소 전체에 무조건 적용하지 않는다.
+
 ### 문서 구조와 양방향 연결 — 2026-09-17 추가
 
 문서 탐색은 [문서 안내](docs/README.md)에서 시작한다. 문헌의 조사·선별·사용자 발굴 목록은 `docs/literature/reviews/`에, 개별 상세 정리는 `docs/literature/papers/`에 둔다. 사용자 발굴 목록의 고정 경로는 `docs/literature/reviews/user-found-papers.md`다.
