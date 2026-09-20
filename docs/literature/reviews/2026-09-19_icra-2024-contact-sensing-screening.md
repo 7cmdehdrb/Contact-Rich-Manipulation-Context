@@ -78,11 +78,17 @@
 
 **선별 이유:** unknown object manipulation을 tactile-based RL로 수행하며, 서로 다른 tactile representation이 real-robot transfer에 어떤 영향을 주는지 비교한다. 기존 상세 정독에서 RGB·Diff·Binary representation과 Binary contact pattern의 Sim-to-Real 특성을 이미 확인한 논문으로, 현재 **Binary tactile 선택의 직접 근거**에 해당한다.
 
+<a id="icra24-zhao-unknown-object-retrieval"></a>
+
 ## 2.8. Unknown Object Retrieval in Confined Space through Reinforcement Learning with Tactile Exploration
 
 **저자:** X. Zhao; W. Liang; X. Zhang; C. M. Chew; Y. Wu
 
+**상세 노트:** [2024 · Zhao et al.](../papers/2024-zhao-unknown-object-retrieval.md)
+
 **선별 이유:** conventional vision이 적합하지 않은 confined space에서 tactile-sensorized tool의 **multi-point contact sensing**을 이용한다. 물체의 physical property에 대한 prior knowledge 없이 RL로 manipulation을 학습한다. 현재 연구의 **물체 물성이 미제공인 경우 tactile interaction으로 행동을 적응시키는 구조**와 연결된다.
+
+**원문 정독 보완:** XELA uSPa44의 4×4×3축 force array를 그대로 입력하지 않고, column별 normal-force max 4D + x-shear 대표값 4D + 30 Hz 초과 FFT feature 1D의 **9D tactile-only actor observation**으로 축약한다. 실물 SAC 학습에서 object progress reward는 OptiTrack으로 계산하지만 evaluation policy는 tactile만 사용한다. continuous planar displacement와 contact recovery용 parameterized backward primitive를 결합하며, 12개 unseen test object에서 90% success를 보고한다.
 
 ## 2.9. Few-Shot Learning of Force-Based Motions From Demonstration Through Pre-training of Haptic Representation
 
