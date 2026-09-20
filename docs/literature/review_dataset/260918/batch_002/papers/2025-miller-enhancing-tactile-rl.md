@@ -1,6 +1,6 @@
 # Enhancing Tactile-based Reinforcement Learning for Robotic Control
 
-[배치 안내](../README.md) · [Manifest](../manifest.csv) · [횡단 비교](../synthesis/literature-synthesis.md)
+[배치 안내](../README.md) · [Manifest](../manifest.csv) · [횡단 비교](../synthesis/literature-synthesis.md) · [정식 상세 노트](../../../../papers/2025-miller-enhancing-tactile-rl.md)
 
 ## 1. Paper Information
 
