@@ -29,6 +29,8 @@
 
 별도 [test_pdfs 검증본](test_pdfs/README.md)은 schema와 형식을 먼저 검증한 3개 PDF이며 위 106개 통계와 Master에 합산하지 않는다.
 
+사용자가 후속 확인 대상으로 지정한 27편은 [별도 확인 요청 논문 목록](../../reviews/2026-09-20_separate-review-paper-list.md)에서 두 개의 원래 목록 구분과 순서를 유지해 관리한다. 이 선택 목록은 기존 Relevant/Partially Relevant 판정이나 프로젝트 사양을 변경하지 않는다.
+
 ## 전체 결과물
 
 | 결과물 | 범위와 구조 |
