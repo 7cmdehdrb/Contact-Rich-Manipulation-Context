@@ -266,7 +266,7 @@ $d$는 현재 손끝–대상 거리, $d_{\mathrm{closest}}$는 episode에서 �
 원문 식 (2):
 
 $$
-r_{\mathrm{execute}}=(1-\mathbf1_{\mathrm{picked}})\alpha_{\mathrm{pick}}h_{\mathrm{obj}}+r_{\mathrm{picked}}+\mathbf1_{\mathrm{picked}}\alpha_{\mathrm{goal}}\max(\tilde d_{\mathrm{closest}}-\tilde d,0).
+r_{\mathrm{execute}}=(1-\mathbf{1}_{\mathrm{picked}})\alpha_{\mathrm{pick}}h_{\mathrm{obj}}+r_{\mathrm{picked}}+\mathbf{1}_{\mathrm{picked}}\alpha_{\mathrm{goal}}\max(\tilde d_{\mathrm{closest}}-\tilde d,0).
 $$
 
 들기 전에는 높이 $h_{\mathrm{obj}}$, 물체가 테이블에서 **10 cm 초과**로 올라간 뒤에는 목표까지의 최고 근접 기록 갱신을 보상한다. Picked 도달 bonus도 있다. 높이 항은 진행 차분이 아니라 현재 높이에 비례한다.
@@ -276,7 +276,7 @@ $$
 원문 식 (3):
 
 $$
-r_{\mathrm{execute}}=(1-\mathbf1_{\mathrm{rotated}})\alpha_{\mathrm{rot}}\max(\phi-\phi_{\max},0)+\mathbf1_{\mathrm{rotated}}\alpha_{\mathrm{open}}\max(\psi-\psi_{\max},0)+r_{\mathrm{rotated}}+r_{\mathrm{opened}}.
+r_{\mathrm{execute}}=(1-\mathbf{1}_{\mathrm{rotated}})\alpha_{\mathrm{rot}}\max(\phi-\phi_{\max},0)+\mathbf{1}_{\mathrm{rotated}}\alpha_{\mathrm{open}}\max(\psi-\psi_{\max},0)+r_{\mathrm{rotated}}+r_{\mathrm{opened}}.
 $$
 
 손잡이 회전 $\phi$가 **1.047 rad, 약 60°**를 넘기 전에는 손잡이 회전 기록을, 이후에는 문 열림 $\psi$의 기록을 보상한다. 문 **0.873 rad, 약 50°** 초과에 opened bonus를 준다. 각 최대값은 현재 시도에서의 기록이다.
@@ -302,13 +302,13 @@ $$
 마지막 lift에서의 terminal reward:
 
 $$
-r_{t_{\mathrm{final}}}=\mathbf1\{\mathrm{pick\text{-}up\ is\ successful}\}.
+r_{t_{\mathrm{final}}}=\mathbf{1}\{\mathrm{pick\text{-}up\ is\ successful}\}.
 $$
 
 Terminal 이전에는 원칙적으로 0이지만, 충분히 닫아보지 않고 reopen하면 다음 penalty를 준다.
 
 $$
-r_t=-0.05a_t^{\mathrm{reopen}}\left(1-\mathbf1\left\{\max_{i\in\mathrm{grip\ joints}}[s_t^{\mathrm{joint\ angles}}]_i>0.2\ \mathrm{rad}\right\}\right),\qquad t<t_{\mathrm{final}}.
+r_t=-0.05a_t^{\mathrm{reopen}}\left(1-\mathbf{1}\left\{\max_{i\in\mathrm{grip\ joints}}[s_t^{\mathrm{joint\ angles}}]_i>0.2\ \mathrm{rad}\right\}\right),\qquad t<t_{\mathrm{final}}.
 $$
 
 따라서 **모든 reopen에 −0.05가 아니다.** 최대 grip joint angle이 0.2 rad를 넘기 전에 reopen할 때만 적용된다. Terminal 성공은 1, 실패는 0이며 별도 실패 −1로 바꾸지 않는다.
@@ -399,7 +399,7 @@ r_{\mathrm{rot}}=\mathrm{clip}(\Delta\theta,-0.157,0.157),\qquad r_{\mathrm{vel}
 $$
 
 $$
-r_{\mathrm{work}}=-\langle|\boldsymbol\tau|,|\dot{\mathbf q}_t|\rangle,\qquad r_{\mathrm{torque}}=-\lVert\boldsymbol\tau\rVert.
+r_{\mathrm{work}}=-\langle|\boldsymbol{\tau}|,|\dot{\mathbf q}_t|\rangle,\qquad r_{\mathrm{torque}}=-\lVert\boldsymbol{\tau}\rVert.
 $$
 
 $$
@@ -454,17 +454,17 @@ $$
 ### Manipulation
 
 $$
-R_m=\sum_{t=T_p+1}^{T_r}\left(\lambda_1R_m^h+\lambda_2R_m^o+\lambda_3\mathbf1_{\mathrm{cont}}+\lambda_4\mathbf1_{\mathrm{lift}}\right).
+R_m=\sum_{t=T_p+1}^{T_r}\left(\lambda_1R_m^h+\lambda_2R_m^o+\lambda_3\mathbf{1}_{\mathrm{cont}}+\lambda_4\mathbf{1}_{\mathrm{lift}}\right).
 $$
 
 | 항 | 의미·계수 |
 | --- | --- |
 | $R_m^h$ | Hand motion reference 추종; $\lambda_1=4$ |
 | $R_m^o$ | Object reference pose의 위치·방향 추종; $\lambda_2=10$ |
-| $\mathbf1_{\mathrm{cont}}$ | **접촉한 fingertip 수**; $\lambda_3=0.5$ |
-| $\mathbf1_{\mathrm{lift}}$ | Table에서 lift되었을 때 bonus; $\lambda_4$ 미명시 |
+| $\mathbf{1}_{\mathrm{cont}}$ | **접촉한 fingertip 수**; $\lambda_3=0.5$ |
+| $\mathbf{1}_{\mathrm{lift}}$ | Table에서 lift되었을 때 bonus; $\lambda_4$ 미명시 |
 
-$\mathbf1_{\mathrm{cont}}$는 기호 모양과 달리 단순 Boolean이 아니라 접촉한 손끝 개수로 설명된다. 기존 노트에 추가 scale $\alpha_1=50,\alpha_2=0.1$이 기록되어 있지만 대응 subterm의 완전한 식은 전재되어 있지 않으므로 임의 위치에 대입하지 않는다.
+$\mathbf{1}_{\mathrm{cont}}$는 기호 모양과 달리 단순 Boolean이 아니라 접촉한 손끝 개수로 설명된다. 기존 노트에 추가 scale $\alpha_1=50,\alpha_2=0.1$이 기록되어 있지만 대응 subterm의 완전한 식은 전재되어 있지 않으므로 임의 위치에 대입하지 않는다.
 
 Reference object trajectory는 평가에만 쓰는 것이 아니라 RL reward의 정답이다. Retargeting optimization의 loss와 최종 visual policy의 imitation loss는 위 reward와 별개다.
 
