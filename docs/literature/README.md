@@ -70,7 +70,7 @@ R1–R7 전체의 제공·정독 상태는 개별 논문 색인을 따른다. �
 | 정리일 | 조사본 ID | 논문·상세 정리 |
 | --- | --- | --- |
 | 2026-09-17 | B1 | [DexTouch — FSR 16bit·LPF/threshold·비대칭 PPO·관절 제어·보상식·감도/배치/F/T ablation·실물 평가·한계와 향후 연구](papers/2024-lee-dextouch.md) |
-| 2026-09-17 | B3 | [Rotating without Seeing — arXiv v4·FSR 이진화·4프레임 관측·비대칭 PPO·상대 관절 목표·보상식·binary/continuous 실물 비교·한계와 향후 연구](papers/2023-yin-rotating-without-seeing.md) |
+| 2026-09-17 / 2026-09-21 재검증 | B3 | [Rotating without Seeing — arXiv v4·FSR 이진화·4프레임 관측·비대칭 PPO·상대 관절 목표·보상식·binary/continuous 실물 비교·Table IV 표기 주의·shape 분석·한계와 향후 연구](papers/2023-yin-rotating-without-seeing.md) |
 | 2026-09-20 | B4 | [Enhancing Tactile RL — 2/17-link binary contact·proprioception/action history·PPO+TR/FR/FD/TFD·auxiliary memory·sensor ablation·MI/tactile prediction·simulation-only 한계](papers/2025-miller-enhancing-tactile-rl.md) |
 
 
