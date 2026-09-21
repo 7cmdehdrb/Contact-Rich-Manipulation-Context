@@ -114,9 +114,9 @@ Simulation tactile은 안정적이라고 보고 별도 averaging을 하지 않�
 
 Running mean tactile value에 대해 threshold 0.8을 적용한다.
 
-$$
+```math
 T_{m,c}=\mathbf{1}[x_{m,c}>0.8].
-$$
+```
 
 Simulation과 real 모두 같은 0.8 threshold를 사용한다.
 
@@ -134,23 +134,23 @@ PyBullet의 contact는 collision resolution 과정에서 약한 interpenetration
 
 Policy observation은 여섯 종류의 tensor로 구성된다.
 
-$$
+```math
 s_t=\{s_t^{\mathrm{contacts\ binary}},s_t^{\Delta\mathrm{contacts\ binary}},s_t^{\mathrm{joint\ angles}},s_t^{\Delta\mathrm{joint\ angles}},s_t^{\mathrm{contacts\ xyz}},s_t^{\Delta\mathrm{contacts\ xyz}}\}.
-$$
+```
 
 ### 7.1. Binary tactile history
 
 최근 20 timesteps의 96 tactile cell binary contact:
 
-$$
+```math
 s_t^{\mathrm{contacts\ binary}}\in\{0,1\}^{20\times96}.
-$$
+```
 
 Adjacent timestep의 contact 변화:
 
-$$
+```math
 s_t^{\Delta\mathrm{contacts\ binary}}\in\{-1,0,1\}^{19\times96}.
-$$
+```
 
 이 정보는 단순 현재 contact뿐 아니라 어느 cell이 새로 접촉했거나 contact를 잃었는지를 남긴다.
 
@@ -158,29 +158,29 @@ $$
 
 Barrett Hand의 8 joint angle을 20 timesteps 저장한다.
 
-$$
+```math
 s_t^{\mathrm{joint\ angles}}\in\mathbb{R}^{20\times8}.
-$$
+```
 
 Adjacent joint change가 0.05 rad threshold를 넘었는지를 binary로 저장한다.
 
-$$
+```math
 s_t^{\Delta\mathrm{joint\ angles}}\in\{0,1\}^{19\times8}.
-$$
+```
 
 ### 7.3. Tactile cell Cartesian position history
 
 Active tactile cell의 Cartesian position을 forward kinematics로 계산하고 **end-effector frame**에서 표현한다.
 
-$$
+```math
 s_t^{\mathrm{contacts\ xyz}}\in\mathbb{R}^{20\times96\times3}.
-$$
+```
 
 Adjacent difference:
 
-$$
+```math
 s_t^{\Delta\mathrm{contacts\ xyz}}\in\mathbb{R}^{19\times96\times3}.
-$$
+```
 
 해당 tactile cell이 active가 아니면 position은 [0,0,0]으로 둔다.
 
@@ -232,9 +232,9 @@ MAT는 finger-level discrete action과 high-level regrasp/lift action을 함께 
 
 개념적으로 action은 다음과 같다.
 
-$$
+```math
 a_t=\{a_t^{\mathrm{finger1}},\ldots,a_t^{\mathrm{finger}n},a_t^{\mathrm{reopen}},a_t^{\mathrm{wrist\ rotation}},a_t^{\mathrm{lift}}\}.
-$$
+```
 
 Barrett Hand에서는 $n=3$이다.
 
@@ -242,15 +242,15 @@ Barrett Hand에서는 $n=3$이다.
 
 각 finger마다 독립적으로 close 여부를 binary로 선택한다.
 
-$$
+```math
 a_t^{\mathrm{finger}i}\in\{0,1\}.
-$$
+```
 
 Policy는 sigmoid output으로 Bernoulli probability를 만들고 action을 sample한다.
 
-$$
+```math
 a_t^{\mathrm{finger}i}\sim\mathrm{Bernoulli}(\mathrm{sigmoid}(f_{\mathrm{finger}i}(s_t))).
-$$
+```
 
 1이면 finger joint를 $\delta_{\mathrm{finger\ angle}}$만큼 닫는다.
 
@@ -260,13 +260,13 @@ $$
 
 정책은 모든 finger를 다시 열지 여부를 선택한다.
 
-$$
+```math
 a_t^{\mathrm{reopen}}\in\{0,1\}.
-$$
+```
 
-$$
+```math
 a_t^{\mathrm{reopen}}\sim\mathrm{Bernoulli}(\mathrm{sigmoid}(f_{\mathrm{reopen}}(s_t))).
-$$
+```
 
 하지만 reopen은 policy sample만으로 결정되는 것은 아니다.
 
@@ -282,19 +282,19 @@ Reopen timestep에서는 normal finger-close action을 실행하지 않는다.
 
 각 tactile link $m$의 active cell 집합을 $\bar C_m$, active tactile link 집합을 $\bar M$이라 할 때 새 palm x/y는 active link별 tactile center의 평균으로 계산한다.
 
-$$
+```math
 x_{\mathrm{new}}=\frac{1}{|\bar M|}\sum_{m\in\bar M}\frac{1}{|\bar C_m|}\sum_{c\in\bar C_m}x_{m,c}.
-$$
+```
 
-$$
+```math
 y_{\mathrm{new}}=\frac{1}{|\bar M|}\sum_{m\in\bar M}\frac{1}{|\bar C_m|}\sum_{c\in\bar C_m}y_{m,c}.
-$$
+```
 
 z는 유지한다.
 
-$$
+```math
 z_{\mathrm{new}}=z_{\mathrm{old}}.
-$$
+```
 
 따라서 hand translation 전체를 RL이 직접 회귀하는 것이 아니다.
 
@@ -306,15 +306,15 @@ Appendix A.1.1에서는 저자들이 초기에는 wrist repositioning 자체를 
 
 Reopen 시 wrist roll angle은 policy가 continuous하게 출력한다.
 
-$$
+```math
 a_t^{\mathrm{wrist\ rotation}}\in[-\pi,\pi].
-$$
+```
 
 Policy는 learned Gaussian에서 sample하고 $\pi$를 곱한다.
 
-$$
+```math
 a_t^{\mathrm{wrist\ rotation}}\sim\mathcal{N}(\tanh(f_{\mathrm{wrist\ rotation}}(s_t)),\sigma_{\mathrm{rotation}})\times\pi.
-$$
+```
 
 $\sigma_{\mathrm{rotation}}$도 학습된다.
 
@@ -333,13 +333,13 @@ Appendix에서는 이를 “4-DOF as opposed to 6-DOF grasp pose adjustments”�
 
 Policy는 lift 여부도 binary로 선택한다.
 
-$$
+```math
 a_t^{\mathrm{lift}}\in\{0,1\}.
-$$
+```
 
-$$
+```math
 a_t^{\mathrm{lift}}\sim\mathrm{Bernoulli}(\mathrm{sigmoid}(f_{\mathrm{lift}}(s_t))).
-$$
+```
 
 Lift가 선택되면 arm을 **25 cm 수직 상승**시키고 episode를 종료한다.
 
@@ -355,9 +355,9 @@ Reward는 매우 sparse하다.
 
 Lift가 수행된 마지막 timestep에서 object pick-up 성공이면 1, 실패면 0이다.
 
-$$
+```math
 r_{t_{\mathrm{final}}}=\mathbf{1}\{\mathrm{pick\text{-}up\ is\ successful}\}.
-$$
+```
 
 ### 15.2. Reopen penalty
 
@@ -365,9 +365,9 @@ Terminal 이전에는 기본적으로 reward가 0이다.
 
 다만 충분히 finger를 닫아 보지도 않고 너무 일찍 reopen하는 행동을 억제하기 위해 penalty를 둔다.
 
-$$
+```math
 r_t=-0.05\,a_t^{\mathrm{reopen}}\left(1-\mathbf{1}\left\{\max_{i\in\mathrm{grip\ joints}}[s_t^{\mathrm{joint\ angles}}]_i>0.2\ \mathrm{rad}\right\}\right).
-$$
+```
 
 즉 reopen 자체가 항상 -0.05가 아니라, max grip joint angle이 0.2 rad를 넘기 전에 reopen할 때 penalty가 적용된다.
 
@@ -379,37 +379,37 @@ MAT는 clipped PPO에 maximum-entropy term을 추가한 **Soft Proximal Policy O
 
 원문 식 (1)은 다음 형태로 시작한다.
 
-$$
+```math
 \max_\theta L^{\mathrm{SP}}=\mathbb{E}_{\rho_0,\pi_\theta}[\pi_\theta(a_t|s_t)Q^{\pi_\theta}(s_t,a_t)].
-$$
+```
 
 Advantage estimator를 사용하면 식 (2)는 다음과 같다.
 
-$$
+```math
 \max_\theta L^{\mathrm{PG}}=\mathbb{E}_{\rho_0,\pi_\theta}[\pi_\theta(a_t|s_t)\hat A_t].
-$$
+```
 
 ### 16.2. Baseline / value network
 
 State-value baseline $V_\psi$는 variance reduction에 사용한다.
 
-$$
+```math
 \min_\psi L^{\mathrm{BL}}=\mathbb{E}\left[\|V_\psi-V^{\pi_\theta}\|^2\right].
-$$
+```
 
 ### 16.3. Clipped surrogate + soft advantage
 
 원문 식 (4)은 다음과 같다.
 
-$$
+```math
 \max_\theta L^{\mathrm{PG}}=\mathbb{E}_{\rho_0,\pi_\theta}\left[\min(\lambda_t(\theta),\mathrm{clip}(\lambda_t(\theta),1-\epsilon,1+\epsilon))(\hat A_t-\alpha\log\pi_\theta(a_t|s_t))\right].
-$$
+```
 
 여기서
 
-$$
+```math
 \lambda_t(\theta)=\frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{\mathrm{old}}}(a_t|s_t)}.
-$$
+```
 
 즉 PPO clipping과 entropy/maximum-entropy 성격의 $\alpha\log\pi$ 항을 함께 사용한다.
 
@@ -419,9 +419,9 @@ Reopen이 false일 때만 lift를 고려하고, reopen과 lift가 모두 false�
 
 원문 식 (5)은 이 hierarchical action flow를 log probability에 반영한다.
 
-$$
+```math
 \log\pi_\theta(a_t|s_t)=\left[\log\pi_\theta(a_t^{\mathrm{reopen}}|s_t)+(1-a_t^{\mathrm{reopen}})\log\pi_\theta(a_t^{\mathrm{lift}}|s_t)+(1-a_t^{\mathrm{reopen}})(1-a_t^{\mathrm{lift}})\sum_{i=1}^{n}\log\pi_\theta(a_t^{\mathrm{finger}i}|s_t)\right]\mathbf{1}\{t_{\mathrm{final}}<H\}.
-$$
+```
 
 **원문 식 (5)에는 reopen 시 함께 sample되는 continuous wrist rotation probability가 명시적으로 포함되어 있지 않다.**
 
@@ -482,17 +482,17 @@ Finger action increment $\delta_{\mathrm{finger\ angle}}$가 작으면 fine cont
 
 따라서 처음에는
 
-$$
+```math
 \delta_{\mathrm{finger\ angle}}=0.4\ \mathrm{rad}
-$$
+```
 
 에서 시작한다.
 
 이후 최고 success rate에 따라 다음 식으로 줄인다.
 
-$$
+```math
 \delta_{\mathrm{finger\ angle}}=0.1+(0.4-0.1)(1-\mathrm{current\ max\ success\ rate}).
-$$
+```
 
 성공률이 높아질수록 0.1 rad에 가까운 작은 finger increment를 사용하게 된다.
 
