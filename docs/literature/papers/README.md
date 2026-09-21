@@ -124,7 +124,7 @@
 | Related Works | 원문이 구성한 비교 구도. 독립 절이 없으면 해당 내용을 담은 절을 명시 |
 | 환경·센서 | 로봇·제어 DOF, 과업 환경, 센서 원리·배치·측정량. 원문에 명시된 최대 측정 범위·분해능·공간 해상도·정확도·감도·주파수·커버리지와 로봇 상세 사양을 기록하고, 장비 사양·실험 설정·시뮬레이션/실물을 구분 |
 | 힘·접촉 처리 | raw signal → 전처리 → 특징·상태 → 행동의 연결. 힘 측정과 접촉 위치 검출을 구분 |
-| 핵심 메소드 | 수식의 변수·좌표계, 제어·정책 구조, 상태 전환, 명령·종료 조건 |
+| 핵심 메소드 | 입력 → 내부 처리 → 출력·제어 → 학습 신호의 end-to-end 흐름, 학습·추론 절차, 구성요소별 정보 경계, 수식의 역할, 좌표계·scale·주기, 상태 전환, 명령·종료 조건, ablation과 구성요소의 대응 |
 | 실험·결과 | 조건, 비교군, 지표, 수치, 그 결과가 뒷받침하는 범위 |
 | Limitation — 저자들이 밝힌 한계 | 저자들이 명시한 방법·실험·적용 범위의 한계와 그 조건·이유. 원문 위치를 함께 기록 |
 | Future Work — 저자들이 제시한 향후 연구 | 저자들이 제안한 개선·확장 방향과 해결할 후속 과제. 계획과 구현·검증된 성과를 구분하고 원문 위치를 기록 |
@@ -135,7 +135,32 @@
 
 센서의 해상도·최대 측정 범위 등이 원문에 없으면 ‘미명시’로 남긴다. 제어용 접촉 threshold를 센서 최소 검출 성능으로, admittance threshold를 최대 측정 범위로, 실험 측정 제공률을 제조사 최대 샘플링률로 바꾸어 기록하지 않는다. 외부 데이터시트는 별도로 확인한 경우에만 별도 출처로 구분한다.
 
-문서 형식은 [최신 Markdown 규칙](../../../.agents/rules/document-formatting.md)을 따른다. 현재 규칙은 블록 수식을 별도 줄의 `$$`로, 인라인 수식을 `$…$`로 작성하며, 수식용 코드 펜스와 백틱을 섞은 인라인 수식을 사용하지 않는다. 원문 식 번호는 블록 밖에 표시하고, 구문 검사와 렌더링 확인 범위를 기록한다. 로컬 검사 통과와 실제 GitHub 웹페이지 표시 확인을 구분한다.
+## Main Method 정리 기준
+
+**2026-09-21 사용자 지시에 따라 강화한 필수 항목이다. 이후 새로 작성하거나 사용자가 재검토를 요청한 논문 노트에 적용한다. 이 지침 변경만으로 기존 노트를 일괄 수정하지 않는다.**
+
+메인 메소드는 architecture 이름, observation, action, reward를 각각 한 줄씩 나열하는 수준에서 끝내지 않는다. 다음 연결을 독자가 순서대로 추적할 수 있어야 한다.
+
+1. **문제와 가정:** 메소드가 해결하는 입력 불확실성·과업 단계, 알려진 정보와 미관측 정보, 시작·종료 가정
+2. **입력 형성:** raw sensor/state의 좌표계·단위·전처리·정규화·stacking, history 또는 latent 구성
+3. **내부 처리:** network branch·encoder·fusion·memory·planner·state machine의 순서와 각 block의 역할
+4. **출력과 실행:** action·prediction의 의미, scale·clip·frequency, controller·후처리·안전 rule과의 연결
+5. **학습:** actor와 critic 또는 teacher가 받는 정보의 차이, loss·reward·constraint, curriculum·randomization·data collection의 역할
+6. **검증:** baseline·ablation이 위 구성요소 중 무엇을 제거·교체하며 어떤 주장까지 뒷받침하는지
+
+논문에 단계형 algorithm이나 세 개 이상의 주요 block이 있으면, 흐름이 산문만으로 불명확한 경우 간결한 순서 목록이나 표로 재구성한다. 원문 figure를 설명할 때에는 block 이름만 번역하지 말고 신호가 어느 block으로 이동하며 무엇으로 변환되는지 기록한다. 학습 시뮬레이션의 ground truth, asymmetric critic·teacher의 privileged information, reward 계산 정보와 배포 actor 관측을 합쳐 쓰지 않는다.
+
+핵심 수식은 다음 세 요소를 함께 설명한다.
+
+- 변수와 좌표계 또는 tensor·feature의 의미
+- 해당 식이 계산하는 물리량·목표·update
+- 계산 결과가 다음 policy, controller, loss, termination 단계에 미치는 영향
+
+원문에 공개된 architecture size, control/policy frequency, history length, action scale, 주요 threshold·hyperparameter는 메소드 재현에 영향을 주는 범위에서 기록한다. 서로 다른 절·본문·부록의 값이 충돌하면 임의로 하나를 선택하지 말고 표기 불일치로 남긴다. 원문에 없는 processing order·loss weight·controller detail은 일반적인 관행으로 채우지 않는다.
+
+메소드 설명은 **입력 → 내부 처리 → 출력·제어 → 학습 신호 → ablation**의 인과 연결이 확인될 때 완료로 본다. 문서 길이나 절 개수만으로 상세성을 판단하지 않는다. 논문의 새 기여와 표준 backbone·외부 controller·기존 primitive도 구분한다.
+
+문서 형식은 [최신 Markdown 규칙](../../../.agents/rules/document-formatting.md)을 따른다. Display math는 fenced `math` block을 기본으로 하고, 짧은 inline 수식은 `$…$`로 작성한다. 원문 식 번호는 블록 밖에 표시하고, 구문 검사와 렌더링 확인 범위를 기록한다. 로컬 검사 통과와 실제 GitHub 웹페이지 표시 확인을 구분한다.
 
 ## Limitation 및 Future Work 정리 기준
 

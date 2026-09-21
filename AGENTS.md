@@ -56,6 +56,25 @@ EEF 이동 거리를 물체 이동 거리로 대체하여 성공했다고 쓰지
 
 실험 수·seed 수·분포·성공 임계값·훈련량은 제안과 실제 수행값을 구분한다. 불리한 실패 사례와 소음·접촉·센서 사각지대 문제도 기록한다. 피드백은 무조건 긍정하거나 부정하지 말고 관측 가능성, 실행 가능성, 연구 가치의 근거로 제시한다.
 
+### 논문 정리의 Main Method — 2026-09-21 추가
+
+논문 상세 정리에서 메인 메소드는 구성요소의 이름과 입출력만 나열하지 않는다. 독자가 원문을 다시 열기 전에 **무엇이 어떤 순서로 처리되어 행동 또는 추정 결과가 되는지**, 그리고 그 과정이 학습과 실행에서 어떻게 다른지를 따라갈 수 있을 정도로 설명한다.
+
+원문에 해당 내용이 존재하는 범위에서 다음을 확인한다.
+
+- 문제 정의와 방법이 전제로 두는 상태·관측 가능성·환경 가정
+- 센서 또는 raw state에서 전처리, history·latent·feature, fusion을 거쳐 정책·추정기로 들어가는 정보 흐름
+- actor·critic·teacher·reward·controller 등 구성요소별 입력과 privileged information의 경계
+- action·prediction의 표현, 좌표계, scale·clip, 명령 주기와 low-level controller 또는 후처리로의 연결
+- network block, algorithm stage, state transition과 학습·추론 절차의 실행 순서
+- loss·reward·constraint의 각 항이 어느 변수에 작용하고 메소드에서 수행하는 역할
+- curriculum, domain randomization, data collection·replay·demonstration 등 학습을 성립시키는 핵심 절차
+- ablation의 각 조건이 메소드의 어느 구성요소를 제거·교체하며 무엇을 검증하는지
+
+핵심 식은 옮겨 적는 데 그치지 않고 변수, 계산 대상, 다음 단계에 미치는 영향을 설명한다. 원문 figure나 algorithm이 메소드 이해에 필수이면 그 흐름을 본문 또는 간결한 표로 재구성한다. 표준 backbone과 논문의 새 기여, simulation에서만 쓰는 정보와 실제 배포 입력을 분리한다. 반대로 원문에 없는 architecture·parameter·처리 순서는 보완해 만들지 않고 `미명시`로 남긴다.
+
+메소드 설명의 완료 여부는 문서 길이가 아니라 **입력 → 내부 처리 → 출력·제어 → 학습 신호 → 검증 ablation**의 연결을 추적할 수 있는지로 판단한다. 이후 새로 작성하거나 사용자가 재검토를 요청한 개별 논문 노트에 적용하며, 이 지침만을 이유로 기존 노트를 일괄 수정하지 않는다. 세부 기준은 [개별 논문 정독 지침](docs/literature/papers/README.md)을 따른다.
+
 ### 논문 정리의 Limitation 및 Future Work — 2026-09-15 추가
 
 논문 내용 정리 시, **각 연구의 저자들이 밝히는 Limitation(한계) 및 Future Work(향후 연구)도 반드시 정리한다.** 두 항목을 구분하고 원문의 절·페이지 등 근거 위치를 함께 기록한다. 독립된 제목의 절이 없더라도 Discussion, Conclusion 또는 본문에 명시된 내용을 확인한다. 저자들이 제시한 한계·향후 연구와 정리자의 비판·추론·제안을 혼합하지 않으며, 원문에 명시되지 않은 항목은 미명시로 남긴다. 향후 계획을 이미 구현·검증된 성과로 서술하지 않는다.
