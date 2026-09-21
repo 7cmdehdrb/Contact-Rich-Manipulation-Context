@@ -227,9 +227,9 @@ Occupancy map을 16 × 16 patch로 나누고, 각 patch를 크기 **(192, 128)�
 
 표현의 의미만 수식으로 쓰면, patch $i$의 좌상단 위치를 $c_i$, 물체·목표의 평면 위치를 $p_o,p_g$로 둘 때 다음의 위치 정보를 붙이는 구조다. **아래 기호는 해설용이며 원문에 번호가 붙은 수식이 아니다.**
 
-$$
+```math
 q_i=[p_o-c_i,\;p_g-c_i].
-$$
+```
 
 차분의 개념은 원문을 따른다. 실제 코드가 meter·cell index 중 무엇을 쓰는지, 값을 어떤 범위로 정규화하는지는 미명시다. 물체·목표의 **방향**은 별도의 수치 관측 경로에 있고, 이 patch별 문맥의 본문 설명은 **위치**를 말한다. Pusher 위치까지 patch마다 concatenate한다고 임의 확장하지 않는다. [원문 §III-A.2·B.1, PDF p. 3]
 
@@ -267,9 +267,9 @@ Embedding과 positional context에서 별도의 MLP들을 통해 **attention fea
 
 정책 행동은 pusher의 $(v_x,v_y)$이고 **각 축**을 −0.1~0.1 m/s로 제한한다. Bin 간격은 0.02 m/s다. 원문의 범위와 간격을 풀면 각 축의 후보는 다음과 같다.
 
-$$
+```math
 \mathcal V=\{-0.10,-0.08,-0.06,-0.04,-0.02,0,0.02,0.04,0.06,0.08,0.10\}\;\mathrm{m/s}.
-$$
+```
 
 각 축 11개 후보이므로 출력은 **x축 categorical distribution의 11 logits + y축의 11 logits = 22 logits**다. 두 축 후보의 조합은 계산상 121개지만, 원문 정책이 121차원 단일 categorical head를 사용하는 것은 아니다. 실행 시 sample과 argmax 중 무엇을 택하는지 등 상세 선택 규칙은 본문에 없다. [원문 §III-B.2·4, PDF p. 3]
 
@@ -299,9 +299,9 @@ Object pose + Target pose + Pusher position  │
 
 ### 7.1 원문 식 (1)
 
-$$
+```math
 r_{\mathrm{total}}=r_{\mathrm{term}}+k_1(1-r_{\mathrm{dist}})+k_2(1-r_{\mathrm{ang}})+r_{\mathrm{coll}}.
-$$
+```
 
 | 항 | 정의 | 실제 설정·의미 |
 | --- | --- | --- |
