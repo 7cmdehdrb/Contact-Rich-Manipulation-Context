@@ -4,86 +4,96 @@
 
 > **문서 상태: 연구 설계 초안.** 선행연구에서 확인된 내용과 본 연구의 설계 제안을 구분한다. 비교 근거가 확보되지 않은 항목은 **추가 조사 필요**로 남긴다.
 
-(지시 사항: 문서의 풀 네임을 언급할 때는, 저자 - 논문 제목 형태로서 언급하고, 재언급시는, 츄축약 제목 형태로 언급할 것. 반드시 상대 경로 참조로 걸어둘 것)
-
 ## 2.1. 연구 질문
 
-첫 번째 문서에서는 초기 시각 관측 이후 물체 상태를 지속적으로 갱신할 수 없는 상황에서, **영역별 Binary 촉각과 손목 F/T를 결합하는 Blind Sweeping**을 연구 방향으로 제시했다.
+[첫 번째 문서](01_Research_Motivation.md)에서는 초기 시각 관측 이후 물체 상태를 지속적으로 갱신할 수 없는 상황에서, **영역별 Binary 촉각과 손목 F/T를 결합하는 Blind Sweeping**을 연구 방향으로 제시했다.
 
 이 문서에서는 그 방향을 다음 질문으로 구체화한다.
 
 > **기존 촉각 표현은 조작에 필요한 정보를 어떻게 제공하며, 본 연구의 제한된 촉각 관측에서 부족한 정보를 손목 Wrench와 행동·관측 이력으로 얼마나 보완할 수 있는가?**
 
-연구의 목표는 모든 접촉 상태와 물체 물성을 완전히 복원하는 것이 아니다. 초기 정보 이후의 상호작용을 관측하고, **물체를 목표 방향으로 이동시키면서 필요한 접촉을 유지하고 적절한 하중을 인가하는 행동을 학습하는 것이다.
+연구의 목표는 모든 접촉 상태와 물체 물성을 완전히 복원하는 것이 아니다. 초기 정보 이후의 상호작용을 관측하고, **물체를 목표 방향으로 이동시키면서 필요한 접촉을 유지하고 적절한 하중을 인가하는 행동**을 학습하는 것이다.
 
-따라서 촉각의 어떤 정보가 축약되거나 관측되지 않으며, F/T가 그중 무엇을 보완하는지**를 정의하고 실제 기여를 비교 실험으로 검증한다.
+따라서 **촉각의 어떤 정보가 축약되거나 관측되지 않으며, F/T가 그중 무엇을 보완하는지**를 정의하고 실제 기여를 비교 실험으로 검증한다.
 
 ---
 
 ## 2.2. 기존 연구는 Tactile 정보를 어떻게 사용하는가?
 
-촉각 활용 방식은 다음 세 방향으로 구분한다. 
+촉각 활용 방식은 **명시적 상태 추정**, **고차원 영상 인코딩**, **저차원 접촉 표현**의 세 방향으로 정리한다. 이어서 2.2.4절에서는 표현을 직접 비교한 연구를 통해, 어떤 정보를 남기거나 제거하는 것이 조작과 실물 전이에 유효했는지 살펴본다.
 
 ### 2.2.1. Contact Point·Pose·Shape 등을 명시적으로 추정하는 접근
 
-이 접근은 촉각 신호를 바로 행동으로 연결하기보다, **접촉 위치·접촉면 자세·물체 자세와 같은 해석 가능한 상태로 변환한 뒤 제어에 활용**한다.
+이 접근은 촉각 신호를 바로 행동으로 연결하기보다, **접촉 위치·접촉면 자세·물체 자세와 같은 해석 가능한 상태로 변환한 뒤 제어에 활용**한다. 여기서는 각 연구가 실제로 추정하는 대상과, 제한된 관측에 대응하는 방법을 구분한다.
 
-[**Yang et al. — Sim-to-Real Model-Based and Model-Free Deep Reinforcement Learning for Tactile Pushing**](../literature/papers/2023-yang-sim-to-real-tactile-pushing.md)는 TacTip 영상에서 **접촉 깊이와 각도**를 추정하고, 이를 로봇·목표 정보와 결합하여 밀기 정책 또는 동역학 모델의 입력으로 사용한다. 여기서 추정하는 것은 물체 전체의 Global Pose가 아니라 **센서에 대한 국소 접촉면의 자세**다.
+[**Max Yang et al. - Sim-to-Real Model-Based and Model-Free Deep Reinforcement Learning for Tactile Pushing**](../literature/papers/2023-yang-sim-to-real-tactile-pushing.md)는 TacTip 영상에서 **접촉 깊이와 각도**를 추정하고, 이를 로봇·목표 정보와 결합하여 밀기 정책 또는 동역학 모델의 입력으로 사용한다. 촉각의 국소 관측으로 물체 중심과 전체 형상·물성을 얻기 어렵다는 문제에 대해, **물체 전체 상태를 복원하는 대신 접촉면의 자세와 접촉 위치를 제어 대상으로 선택**한다. 접촉면에 수직으로 밀도록 정렬하면서 접촉 위치를 목표로 이동시키는 방식이며, 성공 판정도 물체 중심의 목표 도달과 구분된다. 즉, 이 연구의 대응은 모호한 전체 상태를 모두 추정하는 것이 아니라 **관측·제어 대상을 국소 접촉 관계로 한정하는 것**이다. (원문 §III-B–C)
 
-[**Lloyd and Lepora — Pose-and-shear-based tactile servoing**](../literature/papers/2024-lloyd-pose-and-shear-based-tactile-servoing.md)는 접촉 자세와 접촉 이후의 Shear 변형을 불확실성과 함께 추정하고, 로봇 운동학을 이용한 시간적 필터링을 거쳐 제어한다. 이 논문에서 Shear는 주로 **접선 방향 변위와 비틀림**이며, 뉴턴 단위의 전단력이나 손목 Wrench와 같지 않다.
+[**John Lloyd and Nathan F. Lepora - Pose-and-shear-based tactile servoing**](../literature/papers/2024-lloyd-pose-and-shear-based-tactile-servoing.md)는 **접촉 자세와 접촉 이후의 Shear 변형**을 함께 추정한다. 여기서 Shear는 접선 방향 변위와 비틀림이며, 뉴턴 단위의 전단력이나 손목 Wrench가 아니다. 이 연구는 미끄러짐 때문에 서로 다른 접촉·Shear 상태가 유사한 영상을 만드는 **Tactile aliasing**을 명시적으로 다룬다. 하나의 상태값만 출력하는 회귀 대신 **평균과 불확실성을 출력하는 Gaussian-density network(GDN)**를 사용하고, 로봇 운동학에 따른 시간적 예측과 **SE(3) Bayesian filtering**으로 결합한다. 따라서 현재 영상만으로 확정하기 어려운 상태를 불확실성과 시간 정보를 이용해 제어에 활용하는 접근이다. (원문 §1, §3.1–3.3, §6.1)
 
-(지시 사항: [**Idil Ozdamar et al. - Pushing in the Dark: A Reactive Pushing Strategy for Mobile Robots Using Tactile Feedback**](../literature/papers/2024-ozdamar-pushing-in-the-dark.md) 위 논문에 대한 내용도 추가할 것)
+[**Idil Ozdamar et al. - Pushing in the Dark: A Reactive Pushing Strategy for Mobile Robots Using Tactile Feedback**](../literature/papers/2024-ozdamar-pushing-in-the-dark.md)는 모바일 베이스의 정전용량 촉각에서 **대표 접촉점**을 계산한다. Taxel별 신호를 저역통과 필터와 임계값으로 처리한 뒤, 하나만 활성화되면 해당 Taxel의 위치를, 여러 개가 활성화되면 접촉 영역 **양 끝 Taxel 위치의 중점**을 사용한다. 이는 하중 가중 중심이나 물체 중심의 추정이 아니다. 물체의 Pose·형상·물성을 직접 복원하지 않고, 알려진 센서 배치와 Point/Line contact 근사를 이용하여 접촉을 하나의 제어 변수로 축약한다. 접촉점이 범퍼 가장자리로 이동하면 횡이동으로 재정렬하고 회전을 제한하여 접촉 소실에 대응한다. 다만 Point/Line 전환 자체가 계산된 접촉점의 불연속을 만들 수 있으며, 이를 확률적 상태 추정기로 해소한 연구는 아니다. (원문 §II-B–C, §III-B, §IV)
 
-이 연구 계열에서 확인되는 중요한 문제는 **추정 대상과 관측의 모호성**이다. [Lloyd and Lepora](../literature/papers/2024-lloyd-pose-and-shear-based-tactile-servoing.md)는 미끄러짐 때문에 서로 다른 접촉 자세·Shear가 유사한 촉각 영상을 만들 수 있는 Tactile aliasing을 다루며, 단일 회귀값 대신 불확실성 추정과 Bayesian filtering을 사용한다. 
+이 세 연구에서 관측의 제한에 대응하는 방식은 각각 **추정·제어 대상의 한정**, **불확실성 추정과 시간적 필터링**, **대표 접촉점 모델과 반응형 제어**다. 따라서 공통된 시사점은 **국소 접촉 상태를 얻는 것과 전체 물체 상태·작용 하중을 확보하는 것은 다르며, 추정값의 의미는 사용한 센서 정보와 모델에 의해 결정된다**는 것이다.
 
-(지시 사항: 윗 문단을 개선할 것. 내용을 확대할 것. 각각의 논문이, 추정 대상과 관측이 모호하기 때문에, 어떻게 대응했는지 간단하게 작성할 것)
-
-이를 근거로, **국소 접촉 상태를 추정한다고 해서 전체 물체 상태나 작용 하중까지 자동으로 확보되는 것은 아니다**. 라고 판단할 수 있다. 특히 영역별 Binary 관측에서는 영상 내부의 접촉 형상과 변형 분포를 사용하지 않으므로, 위 연구들처럼 국소 Pose 추정기로 사용할 수 없다.
+특히 [**Pushing in the Dark**](../literature/papers/2024-ozdamar-pushing-in-the-dark.md)처럼 센서 위치와 활성 영역을 알면 간단한 접촉점 계산은 가능하다. 따라서 Binary 관측으로 접촉 추정 자체가 불가능하다고 단정하지 않는다. 본 연구에서 구분해야 할 것은 **영역별 접촉 여부에는 센서 내부의 세부 접촉 형상·변형 분포가 남지 않으므로, 그 분포를 입력으로 사용하는 영상 기반 Pose 추정기를 그대로 적용할 수 없다는 점**이다.
 
 이에 따라 본 연구에서는 정밀한 접촉 Pose 복원을 필수 전처리로 두기보다, **관측 가능한 접촉 영역과 연속적인 하중 반응을 행동 결정에 직접 제공하는 방향**을 제안한다.
 
-> **추가 조사 필요:** 물체 전체 Pose·Shape를 촉각으로 추정하는 연구에서 사용하는 사전 형상 모델, 접촉 횟수, 탐색 동작, 시간 이력과 실패 조건. 현재 확보한 국소 접촉 자세 연구만으로 전체 Pose·Shape 추정 계열의 한계를 일반화하지 않는다.
+> **추가 조사 필요:** 물체 전체 Pose·Shape 추정 연구의 사전 형상 모델, 접촉 횟수, 탐색 동작, 시간 이력과 실패 조건. 위 세 연구의 국소 접촉 표현만으로 전체 Pose·Shape 추정 계열의 한계를 일반화하지 않는다.
 
 ### 2.2.2. 고차원 Tactile Image를 인코딩하여 사용하는 접근
 
-이 접근은 촉각 영상의 접촉 패턴과 변형 정보를 Encoder로 처리하고, 생성된 특징을 정책에 제공한다. 명시적인 접촉 자세를 먼저 출력하지 않고도 영상에 포함된 정보를 행동 학습에 활용하는 방식이다.
+이 접근은 **촉각 영상 또는 분포형 촉각을 영상 형태로 표현한 입력**을 Encoder로 처리하고, 생성된 특징을 정책에 제공한다. 접촉점이나 자세 하나로 먼저 축약하지 않고, 공간적인 접촉 패턴·변형·하중 분포를 행동 학습에 활용한다.
 
-[**Yijiong Lin et al. - Bi-Touch**](../literature/papers/2023-lin-bi-touch.md)는 두 TacTip 영상을 Real-to-Sim GAN으로 변환한 뒤 고유감각·목표 정보와 함께 PPO 정책에 제공한다. 실물의 재정렬 과업에서는 시뮬레이션과 실제 접촉 동역학의 차이로 과도한 압착이 발생하여, 시뮬레이션 센서 동역학과 학습 조건을 수정했다.
+[**Yijiong Lin et al. - Tactile Gym 2.0: Sim-to-Real Deep Reinforcement Learning for Comparing Low-Cost High-Resolution Robot Touch**](../literature/papers/2022-lin-tactile-gym-2-0.md)는 TacTip, DIGIT, DigiTac을 같은 Sim-to-Real 방법론에서 비교한다. 실제 촉각 영상을 **시뮬레이션의 Depth-image 표현으로 변환하는 GAN**과 PPO 정책을 결합하여 Edge-following, Surface-following, Pushing을 수행한다. 센서마다 영상 외형뿐 아니라 피부 형상·강성·접촉 거동이 다르므로, 센서별 데이터 수집·영상 변환·정책 학습이 필요하다. 하나의 변환 모델과 정책을 모든 센서에 그대로 교체 적용한 결과는 아니다. (원문 §III-B–F, §IV)
 
-따라서 확인된 문제는 **영상 Encoder 자체가 부적절하다는 것이 아니라, 정책이 사용하는 영상 표현과 접촉 반응을 시뮬레이션·실물 사이에서 대응시켜야 한다는 것**이다. (지시 사항 : 이런 결론은 2.2.2 하단 쪽으로 이전할 것. 2.2.2의 결론은, 이런 고차원 이미지가 효용성이 좋긴 하지만, 시뮬레이션-현실 사이의 대응이 힘들다는 것.)
+[**Yijiong Lin et al. - Bi-Touch: Bimanual Tactile Manipulation With Sim-to-Real Deep Reinforcement Learning**](../literature/papers/2023-lin-bi-touch.md)는 두 TacTip 영상을 각각 **Real-to-Sim GAN**으로 변환하고, 영상 특징과 고유감각·목표 정보를 PPO 정책에 제공하여 양팔 밀기·재정렬·모으기를 수행한다. 그러나 실물 재정렬에서는 시뮬레이션과 실제 접촉 동역학의 차이로 과도한 압착이 발생하여, 시뮬레이션 센서 동역학과 학습 조건을 수정했다. 이는 **영상 관측을 변환하는 것만으로 실제 접촉 반응까지 일치하는 것은 아니라는 사례**다. (원문 §III–V)
 
-또한 [**Su et al. — Sim2Real Manipulation on Unknown Objects with Tactile-based Reinforcement Learning**](../literature/papers/2024-su-sim2real-tactile-manipulation.md)의 Binary 표현은 **64×64 픽셀의 접촉 이미지**다. 영역마다 접촉 여부 하나만 남기는 본 연구의 Binary 벡터와 달리, 센서 내부의 공간 패턴을 유지한다. 따라서 두 표현을 같은 수준의 저차원화로 취급하지 않는다. (지시 사항 : 이 논문은 2.2.2에 있는게 아니라, RGB, Diff, Binary를 비교분석한 논문임으로, 2.3.3의 근거로 삼거나, 아니면 2.3.4로 별도로 구분하는게 맞을 것으로 생각됨. 비슷한 구성으로, docs/literature/papers/2025-zhang-role-of-tactile-sensing.md, )
+[**Dane Brouwer et al. - Gentle Object Retraction in Dense Clutter Using Multimodal Force Sensing and Imitation Learning**](../literature/papers/2026-brouwer-gentle-object-retraction.md)는 도구 양 측면의 분포형 3축 촉각을 **20×5×3 Force Image**로 표현하고, 촉각 전용 ResNet-18로 인코딩한다. 이 영상의 채널은 광학 촉각 카메라의 색을 관측한 것이 아니라 **측정된 힘 성분을 영상화한 표현**이다. 별도의 시각 Encoder와 TCP Pose·Wrench 등의 저차원 입력을 결합한 Diffusion Policy로 선반 인출을 수행하며, 센서 Ablation으로 분포형 촉각과 Wrench의 기여를 비교한다. 다만 **실제 시연 기반 모방학습**이므로, 고차원 촉각 인코딩의 활용 사례로 포함하되 이 논문이 Sim-to-Real 전이의 어려움을 직접 검증했다고 해석하지 않는다. (원문 §III-B, §IV–V, Fig. 3)
 
-(지시 사항: 아래 2개의 논문을 2.2.2 분석에 포함시킬 것.)
-(docs/literature/papers/2026-brouwer-gentle-object-retraction.md)
-(docs/literature/papers/2022-lin-tactile-gym-2-0.md)
+**종합하면, 고차원 촉각 표현은 공간적인 접촉 정보를 정책에 전달하는 데 유효하지만, 시뮬레이션 학습을 실물로 이전하려면 영상 표현과 실제 접촉 반응을 함께 대응시켜야 한다.** [**Tactile Gym 2.0**](../literature/papers/2022-lin-tactile-gym-2-0.md)의 센서별 영상 변환과 [**Bi-Touch**](../literature/papers/2023-lin-bi-touch.md)의 접촉 동역학 수정은 이 대응에 별도 작업이 필요함을 보여준다. 문제의 초점은 Encoder 자체의 부적절함이 아니라 **센서 고유의 영상·변형·접촉 특성을 두 환경에서 일관되게 제공하는 부담**에 있다.
 
-이와 같은 이유로, 고해상도 촉각 영상을 정밀하게 재현하는 대신, **영역별 접촉 여부는 촉각으로, 연속적인 합력·합모멘트는 F/T로 제공하는 구성**을 제안한다. 
+이에 본 연구에서는 고해상도 촉각 영상의 정밀 재현에 대한 의존도를 낮추고, **영역별 접촉 여부는 촉각으로, 연속적인 합력·합모멘트는 F/T로 제공하는 구성**을 제안한다.
 
-> **추가 조사 필요:** 고차원 영상 인코딩과 Binary–Wrench 표현의 학습 효율, 실제 추론 지연, 데이터 요구량 및 전이 성능을 같은 조건에서 비교한 근거. 현재 문헌만으로 “고차원이므로 느리다”거나 “Encoder를 사용하면 일반화가 나쁘다”고 주장하지 않는다.
+> **추가 조사 필요:** 고차원 영상 인코딩과 Binary–Wrench 표현의 학습 효율, 추론 지연, 데이터 요구량 및 전이 성능을 동일 조건에서 비교한 근거. 위 사례만으로 고차원 표현의 일반적인 성능 열세나 본 제안의 우위를 확정하지 않는다.
 
 ### 2.2.3. 촉각을 저차원으로 표현하는 접근
 
-저차원 촉각 표현은 모두 같은 정보를 남기지 않는다. 대표적으로 **영역별 접촉 여부**, **연속적인 접촉력**, **접촉 위치와 하중을 결합한 물리량**을 구분해야 한다.
+저차원 표현에서는 입력 차원뿐 아니라 **접촉 여부만 남기는지, 연속 하중이나 대표 접촉 위치까지 남기는지**를 구분해야 한다.
 
-[**Rotating without Seeing**](../literature/papers/2023-yin-rotating-without-seeing.md)는 Binary 촉각을 관절 상태·이전 제어 목표·회전축·시간 이력과 함께 사용한다. 
+**접촉 여부를 남기는 Binary 표현**
 
-[**DexTouch**](../literature/papers/2024-lee-dextouch.md) 역시 Binary 촉각뿐 아니라 고유감각과 과업 사전정보를 제공한다. 이들은 **간단한 촉각 표현도 다른 실행 정보와 결합하면 시각 없이 조작하는 데 유효할 수 있음**을 보여준다.
+[**Zihan Ding et al. - Sim-to-Real Transfer for Robotic Manipulation with Tactile Sensory**](../literature/papers/2021-ding-sim-to-real-tactile-manipulation.md)는 그리퍼 양쪽 Finger Pad의 **30개 저항식 촉각 Element**와 시뮬레이션 접촉 신호를 모두 Binary로 축약하고, TD3 관측에 넣어 문 열기를 학습한다. 연속 센서 응답을 정밀하게 일치시키는 대신 접촉 여부를 공통 표현으로 사용하는 방식이며, 실물에서 촉각 사용 여부에 따른 문 열기 성능 차이를 확인했다. 다만 이 결과는 **Binary 촉각을 추가한 효과**이며, Binary가 연속 하중 정보보다 항상 우수하다는 뜻은 아니다. (원문 §IV–V, Table III)
 
-반면 [**Beyond Binary**](../literature/papers/2026-pan-beyond-binary-cop-tactile.md)는 촉각 Array의 접촉을 합력과 대표 접촉 위치로 표현한 CoP를 사용한다. 검토한 실물 Peg-in-Hole 평가에서는 Binary보다 CoP 표현이 높은 성공률을 보였다. 이는 해당 과업에서 **접촉 여부를 넘어 하중·위치 정보를 보존하는 것이 유리했던 근거**다. 다만 이 연구는 별도 손목 F/T를 사용하지 않으며, 실물 전이에는 촉각의 Surface-normal force를 사용한다.
+[**Zhao-Heng Yin et al. - Rotating without Seeing: Towards In-hand Dexterity through Touch**](../literature/papers/2023-yin-rotating-without-seeing.md)는 손가락과 손바닥의 **16개 FSR 접촉 Bit**를 관절 위치·이전 제어 목표·회전축 및 **4-Frame 이력**과 함께 사용해 시각 없이 손 안의 물체를 회전시킨다. 시뮬레이션 접촉 힘과 실제 FSR 출력을 이진화하여 관측 표현을 맞춘다. 이 연구의 특징은 단순한 접촉 Bit를 단독으로 사용하는 것이 아니라, **접촉 영역과 손의 움직임·명령 이력을 결합**한다는 점이다. (원문 §III–V)
 
-(지시 사항 : 아래 3개 논문 내용을 추가할 것.)
+[**Kang-Won Lee et al. - DexTouch: Learning to Seek and Manipulate Objects With Tactile Dexterity**](../literature/papers/2024-lee-dextouch.md)는 손가락·손바닥의 **16개 FSR 신호를 부위별 Binary 접촉으로 변환**하고, 관절 상태·손바닥 Pose·손끝 위치·과업 사전정보와 함께 사용한다. PPO로 팔과 손을 함께 제어하여 물체 탐색·파지·운반, 문 열기, 밸브 회전을 과업별로 학습한다. 부위별 접촉 분포는 물체와 실제로 만난 위치를 행동에 반영하는 역할을 하며, 시뮬레이션 힘과 실물 전압의 정밀한 일치를 요구하지 않는 표현을 사용한다. 촉각 감도·배치와 사용 여부를 비교했지만, 해당 출판본은 동일 조건의 Binary 대 연속 촉각 비교를 제시하지 않는다. (원문 §III–V, Table II–III)
 
-(docs/literature/papers/2024-zhao-unknown-object-retrieval.md)
+**연속 하중·대표 위치를 보존하는 저차원 표현**
 
-(docs/literature/papers/2021-ding-sim-to-real-tactile-manipulation.md)
+[**Xinyuan Zhao et al. - Unknown Object Retrieval in Confined Space through Reinforcement Learning with Tactile Exploration**](../literature/papers/2024-zhao-unknown-object-retrieval.md)는 Tool Stick의 **4×4 Taxel, Taxel당 3축 촉각**을 **9차원 연속 특징**으로 축약한다. 구성은 열별 법선력 최댓값 4개, 열별 절댓값이 가장 큰 x축 전단력 값 4개, 전단력 이력의 FFT로 얻은 고주파 특징 1개다. 따라서 공간 분포를 축약하면서도 **하중 크기와 일부 전단·시간 정보를 유지**한다. 물체 Pose나 명시적인 물성 추정치를 입력하지 않고 이 특징만으로 실물 SAC 정책을 학습하며, Binary로 접촉 여부만 남기는 접근과 구분된다. (원문 §III-B.1)
 
-(docs/literature/papers/2024-lee-dextouch.md)
+[**Jiahe Pan et al. - Beyond Binary: Sim-to-Real Dexterous Manipulation with Physics-Grounded Contact Representation**](../literature/papers/2026-pan-beyond-binary-cop-tactile.md)는 촉각 Array별 접촉을 **합력과 대표 접촉 위치를 결합한 CoP**로 표현한다. 검토한 2026년 Preprint의 실물 Peg-in-Hole 실험에서는 CoP가 Binary보다 높은 전체 성공률을 보였다. 이는 단순한 접촉 여부를 넘어 하중·위치를 보존하는 것이 해당 과업에서 유효했던 근거다. 다만 힘은 **촉각 Array에서 복원한 국소 접촉력**이며 손목 F/T가 아니다. 실제 Sim-to-Real 실험에서는 전단 성분의 정합 문제 때문에 Surface-normal CoP Force를 사용했다. (원문 §3.4, §4.1, Table 1)
 
+이처럼 [**Unknown Object Retrieval**](../literature/papers/2024-zhao-unknown-object-retrieval.md)과 [**Beyond Binary**](../literature/papers/2026-pan-beyond-binary-cop-tactile.md)는 저차원에서도 연속적인 하중 정보를 보존한다. 반면 영역별 Binary 표현은 접촉 영역을 남기지만, 같은 영역 안의 하중 크기·방향과 세부 접촉 위치를 표현하지 않는다. 따라서 핵심은 **저차원화 자체가 아니라, 조작에 필요한 정보를 무엇까지 제거했는가**다.
 
-따라서 핵심은 **조작에 필요한 정보를 무엇까지 제거했는가**다.
+본 연구는 영역별 Binary 촉각을 사용하는 구성에서 제거되는 정보 중, **연속적인 전체 하중 정보를 손목 F/T로 보완하는 방향**을 제안한다. 촉각 자체의 연속 하중을 사용하는 기존 저차원 표현과는 정보의 취득 위치와 공간적 의미가 다르다.
 
-영역별 Binary 표현은 활성 영역을 남기지만, 같은 영역 안에서의 하중 크기·방향과 세부 접촉 위치는 표현하지 않는다. 본 연구는 이 중 **연속적인 전체 하중 정보를 F/T로 보완하는 방향**을 제안한다.
+### 2.2.4. 촉각 표현을 직접 비교한 연구에서 얻는 근거
+
+앞의 세 절이 정보를 사용하는 방식을 정리했다면, 여기서는 **같은 연구 안에서 표현을 바꾸어 비교한 결과**를 살펴본다. 특히 영상의 세부 표현을 단순화하는 것과, 접촉력을 Binary로 바꾸는 것을 구분한다.
+
+[**Entong Su et al. - Sim2Real Manipulation on Unknown Objects with Tactile-based Reinforcement Learning**](../literature/papers/2024-su-sim2real-tactile-manipulation.md)는 DIGIT 촉각 영상을 **RGB·Diff·Binary**, 각각의 Augmentation 유무로 나누어 Pivoting 정책의 전이를 비교한다. 검토한 v1의 비증강 조건에서는 시뮬레이션 성공률이 유사했지만, 실물 성공률은 RGB 0.50, Diff 0.60, Binary 0.80으로 달랐다. 저자들은 조명·색·젤 차이를 줄이고 접촉 패턴을 남기는 표현의 이점을 설명한다. 다만 여기서 Binary는 **센서별 1 Bit가 아니라 64×64 픽셀의 접촉 패턴**이다. 따라서 이 결과는 **영상 외형의 단순화가 실물 전이에 유효할 수 있다는 근거**이지, 센서 영역 전체를 하나의 Bit로 축약해도 같은 정보와 성능이 유지된다는 근거가 아니다. (원문 §III-B, §V-B, Table I)
+
+[**Boya Zhang et al. - The Role of Tactile Sensing for Learning Reach and Grasp**](../literature/papers/2025-zhang-role-of-tactile-sensing.md)는 2-Finger Reach-and-Grasp에서 **측정량**과 **공간 해상도**를 분리하여 비교한다. 전역 Binary(B)·힘 크기(M)·3축 힘 벡터(V), 그리고 K개 국소 영역별 BK·MK·VK가 비교 대상이다. 정확한 시각 정보에서는 촉각의 추가 효과가 작았지만, 시각 Pose에 잡음이 있으면 특히 **V와 VK가 유효**했고 국소 VK에 전역 V를 함께 제공한 구성도 국소 정보만 사용하는 구성보다 좋았다. 이때 전역 V는 **촉각에서 얻는 3축 힘 표현**으로, 별도 손목 6축 Wrench와 동일하지 않다. (원문 §III-C, §IV-A–C, Fig. 7–8, Table III)
+
+두 연구의 결과는 다음과 같이 구분해 본 연구에 연결한다.
+
+| 비교 관점 | 선행연구에서 확인된 내용 | 본 연구 설계에 주는 근거 |
+| --- | --- | --- |
+| **영상의 외형과 접촉 패턴** | [**Sim2Real Manipulation**](../literature/papers/2024-su-sim2real-tactile-manipulation.md): RGB 세부를 줄이되 공간적 접촉 패턴을 남긴 Binary 영상이 해당 실물 Pivoting에서 유효 | 정밀한 영상 외형을 모두 유지할 필요는 없으나, 픽셀 단위 Binary와 영역별 Binary를 구분해야 함 |
+| **하중의 크기·방향과 공간적 분포** | [**The Role of Tactile Sensing**](../literature/papers/2025-zhang-role-of-tactile-sensing.md): 잡음 있는 시각 조건에서 힘 벡터와 전역·국소 정보의 결합이 유효 | 접촉 여부만 남길 때 제거되는 연속 하중 정보의 가치를 검토해야 함 |
+
+따라서 본 연구의 방향은 **모든 촉각 정보를 최대한 축약하는 것**이 아니라, **촉각으로 접촉 영역을 남기고 손목 F/T로 연속 하중을 추가하여, 단순한 관측 표현에서도 조작에 필요한 정보를 유지하는 것**이다. 두 비교 연구는 이 설계의 근거를 제공하지만, 각각 Pivoting과 Reach-and-Grasp의 결과이므로 본 Sweeping에서의 센서 결합 효과는 별도로 검증한다.
 
 ---
 
