@@ -4,7 +4,7 @@
 
 [조사 그룹](README.md) · [전체 논문](../papers/README.md) · [문헌 색인](../README.md) · [구체적인 입력 처리·실험 제안](2026-09-16_binary-tactile-wrench-design-notes.md) · [현재 연구 범위](../../00_HANDOFF_BRIEF.md)
 
-**상세노트 바로가기:** [B1 · DexTouch](../papers/2024-lee-dextouch.md) · [B3 · Rotating without Seeing](../papers/2023-yin-rotating-without-seeing.md). 다른 논문의 작성 상태는 아래 [신규 연구 비교표](#3-신규-연구-비교표)에서 확인한다.
+**상세노트 바로가기:** [B1 · DexTouch](../papers/2024-lee-dextouch.md) · [B3 · Rotating without Seeing](../papers/2023-yin-rotating-without-seeing.md) · [C1 · Beyond Binary](../papers/2026-pan-beyond-binary-cop-tactile.md). 다른 논문의 작성 상태는 아래 [신규 연구 비교표](#3-신규-연구-비교표)에서 확인한다.
 
 ## 1. 핵심 답변
 
@@ -61,7 +61,7 @@ Force Push, Pushing in the Dark, Tactile Gym 2.0, Bi-Touch, Yang의 tactile push
 | [W2](#w2) | SRL-VIC, 2024 | 6D wrench | SAC+recovery, 실물 Blind maze | wrench 기반 motion/stiffness 선택. 자유 물체 이동 목표와 다름 | 미작성 |
 | [W3](#w3) | High-quality Wiping, 2025 | F/T 포함 46D 관측 | Blind RL, sim-only | 접촉/힘과 진행의 보상 충돌 방지. 세부 RL optimizer 미명시 | 미작성 |
 | [W4](#w4) | AFORCE, 2021 | 목표 wrench action·측정/추정 wrench 제어 | SAC는 simulation; 실물은 expert | 고주파 force loop 분리. 실물 learned-RL 전이로 분류 금지 | 미작성 |
-| [C1](#c1) | Beyond Binary, 2026 | binary 대 힘+접촉 중심 | PPO, 실물 blind insertion/balancing | 정보 손실 반대 근거만 사용. Sweeping 직접 비교군 아님 | 미작성 |
+| [C1](#c1) | Beyond Binary, 2026 | binary 대 힘+접촉 중심 | PPO, 실물 blind insertion/balancing | 정보 손실 반대 근거만 사용. Sweeping 직접 비교군 아님 | [상세노트](../papers/2026-pan-beyond-binary-cop-tactile.md) |
 
 ## 4. Binary tactile: 방법과 근거
 
@@ -207,6 +207,8 @@ Simulation wiping에서 **SAC 20 Hz→desired pose+wrench→adaptive force/imped
 
 ### C1. Beyond Binary: Sim-to-Real Dexterous Manipulation with Physics-Grounded Contact Representation
 
+**2026-09-21 후속 정독:** 사용자가 제공한 arXiv:2605.28812v1 PDF 18쪽을 기준으로 [상세 논문 노트](../papers/2026-pan-beyond-binary-cop-tactile.md)를 추가했다. 기존 C1의 조사 목적과 해석은 유지하고, 상세 노트에는 CoP mapping·differentiable calibration·RL 구성·실험·저자 Limitation/Future Work를 원문 기준으로 분리했다.
+
 **Jiahe Pan, Stelian Coros, Jitendra Malik, Toru Lin. arXiv preprint, 2026.** [원문 v1](https://arxiv.org/html/2605.28812v1) · [저자 프로젝트](https://mpan31415.github.io/tactile_rep/)
 
 Allegro–XELA uSkin의 blind insertion·ball balancing에서 binary와 **힘 벡터+접촉 중심(CoP)** 등을 비교한다. Asymmetric PPO actor는 proprioception·접촉 표현을, critic은 object GT를 추가 사용한다. GRU와 MLP를 거쳐 관절 목표 증분을 출력한다. [Appendix D–E, PDF pp.14–18]
@@ -277,4 +279,4 @@ Binary 후처리의 hysteresis·debounce, wrench의 하중 보정·프레임 변
 | Enhancing Tactile-based RL | `e51421f53cd0d4b333b05f64adf74fc0f7a52e8ee48c4bbc1c07276a1d0573b2` |
 | Beyond Binary | `f022d8c38412db7bbb55839a936b1a11caa9af4fbf4c3b0ffd701da60731e508` |
 
-본 보고서는 신규 문헌을 두 질문에 맞춰 비교한 조사본이다. 첨부 원문(PDF) 전체를 대상으로 기존 `papers/` 형식의 개별 정독 노트를 새로 작성한 작업, 코드 재현, 실제 장비 성능 검증과는 구분한다.
+본 보고서는 신규 문헌을 두 질문에 맞춰 비교한 조사본이다. 이후 원문이 제공되어 후속 정독한 항목은 `papers/`의 상세 노트로 별도 연결하며, 해당 상세 노트와 이 조사본의 비교·프로젝트 해석은 구분한다. 코드 재현과 실제 장비 성능 검증은 수행하지 않았다.
