@@ -152,6 +152,9 @@ GitHub 문서가 MathJax를 사용하더라도 **일반 MathJax에서 알려진 
 - `\mathbf`, `\mathrm`, `\text`, `\boldsymbol`처럼 인수를 받는 서식 매크로는 `\mathbf{1}`, `\boldsymbol{\tau}`처럼 **중괄호로 인수를 명시**한다. `\mathbf1`, `\mathbf x`, `\boldsymbol\tau`처럼 축약하지 않는다.
 - 새로운 LaTeX 매크로를 도입할 때는 일반 LaTeX/MathJax 지원 여부가 아니라 **GitHub Markdown에서 실제 허용되는지** 확인한다. 검증되지 않은 고급·사용자 정의 매크로를 문서에 바로 추가하지 않는다.
 - 금지 매크로가 발견되면 수학적 의미를 바꾸지 않는 범위에서 GitHub 안전 표기로 치환하고, 동일 패턴을 검사기에 추가한다.
+- `\\left`와 `\\right`는 반드시 올바른 delimiter와 짝을 이뤄야 한다. 특히 literal brace를 쓸 때 `\\left{` / `\\right}`처럼 쓰지 않는다. 필요하면 `\\left\\{` / `\\right\\}`를 사용하지만, indicator 조건은 `\\mathbf{1}_{\\{condition\\}}`처럼 **scalable brace 자체를 피하는 표기**를 우선한다.
+- 수식 내부에 `&gt;`, `&lt;`, `&amp;` 같은 HTML entity를 직접 넣지 않는다. Markdown 원문에는 LaTeX가 기대하는 `>`, `<`, `&`와 적절한 LaTeX 구문을 유지한다.
+- Push 전 검사기는 금지 매크로뿐 아니라 **`\\left/\\right` 짝, 잘못된 brace delimiter, grouping brace 균형, HTML entity 유입, fragile indicator 표기**도 검사해야 한다.
 
 ## 인라인 수식
 
@@ -194,6 +197,14 @@ $l=p_{C,y}^R$
 - 긴 수식은 LaTeX `aligned` 등의 내부 문법으로 정리하되 Markdown 구조 문법을 독립 줄로 두지 않도록 했다.
 - `scripts/check_markdown_math.py`를 추가하여 변경한 Markdown 파일의 위험 패턴과 닫히지 않은 `$$` 블록을 Push 전에 검사하도록 했다.
 - 이번 지침 추가는 재발 방지가 목적이며, 요청에 따라 기존 문서의 잘못 렌더링된 수식은 소급 수정하지 않는다.
+
+### 2026-09-21 — MAT delimiter 오류 추가 교정
+
+- Reward Formulation 비교 문서의 MAT 절에서 indicator를 `\\mathbf{1}\\{...\\}`와 `\\left\\{...\\right\\}` 조합으로 표현한 수식이 GitHub에서 `Missing or unrecognized delimiter for \\left` 오류를 일으키는 사례를 확인했다.
+- MAT terminal/reopen reward는 조건을 indicator의 subscript에 넣는 `\\mathbf{1}_{\\{...\\}}` 형태로 다시 작성하여 scalable brace delimiter 의존성을 제거했다.
+- 비교 문서에 남아 있던 모든 `math` fenced block을 저장소 표준인 `$` display block으로 되돌렸다.
+- 검사기에 `\\left/\\right` 개수 불일치, `\\left{` / `\\right}` 형태의 잘못된 literal brace delimiter, grouping brace 불균형, 수식 내부 HTML entity, fragile indicator 표기를 검출하는 규칙을 추가했다.
+- 이후 수식 오류를 수정할 때는 특정 오류 문자열만 치환하지 않고, 변경 문서의 모든 display/inline math를 다시 검사한다.
 
 ### 2026-09-21 — GitHub 금지 MathJax 매크로 검사 추가
 
