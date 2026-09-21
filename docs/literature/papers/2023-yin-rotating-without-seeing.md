@@ -113,9 +113,7 @@ Fig. 10의 사진에서는 손가락의 센서가 **0–11**, 손바닥의 센�
 해설용으로 접촉할수록 커지는 대표 측정값을 $s_{i,t}$라 놓으면, 이진화의 의미는 다음처럼 표현할 수 있다.
 
 $$
-o_{i,t}=\mathbb{1}[s_{i,t}>\theta_{\mathrm{th}}],
-\qquad
-\mathbf{o}_t\in\{0,1\}^{16}.
+o_{i,t}=\mathbb{1}[s_{i,t}>\theta_{\mathrm{th}}], \qquad \mathbf{o}_t\in\{0,1\}^{16}.
 $$
 
 이 식은 **원문 설명의 개념적 재표현**이다. 실제 전압 극성, equality 처리, 센서별 threshold 사용 여부, firmware의 정확한 비교 연산은 원문에서 정하지 않는다. 실물 threshold의 전압 수치도 제공하지 않는다. [§III-A]
@@ -129,13 +127,7 @@ $$
 각 센서를 손가락·손바닥 링크에 고정된 별도 링크로 모델링한다. 해당 센서 링크에 대한 net contact force를 가져와 norm을 계산하고 threshold를 적용한다. [§III-B, PDF p. 3]
 
 $$
-\mathbf{F}_{i,t}=
-\begin{bmatrix}F_{x,i,t}&F_{y,i,t}&F_{z,i,t}\end{bmatrix}^{\mathsf T},
-\qquad
-\tilde{o}_{i,t}=\mathbb{1}
-\left[\lVert\mathbf{F}_{i,t}\rVert>\tilde{\theta}_{\mathrm{th}}\right],
-\qquad
-\tilde{\theta}_{\mathrm{th}}=0.01\;\mathrm{N}.
+\mathbf{F}_{i,t}= \begin{bmatrix}F_{x,i,t}&F_{y,i,t}&F_{z,i,t}\end{bmatrix}^{\mathsf T}, \qquad \tilde{o}_{i,t}=\mathbb{1} \left[\lVert\mathbf{F}_{i,t}\rVert>\tilde{\theta}_{\mathrm{th}}\right], \qquad \tilde{\theta}_{\mathrm{th}}=0.01\;\mathrm{N}.
 $$
 
 위 식 역시 원문 서술을 모은 해설식이다. **부모 링크에 가해진 force는 센서 링크의 net contact force에 포함하지 않는다.** 이는 센서가 부착된 영역의 접촉과 비센서 영역 접촉을 구분하는 데 중요하다. 벡터의 세 성분을 actor에 전달하는 것도 아니며, normal force 한 성분만 threshold한다고 적혀 있지도 않다. [§III-B]
@@ -174,10 +166,7 @@ $$
 원문 성분을 단순 연결하면 다음과 같이 표현할 수 있다.
 
 $$
-\mathbf{s}_t=
-[\mathbf{q}_t,\mathbf{o}_t,\tilde{\mathbf{q}}_t,\mathbf{k}],
-\qquad
-16+16+16+3=51.
+\mathbf{s}_t= [\mathbf{q}_t,\mathbf{o}_t,\tilde{\mathbf{q}}_t,\mathbf{k}], \qquad 16+16+16+3=51.
 $$
 
 여기서 $\mathbb{S}^{2}$는 3차원 공간의 단위구다. 자유도가 2라는 이유로 입력 성분을 2개로 합산하지 않는다. 관절 속도는 이 actor state 목록에 없다. Reward에서 관절 속도를 사용한다는 사실도 actor 입력에 있다는 뜻은 아니다.
@@ -185,8 +174,7 @@ $$
 ### 5.2 현재와 과거 세 시점: 총 네 프레임
 
 $$
-\mathbf{h}_t=
-[\mathbf{s}_t,\mathbf{s}_{t-1},\mathbf{s}_{t-2},\mathbf{s}_{t-3}].
+\mathbf{h}_t= [\mathbf{s}_t,\mathbf{s}_{t-1},\mathbf{s}_{t-2},\mathbf{s}_{t-3}].
 $$
 
 원문은 **현재 상태와 다른 세 개의 historical state**를 stack한다고 명시한다. 위 성분 전체를 프레임마다 연결한다면 **$51\times4=204$차원**이다. 204라는 숫자는 원문에 직접 기재된 네트워크 입력 사양이 아니라 **명시된 구성에서 계산한 차원**이며, 공개 코드의 tensor shape까지 확인한 값은 아니다. [§IV-A.1, IV-C]
@@ -212,8 +200,7 @@ $$
 정책의 출력은 16차원 상대 관절 명령 $\mathbf{a}_t$다. 원문은 먼저 다음의 직접 누적 형태를 소개한다. [§IV-A.2, PDF p. 4]
 
 $$
-\tilde{\mathbf{q}}_{t+1}
-=\tilde{\mathbf{q}}_t+\mathbf{a}_t.
+\tilde{\mathbf{q}}_{t+1} =\tilde{\mathbf{q}}_t+\mathbf{a}_t.
 $$
 
 기준이 현재 측정 관절 위치 $\mathbf{q}_t$가 아니라 **이전 target $\tilde{\mathbf{q}}_t$**라는 점을 구분한다. 연속 timestep에서 행동이 충돌하면 손가락 운동이 매끄럽지 않을 수 있어 실제로는 행동을 평활화한다.
@@ -221,16 +208,11 @@ $$
 ### 6.2 EMA가 적용되는 위치
 
 $$
-\tilde{\mathbf{a}}_t
-=\eta\mathbf{a}_t+(1-\eta)\tilde{\mathbf{a}}_{t-1},
-\qquad \eta=0.8,
-\qquad t\geq1,
-\qquad \tilde{\mathbf{a}}_0=\mathbf{0}.
+\tilde{\mathbf{a}}_t =\eta\mathbf{a}_t+(1-\eta)\tilde{\mathbf{a}}_{t-1}, \qquad \eta=0.8, \qquad t\geq1, \qquad \tilde{\mathbf{a}}_0=\mathbf{0}.
 $$
 
 $$
-\tilde{\mathbf{q}}_{t+1}
-=\tilde{\mathbf{q}}_t+\tilde{\mathbf{a}}_t.
+\tilde{\mathbf{q}}_{t+1} =\tilde{\mathbf{q}}_t+\tilde{\mathbf{a}}_t.
 $$
 
 즉 현재 행동에 0.8, 이전의 평활화된 행동에 0.2를 부여한다. 이 EMA의 목적은 손가락 motion을 매끄럽게 만드는 것이며 **FSR 전압 필터나 bit의 hysteresis가 아니다.** 새 위치 target은 PD controller로 전달된다. [§IV-A.2, Fig. 3]
@@ -248,9 +230,7 @@ IsaacGym의 simulation step은 **0.01667초**, substep은 **2개**다. 정책이
 본문 식 (1)과 Appendix D 식 (9)는 같은 여섯 항의 가중합을 제시한다. [PDF pp. 4, 14]
 
 $$
-r_t=w_1r_{\mathrm{rot}}+w_2r_{\mathrm{vel}}
-+w_3r_{\mathrm{fall}}+w_4r_{\mathrm{work}}
-+w_5r_{\mathrm{torque}}+w_6r_{\mathrm{dist}}.
+r_t=w_1r_{\mathrm{rot}}+w_2r_{\mathrm{vel}} +w_3r_{\mathrm{fall}}+w_4r_{\mathrm{work}} +w_5r_{\mathrm{torque}}+w_6r_{\mathrm{dist}}.
 $$
 
 | 항 | 가중치 | 유도하려는 행동 |
@@ -269,15 +249,14 @@ $$
 본문 식 (2)는 clipping 상수를 $c_1$로 표현하며, Appendix 식 (3)은 다음 값을 준다.
 
 $$
-r_{\mathrm{rot}}=
-\operatorname{clip}(\Delta\theta,-0.157,0.157).
+r_{\mathrm{rot}}= \mathrm{clip}(\Delta\theta,-0.157,0.157).
 $$
 
 $\Delta\theta$는 축 $\mathbf{k}$에 수직인 평면 $\Pi$에서 측정한 signed rotation angle이다. Fig. 4와 §IV-A.3의 계산 설명은 다음과 같다.
 
 1. $\Pi$ 위에서 단위 벡터 $\mathbf{v}$를 무작위로 고른다.
 2. 이 벡터가 물체에 붙어 있다고 생각하고, 물체가 다음 상태로 움직인 뒤의 대응 벡터 $\mathbf{v}'$를 구한다.
-3. $\mathbf{v}'$를 같은 평면에 투영하여 $\mathbf{v}'_p=\operatorname{Proj}(\mathbf{v}',\Pi)$를 얻는다.
+3. $\mathbf{v}'$를 같은 평면에 투영하여 $\mathbf{v}'_p=\mathrm{Proj}(\mathbf{v}',\Pi)$를 얻는다.
 4. 축 $\mathbf{k}$를 기준으로 $\mathbf{v}$와 $\mathbf{v}'_p$ 사이의 부호 있는 각도 $\Delta\theta\in[-\pi,\pi)$를 사용한다.
 
 저자들은 simulator가 반환하는 각속도 $\boldsymbol{\omega}$에 대해 $\langle\boldsymbol{\omega},\mathbf{k}\rangle$를 보상으로 쓰면, 복잡한 물체 운동에서 잡음의 영향으로 특정 pose 주변에서 진동하는 등 바람직하지 않은 행동이 발생했다고 설명한다. 반면 위와 같이 자세 변화에서 계산한 유한 차분은 반복 학습에서 더 일관된 회전을 만들었다고 보고한다. [§IV-A.3, p. 4]
@@ -305,8 +284,7 @@ $$
 Appendix 식 (6):
 
 $$
-r_{\mathrm{work}}
-=-\left\langle|\boldsymbol{\tau}|,|\dot{\mathbf{q}}_t|\right\rangle.
+r_{\mathrm{work}} =-\left\langle|\boldsymbol{\tau}|,|\dot{\mathbf{q}}_t|\right\rangle.
 $$
 
 $\boldsymbol{\tau}$는 PD controller가 출력한 torque이고, 절댓값은 성분별로 적용된다. 서로 다른 관절의 부호가 상쇄되지 않게 구동 크기를 벌점으로 준다. 원문은 이를 work penalty라고 부르지만, 식에 시간 적분이나 $\Delta t$ 곱이 명시되어 있지는 않다. 따라서 총 에너지 측정값으로 바꾸어 설명하지 않는다. [해설]
@@ -324,14 +302,7 @@ $$
 본문은 clipped inverse-distance 형태를 설명하며, Appendix 식 (8)은 구체적인 상수와 네 손끝의 평균을 준다.
 
 $$
-r_{\mathrm{dist}}
-=\operatorname{mean}_{i=0,1,2,3}
-\left[
-\operatorname{clip}\left(
-\frac{0.1}{0.02+4d(\mathbf{x}_{\mathrm{tip}}^{i},\mathbf{x}_{\mathrm{obj}})},
-0,1
-\right)
-\right].
+r_{\mathrm{dist}} =\mathrm{mean}_{i=0,1,2,3} \left[ \mathrm{clip}\left( \frac{0.1}{0.02+4d(\mathbf{x}_{\mathrm{tip}}^{i},\mathbf{x}_{\mathrm{obj}})}, 0,1 \right) \right].
 $$
 
 $\mathbf{x}_{\mathrm{tip}}^{i}$는 각 손끝 위치, $\mathbf{x}_{\mathrm{obj}}$는 물체 위치를 나타낸다. 손끝이 물체에 가까워지도록 유도하는 shaping이다. $d$를 실제 표면까지의 signed distance나 mesh의 최단 거리라고 구체화한 정의는 원문에서 확인되지 않는다. 이 보상 역시 시뮬레이션의 위치 정보에 의존하며 actor에 물체 위치를 넣는 경로와 구분한다.
