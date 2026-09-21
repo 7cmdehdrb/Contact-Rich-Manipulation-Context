@@ -23,6 +23,7 @@
 | 2026-09-19 | [ICRA 2023 후보 논문 선별 — 축약 촉각 보완 구조와 F/T·촉각 역할 분담](reviews/2026-09-19_icra-2023-contact-sensing-screening.md) | 사용자 제공 ICRA 2023 CSV 190개 레코드의 제목·초록을 검토하여 30편을 후속 정독 후보로 선별. 저정보 tactile force control, tactile partial observability·history, tactile state estimation, F/T safety sensing, object-state 보완과 vision-only 비교군을 구분한다. |
 | 2026-09-20 | [별도 확인 요청 논문 목록](reviews/2026-09-20_separate-review-paper-list.md) | 사용자가 `260918 Review Dataset`에서 별도로 확인하도록 지정한 27편. 원래 두 목록의 구분과 순서를 보존하고 기존 PDF 원문 기반 Review 분석으로 연결한다. |
 | 2026-09-21 | [Sweeping의 숨은 물리 조건에 대한 명시적 추정과 이력 기반 대응](reviews/2026-09-21_sweeping-physical-parameter-adaptation.md) | 기존 상세 리뷰 27편을 제외하고 2022년 이후 주요 저널·학회 연구 7편을 비교한다. 물성·접촉 모델 추정 → 계획·제어, 정책 내부 이력+DR, 별도 latent 적응 모듈을 구분하고 2.4절의 선택 근거와 검증 질문을 정리한다. |
+| 2026-09-21 | [RL 논문의 Reward Formulation 비교](reviews/2026-09-21_rl-reward-formulation-comparison.md) | 기존 `papers/` 상세 노트 28편 중 RL 보상 구조가 기록된 18편의 식·가중치·적용 조건·학습용 정답 사용을 비교. 제외 10편의 사유를 기록하며, 새 원문 정독이나 프로젝트 reward 확정안과 구분한다. |
 | 2026-09-16부터 누적 | [사용자 발굴 논문](reviews/user-found-papers.md) | 사용자가 별도로 제공한 논문의 등록·서지·정독 상태와 상세 노트. USER-P 식별자를 유지하며 조사 그룹의 하나로 관리한다. |
 
 2026-09-14 보고서의 **7–8절은 문헌에서 도출한 해석·연구 제안**이다. 프로젝트의 확정 사양이나 구현 성과로 승격하지 않는다. 각 논문의 본래 목적, 센서 구성, 시각 사용 조건, 제어 방식, 적용 한계는 보고서 본문과 참고문헌을 함께 확인한다. 특정 범주의 직접 사례를 확보하지 못했다는 사실은 그 연구가 존재하지 않는다는 증명이나 신규성 확정이 아니다.
