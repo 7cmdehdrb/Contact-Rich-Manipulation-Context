@@ -126,9 +126,9 @@ MuJoCo force sensor는 3D continuous force를 줄 수 있지만, real tactile el
 
 Reality gap을 줄이기 위해 simulation force와 real electrical response를 모두 binary contact로 변환한다.
 
-$$
+```math
 \hat{c}_i=\begin{cases}1,&c_i>\kappa\\0,&\text{otherwise}\end{cases},\quad i=1,\ldots,30.
-$$
+```
 
 (원문 식 (3))
 
@@ -174,9 +174,9 @@ Training에서는 action 값을 normalize한다. [원문 §IV-C-b, PDF p. 4]
 
 전체 shaped reward는 다음 다섯 항으로 구성된다.
 
-$$
+```math
 R=\omega_{\mathrm{door}}r_{\mathrm{door}}+\omega_{\mathrm{dist}}r_{\mathrm{dist}}+\omega_{\mathrm{ori}}r_{\mathrm{ori}}+\omega_{\mathrm{grasp}}r_{\mathrm{grasp}}+\omega_{\mathrm{tactile}}r_{\mathrm{tactile}}.
-$$
+```
 
 (원문 식 (4))
 
@@ -202,9 +202,9 @@ $$
 
 Tactile reward는
 
-$$
-r_{\mathrm{tactile}}=\|\hat{\mathbf c}\|_1
-$$
+```math
+r_{\mathrm{tactile}}=\|\hat{\mathbf{c}}\|_1
+```
 
 을 사용하며, 조건은 hinge angle $\alpha>\alpha_0$와 grasp state다. 원문은 $\alpha_0=1.15^\circ$를 사용한다. [원문 식 (5)–(9), §IV-C-c, PDF p. 4]
 
@@ -259,9 +259,9 @@ Robot parameter는 randomize하지 않고, link mass·joint damping·joint-contr
 
 각 binary tactile bit는 training 중 매 timestep 확률
 
-$$
+```math
 p_{\mathrm{flip}}=0.005
-$$
+```
 
 로 0↔1 flipping한다. 이는 tactile sim-to-real gap을 완화하기 위한 별도 sensor randomization이다. [원문 §IV-D-c, PDF p. 5]
 
