@@ -70,13 +70,13 @@ EEF 이동 거리를 물체 이동 거리로 대체하여 성공했다고 쓰지
 
 ### Markdown 수식 렌더링 검사 — 2026-09-20 추가
 
-Markdown 문서를 새로 작성하거나 수정할 때는 [Markdown 문서 형식 규칙](.agents/rules/document-formatting.md)을 따른다. 특히 `$$` display math 내부에서 `=`·`-` 같은 Markdown 구조 문법을 독립된 물리적 줄로 두지 않는다. GitHub가 이를 Setext heading 등으로 해석하여 수식 블록을 깨뜨릴 수 있다.
+Markdown 문서를 새로 작성하거나 수정할 때는 [Markdown 문서 형식 규칙](.agents/rules/document-formatting.md)을 따른다. 특히 `$` display math 내부에서 `=`·`-` 같은 Markdown 구조 문법을 독립된 물리적 줄로 두지 않는다. GitHub가 이를 Setext heading 등으로 해석하여 수식 블록을 깨뜨릴 수 있다. 또한 일반 MathJax에서 동작하는 매크로라도 GitHub Markdown에서 차단될 수 있다. 2026-09-21에는 `\operatorname`이 `The following macros are not allowed: operatorname` 오류를 발생시키는 사례를 확인했으므로 사용하지 않는다. 사용자 정의 연산자 표기는 `\mathrm{...}` 같은 GitHub 안전 기본 표기를 우선한다.
 
 Push 전에 **이번 작업에서 생성·수정한 Markdown 파일만** 다음 검사기에 전달한다.
 
 `python scripts/check_markdown_math.py <changed-file.md> [more.md ...]`
 
-검사가 실패하면 수식 블록을 한 Markdown 물리적 줄로 합치거나 LaTeX 내부 정렬 문법을 사용하여 수정한다. `git diff --check` 통과만으로 수식 렌더링이 안전하다고 판단하지 않는다. 기존 문서를 일괄 수정하기 위해 검사기를 저장소 전체에 무조건 적용하지 않는다.
+검사가 실패하면 수식 블록을 한 Markdown 물리적 줄로 합치거나 LaTeX 내부 정렬 문법을 사용하고, 금지 매크로가 있으면 GitHub 안전 표기로 교체한다. 검사기는 `\operatorname` 같은 금지 매크로도 확인한다. `git diff --check` 통과만으로 수식 렌더링이 안전하다고 판단하지 않는다. 기존 문서를 일괄 수정하기 위해 검사기를 저장소 전체에 무조건 적용하지 않는다.
 
 ### 문서 구조와 양방향 연결 — 2026-09-17 추가
 
