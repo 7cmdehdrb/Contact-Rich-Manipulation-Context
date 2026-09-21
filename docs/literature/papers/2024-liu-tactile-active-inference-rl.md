@@ -156,15 +156,15 @@ Fig. 3의 작은 tactile image와 Fig. 4의 marker image는 장면을 보는 외
 
 **원문 식 (7) — 접촉 중심**
 
-$$
+```math
 \mu=\left(\frac{m_{10}}{m_{00}},\frac{m_{01}}{m_{00}}\right).
-$$
+```
 
 **원문 식 (8) — 접촉 intensity**
 
-$$
+```math
 \Sigma=m_{00}.
-$$
+```
 
 중심은 깊이 영상의 접촉 분포가 센서 영상의 어느 위치에 놓이는지 나타낸다. Pixel sum은 전체 깊이 값의 합으로, 저자들은 이를 contact intensity로 사용한다. 본문은 raw moment를 계산하는 이산 합을 별도 식으로 제시하지 않으므로, 위 두 식과 설명을 중심으로 해설한다. [원문 §III-B, PDF p. 4]
 
@@ -176,12 +176,12 @@ $$
 
 **원문 식 (9) — 샘플 점의 optical-flow field**
 
-$$
+```math
 F=\begin{bmatrix}
 \{P(x_1,y_1),P(x_2,y_2),\ldots,P(x_n,y_n)\}\\
 \{Q(x_1,y_1),Q(x_2,y_2),\ldots,Q(x_n,y_n)\}
 \end{bmatrix}.
-$$
+```
 
 $P$와 $Q$는 각 샘플 위치의 optical-flow 두 성분이다. 이 $F$는 **영상 변위 집합**이며 물리적 force vector가 아니다. 샘플 점 선정, tracking window, frame 간격, 기준 영상 갱신, outlier 제거 등의 세부 설정은 제시되지 않는다. [원문 식 (9), PDF p. 4]
 
@@ -191,12 +191,12 @@ $P$와 $Q$는 각 샘플 위치의 optical-flow 두 성분이다. 이 $F$는 **�
 
 **원문 식 (10) — 동적 접촉 특징**
 
-$$
+```math
 \begin{aligned}
 H(x)&=-\sum p(P)\log p(P),\\
 H(y)&=-\sum p(Q)\log p(Q).
 \end{aligned}
-$$
+```
 
 원문 설명에서 entropy가 높다는 것은 flow 값의 분포가 더 퍼져 있다는 뜻이며, 이를 **더 큰 물체 운동 추세와 젤 변형, shear의 대리 지표**로 해석한다. 따라서 단일 접촉 bit보다 접촉면의 시간적 변화를 표현할 수 있다. [원문 §III-B, 식 (10), PDF p. 4]
 
@@ -244,33 +244,33 @@ $$
 
 **원문 식 (1)**
 
-$$
+```math
 \widetilde{\mathcal F}
 =D_{\mathrm{KL}}\!\left(
 q(r_{0:T},o_{0:T},\theta,\pi)
 \,\Vert\,
 p^\Phi(r_{0:T},o_{0:T},\theta)
 \right).
-$$
+```
 
 **원문 식 (2)**
 
-$$
+```math
 \widetilde{\mathcal F}=0
 \;\Rightarrow\;
 D_{\mathrm{KL}}\!\left(q(\pi)\,\Vert\,e^{-\widetilde{\mathcal F}_\pi}\right)=0.
-$$
+```
 
 **원문 식 (3)**
 
-$$
+```math
 \widetilde{\mathcal F}_\pi
 =D_{\mathrm{KL}}\!\left(
 q(r_{0:T},o_{0:T},\theta\mid\pi)
 \,\Vert\,
 p^\Phi(r_{0:T},o_{0:T},\theta)
 \right).
-$$
+```
 
 저자들의 설명은 $q(\pi)$가 free energy가 작은 정책을 선호하도록 만들어, 미래의 free energy를 줄이는 계획 문제로 연결하는 것이다. 위 식은 **원문 표기를 보존한 것**이며, 원문에 없는 정규화 상수나 상세 유도를 추가하여 완결된 증명으로 제시하지 않는다. 식 (1)의 비교 분포에 등장하는 변수 범위와 식 (2)의 지수 표현은 §13에서 별도로 주의한다. [원문 §III-A, PDF p. 2]
 
@@ -280,7 +280,7 @@ $$
 
 **원문 식 (4)**
 
-$$
+```math
 \begin{aligned}
 -\widetilde{\mathcal F}_\pi
 &\approx
@@ -296,7 +296,7 @@ $$
 \mathbb E_{q(o,\theta\mid\pi)}
 \left[D_{\mathrm{KL}}\!\left(q(r\mid o,\theta,\pi)\,\Vert\,p^\Phi(r)\right)\right].
 \end{aligned}
-$$
+```
 
 첫 번째 KL 기대값은 원문에서 **expected information gain, c**로 표시한다. 미래 관측이 로봇의 이해를 얼마나 바꾸는지에 해당하는 탐색 동기다. 두 번째 KL 기대값은 **extrinsic term**이며, 미래 reward가 선호하는 분포에 가까워지도록 하는 목표 수행 동기다. 식에서는 두 번째 항 앞에 마이너스가 있으므로, 낮은 FEEF를 선택하는 것은 정보 획득을 크게 하고 선호와의 차이를 줄이는 방향이다. [원문 식 (4), PDF p. 2]
 
@@ -308,7 +308,7 @@ $$
 
 **원문 식 (5) — 줄바꿈용 연결 화살표를 제외한 표기**
 
-$$
+```math
 \begin{aligned}
 q(o_{t:T},r_{t:T},\theta\mid\pi)
 &=p(\theta)\prod_{\tau=t}^{T}
@@ -321,7 +321,7 @@ q(o_\tau\mid o_{\tau-1},\theta,\pi)
 &=\mathbb E_{q(o_{\tau-1}\mid\theta,\pi)}
 \left[p(o_\tau\mid o_{\tau-1},\theta,\pi)\right].
 \end{aligned}
-$$
+```
 
 Fig. 1은 **Model Ensemble(ME)**과 **Reward Model(RM)**을 학습 대상 신경망으로 표시한다. 실제 환경이 주는 reward와 계획 중 모델이 예측하는 reward를 구분하며, 모델 앙상블 블록에는 Gaussian fitting과 평균·분산 기호가 있다. 하지만 그림에 그려진 신경망 아이콘 개수를 ensemble size로 확정하거나, 그 그림만으로 개별 모델의 출력 분포·loss·학습 절차를 복원할 수는 없다.
 
@@ -331,7 +331,7 @@ Fig. 1은 **Model Ensemble(ME)**과 **Reward Model(RM)**을 학습 대상 신경
 
 **원문 식 (6)**
 
-$$
+```math
 \begin{aligned}
 -\widetilde{\mathcal F}_{\pi\tau}
 &\approx
@@ -348,7 +348,7 @@ q(r_\tau\mid o_\tau,\theta,\pi)\,\Vert\,p^\Phi(r_\tau)
 \mathbb E_{q(\theta)}
 \left[\mathcal H\!\left[q(o_\tau\mid o_{\tau-1},\pi,\theta)\right]\right].
 \end{aligned}
-$$
+```
 
 뒤의 두 항은 원문이 **state information gain, c**로 묶은 부분이다. ‘앙상블의 예측을 합친 분포의 entropy’에서 ‘각 모델 예측 분포 entropy의 평균’을 뺀다. 이는 단순히 다음 상태의 분산이 크면 보상을 주는 설명보다 구체적이다. **모델들이 같은 불확실한 분포를 예측하는 경우와 서로 다른 예측을 하는 경우를 구분하는 형태**이기 때문이다. 이 문장은 식 (6)의 구조 해설이며, 본문이 별도의 모델 불확실성 검증 실험을 보고했다는 뜻은 아니다.
 
@@ -394,14 +394,14 @@ CEM population, elite 수·비율, horizon의 실제 값, 반복 횟수, 분포 
 
 **원문 식 (11) — 세 과업 보상**
 
-$$
+```math
 \begin{aligned}
 r_1&=\mathrm{sgn}(\mathrm{get\_target})
 -\mathrm{dis}(\mathrm{object},\mathrm{target}),\\
 r_2&=\mathrm{sgn}(\mathrm{get\_target}),\\
 r_3&=-H(y).
 \end{aligned}
-$$
+```
 
 원문의 `sgn(get_target)`은 여기서 **0/1 목표 진입 판정 함수**로 설명된다. 일반적인 수학 sign 함수의 음수 출력을 사용하는 것이 아니다. `dis`는 물체와 목표 영역 중심의 거리다. 거리의 단위·정규화, 영역 크기, step reward의 누적 방식, 목표 도달 즉시 episode를 종료하는지는 미명시다. 따라서 식의 간결함과 환경 구현의 완전성을 구분한다.
 
