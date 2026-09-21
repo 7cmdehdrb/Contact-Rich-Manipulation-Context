@@ -175,15 +175,15 @@ Fig. 2(a)는 촉각 정보에 **proprioceptive states와 goal states**를 결합
 
 본문의 action 정의를 모으면 다음과 같다.
 
-$$
+```math
 a_t=(\Delta y_t,\Delta\theta_t),\qquad
 \Delta y_t\in[-1,1]\ \mathrm{mm},\qquad
 \Delta\theta_t\in[-1,1]^{\circ}.
-$$
+```
 
-$$
+```math
 \Delta x_t=1\ \mathrm{mm}.
-$$
+```
 
 모두 **pusher의 좌표계에서 한 time step에 적용하는 위치·회전 증분**이다. 로봇은 매 step 전진하고, 정책 또는 planner가 전진 중 옆으로 얼마나 이동하고 yaw를 얼마나 바꿀지 결정한다. [원문 §III-B-2, PDF p. 3]
 
@@ -195,13 +195,13 @@ $$
 
 **원문 식 (3)**
 
-$$
+```math
 \begin{aligned}
 S_1&=[I_{\mathrm{tactile}},x_g^p,y_g^p,\theta_g^p],\\
 S_2&=[x_o^p,y_o^p,\theta_o^p,x_g^o,y_g^o,\theta_g^o],\\
 S_3&=[x_o^p,y_o^p,\theta_o^p,x_o,y_o,\theta_o].
 \end{aligned}
-$$
+```
 
 | 관측 | 사용 주체 | 구성과 의미 |
 | --- | --- | --- |
