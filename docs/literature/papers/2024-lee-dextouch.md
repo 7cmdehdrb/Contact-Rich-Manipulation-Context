@@ -109,11 +109,7 @@ Fig. 2는 16개 센서가 손의 어느 부분에 있는지를 보여준다. 이
 이 절의 설명을 기호로 옮기면 다음과 같다. **아래는 흐름을 설명하기 위한 표기이며 논문의 번호가 붙은 수식은 아니다.**
 
 $$
-\bar v_i[k]=\operatorname{LPF}(v_i)[k],
-\qquad
-o_{t,i}=\operatorname{Threshold}_{\theta_{\mathrm{th}}}
-\bigl(\bar v_i[k(t)]\bigr),
-\qquad i=1,\ldots,16.
+\bar v_i[k]=\mathrm{LPF}(v_i)[k], \qquad o_{t,i}=\mathrm{Threshold}_{\theta_{\mathrm{th}}} \bigl(\bar v_i[k(t)]\bigr), \qquad i=1,\ldots,16.
 $$
 
 $v_i$는 센서 $i$의 전압, $\bar v_i$는 필터 출력, $o_{t,i}$는 정책 시점 $t$의 접촉 bit다. $k(t)$는 125 Hz 센서 sample을 10 Hz 정책 시점에 대응시키는 설명용 인덱스다. **원문은 이 대응에서 마지막 sample을 쓰는지, 여러 sample을 집계하는지 설명하지 않는다.** 회로의 접촉 시 전압 증감 방향과 threshold 경계의 부등호도 명시하지 않으므로 특정 회로식이나 비교 방향을 확정하지 않았다.
@@ -127,9 +123,7 @@ $v_i$는 센서 $i$의 전압, $\bar v_i$는 필터 출력, $o_{t,i}$는 정책 
 **해설용 표현:**
 
 $$
-f_{t,i}=\sqrt{F_{x,t,i}^{2}+F_{y,t,i}^{2}+F_{z,t,i}^{2}},
-\qquad
-o_{t,i}=\operatorname{Threshold}_{\tilde\theta_{\mathrm{th}}}(f_{t,i}).
+f_{t,i}=\sqrt{F_{x,t,i}^{2}+F_{y,t,i}^{2}+F_{z,t,i}^{2}}, \qquad o_{t,i}=\mathrm{Threshold}_{\tilde\theta_{\mathrm{th}}}(f_{t,i}).
 $$
 
 Simulation에서는 **힘의 크기**, real에서는 **필터링한 전압**을 threshold한다. 두 threshold는 기호도 다르며 물리 단위도 같다고 볼 수 없다. 이진화 뒤 두 환경의 actor가 받는 자료형과 부위별 접촉 표현을 맞추는 구조다. 힘 벡터의 방향 성분을 actor가 그대로 받는 방식은 아니다.
@@ -181,9 +175,7 @@ Actor의 과업 정보에는 목표 위치 3개와 물체 spawn 영역의 크기
 저자는 과업을 $\mathcal M=(\mathcal S,\mathcal A,\mathcal R,\mathcal P)$의 MDP로 기술한다. Agent는 상태 $s_t$에서 $a_t=\pi(s_t)$를 선택하고 $r_t=R(s_t,a_t,s_{t+1})$를 받으며 discounted return을 최대화한다. [원문 §IV-A, PDF pp. 3–4]
 
 $$
-\max_{\pi}\;\mathbb E_{\pi}\left[
-\sum_{t=0}^{T}\gamma^t r_t
-\right].
+\max_{\pi}\;\mathbb E_{\pi}\left[ \sum_{t=0}^{T}\gamma^t r_t \right].
 $$
 
 위 기대값 표현은 목적을 설명한 해설이다. 원문이 MDP라는 이름을 사용해도 **Actor에 물체 상태가 완전 관측된다는 뜻은 아니다.** Fig. 2와 §IV-C의 asymmetric observation이 그 차이를 명확히 보여준다. 이 출판본에는 별도의 belief filter나 물체 pose estimator를 학습하는 절이 없다.
@@ -251,8 +243,7 @@ Cartesian delta pose, 직접 joint torque, desired wrench, stiffness를 policy�
 **해설용 전체 구조:**
 
 $$
-r_t=r_{\mathrm{reach},t}+r_{\mathrm{execute},t}
--\lambda_v\|\dot q_t\|_1.
+r_t=r_{\mathrm{reach},t}+r_{\mathrm{execute},t} -\lambda_v\|\dot q_t\|_1.
 $$
 
 원문은 전체 보상을 이 형태의 번호 식으로 쓰거나 $\lambda_v$라는 기호·수치를 주지 않는다. 위 식은 접근+실행+속도 penalty라는 서술을 설명한 것이다. 논문에 번호가 붙은 수식은 아래의 **(1)–(4)**다.
@@ -262,9 +253,7 @@ $$
 ### 8.2 공통 접근 보상 — 원문 식 (1)
 
 $$
-r_{\mathrm{reach}}
-=\sum_{\mathrm{finger}}\alpha_{\mathrm{reach}}
-\max(d_{\mathrm{closest}}-d,0).
+r_{\mathrm{reach}} =\sum_{\mathrm{finger}}\alpha_{\mathrm{reach}} \max(d_{\mathrm{closest}}-d,0).
 $$
 
 | 기호 | 원문 의미 |
@@ -283,13 +272,7 @@ $$
 ### 8.3 물체 파지·운반 보상 — 원문 식 (2)
 
 $$
-\begin{aligned}
-r_{\mathrm{execute}}
-={}&(1-\mathbf 1_{\mathrm{picked}})\alpha_{\mathrm{pick}}h_{\mathrm{obj}}
-+r_{\mathrm{picked}}\\
-&+\mathbf 1_{\mathrm{picked}}\alpha_{\mathrm{goal}}
-\max(\tilde d_{\mathrm{closest}}-\tilde d,0).
-\end{aligned}
+\begin{aligned} r_{\mathrm{execute}} ={}&(1-\mathbf 1_{\mathrm{picked}})\alpha_{\mathrm{pick}}h_{\mathrm{obj}} +r_{\mathrm{picked}}\\ &+\mathbf 1_{\mathrm{picked}}\alpha_{\mathrm{goal}} \max(\tilde d_{\mathrm{closest}}-\tilde d,0). \end{aligned}
 $$
 
 | 기호·조건 | 의미 |
@@ -309,14 +292,7 @@ $$
 ### 8.4 문손잡이 회전·문 열기 보상 — 원문 식 (3)
 
 $$
-\begin{aligned}
-r_{\mathrm{execute}}
-={}&(1-\mathbf 1_{\mathrm{rotated}})\alpha_{\mathrm{rot}}
-\max(\phi-\phi_{\max},0)\\
-&+\mathbf 1_{\mathrm{rotated}}\alpha_{\mathrm{open}}
-\max(\psi-\psi_{\max},0)\\
-&+r_{\mathrm{rotated}}+r_{\mathrm{opened}}.
-\end{aligned}
+\begin{aligned} r_{\mathrm{execute}} ={}&(1-\mathbf 1_{\mathrm{rotated}})\alpha_{\mathrm{rot}} \max(\phi-\phi_{\max},0)\\ &+\mathbf 1_{\mathrm{rotated}}\alpha_{\mathrm{open}} \max(\psi-\psi_{\max},0)\\ &+r_{\mathrm{rotated}}+r_{\mathrm{opened}}. \end{aligned}
 $$
 
 | 기호·조건 | 의미 |
@@ -337,9 +313,7 @@ $$
 ### 8.5 밸브 회전 보상 — 원문 식 (4)
 
 $$
-r_{\mathrm{execute}}
-=\alpha_{\mathrm{rot}}\max(\theta-\theta_{\max},0)
-+r_{\mathrm{success}}.
+r_{\mathrm{execute}} =\alpha_{\mathrm{rot}}\max(\theta-\theta_{\max},0) +r_{\mathrm{success}}.
 $$
 
 $\theta$는 밸브의 현재 회전각, $\theta_{\max}$는 지금까지 달성한 최대 회전각으로 해석되는 항이다. 문손잡이 회전과 유사하게 회전의 새 진행량을 보상하며, 밸브를 **135°보다 많이 회전**하면 success bonus를 받는다. 밸브의 시계방향을 양의 $\theta$로 놓는 실제 joint-axis convention은 출판본에 수치 정의되어 있지 않다. [§III-B, IV-B, 식 (4)]
