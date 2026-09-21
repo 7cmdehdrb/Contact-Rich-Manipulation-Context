@@ -4,7 +4,7 @@
 
 이 폴더는 제공된 논문 원문을 읽고 **그 논문 자체의 문제 상황, 관련 연구, 환경·센서, 핵심 메소드, 실험, 저자들이 밝힌 Limitation과 Future Work**를 정리하는 곳이다. 여러 논문을 비교하거나 프로젝트 적용안을 제안하는 `reviews/`와 구분한다. 개별 노트에는 별도 연구 주제에 억지로 대응시킨 설명을 넣지 않는다.
 
-현재 상세 노트는 **32편**이다(2026-09-21). 제목으로 찾거나 아래 조사 그룹으로 이동한다. 각 표의 **ID를 누르면 원래 조사 항목**, 마지막 열을 누르면 상세 노트가 열린다.
+현재 상세 노트는 **33편**이다(2026-09-21). 제목으로 찾거나 아래 조사 그룹으로 이동한다. 각 표의 **ID를 누르면 원래 조사 항목**, 마지막 열을 누르면 상세 노트가 열린다.
 
 [Blind Pushing · R1–R7](#blind-pushing) · [IROS 후속 선정](#iros-selected) · [사용자 발굴](#user-found) · [Binary·F/T 후속 정독](#binary-wrench) · [ICRA 후보 선별 후속 정독](#icra-screening-followup) · [Wrist Wrench 후속 정독](#wrist-wrench-followup) · [작성 지침](#paper-guidelines)
 
@@ -105,13 +105,14 @@
 
 ## Wrist Wrench 조사 후속 원문 정독
 
-[2026-09-21 Wrist Wrench 조사](../reviews/2026-09-21_wrist-wrench-manipulation-survey.md)에서 정책 관측 사례로 분류한 논문을 사용자가 원문 PDF로 제공하여 정식 상세 노트를 작성했다. 조사 논문의 reference chain에서 후속 확인한 문헌은 원래 W/C 후보와 섞지 않고 `연결 문헌`으로 구분한다.
+[2026-09-21 Wrist Wrench 조사](../reviews/2026-09-21_wrist-wrench-manipulation-survey.md)에서 정책 관측 또는 제어기·플래너 피드백 사례로 분류한 논문을 사용자가 원문 PDF로 제공하여 정식 상세 노트를 작성했다. 조사 논문의 reference chain에서 후속 확인한 문헌은 원래 W/C 후보와 섞지 않고 `연결 문헌`으로 구분한다.
 
 | 조사본 ID | 논문 | 원문 정독 상태 | 상세 노트 |
 | --- | --- | --- | --- |
 | [W1](../reviews/2026-09-21_wrist-wrench-manipulation-survey.md#w1-foar--외장-손목-센서와-wrench-이력) | FoAR: Force-Aware Reactive Policy for Contact-Rich Robotic Manipulation | 제공된 arXiv:2411.15753v2 PDF 9쪽 전체 정독·렌더링 대조 완료. 외장 OptoForce 6D F/T, 2초 이력 Transformer, future-contact-gated fusion, reactive correction, Table I–V, Limitation·Future Work·미명시 사항 포함 | [2025 · He et al.](2025-he-foar.md) |
 | [W4](../reviews/2026-09-21_wrist-wrench-manipulation-survey.md#w4) | Zero-Shot Transfer of Haptics-Based Object Insertion Policies | 제공된 arXiv:2301.12587v3 PDF 9쪽 전체 정독·렌더링 대조 완료. 추정 6D Wrench·상대 pose 8-step history, SAC residual policy, target-noise curriculum·inference delay, Table I–III·Fig. 1–9, Limitation·Future Work·미명시 사항 포함 | [2023 · Brahmbhatt et al.](2023-brahmbhatt-zero-shot-haptics-insertion.md) |
 | [W7](../reviews/2026-09-21_wrist-wrench-manipulation-survey.md#w7) | FORGE: Force-Guided Exploration for Robust Contact-Rich Manipulation under Uncertainty | 제공된 arXiv:2408.04587v2 PDF 13쪽 전체 정독·렌더링 대조 완료. 관절 토크 기반 3D force, threshold-conditioned recurrent PPO, dynamics randomization, success prediction, Table I-II·Appendix A-G, Limitation·Future Work 포함 | [2025 · Noseworthy et al.](2025-noseworthy-forge.md) |
+| [C1](../reviews/2026-09-21_wrist-wrench-manipulation-survey.md#c1) | A Self-Tuning Impedance-Based Interaction Planner for Robotic Haptic Exploration | 제공된 arXiv:2203.05413v2 PDF 8쪽 전체 정독·렌더링 대조 완료. 내부 토크 기반 외력 추정, Exploration·Bouncing·FSM, 방향성 impedance·torque controller, 식 (1)–(9)·Algorithm 1–2·Fig. 1–9, 실물 high/low/self-tuning 비교, Limitation·Future Work·미명시 사항 포함. RL이 아닌 제어·계획 사례 | [2022 · Kato et al.](2022-kato-self-tuning-haptic-exploration.md) |
 | [W5 Ref. 19 · 연결 문헌](../reviews/2026-09-21_wrist-wrench-manipulation-survey.md#ref-w5-19-lee-2019) | Making Sense of Vision and Touch: Self-Supervised Learning of Multimodal Representations for Contact-Rich Tasks | 제공된 IEEE ICRA 2019 출판본 PDF 8쪽 전체 정독·렌더링 대조 완료. 32×6 손목 F/T 이력·RGB·proprioception fusion, 세 self-supervised objective, frozen representation+TRPO, staged reward·compliant torque controller, modality ablation·형상 transfer, Future Work·미명시 사항 포함. 2022년 이후 선별 후보가 아닌 W5 Reference [19] 연결 문헌 | [2019 · Lee et al.](2019-lee-making-sense-vision-touch.md) |
 
 <a id="paper-guidelines"></a>

@@ -86,6 +86,7 @@ R1–R7 전체의 제공·정독 상태는 개별 논문 색인을 따른다. �
 | 2026-09-21 | W1 | [FoAR — 외장 OptoForce 6D F/T·2초 이력 Transformer·future-contact fusion·reactive correction·실물 ablation·한계/Future Work](papers/2025-he-foar.md) |
 | 2026-09-21 | W4 | [Zero-Shot Transfer — 추정 6D Wrench·상대 pose 8-step history·SAC residual policy·target-noise curriculum·inference delay·실물 전이·한계/Future Work](papers/2023-brahmbhatt-zero-shot-haptics-insertion.md) |
 | 2026-09-21 | W7 | [FORGE — 관절 토크 기반 3D force·threshold-conditioned recurrent PPO·DR·success prediction·실물 ablation·한계/Future Work](papers/2025-noseworthy-forge.md) |
+| 2026-09-21 | C1 | [Self-Tuning Interaction Planner — 추정 외력·실제 운동 이력·Exploration/Bouncing·FSM·방향성 impedance·실물 미로 비교·비학습 방법·한계/Future Work](papers/2022-kato-self-tuning-haptic-exploration.md) |
 | 2026-09-21 | W5 Ref. 19 · 연결 문헌 | [Making Sense of Vision and Touch — 32×6 손목 F/T·RGB·proprioception fusion·self-supervised representation·frozen encoder+TRPO·staged reward·형상 transfer·한계/Future Work](papers/2019-lee-making-sense-vision-touch.md) |
 
 

@@ -2,6 +2,8 @@
 
 [문헌 색인](../README.md) · [조사 그룹](README.md) · [전체 논문](../papers/README.md) · [발표 설계 2.3절](../../presentation/02_Tactile_Representation_and_Policy_Design.md#23-본-연구에서-ft를-추가하는-이유와-한계)
 
+후속 상세 리뷰: [W1 · FoAR](../papers/2025-he-foar.md) · [W4 · Zero-Shot Transfer](../papers/2023-brahmbhatt-zero-shot-haptics-insertion.md) · [W7 · FORGE](../papers/2025-noseworthy-forge.md) · [C1 · Self-Tuning Planner](../papers/2022-kato-self-tuning-haptic-exploration.md) · [연결 문헌 · Lee 2019](../papers/2019-lee-making-sense-vision-touch.md)
+
 - **조사일:** 2026-09-21
 - **대상:** `docs/presentation/02_Tactile_Representation_and_Policy_Design.md` §2.3 보강
 - **성격:** 원문 기반 비교 조사 및 본문 반영 제안. 개별 논문의 전체 정독 노트나 구현 검증 보고서는 아니다.
@@ -15,7 +17,7 @@
 
 앞선 1차 조사에서는 **2022년 이후 정식 출판된 RA-L, ICRA, IROS, RSS 논문**을 선정했다. SCIE는 저널 색인 분류이므로 학회 논문을 SCIE 논문으로 표현하지 않는다. arXiv는 원문 접근 경로로 사용하고, 정식 출판 여부는 출판사·학회 proceedings·저자 공식 출판 기록으로 별도 확인했다. §6의 RL 후속 조사는 같은 연도·정식 출판 원칙을 유지하면서 Autonomous Robots와 CoRL까지 범위를 넓혔다.
 
-[상세 리뷰 색인](../papers/README.md)의 조사 착수 시점 기존 28편은 제외했다. 특히 Force Push, Pushing in the Dark, Visuo-Force-Tactile Door Opening, Learning Force Control 및 Haninger의 compliant contact primitives를 새 레퍼런스로 재사용하지 않았다. 아래 9편은 조사 착수 시 해당 폴더에 상세 리뷰가 없었다. 이후 사용자가 원문을 제공한 [W1 FoAR](../papers/2025-he-foar.md), [W4 Zero-Shot Transfer](../papers/2023-brahmbhatt-zero-shot-haptics-insertion.md), [W7 FORGE](../papers/2025-noseworthy-forge.md)의 상세 노트를 후속으로 추가했다. **SRL-VIC는 기존 조사 목록에서 언급된 후보를 원문으로 재확인한 사례**이며, 완전히 새로 발견한 논문으로 취급하지 않는다. [Lee et al., ICRA 2019](../papers/2019-lee-making-sense-vision-touch.md)은 연도 조건 때문에 이 9편이나 §6의 8편에 포함하지 않고, W5의 Reference [19]에서 확장한 연결 선행문헌으로 §7에 별도 기록한다.
+[상세 리뷰 색인](../papers/README.md)의 조사 착수 시점 기존 28편은 제외했다. 특히 Force Push, Pushing in the Dark, Visuo-Force-Tactile Door Opening, Learning Force Control 및 Haninger의 compliant contact primitives를 새 레퍼런스로 재사용하지 않았다. 아래 9편은 조사 착수 시 해당 폴더에 상세 리뷰가 없었다. 이후 사용자가 원문을 제공한 [W1 FoAR](../papers/2025-he-foar.md), [W4 Zero-Shot Transfer](../papers/2023-brahmbhatt-zero-shot-haptics-insertion.md), [W7 FORGE](../papers/2025-noseworthy-forge.md), [C1 Self-Tuning Planner](../papers/2022-kato-self-tuning-haptic-exploration.md)의 상세 노트를 후속으로 추가했다. **SRL-VIC는 기존 조사 목록에서 언급된 후보를 원문으로 재확인한 사례**이며, 완전히 새로 발견한 논문으로 취급하지 않는다. [Lee et al., ICRA 2019](../papers/2019-lee-making-sense-vision-touch.md)은 연도 조건 때문에 이 9편이나 §6의 8편에 포함하지 않고, W5의 Reference [19]에서 확장한 연결 선행문헌으로 §7에 별도 기록한다.
 
 ## 2. 핵심 비교표
 
@@ -30,7 +32,7 @@ W1–W7은 측정·추정 힘이 학습 정책의 실행 관측에 들어가는 
 | W5 | **Symmetry-aware RL … with a Soft Wrist**, ICRA 2024 | UR5e의 F/T 센서, soft wrist 상부 / 6D | Arm-tip 위치 + Wrench 및 행동 이력 → recurrent SAC | Peg-in-hole / 정책에 영상 없음; hole 좌표계는 알려짐 |
 | W6 | **SRL-VIC**, RA-L 2024 | F/T 입력 명시; 실기 센서 구현 불명확 / 6D | Wrench + EE 위치 → task actor; Wrench → safety/recovery | Blind maze·장애물 밀기 / 시각 없음 |
 | W7 | [**FORGE**](../papers/2025-noseworthy-forge.md), RA-L 2025 | Franka 관절 토크 기반 추정 / **3D force** | 힘 + EE 상태 + 부품 pose 추정 + 허용 힘 → recurrent PPO | 삽입·너트 체결 / 부품 pose 추정 사용 |
-| C1 | **A Self-Tuning Impedance-Based Interaction Planner …**, RA-L 2022 | Franka 내부 관절 토크 기반 외력 추정 / 평면 힘 중심 | 힘·운동 이력 → 탐색/반동 전환 → 경로·임피던스 | Blind maze / 시각 없음 |
+| C1 | [**A Self-Tuning Impedance-Based Interaction Planner …**](../papers/2022-kato-self-tuning-haptic-exploration.md), RA-L 2022 | Franka 내부 관절 토크 기반 외력 추정 / 평면 힘 중심 | 힘·운동 이력 → 탐색/반동 전환 → 경로·임피던스; 비학습 방법 | Blind maze / 시각 없음 |
 | C2 | **Rotating Objects via In-Hand Pivoting …**, IROS 2023 | 외장 Robotiq FT-300 / **수직 Fz** | 측정 Fz와 모델 기대값의 오차 → PI 경로 보정 | 바닥 지지 pivoting / 시각 사용 |
 
 각 행의 서지·원문 근거와 해당 절은 아래 항목에 연결했다. 실행 관측의 일부를 요약한 표이며, 학습용 privileged state나 성공 판정 센서를 actor 입력으로 합쳐 적지 않았다.
@@ -119,14 +121,17 @@ W1–W7은 측정·추정 힘이 학습 정책의 실행 관측에 들어가는 
 
 ## 4. 외력 피드백을 사용하는 보조 2편
 
-### C1. Self-Tuning Interaction Planner — 추정 외력으로 Blind 탐색
+<a id="c1"></a>
 
-**Kato, Y., et al. “A Self-Tuning Impedance-Based Interaction Planner for Robotic Haptic Exploration.” IEEE Robotics and Automation Letters, 7(4), 9461–9468, 2022.** [DOI](https://doi.org/10.1109/LRA.2022.3190806) · [원문](https://arxiv.org/html/2203.05413v2)
+### C1. [Self-Tuning Interaction Planner — 추정 외력으로 Blind 탐색](../papers/2022-kato-self-tuning-haptic-exploration.md)
 
-- **센서 → 알고리즘:** Franka 내부 관절 토크로 외력을 추정한다. 힘과 시간에 따른 실제 변위로 탐색·반동·갇힘을 판단해 경로와 임피던스를 조정한다. 평면 미로에서 나사 더미도 밀어 통과한다. 근거: §III-A/B, Algorithms 1–2, §IV.
+**Kato, Y., et al. “A Self-Tuning Impedance-Based Interaction Planner for Robotic Haptic Exploration.” IEEE Robotics and Automation Letters, 7(4), 9461–9468, 2022.** [상세 노트](../papers/2022-kato-self-tuning-haptic-exploration.md) · [DOI](https://doi.org/10.1109/LRA.2022.3190806) · [원문](https://arxiv.org/html/2203.05413v2)
+
+- **센서 → 알고리즘:** Franka 내부 관절 토크로 추정한 외력과 실제 pose를 사용한다. Exploration은 힘이 5 N·7 N에 도달한 두 시점의 실제 위치 차이로 다음 진행 방향을 정한다. 500 ms 동안 실제 변위가 1 mm 미만이면 Bouncing으로 전환하여 외력 방향과 2000-step 운동 추세에서 축별 이동량을 만든다. 계획된 진행 방향에 강성 주축을 맞춰 경로 추종과 횡방향 순응성을 함께 확보한다. 근거: §II-B, §III-A/B, Algorithms 1–2, §IV-B, PDF pp.2–5.
+- **검증:** 같은 planner에 high·low·self-tuning impedance를 적용했다. 기본 미로의 평균 힘은 각각 약 23·18·11 N, 최대 추종 오차는 약 0.04·0.10·0.04 m였다. 나사를 추가한 미로에서는 self-tuning만 통과하고 high·low는 큰 힘으로 중단했다. 반복 trial 성공률이나 F/T 제거 ablation은 아니다. 근거: §IV-B, Fig. 6–7, PDF pp.5–6.
 - **저자 Limitation:** 힘 임계값의 수동 조정, 강체 환경에 한정. 근거: §V.
 - **저자 Future Work:** 3D maze와 시각이 제한된 동물의 haptic navigation 원리 적용. 근거: §V.
-- **본 조사 해석:** 외력과 운동 이력을 연결하는 제어 사례다. 학습 정책의 observation이나 학습된 이력 표현의 증거는 아니다.
+- **본 조사 해석:** 외력과 운동 이력을 연결하는 비학습 제어·계획 사례다. 외장 손목 F/T 장착, 학습 정책의 observation이나 학습된 이력 표현의 증거는 아니며, §6의 RL 후보에도 포함하지 않는다. 원문의 차원 표기·threshold 집계·제어 주기 등 재현상의 미명시는 상세 노트에서 구분했다.
 
 ### C2. In-Hand Pivoting — 외장 F/T를 수직 경로 보정에 사용
 
@@ -281,7 +286,7 @@ R1–R4·R7–R8은 force 또는 wrench가 학습 정책의 명시적 state/obse
 
 ## 8. 조사 상태
 
-- 원문에서 센서 출처, 실제 정책 입력, 태스크 및 실물 검증 여부를 확인했다. W1·W4·W7은 첨부 PDF를 후속 정독하여 각각 [FoAR](../papers/2025-he-foar.md), [Zero-Shot Transfer](../papers/2023-brahmbhatt-zero-shot-haptics-insertion.md), [FORGE](../papers/2025-noseworthy-forge.md) 상세 노트로 연결했고, W5 Reference [19]의 [Lee et al. 2019](../papers/2019-lee-making-sense-vision-touch.md)은 선별 집계 밖 연결 문헌으로 별도 정독했다. 하드웨어 출처가 불명확한 W6은 그 상태를 명시했다.
+- 원문에서 센서 출처, 실제 정책·제어 입력, 태스크 및 실물 검증 여부를 확인했다. W1·W4·W7·C1은 첨부 PDF를 후속 정독하여 각각 [FoAR](../papers/2025-he-foar.md), [Zero-Shot Transfer](../papers/2023-brahmbhatt-zero-shot-haptics-insertion.md), [FORGE](../papers/2025-noseworthy-forge.md), [Self-Tuning Planner](../papers/2022-kato-self-tuning-haptic-exploration.md) 상세 노트로 연결했고, W5 Reference [19]의 [Lee et al. 2019](../papers/2019-lee-making-sense-vision-touch.md)은 선별 집계 밖 연결 문헌으로 별도 정독했다. 하드웨어 출처가 불명확한 W6은 그 상태를 명시했다.
 - 각 핵심·보조 논문의 저자 Limitation과 Future Work를 분리했다. 위치 표기의 페이지는 원문 PDF 첫 페이지를 1로 세는 기준이다.
 - RL 후속 조사에서는 상세 리뷰가 있는 논문을 다시 후보로 세지 않았고, direct actor input과 estimator/context encoder를 통한 indirect input을 분리했다. 정식 출판되지 않은 preprint와 RL이 아닌 학습법도 제외 사유를 남겼다.
 - 연구 방향이나 센서 사양을 새로 확정하지 않았다. 이 문서는 §2.3 수정에 사용할 비교 조사와 제안 문안이다.
