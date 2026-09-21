@@ -76,7 +76,7 @@ Push 전에 **이번 작업에서 생성·수정한 Markdown 파일만** 다음 
 
 `python scripts/check_markdown_math.py <changed-file.md> [more.md ...]`
 
-검사가 실패하면 수식 블록을 한 Markdown 물리적 줄로 합치거나 LaTeX 내부 정렬 문법을 사용하고, 금지 매크로가 있으면 GitHub 안전 표기로 교체한다. 검사기는 `\operatorname` 같은 금지 매크로도 확인한다. `git diff --check` 통과만으로 수식 렌더링이 안전하다고 판단하지 않는다. 기존 문서를 일괄 수정하기 위해 검사기를 저장소 전체에 무조건 적용하지 않는다.
+검사가 실패하면 복잡한 display 수식은 `math` fence로 옮기고, inline 수식은 GFM-sensitive escape를 named macro로 바꾸며, 금지 매크로가 있으면 GitHub 안전 표기로 교체한다. 검사기는 `\operatorname`, GFM-sensitive escape, HTML entity, brace·delimiter·environment 불균형을 확인한다. `git diff --check` 통과만으로 수식 렌더링이 안전하다고 판단하지 않는다. 기존 문서를 일괄 수정하기 위해 검사기를 저장소 전체에 무조건 적용하지 않는다.
 
 ### 문서 구조와 양방향 연결 — 2026-09-17 추가
 
