@@ -239,9 +239,9 @@ TacTip의 부드러운 피부 안에는 끝에 marker가 있는 돌출 pin들이
 
 원문이 정의한 각도 차이 함수는 다음과 같다.
 
-$$
+```math
 S(\phi,\psi)=1-\cos(\phi-\psi).
-$$
+```
 
 [원문 식 (1)–(4), Fig. 2, PDF pp. 3–4]
 
@@ -257,13 +257,13 @@ Fig. 2에서 빨간색은 goal/subgoal, 주황색은 observation에 포함되는
 
 **원문 식 (1)**
 
-$$
+```math
 \begin{aligned}
 R_t^{\mathrm{BP}}={}&-w_1\lVert p_t^g-p_t^o\rVert_2
 -w_2S(\theta_t^g,\theta_t^o)\\
 &-w_3\sum_{i=1}^{2}S(\theta_t^{e_i},\theta_t^o).
 \end{aligned}
-$$
+```
 
 | 항 | 감소시키는 오차 | 저자들이 설명하는 기능 |
 | --- | --- | --- |
@@ -279,14 +279,14 @@ $$
 
 각 episode에서 직선 또는 정현파 경로를 샘플링하고, 그 위의 goal sequence를 물체 목표 궤적으로 사용한다. [원문 §IV-A-1, PDF p. 5]
 
-$$
+```math
 y=kx\quad\text{또는}\quad y=a\sin(x/50),
-$$
+```
 
-$$
+```math
 k\in[-0.28,0.28],\qquad a\in[-20,20],\qquad
 x\in[-280,50]\ \mathrm{mm}.
-$$
+```
 
 위 수식과 범위는 원문 표기를 따른다. Table I의 시뮬레이션 물체는 **400 mm cuboid**로 표시된다. Goal의 전체 개수, waypoint 전환 tolerance, 목표 방향을 경로에서 계산하는 구체식, 물체 초기 pose 분포, 접촉 높이·초기 penetration, 시뮬레이션 질량·마찰은 본문에 없다. [원문 §IV-A-1, Table I, PDF p. 5]
 
@@ -298,7 +298,7 @@ $$
 
 **원문 식 (2)**
 
-$$
+```math
 \begin{aligned}
 R_t^{\mathrm{BR}}={}&-w_1\lVert p_0^o-p_t^o\rVert_2
 -w_2S(\theta^g,\theta_t^o)\\
@@ -307,7 +307,7 @@ S\left(\theta_t^{e_i},(-1)^i(\pi/2+\theta_t^o)\right)\\
 &-w_4\sum_{i=1}^{2}
 \lVert p_{\mathrm{ctrl}_i}^{o}-p_t^{e_i}\rVert_2.
 \end{aligned}
-$$
+```
 
 | 항 | 기능 | 해석의 경계 |
 | --- | --- | --- |
@@ -361,13 +361,13 @@ Fig. 2(b)의 초록색 $p_{\mathrm{ctrl}_i}^{o}$는 물체 양쪽의 원하는 T
 
 **원문 식 (3)**
 
-$$
+```math
 \begin{aligned}
 R_t^{\mathrm{BG}}={}&-w_1\lVert p_t^{o_1}-p_t^{o_2}\rVert_2\\
 &-w_2\sum_{i=1}^{2}S(\theta_t^{e_i},\theta_t^{o_i})\\
 &-w_3\sum_{i=1}^{2}\lVert p_{\mathrm{ctrl}}^{o_i}-p_t^{e_i}\rVert_2.
 \end{aligned}
-$$
+```
 
 첫째 항은 두 물체 사이의 거리를 줄이고, 둘째 항은 각 TCP의 접촉면 정렬을 유도하며, 셋째 항은 TCP가 desired contact point를 유지하여 접촉을 잃지 않게 한다. $p_{\mathrm{ctrl}}^{o_i}$는 원문 설명에서 TCP의 contact depth를 조절하기 위한 원하는 접촉 위치다. [원문 식 (3), Fig. 2(c), PDF p. 4]
 
@@ -398,13 +398,13 @@ GUM은 두 물체를 향한 이동을 한 번에 해결하는 대신, **target l
 
 **원문 식 (4)**
 
-$$
+```math
 \begin{aligned}
 R_t^{\mathrm{BG\text{-}GUM}}={}&R_t^{\mathrm{BG}}
 -w_4\sum_{i=1}^{N}\lVert p_t^{g_i}-p_t^{o_i}\rVert_2\\
 &-w_5\sum_{i=1}^{N}S(\theta_t^{o_i},(-1)^i\theta_t^c).
 \end{aligned}
-$$
+```
 
 추가한 첫 항은 물체가 선택된 subgoal에 가까워지게 하고, 마지막 항은 target line 방향으로 밀리도록 물체 방향을 유도한다. 기존 식 (3)의 물체 간 거리 감소·접촉 정렬·접촉 유지 항은 그대로 포함된다. **GUM은 접촉 유지 reward를 대체하지 않고, 그 위에 방향·중간 목표 안내를 추가한다.** [원문 식 (4) 및 직후 설명, PDF p. 4]
 
@@ -437,10 +437,10 @@ $$
 
 원문은 각 물체의 초기 위치 $p_0^{o_i}=(x^i,y^i)$를 다음 범위에서 균일 샘플링한다고 명시한다.
 
-$$
+```math
 x^i\in(-1)^i[50,200]\ \mathrm{mm},\qquad
  y^i\in(-1)^i[0,100]\ \mathrm{mm},\qquad i\in\{1,2\}.
-$$
+```
 
 원문 부호 범위를 풀어 읽으면, 첫 물체는 음의 x·y 구역, 두 번째 물체는 양의 x·y 구역에서 시작한다. 이는 제시된 부호식의 해설이며, 초기 orientation이나 TCP reset 분포까지 정해 주는 식은 아니다. [원문 §IV-A-3, PDF p. 5]
 
