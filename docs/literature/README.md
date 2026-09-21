@@ -84,6 +84,7 @@ R1–R7 전체의 제공·정독 상태는 개별 논문 색인을 따른다. �
 | 정리일 | 조사본 ID | 논문·상세 정리 |
 | --- | --- | --- |
 | 2026-09-21 | W1 | [FoAR — 외장 OptoForce 6D F/T·2초 이력 Transformer·future-contact fusion·reactive correction·실물 ablation·한계/Future Work](papers/2025-he-foar.md) |
+| 2026-09-21 | W7 | [FORGE — 관절 토크 기반 3D force·threshold-conditioned recurrent PPO·DR·success prediction·실물 ablation·한계/Future Work](papers/2025-noseworthy-forge.md) |
 
 
 ### ICRA 후보 선별 후속 원문 정독

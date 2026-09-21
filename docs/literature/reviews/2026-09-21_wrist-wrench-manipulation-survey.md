@@ -28,7 +28,7 @@ W1–W7은 측정·추정 힘이 학습 정책의 실행 관측에 들어가는 
 | W4 | **Zero-Shot Transfer of Haptics-Based Object Insertion Policies**, ICRA 2023 | Franka 제공 말단 외력 추정값 / 6D | 상대 EE pose + Wrench의 8시점 이력 → SAC residual motion | 접시·컵 삽입 / 초기 시각 이후 추적 없음 |
 | W5 | **Symmetry-aware RL … with a Soft Wrist**, ICRA 2024 | UR5e의 F/T 센서, soft wrist 상부 / 6D | Arm-tip 위치 + Wrench 및 행동 이력 → recurrent SAC | Peg-in-hole / 정책에 영상 없음; hole 좌표계는 알려짐 |
 | W6 | **SRL-VIC**, RA-L 2024 | F/T 입력 명시; 실기 센서 구현 불명확 / 6D | Wrench + EE 위치 → task actor; Wrench → safety/recovery | Blind maze·장애물 밀기 / 시각 없음 |
-| W7 | **FORGE**, RA-L 2025 | Franka 관절 토크 기반 추정 / **3D force** | 힘 + EE 상태 + 부품 pose 추정 + 허용 힘 → recurrent PPO | 삽입·너트 체결 / 부품 pose 추정 사용 |
+| W7 | [**FORGE**](../papers/2025-noseworthy-forge.md), RA-L 2025 | Franka 관절 토크 기반 추정 / **3D force** | 힘 + EE 상태 + 부품 pose 추정 + 허용 힘 → recurrent PPO | 삽입·너트 체결 / 부품 pose 추정 사용 |
 | C1 | **A Self-Tuning Impedance-Based Interaction Planner …**, RA-L 2022 | Franka 내부 관절 토크 기반 외력 추정 / 평면 힘 중심 | 힘·운동 이력 → 탐색/반동 전환 → 경로·임피던스 | Blind maze / 시각 없음 |
 | C2 | **Rotating Objects via In-Hand Pivoting …**, IROS 2023 | 외장 Robotiq FT-300 / **수직 Fz** | 측정 Fz와 모델 기대값의 오차 → PI 경로 보정 | 바닥 지지 pivoting / 시각 사용 |
 
@@ -99,9 +99,11 @@ W1–W7은 측정·추정 힘이 학습 정책의 실행 관측에 들어가는 
 - **저자 Future Work:** 더 일반적인 태스크와 model-based RL로 확장. 근거: §V.
 - **본 조사 해석:** Wrench의 정책 입력 사례로 적합하다. 관측 이력의 기여를 입증한 논문으로는 분류하지 않는다.
 
-### W7. FORGE — 6D Wrench가 아닌 3D force 관측
+<a id="w7"></a>
 
-**Noseworthy, M., et al. “FORGE: Force-Guided Exploration for Robust Contact-Rich Manipulation Under Uncertainty.” IEEE Robotics and Automation Letters, 2025.** [IEEE 출판 기록](https://ieeexplore.ieee.org/document/10925874/) · [저자 연구실의 출판 확인](https://research.nvidia.com/labs/srl/publication/noseworthy-2025-forge/) · [원문](https://arxiv.org/html/2408.04587v2)
+### W7. [FORGE — 6D Wrench가 아닌 3D force 관측](../papers/2025-noseworthy-forge.md)
+
+**Noseworthy, M., et al. “FORGE: Force-Guided Exploration for Robust Contact-Rich Manipulation Under Uncertainty.” IEEE Robotics and Automation Letters, 2025.** [상세 노트](../papers/2025-noseworthy-forge.md) · [IEEE 출판 기록](https://ieeexplore.ieee.org/document/10925874/) · [저자 연구실의 출판 확인](https://research.nvidia.com/labs/srl/publication/noseworthy-2025-forge/) · [원문](https://arxiv.org/html/2408.04587v2)
 
 - **센서 → 정책:** Franka 관절 토크 기반 추정값 중 **EE 좌표계 3D force**를 사용한다. EE 상태, 부품 pose 추정, 허용 힘과 함께 recurrent PPO에 입력하여 pose target과 성공 예측을 출력한다. 근거: §II-B, §III–IV.
 - **검증:** 실물 M16 너트 체결은 69%, No Force는 40%; peg 삽입은 84/82%다. 효과 크기가 작업별로 다르다. 근거: Table I. 힘 제한 대응·성공 종료 판정도 분석한다: §V-C/D.

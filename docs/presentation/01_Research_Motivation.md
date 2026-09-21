@@ -110,15 +110,15 @@
 
 ---
 
-### 상세 노트 미작성 논문의 원문 안내
+### 인용 논문의 원문·상세 노트 안내
 
-논문명은 저장소의 기존 상세 노트로 상대경로 연결한다. 별도 상세 노트가 없는 다음 두 논문은 이 문서의 원문 안내 항목으로 연결한다. 아래 항목은 서지·원문 안내이며 개별 논문 정독 노트를 대체하지 않는다.
+상세 노트가 작성된 논문은 저장소 내부 상대경로로 연결하고, 미작성 논문은 원문을 안내한다. 아래 항목은 각 인용 근거의 확인 경로다.
 
 <a id="ref-forge"></a>
 
-**FORGE: Force-Guided Exploration for Robust Contact-Rich Manipulation under Uncertainty** — Noseworthy et al.
+**[FORGE: Force-Guided Exploration for Robust Contact-Rich Manipulation under Uncertainty](../literature/papers/2025-noseworthy-forge.md)** — Noseworthy et al.
 
-[원문: arXiv:2408.04587v2](https://arxiv.org/html/2408.04587v2) · **상세 노트 미작성**
+[상세 노트](../literature/papers/2025-noseworthy-forge.md) · [원문: arXiv:2408.04587v2](https://arxiv.org/html/2408.04587v2)
 
 이 문서에서는 부분 관측을 다루는 순환 정책, 힘 관측, 과도한 힘에 대한 페널티의 근거로 인용한다.
 
