@@ -2,7 +2,7 @@
 
 [문서 안내](../../README.md) · [문헌 색인](../README.md) · [전체 논문](README.md) · [원래 조사 · B3](../reviews/2026-09-16_binary-tactile-wrench-rl.md#b3)
 
-정리일: **2026-09-17**. 사용자가 제공한 **arXiv 2303.10880v4 PDF 15쪽 전체**를 기준으로 작성한 상세 정독 노트다. 기존 Binary Tactile·F/T 조사에 포함된 **B3**의 후속 정독이며, 새로 발굴한 논문으로 중복 등록하지 않는다.
+최초 정리일: **2026-09-17**. **2026-09-21 재검증:** 사용자가 다시 제공한 PDF 15쪽 전체를 원문과 대조했으며 SHA-256이 기존 기록과 동일한 `7be48b3f9573efaf8d53b2abf94f23ae16532d6afa2408bc803bc14d4286a5ba`임을 확인했다. 이번 재검증에서는 특히 (1) actor가 16-bit tactile만 쓰는 것이 아니라 관절 위치·이전 target·회전축과 4-frame history를 함께 사용한다는 점, (2) 실물 Table I에서 Rubber Duck은 continuous tactile의 평균 CRA가 binary보다 소폭 높다는 예외, (3) Table IV의 실물 회전 열이 본문 정의와 달리 CRR로 인쇄된 표기 불일치, (4) shape reconstruction이 회전 actor 내부 모듈이 아니라 별도 temporal-CNN 사후 분석이라는 점을 다시 확인했다. 기존 Binary Tactile·F/T 조사에 포함된 **B3**의 동일 상세 노트를 보완하며, 새 논문으로 중복 등록하지 않는다.
 
 [읽은 판본 v4](https://arxiv.org/abs/2303.10880v4) · [v4 PDF](https://arxiv.org/pdf/2303.10880v4) · [RSS 공식 서지](https://www.roboticsproceedings.org/rss19/p036.html) · [DOI](https://doi.org/10.15607/RSS.2023.XIX.036) · [저자 프로젝트](https://touchdexterity.github.io/)
 
