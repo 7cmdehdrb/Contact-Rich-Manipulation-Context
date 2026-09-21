@@ -10,6 +10,7 @@
 - **DOI:** [10.1109/LRA.2020.3010739](https://doi.org/10.1109/LRA.2020.3010739)
 - **확인 원문:** 사용자 제공 IEEE 출판본 PDF 8쪽 전체
 - **파일 SHA-256:** b8338cd208ea74e5afc83a9159b391ef5dae2d4d61694ea452996ca9eae5d802
+- **2026-09-21 재검증:** 이번에 다시 제공된 IEEE PDF의 SHA-256이 기존 정독 원문과 동일함을 확인했다. 따라서 별도 중복 노트를 만들지 않고 이 문서를 canonical 상세 노트로 유지하며, observation·controller action space·fail-safe·reward·실물 insertion 결과·Limitation/Future Work를 원문 8쪽 기준으로 재확인했다.
 - **Supplementary material:** IEEE Xplore에 저자 제공 보충자료가 있다고 원문에 명시되지만 이번 정독에서는 확인하지 않음
 - **코드:** 원문은 SAC 구현으로 TF2RL을 사용했다고 밝히지만, 논문 전용 공개 코드는 이번 정독에서 확인하지 않음
 
