@@ -92,27 +92,40 @@ Tactile 정보를 저차원화 할 경우의 유의할 점은 **조작에 필요
 
 ## 2.4. Sweeping에서 중요하게 다뤄야 할 것은 무엇인가?
 
-Sweeping에서 시스템 파라미터(Shape·질량·마찰·지지 조건 등)은 접촉 위치, 필요한 하중, 미끄러짐, 회전 등의 현실 움직임에 영향을 준다. 이러한 숨은 환경 조건에 대응하는 연구 방향은 다음 두 부류로 구분된다.
+Sweeping에서는 Shape·질량·마찰·지지 조건 등의 숨은 물리 조건이 접촉 위치, 필요한 하중, 미끄러짐과 회전에 영향을 준다. 선행연구의 대응 구조는 크게 **의미가 정해진 물성·접촉 모델을 별도로 추정하는 방향**과 **물성값을 요구하지 않고 정책 내부에서 시간 이력을 처리하는 방향**으로 나눌 수 있다. 다만 이력은 명시적 추정기에도 쓰일 수 있고, 물성값 대신 별도 latent를 추정하는 중간 구조도 있으므로 두 범주를 완전히 배타적인 것으로 보지 않는다.
 
-### 2.4.1. 명시적 모델의 작성
+[2026-09-21 상세 조사](../literature/reviews/2026-09-21_sweeping-physical-parameter-adaptation.md)는 기존 상세 리뷰 27편을 제외하고, 2022년 이후 T-RO·IJRR·ICRA·IROS·CoRL 게재 연구 7편의 관측, 실행 중 정보 흐름, DR, 실물 검증과 한계를 비교했다.
 
-주변 환경이나 물체의 물성치를 별도 모델로 추정하고, 그 추정값을 계획 또는 정책에 제공한다.
+### 2.4.1. 명시적 물성·접촉 모델을 추정하는 방향
 
-(Reference 추가 필요)
+관측된 운동과 접촉 반응으로 물성 또는 접촉 모델을 추정하고, 그 값이나 불확실성을 계획·제어기에 제공한다.
 
-### 2.4.2. 이력 기반 간접 적응 방향
+- [Dutta et al.](../literature/reviews/2026-09-21_sweeping-physical-parameter-adaptation.md#a1)은 RGB-D·접촉력·행동으로 물체 상태와 질량·CoM·마찰 관련 파라미터를 추정하여 iCEM MPC에 제공했다. 실제 목표 지향 pushing까지 검증했지만 실행 중 시각을 사용한다.
+- [Haninger et al.](../literature/reviews/2026-09-21_sweeping-physical-parameter-adaptation.md#a2)은 compliant contact model을 추정하여 MPC에 연결했다. MPC 실험에서 온라인으로 갱신한 핵심 값은 접촉 기준 위치이며, 마찰계수 추정 사례로 인용하지 않는다.
+- [Xue et al.](../literature/reviews/2026-09-21_sweeping-physical-parameter-adaptation.md#a3)은 상태·행동 이력으로 질량·반경·물체–테이블 마찰의 추정값과 분포를 만들고, 이를 조건부 행동 검색에 사용했다. 제목의 `Implicit`은 별도 물성 추정기가 없다는 뜻이 아니다.
 
-관측·행동·반응의 시간 이력을 정책에 제공하여, 정책이 행동 선택에 필요한 환경 차이를 내부적으로 구분하도록 한다.
+따라서 이 범주의 판단 기준은 이력 사용 여부가 아니라, **질량·마찰·강성·접촉 위치처럼 의미가 정해진 추정 출력이 실행 중 계획·제어에 들어가는가**이다. 본 연구에 적용하려면 제한된 F/T·Binary 촉각으로 필요한 파라미터를 구분할 수 있는지와 추정 오차가 행동 선택에 미치는 영향을 별도로 검증해야 한다.
 
-(Reference 추가 필요)
+### 2.4.2. 물성 추정값을 요구하지 않는 이력 기반 정책
 
-### 2.4.3. 결론
+관측·행동·반응의 이력을 stack이나 recurrent state로 정책에 제공하여, 물성의 명시적 복원 없이 행동을 선택한다.
 
-최종 Blind Actor는 실행 중 현재 물체 Pose나 정답 물성치를 받을 수 없고, 연구 목표도 물성치 자체의 정확한 복원보다 제한된 센싱으로 적절한 Sweeping 행동을 선택하는 것이기 때문에, **이력 기반 간접 적응 방향**을 사용한다.
+- [Del Aguila Ferrandis et al.](../literature/reviews/2026-09-21_sweeping-physical-parameter-adaptation.md#b1)은 planar pushing에서 10시점 관측 stack 또는 LSTM을 사용하고 마찰·반발계수·질량·형상·행동 지속시간 등을 randomize했다. 별도 물성 추정기 없이 실물로 전이했지만 현재 물체 Pose는 Vicon으로 계속 관측했다.
+- [Sievers et al.](../literature/reviews/2026-09-21_sweeping-physical-parameter-adaptation.md#b2)은 시각 없는 in-hand manipulation에서 관절각·PD 제어오차의 5시점 stack과 물체·로봇·접촉 조건 DR을 사용했다. 현재 물체 Pose나 정답 물성은 actor에 주지 않았지만 센서와 과업은 본 연구와 다르다.
+- [DeXtreme](../literature/reviews/2026-09-21_sweeping-physical-parameter-adaptation.md#b3)은 LSTM과 물리 DR/ADR을 결합한 추가 사례다. 다만 시각으로 추정한 물체 Pose를 actor가 사용하므로 Blind Sweeping의 직접 검증은 아니다.
 
-추가적으로, 이력 기반 적응이 다양한 조건을 경험할 수 있도록 물체·환경·로봇 조건에 Domain Randomization을 함께 적용한다. Randomization은 강건성을 제공할 뿐 아니라, 정책이 구분해야 할 조건 변화를 학습 분포에 제공한다.
+[HORA](../literature/reviews/2026-09-21_sweeping-physical-parameter-adaptation.md#c1)는 30시점 이력으로 별도 adaptation module의 latent를 추정한 뒤 정책에 제공한다. 물성값을 직접 출력하지는 않지만, 별도 모듈 없는 end-to-end 이력 정책과는 구분한다. 또한 DR은 학습할 조건의 분포를 제공할 뿐이므로, DR을 사용했다는 사실만으로 실행 중 물성 식별이나 적응이 입증되지는 않는다.
 
-> **추가 조사 필요:** 명시적 환경 모델을 구축하는 연구와 이력으로 환경 파라미터에 간접 적응하는 연구를 각각 조사해 이 분류와 선택 근거를 보강한다. 이 TODO는 현재 저장소의 논문으로 임의 대체하지 않는다.
+### 2.4.3. 본 연구의 선택과 검증 범위
+
+최종 Blind Actor는 실행 중 현재 물체 Pose나 정답 물성치를 받지 않으며, 연구 목표도 물성 자체의 정확한 복원보다 제한된 센싱으로 적절한 Sweeping 행동을 선택하는 것이다. 따라서 **Binary 촉각·Wrench·고유감각·적용 행동의 이력을 정책에 통합하는 방향**을 우선 검토한다. 이는 현재 관측 조건과 연구 목표에 따른 `PROPOSED` 선택이며, 명시적 추정이 불가능하거나 이력 방식이 보편적으로 우월하다는 결론은 아니다.
+
+Domain Randomization은 물체·환경·로봇 조건의 변화를 학습 분포에 제공하고, 이력은 실행 중 관측되는 반응을 누적한다. 두 역할을 구분하여 함께 사용하되, 실제 기여는 같은 센싱·학습 예산에서 다음 비교로 검증한다.
+
+1. 현재 관측만 사용하는 정책과 이력 정책 비교
+2. 같은 정책 구조에서 DR 적용 여부 비교
+3. 학습 중 본 조건과 새로운 물체·마찰·지지 조건의 분리 평가
+4. EEF 이동이 아닌 실제 물체 이동·회전·접촉 손실·과도 하중 평가
 
 ---
 
@@ -218,4 +231,3 @@ Hand의 행동 표현은 아직 확정하지 않는다. 현재 비교할 후보�
 | **Arm·Hand 고유감각** | 관절 위치·속도 등 실제 사용하는 관측의 잡음과 지연, 센서 간 시간 정렬 오차 |
 
 Binary 촉각은 [**Sim-to-Real Transfer for Robotic Manipulation with Tactile Sensory**](../literature/papers/2021-ding-sim-to-real-tactile-manipulation.md)의 **매 Bit·매 Timestep 반전**을 구현 후보로 삼는다. 
-
