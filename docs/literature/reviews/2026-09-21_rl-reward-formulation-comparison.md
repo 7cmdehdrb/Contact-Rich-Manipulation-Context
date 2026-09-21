@@ -49,9 +49,9 @@ Task reward, PPO/SAC의 최적화 목적, 표현학습 loss, constrained-RL의 c
 
 ### Reward 식과 전환 조건
 
-$$
+```math
 r=\begin{cases}-\bigl(g(o_\theta,g_\theta)+g(p_\theta,o_\theta)\bigr),&\lVert o_{xy}-g_{xy}\rVert>d,\\-\bigl(f(o_{xy},g_{xy})+g(p_\theta,o_\theta)\bigr),&\lVert o_{xy}-g_{xy}\rVert\le d.\end{cases}
-$$
+```
 
 $p$는 pusher, $o$는 **물체 접촉면**, $g$는 goal이다. 함수 $f$는 Euclidean distance, 함수 $g(\cdot,\cdot)$는 cosine distance다. 접촉면의 위치를 물체 중심 위치로 바꾸어 읽지 않는다.
 
@@ -73,17 +73,17 @@ $p$는 pusher, $o$는 **물체 접촉면**, $g$는 goal이다. 함수 $f$는 Euc
 
 공통 각도 오차는 다음과 같다. 위치 항은 **제곱하지 않은 Euclidean norm**이며 $w_j>0$의 실제 값은 미명시다.
 
-$$
+```math
 S(\phi,\psi)=1-\cos(\phi-\psi).
-$$
+```
 
 ### Bi-pushing — 물체 pose와 양팔 접촉 정렬
 
 원문 식 (1):
 
-$$
+```math
 R_t^{\mathrm{BP}}=-w_1\lVert p_t^g-p_t^o\rVert_2-w_2S(\theta_t^g,\theta_t^o)-w_3\sum_{i=1}^{2}S(\theta_t^{e_i},\theta_t^o).
-$$
+```
 
 물체 위치·방향을 경로 목표에 맞추고 두 TCP를 접촉면에 정렬한다. $o$는 물체, $g$는 목표, $e_i$는 각 TCP다. 마지막 항은 **양팔 힘의 균등화가 아니라 방향 정렬**이다.
 
@@ -91,9 +91,9 @@ $$
 
 원문 식 (2):
 
-$$
+```math
 R_t^{\mathrm{BR}}=-w_1\lVert p_0^o-p_t^o\rVert_2-w_2S(\theta^g,\theta_t^o)-w_3\sum_{i=1}^{2}S\left(\theta_t^{e_i},(-1)^i(\pi/2+\theta_t^o)\right)-w_4\sum_{i=1}^{2}\lVert p_{\mathrm{ctrl}_i}^{o}-p_t^{e_i}\rVert_2.
-$$
+```
 
 초기 중심 이탈, 목표 각도 오차, TCP 방향 오차, 원하는 접촉 위치와 TCP의 거리라는 네 항이다. $p_{\mathrm{ctrl}_i}^{o}$는 **기하학적으로 지정한 원하는 접촉 위치**이며 측정한 CoP가 아니다. 좌우 각도의 부호는 기존 노트의 원문 표기를 유지했다.
 
@@ -103,15 +103,15 @@ $$
 
 원문 식 (3):
 
-$$
+```math
 R_t^{\mathrm{BG}}=-w_1\lVert p_t^{o_1}-p_t^{o_2}\rVert_2-w_2\sum_{i=1}^{2}S(\theta_t^{e_i},\theta_t^{o_i})-w_3\sum_{i=1}^{2}\lVert p_{\mathrm{ctrl}}^{o_i}-p_t^{e_i}\rVert_2.
-$$
+```
 
 물체 간 거리, 접촉 방향, 접촉 위치를 함께 다룬다. GUM은 기존 항을 유지하고 target line의 subgoal 및 방향을 추가한다. 원문 식 (4):
 
-$$
+```math
 R_t^{\mathrm{BG\text{-}GUM}}=R_t^{\mathrm{BG}}-w_4\sum_{i=1}^{N}\lVert p_t^{g_i}-p_t^{o_i}\rVert_2-w_5\sum_{i=1}^{N}S(\theta_t^{o_i},(-1)^i\theta_t^c).
-$$
+```
 
 $\theta_t^c$는 target line 방향과 연결되는 표기다. 합의 $N$은 문맥상 두 물체이며, **후보 subgoal 수 $n=10$과 다르다**. Target line 갱신은 75 steps다. 해당 기호의 상세 정의·구현 공백은 상세 노트 §8.3을 따른다.
 
@@ -123,9 +123,9 @@ $\theta_t^c$는 target line 방향과 연결되는 표기다. 합의 $N$은 문�
 
 **출처:** [상세 노트 §7](../papers/2025-dengler-location-based-attention-pushing.md). 원문 §III-B.3, 식 (1), §IV-A, PDF pp. 3–4. PPO의 task reward다.
 
-$$
+```math
 r_{\mathrm{total}}=r_{\mathrm{term}}+0.1(1-r_{\mathrm{dist}})+0.02(1-r_{\mathrm{ang}})+r_{\mathrm{coll}}.
-$$
+```
 
 | 항 | 정의·값 |
 | --- | --- |
@@ -146,9 +146,9 @@ Dense 항은 **현재의 근접도**이지 이전 step 대비 진전량이 아�
 
 총합의 표기를 정리하면 다음과 같다.
 
-$$
+```math
 r_t^{\mathrm{tot}}=2.5r_{1,t}+1.25r_{2,t}+0.156r_{3,t}+0.3r_{4,t}.
-$$
+```
 
 | 항 | 보상 구조 | 추가 조건 |
 | --- | --- | --- |
@@ -169,9 +169,9 @@ Reach target은 학습용 exploration shaping이며 actor에게 준 별도 목�
 
 **출처:** [상세 노트 §11–12](../papers/2025-bergmann-precision-focused-pushing.md). SAC와 HER를 사용하는 goal-conditioned pushing이다.
 
-$$
+```math
 r(p_o,p_g)=\begin{cases}-1,&\lVert p_o-p_g\rVert_2\ge0.01\ \mathrm{m},\\0,&\text{otherwise}.\end{cases}
-$$
+```
 
 $p_o,p_g$는 simulator의 물체·목표 중심이다. Numeric object GT는 actor 관측이 아니라 reward 계산에 사용된다.
 
@@ -185,9 +185,9 @@ Episode는 항상 **50 environment steps**이며 조기 목표 도달로 바로 
 
 **출처:** [상세 노트 §10–11](../papers/2024-zhao-unknown-object-retrieval.md). 원문 식 (1)–(3), Table I. 실제 로봇 SAC 학습에서 사용하는 다섯 항이다.
 
-$$
+```math
 r=r_t+r_o+r_f+r_g+r_p.
-$$
+```
 
 | 항 | 식·수치 | 적용 조건 |
 | --- | --- | --- |
@@ -199,9 +199,9 @@ $$
 
 ### Force-regulation 구간식
 
-$$
+```math
 r_f=\begin{cases}0,&f_n^{\max}<f_n^l,\\r_f^h,&f_n^{\max}>f_n^h,\\(f_n^{\max}-f_n^l)^2,&\text{otherwise},\end{cases}\qquad f_n^l=0.2\ \mathrm{N},\quad f_n^h=1.5\ \mathrm{N},\quad r_f^h=-10.
-$$
+```
 
 약한 접촉에는 보상이 없고, 중간 범위에는 **양의 제곱 항**, 상한 초과에는 penalty를 준다. 중간 항은 특정 목표 힘에 대한 음의 제곱 오차가 아니다. 식상 하한으로부터 힘이 증가하면 중간 구간 보상이 커진다.
 
@@ -219,9 +219,9 @@ $d_o$는 **OptiTrack이 측정한 실제 물체 진전량**이며 EEF 이동이 
 
 **출처:** [상세 노트 §17–20](../papers/2020-beltran-hernandez-learning-force-control.md). SAC와 position/force 또는 admittance controller를 결합하며 같은 reward 구조를 여러 task에 사용한다.
 
-$$
+```math
 r(s,a)=w_1L_m\left(\left\|x_e/x_{\max}\right\|_{1,2}\right)+w_2L_m\left(\left\|a/a_{\max}\right\|_2\right)+w_3L_m\left(\left\|F_{\mathrm{ext}}/F_{\max}\right\|_2\right)+w_4\rho+w_5\kappa.
-$$
+```
 
 | 성분 | 역할 |
 | --- | --- |
@@ -231,11 +231,11 @@ $$
 | $\rho$ | Step/time penalty |
 | $\kappa$ | 완료·safety 결과 |
 
-$$
+```math
 \kappa=\begin{cases}200,&\text{task completed},\\-10,&\text{safety violation},\\0,&\text{otherwise}.\end{cases}
-$$
+```
 
-$L_m$은 reward range로의 선형 mapping이다. Mapping의 구체 범위·계수, $w_i$와 각 정규화 기준값은 노트만으로 완결되지 않는다. $\|\cdot\|_{1,2}$도 노트 표기를 보존하며 임의로 단일 L2 norm으로 바꾸지 않는다. **200·−10은 $\kappa$ 내부 값**이므로 가중치 $w_5$를 적용한 최종 기여와 구분한다.
+$L_m$은 reward range로의 선형 mapping이다. Mapping의 구체 범위·계수, $w_i$와 각 정규화 기준값은 노트만으로 완결되지 않는다. $\lVert\cdot\rVert_{1,2}$도 노트 표기를 보존하며 임의로 단일 L2 norm으로 바꾸지 않는다. **200·−10은 $\kappa$ 내부 값**이므로 가중치 $w_5$를 적용한 최종 기여와 구분한다.
 
 실행 전 IK·관절속도 검사에 실패한 action은 차단하고, 접촉 하중 한계 초과 시 episode를 종료한다. 이 fail-safe는 학습 penalty와 별도다. 물체 GT 중심 보상이 아니라 **EEF 목표 오차와 실제 F/T 기반 하중**을 사용하는 사례다.
 
@@ -247,17 +247,17 @@ $L_m$은 reward range로의 선형 mapping이다. Mapping의 구체 범위·계�
 
 전체 구조는 **해설식**이다. $\lambda_v$는 속도 penalty를 나타내기 위한 설명용 기호이며 원문의 명시 계수가 아니다.
 
-$$
+```math
 r_t=r_{\mathrm{reach},t}+r_{\mathrm{execute},t}-\lambda_v\lVert\dot q_t\rVert_1.
-$$
+```
 
 ### 공통 접근 — 최고 근접 기록 갱신
 
 원문 식 (1):
 
-$$
+```math
 r_{\mathrm{reach}}=\sum_{\mathrm{finger}}\alpha_{\mathrm{reach}}\max(d_{\mathrm{closest}}-d,0).
-$$
+```
 
 $d$는 현재 손끝–대상 거리, $d_{\mathrm{closest}}$는 episode에서 달성한 최고 근접 기록이다. 후퇴했다가 같은 위치로 돌아오는 것만으로는 새 접근 보상을 얻지 못한다. **이전 step과의 거리 차분과 다르다.** 기록 갱신의 코드 순서는 미명시다.
 
@@ -265,9 +265,9 @@ $d$는 현재 손끝–대상 거리, $d_{\mathrm{closest}}$는 episode에서 �
 
 원문 식 (2):
 
-$$
+```math
 r_{\mathrm{execute}}=(1-\mathbf{1}_{\mathrm{picked}})\alpha_{\mathrm{pick}}h_{\mathrm{obj}}+r_{\mathrm{picked}}+\mathbf{1}_{\mathrm{picked}}\alpha_{\mathrm{goal}}\max(\tilde d_{\mathrm{closest}}-\tilde d,0).
-$$
+```
 
 들기 전에는 높이 $h_{\mathrm{obj}}$, 물체가 테이블에서 **10 cm 초과**로 올라간 뒤에는 목표까지의 최고 근접 기록 갱신을 보상한다. Picked 도달 bonus도 있다. 높이 항은 진행 차분이 아니라 현재 높이에 비례한다.
 
@@ -275,9 +275,9 @@ $$
 
 원문 식 (3):
 
-$$
+```math
 r_{\mathrm{execute}}=(1-\mathbf{1}_{\mathrm{rotated}})\alpha_{\mathrm{rot}}\max(\phi-\phi_{\max},0)+\mathbf{1}_{\mathrm{rotated}}\alpha_{\mathrm{open}}\max(\psi-\psi_{\max},0)+r_{\mathrm{rotated}}+r_{\mathrm{opened}}.
-$$
+```
 
 손잡이 회전 $\phi$가 **1.047 rad, 약 60°**를 넘기 전에는 손잡이 회전 기록을, 이후에는 문 열림 $\psi$의 기록을 보상한다. 문 **0.873 rad, 약 50°** 초과에 opened bonus를 준다. 각 최대값은 현재 시도에서의 기록이다.
 
@@ -285,9 +285,9 @@ $$
 
 원문 식 (4):
 
-$$
+```math
 r_{\mathrm{execute}}=\alpha_{\mathrm{rot}}\max(\theta-\theta_{\max},0)+r_{\mathrm{success}}.
-$$
+```
 
 회전 기록 갱신과 **135° 초과** success bonus다. 상대 가중치·bonus 수치, flag 유지 여부·중복 발행 방지 구현은 미명시다. Door 식 뒤 문장의 picked/rotated 표기 불일치는 상세 노트에 기록되어 있다.
 
@@ -301,15 +301,15 @@ $$
 
 마지막 lift에서의 terminal reward:
 
-$$
+```math
 r_{t_{\mathrm{final}}}=\mathbf{1}\{\mathrm{pick\text{-}up\ is\ successful}\}.
-$$
+```
 
 Terminal 이전에는 원칙적으로 0이지만, 충분히 닫아보지 않고 reopen하면 다음 penalty를 준다.
 
-$$
+```math
 r_t=-0.05a_t^{\mathrm{reopen}}\left(1-\mathbf{1}\left\{\max_{i\in\mathrm{grip\ joints}}[s_t^{\mathrm{joint\ angles}}]_i>0.2\ \mathrm{rad}\right\}\right),\qquad t<t_{\mathrm{final}}.
-$$
+```
 
 따라서 **모든 reopen에 −0.05가 아니다.** 최대 grip joint angle이 0.2 rad를 넘기 전에 reopen할 때만 적용된다. Terminal 성공은 1, 실패는 0이며 별도 실패 −1로 바꾸지 않는다.
 
@@ -321,9 +321,9 @@ $$
 
 **출처:** [상세 노트 §5.4–5.5](../papers/2021-ding-sim-to-real-tactile-manipulation.md). 원문 §IV-C-c, 식 (4)–(9), PDF p. 4. TD3 door opening이다.
 
-$$
+```math
 R=5.0r_{\mathrm{door}}+0.4r_{\mathrm{dist}}+0.05r_{\mathrm{ori}}+0.1r_{\mathrm{grasp}}+0.01r_{\mathrm{tactile}}.
-$$
+```
 
 | 항 | 보상하는 내용 |
 | --- | --- |
@@ -335,9 +335,9 @@ $$
 
 활성 수 항의 기본식은 다음과 같다.
 
-$$
+```math
 r_{\mathrm{tactile}}=\lVert\hat{\mathbf{c}}\rVert_1\quad\text{when grasp is maintained and }\alpha>\alpha_0,\qquad\alpha_0=1.15^\circ.
-$$
+```
 
 30개 binary unit의 활성 수이지 압력·힘의 합이 아니다. 조건 없이 접촉 bit 수만 계속 늘리도록 하는 reward로 설명하지 않는다.
 
@@ -351,9 +351,9 @@ $$
 
 ### 주 보상 — rollout 뒤의 파지 안정성 시험
 
-$$
+```math
 r_{\mathrm{grasp}}=1000\frac{t_{\mathrm{inhand}}}{t_{\mathrm{total}}}.
-$$
+```
 
 로봇이 물체를 들어 올리고 orientation을 유지한 채 random force를 가하고 기다린다. 그 시험 중 **양 finger 접촉을 유지한 시간**을 누적한다. 전체 시험시간 대비 유지 비율을 보상하므로 단순한 순간 lift 여부와 다르다. 위 식을 rollout의 매 step마다 지급하는 보상으로 옮기지 않는다.
 
@@ -369,9 +369,9 @@ Touch, approach, 양쪽 force relation, force threshold 초과 penalty를 사용
 
 **출처:** [상세 노트 §8](../papers/2024-su-sim2real-tactile-manipulation.md). 원문 §IV Reward Function, PDF p. 3의 번호 없는 식. PPO다.
 
-$$
+```math
 R=w_{\mathrm{contact}}r_{\mathrm{contact}}+w_{\mathrm{position}}r_{\mathrm{position}}+w_{\mathrm{angle}}r_{\mathrm{angle}}-w_{\mathrm{penalty}}r_{\mathrm{penalty}}.
-$$
+```
 
 | 항 | 식·값 | 확인 범위 |
 | --- | --- | --- |
@@ -390,21 +390,21 @@ Position은 초기 거리 대비 현재 근접도이지 직전 step 진전량이
 
 **출처:** [상세 노트 §7](../papers/2023-yin-rotating-without-seeing.md). 원문 §IV-A.3, 식 (1)–(2), PDF p. 4; Appendix D 식 (3)–(9), PDF p. 14. PPO다.
 
-$$
+```math
 r_t=20r_{\mathrm{rot}}+0.1r_{\mathrm{vel}}+r_{\mathrm{fall}}+0.0003r_{\mathrm{work}}+0.0003r_{\mathrm{torque}}+0.1r_{\mathrm{dist}}.
-$$
+```
 
-$$
+```math
 r_{\mathrm{rot}}=\mathrm{clip}(\Delta\theta,-0.157,0.157),\qquad r_{\mathrm{vel}}=-\lVert\mathbf{v}_t\rVert.
-$$
+```
 
-$$
+```math
 r_{\mathrm{work}}=-\langle|\boldsymbol{\tau}|,|\dot{\mathbf{q}}_t|\rangle,\qquad r_{\mathrm{torque}}=-\lVert\boldsymbol{\tau}\rVert.
-$$
+```
 
-$$
+```math
 r_{\mathrm{dist}}=\mathrm{mean}_{i=0,1,2,3}\left[\mathrm{clip}\left(\frac{0.1}{0.02+4d(\mathbf{x}_{\mathrm{tip}}^i,\mathbf{x}_{\mathrm{obj}})},0,1\right)\right].
-$$
+```
 
 | 항 | 의도와 적용 조건 |
 | --- | --- |
@@ -445,17 +445,17 @@ Work 식에는 시간 적분이 없으므로 총 에너지로 바꾸어 부르�
 
 ### Pre-grasp
 
-$$
+```math
 R_p=\sum_{t=1}^{T_p}10\exp\left(-10\left\|\mathbf{x}_{rt}^{t}(\mathbf{q}_r^t)-\hat{\mathbf{x}}_{rt}^{t}\right\|_2^2\right).
-$$
+```
 
 현재 robot fingertip position을 reference fingertip position에 맞춘다. 위 식은 한 step 보상이 아니라 **pre-grasp 구간에 대한 합**으로 제시되어 있다.
 
 ### Manipulation
 
-$$
+```math
 R_m=\sum_{t=T_p+1}^{T_r}\left(\lambda_1R_m^h+\lambda_2R_m^o+\lambda_3\mathbf{1}_{\mathrm{cont}}+\lambda_4\mathbf{1}_{\mathrm{lift}}\right).
-$$
+```
 
 | 항 | 의미·계수 |
 | --- | --- |
@@ -474,9 +474,9 @@ Reference object trajectory는 평가에만 쓰는 것이 아니라 RL reward의
 
 **출처:** [상세 노트 §8, 탐색 목적의 구분은 §6](../papers/2024-liu-tactile-active-inference-rl.md). 원문 §IV-B, 식 (11), PDF p. 5. Model ensemble·reward model·CEM을 사용하는 model-based active inference RL이다.
 
-$$
+```math
 r_1=\mathrm{sgn}(\mathrm{get\_target})-\mathrm{dis}(\mathrm{object},\mathrm{target}),\qquad r_2=\mathrm{sgn}(\mathrm{get\_target}),\qquad r_3=-H(y).
-$$
+```
 
 | 과업·조건 | 설계 |
 | --- | --- |
