@@ -110,21 +110,21 @@ Unknown-geometry peg insertion 등에서 task difficulty curriculum이 학습을
 
 정책 observation은 다음과 같이 정의된다. [원문 §III-B.1]
 
-$$
+```math
 s=[f_n,f_x,\mu_{\mathrm{FFT}}]\in\mathbb{R}^{9}.
-$$
+```
 
 여기서
 
-$$
+```math
 f_n=[f_{n,1},\ldots,f_{n,4}]\in\mathbb{R}^{4}
-$$
+```
 
 이고,
 
-$$
+```math
 f_x=[f_{x,1},\ldots,f_{x,4}]\in\mathbb{R}^{4}.
-$$
+```
 
 따라서 observation은 4 + 4 + 1 = 9차원이다.
 
@@ -173,9 +173,9 @@ FFT window의 overlap, window function, spectrum magnitude/energy의 정확한 �
 
 정책 action은 다음 3차원으로 정의된다. [원문 §III-B.2]
 
-$$
+```math
 a=[a_x,a_y,a_p]\in\mathbb{R}^{3}.
-$$
+```
 
 ### 8.1. Continuous displacement
 
@@ -202,9 +202,9 @@ SAC가 출력하는 세 action component는 모두 $[-1,1]$로 normalize된다.
 
 실행 전 다음 scaling을 적용한다.
 
-$$
+```math
 \alpha_a=[\alpha_{a,x},\alpha_{a,y},\alpha_{a,p}]=[0.5,0.2,30]\ \mathrm{mm}.
-$$
+```
 
 따라서 최대 scale은
 
@@ -220,9 +220,9 @@ $$
 
 전체 reward는 다음 다섯 항의 합이다. [원문 식 (1)]
 
-$$
+```math
 r=r_t+r_o+r_f+r_g+r_p.
-$$
+```
 
 ## 10.1. Time penalty $r_t$
 
@@ -230,17 +230,17 @@ $$
 
 Table I의 값은
 
-$$
+```math
 r_t=-0.1.
-$$
+```
 
 Backward primitive를 사용할 때에는 primitive 전체를 단일 timestep으로 싸게 처리하지 않고, 같은 이동을 $a_x,a_y$만으로 수행했을 때 필요한 equivalent timestep 수에 따라 time penalty를 계산한다.
 
 ## 10.2. Object forward progress reward $r_o$
 
-$$
+```math
 r_o=\alpha_{r,o}d_o.
-$$
+```
 
 - $d_o$: 현재 timestep에서 object가 intended retrieval direction으로 이동한 거리
 - $\alpha_{r,o}=5.0$
@@ -253,9 +253,9 @@ $$
 
 원문 식 (3)은 maximum normal tactile force $f_n^{\max}$에 대해 세 구간을 정의한다.
 
-$$
+```math
 r_f=\begin{cases}0,&f_n^{\max}<f_n^{l}\\r_f^{h},&f_n^{\max}>f_n^{h}\\(f_n^{\max}-f_n^{l})^2,&\text{otherwise}\end{cases}
-$$
+```
 
 Table I의 parameter는 다음과 같다.
 
@@ -274,9 +274,9 @@ Table I의 parameter는 다음과 같다.
 
 ## 10.4. Terminal goal reward $r_g$
 
-$$
+```math
 r_g=\alpha_{r,g}d_g.
-$$
+```
 
 - $\alpha_{r,g}=2.0$
 - $d_g$: episode 성공으로 인정하기 위해 object가 초기 위치에서 전진해야 하는 terminal distance
@@ -289,9 +289,9 @@ Backward adjustment primitive를 실행한 뒤 일정 시간 안에 object와 co
 
 Table I:
 
-$$
+```math
 r_p=-10.0.
-$$
+```
 
 재접촉 판정에 사용하는 정확한 time window와 contact threshold의 구현 세부는 원문에 명시되지 않는다.
 
@@ -299,15 +299,15 @@ $$
 
 초기 terminal goal은
 
-$$
+```math
 d_g^l=20\ \mathrm{mm}
-$$
+```
 
 이고, 최대 goal은
 
-$$
+```math
 d_g^h=50\ \mathrm{mm}.
-$$
+```
 
 Agent가 현재 goal을 달성할 때마다 $d_g$를 **1 mm씩 증가**시키며 최종적으로 $d_g^h$까지 올린다.
 
@@ -384,9 +384,9 @@ Baseline은 학습 기반이 아닌 rule-based planner다.
 
 Maximum normal force $f_n^{\max}$를
 
-$$
+```math
 [f_n^l,f_n^h]
-$$
+```
 
 범위에 유지한다.
 
@@ -394,9 +394,9 @@ $$
 
 정상 contact가 형성되면 intended retrieval direction으로
 
-$$
+```math
 0.8\alpha_{a,x}
-$$
+```
 
 의 일정 command로 이동한다고 설명한다.
 
@@ -502,9 +502,9 @@ Backward primitive를 제거하고 cylinder Obj-5–8에 대해 다시 학습한
 
 Curriculum을 제거한 model은 처음부터
 
-$$
+```math
 d_g=d_g^h=50\ \mathrm{mm}
-$$
+```
 
 로 학습한다.
 
