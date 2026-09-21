@@ -177,9 +177,9 @@ R_m
 +
 \lambda_2R_m^o
 +
-\lambda_3\mathbf 1_{\mathrm{cont}}
+\lambda_3\mathbf{1}_{\mathrm{cont}}
 +
-\lambda_4\mathbf 1_{\mathrm{lift}}
+\lambda_4\mathbf{1}_{\mathrm{lift}}
 \right).
 ```
 
@@ -189,8 +189,8 @@ R_m
 
 - $R_m^h$: robot hand motion을 reference와 가깝게 유지
 - $R_m^o$: current object pose를 reference object trajectory에 맞춤
-- $\mathbf 1_{\mathrm{cont}}$: object와 contact한 fingertip 수
-- $\mathbf 1_{\mathrm{lift}}$: object가 table에서 lift되면 bonus
+- $\mathbf{1}_{\mathrm{cont}}$: object와 contact한 fingertip 수
+- $\mathbf{1}_{\mathrm{lift}}$: object가 table에서 lift되면 bonus
 
 Object-motion term은 position error와 orientation angular distance를 함께 사용한다. 원문은
 
