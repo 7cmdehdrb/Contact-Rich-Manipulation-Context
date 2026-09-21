@@ -47,8 +47,7 @@ DexTouch의 확인된 처리 순서는 **FSR → low-pass filter → threshold �
 단순 1차 low-pass 후보는 다음과 같다.
 
 $$
-z_{ij,t}=\alpha_t z_{ij,t-1}+(1-\alpha_t)u_{ij,t},
-\qquad \alpha_t=\exp(-2\pi f_c\Delta t).
+z_{ij,t}=\alpha_t z_{ij,t-1}+(1-\alpha_t)u_{ij,t}, \qquad \alpha_t=\exp(-2\pi f_c\Delta t).
 $$
 
 $f_c$는 설계할 차단주파수이고 $\Delta t$는 실제 샘플 간격이다. 급격한 접촉을 지나치게 평활화하면 충격이나 짧은 접촉을 놓칠 수 있다. 필터 사용 여부 자체도 검증 대상이다.
@@ -67,12 +66,7 @@ $f_c$는 설계할 차단주파수이고 $\Delta t$는 실제 샘플 간격이�
 노이즈가 있는 신호에 단일 threshold를 적용하면 경계에서 0/1이 반복될 수 있다. 다음 Schmitt-trigger 형태는 이를 줄이는 **제안**이다.
 
 $$
-c_{i,t}=\begin{cases}
-1,&s_{i,t}\geq\theta_{i,\mathrm{on}},\\
-0,&s_{i,t}\leq\theta_{i,\mathrm{off}},\\
-c_{i,t-1},&\theta_{i,\mathrm{off}}<s_{i,t}<\theta_{i,\mathrm{on}},
-\end{cases}
-\qquad \theta_{i,\mathrm{off}}<\theta_{i,\mathrm{on}}.
+c_{i,t}=\begin{cases} 1,&s_{i,t}\geq\theta_{i,\mathrm{on}},\\ 0,&s_{i,t}\leq\theta_{i,\mathrm{off}},\\ c_{i,t-1},&\theta_{i,\mathrm{off}}<s_{i,t}<\theta_{i,\mathrm{on}}, \end{cases} \qquad \theta_{i,\mathrm{off}}<\theta_{i,\mathrm{on}}.
 $$
 
 연속된 일정 시간 동안 조건을 만족해야 상태를 전환하는 debounce도 비교할 수 있다. 다만 hysteresis와 debounce를 동시에 강하게 적용하면 접촉 시작·해제의 지연이 커진다. 즉시 접촉 이벤트가 필요한 정책에는 오히려 불리할 수 있다.
@@ -114,8 +108,7 @@ Hand articulation으로 하중 분포가 바뀌면 하나의 고정 payload 보�
 $S$를 센서 프레임, $T$를 선택한 task 프레임으로 둔다. $R_{TS}$는 $S$에서 $T$로의 회전이고, $p_{TS}$는 **$T$ 원점에서 센서 원점까지의 벡터를 $T$에서 표현한 값**이다. 같은 작용 wrench를 $T$ 원점 기준으로 옮기면 다음과 같다.
 
 $$
-F^T=R_{TS}F^S,\qquad
-\tau^T=R_{TS}\tau^S+p_{TS}\times(R_{TS}F^S).
+F^T=R_{TS}F^S,\qquad \tau^T=R_{TS}\tau^S+p_{TS}\times(R_{TS}F^S).
 $$
 
 방향만 회전해 센서 원점 기준 모멘트를 유지하려면 위 병진 항을 넣지 않고, 그 선택을 observation 문서에 적는다. 데이터시트의 작용/반작용 부호와 시뮬레이터 센서 부호도 맞춰야 한다. 좌표계가 다른 force와 torque를 그대로 이어 붙이면 접촉 방향 학습이 불필요하게 어려워진다.
@@ -127,7 +120,7 @@ $$
 N과 N·m를 같은 스케일로 취급하지 않는다. 축별 또는 힘/토크 그룹별 scale $d_k$를 고정해 다음 입력을 후보로 사용한다.
 
 $$
-\widetilde w_{k,t}=\operatorname{clip}\left(\frac{w_{k,t}-b_k}{d_k},-c_k,c_k\right).
+\widetilde w_{k,t}=\mathrm{clip}\left(\frac{w_{k,t}-b_k}{d_k},-c_k,c_k\right).
 $$
 
 $b_k,d_k,c_k$는 실제 데이터와 학습 분포에서 정할 값이다. 문헌 숫자를 장비 한계로 옮기지 않는다. running normalization을 쓰면 학습·실행 시 통계 갱신 규칙을 일치시킨다. **정책 입력 clipping과 독립적인 안전 감독의 원시 하중 판단을 분리한다.**
