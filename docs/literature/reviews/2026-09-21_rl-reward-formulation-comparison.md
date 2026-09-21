@@ -170,7 +170,7 @@ Reach target은 학습용 exploration shaping이며 actor에게 준 별도 목�
 **출처:** [상세 노트 §11–12](../papers/2025-bergmann-precision-focused-pushing.md). SAC와 HER를 사용하는 goal-conditioned pushing이다.
 
 ```math
-r(p_o,p_g)=\begin{cases}-1,&\lVert p_o-p_g\rVert_2\ge0.01\\,\\mathrm{m},\\0,&\text{otherwise}.\end{cases}
+r(p_o,p_g)=\begin{cases}-1,&\lVert p_o-p_g\rVert_2\ge0.01\,\mathrm{m},\\0,&\text{otherwise}.\end{cases}
 ```
 
 $p_o,p_g$는 simulator의 물체·목표 중심이다. Numeric object GT는 actor 관측이 아니라 reward 계산에 사용된다.
@@ -200,7 +200,7 @@ r=r_t+r_o+r_f+r_g+r_p.
 ### Force-regulation 구간식
 
 ```math
-r_f=\begin{cases}0,&f_n^{\max}<f_n^l,\\r_f^h,&f_n^{\max}>f_n^h,\\(f_n^{\max}-f_n^l)^2,&\text{otherwise},\end{cases}\qquad f_n^l=0.2\\,\\mathrm{N},\quad f_n^h=1.5\\,\\mathrm{N},\quad r_f^h=-10.
+r_f=\begin{cases}0,&f_n^{\max}<f_n^l,\\r_f^h,&f_n^{\max}>f_n^h,\\(f_n^{\max}-f_n^l)^2,&\text{otherwise},\end{cases}\qquad f_n^l=0.2\,\mathrm{N},\quad f_n^h=1.5\,\mathrm{N},\quad r_f^h=-10.
 ```
 
 약한 접촉에는 보상이 없고, 중간 범위에는 **양의 제곱 항**, 상한 초과에는 penalty를 준다. 중간 항은 특정 목표 힘에 대한 음의 제곱 오차가 아니다. 식상 하한으로부터 힘이 증가하면 중간 구간 보상이 커진다.
