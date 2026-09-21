@@ -104,7 +104,7 @@ $$
 $i$번째 접촉의 force는 다음과 같이 표현된다. [원문 식 (4)]
 
 $$
-\mathbf{F}_i=\operatorname{diag}(\mathbf{K}_i)\left(\mathbf{x}_i^o-\mathbf{x}_i^w\right).
+\mathbf{F}_i=\mathrm{diag}(\mathbf{K}_i)\left(\mathbf{x}_i^o-\mathbf{x}_i^w\right).
 $$
 
 $\mathbf{K}_i\in\mathbb{R}^{3}$는 방향 성분을 포함한 stiffness vector, $\mathbf{x}_i^o$는 contact spring의 rest position, $\mathbf{x}_i^w$는 현재 world-frame contact point다.
@@ -148,7 +148,7 @@ $$
 원문 식 (6)을 풀어 쓰면
 
 $$
-\boldsymbol{\tau}_i=\left(\mathbf{J}_p^{T}+D_{\mathbf{q}}^{T}(\mathbf{R}\mathbf{x}_i)\right)\operatorname{diag}(\mathbf{K}_i)\left(\mathbf{x}_i^o-\mathbf{p}-\mathbf{R}\mathbf{x}_i\right).
+\boldsymbol{\tau}_i=\left(\mathbf{J}_p^{T}+D_{\mathbf{q}}^{T}(\mathbf{R}\mathbf{x}_i)\right)\mathrm{diag}(\mathbf{K}_i)\left(\mathbf{x}_i^o-\mathbf{p}-\mathbf{R}\mathbf{x}_i\right).
 $$
 
 즉 torque response에는 TCP 위치·회전, contact location, rest position, contact stiffness vector가 함께 반영된다.
@@ -276,7 +276,7 @@ $$
 contact parameter를 EKF state에 넣는 것만으로 추정 가능성이 자동 보장되는 것은 아니다. 논문은 linearized observability matrix를 구성하고, 충분조건으로
 
 $$
-\operatorname{rank}\left(D_{\boldsymbol{\phi}}\boldsymbol{\delta}\right)=3N_e
+\mathrm{rank}\left(D_{\boldsymbol{\phi}}\boldsymbol{\delta}\right)=3N_e
 $$
 
 에 해당하는 조건을 제시한다. [원문 §IV-C, 식 (23)–(25)]
