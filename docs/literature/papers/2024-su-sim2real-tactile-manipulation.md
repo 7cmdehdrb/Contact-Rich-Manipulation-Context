@@ -182,9 +182,9 @@ RGB는 센서 또는 시뮬레이터의 원래 촉각 영상을 사용한다. �
 
 **해설용 재구성 — 원문 §III-B의 연산 순서. 원문에 번호가 부여된 수식은 아니다.**
 
-$$
+```math
 D_t(u,v)=\frac{1}{3}\sum_{c\in\{R,G,B\}}\left[I_{0,c}(u,v)-I_{t,c}(u,v)\right].
-$$
+```
 
 여기서 $I_0$는 무접촉 기준 영상, $I_t$는 현재 영상이다. **직전 프레임과의 차분이 아니다.** 따라서 이 Diff만으로 optical flow나 시간 미분 특징을 직접 계산한다고 설명해서는 안 된다. [원문 §III-B, PDF p. 3]
 
@@ -276,12 +276,12 @@ Fig. 4에는 reward와 success rate의 학습 곡선이 있지만, 이를 근거
 
 **원문 §IV의 번호 없는 reward 식**
 
-$$
+```math
 R=w_{\mathrm{contact}}r_{\mathrm{contact}}
 +w_{\mathrm{position}}r_{\mathrm{position}}
 +w_{\mathrm{angle}}r_{\mathrm{angle}}
 -w_{\mathrm{penalty}}r_{\mathrm{penalty}}.
-$$
+```
 
 원문은 접촉, 목표 위치에 대한 거리, 목표 각도, 행동 크기의 네 항을 사용한다. 아래에서는 직접 제시한 값과 설명만 있는 부분을 분리한다. [원문 §IV Reward Function, PDF p. 3]
 
@@ -291,10 +291,10 @@ $$
 
 **원문 설명의 수식화**
 
-$$
+```math
 r_{\mathrm{contact}}=0.5,\qquad
 w_{\mathrm{contact}}\in\{0,1,2\}.
-$$
+```
 
 따라서 이 항의 기여는 접촉 수에 따라 0·0.5·1이 된다. 이는 명시된 값의 대수적 해설이다. 목적은 처음 잡은 물체와의 접촉을 유지하여 회전 중 손끝이 떨어지는 것을 줄이는 것이다. **접촉력의 크기를 목표값에 맞추거나 압력을 일정하게 만드는 reward는 아니다.** 접촉 여부의 세부 simulator 판정 기준은 없다. [원문 §IV Contact, PDF p. 3]
 
@@ -302,9 +302,9 @@ $$
 
 **원문에 직접 제시된 식**
 
-$$
+```math
 r_{\mathrm{position}}=1-\frac{\mathrm{curdist}}{\mathrm{initdist}}.
-$$
+```
 
 `curdist`와 `initdist`는 목표 위치까지의 현재·초기 거리다. 원문은 gripper contact가 있을 때 **가중치 10**을 사용하고, 목표에 가까워지는 경우를 보상하고 멀어지는 경우를 벌점으로 설명한다. 회전 중 접촉 유지와 목표 각도 도달에 기여하도록 둔 항이다. [원문 §IV Distance-based reward, PDF p. 3]
 
@@ -320,10 +320,10 @@ $$
 
 **원문에 직접 제시된 식 — PDF에서 위첨자 2 확인**
 
-$$
+```math
 r_{\mathrm{penalty}}=\lVert a\rVert^{2},\qquad
 w_{\mathrm{penalty}}=0.01.
-$$
+```
 
 본문의 2는 아래첨자 norm 종류가 아니라 **위첨자 제곱**이다. 즉 이를 제곱 없는 L2 norm으로 옮기지 않는다. 이 항은 행동 크기를 억제하지만, action 단위·scaling이 미명시이므로 물리적인 속도·힘 상한을 보장하는 항으로 해석할 수 없다. [원문 §IV Action penalty, PDF p. 3]
 
