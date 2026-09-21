@@ -395,7 +395,7 @@ r_t=20r_{\mathrm{rot}}+0.1r_{\mathrm{vel}}+r_{\mathrm{fall}}+0.0003r_{\mathrm{wo
 $$
 
 $$
-r_{\mathrm{rot}}=\operatorname{clip}(\Delta\theta,-0.157,0.157),\qquad r_{\mathrm{vel}}=-\lVert\mathbf v_t\rVert.
+r_{\mathrm{rot}}=\mathrm{clip}(\Delta\theta,-0.157,0.157),\qquad r_{\mathrm{vel}}=-\lVert\mathbf v_t\rVert.
 $$
 
 $$
@@ -403,7 +403,7 @@ r_{\mathrm{work}}=-\langle|\boldsymbol\tau|,|\dot{\mathbf q}_t|\rangle,\qquad r_
 $$
 
 $$
-r_{\mathrm{dist}}=\operatorname{mean}_{i=0,1,2,3}\left[\operatorname{clip}\left(\frac{0.1}{0.02+4d(\mathbf x_{\mathrm{tip}}^i,\mathbf x_{\mathrm{obj}})},0,1\right)\right].
+r_{\mathrm{dist}}=\mathrm{mean}_{i=0,1,2,3}\left[\mathrm{clip}\left(\frac{0.1}{0.02+4d(\mathbf x_{\mathrm{tip}}^i,\mathbf x_{\mathrm{obj}})},0,1\right)\right].
 $$
 
 | 항 | 의도와 적용 조건 |
