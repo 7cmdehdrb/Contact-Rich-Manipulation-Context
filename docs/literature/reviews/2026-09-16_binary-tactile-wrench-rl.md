@@ -262,7 +262,7 @@ Binary 후처리의 hysteresis·debounce, wrench의 하중 보정·프레임 변
 | [Variable Impedance Control in End-Effector Space, 2019](https://arxiv.org/pdf/1906.08880) | §V-C에서 실물 direct force sensing을 쓰지 않는다고 명시. Actor의 RGB+EEF 상태, wiped-state binary를 F/T actor나 binary tactile로 분류하지 않음 |
 | [Robotic Table Wiping via RL and Whole-body Trajectory Optimization, 2022](https://arxiv.org/abs/2210.10865) | RL은 영상 mask 기반 waypoint 결정. F/T actor 근거 없고 Blind 조건이 아님 |
 | [Adaptive Wiping, 2025](https://arxiv.org/abs/2505.06451) | F/T time-series 표현은 관련 있지만 imitation learning. F/T–RL 신규 핵심 목록 제외 |
-| [Learning Force Control, 2020](https://arxiv.org/abs/2003.00628) | F/T+SAC이나 고정밀 assembly 중심. 이번에는 지속 접촉 사례를 우선함 |
+| [Learning Force Control, 2020](../papers/2020-beltran-hernandez-learning-force-control.md) | F/T+SAC이나 고정밀 assembly 중심이라 최초 신규 핵심 목록에서는 제외했다. 이후 동일 IEEE 원문을 상세 정독하여 F/T가 policy observation·force controller·reward·fail-safe에 동시에 연결되는 구조와 실물 precision insertion 결과를 별도 노트에 기록했다. |
 | [TACTFUL, 2026](https://arxiv.org/html/2606.24712v1) | UR10e+Inspire·저항식 taxel·Blind 실물 RL로 장비는 가깝지만 continuous tactile와 geometry reconstruction 중심. Binary/F/T 방법 근거로는 제외 |
 | [Learning contact-rich whole-body manipulation with example-guided RL, 2025](https://doi.org/10.1126/scirobotics.ads6790) | 저자 [공개 자료](https://datadryad.org/dataset/doi:10.5061/dryad.ncjsxkt80)에 binary-contact 관측 옵션과 Blind whole-body 조작을 확인했으나 출판사 전체 원문 접근 실패. 정확한 threshold·학습조건·저자 한계/향후 연구를 검증하지 못해 상세 선정 보류 |
 
