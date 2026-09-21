@@ -32,6 +32,14 @@ DISALLOWED_MATH_MACRO = re.compile(
     r"\\(" + "|".join(re.escape(name) for name in DISALLOWED_MATH_MACROS) + r")\b"
 )
 
+# TeX often accepts unbraced single-token arguments (for example, \\mathbf x),
+# but this repository requires explicit braces to avoid brittle GitHub rendering.
+BRACED_STYLE_MACROS = ("mathbf", "mathrm", "text", "boldsymbol")
+UNBRACED_STYLE_MACRO = re.compile(
+    r"\\(" + "|".join(re.escape(name) for name in BRACED_STYLE_MACROS) + r")(?!\s*\{)"
+)
+
+
 
 def iter_markdown_paths(args: list[str]) -> list[Path]:
     paths: list[Path] = []
