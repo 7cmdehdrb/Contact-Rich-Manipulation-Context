@@ -69,6 +69,7 @@ GitHub 문서가 MathJax를 사용하더라도 **일반 MathJax에서 알려진 
 - **`\operatorname`과 `\operatorname*`을 사용하지 않는다.**
 - 표준 내장 연산자는 가능한 경우 `\max`, `\min`, `\cos`, `\exp`처럼 GitHub에서 직접 지원되는 기본 명령을 사용한다.
 - 별도 이름이 필요한 연산자는 `\mathrm{clip}`, `\mathrm{mean}`처럼 단순한 `\mathrm{...}` 표기를 우선 사용한다.
+- `\mathbf`, `\mathrm`, `\text`, `\boldsymbol`처럼 인수를 받는 서식 매크로는 `\mathbf{1}`, `\boldsymbol{\tau}`처럼 **중괄호로 인수를 명시**한다. `\mathbf1`, `\mathbf x`, `\boldsymbol\tau`처럼 축약하지 않는다.
 - 새로운 LaTeX 매크로를 도입할 때는 일반 LaTeX/MathJax 지원 여부가 아니라 **GitHub Markdown에서 실제 허용되는지** 확인한다. 검증되지 않은 고급·사용자 정의 매크로를 문서에 바로 추가하지 않는다.
 - 금지 매크로가 발견되면 수학적 의미를 바꾸지 않는 범위에서 GitHub 안전 표기로 치환하고, 동일 패턴을 검사기에 추가한다.
 
@@ -123,3 +124,4 @@ $l=p_{C,y}^R$
 - 일반 MathJax 지원과 GitHub Markdown 허용 매크로가 동일하지 않다는 점을 규칙에 명시했다.
 - 검사기가 display math의 Markdown 충돌뿐 아니라 금지 매크로와 `math` fenced block, 여러 물리적 줄로 작성한 display equation도 사전에 거부하도록 강화했다.
 - 같은 점검에서 비교 문서의 `\\mathbf1`, `\\boldsymbol\\tau` 같은 축약 표기도 `\\mathbf{1}`, `\\boldsymbol{\\tau}`로 정규화하고, 검사기가 서식 매크로의 비중괄호 인수도 거부하도록 추가했다.
+- 후속 재검증에서 검사기 호출부만 추가되고 정규식 정의가 누락된 결함을 발견해 즉시 수정했으며, 비교 문서에 남은 `\mathbf x`류 표기도 모두 중괄호 형태로 정규화했다. 문서 변경 후에는 검사기 자체의 실행 가능성도 확인한다.
