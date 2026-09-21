@@ -92,40 +92,40 @@ DexMV·DexRepNet은 human video에서 demonstration을 추출하여 DAPG를 사�
 
 Human hand pose와 shape는 MANO representation을 사용하며 hand joint의 3D location
 
-$$
+```math
 \boldsymbol{\psi}_h\in\mathbb{R}^{21\times3}
-$$
+```
 
 로 표현한다. Human hand/object trajectory를 추출하는 전체 pose-estimation pipeline은 prior work [24]를 따른다고 설명하며, 본 논문에서 estimator architecture를 다시 상세히 제시하지 않는다. [원문 §III-A, PDF pp. 2–3]
 
 ### 3.2 Hand motion retargeting
 
-Video length가 $T$일 때 robot joint angle $\mathbf q_r^t$를 다음 optimization으로 구한다.
+Video length가 $T$일 때 robot joint angle $\mathbf{q}_r^t$를 다음 optimization으로 구한다.
 
-$$
-\min_{\mathbf q_r^t}
+```math
+\min_{\mathbf{q}_r^t}
 \sum_{t=1}^{T}
 \left\|
-\hat{\mathbf x}_{rj}^{t}(\mathbf q_r^t)
+\hat{\mathbf{x}}_{rj}^{t}(\mathbf{q}_r^t)
 -
 \boldsymbol{\psi}_{hj}^{t}
 \right\|_2^2
 +
 \alpha
 \left\|
-\mathbf q_r^t-\mathbf q_r^{t-1}
+\mathbf{q}_r^t-\mathbf{q}_r^{t-1}
 \right\|_2^2.
-$$
+```
 
 (원문 식 (1))
 
 첫 항은 forward kinematics로 얻은 robot hand joint position과 human hand의 tip/middle-phalanx position을 맞추고, 두 번째 항은 joint pose의 급격한 변화를 억제한다. 원문은
 
-$$
+```math
 \alpha=4\times10^{-3}
-$$
+```
 
-으로 설정하고 초기 robot pose $\mathbf q_r^0$를 motion limit의 mean pose로 둔다. NLopt solver로 optimization한다. [원문 §III-A, 식 (1), PDF p. 3]
+으로 설정하고 초기 robot pose $\mathbf{q}_r^0$를 motion limit의 mean pose로 둔다. NLopt solver로 optimization한다. [원문 §III-A, 식 (1), PDF p. 3]
 
 이 단계에서 얻은 trajectory는 **visually plausible하지만 physically plausible하지 않을 수 있다.** 따라서 그대로 robot demonstration으로 쓰지 않고 다음 state-based RL 단계에서 물리적으로 실행 가능한 trajectory로 정제한다. [원문 §III-A, PDF p. 3]
 
@@ -145,7 +145,7 @@ State policy는 human-video reference trajectory를 따라가되 simulator physi
 
 Pre-grasp에서는 physical contact 없이 human-like approach를 하도록 reference fingertip position을 따른다.
 
-$$
+```math
 R_p
 =
 \sum_{t=1}^{T_p}
@@ -153,22 +153,22 @@ R_p
 \exp\left(
 -10
 \left\|
-\mathbf x_{rt}^{t}(\mathbf q_r^t)
+\mathbf{x}_{rt}^{t}(\mathbf{q}_r^t)
 -
-\hat{\mathbf x}_{rt}^{t}
+\hat{\mathbf{x}}_{rt}^{t}
 \right\|_2^2
 \right).
-$$
+```
 
 (원문 식 (2))
 
-$\hat{\mathbf x}_{rt}^{t}$는 reference trajectory의 robot fingertip position, $\mathbf x_{rt}^{t}$는 current fingertip position이다. [원문 §III-B, 식 (2), PDF p. 3]
+$\hat{\mathbf{x}}_{rt}^{t}$는 reference trajectory의 robot fingertip position, $\mathbf{x}_{rt}^{t}$는 current fingertip position이다. [원문 §III-B, 식 (2), PDF p. 3]
 
 ### 4.4 Manipulation reward
 
 Pre-grasp configuration에 도달하면 manipulation stage로 넘어가며 hand와 object motion을 함께 constrain한다.
 
-$$
+```math
 R_m
 =
 \sum_{t=T_p+1}^{T_r}
@@ -181,7 +181,7 @@ R_m
 +
 \lambda_4\mathbf 1_{\mathrm{lift}}
 \right).
-$$
+```
 
 (원문 식 (3))
 
@@ -194,13 +194,13 @@ $$
 
 Object-motion term은 position error와 orientation angular distance를 함께 사용한다. 원문은
 
-$$
+```math
 \lambda_1=4,\quad
 \lambda_2=10,\quad
 \lambda_3=0.5,\quad
 \alpha_1=50,\quad
 \alpha_2=0.1
-$$
+```
 
 을 명시한다. **$\lambda_4$의 수치는 본문에 별도로 기재되지 않는다.** [원문 §III-B, 식 (3), PDF p. 3]
 
@@ -228,9 +228,9 @@ State-based policy는 robot proprioceptive state와 object state를 요구하므
 
 Training data는 optimized state-based policy의 successful rollout에서 생성한다. 각 rollout에서 depth camera로
 
-$$
+```math
 \mathbf{PC}_w\in\mathbb{R}^{N\times3}
-$$
+```
 
 의 scene point cloud를 렌더링한다. [원문 §III-C, PDF p. 3]
 
@@ -245,11 +245,11 @@ World-frame point cloud만 사용하는 대신 동일한 point cloud를 다음 c
 
 이를 결합한 representation은
 
-$$
+```math
 \mathbf{PC}
 \in
 \mathbb{R}^{N\times3(j+3)}
-$$
+```
 
 으로 표현되며 $j$는 fingertip 수다. [원문 §III-C, Fig. 1, PDF pp. 3–4]
 
