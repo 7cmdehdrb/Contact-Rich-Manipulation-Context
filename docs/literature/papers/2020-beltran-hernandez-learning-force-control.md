@@ -100,15 +100,15 @@ Policy와 force controller의 주기는 다르다.
 
 Policy observation은 Algorithm 1과 §III-B에서 다음과 같이 정의된다.
 
-$$
+```math
 o=[x_e,\dot{x},F_{\mathrm{ext}}].
-$$
+```
 
 여기서
 
-$$
+```math
 x_e=x_g-x.
-$$
+```
 
 Observation의 세 요소는 다음 역할을 가진다.
 
@@ -152,17 +152,17 @@ Fig. 2에서 저자들은 단순 P-controller가 goal을 향해 직선적으로 
 
 Policy action은
 
-$$
+```math
 a=[a_x,a_p]
-$$
+```
 
 로 나뉜다.
 
 ### 8.1. Motion action $a_x$
 
-$$
+```math
 a_x=[p,\phi]
-$$
+```
 
 이며 3D position과 quaternion 기반 orientation에 대응하는 **6개의 position/orientation control components**를 사용한다.
 
@@ -181,9 +181,9 @@ RL이 controller structure 자체를 생성하는 것은 아니며, 미리 정�
 
 EEF pose는
 
-$$
+```math
 x=[p,\phi]
-$$
+```
 
 로 정의한다.
 
@@ -194,9 +194,9 @@ Quaternion은 scalar part $\eta$와 vector part $\epsilon$으로 표현한다.
 
 Controller가 계산한 commanded pose
 
-$$
+```math
 x_c=[p_t,\phi_t]
-$$
+```
 
 는 IK를 통해 desired joint configuration $q_c$로 변환된다.
 
@@ -215,15 +215,15 @@ Parallel controller는
 
 원문 식 (1)의 구조는 다음과 같다.
 
-$$
+```math
 u=S(K_p^x x_e+K_d^x\dot{x}_e)+a_x+(I-S)\left(K_p^fF_{\mathrm{ext}}+K_i^f\int F_{\mathrm{ext}}dt\right).
-$$
+```
 
 Selection matrix는
 
-$$
+```math
 S=\mathrm{diag}(s_1,\ldots,s_6),\qquad s_j\in[0,1].
-$$
+```
 
 각 $s_j$는 해당 direction에서 position controller와 force controller 중 어느 쪽의 영향이 큰지를 조절한다.
 
@@ -239,21 +239,21 @@ $$
 
 Position derivative gain은 proportional gain으로부터 계산한다.
 
-$$
+```math
 K_d^x=2\sqrt{K_p^x}.
-$$
+```
 
 Force integral gain은 실험적으로 proportional gain의 1%로 설정한다.
 
-$$
+```math
 K_i^f=0.01K_p^f.
-$$
+```
 
 따라서 최대 설정에서 RL이 직접 선택하는 controller parameter는
 
-$$
+```math
 a_p=[K_p^x,K_p^f,S].
-$$
+```
 
 이다.
 
@@ -263,9 +263,9 @@ RL output은 normalized $[-1,1]$ 범위에서 생성된다.
 
 각 controller parameter에는 baseline value $P_{\mathrm{base}}$와 range $P_{\mathrm{range}}$를 미리 정하여
 
-$$
+```math
 [P_{\mathrm{base}}-P_{\mathrm{range}},P_{\mathrm{base}}+P_{\mathrm{range}}]
-$$
+```
 
 사이로 mapping한다.
 
@@ -279,9 +279,9 @@ Position-controlled robot에서 desired dynamic interaction을 만들기 위해 
 
 원문 식 (2):
 
-$$
+```math
 F_{\mathrm{ext}}=m_d\ddot{x}+b_d\dot{x}+k_dx.
-$$
+```
 
 - $m_d$: desired inertia
 - $b_d$: desired damping
@@ -289,9 +289,9 @@ $$
 
 Damping ratio와 natural frequency 관계는
 
-$$
+```math
 \zeta=\frac{b_d}{2\sqrt{k_dm_d}},\qquad\omega_n=\sqrt{\frac{k_d}{m_d}}.
-$$
+```
 
 로 정의한다.
 
@@ -311,15 +311,15 @@ Admittance structure도 원래 30개의 parameter를 가진다.
 - Damping ratio $\zeta$: constant
 - Damping은 stiffness와 inertia로부터 계산
 
-$$
+```math
 b_d=2\zeta\sqrt{k_dm_d}.
-$$
+```
 
 따라서 RL이 직접 조절하는 것은
 
-$$
+```math
 a_p=[K_p^x,k_d]
-$$
+```
 
 이다.
 
@@ -393,9 +393,9 @@ Force limit violation은 이미 collision/contact overload가 발생한 뒤 측�
 
 모든 task에 같은 reward structure를 사용한다.
 
-$$
+```math
 r(s,a)=w_1L_m\left(\left\|x_e/x_{\max}\right\|_{1,2}\right)+w_2L_m\left(\left\|a/a_{\max}\right\|_2\right)+w_3L_m\left(\left\|F_{\mathrm{ext}}/F_{\max}\right\|_2\right)+w_4\rho+w_5\kappa.
-$$
+```
 
 $L_m$은 입력을 reward range로 선형 mapping한다.
 
@@ -409,9 +409,9 @@ Reward가 고려하는 요소는 다음과 같다.
 
 Terminal term은
 
-$$
+```math
 \kappa=\begin{cases}200,&\text{task completed}\\-10,&\text{safety violation}\\0,&\text{otherwise}\end{cases}.
-$$
+```
 
 각 term weight $w_i$, $x_{\max}$, $a_{\max}$, $F_{\max}$의 실제 수치는 원문 본문에 명시되지 않는다.
 
