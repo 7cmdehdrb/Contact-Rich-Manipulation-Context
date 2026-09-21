@@ -73,6 +73,20 @@ def check_disallowed_macros(
     return errors
 
 
+def check_unbraced_style_macros(
+    fragment: str, path: Path, lineno: int, context: str
+) -> list[str]:
+    errors: list[str] = []
+    for match in UNBRACED_STYLE_MACRO.finditer(fragment):
+        macro = match.group(1)
+        errors.append(
+            f"{path}:{lineno}: style macro '\\{macro}' in {context} must use "
+            "an explicit braced argument (for example, \\mathbf{1} or "
+            "\\boldsymbol{\\tau})"
+        )
+    return errors
+
+
 def check_file(path: Path) -> list[str]:
     errors: list[str] = []
     try:
@@ -131,6 +145,9 @@ def check_file(path: Path) -> list[str]:
             errors.extend(
                 check_disallowed_macros(line, path, lineno, "display math")
             )
+            errors.extend(
+                check_unbraced_style_macros(line, path, lineno, "display math")
+            )
 
             if SETEXT_UNDERLINE.fullmatch(line):
                 errors.append(
@@ -160,6 +177,11 @@ def check_file(path: Path) -> list[str]:
         for match in INLINE_MATH.finditer(cleaned):
             errors.extend(
                 check_disallowed_macros(
+                    match.group(1), path, lineno, "inline math"
+                )
+            )
+            errors.extend(
+                check_unbraced_style_macros(
                     match.group(1), path, lineno, "inline math"
                 )
             )
