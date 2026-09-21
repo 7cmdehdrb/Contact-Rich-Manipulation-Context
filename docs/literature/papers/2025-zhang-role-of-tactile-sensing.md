@@ -256,13 +256,13 @@ Binary tactile은 contact를 효과적으로 등록하지만, 저자들은 **int
 
 Noisy vision에서 $K=5,9,12$를 비교한 결과 저자들은 다음 경향을 보고한다.
 
-$$
+```math
 \mathrm{VK}^{12}
 \sim
 \mathrm{VK}^{9}
 \ge
 \mathrm{VK}^{5}.
-$$
+```
 
 즉 local force-vector sensing에서는 너무 적은 taxel이 불리했다. [원문 §IV-C, Fig. 8, PDF p. 5]
 
@@ -270,7 +270,7 @@ $$
 
 각 local VK에 overall force vector V를 추가한 조건도 비교한다. 결과는 원문의 표현대로 대략
 
-$$\{\mathrm{VK}^{5},\mathrm{VK}^{9},\mathrm{VK}^{12}\}+V\geV>\mathrm{VK}^{5},\mathrm{VK}^{9},\mathrm{VK}^{12}$$
+$$\lbrace\mathrm{VK}^{5},\mathrm{VK}^{9},\mathrm{VK}^{12}\rbrace+V\geV>\mathrm{VK}^{5},\mathrm{VK}^{9},\mathrm{VK}^{12}$$
 
 의 경향을 보인다. 저자들은 **concise global force를 추가하면 global-only 또는 local-only보다 더 좋은 성능**을 얻는다고 해석한다. [원문 §IV-C, Fig. 8, PDF p. 5]
 
