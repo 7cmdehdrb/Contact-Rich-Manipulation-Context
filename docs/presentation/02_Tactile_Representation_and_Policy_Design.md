@@ -178,35 +178,15 @@ Hand의 행동 표현은 아직 확정하지 않는다. 현재 비교할 후보�
 
 ### 2.7.1. 사전 연구의 Domain Randomization
 
-본 연구에서는 물체·환경·로봇·Base 조건이 달라져도 동작하는 정책을 학습하기 위해 Domain Randomization을 적용하는 방향을 잡는다. 아래는 **이미 검토한 RL 논문에서 보고한 무작위화 대상과 범위**이며, 본 연구에 그대로 적용할 확정값은 아니다.
+이미 검토한 RL 기반 연구에서는 물체·환경·로봇·센서 조건을 다양하게 무작위화하여 학습한다. 여기서는 **각 연구가 어떤 항목을 Randomization 했는지만 정리하며, 구체적인 수치 범위는 생략한다.**
 
-**[Rotating without Seeing](../literature/papers/2023-yin-rotating-without-seeing.md) — PPO 기반 In-hand Rotation**
-
-물체 질량 **0.2–0.6 kg**, 물체·Hand 마찰계수 **0.3–3.0**, 물체 형상 배율 $\mathcal U(0.95,1.05)$와 초기 위치를 무작위화한다. 제어기 P Gain에는 $\mathcal U(0.66,1.33)$, D Gain에는 $\mathcal U(0.80,1.20)$ 배율을 적용하며, 외력도 주입한다. 센서 측면에서는 **활성 접촉 Bit를 확률 0.1로 1→0으로 만드는 Dropout**과 **Sensor lag probability 0.25**를 사용한다. 관절 관측에는 $+\mathcal U(-0.05,0.05)$, Action에는 $+\mathcal U(-0.06,0.06)$ 잡음을 추가한다. 
-
-**[Jiahe Pan et al. - Beyond Binary: Sim-to-Real Dexterous Manipulation with Physics-Grounded Contact Representation](../literature/papers/2026-pan-beyond-binary-cop-tactile.md) — PPO 기반 Insertion·Ball Balancing**
-
-| 구분                       | 보고된 무작위화 대상과 범위                                                                                                                                                                                                                                                     |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Peg-in-Hole 물성**       | Peg 질량 0.03–0.04 kg. 마찰: Peg [0.2, 0.4] / [0.1, 0.2], Hole [0.3, 0.5] / [0.1, 0.3], Hand [0.5, 0.7] / [0.3, 0.5]                                                                                                                                                    |
-| **Peg-in-Hole 초기 조건**    | Peg Roll·Pitch $+\mathcal U(-0.2,0.2)$ rad, Yaw $+\mathcal U(0,2\pi)$ rad. Hand 위치 $+\mathcal U(-0.5,0.5)$ cm, Roll·Pitch $+\mathcal U(-0.02,0.02)$ rad, 관절 위치 $+\mathcal U(-0.05,0.05)$ rad                                                                        |
-| **Ball Balancing 물성**    | Ball 질량 0.05–0.25 kg, Plate 질량 0.035–0.055 kg. 마찰: Ball·Plate 각각 [0.01, 0.02] / [0.0, 0.01], Hand [1.9, 2.0] / [1.8, 1.9]                                                                                                                                           |
-| **Ball Balancing 초기 조건** | Ball 위치 $+\mathcal U(-5.0,5.0)$ cm, Plate 위치 $+\mathcal U(-0.5,0.5)$ cm. Hand Roll·Pitch $+\mathcal U(-0.02,0.02)$ rad, 관절 위치 $+\mathcal U(-0.05,0.05)$ rad                                                                                                         |
-| **공통 제어·관측 조건**          | P Gain 배율 $\mathcal U(0.8,1.2)$, D Gain 배율 $\mathcal U(0.7,1.3)$. 관절 위치 관측 잡음 $+\mathcal U(-0.1,0.1)$ rad. 힘 벡터 관측에는 확률 0.2로 방향 회전 $+\mathcal U(-0.1,0.1)$ rad 및 크기 배율 $\mathcal U(0.9,1.1)$, 접촉 위치 관측에는 확률 0.2로 $+\mathcal U(-0.1,0.1)$ cm 잡음. 접촉 관측 지연 0.05–0.1 s |
-
-**[Sim-to-Real Transfer for Robotic Manipulation with Tactile Sensory](../literature/papers/2021-ding-sim-to-real-tactile-manipulation.md) — TD3 기반 Door Opening**
-
-손잡이 마찰 **[0.8, 1.0]**, 문 경첩 Stiffness **[0.1, 0.8]**·Damping **[0.1, 0.3]**·Friction loss **[0.0, 1.0]**, 문 질량 **[50.0, 150.0]**, 손잡이 질량 **[2.0, 10.0]**를 균등분포로 무작위화한다. 이 수치는 원문 Table I의 표기를 유지한 것이며, 표에 없는 질량·Gain 단위를 임의로 보완하지 않는다. 로봇의 Link 질량·Joint damping·제어 Gain 등은 DR하지 않고, 실물과 시뮬레이션의 관절 궤적을 맞추어 동정한 뒤 고정한다. Table의 X·Y 위치 Offset은 각 **[-0.05, 0.05]**에서 Episode 단위로 적용한다. (원문 §IV-D-a–b, Tables I–II)
-
-매 Timestep마다 촉각을 제외한 관측에 **[-0.002, 0.002]** 잡음, Gripper를 제외한 Action에 **[-0.01, 0.01]** 잡음을 적용하고, 전체 관측에 **0 또는 1 Step 지연**을 허용한다. Binary 촉각에는 연속 잡음 대신 **각 Bit를 매 Timestep 확률 $p_{\mathrm{flip}}=0.005$, 즉 0.5%로 0↔1 반전**하는 별도의 Tactile Signal Randomization을 적용한다. 이는 0/1을 새로 무작위 추출하는 것이 아니라 현재 값의 반전이며, [**Rotating without Seeing**](../literature/papers/2023-yin-rotating-without-seeing.md)의 1→0 Dropout과 구분된다. (원문 §IV-D-b–c, Table II, PDF p. 5)
-
-**[DexTouch](../literature/papers/2024-lee-dextouch.md) — PPO 기반 탐색·조작의 초기 조건 Randomization**
-
-물체 파지는 초기 X·Y 위치 Offset을 각각 **±0.30 m, ±0.15 m**, 문 열기는 **±0.55 m, ±0.20 m**, 밸브 회전은 **±0.30 m, ±0.30 m** 범위의 균등분포로 설정한다. 파지 물체와 밸브의 Z-Pose 회전 범위는 **$[-\pi,\pi]$ rad**다. 이는 **초기 배치의 무작위화**이며, 해당 출판본에서 질량·마찰·PD Gain·센서 잡음의 DR 분포까지 제시한 것은 아니다. (원문 §V-A, Table I)
-
-**[Sim2Real Manipulation](../literature/papers/2024-su-sim2real-tactile-manipulation.md) — PPO 기반 Pivoting**
-
-로봇 Base 기준 지지면 높이 **0–20 cm**, 물체 길이 **13–18 cm**, Gripper 기준 초기 물체 각도 **165–195°**, 목표 상대 각도 **90–150°**를 변화시키며 여러 형상의 물체로 학습한다. 이는 기하·초기·목표 조건의 다양화에 대한 근거다. 검토한 v1은 질량·마찰·관성·젤 물성의 별도 DR 수치나 모든 변수의 독립 균등분포를 명시하지 않으므로 추가하지 않는다. (원문 §IV Domain Randomization)
+| 연구 | Randomization 대상 |
+| --- | --- |
+| [**Rotating without Seeing**](../literature/papers/2023-yin-rotating-without-seeing.md) | 물체 질량·마찰·형상·초기 위치, Hand 마찰, PD Gain, 외력, 관절 관측 잡음, Action 잡음, Tactile Dropout·지연 |
+| [**Beyond Binary**](../literature/papers/2026-pan-beyond-binary-cop-tactile.md) | 물체 질량·마찰, 물체·Hand 초기 Pose, Hand 초기 관절 상태·마찰, PD Gain, 관절 관측 잡음, Contact Force·Position 잡음, Contact Observation 지연 |
+| [**Sim-to-Real Transfer for Robotic Manipulation with Tactile Sensory**](../literature/papers/2021-ding-sim-to-real-tactile-manipulation.md) | 손잡이 마찰, 문 경첩 Stiffness·Damping·Friction, 문·손잡이 질량, 환경 위치 Offset, Observation·Action 잡음, Observation 지연, Binary Tactile Bit Flip |
+| [**DexTouch**](../literature/papers/2024-lee-dextouch.md) | 물체·문·밸브의 초기 위치, 물체·밸브의 초기 Orientation |
+| [**Sim2Real Manipulation**](../literature/papers/2024-su-sim2real-tactile-manipulation.md) | 물체 형상·길이, 지지면 높이, 초기 물체 자세, 목표 자세 |
 
 ### 2.7.2. Randomization 대상 (후보)
 
