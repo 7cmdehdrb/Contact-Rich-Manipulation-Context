@@ -112,11 +112,11 @@
 
 **원문 정독 보완:** 제공된 7쪽 원문에서 별도 taxel/tactile array의 모델·배치·해상도는 제시되지 않는다. 실제 online estimator는 EE z-position·velocity와 joint-torque 기반 force/residual force를 이용해 Searching / Stuck / Unstuck / Aligned를 판정하고, 1 kHz BT가 Wiggle/Push를 전환한다. 따라서 제목의 tactile을 분포형 tactile skin 사용으로 단정하지 않는다.
 
-## 2.11. Robot Synesthesia: In-Hand Manipulation with Visuotactile Sensing
+<a id="icra24-yuan-robot-synesthesia"></a>\n\n## 2.11. Robot Synesthesia: In-Hand Manipulation with Visuotactile Sensing
 
-**저자:** Y. Yuan; H. Che; Y. Qin; B. Huang; Z. -H. Yin; K. -W. Lee; Y. Wu; S. -C. Lim; X. Wang
+**저자:** Y. Yuan; H. Che; Y. Qin; B. Huang; Z. -H. Yin; K. -W. Lee; Y. Wu; S. -C. Lim; X. Wang\n\n**상세 노트:** [2024 · Yuan et al.](../papers/2024-yuan-robot-synesthesia-visuotactile.md)
 
-**선별 이유:** contact-rich manipulation에서 visual과 tactile feedback의 fusion을 핵심 문제로 두고, tactile을 point-cloud representation으로 변환하여 vision과 결합한다. vision/touch integration에 대한 comprehensive ablation을 수행한다고 초록에 명시되어 있어 **modality별 역할과 상보성**을 확인하기 좋다.
+**선별 이유:** contact-rich manipulation에서 visual과 tactile feedback의 fusion을 핵심 문제로 두고, tactile을 point-cloud representation으로 변환하여 vision과 결합한다. vision/touch integration에 대한 comprehensive ablation을 수행한다고 초록에 명시되어 있어 **modality별 역할과 상보성**을 확인하기 좋다.\n\n**원문 정독 보완:** 16개 FSR을 threshold하여 binary contact로 만든 뒤, 활성 sensor mesh의 3D 위치를 tactile point cloud로 변환해 Azure Kinect camera point cloud 및 robot-kinematics augmented point cloud와 palm frame에서 input-level fusion한다. PPO teacher는 object position·linear/angular velocity·shape embedding을 포함한 privileged state를 사용하고, student는 5.12M teacher transitions의 BC와 DAgger로 visuotactile policy를 distill한다. 실물에서는 fine-tuning 없이 평가한다. 따라서 이 논문은 binary tactile에 **연속 하중을 추가한 사례가 아니라 spatial/visual context를 추가한 사례**이며, deployable student는 실행 중 continuous vision을 사용한다.
 
 ## 2.12. Generalize by Touching: Tactile Ensemble Skill Transfer for Robotic Furniture Assembly
 
