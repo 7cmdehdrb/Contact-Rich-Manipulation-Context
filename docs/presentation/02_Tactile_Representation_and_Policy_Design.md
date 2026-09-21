@@ -145,17 +145,16 @@ Sweeping에서 시스템 파라미터(Shape·질량·마찰·지지 조건 등)�
 - 접촉력 벡터
 - 정확한 질량·마찰·형상 파라미터 등
 
----
 
-## 2.6. Action 설계
+### 2.5.2. Action 설계
 
-### 2.6.1. Arm Action은 Cartesian Space로 표현한다
+#### 2.5.2.1. Arm Action은 Cartesian Space로 표현한다
 
 정책의 Arm Action은 **EEF 기준 Cartesian Space의 운동 명령**으로 표현한다. 이는 정책 출력의 표현에 관한 결정이며, 실제 명령 변환 및 제어기 선택을 확정한 것은 아니다.
 
 > **추가 조사 필요:** Joint-space Action 대비 Cartesian Action을 선택할 근거와, 현재 구현에서 실제 적용되는 Controller 경로를 확인한다.
 
-### 2.6.2. Arm Action: Cartesian 증분을 생성한다
+#### 2.5.2.2. Arm Action: Cartesian 증분을 생성한다
 
 Arm의 기본 행동 후보는 EEF의 위치·회전 증분이다.
 
@@ -165,7 +164,7 @@ $$
 
 각 성분에는 물리 단위의 크기 제한을 적용하고 EEF 기준 좌표계를 일관되게 사용한다. 
 
-### 2.6.3. Hand Action (미정)
+#### 2.5.2.3. Hand Action (미정)
 
 Hand의 행동 표현은 아직 확정하지 않는다. 현재 비교할 후보는 6개 구동 입력을 직접 제어하는 방식과, 엄지와 나머지 손가락을 분리한 2차원 근사다. 여기서 6차원은 **Cartesian 6-DoF가 아니라 Hand의 구동 입력 차원**이다.
 
@@ -176,11 +175,16 @@ Hand의 행동 표현은 아직 확정하지 않는다. 현재 비교할 후보�
 
 > **추가 조사 필요:** Sweeping·비파지 조작에서 직접 관절 제어와 저차원 Hand Synergy를 비교한 연구.
 
+
+### 2.5.3. Reward Formulation 설계
+
+(Hmm...)
+
 ---
 
-## 2.7. Domain Randomization 설계
+## 2.6. Domain Randomization 설계
 
-### 2.7.1. 사전 연구의 Domain Randomization
+### 2.6.1. 사전 연구의 Domain Randomization
 
 이미 검토한 RL 기반 연구에서는 물체·환경·로봇·센서 조건을 다양하게 무작위화하여 학습한다. 여기서는 **각 연구가 어떤 항목을 Randomization 했는지만 정리하며, 구체적인 수치 범위는 생략한다.**
 
@@ -192,7 +196,7 @@ Hand의 행동 표현은 아직 확정하지 않는다. 현재 비교할 후보�
 | [**DexTouch**](../literature/papers/2024-lee-dextouch.md) | 물체·문·밸브의 초기 위치, 물체·밸브의 초기 Orientation |
 | [**Sim2Real Manipulation**](../literature/papers/2024-su-sim2real-tactile-manipulation.md) | 물체 형상·길이, 지지면 높이, 초기 물체 자세, 목표 자세 |
 
-### 2.7.2. Randomization 대상 (후보)
+### 2.6.2. Randomization 대상 (후보)
 
 | 구분            | Randomization 후보                                |
 | ------------- | ----------------------------------------------- |
@@ -201,11 +205,11 @@ Hand의 행동 표현은 아직 확정하지 않는다. 현재 비교할 후보�
 | **로봇 파라미터**   | 시작 관절 상태·Hand 자세·제어 Gain(Stiffness & Damping) 등 |
 | **Base 파라미터** | 선반에 대한 Base의 XY 평면 위치                           |
 
-### 2.7.3. 센서 불확실성
+### 2.6.3. 센서 불확실성
 
-2.7.2절의 환경·물체·로봇·Base 파라미터와 **별도로 센서 관측 오차를 모델링하고, 학습 중 해당 오차를 무작위화한다.** 물리 파라미터의 변화가 실제 접촉·운동을 바꾼다면, 센서 불확실성은 그 상태가 정책에 어떻게 측정·전달되는지를 바꾼다.
+2.6.2절의 환경·물체·로봇·Base 파라미터와 **별도로 센서 관측 오차를 모델링하고, 학습 중 해당 오차를 무작위화한다.** 물리 파라미터의 변화가 실제 접촉·운동을 바꾼다면, 센서 불확실성은 그 상태가 정책에 어떻게 측정·전달되는지를 바꾼다.
 
-[2.7.1절](#271-사전-연구의-domain-randomization)의 Binary 반전·Dropout·지연 및 연속 접촉력 잡음 사례를 근거로, 본 연구에서는 다음 관측 오차 모델을 검토한다. **아래는 본 과업에 대한 설계 후보이며, 선행연구가 손목 F/T까지 동일하게 적용했다는 뜻은 아니다.**
+[2.6.1절](#261-사전-연구의-domain-randomization)의 Binary 반전·Dropout·지연 및 연속 접촉력 잡음 사례를 근거로, 본 연구에서는 다음 관측 오차 모델을 검토한다. **아래는 본 과업에 대한 설계 후보이며, 선행연구가 손목 F/T까지 동일하게 적용했다는 뜻은 아니다.**
 
 | 대상 | 센서 불확실성 모델 후보 |
 | --- | --- |
@@ -215,6 +219,3 @@ Hand의 행동 표현은 아직 확정하지 않는다. 현재 비교할 후보�
 
 Binary 촉각은 [**Sim-to-Real Transfer for Robotic Manipulation with Tactile Sensory**](../literature/papers/2021-ding-sim-to-real-tactile-manipulation.md)의 **매 Bit·매 Timestep 반전**을 구현 후보로 삼는다. 
 
-## 2.8. Reward Formulation 설계
-
-(Hmm...)
