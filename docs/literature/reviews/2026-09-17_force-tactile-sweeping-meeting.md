@@ -153,12 +153,19 @@ $
 - **선별 기준:** 둘 중 하나라도 한계를 넘으면 시연을 자동 종료하고 **같은 장면의 시연을 다시 수집**한다. 이 방식으로 수집한 **100개 시연**으로 학습한다. [원문 §V-A]
 - **이유:** Clutter에서는 접촉이 불가피하므로, 접촉에 반응할 시간을 허용하면서 과도한 힘의 지속을 제한한다. $\delta t_{\mathrm{react}}=0.8\,\mathrm{s}$는 **8 Action Steps / 10 Hz**, 한계값은 해당 물체의 손상 시험에서 얻은 **26 N·6 N**을 기준으로 정했다. **Peak Tactile**은 국소 손상 위험을, **Net Wrench**는 Tactile이 덮지 못한 접촉을 함께 감시한다. [원문 §IV-B]
 
+### 2.3. [Learning Force Control](../papers/2020-beltran-hernandez-learning-force-control.md) — F/T를 관측·제어·보상·안전에 함께 연결
+
+- **정책 관측:** SAC policy는 goal EEF pose error, EEF velocity, low-pass filtered F/T 기반 interaction force를 사용한다. Current object pose나 환경 geometry를 policy input으로 주지 않는다.
+- **Action / Controller:** Policy는 20 Hz에서 motion correction과 force-controller parameter를 출력하고, parallel position/force controller 또는 admittance controller가 500 Hz 수준에서 position command를 생성한다. 즉 force sensing을 단순 contact detector가 아니라 **motion과 compliance를 조절하는 연속 feedback**으로 사용한다.
+- **Reward / Safety:** Interaction force magnitude는 reward에 포함되고, force limit 초과는 fail-safe에서 episode termination으로 사용된다. IK feasibility와 joint-velocity limit은 actuation 전에 검사한다.
+- **실물 결과:** UR3 e-series에서 0.2 mm ring insertion과 0.05 mm peg insertion을 직접 학습했다. Peg insertion에서는 첫 contact 이후 stiffness 관련 parameter를 줄여 force를 낮추고, alignment 후 다시 높여 friction을 이기며 삽입하는 phase-dependent behavior를 보고한다.
+- **경계:** F/T를 제거한 ablation은 없고, task는 precision assembly이다. 따라서 F/T가 tactile보다 우월하다는 근거나 Blind Sweeping의 직접 baseline으로 확대하지 않는다.
+
 ### 적용 검토안과 근거
 
 검토안: **6축 Wrench 관측**을 통해 **의도하는 방향·크기**를 반영하는 Reward를 정책에 제공하는 구성.
 
-**F/T 관련 추가 조사는 필요하다.** Contact 기반 Manipulation으로 조사한 연구들에서는 대부분 Tactile 정보를 활용하는 경우가 많아, Wrench 정보를 다루는 경우를 확인하지 못했다. 
-**Wrench로 접촉 손실·미끄러짐·물체 진행을 어떻게 판단하는지**, 그리고 **미지 질량·마찰에 어떻게 적응하는지**를 우선 보완할 예정이다.
+**F/T 관련 추가 조사는 여전히 필요하다.** 다만 [Learning Force Control](../papers/2020-beltran-hernandez-learning-force-control.md)에서 **F/T 기반 interaction feedback을 policy observation, compliant controller, reward, fail-safe에 연결하는 실물 RL 사례**를 확인했다. 이 연구는 precision insertion이며 F/T 제거 ablation이나 tactile 병용 비교가 없으므로, **Wrench로 접촉 손실·미끄러짐·물체 진행을 어떻게 판단하는지**, 그리고 **미지 질량·마찰에 어떻게 적응하는지**는 별도로 보완해야 한다.
 
 ## 3. RL 결합과 Reward — Task 중심의 보상 설계
 
