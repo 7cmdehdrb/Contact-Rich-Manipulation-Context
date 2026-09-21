@@ -19,7 +19,7 @@
 | ID | 논문 | 정식 게재 | 이 조사에서의 위치 |
 | --- | --- | --- | --- |
 | A1 | Dutta, Burdet & Kaboli, **Predictive Visuo-Tactile Interactive Perception Framework for Object Properties Inference** | T-RO 41:1386–1403, **2025** | 물성 추정 → 목표 지향 pushing의 직접 사례 |
-| A2 | Haninger et al., **Differentiable Compliant Contact Primitives for Estimation and Model Predictive Control** | ICRA **2024**, 17146–17152 | 접촉·지지 모델 추정 → MPC |
+| A2 | [Haninger et al., **Differentiable Compliant Contact Primitives for Estimation and Model Predictive Control**](../papers/2024-haninger-differentiable-compliant-contact-primitives.md) | ICRA **2024**, 17146–17152 | 접촉·지지 모델 추정 → MPC |
 | A3 | Xue et al., **Robust Contact-rich Manipulation through Implicit Motor Adaptation** | IJRR, **2025 온라인 출판**, DOI 아래 참조 | 물성 확률 추정 → 조건부 정책 검색 |
 | B1 | Del Aguila Ferrandis, Moura & Vijayakumar, **Nonprehensile Planar Manipulation through Reinforcement Learning with Multimodal Categorical Exploration** | IROS **2023**, 5606–5613 | 물성 추정기 없는 pushing: 이력 + DR |
 | B2 | Sievers, Pitz & Bäuml, **Learning Purely Tactile In-Hand Manipulation with a Torque-Controlled Hand** | ICRA **2022** | 시각 없는 조작: 관측 stack + DR |
@@ -57,7 +57,7 @@
 
 <a id="a2"></a>
 
-### A2. Haninger et al. — 접촉·지지 조건 모델 → MPC
+### A2. [Haninger et al. — Differentiable Compliant Contact Primitives for Estimation and Model Predictive Control](../papers/2024-haninger-differentiable-compliant-contact-primitives.md)
 
 **연결:** 관절 위치·토크/모터 입력 → compliant contact primitive의 offline fitting 및 online EKF → 갱신된 접촉 모델 → MPC. 강성·접촉 위치 등의 추정을 별도로 평가했고, **MPC 실험에서는 강성을 고정하고 접촉 기준 위치를 온라인 갱신**했다.
 
@@ -65,7 +65,7 @@
 
 **저자 Limitation:** 관측가능성 조건이 있으며, 두 위치 파라미터를 함께 추정할 때 힘 예측이 맞아도 위치 추정이 잘못될 수 있다. **Future Work:** 확인한 원문에서 별도 명시적 진술을 찾지 못했다.
 
-**근거:** 공개 저자본 arXiv:2303.17476v3, §4.3, §5 식 (27)–(29), §6.2–6.3. [원문](https://arxiv.org/html/2303.17476v3) · [DOI](https://doi.org/10.1109/ICRA57147.2024.10611406)
+**근거:** 사용자 제공 IEEE 출판본 PDF 7쪽 전체 정독 및 [상세 노트](../papers/2024-haninger-differentiable-compliant-contact-primitives.md). 공개 저자본 arXiv:2303.17476v3, §4.3, §5 식 (27)–(29), §6.2–6.3도 기존 조사에서 확인했다. [원문](https://arxiv.org/html/2303.17476v3) · [DOI](https://doi.org/10.1109/ICRA57147.2024.10611406)
 
 <a id="a3"></a>
 
@@ -156,7 +156,7 @@
 
 ### 2.4.1. 명시적 물성·접촉 모델을 추정하는 방향
 
-관측된 운동과 접촉 반응으로 물성 또는 접촉 모델을 추정하고, 추정값이나 그 불확실성을 계획·제어에 제공한다. [Dutta et al.](https://doi.org/10.1109/TRO.2025.3531816)은 물성 추정을 목표 지향 pushing의 MPC에 연결하며, [Haninger et al.](https://doi.org/10.1109/ICRA57147.2024.10611406)은 접촉 모델 추정을 MPC에 반영한다. 이 접근에서도 시간 이력을 사용할 수 있다.
+관측된 운동과 접촉 반응으로 물성 또는 접촉 모델을 추정하고, 추정값이나 그 불확실성을 계획·제어에 제공한다. [Dutta et al.](https://doi.org/10.1109/TRO.2025.3531816)은 물성 추정을 목표 지향 pushing의 MPC에 연결하며, [Haninger et al.](../papers/2024-haninger-differentiable-compliant-contact-primitives.md)은 접촉 모델 추정을 MPC에 반영한다. 이 접근에서도 시간 이력을 사용할 수 있다.
 
 본 연구에 적용하려면 제한된 F/T·촉각에서 필요한 파라미터가 얼마나 구분되는지, 추정 오차가 행동 선택에 어떤 영향을 주는지 검증해야 한다. 이는 명시적 모델 전체가 부적합하다는 결론이 아니라, 별도 검증이 필요한 설계 선택이다.
 
