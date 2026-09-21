@@ -39,11 +39,13 @@
 | P-01 | PROPOSED | 초기 대상 pose+방향·거리+F/T+촉각이 입력의 중심 | 전체 observation dimension은 미정 |
 | P-02 | PROPOSED | 선반 좌표계의 좌우 Sweep을 구체적인 시작안으로 사용 | 9/11의 전방향 지향을 영구 삭제하지 않음 |
 | P-03 | PROPOSED | tactile 영역별 Grid를 scalar/Boolean으로 축약하여 17차원 사용 | 원시 출력·축약 함수·threshold 실측 미완료 |
-| P-04 | PROPOSED | Cartesian arm command와 사전 정의 Hand posture | Δpose/velocity, 제어 DOF, controller, hand mode 미정 |
+| P-04 | PROPOSED | EEF 기준 Cartesian arm command | 실제 controller 경로와 허용 DOF는 미정 |
 | P-05 | PROPOSED | 초기 접촉→sweep→근처 대기 자세 | 전체 상태기계·학습 action 구조는 확정되지 않음 |
 | P-06 | PROPOSED | 9/13안에서는 명시 Geometry 입력 없음 | 9/14에 전체 입력 계약을 확정하지 않음. geometry 필요성을 임의 확정하지 않음 |
 | P-07 | REPORTED_IMPLEMENTED | 9/10의 Cartesian/OSC sweep·일부 relative obs·초기 상태 랜덤화 | 센서 기반 최종 정책과 다름. 최신 코드 재확인 필요 |
 | P-08 | HISTORICAL | 9/11 PPO config 코드 | 현재 환경·실행에 적용되는지 미확인 |
+| P-09 | PROPOSED | 관측·행동·로봇 상태 이력으로 숨은 환경 차이에 간접 적응 | 명시적 물성 추정과 구분하며 관련 선행연구 추가 조사 필요 |
+| P-10 | PROPOSED | Base Randomization은 정지 후 XY 위치 편차로 한정 | 범위는 실측 전 미정이며 Yaw·동적 이동·위치 추정 오차는 자동 포함하지 않음 |
 
 ## 4. 변경되었거나 후순위가 된 내용
 
@@ -74,12 +76,13 @@
 | O-08 | Blind 실행에서 목표 도달·종료를 어떻게 판정하는가? | 물체 GT 평가와 실물 종료 로직을 분리하고 오류 측정 | P0 |
 | O-09 | 최초 학습의 방향 범위·물체 종류·초기 접촉 조건은? | 최소 실험 정의. 좌우 시작안과 전방향 확장 범위 구분 | P1 |
 | O-10 | 실제 approach error 분포는? | 반복 접근 후 EEF–물체 relative pose error 측정 | P1, 장비 의존 |
-| O-11 | 고유감각·action history·sensor history·RNN은 필요한가? | 관측 가능성과 baseline 실패를 보고 비교 실험 설계 | P1 |
+| O-11 | 고유감각·action history·sensor history를 어떤 구조와 길이로 제공할 것인가? | 현재 관측·Window 요약·순서 보존 이력을 비교하고 제어 주기·지연에 따라 길이 결정 | P1 |
 | O-12 | 보상·성공 기준·허용 force·rotation·timeout은? | 물리 목표와 실물 안전 한계 및 관측 조건에 근거해 결정 | P1 |
-| O-13 | 손 자세 고정/모드 선택/연속 손가락 제어 중 무엇을 쓰는가? | 접촉면과 tactile coverage, 기본 제어 가능성 확인 | P1 |
+| O-13 | Hand의 6차원 직접 제어와 2차원 근사 중 무엇을 쓰는가? | 접촉면과 tactile coverage, 표현 가능 자세, 기본 제어 가능성 확인 | P1 |
 | O-14 | 어떤 비교 실험으로 F/T·촉각의 기여를 입증하는가? | 동일 조건의 무접촉센서/F/T-only/tactile-only/결합 baseline 제안 검토 | P1 |
 | O-15 | 최종 clutter 범위와 실물 검증 수준은? | 기본 feasibility·센싱 실패 조건과 연구 일정의 근거로 결정 | P2 |
 | O-16 | 간섭 판별이 센서만으로 충분히 가능한가, 추가 기여가 있는가? | 기본 문제 및 문헌 결과 이후 식별 가능성과 rule-based 기준 비교 | P2/DEFERRED |
+| O-17 | 명시적 물성 모델과 이력 기반 간접 적응은 기존 연구에서 어떻게 비교되는가? | 두 연구 방향의 선행연구를 추가 조사하고 본 연구의 선택 근거 보강 | P1 |
 
 P0/P1/P2는 이 인계에서 구성한 작업 우선순위다. 교수님이 이 번호나 정확한 순서를 승인했다는 뜻은 아니다. 장비가 없는 P0 항목은 확인 불가로 남기고 가정을 명시한 시뮬레이션·문헌 작업을 병행한다.
 
