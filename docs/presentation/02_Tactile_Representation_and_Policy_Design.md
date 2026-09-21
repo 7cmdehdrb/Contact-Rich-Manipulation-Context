@@ -20,6 +20,8 @@
 
 ## 2.2. 기존 연구는 Tactile 정보를 어떻게 사용하는가?
 
+![overview](../../img/tactile_representation_fig1.png)
+
 촉각 활용 방식은 **명시적 상태 추정**, **고차원 영상 인코딩**, **저차원 접촉 표현**의 세 방향으로 정리한다. 이어서 2.2.4절에서는 표현을 직접 비교한 연구를 통해, 어떤 정보를 남기거나 제거하는 것이 조작과 실물 전이에 유효했는지 살펴본다.
 
 ### 2.2.1. Contact Point·Pose·Shape 등을 명시적으로 추정하는 접근
@@ -116,6 +118,8 @@ Sweeping에서 시스템 파라미터(Shape·질량·마찰·지지 조건 등)�
 
 ## 2.5. Markov Decision Process
 
+![overview](../../img/tactile_representation_fig2.png)
+
 ### 2.5.1. State
 
 | 구성        | Actor 입력 후보                                                            |
@@ -210,3 +214,7 @@ Hand의 행동 표현은 아직 확정하지 않는다. 현재 비교할 후보�
 | **Arm·Hand 고유감각** | 관절 위치·속도 등 실제 사용하는 관측의 잡음과 지연, 센서 간 시간 정렬 오차 |
 
 Binary 촉각은 [**Sim-to-Real Transfer for Robotic Manipulation with Tactile Sensory**](../literature/papers/2021-ding-sim-to-real-tactile-manipulation.md)의 **매 Bit·매 Timestep 반전**을 구현 후보로 삼는다. 
+
+## 2.8. Reward Formulation 설계
+
+(Hmm...)
