@@ -14,7 +14,7 @@
 
 앞선 조사 조건을 유지하여 **2022년 이후 정식 출판된 RA-L, ICRA, IROS, RSS 논문**을 선정했다. SCIE는 저널 색인 분류이므로 학회 논문을 SCIE 논문으로 표현하지 않는다. arXiv는 원문 접근 경로로 사용하고, 정식 출판 여부는 출판사·학회 proceedings·저자 공식 출판 기록으로 별도 확인했다.
 
-[상세 리뷰 색인](../papers/README.md)의 조사 착수 시점 기존 28편은 제외했다. 특히 Force Push, Pushing in the Dark, Visuo-Force-Tactile Door Opening, Learning Force Control 및 Haninger의 compliant contact primitives를 새 레퍼런스로 재사용하지 않았다. 아래 9편은 조사 착수 시 해당 폴더에 상세 리뷰가 없었다. 이후 사용자가 원문을 제공한 W1 FoAR만 이번 작업에서 [상세 노트](../papers/2025-he-foar.md)를 추가했다. **SRL-VIC는 기존 조사 목록에서 언급된 후보를 원문으로 재확인한 사례**이며, 완전히 새로 발견한 논문으로 취급하지 않는다.
+[상세 리뷰 색인](../papers/README.md)의 조사 착수 시점 기존 28편은 제외했다. 특히 Force Push, Pushing in the Dark, Visuo-Force-Tactile Door Opening, Learning Force Control 및 Haninger의 compliant contact primitives를 새 레퍼런스로 재사용하지 않았다. 아래 9편은 조사 착수 시 해당 폴더에 상세 리뷰가 없었다. 이후 사용자가 원문을 제공한 [W1 FoAR](../papers/2025-he-foar.md), [W4 Zero-Shot Transfer](../papers/2023-brahmbhatt-zero-shot-haptics-insertion.md), [W7 FORGE](../papers/2025-noseworthy-forge.md)의 상세 노트를 후속으로 추가했다. **SRL-VIC는 기존 조사 목록에서 언급된 후보를 원문으로 재확인한 사례**이며, 완전히 새로 발견한 논문으로 취급하지 않는다.
 
 ## 2. 핵심 비교표
 
@@ -25,7 +25,7 @@ W1–W7은 측정·추정 힘이 학습 정책의 실행 관측에 들어가는 
 | W1 | [**FoAR**](../papers/2025-he-foar.md), RA-L 2025 | 외장 OptoForce / 6D | Wrench 이력의 Transformer 표현 → 시각 특징과 결합 → Diffusion Policy; 반응형 동작 보정에도 사용 | Wiping·peeling·chopping / 시각 사용 |
 | W2 | **Comp-ACT**, IROS 2024 | UR5e 내장 손목 F/T / 6D | 현재 Wrench + EE pose + 영상 → ACT → 자세·그리퍼·강성 | 삽입·닦기·그리기 / 시각 사용 |
 | W3 | **Reactive Diffusion Policy — Force 분기**, RSS 2025 | Flexiv 관절 토크 기반 TCP 추정값 / 6D | 실시간 Wrench → 빠른 GRU 행동 분기; 느린 시각 정책과 결합 | Peeling·wiping·양팔 lifting / 시각 사용 |
-| W4 | **Zero-Shot Transfer of Haptics-Based Object Insertion Policies**, ICRA 2023 | Franka 제공 말단 외력 추정값 / 6D | 상대 EE pose + Wrench의 8시점 이력 → SAC residual motion | 접시·컵 삽입 / 초기 시각 이후 추적 없음 |
+| W4 | [**Zero-Shot Transfer of Haptics-Based Object Insertion Policies**](../papers/2023-brahmbhatt-zero-shot-haptics-insertion.md), ICRA 2023 | Franka 제공 말단 외력 추정값 / 6D | 상대 EE pose + Wrench의 8시점 이력 → SAC residual motion | 접시·컵 삽입 / 초기 시각 이후 추적 없음 |
 | W5 | **Symmetry-aware RL … with a Soft Wrist**, ICRA 2024 | UR5e의 F/T 센서, soft wrist 상부 / 6D | Arm-tip 위치 + Wrench 및 행동 이력 → recurrent SAC | Peg-in-hole / 정책에 영상 없음; hole 좌표계는 알려짐 |
 | W6 | **SRL-VIC**, RA-L 2024 | F/T 입력 명시; 실기 센서 구현 불명확 / 6D | Wrench + EE 위치 → task actor; Wrench → safety/recovery | Blind maze·장애물 밀기 / 시각 없음 |
 | W7 | [**FORGE**](../papers/2025-noseworthy-forge.md), RA-L 2025 | Franka 관절 토크 기반 추정 / **3D force** | 힘 + EE 상태 + 부품 pose 추정 + 허용 힘 → recurrent PPO | 삽입·너트 체결 / 부품 pose 추정 사용 |
@@ -67,9 +67,11 @@ W1–W7은 측정·추정 힘이 학습 정책의 실행 관측에 들어가는 
 - **저자 Future Work:** 지연 감소, dexterous hand와 빠른 시각 반응으로 확장. 근거: §VI.
 - **본 조사 해석:** 힘의 크기 하나로 축약하기보다 여러 방향의 반응을 활용할 근거다. Blind 조건의 검증은 아니다.
 
-### W4. Zero-Shot Transfer — 초기 시각 이후 Wrench·고유감각 이력
+<a id="w4"></a>
 
-**Brahmbhatt, S., Deka, A., Spielberg, A., and Müller, M. “Zero-Shot Transfer of Haptics-Based Object Insertion Policies.” ICRA, 3940–3947, 2023.** [IEEE 출판 기록](https://ieeexplore.ieee.org/document/10160346/) · [논문](https://arxiv.org/pdf/2301.12587)
+### W4. [Zero-Shot Transfer — 초기 시각 이후 Wrench·고유감각 이력](../papers/2023-brahmbhatt-zero-shot-haptics-insertion.md)
+
+**Brahmbhatt, S., Deka, A., Spielberg, A., and Müller, M. “Zero-Shot Transfer of Haptics-Based Object Insertion Policies.” ICRA, 3940–3947, 2023.** [상세 노트](../papers/2023-brahmbhatt-zero-shot-haptics-insertion.md) · [IEEE 출판 기록](https://ieeexplore.ieee.org/document/10160346/) · [논문](https://arxiv.org/pdf/2301.12587)
 
 - **센서 → 정책:** Franka가 제공하는 추정 말단 6D Wrench와 목표 대비 EE pose의 **8시점 이력**을 SAC에 넣는다. 정책은 residual motion을 출력한다. 초기 목표를 시각으로 정한 뒤 실행 중 object tracking을 사용하지 않는다. 근거: §III, PDF pp.3–4.
 - **출처 재확인:** 저자 구현은 `O_F_ext_hat_K`를 관측으로 전달한다. [저자 제어 코드](https://github.com/isl-org/0shot-object-insertion/blob/e916d29e815b46e2f54636d46fff8a92cc698f22/ros_controllers/src/tf_policy_controller.cpp#L241-L247) · [이력 구성 코드](https://github.com/isl-org/0shot-object-insertion/blob/e916d29e815b46e2f54636d46fff8a92cc698f22/ros_controllers/nodes/tf_policy_actionserver_base.py#L99-L129) · [Franka의 추정 Wrench 정의](https://github.com/frankaemika/libfranka/blob/0.9.0/include/franka/robot_state.h#L302-L310). 별도 장착 F/T로 분류하지 않는다.
@@ -147,7 +149,7 @@ W1–W7은 측정·추정 힘이 학습 정책의 실행 관측에 들어가는 
 
 ### 5.2. 본문에 넣을 수 있는 문안 — PROPOSED
 
-> 손목 Wrench를 접촉 조작 정책의 관측으로 사용하는 선행 사례가 존재한다. FoAR는 외장 F/T 센서의 시간 이력을 시각 특징과 결합하고, Zero-Shot Transfer는 초기 시각 정보 이후 말단 pose와 Wrench 이력으로 삽입 행동을 선택한다. Symmetry-aware RL 역시 F/T·고유감각·행동 이력을 이용한 부분 관측 정책을 학습한다. 따라서 본 연구에서 Wrench를 행동과 로봇 운동 이후 나타나는 하중 반응으로 활용하는 설계에는 선행 근거가 있다. [W1](../papers/2025-he-foar.md), [W4](https://arxiv.org/pdf/2301.12587), [W5](https://arxiv.org/html/2402.18002v2)
+> 손목 Wrench를 접촉 조작 정책의 관측으로 사용하는 선행 사례가 존재한다. FoAR는 외장 F/T 센서의 시간 이력을 시각 특징과 결합하고, Zero-Shot Transfer는 초기 시각 정보 이후 말단 pose와 Wrench 이력으로 삽입 행동을 선택한다. Symmetry-aware RL 역시 F/T·고유감각·행동 이력을 이용한 부분 관측 정책을 학습한다. 따라서 본 연구에서 Wrench를 행동과 로봇 운동 이후 나타나는 하중 반응으로 활용하는 설계에는 선행 근거가 있다. [W1](../papers/2025-he-foar.md), [W4](../papers/2023-brahmbhatt-zero-shot-haptics-insertion.md), [W5](https://arxiv.org/html/2402.18002v2)
 >
 > 다만 F/T 관측의 기여는 작업과 제어 구조에 따라 달라진다. Comp-ACT의 관측 포함·제거 비교에서, F/T를 포함한 정책은 삽입 성공률이 높고 wiping 성공률이 낮았다. 본 연구에서도 Wrench 추가 효과를 실험으로 확인해야 하며, 기존 결과만으로 자유 물체 Sweeping의 성능 향상이나 접촉 위치·물체 상태의 유일한 복원을 주장하지 않는다. [W2](https://arxiv.org/html/2406.14990v2)
 
@@ -163,6 +165,6 @@ W1–W7은 측정·추정 힘이 학습 정책의 실행 관측에 들어가는 
 
 ## 6. 조사 상태
 
-- 원문에서 센서 출처, 실제 정책 입력, 태스크 및 실물 검증 여부를 확인했다. W1은 첨부 PDF 9쪽을 후속 정독하여 [상세 노트](../papers/2025-he-foar.md)로 연결했고, 하드웨어 출처가 불명확한 W6은 그 상태를 명시했다.
+- 원문에서 센서 출처, 실제 정책 입력, 태스크 및 실물 검증 여부를 확인했다. W1·W4·W7은 첨부 PDF를 후속 정독하여 각각 [FoAR](../papers/2025-he-foar.md), [Zero-Shot Transfer](../papers/2023-brahmbhatt-zero-shot-haptics-insertion.md), [FORGE](../papers/2025-noseworthy-forge.md) 상세 노트로 연결했고, 하드웨어 출처가 불명확한 W6은 그 상태를 명시했다.
 - 각 핵심·보조 논문의 저자 Limitation과 Future Work를 분리했다. 위치 표기의 페이지는 원문 PDF 첫 페이지를 1로 세는 기준이다.
 - 연구 방향이나 센서 사양을 새로 확정하지 않았다. 이 문서는 §2.3 수정에 사용할 비교 조사와 제안 문안이다.
