@@ -101,7 +101,7 @@ Sweeping에서는 Shape·질량·마찰·지지 조건 등의 숨은 물리 조�
 관측된 운동과 접촉 반응으로 물성 또는 접촉 모델을 추정하고, 그 값이나 불확실성을 계획·제어기에 제공한다.
 
 - [Dutta et al.](../literature/reviews/2026-09-21_sweeping-physical-parameter-adaptation.md#a1)은 RGB-D·접촉력·행동으로 물체 상태와 질량·CoM·마찰 관련 파라미터를 추정하여 iCEM MPC에 제공했다. 실제 목표 지향 pushing까지 검증했지만 실행 중 시각을 사용한다.
-- [Haninger et al.](../literature/reviews/2026-09-21_sweeping-physical-parameter-adaptation.md#a2)은 compliant contact model을 추정하여 MPC에 연결했다. MPC 실험에서 온라인으로 갱신한 핵심 값은 접촉 기준 위치이며, 마찰계수 추정 사례로 인용하지 않는다.
+- [Haninger et al.](../literature/papers/2024-haninger-differentiable-compliant-contact-primitives.md)은 compliant contact model을 추정하여 MPC에 연결했다. MPC 실험에서 온라인으로 갱신한 핵심 값은 접촉 기준 위치이며, 마찰계수 추정 사례로 인용하지 않는다.
 - [Xue et al.](../literature/reviews/2026-09-21_sweeping-physical-parameter-adaptation.md#a3)은 상태·행동 이력으로 질량·반경·물체–테이블 마찰의 추정값과 분포를 만들고, 이를 조건부 행동 검색에 사용했다. 제목의 `Implicit`은 별도 물성 추정기가 없다는 뜻이 아니다.
 
 따라서 이 범주의 판단 기준은 이력 사용 여부가 아니라, **질량·마찰·강성·접촉 위치처럼 의미가 정해진 추정 출력이 실행 중 계획·제어에 들어가는가**이다. 본 연구에 적용하려면 제한된 F/T·Binary 촉각으로 필요한 파라미터를 구분할 수 있는지와 추정 오차가 행동 선택에 미치는 영향을 별도로 검증해야 한다.
