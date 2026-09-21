@@ -99,6 +99,7 @@
 | 논문 | 확인된 내용 | 본 연구에서 뒷받침하는 논점 |
 | --- | --- | --- |
 | [**Force Push: Robust Single-Point Pushing with Force Feedback**](../literature/papers/2024-heins-force-push.md) — Heins and Schoellig, 2024 | 물체의 현재 Pose와 정확한 물성 모델 없이 접촉력 피드백으로 밀기를 수행한다. 힘의 방향으로 조향하고, 크기에 따라 접촉 회복과 과부하 시 속도 보정을 수행한다. | **힘의 크기와 방향은 접촉 여부를 넘어 행동을 조절하는 데 사용되는 정보다.** |
+| [**Learning Force Control for Contact-Rich Manipulation Tasks With Rigid Position-Controlled Robots**](../literature/papers/2020-beltran-hernandez-learning-force-control.md) — Beltran-Hernandez et al., 2020 | F/T 기반 interaction feedback을 EEF pose error·velocity와 함께 SAC observation에 넣고, parallel position/force 또는 admittance controller의 motion·gain을 학습한다. 같은 force signal을 reward와 fail-safe에도 사용하여 실물 precision insertion을 학습한다. | **연속 force feedback은 접촉 검출을 넘어 motion·compliance·안전 판단을 동시에 조절하는 정책 정보로 사용할 수 있다.** Tactile과의 병용 우위나 Sweeping 성능을 검증한 연구는 아니다. |
 | [**Gentle Object Retraction in Dense Clutter Using Multimodal Force Sensing and Imitation Learning**](../literature/papers/2026-brouwer-gentle-object-retraction.md) — Brouwer et al. | 분포형 촉각과 관절 토크 기반 추정 Wrench를 정책에 함께 사용한다. 저자들은 Wrench가 여러 접촉의 개별 하중을 구분하지 못하고, 촉각은 센서가 덮지 못한 접촉을 놓친다는 차이를 설명한다. | **촉각의 국소 접촉 정보와 Wrench의 전체 하중 정보는 서로 다른 관측 한계를 보완한다.** |
 
 ### 추가 문헌조사 방향
