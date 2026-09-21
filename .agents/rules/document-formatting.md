@@ -117,5 +117,7 @@ $l=p_{C,y}^R$
 
 - Reward Formulation 비교 문서에서 `\operatorname` 사용 시 GitHub가 `The following macros are not allowed: operatorname`을 표시하여 수식이 렌더링되지 않는 문제를 확인했다.
 - 해당 문서의 `\operatorname{clip}`, `\operatorname{mean}`을 각각 `\mathrm{clip}`, `\mathrm{mean}`으로 교체했다.
+- 저장소 코드 검색으로 기존 문서에 남아 있던 `\operatorname` 사용처도 확인하여 `\mathrm{...}` 기반 안전 표기로 교체했다. 함께 수정한 문서는 DexTouch, Rotating without Seeing, force-tactile sweeping meeting, binary-tactile-wrench design notes, Haninger compliant contact primitives, UltraDP review dataset 노트다.
+- 위 기존 문서에서 이번 수정으로 건드린 display math는 현재 저장소 규칙에 맞게 한 수식을 한 Markdown 물리적 줄로 정규화했다.
 - 일반 MathJax 지원과 GitHub Markdown 허용 매크로가 동일하지 않다는 점을 규칙에 명시했다.
 - 검사기가 display math의 Markdown 충돌뿐 아니라 금지 매크로와 `math` fenced block, 여러 물리적 줄로 작성한 display equation도 사전에 거부하도록 강화했다.
