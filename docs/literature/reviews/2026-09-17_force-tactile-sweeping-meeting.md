@@ -122,7 +122,7 @@ $
 $
 \theta_o=\theta_d-k_c\Delta_c,\qquad
 \theta_{\mathrm{ee}}=\theta_{\mathrm{ee}}^{-}
-+\operatorname{clip}\!\left(\theta_o-\theta_{\mathrm{ee}}^{-},-\gamma_{\max},\gamma_{\max}\right)
++\mathrm{clip}\!\left(\theta_o-\theta_{\mathrm{ee}}^{-},-\gamma_{\max},\gamma_{\max}\right)
 $
 
 $\theta_{\mathrm{ee}}^{-}$는 이전 제어 방향, $\gamma_{\max}$는 한 iteration의 회전량 제한이다.
@@ -189,9 +189,7 @@ Sweep은 아니지만, **Grasping·운반과 Door Opening에서 접근 보상과
 **공통 접근 보상 — 손끝이 대상에 더 가까이 도달했을 때 보상**
 
 $$
-r_{\mathrm{reach}}
-=\sum_{\mathrm{finger}}\alpha_{\mathrm{reach}}
-\max(d_{\mathrm{closest}}-d,0).
+r_{\mathrm{reach}} =\sum_{\mathrm{finger}}\alpha_{\mathrm{reach}} \max(d_{\mathrm{closest}}-d,0).
 $$
 
 $d$는 손끝–대상 거리, $d_{\mathrm{closest}}$는 에피소드에서 달성한 최소거리 기록이다. **직전 step보다 가까워지는 것보다 엄격하게, 기존 최소거리 기록을 갱신할 때 보상**한다.
@@ -199,13 +197,7 @@ $d$는 손끝–대상 거리, $d_{\mathrm{closest}}$는 에피소드에서 달�
 **Grasping·운반 — 들어 올린 뒤 목표점으로 이동**
 
 $$
-\begin{aligned}
-r_{\mathrm{execute}}^{\mathrm{grasp}}
-={}&(1-\mathbf{1}_{\mathrm{picked}})\alpha_{\mathrm{pick}}h_{\mathrm{obj}}
-+r_{\mathrm{picked}}\\
-&+\mathbf{1}_{\mathrm{picked}}\alpha_{\mathrm{goal}}
-\max(\tilde d_{\mathrm{closest}}-\tilde d,0).
-\end{aligned}
+\begin{aligned} r_{\mathrm{execute}}^{\mathrm{grasp}} ={}&(1-\mathbf{1}_{\mathrm{picked}})\alpha_{\mathrm{pick}}h_{\mathrm{obj}} +r_{\mathrm{picked}}\\ &+\mathbf{1}_{\mathrm{picked}}\alpha_{\mathrm{goal}} \max(\tilde d_{\mathrm{closest}}-\tilde d,0). \end{aligned}
 $$
 
 | 항 | 의미 |
@@ -218,14 +210,7 @@ $$
 **Door Opening — 손잡이를 돌린 뒤 문을 열기**
 
 $$
-\begin{aligned}
-r_{\mathrm{execute}}^{\mathrm{door}}
-={}&(1-\mathbf{1}_{\mathrm{rotated}})\alpha_{\mathrm{rot}}
-\max(\phi-\phi_{\max},0)\\
-&+\mathbf{1}_{\mathrm{rotated}}\alpha_{\mathrm{open}}
-\max(\psi-\psi_{\max},0)
-+r_{\mathrm{rotated}}+r_{\mathrm{opened}}.
-\end{aligned}
+\begin{aligned} r_{\mathrm{execute}}^{\mathrm{door}} ={}&(1-\mathbf{1}_{\mathrm{rotated}})\alpha_{\mathrm{rot}} \max(\phi-\phi_{\max},0)\\ &+\mathbf{1}_{\mathrm{rotated}}\alpha_{\mathrm{open}} \max(\psi-\psi_{\max},0) +r_{\mathrm{rotated}}+r_{\mathrm{opened}}. \end{aligned}
 $$
 
 $\phi$는 손잡이 각도, $\psi$는 문 열림 각도이며, 아래첨자 $\max$는 각각의 최대기록이다. 손잡이를 **약 60°** 돌리기 전에는 손잡이 회전을, 이후에는 문 열림을 보상한다. 두 Bonus는 손잡이 회전 조건과 **문 약 50° 열림**에 대응한다. $\alpha$와 Bonus의 구체적인 수치는 원문에 명시되지 않는다.
@@ -241,24 +226,13 @@ $p$는 위치, $\theta$는 평면 방향각, $o$는 물체, $g$는 목표, $e_i$
 **Bi-pushing — 목표 위치·방향으로 밀면서 접촉면에 수직 정렬**
 
 $$
-R_t^{\mathrm{BP}}
-=-w_1\lVert p_t^g-p_t^o\rVert_2
--w_2S(\theta_t^g,\theta_t^o)
--w_3\sum_{i=1}^{2}S(\theta_t^{e_i},\theta_t^o).
+R_t^{\mathrm{BP}} =-w_1\lVert p_t^g-p_t^o\rVert_2 -w_2S(\theta_t^g,\theta_t^o) -w_3\sum_{i=1}^{2}S(\theta_t^{e_i},\theta_t^o).
 $$
 
 **Bi-reorienting — 중심 위치를 유지하면서 목표 방향으로 회전**
 
 $$
-\begin{aligned}
-R_t^{\mathrm{BR}}
-={}&-w_1\lVert p_0^o-p_t^o\rVert_2
--w_2S(\theta^g,\theta_t^o)\\
-&-w_3\sum_{i=1}^{2}
-S\!\left(\theta_t^{e_i},(-1)^i(\pi/2+\theta_t^o)\right)\\
-&-w_4\sum_{i=1}^{2}
-\lVert p_{\mathrm{ctrl}_i}^{o}-p_t^{e_i}\rVert_2.
-\end{aligned}
+\begin{aligned} R_t^{\mathrm{BR}} ={}&-w_1\lVert p_0^o-p_t^o\rVert_2 -w_2S(\theta^g,\theta_t^o)\\ &-w_3\sum_{i=1}^{2} S\!\left(\theta_t^{e_i},(-1)^i(\pi/2+\theta_t^o)\right)\\ &-w_4\sum_{i=1}^{2} \lVert p_{\mathrm{ctrl}_i}^{o}-p_t^{e_i}\rVert_2. \end{aligned}
 $$
 
 $p_{\mathrm{ctrl}_i}^{o}$는 원하는 접촉 위치다. **중심 유지 + 목표 회전 + 접촉면 정렬 + 접촉 위치 유지**로 구성한다. 여기서 수직 정렬은 세계 좌표계의 수직축이 아니라 **접촉면 법선 방향 정렬**이다. 각도의 좌우 부호는 원문 표기를 따른다.
@@ -266,24 +240,13 @@ $p_{\mathrm{ctrl}_i}^{o}$는 원하는 접촉 위치다. **중심 유지 + 목�
 **Bi-gathering — 두 물체 사이의 거리를 줄이면서 접촉 유지**
 
 $$
-\begin{aligned}
-R_t^{\mathrm{BG}}
-={}&-w_1\lVert p_t^{o_1}-p_t^{o_2}\rVert_2
--w_2\sum_{i=1}^{2}S(\theta_t^{e_i},\theta_t^{o_i})\\
-&-w_3\sum_{i=1}^{2}
-\lVert p_{\mathrm{ctrl}}^{o_i}-p_t^{e_i}\rVert_2.
-\end{aligned}
+\begin{aligned} R_t^{\mathrm{BG}} ={}&-w_1\lVert p_t^{o_1}-p_t^{o_2}\rVert_2 -w_2\sum_{i=1}^{2}S(\theta_t^{e_i},\theta_t^{o_i})\\ &-w_3\sum_{i=1}^{2} \lVert p_{\mathrm{ctrl}}^{o_i}-p_t^{e_i}\rVert_2. \end{aligned}
 $$
 
 여기에 GUM(Goal-update Mechanism)을 적용해 **중간 목표까지의 거리와 Target Line 방향 정렬**을 추가한다.
 
 $$
-\begin{aligned}
-R_t^{\mathrm{BG\text{-}GUM}}
-={}&R_t^{\mathrm{BG}}
--w_4\sum_{i=1}^{N}\lVert p_t^{g_i}-p_t^{o_i}\rVert_2\\
-&-w_5\sum_{i=1}^{N}S(\theta_t^{o_i},(-1)^i\theta_t^c).
-\end{aligned}
+\begin{aligned} R_t^{\mathrm{BG\text{-}GUM}} ={}&R_t^{\mathrm{BG}} -w_4\sum_{i=1}^{N}\lVert p_t^{g_i}-p_t^{o_i}\rVert_2\\ &-w_5\sum_{i=1}^{N}S(\theta_t^{o_i},(-1)^i\theta_t^c). \end{aligned}
 $$
 
 $p_t^{g_i}$는 중간 목표이며, $\theta_t^c$는 본문의 설명상 Target Line 방향이다. 원문의 $N$은 두 물체에 대한 합산 문맥이며, 중간 목표 후보 개수와 구분한다.
@@ -295,13 +258,7 @@ $p_t^{g_i}$는 중간 목표이며, $\theta_t^c$는 본문의 설명상 Target L
 Model-free SAC와 Model-based PETS/MPC를 비교하며, 다음 보상으로 **목표 진행과 접촉면 정렬**을 평가한다. 원문 §III-B-3, 식 (4).
 
 $$
-r=
-\begin{cases}
--\bigl(g(o_\theta,g_\theta)+g(p_\theta,o_\theta)\bigr),
-&\lVert o_{xy}-g_{xy}\rVert>d,\\
--\bigl(f(o_{xy},g_{xy})+g(p_\theta,o_\theta)\bigr),
-&\lVert o_{xy}-g_{xy}\rVert\le d.
-\end{cases}
+r= \begin{cases} -\bigl(g(o_\theta,g_\theta)+g(p_\theta,o_\theta)\bigr), &\lVert o_{xy}-g_{xy}\rVert>d,\\ -\bigl(f(o_{xy},g_{xy})+g(p_\theta,o_\theta)\bigr), &\lVert o_{xy}-g_{xy}\rVert\le d. \end{cases}
 $$
 
 | 항 | 의미 |
@@ -318,10 +275,7 @@ $$
 **원문 §IV Reward Function의 번호 없는 식**은 다음 네 항으로 구성된다. 목표는 초기 파지를 유지하면서 지지면을 이용해 물체를 목표 상대 각도로 회전시키는 것이다. [arXiv v1, PDF p. 3]
 
 $$
-R=w_{\mathrm{contact}}r_{\mathrm{contact}}
-+w_{\mathrm{position}}r_{\mathrm{position}}
-+w_{\mathrm{angle}}r_{\mathrm{angle}}
--w_{\mathrm{penalty}}r_{\mathrm{penalty}}.
+R=w_{\mathrm{contact}}r_{\mathrm{contact}} +w_{\mathrm{position}}r_{\mathrm{position}} +w_{\mathrm{angle}}r_{\mathrm{angle}} -w_{\mathrm{penalty}}r_{\mathrm{penalty}}.
 $$
 
 | 항 | 원문이 제시한 정의·계수 | 유도하는 행동과 확인 범위 |
