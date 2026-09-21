@@ -272,13 +272,13 @@ r_{\mathrm{reach}} =\sum_{\mathrm{finger}}\alpha_{\mathrm{reach}} \max(d_{\mathr
 ### 8.3 물체 파지·운반 보상 — 원문 식 (2)
 
 ```math
-\begin{aligned} r_{\mathrm{execute}} ={}&(1-\mathbf 1_{\mathrm{picked}})\alpha_{\mathrm{pick}}h_{\mathrm{obj}} +r_{\mathrm{picked}}\\ &+\mathbf 1_{\mathrm{picked}}\alpha_{\mathrm{goal}} \max(\tilde d_{\mathrm{closest}}-\tilde d,0). \end{aligned}
+\begin{aligned} r_{\mathrm{execute}} ={}&(1-\mathbf{1}_{\mathrm{picked}})\alpha_{\mathrm{pick}}h_{\mathrm{obj}} +r_{\mathrm{picked}}\\ &+\mathbf{1}_{\mathrm{picked}}\alpha_{\mathrm{goal}} \max(\tilde d_{\mathrm{closest}}-\tilde d,0). \end{aligned}
 ```
 
 | 기호·조건 | 의미 |
 | --- | --- |
 | $h_{\mathrm{obj}}$ | 테이블을 기준으로 한 물체 높이 |
-| $\mathbf 1_{\mathrm{picked}}$ | 물체가 기준 높이 **10 cm**를 넘었을 때 1이 되는 indicator |
+| $\mathbf{1}_{\mathrm{picked}}$ | 물체가 기준 높이 **10 cm**를 넘었을 때 1이 되는 indicator |
 | $\alpha_{\mathrm{pick}}$ | 들어 올리기 항의 가중치 |
 | $r_{\mathrm{picked}}$ | Picked 조건에 도달하는 순간의 추가 bonus |
 | $\tilde d$ | 현재 물체–운반 목표점 거리 |
@@ -292,14 +292,14 @@ r_{\mathrm{reach}} =\sum_{\mathrm{finger}}\alpha_{\mathrm{reach}} \max(d_{\mathr
 ### 8.4 문손잡이 회전·문 열기 보상 — 원문 식 (3)
 
 ```math
-\begin{aligned} r_{\mathrm{execute}} ={}&(1-\mathbf 1_{\mathrm{rotated}})\alpha_{\mathrm{rot}} \max(\phi-\phi_{\max},0)\\ &+\mathbf 1_{\mathrm{rotated}}\alpha_{\mathrm{open}} \max(\psi-\psi_{\max},0)\\ &+r_{\mathrm{rotated}}+r_{\mathrm{opened}}. \end{aligned}
+\begin{aligned} r_{\mathrm{execute}} ={}&(1-\mathbf{1}_{\mathrm{rotated}})\alpha_{\mathrm{rot}} \max(\phi-\phi_{\max},0)\\ &+\mathbf{1}_{\mathrm{rotated}}\alpha_{\mathrm{open}} \max(\psi-\psi_{\max},0)\\ &+r_{\mathrm{rotated}}+r_{\mathrm{opened}}. \end{aligned}
 ```
 
 | 기호·조건 | 의미 |
 | --- | --- |
 | $\phi$ | 현재 문손잡이 회전각 |
 | $\phi_{\max}$ | 시도 중 최대 문손잡이 회전각 |
-| $\mathbf 1_{\mathrm{rotated}}$ | 손잡이 회전이 **1.047 rad, 약 60°**를 넘으면 활성 |
+| $\mathbf{1}_{\mathrm{rotated}}$ | 손잡이 회전이 **1.047 rad, 약 60°**를 넘으면 활성 |
 | $\psi$ | 문 자체의 현재 회전각 |
 | $\psi_{\max}$ | 시도 중 최대 문 열림 각도 |
 | $r_{\mathrm{rotated}}$ | 손잡이 회전 threshold 도달 bonus |
@@ -308,7 +308,7 @@ r_{\mathrm{reach}} =\sum_{\mathrm{finger}}\alpha_{\mathrm{reach}} \max(d_{\mathr
 
 손잡이를 충분히 돌리기 전에는 손잡이 각도의 새 기록을 보상하고, 이후에는 문 열림 각도의 새 기록을 보상한다. 문을 조금 열었다 닫은 뒤 이전 최대 각도까지 다시 여는 것만으로는 그 각도 항의 새 보상이 생기지 않는 구조다. Bonus 항은 원문 설명상 조건 도달에 연결되며, 조건과 무관한 매 step 상수 보상으로 읽지 않는다.
 
-**출판본 오기:** 식 (3)은 $\mathbf 1_{\mathrm{rotated}}$를 사용하지만 직후 설명 문장은 $\mathbf 1_{\mathrm{picked}}$라고 표기한다. 문장 내용은 손잡이 60° 회전을 설명하므로 이 노트에서는 식의 rotated를 따라 해설하되, 원문의 불일치를 숨기지 않는다. Flag의 latch 여부와 bonus 중복 방지 구현은 미명시다.
+**출판본 오기:** 식 (3)은 $\mathbf{1}_{\mathrm{rotated}}$를 사용하지만 직후 설명 문장은 $\mathbf{1}_{\mathrm{picked}}$라고 표기한다. 문장 내용은 손잡이 60° 회전을 설명하므로 이 노트에서는 식의 rotated를 따라 해설하되, 원문의 불일치를 숨기지 않는다. Flag의 latch 여부와 bonus 중복 방지 구현은 미명시다.
 
 ### 8.5 밸브 회전 보상 — 원문 식 (4)
 
