@@ -32,13 +32,7 @@
 
 [**Idil Ozdamar et al. - Pushing in the Dark: A Reactive Pushing Strategy for Mobile Robots Using Tactile Feedback**](../literature/papers/2024-ozdamar-pushing-in-the-dark.md)는 모바일 베이스의 정전용량 촉각에서 **대표 접촉점**을 계산한다. Taxel별 신호를 저역통과 필터와 임계값으로 처리한 뒤, 하나만 활성화되면 해당 Taxel의 위치를, 여러 개가 활성화되면 접촉 영역 **양 끝 Taxel 위치의 중점**을 사용한다. 물체의 Pose·형상·물성을 직접 복원하지 않고, 알려진 센서 배치와 Point/Line contact 근사를 이용하여 접촉을 하나의 제어 변수로 축약한다. 
 
-
-
-**확인된 한계는 국소 상태 추정의 모호성과 접촉 형상에 대한 모델의 적용 범위다.** [**Pose-and-shear-based tactile servoing**](../literature/papers/2024-lloyd-pose-and-shear-based-tactile-servoing.md)는 Discussion and limitations에서, 미끄러짐 이후 서로 다른 Shear 변위가 유사한 촉각 영상에 대응하여 단일 관측의 추정 오차가 커지는 문제를 명시한다. GDN과 Bayesian filtering으로 이를 완화하지만, 필터의 정확도는 가정한 상태 변화·잡음 모델이 실제 시간 변화와 얼마나 일치하는지에 영향을 받는다. 미끄러짐이 없는 데이터만 사용하면 모호성을 줄일 수 있으나, 저자들은 이 경우 큰 접촉 깊이 등 제한된 조건으로 적용 범위가 좁아질 수 있다고 설명한다. (원문 §6.1)
-
-또한 [**Pose-and-shear-based tactile servoing**](../literature/papers/2024-lloyd-pose-and-shear-based-tactile-servoing.md)의 모델은 **평면 또는 완만한 곡면**을 중심으로 한다. 저자들은 모서리와 같은 다른 표면 특징으로 확장할 때, 기존의 접촉 Pose와 Shear를 하나의 6차원 상태로 결합하는 표현을 그대로 사용할 수 없으며 별도의 추정·제어 구성이 필요하다고 설명한다. 따라서 이 연구에서 직접 확인되는 것은 **촉각 영상에서 국소 상태를 안정적으로 추정하는 정확도와, 동일한 접촉 모델을 다양한 표면 형상에 적용하는 데 한계가 있다는 점**이다. (원문 §3.1.1, §6.1)
-
-> **보류:** 위 근거는 국소 접촉 Pose·Shear 추정의 한계다. 이를 전체 물체 Pose·Shape 추정 계열의 일반적인 한계로 확대하지 않는다. 전체 Pose·Shape 복원에 필요한 사전 모델·다중 접촉과 그 실패 조건은 직접적인 근거를 추가로 확보한 뒤 보강한다.
+ [**Pose-and-shear-based tactile servoing**](../literature/papers/2024-lloyd-pose-and-shear-based-tactile-servoing.md)에서는 제시하는 모델이 **평면 또는 완만한 곡면**을 중심으로 하기 때문에, 모서리와 같은 다른 표면 특징으로 확장할 때, 별도의 추정·제어 구성이 필요하다고 설명한다. 따라서 이러한 방법은 **촉각 영상에서 국소 상태를 안정적으로 추정하는 정확도와 동일한 접촉 모델을 다양한 표면 형상에 적용하는 것에 한계가 존재한다.**
 
 ### 2.2.2. 고차원 Tactile Image를 인코딩하여 사용하는 접근
 
@@ -50,7 +44,7 @@
 
 [**Dane Brouwer et al. - Gentle Object Retraction in Dense Clutter Using Multimodal Force Sensing and Imitation Learning**](../literature/papers/2026-brouwer-gentle-object-retraction.md)는 도구 양 측면의 분포형 3축 촉각을 **20×5×3 Force Image**로 표현하고, 촉각 전용 ResNet-18로 인코딩한다. 이 영상의 채널은 광학 촉각 카메라의 색을 관측한 것이 아니라 **측정된 힘 성분을 영상화한 표현**이다. 별도의 시각 Encoder와 TCP Pose·Wrench 등의 저차원 입력을 결합한 Diffusion Policy로 선반 인출을 수행하며, 센서 Ablation으로 분포형 촉각과 Wrench의 기여를 비교한다. 
 
-**고차원 촉각 표현은 공간적인 접촉 정보를 정책에 전달하는 데 유효하지만, 시뮬레이션 학습을 실물로 이전하려면 영상 표현과 실제 접촉 반응을 함께 대응시켜야 한다.** [**Tactile Gym 2.0**](../literature/papers/2022-lin-tactile-gym-2-0.md)의 센서별 영상 변환과 [**Bi-Touch**](../literature/papers/2023-lin-bi-touch.md)의 접촉 동역학 수정은 이 대응에 별도 작업이 필요함을 보여준다. 문제의 핵심은 **센서 고유의 영상·변형·접촉 특성을 두 환경에서 일관되게 제공하는 것**에 있다.
+[**Tactile Gym 2.0**](../literature/papers/2022-lin-tactile-gym-2-0.md)의 센서별 영상 변환과 [**Bi-Touch**](../literature/papers/2023-lin-bi-touch.md)의 접촉 동역학 수정 작업은 **고차원 촉각 표현은 공간적인 접촉 정보를 정책에 전달하는 데 유효하지만, 시뮬레이션 학습을 실물로 이전하려면 영상 표현과 실제 접촉 반응을 함께 대응**이 필요함을 보여준다. 
 
 ### 2.2.3. 촉각을 저차원으로 표현하는 접근
 
@@ -64,7 +58,7 @@
 
 [**Xinyuan Zhao et al. - Unknown Object Retrieval in Confined Space through Reinforcement Learning with Tactile Exploration**](../literature/papers/2024-zhao-unknown-object-retrieval.md)는 Tool Stick의 **4×4 Taxel, Taxel당 3축 촉각**을 **9차원 연속 특징**으로 축약한다. 구성은 열별 법선력 최댓값 4개, 열별 절댓값이 가장 큰 x축 전단력 값 4개, 전단력 이력의 FFT로 얻은 고주파 특징 1개다. 따라서 공간 분포를 축약하면서도 **하중 크기와 일부 전단·시간 정보를 유지**한다. 물체 Pose나 명시적인 물성 추정치를 입력하지 않고 이 특징만으로 실물 SAC 정책을 학습한다.
 
-Tactile 정보를 저차원화 할 경우의 유의할 점은 **저차원화 자체가 아니라, 조작에 필요한 정보를 무엇까지 제거했는가**다.
+Tactile 정보를 저차원화 할 경우의 유의할 점은 **조작에 필요한 정보를 무엇까지 제거했는가**에 우유의하여야 한다.
 
 #### 2.2.3.1. 촉각 표현을 직접 비교한 연구에서 얻는 근거
 
@@ -147,9 +141,6 @@ Sweeping에서 시스템 파라미터(Shape·질량·마찰·지지 조건 등)�
 - 접촉력 벡터
 - 정확한 질량·마찰·형상 파라미터 등
 
-> **추가 조사 필요:** Asymmetric Actor–Critic 등 Privileged 학습 정보의 사용 근거와 본 과업에서의 필요성을 별도로 조사한다.
-
-
 ---
 
 ## 2.6. Action 설계
@@ -187,27 +178,21 @@ Hand의 행동 표현은 아직 확정하지 않는다. 현재 비교할 후보�
 
 ### 2.7.1. 사전 연구의 Domain Randomization
 
-본 연구에서는 물체·환경·로봇·Base 조건이 달라져도 동작하는 정책을 학습하기 위해 Domain Randomization을 적용하는 방향을 잡는다. 아래는 **이미 검토한 RL 논문에서 보고한 무작위화 대상과 범위**이며, 본 연구에 그대로 적용할 확정값은 아니다. 물성의 DR, 초기·목표 조건의 변화, 관측·행동 오차 주입을 구분한다. $\mathcal U(a,b)$는 균등분포이며, 배율과 가산 잡음도 구분해 기록한다.
+본 연구에서는 물체·환경·로봇·Base 조건이 달라져도 동작하는 정책을 학습하기 위해 Domain Randomization을 적용하는 방향을 잡는다. 아래는 **이미 검토한 RL 논문에서 보고한 무작위화 대상과 범위**이며, 본 연구에 그대로 적용할 확정값은 아니다.
 
 **[Rotating without Seeing](../literature/papers/2023-yin-rotating-without-seeing.md) — PPO 기반 In-hand Rotation**
 
-물체 질량 **0.2–0.6 kg**, 물체·Hand 마찰계수 **0.3–3.0**, 물체 형상 배율 $\mathcal U(0.95,1.05)$와 초기 위치를 무작위화한다. 제어기 P Gain에는 $\mathcal U(0.66,1.33)$, D Gain에는 $\mathcal U(0.80,1.20)$ 배율을 적용하며, 외력도 주입한다. 초기 위치는 원문 Table VI에 $+\mathcal U(-0.015,0.015)$와 단위 `cm`가 함께 표기되어 있어, 이를 임의로 ±1.5 cm로 환산하지 않는다. (원문 §IV-B, Appendix C, Table VI)
-
-센서 측면에서는 **활성 접촉 Bit를 확률 0.1로 1→0으로 만드는 Dropout**과 **Sensor lag probability 0.25**를 사용한다. 후자는 0.25초의 지연을 뜻하지 않는다. 관절 관측에는 $+\mathcal U(-0.05,0.05)$, Action에는 $+\mathcal U(-0.06,0.06)$ 잡음을 추가한다. 이 두 잡음 값의 단위와 Action scaling 전후의 적용 순서는 원문에 별도로 명시되지 않는다. (원문 §IV-B.1, Table VI)
+물체 질량 **0.2–0.6 kg**, 물체·Hand 마찰계수 **0.3–3.0**, 물체 형상 배율 $\mathcal U(0.95,1.05)$와 초기 위치를 무작위화한다. 제어기 P Gain에는 $\mathcal U(0.66,1.33)$, D Gain에는 $\mathcal U(0.80,1.20)$ 배율을 적용하며, 외력도 주입한다. 센서 측면에서는 **활성 접촉 Bit를 확률 0.1로 1→0으로 만드는 Dropout**과 **Sensor lag probability 0.25**를 사용한다. 관절 관측에는 $+\mathcal U(-0.05,0.05)$, Action에는 $+\mathcal U(-0.06,0.06)$ 잡음을 추가한다. 
 
 **[Jiahe Pan et al. - Beyond Binary: Sim-to-Real Dexterous Manipulation with Physics-Grounded Contact Representation](../literature/papers/2026-pan-beyond-binary-cop-tactile.md) — PPO 기반 Insertion·Ball Balancing**
 
-검토한 v1의 Appendix E.4, Table 6은 과업별 물성·초기 조건과 공통 관측·제어 오차를 구분한다. 아래 마찰 범위는 **정지 / 운동 마찰 순서**다.
-
-| 구분 | 보고된 무작위화 대상과 범위 |
-| --- | --- |
-| **Peg-in-Hole 물성** | Peg 질량 0.03–0.04 kg. 마찰: Peg [0.2, 0.4] / [0.1, 0.2], Hole [0.3, 0.5] / [0.1, 0.3], Hand [0.5, 0.7] / [0.3, 0.5] |
-| **Peg-in-Hole 초기 조건** | Peg Roll·Pitch $+\mathcal U(-0.2,0.2)$ rad, Yaw $+\mathcal U(0,2\pi)$ rad. Hand 위치 $+\mathcal U(-0.5,0.5)$ cm, Roll·Pitch $+\mathcal U(-0.02,0.02)$ rad, 관절 위치 $+\mathcal U(-0.05,0.05)$ rad |
-| **Ball Balancing 물성** | Ball 질량 0.05–0.25 kg, Plate 질량 0.035–0.055 kg. 마찰: Ball·Plate 각각 [0.01, 0.02] / [0.0, 0.01], Hand [1.9, 2.0] / [1.8, 1.9] |
-| **Ball Balancing 초기 조건** | Ball 위치 $+\mathcal U(-5.0,5.0)$ cm, Plate 위치 $+\mathcal U(-0.5,0.5)$ cm. Hand Roll·Pitch $+\mathcal U(-0.02,0.02)$ rad, 관절 위치 $+\mathcal U(-0.05,0.05)$ rad |
-| **공통 제어·관측 조건** | P Gain 배율 $\mathcal U(0.8,1.2)$, D Gain 배율 $\mathcal U(0.7,1.3)$. 관절 위치 관측 잡음 $+\mathcal U(-0.1,0.1)$ rad. 힘 벡터 관측에는 확률 0.2로 방향 회전 $+\mathcal U(-0.1,0.1)$ rad 및 크기 배율 $\mathcal U(0.9,1.1)$, 접촉 위치 관측에는 확률 0.2로 $+\mathcal U(-0.1,0.1)$ cm 잡음. 접촉 관측 지연 0.05–0.1 s |
-
-관절 위치 관측에도 **0.05 s의 고정 지연**을 적용하지만, 이는 지연값을 무작위 추출하는 항과 구분한다. 여기서 힘 벡터 잡음은 **촉각 접촉력 관측**에 대한 설정이며, 손목 6축 F/T의 잡음 범위가 아니다. (원문 Appendix E.4, Table 6)
+| 구분                       | 보고된 무작위화 대상과 범위                                                                                                                                                                                                                                                     |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Peg-in-Hole 물성**       | Peg 질량 0.03–0.04 kg. 마찰: Peg [0.2, 0.4] / [0.1, 0.2], Hole [0.3, 0.5] / [0.1, 0.3], Hand [0.5, 0.7] / [0.3, 0.5]                                                                                                                                                    |
+| **Peg-in-Hole 초기 조건**    | Peg Roll·Pitch $+\mathcal U(-0.2,0.2)$ rad, Yaw $+\mathcal U(0,2\pi)$ rad. Hand 위치 $+\mathcal U(-0.5,0.5)$ cm, Roll·Pitch $+\mathcal U(-0.02,0.02)$ rad, 관절 위치 $+\mathcal U(-0.05,0.05)$ rad                                                                        |
+| **Ball Balancing 물성**    | Ball 질량 0.05–0.25 kg, Plate 질량 0.035–0.055 kg. 마찰: Ball·Plate 각각 [0.01, 0.02] / [0.0, 0.01], Hand [1.9, 2.0] / [1.8, 1.9]                                                                                                                                           |
+| **Ball Balancing 초기 조건** | Ball 위치 $+\mathcal U(-5.0,5.0)$ cm, Plate 위치 $+\mathcal U(-0.5,0.5)$ cm. Hand Roll·Pitch $+\mathcal U(-0.02,0.02)$ rad, 관절 위치 $+\mathcal U(-0.05,0.05)$ rad                                                                                                         |
+| **공통 제어·관측 조건**          | P Gain 배율 $\mathcal U(0.8,1.2)$, D Gain 배율 $\mathcal U(0.7,1.3)$. 관절 위치 관측 잡음 $+\mathcal U(-0.1,0.1)$ rad. 힘 벡터 관측에는 확률 0.2로 방향 회전 $+\mathcal U(-0.1,0.1)$ rad 및 크기 배율 $\mathcal U(0.9,1.1)$, 접촉 위치 관측에는 확률 0.2로 $+\mathcal U(-0.1,0.1)$ cm 잡음. 접촉 관측 지연 0.05–0.1 s |
 
 **[Sim-to-Real Transfer for Robotic Manipulation with Tactile Sensory](../literature/papers/2021-ding-sim-to-real-tactile-manipulation.md) — TD3 기반 Door Opening**
 
@@ -244,6 +229,4 @@ Hand의 행동 표현은 아직 확정하지 않는다. 현재 비교할 후보�
 | **손목 6축 F/T** | 영점 Bias, 힘·모멘트 측정 잡음, 측정값 Scale 오차, 보정 후 남는 부하 오차, 관측 지연 |
 | **Arm·Hand 고유감각** | 관절 위치·속도 등 실제 사용하는 관측의 잡음과 지연, 센서 간 시간 정렬 오차 |
 
-Binary 촉각은 [**Sim-to-Real Transfer for Robotic Manipulation with Tactile Sensory**](../literature/papers/2021-ding-sim-to-real-tactile-manipulation.md)의 **매 Bit·매 Timestep 반전**을 구현 후보로 삼되, 확률 0.005를 본 Hand의 확정 오류율로 채택하지 않는다. 실물에서 오검출과 접촉 누락의 빈도가 다르면 두 확률을 분리하는 모델을 검토한다. 힘·모멘트 잡음의 단위와 Scale, 지연의 시간 기준도 별도로 명세한다.
-
-Episode 동안 유지되는 Bias와 Step마다 발생하는 잡음, 과거 관측이 늦게 전달되는 지연은 구분해 적용한다. 통신 누락을 정상 무접촉으로 동일시하지 않으며, 오차의 분포·범위·적용 주기는 실물 측정으로 정한다. **센서 오차를 경험하도록 학습하는 것과, 모든 센싱 불확실성에 대한 강건성이 검증되었다는 것은 구분한다.**
+Binary 촉각은 [**Sim-to-Real Transfer for Robotic Manipulation with Tactile Sensory**](../literature/papers/2021-ding-sim-to-real-tactile-manipulation.md)의 **매 Bit·매 Timestep 반전**을 구현 후보로 삼는다. 
