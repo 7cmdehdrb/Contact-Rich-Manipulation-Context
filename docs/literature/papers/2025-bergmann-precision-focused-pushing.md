@@ -104,9 +104,9 @@ RL agent를 학습하기 전에 autoencoder를 별도로 학습한다. Training 
 
 Encoder는
 
-$$
+```math
 z_o,z_g\in\mathbb{R}^{6}
-$$
+```
 
 의 latent representation을 만든다.
 
@@ -116,15 +116,15 @@ $$
 
 Planar EE position은
 
-$$
+```math
 p_e=[x_e,y_e]^T\in\mathbb{R}^{2}
-$$
+```
 
 이고, 현재 observation은
 
-$$
+```math
 s=[p_e,z_o,z_g]\in\mathbb{R}^{14}
-$$
+```
 
 로 구성된다.
 
@@ -148,9 +148,9 @@ Binary object image에는 object의 **mass와 friction coefficient가 나타나�
 
 Agent는 현재 시점 $T$까지의 episode 전체 observation
 
-$$
+```math
 (s_1,s_2,\ldots,s_T)
-$$
+```
 
 을 처리한다.
 
@@ -168,23 +168,23 @@ $$
 
 Action은 다음 3차원 continuous vector다.
 
-$$
+```math
 a=[a_x,a_y,a_s]^T.
-$$
+```
 
 ### 9.1. Cartesian position offset
 
-$$
+```math
 a_x,a_y\in[-1,1]
-$$
+```
 
 이며 base frame x/y 방향의 desired EE position offset이다. 원문은 단위를 m로 표시한다.
 
 ### 9.2. Action duration / control-cycle count
 
-$$
+```math
 a_s\in[10,600]
-$$
+```
 
 은 같은 target offset을 적용하는 **MuJoCo simulation step 수**다.
 
@@ -220,15 +220,15 @@ Reward는 simulator의 **ground-truth object center와 goal center**를 사용�
 
 Object position과 goal position을
 
-$$
+```math
 p_o=[x_o,y_o]^T,\qquad p_g=[x_g,y_g]^T
-$$
+```
 
 라고 하면 즉시 reward는 다음과 같다.
 
-$$
+```math
 r(p_o,p_g)=\begin{cases}-1,&\|p_o-p_g\|_2\ge 0.01\ \mathrm{m}\\0,&\text{otherwise}\end{cases}
-$$
+```
 
 즉 goal에서 1 cm 이상 떨어져 있으면 step reward가 -1이고, 1 cm 미만이면 0이다.
 
@@ -238,9 +238,9 @@ $$
 
 Episode horizon은 항상
 
-$$
+```math
 T_{\max}=50
-$$
+```
 
 environment steps다.
 
@@ -256,9 +256,9 @@ Goal에 일찍 도달해도 episode를 즉시 종료하지 않는다. 마지막 
 
 Policy objective는 다음과 같다.
 
-$$
+```math
 \pi_{\phi,G}^{*}:=\arg\max_{\pi}\mathbb{E}_{\pi,\rho_G}\left[\sum_{k=0}^{T_{\max}}\gamma^k r_{k+1}^{g}\right].
-$$
+```
 
 현재 environment state뿐 아니라 desired goal을 함께 condition하여 action을 선택한다.
 
@@ -306,9 +306,9 @@ Start position, goal position, object yaw도 randomize한다.
 
 Object orientation은 reward에 포함되지 않지만, initial yaw는
 
-$$
+```math
 [-\pi,\pi]
-$$
+```
 
 에서 uniform sampling한다.
 
@@ -318,9 +318,9 @@ $$
 
 저자들이 정의한 sliding friction force는
 
-$$
+```math
 F_k=\mu_k m_o\,9.81\ \mathrm{m/s^2}.
-$$
+```
 
 $\mu_k$는 sliding friction coefficient, $m_o$는 object mass다.
 
@@ -336,31 +336,31 @@ Mass와 friction coefficient를 각각 uniform하게 뽑으면 두 변수의 곱
 
 먼저 gravity를 제외한 friction product의 범위를
 
-$$
+```math
 \tilde F_k^{\min}=m_o^{\min}\mu_k^{\min},\qquad \tilde F_k^{\max}=m_o^{\max}\mu_k^{\max}
-$$
+```
 
 으로 정의한다.
 
 $x$는 scale parameter
 
-$$
+```math
 \beta=\frac{1}{7}
-$$
+```
 
 인 exponential distribution에서 뽑아 $[0,1]$로 clip하고, $y$는
 
-$$
+```math
 y\sim\mathrm{Bernoulli}(0.5)
-$$
+```
 
 로 뽑는다.
 
 Mass는 다음과 같이 생성한다.
 
-$$
+```math
 m_o=\left(\frac{\tilde F_k^{\max}-\tilde F_k^{\min}}{\mu_k}\right)\left((1-x)(1-y)+xy\right)+\frac{\tilde F_k^{\min}}{\mu_k}.
-$$
+```
 
 Bernoulli 변수를 이용해 exponential sample을 양쪽 boundary로 mirror함으로써 **작은 값과 큰 값 모두를 더 자주 샘플**한다.
 
