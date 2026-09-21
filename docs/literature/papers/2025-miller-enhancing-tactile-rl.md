@@ -83,9 +83,9 @@ Proprioception에는 다음이 포함된다.
 
 Tactile observation은
 
-$$
+```math
 o_t^{tact}=b\in\{0,1\}^{N_{sensors}}
-$$
+```
 
 의 sensor/link별 binary contact다.
 
@@ -138,25 +138,25 @@ Previous action 역시 observation에 포함되며, 이는 이후 proprioception
 
 Observation history 전체를 하나의 MLP encoder가 latent로 변환한다.
 
-$$
+```math
 o_t\rightarrow1024\rightarrow512\rightarrow256\rightarrow z_t.
-$$
+```
 
 Layer normalization과 ELU를 각 hidden layer 뒤에 사용한다.
 
 Policy는
 
-$$
+```math
 z_t\rightarrow128\rightarrow64\rightarrow n_{actions}\rightarrow a_t
-$$
+```
 
 이고 output activation은 tanh다.
 
 Value network는
 
-$$
+```math
 z_t\rightarrow128\rightarrow64\rightarrow1\rightarrow V(o_t)
-$$
+```
 
 이다.
 
@@ -168,9 +168,9 @@ RL algorithm은 PPO-Clip이다.
 
 논문의 notation을 따르면 PPO 관련 loss는 encoder, policy, value parameters를 함께 update하며, 여기에 auxiliary representation loss를 추가한다.
 
-$$
+```math
 L=L_{PPO}(\theta_e,\theta_\pi,\theta_v)+c_{aux}L_{aux}(\theta_e,\theta_{aux}).
-$$
+```
 
 PPO update와 auxiliary update는 **서로 다른 optimizer**를 사용한다.
 
@@ -187,9 +187,9 @@ TR은 latent $z_t$에서 원래 tactile observation을 복원하도록 강제한
 
 Binary tactile이므로 BCE classification loss를 사용하며, contact class sparsity를 보정하기 위해 positive weight
 
-$$
+```math
 p_c=10
-$$
+```
 
 을 사용한다.
 
@@ -201,9 +201,9 @@ $$
 
 FR은 tactile뿐 아니라 proprioception까지 동시에 reconstruction한다.
 
-$$
+```math
 L_{FR}=L_{TR}+\mathrm{MSE}(\hat{o}_t^{prop},o_t^{prop}).
-$$
+```
 
 이는 일반적인 multimodal autoencoder에 가까운 baseline이다.
 
@@ -215,37 +215,37 @@ FD는 reconstruction이 아니라 **미래를 예측하는 데 필요한 정보*
 
 Memory에서 terminal transition을 포함하지 않는 sequence
 
-$$
+```math
 (o_t,a_t,\ldots,o_{t+n-1},a_{t+n-1})
-$$
+```
 
 를 sampling한다.
 
 현재 latent와 action에서 다음 latent를 예측한다.
 
-$$
+```math
 \hat{z}_{t+1}=f(z_t,a_t).
-$$
+```
 
 이 prediction을 autoregressive하게 반복해 여러 timestep 미래를 예측한다.
 
 Target latent는 실제 encoder를 직접 사용하지 않고 EMA target encoder $e_T$로 계산한다.
 
-$$
+```math
 z_{t+i}^{T}=e_T(o_{t+i}).
-$$
+```
 
 Forward prediction은 projector $p$를 거쳐 target latent와 MSE로 비교한다.
 
-$$
+```math
 L_{FD}=\sum_{i=1}^{n-1}\mathrm{MSE}\left(p(\hat{z}_{t+i}),z_{t+i}^{T}\right).
-$$
+```
 
 Target encoder update는 Appendix 식 (7)을 따른다.
 
-$$
+```math
 \theta_{e_T}\leftarrow(1-\tau)\theta_{e_T}+\tau\theta_e,\qquad\tau=0.01.
-$$
+```
 
 ## 14. Self-Supervised Objective 4 — Tactile Forward Dynamics
 
@@ -272,15 +272,15 @@ TFD는 FD에 **future tactile reconstruction**을 추가한다.
 
 On-policy RL rollout shape가
 
-$$
+```math
 [B,R,\ldots]
-$$
+```
 
 이면 auxiliary memory는
 
-$$
+```math
 [N_{rollouts},B,R,\ldots]
-$$
+```
 
 로 확장된다.
 
@@ -454,9 +454,9 @@ FD agent에 separated auxiliary memory를 적용한다.
 
 저자들은 self-supervision이 실제 object state 관련 정보를 latent에 더 많이 담는지 확인하기 위해
 
-$$
+```math
 I(z_t;s_t)
-$$
+```
 
 를 측정한다.
 
