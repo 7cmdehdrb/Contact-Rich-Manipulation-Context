@@ -61,7 +61,7 @@
 | 조사본 ID | 논문 | 원문 정독 상태 | 상세 노트 |
 | --- | --- | --- | --- |
 | [B1](../reviews/2026-09-16_binary-tactile-wrench-rl.md#b1) | DexTouch: Learning to Seek and Manipulate Objects With Tactile Dexterity | 제공된 IEEE 출판본 PDF 8쪽 전체 정독·정리 완료. 식 (1)–(4), Table I–III, Limitation·Future Work와 미명시 사항 포함 | [2024 · Lee et al.](2024-lee-dextouch.md) |
-| [B3](../reviews/2026-09-16_binary-tactile-wrench-rl.md#b3) | Rotating without Seeing: Towards In-hand Dexterity through Touch | 제공된 arXiv:2303.10880v4 (2023-03-27) PDF 15쪽 전체 정독·정리 완료. 식 (1)–(9), Table I–VI, Limitation·Future Work와 미명시 사항 포함 | [2023 · Yin et al.](2023-yin-rotating-without-seeing.md) |
+| [B3](../reviews/2026-09-16_binary-tactile-wrench-rl.md#b3) | Rotating without Seeing: Towards In-hand Dexterity through Touch | 제공된 arXiv:2303.10880v4 (2023-03-27) PDF 15쪽 전체 정독·정리 완료. 2026-09-21 동일 SHA-256 원문 재검증: 4-frame actor observation, binary/continuous 실물 비교의 Rubber Duck 예외, Table IV 지표 표기 불일치, 별도 temporal-CNN shape 분석을 재확인. 식 (1)–(9), Table I–VI, Limitation·Future Work와 미명시 사항 포함 | [2023 · Yin et al.](2023-yin-rotating-without-seeing.md) |
 | [B4](../reviews/2026-09-16_binary-tactile-wrench-rl.md#b4) | Enhancing Tactile-based Reinforcement Learning for Robotic Control | 제공된 arXiv v1 / NeurIPS 2025 PDF 28쪽 전체 정독·정리 완료. 2/17-link binary contact, proprioception/action history, PPO+TR/FR/FD/TFD, separated auxiliary memory, sensor ablation, MI·tactile prediction 분석, Limitation·Future Work 포함 | [2025 · Miller et al.](2025-miller-enhancing-tactile-rl.md) |
 
 <a id="icra-screening-followup"></a>
