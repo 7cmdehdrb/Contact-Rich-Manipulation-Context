@@ -123,5 +123,5 @@ $l=p_{C,y}^R$
 - 위 기존 문서에서 이번 수정으로 건드린 display math는 현재 저장소 규칙에 맞게 한 수식을 한 Markdown 물리적 줄로 정규화했다.
 - 일반 MathJax 지원과 GitHub Markdown 허용 매크로가 동일하지 않다는 점을 규칙에 명시했다.
 - 검사기가 display math의 Markdown 충돌뿐 아니라 금지 매크로와 `math` fenced block, 여러 물리적 줄로 작성한 display equation도 사전에 거부하도록 강화했다.
-- 같은 점검에서 비교 문서의 `\\mathbf1`, `\\boldsymbol\\tau` 같은 축약 표기도 `\\mathbf{1}`, `\\boldsymbol{\\tau}`로 정규화하고, 검사기가 서식 매크로의 비중괄호 인수도 거부하도록 추가했다.
+- 같은 점검에서 비교 문서의 `\mathbf1`, `\boldsymbol\tau` 같은 축약 표기도 `\mathbf{1}`, `\boldsymbol{\tau}`로 정규화하고, 검사기가 서식 매크로의 비중괄호 인수도 거부하도록 추가했다.
 - 후속 재검증에서 검사기 호출부만 추가되고 정규식 정의가 누락된 결함을 발견해 즉시 수정했으며, 비교 문서에 남은 `\mathbf x`류 표기도 모두 중괄호 형태로 정규화했다. 문서 변경 후에는 검사기 자체의 실행 가능성도 확인한다.
