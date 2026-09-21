@@ -71,6 +71,7 @@ GitHub 문서가 MathJax를 사용하더라도 **일반 MathJax에서 알려진 
 - 별도 이름이 필요한 연산자는 `\mathrm{clip}`, `\mathrm{mean}`처럼 단순한 `\mathrm{...}` 표기를 우선 사용한다.
 - 새로운 LaTeX 매크로를 도입할 때는 일반 LaTeX/MathJax 지원 여부가 아니라 **GitHub Markdown에서 실제 허용되는지** 확인한다. 검증되지 않은 고급·사용자 정의 매크로를 문서에 바로 추가하지 않는다.
 - 금지 매크로가 발견되면 수학적 의미를 바꾸지 않는 범위에서 GitHub 안전 표기로 치환하고, 동일 패턴을 검사기에 추가한다.
+
 ## 인라인 수식
 
 문장이나 표 안의 짧은 수식은 한 쌍의 `$`로 감싼 표준 인라인 수식으로 작성한다. 수식 안팎에 백틱을 함께 사용하지 않는다.
@@ -86,7 +87,7 @@ $l=p_{C,y}^R$
 - 기존 Markdown 문서에 수식을 추가하거나 기존 블록 수식을 수정할 때도 이 규칙을 적용한다.
 - 문서 작업 후 언어 식별자가 `math`인 fenced code block이나 백틱을 섞은 인라인 수식이 새로 생기지 않았는지 확인한다.
 - 새로 작성하거나 수정한 Markdown 파일은 Push 전에 `python scripts/check_markdown_math.py <changed-file.md> [...]`로 검사한다.
-- 검사기는 `$` 블록 안의 독립된 Setext underline(`=`, `-`)·Markdown 구조 문법·닫히지 않은 `$` 블록뿐 아니라, GitHub에서 금지된 수식 매크로, `math` fenced block, 한 블록을 여러 Markdown 물리적 줄로 나눈 display equation도 오류로 처리한다.
+- 검사기는 `$$` 블록 안의 독립된 Setext underline(`=`, `-`)·Markdown 구조 문법·닫히지 않은 `$$` 블록뿐 아니라, GitHub에서 금지된 수식 매크로, `math` fenced block, 한 블록을 여러 Markdown 물리적 줄로 나눈 display equation도 오류로 처리한다.
 - 현재 금지 매크로 목록에는 `\operatorname`이 포함된다. 새 금지 사례가 확인되면 지침과 `scripts/check_markdown_math.py`의 목록을 함께 갱신한다.
 - `git diff --check`만으로는 GitHub 렌더링 충돌을 검출할 수 없으므로 위 수식 검사를 별도로 수행한다.
 - 요청 범위 밖의 기존 표기까지 자동으로 일괄 수정하지 않는다.
