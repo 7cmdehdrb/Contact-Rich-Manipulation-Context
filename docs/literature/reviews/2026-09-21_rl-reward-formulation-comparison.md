@@ -336,7 +336,7 @@ $$
 활성 수 항의 기본식은 다음과 같다.
 
 $$
-r_{\mathrm{tactile}}=\lVert\hat{\mathbf c}\rVert_1\quad\text{when grasp is maintained and }\alpha>\alpha_0,\qquad\alpha_0=1.15^\circ.
+r_{\mathrm{tactile}}=\lVert\hat{\mathbf{c}}\rVert_1\quad\text{when grasp is maintained and }\alpha>\alpha_0,\qquad\alpha_0=1.15^\circ.
 $$
 
 30개 binary unit의 활성 수이지 압력·힘의 합이 아니다. 조건 없이 접촉 bit 수만 계속 늘리도록 하는 reward로 설명하지 않는다.
@@ -395,15 +395,15 @@ r_t=20r_{\mathrm{rot}}+0.1r_{\mathrm{vel}}+r_{\mathrm{fall}}+0.0003r_{\mathrm{wo
 $$
 
 $$
-r_{\mathrm{rot}}=\mathrm{clip}(\Delta\theta,-0.157,0.157),\qquad r_{\mathrm{vel}}=-\lVert\mathbf v_t\rVert.
+r_{\mathrm{rot}}=\mathrm{clip}(\Delta\theta,-0.157,0.157),\qquad r_{\mathrm{vel}}=-\lVert\mathbf{v}_t\rVert.
 $$
 
 $$
-r_{\mathrm{work}}=-\langle|\boldsymbol{\tau}|,|\dot{\mathbf q}_t|\rangle,\qquad r_{\mathrm{torque}}=-\lVert\boldsymbol{\tau}\rVert.
+r_{\mathrm{work}}=-\langle|\boldsymbol{\tau}|,|\dot{\mathbf{q}}_t|\rangle,\qquad r_{\mathrm{torque}}=-\lVert\boldsymbol{\tau}\rVert.
 $$
 
 $$
-r_{\mathrm{dist}}=\mathrm{mean}_{i=0,1,2,3}\left[\mathrm{clip}\left(\frac{0.1}{0.02+4d(\mathbf x_{\mathrm{tip}}^i,\mathbf x_{\mathrm{obj}})},0,1\right)\right].
+r_{\mathrm{dist}}=\mathrm{mean}_{i=0,1,2,3}\left[\mathrm{clip}\left(\frac{0.1}{0.02+4d(\mathbf{x}_{\mathrm{tip}}^i,\mathbf{x}_{\mathrm{obj}})},0,1\right)\right].
 $$
 
 | 항 | 의도와 적용 조건 |
@@ -446,7 +446,7 @@ Work 식에는 시간 적분이 없으므로 총 에너지로 바꾸어 부르�
 ### Pre-grasp
 
 $$
-R_p=\sum_{t=1}^{T_p}10\exp\left(-10\left\|\mathbf x_{rt}^{t}(\mathbf q_r^t)-\hat{\mathbf x}_{rt}^{t}\right\|_2^2\right).
+R_p=\sum_{t=1}^{T_p}10\exp\left(-10\left\|\mathbf{x}_{rt}^{t}(\mathbf{q}_r^t)-\hat{\mathbf{x}}_{rt}^{t}\right\|_2^2\right).
 $$
 
 현재 robot fingertip position을 reference fingertip position에 맞춘다. 위 식은 한 step 보상이 아니라 **pre-grasp 구간에 대한 합**으로 제시되어 있다.
