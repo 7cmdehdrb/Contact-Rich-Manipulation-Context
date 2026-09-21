@@ -58,6 +58,19 @@ $$
 
 이 금지 규칙은 수식에만 적용한다. 일반 소스 코드, 명령어, 로그에는 내용에 맞는 fenced code block을 사용할 수 있다.
 
+### GitHub 금지 매크로 및 MathJax 호환성 — 2026-09-21 추가
+
+GitHub 문서가 MathJax를 사용하더라도 **일반 MathJax에서 알려진 모든 매크로가 GitHub Markdown에서 허용되는 것은 아니다.** GitHub의 Markdown 렌더링 계층이 특정 매크로를 차단할 수 있으므로, 로컬 LaTeX·일반 MathJax에서 동작한다는 사실만으로 GitHub 호환성을 가정하지 않는다.
+
+2026-09-21 `docs/literature/reviews/2026-09-21_rl-reward-formulation-comparison.md`에서 `\operatorname{clip}`, `\operatorname{mean}`을 사용한 결과 GitHub가 **`The following macros are not allowed: operatorname`** 오류를 표시하여 해당 수식이 깨지는 문제가 확인되었다. GitHub Markup의 공개 이슈에서도 같은 `\operatorname` 차단 사례가 보고되어 있다: https://github.com/github/markup/issues/1688
+
+이 저장소에서는 다음 규칙을 적용한다.
+
+- **`\operatorname`과 `\operatorname*`을 사용하지 않는다.**
+- 표준 내장 연산자는 가능한 경우 `\max`, `\min`, `\cos`, `\exp`처럼 GitHub에서 직접 지원되는 기본 명령을 사용한다.
+- 별도 이름이 필요한 연산자는 `\mathrm{clip}`, `\mathrm{mean}`처럼 단순한 `\mathrm{...}` 표기를 우선 사용한다.
+- 새로운 LaTeX 매크로를 도입할 때는 일반 LaTeX/MathJax 지원 여부가 아니라 **GitHub Markdown에서 실제 허용되는지** 확인한다. 검증되지 않은 고급·사용자 정의 매크로를 문서에 바로 추가하지 않는다.
+- 금지 매크로가 발견되면 수학적 의미를 바꾸지 않는 범위에서 GitHub 안전 표기로 치환하고, 동일 패턴을 검사기에 추가한다.
 ## 인라인 수식
 
 문장이나 표 안의 짧은 수식은 한 쌍의 `$`로 감싼 표준 인라인 수식으로 작성한다. 수식 안팎에 백틱을 함께 사용하지 않는다.
@@ -73,7 +86,8 @@ $l=p_{C,y}^R$
 - 기존 Markdown 문서에 수식을 추가하거나 기존 블록 수식을 수정할 때도 이 규칙을 적용한다.
 - 문서 작업 후 언어 식별자가 `math`인 fenced code block이나 백틱을 섞은 인라인 수식이 새로 생기지 않았는지 확인한다.
 - 새로 작성하거나 수정한 Markdown 파일은 Push 전에 `python scripts/check_markdown_math.py <changed-file.md> [...]`로 검사한다.
-- 검사기는 `$$` 블록 안의 독립된 Setext underline(`=`, `-`)과 Markdown 구조 문법, 닫히지 않은 `$$` 블록을 오류로 처리한다.
+- 검사기는 `$` 블록 안의 독립된 Setext underline(`=`, `-`)·Markdown 구조 문법·닫히지 않은 `$` 블록뿐 아니라, GitHub에서 금지된 수식 매크로, `math` fenced block, 한 블록을 여러 Markdown 물리적 줄로 나눈 display equation도 오류로 처리한다.
+- 현재 금지 매크로 목록에는 `\operatorname`이 포함된다. 새 금지 사례가 확인되면 지침과 `scripts/check_markdown_math.py`의 목록을 함께 갱신한다.
 - `git diff --check`만으로는 GitHub 렌더링 충돌을 검출할 수 없으므로 위 수식 검사를 별도로 수행한다.
 - 요청 범위 밖의 기존 표기까지 자동으로 일괄 수정하지 않는다.
 
@@ -98,3 +112,10 @@ $l=p_{C,y}^R$
 - 긴 수식은 LaTeX `aligned` 등의 내부 문법으로 정리하되 Markdown 구조 문법을 독립 줄로 두지 않도록 했다.
 - `scripts/check_markdown_math.py`를 추가하여 변경한 Markdown 파일의 위험 패턴과 닫히지 않은 `$$` 블록을 Push 전에 검사하도록 했다.
 - 이번 지침 추가는 재발 방지가 목적이며, 요청에 따라 기존 문서의 잘못 렌더링된 수식은 소급 수정하지 않는다.
+
+### 2026-09-21 — GitHub 금지 MathJax 매크로 검사 추가
+
+- Reward Formulation 비교 문서에서 `\operatorname` 사용 시 GitHub가 `The following macros are not allowed: operatorname`을 표시하여 수식이 렌더링되지 않는 문제를 확인했다.
+- 해당 문서의 `\operatorname{clip}`, `\operatorname{mean}`을 각각 `\mathrm{clip}`, `\mathrm{mean}`으로 교체했다.
+- 일반 MathJax 지원과 GitHub Markdown 허용 매크로가 동일하지 않다는 점을 규칙에 명시했다.
+- 검사기가 display math의 Markdown 충돌뿐 아니라 금지 매크로와 `math` fenced block, 여러 물리적 줄로 작성한 display equation도 사전에 거부하도록 강화했다.
