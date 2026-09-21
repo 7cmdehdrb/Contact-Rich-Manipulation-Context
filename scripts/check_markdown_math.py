@@ -178,6 +178,73 @@ def check_math_structure(
     return errors
 
 
+def check_math_fragment_syntax(
+    fragment: str, path: Path, lineno: int, context: str
+) -> list[str]:
+    errors: list[str] = []
+
+    if HTML_ENTITY_IN_MATH.search(fragment):
+        errors.append(
+            f"{path}:{lineno}: HTML entity inside {context}; keep raw LaTeX "
+            "comparison/operators in the Markdown source"
+        )
+
+    if MALFORMED_LEFT_BRACE.search(fragment):
+        errors.append(
+            f"{path}:{lineno}: malformed '\\left{{' in {context}; a literal "
+            "brace delimiter must be escaped as '\\left\\{{', or preferably "
+            "avoid scalable braces for indicator notation"
+        )
+
+    if MALFORMED_RIGHT_BRACE.search(fragment):
+        errors.append(
+            f"{path}:{lineno}: malformed '\\right}}' in {context}; a literal "
+            "brace delimiter must be escaped as '\\right\\}}', or preferably "
+            "avoid scalable braces for indicator notation"
+        )
+
+    if INDICATOR_WITH_TRAILING_SET.search(fragment):
+        errors.append(
+            f"{path}:{lineno}: fragile indicator notation '\\mathbf{{1}}\\{{...\\}}' "
+            f"in {context}; write the condition as a subscript, e.g. "
+            "'\\mathbf{{1}}_{{\\{{condition\\}}}}'"
+        )
+
+    left_count = len(re.findall(r"\\\\left(?:\\\\[A-Za-z]+|[()[\\]{}|.])", fragment))
+    right_count = len(re.findall(r"\\\\right(?:\\\\[A-Za-z]+|[()[\\]{}|.])", fragment))
+    if left_count != right_count:
+        errors.append(
+            f"{path}:{lineno}: unmatched \\left/\\right delimiters in {context} "
+            f"(left={left_count}, right={right_count})"
+        )
+
+    # Check grouping braces while ignoring escaped literal braces \\{ and \\}.
+    depth = 0
+    escaped = False
+    for ch in fragment:
+        if escaped:
+            escaped = False
+            continue
+        if ch == "\\":
+            escaped = True
+            continue
+        if ch == "{":
+            depth += 1
+        elif ch == "}":
+            depth -= 1
+            if depth < 0:
+                errors.append(
+                    f"{path}:{lineno}: unmatched closing grouping brace in {context}"
+                )
+                break
+    if depth > 0:
+        errors.append(
+            f"{path}:{lineno}: {depth} unclosed grouping brace(s) in {context}"
+        )
+
+    return errors
+
+
 def check_file(path: Path) -> list[str]:
     errors: list[str] = []
     try:
