@@ -86,7 +86,15 @@ Tactile 정보를 저차원화 할 경우의 유의할 점은 **조작에 필요
 - **손목 Wrench:** 손목 센서를 통해 전달되는 전체 힘과 모멘트의 크기·방향·변화 제공
 - **행동·고유감각 이력:** 이 관측이 어떤 명령과 실제 로봇 운동 이후 발생했는지 제공
 
-> **추가 조사 필요:** 위 역할 분담을 직접 뒷받침하는 비교 근거는 별도로 조사한다. 현 단계에서는 F/T가 Binary 촉각의 부족한 정보를 모두 복원하거나 접촉 상태를 유일하게 식별한다고 주장하지 않고, 논리 구조만 유지한다.
+[2026-09-21 Wrist Wrench 조사](../literature/reviews/2026-09-21_wrist-wrench-manipulation-survey.md)는 기존 상세 리뷰 28편을 제외하고, 2022년 이후 RA-L·ICRA·IROS·RSS 연구에서 Wrench가 학습 정책의 관측에 들어가는 7편과 제어기·플래너 피드백으로 쓰이는 2편을 비교했다. 외장 F/T, 로봇 내장 F/T와 관절 토크 기반 말단 외력 추정을 구분하고, 실제로 사용한 성분이 6D Wrench인지 3D force 또는 Fz인지도 분리했다.
+
+[FoAR](../literature/papers/2025-he-foar.md)는 flange와 gripper 사이의 외장 OptoForce에서 얻은 6D Wrench 약 2초 이력을 Transformer로 처리해 시각 특징과 결합하고, 접촉 예정 구간의 행동 보정에도 사용했다. 이는 외장 손목 F/T의 이력을 정책에 넣은 직접 사례다. 다만 실행 중 RGB-D를 계속 사용하고, FoAR와 vision-only 기준선은 센서뿐 아니라 fusion·predictor·reactive correction도 함께 다르다.
+
+[Zero-Shot Transfer](../literature/reviews/2026-09-21_wrist-wrench-manipulation-survey.md#w4-zero-shot-transfer--초기-시각-이후-wrench고유감각-이력)는 초기 시각 이후 상대 EE pose와 추정 6D Wrench의 8시점 이력으로 삽입 행동을 선택했고, [Symmetry-aware RL](../literature/reviews/2026-09-21_wrist-wrench-manipulation-survey.md#w5-symmetry-aware-rl--ft행동-이력의-recurrent-policy)은 위치·F/T·행동 이력을 recurrent policy에 제공했다. 두 연구는 Wrench를 단일 시점 값보다 행동·운동의 시간 맥락과 함께 사용할 근거를 제공한다.
+
+F/T 관측의 효과는 과업에 따라 달랐다. [Comp-ACT](../literature/reviews/2026-09-21_wrist-wrench-manipulation-survey.md#w2-comp-act--ft-관측의-포함제거-비교)의 동일 논문 내 포함·제거 비교에서 F/T를 포함한 정책은 세 삽입 과업에서 성공률이 높았지만 wiping은 70% 대 100%로 낮았고 drawing은 같았다. 따라서 **Wrench가 접촉 조작의 행동 선택에 유용할 수 있다는 근거는 있으나, 항상 성능을 높이거나 접촉 위치·물체 상태를 유일하게 복원한다는 근거는 아니다.**
+
+또한 이번 조사에는 Binary 촉각과 Wrist Wrench의 역할을 같은 조건에서 직접 분리한 실험이 없다. 위 역할 분담은 선행 사례와 센서 측정량에 근거한 `PROPOSED` 설계이며, 본 연구에서는 Binary tactile only, Wrench only, 두 센서 병용 조건을 같은 정책·학습 예산에서 비교해야 한다.
 
 ---
 

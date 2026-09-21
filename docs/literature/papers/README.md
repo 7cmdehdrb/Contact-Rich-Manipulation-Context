@@ -4,9 +4,9 @@
 
 이 폴더는 제공된 논문 원문을 읽고 **그 논문 자체의 문제 상황, 관련 연구, 환경·센서, 핵심 메소드, 실험, 저자들이 밝힌 Limitation과 Future Work**를 정리하는 곳이다. 여러 논문을 비교하거나 프로젝트 적용안을 제안하는 `reviews/`와 구분한다. 개별 노트에는 별도 연구 주제에 억지로 대응시킨 설명을 넣지 않는다.
 
-현재 상세 노트는 **28편**이다(2026-09-21). 제목으로 찾거나 아래 조사 그룹으로 이동한다. 각 표의 **ID를 누르면 원래 조사 항목**, 마지막 열을 누르면 상세 노트가 열린다.
+현재 상세 노트는 **29편**이다(2026-09-21). 제목으로 찾거나 아래 조사 그룹으로 이동한다. 각 표의 **ID를 누르면 원래 조사 항목**, 마지막 열을 누르면 상세 노트가 열린다.
 
-[Blind Pushing · R1–R7](#blind-pushing) · [IROS 후속 선정](#iros-selected) · [사용자 발굴](#user-found) · [Binary·F/T 후속 정독](#binary-wrench) · [ICRA 후보 선별 후속 정독](#icra-screening-followup) · [작성 지침](#paper-guidelines)
+[Blind Pushing · R1–R7](#blind-pushing) · [IROS 후속 선정](#iros-selected) · [사용자 발굴](#user-found) · [Binary·F/T 후속 정독](#binary-wrench) · [ICRA 후보 선별 후속 정독](#icra-screening-followup) · [Wrist Wrench 후속 정독](#wrist-wrench-followup) · [작성 지침](#paper-guidelines)
 
 <a id="blind-pushing"></a>
 
@@ -100,6 +100,16 @@
 | 조사본 ID | 논문 | 원문 정독 상태 | 상세 노트 |
 | --- | --- | --- | --- |
 | [A2](../reviews/2026-09-21_sweeping-physical-parameter-adaptation.md#a2) | Differentiable Compliant Contact Primitives for Estimation and Model Predictive Control | 제공된 IEEE 출판본 PDF 7쪽 전체 정독·정리 완료. differentiable compliant primitive, offline fitting, EKF, observability, sensorless/sensored estimation, online MPC, Limitation·Future Work·미명시 사항 포함 | [2024 · Haninger et al.](2024-haninger-differentiable-compliant-contact-primitives.md) |
+
+<a id="wrist-wrench-followup"></a>
+
+## Wrist Wrench 조사 후속 원문 정독
+
+[2026-09-21 Wrist Wrench 조사](../reviews/2026-09-21_wrist-wrench-manipulation-survey.md)에서 정책 관측 사례 W1로 분류한 논문을 사용자가 원문 PDF로 제공하여 정식 상세 노트를 작성했다.
+
+| 조사본 ID | 논문 | 원문 정독 상태 | 상세 노트 |
+| --- | --- | --- | --- |
+| [W1](../reviews/2026-09-21_wrist-wrench-manipulation-survey.md#w1-foar--외장-손목-센서와-wrench-이력) | FoAR: Force-Aware Reactive Policy for Contact-Rich Robotic Manipulation | 제공된 arXiv:2411.15753v2 PDF 9쪽 전체 정독·렌더링 대조 완료. 외장 OptoForce 6D F/T, 2초 이력 Transformer, future-contact-gated fusion, reactive correction, Table I–V, Limitation·Future Work·미명시 사항 포함 | [2025 · He et al.](2025-he-foar.md) |
 
 <a id="paper-guidelines"></a>
 

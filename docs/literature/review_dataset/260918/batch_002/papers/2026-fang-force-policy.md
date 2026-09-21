@@ -134,7 +134,7 @@ Tactile을 사용하지 않으므로 tactile이 F/T에 추가하는 정보는 �
 
 | 주장/역할 | Evidence Type | 비교 조건 | 결과 | 원문 위치 |
 | --- | --- | --- | --- | --- |
-| Force Policy 전체 시스템의 과업 성능 | Controlled comparison | RISE-2, pi0.5, RDP, FoAR, ForceVLA, TA-VLA | Force Policy flip95%, EV65%, easy100%, hard90%. Controller·scheduler·architecture가 함께 달라 순수 F/T ablation은 아님. Flip/EV는 partial credit 포함. | §V-B; PDF p.7 ; Table II |
+| Force Policy 전체 시스템의 과업 성능 | Controlled comparison | RISE-2, pi0.5, RDP, [FoAR](../../../../papers/2025-he-foar.md), ForceVLA, TA-VLA | Force Policy flip95%, EV65%, easy100%, hard90%. Controller·scheduler·architecture가 함께 달라 순수 F/T ablation은 아님. Flip/EV는 partial credit 포함. | §V-B; PDF p.7 ; Table II |
 | Semantic/kinematic IF label이 wrench-only label보다 유용 | Representation ablation; Controlled comparison | Wrench-only IF label로 학습 vs 제안 IF label | Hard sticker success 50% vs90%; IF >20° error 비율 4.9% vs3.6%. | §V-C; PDF p.8 ; Fig.6 |
 | Scheduler 자체도 성능에 기여 | Controlled comparison | Vision-only policy에 제안 scheduler 추가 | Flip RISE-2 42.5→62.5%, pi0.5 52.5→77.5%. Force 정보의 단독 효과로 전체 차이를 설명할 수 없음. | Supplement IV; PDF p.19 ; Table V |
 | Force tracking과 motion smoothness | Controlled comparison | 제안 scheduler 적용 전후; demonstration force profile와 비교 | SPARC linear -4.515→-2.640, angular -3.935→-2.967; force profile 정성 비교. | §V-B–C; PDF pp.7–8 ; Fig.5; Fig.7 |

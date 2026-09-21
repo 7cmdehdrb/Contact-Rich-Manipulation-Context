@@ -24,6 +24,7 @@
 | 2026-09-20 | [별도 확인 요청 논문 목록](reviews/2026-09-20_separate-review-paper-list.md) | 사용자가 `260918 Review Dataset`에서 별도로 확인하도록 지정한 27편. 원래 두 목록의 구분과 순서를 보존하고 기존 PDF 원문 기반 Review 분석으로 연결한다. |
 | 2026-09-21 | [Sweeping의 숨은 물리 조건에 대한 명시적 추정과 이력 기반 대응](reviews/2026-09-21_sweeping-physical-parameter-adaptation.md) | 기존 상세 리뷰 27편을 제외하고 2022년 이후 주요 저널·학회 연구 7편을 비교한다. 물성·접촉 모델 추정 → 계획·제어, 정책 내부 이력+DR, 별도 latent 적응 모듈을 구분하고 2.4절의 선택 근거와 검증 질문을 정리한다. |
 | 2026-09-21 | [RL 논문의 Reward Formulation 비교](reviews/2026-09-21_rl-reward-formulation-comparison.md) | 기존 `papers/` 상세 노트 28편 중 RL 보상 구조가 기록된 18편의 식·가중치·적용 조건·학습용 정답 사용을 비교. 제외 10편의 사유를 기록하며, 새 원문 정독이나 프로젝트 reward 확정안과 구분한다. |
+| 2026-09-21 | [Wrist Wrench를 관측·피드백으로 사용하는 Manipulation 연구](reviews/2026-09-21_wrist-wrench-manipulation-survey.md) | 기존 상세 리뷰 28편을 제외하고 2022년 이후 주요 저널·학회 연구를 비교한다. 외장·내장 F/T와 관절 토크 기반 추정, 6D·3D·Fz 입력, 정책 관측과 제어기 피드백을 구분하고 2.3절의 근거와 한계를 정리한다. |
 | 2026-09-16부터 누적 | [사용자 발굴 논문](reviews/user-found-papers.md) | 사용자가 별도로 제공한 논문의 등록·서지·정독 상태와 상세 노트. USER-P 식별자를 유지하며 조사 그룹의 하나로 관리한다. |
 
 2026-09-14 보고서의 **7–8절은 문헌에서 도출한 해석·연구 제안**이다. 프로젝트의 확정 사양이나 구현 성과로 승격하지 않는다. 각 논문의 본래 목적, 센서 구성, 시각 사용 조건, 제어 방식, 적용 한계는 보고서 본문과 참고문헌을 함께 확인한다. 특정 범주의 직접 사례를 확보하지 못했다는 사실은 그 연구가 존재하지 않는다는 증명이나 신규성 확정이 아니다.
@@ -75,6 +76,14 @@ R1–R7 전체의 제공·정독 상태는 개별 논문 색인을 따른다. �
 | 2026-09-17 / 2026-09-21 재검증 | B3 | [Rotating without Seeing — arXiv v4·FSR 이진화·4프레임 관측·비대칭 PPO·상대 관절 목표·보상식·binary/continuous 실물 비교·Table IV 표기 주의·shape 분석·한계와 향후 연구](papers/2023-yin-rotating-without-seeing.md) |
 | 2026-09-20 | B4 | [Enhancing Tactile RL — 2/17-link binary contact·proprioception/action history·PPO+TR/FR/FD/TFD·auxiliary memory·sensor ablation·MI/tactile prediction·simulation-only 한계](papers/2025-miller-enhancing-tactile-rl.md) |
 | 2026-09-21 | C1 | [Beyond Binary — CoP force+contact position·taxel mapping·differentiable calibration·GRU PPO·binary/raw-taxel ablation·zero-shot sim-to-real·한계/Future Work](papers/2026-pan-beyond-binary-cop-tactile.md) |
+
+### Wrist Wrench 조사 후속 원문 정독
+
+[2026-09-21 Wrist Wrench 조사](reviews/2026-09-21_wrist-wrench-manipulation-survey.md)에 포함된 논문의 첨부 원문(PDF) 후속 정독이다.
+
+| 정리일 | 조사본 ID | 논문·상세 정리 |
+| --- | --- | --- |
+| 2026-09-21 | W1 | [FoAR — 외장 OptoForce 6D F/T·2초 이력 Transformer·future-contact fusion·reactive correction·실물 ablation·한계/Future Work](papers/2025-he-foar.md) |
 
 
 ### ICRA 후보 선별 후속 원문 정독

@@ -40,6 +40,7 @@
 - [2026-09-16 — Binary Tactile·Wrench 입력 처리 및 비교 실험 제안](docs/literature/reviews/2026-09-16_binary-tactile-wrench-design-notes.md)
 - [2026-09-18 미팅 검토 자료 — 힘·촉각 기반 Sweeping의 선행연구와 적용 후보](docs/literature/reviews/2026-09-17_force-tactile-sweeping-meeting.md) — 2026-09-17까지의 문헌을 바탕으로 한 논의 자료이며 확정 사양·미팅 결과가 아님.
 - [2026-09-21 — Sweeping의 숨은 물리 조건에 대한 명시적 추정과 이력 기반 대응](docs/literature/reviews/2026-09-21_sweeping-physical-parameter-adaptation.md)
+- [2026-09-21 — Wrist Wrench를 관측·피드백으로 사용하는 Manipulation 연구](docs/literature/reviews/2026-09-21_wrist-wrench-manipulation-survey.md) — 후속 정독: [FoAR](docs/literature/papers/2025-he-foar.md)
 - [사용자 발굴 논문 — 누적 목록](docs/literature/reviews/user-found-papers.md)
 
 ## 현재 상태를 오해하지 않기 위한 핵심
