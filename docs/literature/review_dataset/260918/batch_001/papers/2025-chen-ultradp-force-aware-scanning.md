@@ -40,7 +40,7 @@ Controller는 measured wrench $F_e$, robot joint state, Jacobian/dynamics, desir
 
 ### 4.3. Action
 
-시연에서 $A_t=(\operatorname{diff}(x_{t+1},x_t),w_t)$를 구성하고 desired relative pose와 wrench를 학습한다. Navigation이 예측한 명령은 약 10 Hz, low-level 제어는 1 kHz이며 command에 low-pass filter를 적용한다. Filter cutoff는 본문 미명시다. (§III-A Eq.(3), p.3; §III-D, p.4)
+시연에서 $A_t=(\mathrm{diff}(x_{t+1},x_t),w_t)$를 구성하고 desired relative pose와 wrench를 학습한다. Navigation이 예측한 명령은 약 10 Hz, low-level 제어는 1 kHz이며 command에 low-pass filter를 적용한다. Filter cutoff는 본문 미명시다. (§III-A Eq.(3), p.3; §III-D, p.4)
 
 ### 4.4. Controller
 
