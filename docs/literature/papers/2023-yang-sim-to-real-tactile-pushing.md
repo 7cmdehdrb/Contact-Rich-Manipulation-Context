@@ -321,7 +321,7 @@ Model-free에서는 이 보상의 영향을 학습 과정에서 정책 가중치
 
 **원문 식 (4)**
 
-$$
+```math
 r=
 \begin{cases}
 -\bigl(g(o_\theta,g_\theta)+g(p_\theta,o_\theta)\bigr),
@@ -329,7 +329,7 @@ r=
 -\bigl(f(o_{xy},g_{xy})+g(p_\theta,o_\theta)\bigr),
 &\lVert o_{xy}-g_{xy}\rVert\le d.
 \end{cases}
-$$
+```
 
 **먼 구간:** 접촉면 방향을 목표 bearing과 맞추는 항을 사용한다. 전진이 고정되어 있으므로, 목표로 향하는 접촉 방향을 만들면 목표 쪽으로 진행할 수 있다는 설계다. 이 구간의 식에는 목표 Euclidean distance를 직접 줄이는 항이 없다. [원문 §III-B-3, PDF p. 4]
 
@@ -359,12 +359,12 @@ $$
 
 **원문 식 (1)**
 
-$$
+```math
 \pi_\theta^{\ast}
 =\underset{\pi}{\mathrm{arg\,max}}\;
 \mathbb{E}_{\tau\sim p_\pi(\tau),\,g\sim q(g)}
 \left[\sum_{t=0}^{T}\gamma^t r(s_t,a_t,g)\right].
-$$
+```
 
 $p_\pi(\tau)$는 정책에 따른 episode 분포, $q(g)$는 goal 분포이고, discount factor는 $\gamma\in[0,1)$이다. 원문은 정확한 gamma 값과 T의 수치를 제시하지 않는다. [원문 식 (1), PDF pp. 2–3]
 
@@ -393,34 +393,34 @@ Model-based 방법은 **PETS**(Probabilistic Ensemble Trajectory Sampling)이며
 
 **원문 본문의 모델 정의**
 
-$$
+```math
 f_\theta(s_t,a_t)
 \equiv\mathcal{N}\bigl(\mu_\theta(s_t,a_t),\Sigma_\theta(s_t,a_t)\bigr).
-$$
+```
 
-$$
+```math
 \Delta s_t=s_{t+1}-s_t,\qquad
 \Delta s_t\sim f_\theta(s_t,a_t).
-$$
+```
 
 여기서 모델에 제공하는 state는 S3이며, action을 적용했을 때 **관측으로 표현한 contact state가 어떻게 변할지**를 예측한다. 물체 질량·마찰계수를 각각 물리 파라미터로 출력하는 identification 모델이나, 촉각 이미지 자체를 생성하는 GAN과는 역할이 다르다. [원문 §III-A-2, 식 (3), Fig. 2, PDF pp. 3–4]
 
 원문은 transition 데이터셋을 다음과 같이 정의한다.
 
-$$
+```math
 \mathcal{D}=\{(s_t,a_t,s_{t+1})_{1,\ldots,N}\}.
-$$
+```
 
 **원문 식 (2) — 표기 유지**
 
-$$
+```math
 \mathcal{L}_{\mathrm{NLL}}
 =\sum_{n=1}^{N}
 [s_{n+1}-\mu_\theta]^{\mathsf{T}}
 \Sigma_\theta^{-1}
 [s_{n+1}-\mu_\theta]
 +\log\bigl(\det(\Sigma_\theta)\bigr).
-$$
+```
 
 [원문 식 (2), PDF p. 3]
 
@@ -434,11 +434,11 @@ $$
 
 원문에 번호 없이 제시된 planning 목적을 같은 의미로 정리하면 다음과 같다.
 
-$$
+```math
 \underset{a_{t:t+H}}{\mathrm{arg\,max}}\;
 \mathbb{E}_{f}
 \left[\sum_{k=t}^{t+H}r(s_k,a_k,g)\right].
-$$
+```
 
 이 식은 저자들의 horizon reward 최대화를 나타낸다. 현재 tactile pose는 출발 state를 정하고, dynamics model은 후보 action 뒤의 접촉 상태를 예측하며, 식 (4)는 예측된 상태의 **목표 진행과 접촉 정렬**을 평가한다. 이 결과가 첫 횡이동·yaw 명령의 선택으로 이어진다. [원문 §III-A-2–B, Fig. 2(a), PDF pp. 3–4]
 
