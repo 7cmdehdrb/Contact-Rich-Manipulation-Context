@@ -4,9 +4,14 @@
 Usage:
     python scripts/check_markdown_math.py path/to/file.md [more.md ...]
 
-Pass only Markdown files that are being created or modified. The checker is
-intentionally path-scoped so legacy documents do not have to be reformatted
-as part of unrelated work.
+The checker distinguishes GitHub's two block-math syntaxes:
+
+- fenced ```math blocks: preferred for non-trivial display equations because
+  their contents are not first interpreted as ordinary Markdown text.
+- $$ blocks: allowed only for simple, single-physical-line equations that do
+  not contain backslash-escaped ASCII punctuation vulnerable to GFM unescaping.
+
+Inline $...$ math is also checked for the same GFM escape hazards.
 """
 
 from __future__ import annotations
@@ -24,21 +29,35 @@ FENCE_OPEN = re.compile(r"^\s{0,3}((?:\x60){3,}|~{3,})(.*)$")
 INLINE_CODE = re.compile(r"(\x60+)(.*?)\1")
 INLINE_MATH = re.compile(r"(?<!\\)\$(?!\$)(.+?)(?<!\\)\$")
 SAME_LINE_DISPLAY = re.compile(r"(?<!\\)\$\$.+?\$\$")
+HTML_ENTITY_IN_MATH = re.compile(
+    r"&(?:lt|gt|amp|quot|apos|#\d+|#x[0-9A-Fa-f]+);"
+)
 
-# GitHub Markdown may reject macros that ordinary MathJax supports.
-# Keep this list synchronized with .agents/rules/document-formatting.md.
+# GitHub may reject macros that ordinary MathJax supports.
+# Keep synchronized with .agents/rules/document-formatting.md.
 DISALLOWED_MATH_MACROS = ("operatorname",)
 DISALLOWED_MATH_MACRO = re.compile(
     r"\\(" + "|".join(re.escape(name) for name in DISALLOWED_MATH_MACROS) + r")\b"
 )
 
-# TeX often accepts unbraced single-token arguments (for example, \\mathbf x),
-# but this repository requires explicit braces to avoid brittle GitHub rendering.
+# TeX accepts some unbraced single-token arguments, but explicit braces make
+# repository math less ambiguous and easier to lint.
 BRACED_STYLE_MACROS = ("mathbf", "mathrm", "text", "boldsymbol")
 UNBRACED_STYLE_MACRO = re.compile(
     r"\\(" + "|".join(re.escape(name) for name in BRACED_STYLE_MACROS) + r")(?!\s*\{)"
 )
 
+# In ordinary GFM text, a backslash before ASCII punctuation can be consumed by
+# Markdown before MathJax sees it.  This is the root cause of patterns such as
+# \left\{ becoming \left{ and of \\ row separators being damaged inside $$.
+# GitHub explicitly documents \$ inside math, so '$' is intentionally excluded.
+GFM_RISKY_ESCAPE = re.compile(
+    r"""\\([!"#%&'()*+,\-./:;<=>?@\[\\\]^_`{|}~])"""
+)
+
+ENV_TOKEN = re.compile(r"\\(begin|end)\{([^{}]+)\}")
+LEFT_TOKEN = re.compile(r"\\left\b")
+RIGHT_TOKEN = re.compile(r"\\right\b")
 
 
 def iter_markdown_paths(args: list[str]) -> list[Path]:
@@ -59,7 +78,6 @@ def is_fence_close(line: str, fence: str) -> bool:
 
 
 def strip_inline_code(line: str) -> str:
-    """Remove inline-code spans before inspecting inline math."""
     previous = None
     while previous != line:
         previous = line
@@ -67,31 +85,96 @@ def strip_inline_code(line: str) -> str:
     return line
 
 
-def check_disallowed_macros(
-    fragment: str, path: Path, lineno: int, context: str
+def check_common_math(
+    fragment: str,
+    path: Path,
+    lineno: int,
+    context: str,
+    *,
+    gfm_preprocessed: bool,
 ) -> list[str]:
     errors: list[str] = []
+
     for match in DISALLOWED_MATH_MACRO.finditer(fragment):
         macro = match.group(1)
         errors.append(
             f"{path}:{lineno}: GitHub-disallowed math macro '\\{macro}' in "
-            f"{context}; replace it with a GitHub-safe basic form "
-            "(for example, use \\mathrm{...} for a custom operator label)"
+            f"{context}; use a GitHub-safe basic form such as \\mathrm{{...}}"
         )
-    return errors
 
-
-def check_unbraced_style_macros(
-    fragment: str, path: Path, lineno: int, context: str
-) -> list[str]:
-    errors: list[str] = []
     for match in UNBRACED_STYLE_MACRO.finditer(fragment):
         macro = match.group(1)
         errors.append(
             f"{path}:{lineno}: style macro '\\{macro}' in {context} must use "
-            "an explicit braced argument (for example, \\mathbf{1} or "
-            "\\boldsymbol{\\tau})"
+            "an explicit braced argument, e.g. \\mathbf{1}"
         )
+
+    if HTML_ENTITY_IN_MATH.search(fragment):
+        errors.append(
+            f"{path}:{lineno}: HTML entity found inside {context}; use the "
+            "actual mathematical character/operator rather than &lt;/&gt;/etc."
+        )
+
+    if gfm_preprocessed:
+        for match in GFM_RISKY_ESCAPE.finditer(fragment):
+            token = match.group(0)
+            errors.append(
+                f"{path}:{lineno}: GFM-sensitive escape '{token}' inside "
+                f"{context}. Markdown can consume this escape before MathJax. "
+                "For display math, use a fenced ```math block; for inline "
+                "math, use named macros such as \\lbrace/\\rbrace or "
+                "\\lVert/\\rVert and avoid escaped spacing punctuation."
+            )
+
+    return errors
+
+
+def check_math_structure(
+    fragment: str, path: Path, lineno: int, context: str
+) -> list[str]:
+    errors: list[str] = []
+
+    # Count grouping braces that are not escaped literal braces.
+    depth = 0
+    for match in re.finditer(r"(?<!\\)[{}]", fragment):
+        if match.group(0) == "{":
+            depth += 1
+        else:
+            depth -= 1
+            if depth < 0:
+                errors.append(
+                    f"{path}:{lineno}: unmatched closing brace in {context}"
+                )
+                depth = 0
+    if depth:
+        errors.append(
+            f"{path}:{lineno}: unbalanced grouping braces in {context}"
+        )
+
+    left_count = len(LEFT_TOKEN.findall(fragment))
+    right_count = len(RIGHT_TOKEN.findall(fragment))
+    if left_count != right_count:
+        errors.append(
+            f"{path}:{lineno}: unbalanced \\left/\\right delimiters in {context} "
+            f"({left_count} left vs {right_count} right)"
+        )
+
+    env_stack: list[str] = []
+    for match in ENV_TOKEN.finditer(fragment):
+        kind, name = match.groups()
+        if kind == "begin":
+            env_stack.append(name)
+        elif not env_stack or env_stack[-1] != name:
+            errors.append(
+                f"{path}:{lineno}: unmatched \\end{{{name}}} in {context}"
+            )
+        else:
+            env_stack.pop()
+    for name in reversed(env_stack):
+        errors.append(
+            f"{path}:{lineno}: missing \\end{{{name}}} in {context}"
+        )
+
     return errors
 
 
@@ -103,73 +186,99 @@ def check_file(path: Path) -> list[str]:
         return [f"{path}: cannot read file: {exc}"]
 
     in_display_math = False
-    block_start = 0
-    nonempty_content = 0
+    display_start = 0
+    display_lines: list[str] = []
+
     code_fence: str | None = None
+    math_fence = False
+    math_fence_start = 0
+    math_fence_lines: list[str] = []
 
     for lineno, line in enumerate(lines, start=1):
         stripped = line.strip()
 
         if code_fence is not None:
             if is_fence_close(line, code_fence):
+                if math_fence:
+                    fragment = "\n".join(math_fence_lines)
+                    errors.extend(
+                        check_common_math(
+                            fragment,
+                            path,
+                            math_fence_start,
+                            "fenced math",
+                            gfm_preprocessed=False,
+                        )
+                    )
+                    errors.extend(
+                        check_math_structure(
+                            fragment, path, math_fence_start, "fenced math"
+                        )
+                    )
                 code_fence = None
+                math_fence = False
+                math_fence_lines = []
+            elif math_fence:
+                math_fence_lines.append(line)
             continue
 
         fence_match = FENCE_OPEN.match(line)
         if fence_match:
             code_fence = fence_match.group(1)
             info = fence_match.group(2).strip().lower()
-            if info and info.split()[0] == "math":
-                errors.append(
-                    f"{path}:{lineno}: fenced code block with language 'math' is "
-                    "not allowed by repository formatting rules; use $$ delimiters"
-                )
+            math_fence = bool(info and info.split()[0] == "math")
+            if math_fence:
+                math_fence_start = lineno
+                math_fence_lines = []
             continue
 
         if stripped == "$$":
             if not in_display_math:
                 in_display_math = True
-                block_start = lineno
-                nonempty_content = 0
+                display_start = lineno
+                display_lines = []
             else:
-                if nonempty_content == 0:
+                nonempty = [x for x in display_lines if x.strip()]
+                if not nonempty:
                     errors.append(
-                        f"{path}:{block_start}-{lineno}: empty $$ display-math block"
+                        f"{path}:{display_start}-{lineno}: empty $$ display block"
                     )
-                elif nonempty_content > 1:
+                if len(nonempty) > 1:
                     errors.append(
-                        f"{path}:{block_start}-{lineno}: display equation spans "
-                        f"{nonempty_content} non-empty Markdown lines; keep one "
-                        "display equation on one physical line and use LaTeX "
-                        "alignment commands inside that line when needed"
+                        f"{path}:{display_start}-{lineno}: $$ equation spans "
+                        f"{len(nonempty)} non-empty Markdown lines. Prefer a "
+                        "fenced ```math block for non-trivial display math."
                     )
+                fragment = "\n".join(display_lines)
+                errors.extend(
+                    check_common_math(
+                        fragment,
+                        path,
+                        display_start,
+                        "$$ display math",
+                        gfm_preprocessed=True,
+                    )
+                )
+                errors.extend(
+                    check_math_structure(
+                        fragment, path, display_start, "$$ display math"
+                    )
+                )
                 in_display_math = False
+                display_lines = []
             continue
 
         if in_display_math:
-            if stripped:
-                nonempty_content += 1
-
-            errors.extend(
-                check_disallowed_macros(line, path, lineno, "display math")
-            )
-            errors.extend(
-                check_unbraced_style_macros(line, path, lineno, "display math")
-            )
-
+            display_lines.append(line)
             if SETEXT_UNDERLINE.fullmatch(line):
                 errors.append(
-                    f"{path}:{lineno}: standalone '{stripped}' inside $$ block can be "
-                    "parsed as a Markdown Setext heading underline; keep the operator "
-                    "on the same physical line as the LaTeX expression"
+                    f"{path}:{lineno}: standalone '{stripped}' inside $$ block can "
+                    "be parsed as a Markdown Setext heading underline"
                 )
-                continue
-
             if MARKDOWN_STRUCTURE.match(line):
                 errors.append(
                     f"{path}:{lineno}: Markdown structural syntax inside $$ block "
-                    f"('{stripped}'); rewrite the display equation so this token is "
-                    "not at the beginning of a physical Markdown line"
+                    f"('{stripped}')"
                 )
             continue
 
@@ -177,25 +286,35 @@ def check_file(path: Path) -> list[str]:
 
         if SAME_LINE_DISPLAY.search(cleaned):
             errors.append(
-                f"{path}:{lineno}: same-line $$...$$ display math is not allowed by "
-                "repository rules; put opening and closing $$ on separate lines"
+                f"{path}:{lineno}: same-line $$...$$ display math is not allowed; "
+                "use a fenced ```math block or repository-style block delimiters"
             )
             continue
 
         for match in INLINE_MATH.finditer(cleaned):
+            fragment = match.group(1)
             errors.extend(
-                check_disallowed_macros(
-                    match.group(1), path, lineno, "inline math"
+                check_common_math(
+                    fragment,
+                    path,
+                    lineno,
+                    "inline math",
+                    gfm_preprocessed=True,
                 )
             )
             errors.extend(
-                check_unbraced_style_macros(
-                    match.group(1), path, lineno, "inline math"
+                check_math_structure(
+                    fragment, path, lineno, "inline math"
                 )
             )
 
     if in_display_math:
-        errors.append(f"{path}:{block_start}: unclosed $$ display-math block")
+        errors.append(
+            f"{path}:{display_start}: unclosed $$ display-math block"
+        )
+    if code_fence is not None:
+        kind = "math fence" if math_fence else "code fence"
+        errors.append(f"{path}:{math_fence_start or 1}: unclosed {kind}")
 
     return errors
 
