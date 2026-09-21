@@ -129,7 +129,7 @@ Actor observation은 $\mathbf{o}_t\in\mathbb{R}^{54}$이다. Table I의 구성�
 | Projected gravity unit vector | 3 | $\mathcal U(\pm0.05)$ |
 | Object–goal relative position w.r.t. base | 3 | $\mathcal U(\pm0.02)$ |
 | Goal orientation w.r.t. object | 9 | $\mathcal U(\pm0.01)$ |
-| Previous action $\mathbf a_{t-1}$ | 11 | noise 없음 |
+| Previous action $\mathbf{a}_{t-1}$ | 11 | noise 없음 |
 
 [원문 Table I, §III-C, PDF p. 3]
 
@@ -169,14 +169,14 @@ Actor에 dimensions·velocity가 없더라도 training reward는 simulation의 �
 
 Push policy action은
 
-$$
-\mathbf a_t=
+```math
+\mathbf{a}_t=
 \left(
-\Delta\mathbf u^{\mathrm{cmd}}_{\mathrm{base}},
-\Delta\mathbf q^{\mathrm{cmd}}_j
+\Delta\mathbf{u}^{\mathrm{cmd}}_{\mathrm{base}},
+\Delta\mathbf{q}^{\mathrm{cmd}}_j
 \right)
 \in\mathbb R^{11}
-$$
+```
 
 이다.
 
@@ -212,7 +212,7 @@ Actor action에는 “contact 유지 / contact 해제 / face switch” 같은 �
 
 ### 6.2 Surface reach target을 이용한 exploration shaping
 
-각 reset마다 object의 vertical surface에서 reach target $\mathbf p_r$를 무작위로 샘플링하고, $r_2$로 EE를 그쪽으로 유도한다. 목적은 특정 centroid만 밀도록 고정하는 것이 아니라 **object surface의 여러 위치를 경험하게 하는 것**이다. [원문 §III-B·D, Fig. 3B, PDF pp. 3–4]
+각 reset마다 object의 vertical surface에서 reach target $\mathbf{p}_r$를 무작위로 샘플링하고, $r_2$로 EE를 그쪽으로 유도한다. 목적은 특정 centroid만 밀도록 고정하는 것이 아니라 **object surface의 여러 위치를 경험하게 하는 것**이다. [원문 §III-B·D, Fig. 3B, PDF pp. 3–4]
 
 이 reach target은 actor observation으로 주어지는 task goal이 아니라 reward shaping용 training signal이다. 저자들은 정확히 그 sampled point를 맞히게 할 의도는 없으며, $r_2$ weight를 1500 iteration 뒤 1/4로 줄인다. [원문 §III-D, PDF p. 4]
 
@@ -222,18 +222,18 @@ Actor action에는 “contact 유지 / contact 해제 / face switch” 같은 �
 
 Total reward는 네 항의 가중합이다.
 
-$$
+```math
 r^{mathrm{tot}}_t=\sum_{i=1}^{4} w_i r_{i,t}
-$$
+```
 
 원문 weight는
 
-$$
+```math
 w_1=2.5,\quad
 w_2=1.25,\quad
 w_3=0.156,\quad
 w_4=0.3
-$$
+```
 
 이다. [원문 §III-D, Table II, PDF p. 4]
 
@@ -281,7 +281,7 @@ Zero-shot hardware transfer를 위해 다음을 randomize한다.
 | Object–floor static/dynamic friction의 combined coefficient | 0.4–1.25 |
 | Object mass | 1–10 kg |
 | Object CoM x/y | centroid 기준 각 dimension의 ±25% |
-| Object CoM z | centroid 기준 $[-0.6d_z,\;0.25d_z]$ |
+| Object CoM z | centroid 기준 $[-0.6d_z,\quad 0.25d_z]$ |
 | Object x/y dimensions | 각각 0.25–0.75 m |
 | Object z dimension | 0.4–1.0 m |
 | Object shape | cuboid, cylinder |
@@ -353,7 +353,7 @@ Table V의 결과는 다음과 같다.
 | Cardboard cuboid | 4.5 kg | 100×50×53 cm | 0° | 0.14 | 80.0% |
 | Wood cuboid | 6.30 kg | 40×40×60 cm | 180° | 1.00 | 91.6% |
 | Cardboard cuboid on caster wheels | 13.30 kg | 50×50×60 cm | 0° | 4.80 | 83.3% |
-| Cardboard cylinder | 2.45 kg | $\Phi 30\times 40\,\mathrm{cm}$ | 0° | — | 83.3% |
+| Cardboard cylinder | 2.45 kg | $\Phi 30\times 40~\mathrm{cm}$ | 0° | — | 83.3% |
 
 [원문 Table V, §IV-C, PDF p. 5]
 
