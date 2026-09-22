@@ -2,31 +2,11 @@
 
 [발표 문서 안내](README.md) · [Research Motivation and Contributions](01_Research_Motivation.md) · [Method](03_Method.md)
 
-> **문서 상태: 기존 문헌 정리의 재구성.** F/T·Tactile 관련 선행연구와 기존 DR 비교를 모은다. 본 연구의 Contribution은 [01 문서](01_Research_Motivation.md), 실행 설계는 [03 문서](03_Method.md)에서 다룬다. RL 정책 학습과 Reward Formulation의 추가 정리는 TODO로 남긴다.
+> **문서 상태: 선행연구 정리.** Tactile 활용 방식, RL 보상 설계와 Domain Randomization 사례를 정리한다. F/T·Wrench 선행연구 절은 TODO로 남긴다. 본 연구의 Contribution은 [01 문서](01_Research_Motivation.md), 실행 설계는 [03 문서](03_Method.md)에서 다룬다.
 
 ## 2.1. F/T·Wrench를 활용하는 선행연구
 
-### 2.1.1. 연속적인 하중 피드백과 조작
-
-| 연구 | 확인된 내용 |
-| --- | --- |
-| [**Heins and Schoellig - Force Push: Robust Single-Point Pushing with Force Feedback**](../literature/papers/2024-heins-force-push.md) | 물체의 현재 Pose와 정확한 물성 모델 없이 접촉력 피드백으로 밀기를 수행한다. 힘의 방향으로 조향하고, 크기에 따라 접촉 회복과 과부하 시 속도 보정을 수행한다. |
-| [**Beltran-Hernandez et al. - Learning Force Control for Contact-Rich Manipulation Tasks With Rigid Position-Controlled Robots**](../literature/papers/2020-beltran-hernandez-learning-force-control.md) | F/T 기반 interaction feedback을 EEF pose error·velocity와 함께 SAC observation에 넣고, parallel position/force 또는 admittance controller의 motion·gain을 학습한다. 같은 force signal을 reward와 fail-safe에도 사용하여 실물 precision insertion을 학습한다. Tactile과의 병용 우위나 Sweeping 성능을 검증한 연구는 아니다. |
-| [**Brouwer et al. - Gentle Object Retraction in Dense Clutter Using Multimodal Force Sensing and Imitation Learning**](../literature/papers/2026-brouwer-gentle-object-retraction.md) | 분포형 촉각과 관절 토크 기반 추정 Wrench를 정책에 함께 사용한다. 저자들은 Wrench가 여러 접촉의 개별 하중을 구분하지 못하고, 촉각은 센서가 덮지 못한 접촉을 놓친다는 차이를 설명한다. |
-
-[**Force Push**](../literature/papers/2024-heins-force-push.md)는 힘의 크기와 방향이 접촉 여부를 넘어 행동을 조절하는 데 사용되는 사례다. [**Gentle Object Retraction**](../literature/papers/2026-brouwer-gentle-object-retraction.md)은 촉각의 국소 접촉 정보와 Wrench의 전체 하중 정보가 서로 다른 관측 한계를 갖는다는 점을 보여준다.
-
-### 2.1.2. 학습 정책의 Wrench 관측과 비교 결과
-
-[2026-09-21 Wrist Wrench 조사](../literature/reviews/2026-09-21_wrist-wrench-manipulation-survey.md)는 기존 상세 리뷰 28편을 제외하고, 2022년 이후 RA-L·ICRA·IROS·RSS 연구에서 Wrench가 학습 정책의 관측에 들어가는 7편과 제어기·플래너 피드백으로 쓰이는 2편을 비교했다. 외장 F/T, 로봇 내장 F/T와 관절 토크 기반 말단 외력 추정을 구분하고, 실제로 사용한 성분이 6D Wrench인지 3D force 또는 Fz인지도 분리했다.
-
-[FoAR](../literature/papers/2025-he-foar.md)는 flange와 gripper 사이의 외장 OptoForce에서 얻은 6D Wrench 약 2초 이력을 Transformer로 처리해 시각 특징과 결합하고, 접촉 예정 구간의 행동 보정에도 사용했다. 이는 외장 손목 F/T의 이력을 정책에 넣은 직접 사례다. 다만 실행 중 RGB-D를 계속 사용하고, FoAR와 vision-only 기준선은 센서뿐 아니라 fusion·predictor·reactive correction도 함께 다르다.
-
-[Zero-Shot Transfer](../literature/reviews/2026-09-21_wrist-wrench-manipulation-survey.md#w4-zero-shot-transfer--초기-시각-이후-wrench고유감각-이력)는 초기 시각 이후 상대 EE pose와 추정 6D Wrench의 8시점 이력으로 삽입 행동을 선택했고, [Symmetry-aware RL](../literature/reviews/2026-09-21_wrist-wrench-manipulation-survey.md#w5-symmetry-aware-rl--ft행동-이력의-recurrent-policy)은 위치·F/T·행동 이력을 recurrent policy에 제공했다. 두 연구는 Wrench를 단일 시점 값보다 행동·운동의 시간 맥락과 함께 사용한 사례다.
-
-F/T 관측의 효과는 과업에 따라 달랐다. [Comp-ACT](../literature/reviews/2026-09-21_wrist-wrench-manipulation-survey.md#w2-comp-act--ft-관측의-포함제거-비교)의 동일 논문 내 포함·제거 비교에서 F/T를 포함한 정책은 세 삽입 과업에서 성공률이 높았지만 wiping은 70% 대 100%로 낮았고 drawing은 같았다. 따라서 **Wrench가 접촉 조작의 행동 선택에 유용할 수 있다는 근거는 있으나, 항상 성능을 높이거나 접촉 위치·물체 상태를 유일하게 복원한다는 근거는 아니다.**
-
-또한 이 조사에는 Binary 촉각과 Wrist Wrench의 역할을 같은 조건에서 직접 분리한 실험이 없다. Binary 또는 희소 촉각과 손목 F/T를 결합했을 때 두 입력의 기여를 구분한 근거는 추가 확인이 필요하다.
+> **TODO:** F/T·Wrench를 활용하는 선행연구는 추후 정리한다. 현재는 절만 마련한다.
 
 ## 2.2. Tactile 정보를 활용하는 선행연구
 
@@ -52,7 +32,7 @@ F/T 관측의 효과는 과업에 따라 달랐다. [Comp-ACT](../literature/rev
 
 [**Yijiong Lin et al. - Bi-Touch: Bimanual Tactile Manipulation With Sim-to-Real Deep Reinforcement Learning**](../literature/papers/2023-lin-bi-touch.md)는 두 TacTip 영상을 각각 **Real-to-Sim GAN**으로 변환하고, 영상 특징과 고유감각·목표 정보를 PPO 정책에 제공하여 양팔 밀기·재정렬·모으기를 수행한다.
 
-[**Gentle Object Retraction**](../literature/papers/2026-brouwer-gentle-object-retraction.md)는 도구 양 측면의 분포형 3축 촉각을 **20×5×3 Force Image**로 표현하고, 촉각 전용 ResNet-18로 인코딩한다. 이 영상의 채널은 광학 촉각 카메라의 색을 관측한 것이 아니라 **측정된 힘 성분을 영상화한 표현**이다. 별도의 시각 Encoder와 TCP Pose·Wrench 등의 저차원 입력을 결합한 Diffusion Policy로 선반 인출을 수행하며, 센서 Ablation으로 분포형 촉각과 Wrench의 기여를 비교한다.
+[**Brouwer et al. - Gentle Object Retraction in Dense Clutter Using Multimodal Force Sensing and Imitation Learning**](../literature/papers/2026-brouwer-gentle-object-retraction.md)는 도구 양 측면의 분포형 3축 촉각을 **20×5×3 Force Image**로 표현하고, 촉각 전용 ResNet-18로 인코딩한다. 이 영상의 채널은 광학 촉각 카메라의 색을 관측한 것이 아니라 **측정된 힘 성분을 영상화한 표현**이다. 별도의 시각 Encoder와 TCP Pose·Wrench 등의 저차원 입력을 결합한 Diffusion Policy로 선반 인출을 수행하며, 센서 Ablation으로 분포형 촉각과 Wrench의 기여를 비교한다.
 
 [**Tactile Gym 2.0**](../literature/papers/2022-lin-tactile-gym-2-0.md)의 센서별 영상 변환과 [**Bi-Touch**](../literature/papers/2023-lin-bi-touch.md)의 접촉 동역학 수정 작업은 **고차원 촉각 표현이 공간적인 접촉 정보를 정책에 전달하는 데 유효하지만, 시뮬레이션 학습을 실물로 이전하려면 영상 표현과 실제 접촉 반응을 함께 대응시켜야 한다는 점**을 보여준다.
 
@@ -84,22 +64,137 @@ Tactile 정보를 저차원화할 때는 **조작에 필요한 정보를 무엇�
 
 ## 2.3. Reinforcement Learning
 
-### 2.3.1. RL 기반 정책 학습 — TODO
+기존 연구의 **Reward Formulation이 어떤 행동을 유도하는지**를 중심으로 정리한다. 목표 달성, 접촉·하중 조절, 과업 단계의 진행을 구분하며, 보상 계산에 사용하는 물체 정답이나 외부 측정값을 실행 정책의 관측과 혼동하지 않는다. 수식과 설명은 연결한 상세 리뷰를 기준으로 한다.
 
-> **TODO:** 기존 접촉 기반 조작 연구에서 RL 정책을 어떻게 학습했는지 정리할 예정이다. 이번 재구성에서는 내용을 채우지 않는다.
+### 2.3.1. Bi-Touch — 목표 위치·방위와 접촉면 정렬
 
-### 2.3.2. 선행연구의 Reward Formulation — TODO
+[**Bi-Touch**](../literature/papers/2023-lin-bi-touch.md) — Lin et al., 2023. 여기서는 **Bi-pushing만** 다룬다. 보상은 **물체의 목표 위치**, **목표 방위**, **두 툴과 접촉면의 정렬**을 함께 고려한다.
 
-> **TODO:** 기존 연구들의 Reward Formulation을 정리할 예정이다. 이번에는 항목만 마련하며, 보상식·보상 항·가중치 등의 내용은 채우지 않는다.
+```math
+R_t^{\mathrm{BP}}=-w_1\lVert p_t^g-p_t^o\rVert_2-w_2S(\theta_t^g,\theta_t^o)-w_3\sum_{i=1}^{2}S(\theta_t^{e_i},\theta_t^o),\qquad S(\phi,\psi)=1-\cos(\phi-\psi).
+```
+
+$p_t^g,p_t^o$는 현재 목표와 물체의 위치, $\theta_t^g,\theta_t^o$는 각 방위, $\theta_t^{e_i}$는 각 툴 TCP의 방위다. 첫 두 항은 물체가 경로상의 위치·방위 목표를 따르게 하고, 마지막 항은 두 TacTip이 **접촉면에 수직으로 정렬된 밀기**를 유지하도록 유도한다.
+
+따라서 이 보상은 목표점 도달만이 아니라 **어떤 자세로 물체를 미는가**를 함께 다룬다. 다만 마지막 항은 기하학적 정렬 항이며, 접촉력 추종이나 활성 촉각 수 보상이 아니다. Bi-reorienting·Bi-gathering의 접촉 위치 항은 여기에 포함하지 않는다. 가중치의 수치는 상세 리뷰에서 미명시로 정리되어 있다. (원문 §III-C-1, 식 (1))
+
+### 2.3.2. Location-Based Attention Pushing — 목표 근접도와 장애물 충돌
+
+[**Dengler et al. - Learning Goal-Directed Object Pushing in Cluttered Scenes With Location-Based Attention**](../literature/papers/2025-dengler-location-based-attention-pushing.md), 2025. 현재 목표에 가까워지는 정도와 종료 결과를 보상하고, 장애물과의 접촉을 벌점 처리한다.
+
+```math
+r_{\mathrm{total}}=r_{\mathrm{term}}+k_1(1-r_{\mathrm{dist}})+k_2(1-r_{\mathrm{ang}})+r_{\mathrm{coll}}.
+```
+
+$r_{\mathrm{dist}}$와 $r_{\mathrm{ang}}$는 각각 정규화된 **물체–목표 위치 거리와 방위 차이**다. 두 항은 이전 시점 대비 진행량이 아니라 **현재 목표 근접도**를 보상한다. $r_{\mathrm{term}}$은 성공 또는 작업영역 이탈에 따른 종료 보상이고, $r_{\mathrm{coll}}$은 Pusher나 대상 물체가 장애물에 접촉한 시점의 Binary 페널티다.
+
+밀기에 필요한 Pusher–대상 물체 접촉 전체를 금지하거나, 접촉력의 크기에 비례해 벌점을 주는 구조는 아니다. 이 연구는 F/T·촉각 관측 대신 물체 Pose와 장애물 정보를 사용하는 밀기 사례로 구분한다. (원문 §III-B.3, 식 (1), §IV-A)
+
+### 2.3.3. Precision-Focused Pushing — 목표 허용범위의 희소 보상
+
+[**Bergmann et al. - Precision-Focused Reinforcement Learning Model for Robotic Object Pushing**](../literature/papers/2025-bergmann-precision-focused-pushing.md), 2025. 물체 중심이 목표 위치의 허용범위에 들어왔는지만으로 보상을 구성한다.
+
+```math
+r(p_o,p_g)=\begin{cases}-1,&\lVert p_o-p_g\rVert_2\ge 0.01\ \mathrm{m}\\0,&\text{otherwise}.\end{cases}
+```
+
+$p_o,p_g$는 물체 중심과 목표 위치다. 목표에서 **1 cm 이상 떨어지면 매 Step −1**, 범위 안에서는 0을 준다. 별도의 방위 정렬·접촉력·촉각 활성 보상은 포함하지 않는다.
+
+목표에 일찍 도달해도 즉시 종료하지 않고, 고정된 Episode의 **마지막 시점에도 목표 범위 안에 있어야 성공**으로 판정한다. 이 조건은 목표를 잠시 통과한 뒤 다시 밀어내는 경우와 최종 위치를 유지한 경우를 구분한다. 보상에 사용하는 정답 중심 좌표는 Actor 입력이 아니며, 정책은 시각 특징과 EEF 위치를 사용한다. (상세 리뷰 §11–12)
+
+### 2.3.4. Unknown Object Retrieval — 전진 진행량과 접촉 하중 조절
+
+[**Unknown Object Retrieval**](../literature/papers/2024-zhao-unknown-object-retrieval.md) — Zhao et al., 2024. 목표 방향으로 물체를 꺼내는 진행량과 접촉 하중을 함께 고려한다.
+
+```math
+r=r_t+r_o+r_f+r_g+r_p.
+```
+
+$r_t$는 시간 페널티, $r_o$는 **현재 Step의 물체 전진 변위**에 비례하는 보상, $r_f$는 촉각 법선력 보상이다. $r_g$는 목표 인출 거리 달성 시의 보상이며, $r_p$는 후퇴·조정 Primitive 이후 정해진 시간 안에 재접촉하지 못했을 때의 페널티다. Primitive 실행에도 동등한 이동에 필요한 시간 비용을 반영한다.
+
+접촉 하중 항은 최대 촉각 법선력 $f_n^{\max}$를 세 구간으로 나눈다.
+
+```math
+r_f=\begin{cases}0,&f_n^{\max}<f_n^l\\r_f^h,&f_n^{\max}>f_n^h\\(f_n^{\max}-f_n^l)^2,&\text{otherwise}.\end{cases}
+```
+
+하한 $f_n^l$ 미만에서는 보상하지 않고, 하한과 상한 $f_n^h$ 사이에서는 위 제곱 항을 주며, 상한을 넘으면 음수인 $r_f^h$를 적용한다. **접촉을 모두 줄이기보다 필요한 하중을 형성하도록 유도하면서 과도한 누름은 제한**하는 구성이다. 상한 초과 시에는 보상과 별도로 누름을 해제하는 동작도 사용하므로, 하중 제한을 보상 하나의 효과로 설명하지 않는다.
+
+전진 변위는 학습 중 OptiTrack으로 측정하지만 실행 정책에는 입력하지 않는다. 또한 재접촉 실패 페널티는 **조정 후 접촉 회복**에 관한 것이며, 모든 순간의 접촉 소실을 동일하게 벌점 처리하는 항은 아니다. (원문 식 (1)–(3), 상세 리뷰 §10.1–10.5)
+
+### 2.3.5. Learning Force Control — 목표 오차·동작·하중·안전
+
+[**Beltran-Hernandez et al. - Learning Force Control for Contact-Rich Manipulation Tasks With Rigid Position-Controlled Robots**](../literature/papers/2020-beltran-hernandez-learning-force-control.md), 2020. 목표 Pose 도달과 함께 큰 동작·접촉 하중을 억제하고, 시간과 안전 결과를 반영한다.
+
+```math
+r(s,a)=w_1L_m\left(\left\|x_e/x_{\max}\right\|_{1,2}\right)+w_2L_m\left(\left\|a/a_{\max}\right\|_2\right)+w_3L_m\left(\left\|F_{\mathrm{ext}}/F_{\max}\right\|_2\right)+w_4\rho+w_5\kappa.
+```
+
+$x_e$는 목표 Pose 오차, $a$는 Action, $F_{\mathrm{ext}}$는 접촉 하중이며 각각 기준값으로 정규화한다. $L_m$은 보상 범위로의 선형 매핑, $\rho$는 Step·시간 페널티, $\kappa$는 과업 완료·안전 위반 결과를 나타낸다. **목표 오차 감소, 동작 크기 억제, 낮은 상호작용 하중, 빠른 완료, 안전 위반 회피**를 함께 고려하는 구조다. 개별 가중치와 정규화 기준의 수치는 상세 리뷰에서 미명시로 정리되어 있다.
+
+하중 항은 특정 목표 힘과의 추종 오차가 아니라 **측정된 접촉 하중의 크기**에 작용한다. 안전 위반 페널티와 별도로 명령 유효성 검사·힘 한계 초과 시 종료하는 Fail-safe를 사용하므로, 보상과 안전 감독도 구분한다. (상세 리뷰 §17–20)
+
+### 2.3.6. DexTouch — 접근과 과업별 진행의 분리
+
+[**DexTouch**](../literature/papers/2024-lee-dextouch.md) — Lee et al., 2024. 보상은 **접근 보상**과 **과업 실행 보상**으로 구성하고, 급격한 동작을 억제하기 위한 관절 속도의 L1 Norm 페널티를 추가한다.
+
+공통 접근 항은 손끝이 물체에 대해 달성한 최고 근접 기록을 갱신할 때 보상한다.
+
+```math
+r_{\mathrm{reach}}=\sum_{\mathrm{finger}}\alpha_{\mathrm{reach}}\max(d_{\mathrm{closest}}-d,0).
+```
+
+$d$는 현재 손끝–물체 거리, $d_{\mathrm{closest}}$는 지금까지 달성한 최소 거리다. 따라서 물러났다가 이미 도달했던 거리로 돌아오는 것만으로는 새 접근 보상이 생기지 않는다. 이전 Step 대비 거리 차분과도 구분된다.
+
+실행 보상은 **파지·운반에서는 들어 올린 높이와 이후 목표 운반 진행**, **문 열기에서는 손잡이 회전 이후 문 열림 진행**, **밸브에서는 최대 회전각 기록 갱신**을 반영한다. 과업 단계의 달성 보너스도 사용한다. 즉 촉각을 관측한다고 해서 보상이 활성 센서 수로 정의되는 것은 아니며, 이 논문의 핵심은 **접근과 실제 물체 조작의 진행을 분리해 보상하는 것**이다. (원문 §IV-B, 식 (1)–(4), 상세 리뷰 §8)
+
+### 2.3.7. Sim-to-Real Transfer — 파지 유지와 활성 촉각 수
+
+[**Sim-to-Real Transfer for Robotic Manipulation with Tactile Sensory**](../literature/papers/2021-ding-sim-to-real-tactile-manipulation.md) — Ding et al., 2021. 문 열기 보상은 다음 다섯 항으로 구성된다.
+
+```math
+R=\omega_{\mathrm{door}}r_{\mathrm{door}}+\omega_{\mathrm{dist}}r_{\mathrm{dist}}+\omega_{\mathrm{ori}}r_{\mathrm{ori}}+\omega_{\mathrm{grasp}}r_{\mathrm{grasp}}+\omega_{\mathrm{tactile}}r_{\mathrm{tactile}}.
+```
+
+$r_{\mathrm{door}}$는 **파지가 유지될 때의 문 경첩 각도**, $r_{\mathrm{dist}}$는 Gripper–손잡이 거리, $r_{\mathrm{ori}}$는 Gripper와 목표 방위의 정렬을 반영한다. $r_{\mathrm{grasp}}$는 **양손가락이 손잡이와 접촉한 파지 상태**를 보상한다.
+
+촉각 항은 활성 Binary 촉각 Unit의 수를 사용한다.
+
+```math
+r_{\mathrm{tactile}}=\|\hat{\mathbf{c}}\|_1.
+```
+
+이 항은 **파지 상태이며 문 열림 각도가 시작 기준을 넘었을 때** 적용한다. 따라서 아무 물체나 많이 접촉하면 항상 보상을 주는 것이 아니라, **과업에 필요한 파지를 유지하며 문을 여는 구간에서 접촉 영역을 넓히도록 유도**하는 구조다. 문 각도 자체를 보상하는 항과 활성 촉각 수를 보상하는 항을 구분한다. (원문 §IV-C-c, 식 (4)–(9), 상세 리뷰 §5.4–5.5)
+
+### 2.3.8. 접촉 유지 보상과 촉각 개수 보상의 구분
+
+| 구분 | 해당 연구와 항 | 실제 보상 조건 |
+| --- | --- | --- |
+| **접촉·파지 상태 유지** | [**Sim-to-Real Transfer**](../literature/papers/2021-ding-sim-to-real-tactile-manipulation.md)의 $r_{\mathrm{grasp}}$ | 양손가락이 손잡이와 접촉한 현재 파지 상태를 보상. 접촉 시간을 별도 변수로 누적하는 식은 아님 |
+| **활성 촉각 수** | [**Sim-to-Real Transfer**](../literature/papers/2021-ding-sim-to-real-tactile-manipulation.md)의 $r_{\mathrm{tactile}}$ | 파지 상태이며 문 열림이 시작된 조건에서 활성 Binary Unit 수를 보상 |
+
+[**Bi-Touch**](../literature/papers/2023-lin-bi-touch.md)의 툴–접촉면 정렬, [**Unknown Object Retrieval**](../literature/papers/2024-zhao-unknown-object-retrieval.md)의 하중 구간·재접촉 실패, [**DexTouch**](../literature/papers/2024-lee-dextouch.md)의 손끝 거리 항은 접촉에 관련되지만, 위 두 보상과 같은 식은 아니다. **접촉 여부·접촉 하중·접촉 기하·활성 센서 수 중 무엇을 직접 보상하는지**를 구분해야 한다.
 
 ## 2.4. 선행연구의 Domain Randomization
 
-이미 검토한 RL 기반 연구에서는 물체·환경·로봇·센서 조건을 다양하게 무작위화하여 학습한다. 여기서는 **각 연구가 어떤 항목을 Randomization 했는지만 정리하며, 구체적인 수치 범위는 생략한다.**
+기존에 검토한 다섯 연구의 Randomization 대상을 **물리·초기 조건**과 **관측·명령 불확실성**으로 나누어 정리한다. 구체적인 수치 범위는 상세 리뷰에서 확인한다.
 
-| 연구 | Randomization 대상 |
-| --- | --- |
-| [**Rotating without Seeing**](../literature/papers/2023-yin-rotating-without-seeing.md) | 물체 질량·마찰·형상·초기 위치, Hand 마찰, PD Gain, 외력, 관절 관측 잡음, Action 잡음, Tactile Dropout·지연 |
-| [**Beyond Binary**](../literature/papers/2026-pan-beyond-binary-cop-tactile.md) | 물체 질량·마찰, 물체·Hand 초기 Pose, Hand 초기 관절 상태·마찰, PD Gain, 관절 관측 잡음, Contact Force·Position 잡음, Contact Observation 지연 |
-| [**Sim-to-Real Transfer**](../literature/papers/2021-ding-sim-to-real-tactile-manipulation.md) | 손잡이 마찰, 문 경첩 Stiffness·Damping·Friction, 문·손잡이 질량, 환경 위치 Offset, Observation·Action 잡음, Observation 지연, Binary Tactile Bit Flip |
-| [**DexTouch**](../literature/papers/2024-lee-dextouch.md) | 물체·문·밸브의 초기 위치, 물체·밸브의 초기 Orientation |
-| [**Sim2Real Manipulation**](../literature/papers/2024-su-sim2real-tactile-manipulation.md) | 물체 형상·길이, 지지면 높이, 초기 물체 자세, 목표 자세 |
+### 2.4.1. 물체·환경·로봇 조건
+
+| 연구 | 물체·환경·과업 | 로봇·제어·외란 |
+| --- | --- | --- |
+| [**Rotating without Seeing**](../literature/papers/2023-yin-rotating-without-seeing.md) | 물체 질량·마찰<br>형상 배율·초기 위치 | Hand 마찰<br>PD Gain·외력 |
+| [**Beyond Binary**](../literature/papers/2026-pan-beyond-binary-cop-tactile.md) | Peg·Ball·Plate 질량<br>물체·접촉면 마찰<br>물체 초기 위치·방향(과업별) | Hand 초기 Pose·관절 상태<br>Hand 마찰·PD Gain |
+| [**Sim-to-Real Transfer**](../literature/papers/2021-ding-sim-to-real-tactile-manipulation.md) | 문·손잡이 질량, 손잡이 마찰<br>경첩 Stiffness·Damping·Friction loss<br>Table의 XY 위치 | 로봇 파라미터는 동정 후 고정 |
+| [**DexTouch**](../literature/papers/2024-lee-dextouch.md) | 물체·문·밸브 초기 위치<br>물체·밸브 초기 Orientation | — |
+| [**Sim2Real Manipulation**](../literature/papers/2024-su-sim2real-tactile-manipulation.md) | 물체 형상·길이, 지지면 높이<br>초기 물체 각도·목표 상대 각도 | — |
+
+### 2.4.2. 센서 관측·명령 불확실성
+
+| 연구 | 촉각·접촉 관측 | 기타 관측·명령 |
+| --- | --- | --- |
+| [**Rotating without Seeing**](../literature/papers/2023-yin-rotating-without-seeing.md) | 활성 접촉 누락(Dropout)<br>센서 지연 | 관절 관측 잡음<br>Action 잡음 |
+| [**Beyond Binary**](../literature/papers/2026-pan-beyond-binary-cop-tactile.md) | 접촉력 크기·방향 잡음<br>접촉 위치 잡음·접촉 관측 지연 | 관절 위치 관측 잡음 |
+| [**Sim-to-Real Transfer**](../literature/papers/2021-ding-sim-to-real-tactile-manipulation.md) | Binary Bit Flip<br>관측 지연 | 촉각 외 관측 잡음<br>Gripper 외 Action 잡음<br>관측 지연 |
+
+**—는 검토한 상세 리뷰에서 해당 항목의 DR 보고를 확인하지 못했다는 뜻이다.** 같은 이유로 DexTouch와 Sim2Real Manipulation에는 별도의 센서 잡음 DR 항목을 추가하지 않았다. 접촉 누락만 만드는 Dropout과 양방향으로 값을 반전하는 Bit Flip은 구분한다.
