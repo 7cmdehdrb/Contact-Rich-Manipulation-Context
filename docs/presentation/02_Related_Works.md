@@ -105,6 +105,52 @@ Tactile 정보를 저차원화할 때는 **조작에 필요한 정보를 무엇�
 
 [**Jiahe Pan et al. - Beyond Binary: Sim-to-Real Dexterous Manipulation with Physics-Grounded Contact Representation**](../literature/papers/2026-pan-beyond-binary-cop-tactile.md)는 blind peg-in-hole에서 array별 Binary 접촉(전체 성공률 0.53)보다 **접촉 하중과 local contact position을 함께 보존한 CoP 표현(0.78)**이 높은 성공률을 보였고, OOD 초기조건에서도 0.20 대비 0.63을 기록했다. Raw taxel은 0.48로 CoP보다 낮았다. 이는 **Binary로 과도하게 축약하면 필요한 하중·공간 정보가 부족할 수 있고, raw tactile을 그대로 쓰는 것 역시 sim-to-real mismatch와 차원 문제를 가질 수 있음**을 같은 실물 과업에서 보여주는 근거다. 다만 이 연구의 force는 **XELA tactile taxel에서 복원한 local force**이며 별도 손목 F/T가 아니고, 실제 전이 실험에서는 shear simulation 불일치 때문에 surface-normal force만 사용했다. (기존 Motivation의 비교 근거를 이관. arXiv v1, §3.4·4.1·6, Table 1)
 
+### 2.2.5. Tactile 정보의 축약과 과업별 센서 선택
+
+다음 다섯 연구는 **좌표 표현의 정규화, 영역별 Pooling, 측정량의 요약, 신호의 이진화, 센서 부분집합의 선택**을 각각 다룬다. 이들은 모두 입력을 단순화하는 데 참고할 수 있지만, 실제 입력 차원을 줄이는 방법과 학습하기 쉬운 표현으로 바꾸는 방법은 구분해야 한다.
+
+<a id="tactile-reduction-wu"></a>
+
+#### Wu et al. — 센서별 좌표를 공통 표현으로 정규화
+
+[**Tianhao Wu et al. - Canonical Representation and Force-Based Pretraining of 3D Tactile for Dexterous Visuo-Tactile Policy Learning**](https://doi.org/10.1109/ICRA55743.2025.11128094), ICRA 2025. Taxel의 **6D Pose + 3D Force**를 그대로 사용하는 대신, **센서 원점의 6D Pose + 센서 내부에서 정규화한 3D Taxel 위치 + 3D Force**로 재표현한다. 각 센서의 좌표를 공통 Unit Frame에 정렬하여 같은 종류의 센서가 일관된 표현을 갖도록 하고, 센서 내부의 작은 위치 차이를 신경망이 구별하기 쉽게 만든다. 이후 GNN으로 인코딩하고, Local Force 복원·Net Force 예측으로 사전학습한 특징을 시각·고유감각과 결합한 Diffusion Policy에 사용한다.
+
+**Taxel당 차원은 9D에서 12D로 증가한다.** 따라서 이 연구의 축약은 채널 삭제가 아니라 **좌표 정규화로 학습할 Feature Space를 정리하는 것**이다. 사전학습의 Mask도 힘 복원 문제를 만들기 위한 것이며, 실행 중 비활성 센서를 제외하는 선택기가 아니다. (첨부 ICRA 출판본 §IV-A–C, Fig. 2–3, PDF pp. 3–4)
+
+<a id="tactile-reduction-melnik"></a>
+
+#### Melnik et al. — 92개 촉각을 16개 영역별 Boolean으로 Pooling
+
+[**Andrew Melnik et al. - Using Tactile Sensing to Improve the Sample Efficiency and Performance of Deep Deterministic Policy Gradients for Simulated In-Hand Manipulation Tasks**](https://doi.org/10.3389/frobt.2021.538773), Frontiers in Robotics and AI, 2021. Shadow Hand의 **92개 법선력 센서**를 손가락 마디 15개와 손바닥 1개의 **16개 영역**으로 묶고, 각 영역에서 하나라도 양의 측정값이 있으면 1, 없으면 0을 반환한다. 이 OR Pooling으로 촉각 입력은 **92D → 16D**, 나머지 관측을 포함한 전체 입력은 **160D → 84D**가 된다. 영역별 접촉 유무는 남지만 영역 내부 접촉 분포와 힘 크기는 사라진다. 현재 물체 상태·고유감각을 함께 사용하는 시뮬레이션 DDPG+HER 연구다.
+
+16개 Boolean 영역도 무촉각 대비 학습 효율의 이득을 보였지만, Block 과업의 수렴 성공률은 92개 Boolean의 0.44에서 16개 영역의 0.38로 낮아졌다. 또한 센서별 활성 빈도와 활성 Bit 제거 시 Q-value 변화를 비교한 결과, **자주 활성화되는 센서가 항상 가장 유용하지는 않았다.** Pooling의 유효성을 보여주지만, 드문 접촉을 임의로 삭제해도 된다는 결과는 아니다. (첨부 원문 §2.2, §3–4, Tables 4–5·8, Fig. 7, PDF pp. 5·9·11·14–15)
+
+<a id="tactile-reduction-zhang"></a>
+
+#### Zhang et al. — 분포형 촉각을 전역 측정량 또는 국소 영역으로 요약
+
+[**Boya Zhang et al. - The Role of Tactile Sensing for Learning Reach and Grasp**](../literature/papers/2025-zhang-role-of-tactile-sensing.md), ICRA 2025. 손끝당 50개 독립 Force Vector를 갖는 시뮬레이션 모델에서, 촉각을 **손끝 전체의 Binary·힘 크기·3D 합력** 또는 **K개 국소 영역별 측정값**으로 요약한다. 두 손가락 기준 전역 Binary B는 2D, 전역 Force Vector V는 6D이며, 국소 BK·MK는 2K-D, VK는 6K-D다. SAC·MPO가 이 표현과 시각·고유감각을 사용해 Reach-and-Grasp를 학습한다.
+
+전역 Force Vector처럼 간결하더라도 방향을 보존한 측정량이 유용했고, 국소 VK에 V를 추가하면 학습 성능이 개선되었다. 반면 **국소 Taxel 수를 줄이면 성능이 낮아지는 조건도 있었다.** 따라서 핵심은 무조건 적은 채널이 아니라 **과업에 필요한 측정량을 남기는 것**이다. 여기서 V의 6D는 **손가락별 3축 합력 두 개**이며 손목 6축 Wrench와 다르다. (첨부 ICRA 출판본 §III-C, §IV-C, Fig. 3·8, Table III, PDF pp. 3·5)
+
+<a id="tactile-reduction-yin"></a>
+
+#### Yin et al. — 16개 FSR의 연속값을 16개 접촉 Bit로 이진화
+
+[**Zhao-Heng Yin et al. - Rotating without Seeing: Towards In-hand Dexterity through Touch**](../literature/papers/2023-yin-rotating-without-seeing.md), 2023. 손바닥·손가락 링크·손끝에 배치한 **16개 FSR의 연속 응답을 임계값으로 이진화**한다. 센서별 위치 대응을 유지하면서 힘 크기를 제거하므로, 이는 **16개 채널을 더 적게 합치는 것이 아니라 각 채널의 값 표현을 단순화**하는 방법이다. 접촉 Bit와 고유감각·이전 제어 목표·회전축의 4-Frame 입력으로 PPO를 학습하여 Blind In-hand Rotation을 실물로 이전한다.
+
+다만 손바닥 또는 손끝 센서군을 제거하고 다시 학습한 정책은 전체 센서 정책보다 성능이 낮았다. **해당 동작에서 중요한 접촉 영역은 이진화하더라도 유지해야 한다**는 반대 근거도 함께 제공한다. (첨부 arXiv:2303.10880v4 §III-A–B, §IV-A.1, §V-G, Table IV, PDF pp. 3–4·8–9)
+
+<a id="tactile-reduction-wei"></a>
+
+#### Wei et al. — 과업에 맞는 센서 종류·위치·개수를 선택
+
+[**Qi Wei et al. - Task-specific Embodied Tactile Sensing for Dexterous Hand**](https://doi.org/10.1109/ICRA55743.2025.11127318), ICRA 2025. MSSL(Multimodal Sensor Selection Layer)이 각 배치 위치에서 **FSR·Proximity·미설치** 중 하나를 선택한다. 센서 시계열의 STFT와 MobileNet-V2 특징으로 선택 확률을 학습하고, 선택된 데이터로 물체 인식·미끄러짐 판별을 수행하는 예측기를 함께 학습한다. 12개 후보 위치에서 물체 인식에는 **6 FSR + 4 Proximity = 10개**, 미끄러짐 판별에는 **4 FSR + 5 Proximity = 9개**를 선택했다. 이는 선택 Mask에 따른 **센서 구성의 축소**이며, 12D 입력을 10D·9D로 압축했다는 뜻은 아니다.
+
+비교 대상은 모든 위치에 단일 종류의 센서를 배치한 구성이다. 실물 물체 인식에서는 선택 구성이 더 좋은 결과를 보였지만, 실물 미끄러짐 판별에서는 전체 배치가 더 좋고 선택 구성은 적은 센서로 그 성능에 접근했다. **과업별 센서 선택의 직접 근거**이지만, 검증한 것은 지도학습 기반 배치 선택이며 **동작 중 RL로 입력을 전환하는 방식은 향후 연구**로 남긴다. (첨부 ICRA 출판본 §IV–V, Fig. 3·5–6, Table II, PDF pp. 3–6)
+
+위 결과를 바탕으로 한 본 연구의 **동작별 접촉면 선택과 18D 관측 후보**는 [Method §3.3](03_Method.md#surface-conditioned-tactile)에 정리한다. 다섯 논문 모두 손바닥·손등 34개 Binary 채널을 18D로 통합한 Sweeping 정책을 직접 검증한 것은 아니다.
+
 ## 2.3. Reinforcement Learning
 
 기존 연구의 **Reward Formulation이 어떤 행동을 유도하는지**를 중심으로 정리한다. 목표 달성, 접촉·하중 조절, 과업 단계의 진행을 구분하며, 보상 계산에 사용하는 물체 정답이나 외부 측정값을 실행 정책의 관측과 혼동하지 않는다. 수식과 설명은 연결한 상세 리뷰를 기준으로 한다.
