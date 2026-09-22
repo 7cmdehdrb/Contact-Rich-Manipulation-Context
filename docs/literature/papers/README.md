@@ -4,9 +4,27 @@
 
 이 폴더는 제공된 논문 원문을 읽고 **그 논문 자체의 문제 상황, 관련 연구, 환경·센서, 핵심 메소드, 실험, 저자들이 밝힌 Limitation과 Future Work**를 정리하는 곳이다. 여러 논문을 비교하거나 프로젝트 적용안을 제안하는 `reviews/`와 구분한다. 개별 노트에는 별도 연구 주제에 억지로 대응시킨 설명을 넣지 않는다.
 
-현재 상세 노트는 **33편**이다(2026-09-21). 제목으로 찾거나 아래 조사 그룹으로 이동한다. 각 표의 **ID를 누르면 원래 조사 항목**, 마지막 열을 누르면 상세 노트가 열린다.
+현재 상세 노트는 **33편**이다(2026-09-22). 제목으로 찾거나 아래 조사 그룹으로 이동한다. 각 표의 **ID를 누르면 원래 조사 항목**, 마지막 열을 누르면 상세 노트가 열린다.
 
-[Blind Pushing · R1–R7](#blind-pushing) · [IROS 후속 선정](#iros-selected) · [사용자 발굴](#user-found) · [Binary·F/T 후속 정독](#binary-wrench) · [ICRA 후보 선별 후속 정독](#icra-screening-followup) · [Wrist Wrench 후속 정독](#wrist-wrench-followup) · [작성 지침](#paper-guidelines)
+[사용자 확인 대기](#user-unchecked) · [Blind Pushing · R1–R7](#blind-pushing) · [IROS 후속 선정](#iros-selected) · [사용자 발굴](#user-found) · [Binary·F/T 후속 정독](#binary-wrench) · [ICRA 후보 선별 후속 정독](#icra-screening-followup) · [Wrist Wrench 후속 정독](#wrist-wrench-followup) · [작성 지침](#paper-guidelines)
+
+<a id="user-unchecked"></a>
+
+## 사용자 확인 대기 상세 리뷰
+
+기준일: 2026-09-22. 아래 **9편은 원문 정독 및 상세 리뷰 작성은 완료되었지만, 사용자가 아직 직접 내용을 확인하지 않은 문헌**이다. 이 상태는 기존의 `원문 정독 완료` 여부와 별도로 관리하며, 사용자가 확인을 마치면 이 목록과 각 상세 노트의 상태 표기를 갱신한다.
+
+| 논문 | 사용자 확인 상태 | 상세 노트 |
+| --- | --- | --- |
+| Making Sense of Vision and Touch: Self-Supervised Learning of Multimodal Representations for Contact-Rich Tasks | **미확인** | [2019 · Lee et al.](2019-lee-making-sense-vision-touch.md) |
+| MAT: Multi-Fingered Adaptive Tactile Grasping via Deep Reinforcement Learning | **미확인** | [2019 · Wu et al.](2019-wu-mat-adaptive-tactile-grasping.md) |
+| Attention for Robot Touch: Tactile Saliency Prediction for Robust Sim-to-Real Tactile Control | **미확인** | [2023 · Lin et al.](2023-lin-attention-for-robot-touch.md) |
+| Differentiable Compliant Contact Primitives for Estimation and Model Predictive Control | **미확인** | [2024 · Haninger et al.](2024-haninger-differentiable-compliant-contact-primitives.md) |
+| Pose-and-shear-based tactile servoing | **미확인** | [2024 · Lloyd & Lepora](2024-lloyd-pose-and-shear-based-tactile-servoing.md) |
+| Robot Synesthesia: In-Hand Manipulation with Visuotactile Sensing | **미확인** | [2024 · Yuan et al.](2024-yuan-robot-synesthesia-visuotactile.md) |
+| Enhancing Tactile-based Reinforcement Learning for Robotic Control | **미확인** | [2025 · Miller et al.](2025-miller-enhancing-tactile-rl.md) |
+| Beyond Binary: Sim-to-Real Dexterous Manipulation with Physics-Grounded Contact Representation | **미확인** | [2026 · Pan et al.](2026-pan-beyond-binary-cop-tactile.md) |
+| Framework for Robot Door Opening Based on Visual, Force, and Tactile Integration | **미확인** | [2026 · Šimundić et al.](2026-simundic-visuo-force-tactile-door-opening.md) |
 
 <a id="blind-pushing"></a>
 
