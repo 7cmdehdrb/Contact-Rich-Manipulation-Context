@@ -127,6 +127,47 @@ timeline
 
 [Tactile Pushing (Yang et al.) 원문 근거](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md#p10) · [Zero-Shot Haptics Insertion (Brahmbhatt et al.) 원문 근거](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md#p07) · [Bi-Touch (Lin et al.) 원문 근거](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md#p09) · [Rotating without Seeing (Yin et al.) 원문 근거](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md#p11)
 
+### 4.1. 개별 논문에서 확인되는 한계
+
+| 연구 | 수렴·전이를 위해 둔 설계 | 한계가 드러난 조건 |
+| --- | --- | --- |
+| [Tactile Pushing (Yang et al.)](../literature/papers/2023-yang-sim-to-real-tactile-pushing.md) | 접촉 깊이·각도를 추정한 pose 표현, 접촉 법선 정렬 reward, step당 $1\ \mathrm{mm}$의 고정 전진 | Pose 기반 방법은 여러 미지 물체에 전이했지만 image-based SAC는 학습 밖 변형을 보인 rubber duck의 부리 접촉과 $-20^\circ$ 초기 오차에서 접촉을 잃었다. 고정 전진은 가까운 목표로 급회전하거나 접촉면을 탐색하는 행동을 제한한다. |
+| [Zero-Shot Haptics Insertion (Brahmbhatt et al.)](../literature/papers/2023-brahmbhatt-zero-shot-haptics-insertion.md) | 시작 전 target pose 1회 측정, target-pose noise curriculum, episode의 50%를 부분 삽입 상태에서 시작하는 reverse curriculum, residual action | Noise 범위를 넘는 큰 수평 초기 오차에서 성능이 낮았다. Base가 중심에서 크게 회전한 자세에서는 저자들이 OSC 관성 파라미터 식별 오차를 원인으로 추정했으며, 강한 충돌로 jammed된 뒤 복구하지 못한 사례가 있다. |
+| [Bi-Touch (Lin et al.)](../literature/papers/2023-lin-bi-touch.md) | 실제 영상을 simulation-like 영상으로 바꾸는 GAN, 접촉 안정화 reward, 회전각 subgoal curriculum, gathering의 GUM과 물체 중심→TCP curriculum | 수정 전 회전 정책은 simulation sensor dynamics를 이용해 과도하게 압착하는 전략을 학습했다. 저자들은 sensor stiffness·damping과 penalty를 조정했지만 shear deformation은 여전히 모델링하지 않았다. 날카로운 triangular prism에서 slip 후 복구하지 못했고, 반복 외란에서는 큰 방향 전환 중 workspace를 벗어나는 실패가 증가했다. |
+| [Rotating without Seeing (Yin et al.)](../literature/papers/2023-yin-rotating-without-seeing.md) | 실물 FSR 전압과 simulation contact force의 정합 부담을 줄이기 위한 16영역 Binary contact, 물체 중심·회전축 이탈 시 학습 episode 조기 reset | Binary 표현은 부위별 접촉 사건을 유지하지만 연속 force magnitude·방향·전단 분포를 제거한다. x·y축 회전에서 중요한 손가락 링크 측면 접촉을 센서 배치가 관측하지 못해 일부 물체의 성능이 제한됐다. 다만 이 연구는 z축 평면 회전에만 한정되지 않고 x·y·z축 회전을 모두 평가했으므로, 한계를 ‘평면 회전만 가능’으로 축약하지 않는다. |
+
+### 4.2. 이전 시기 대비 진전
+
+2023년의 네 연구는 **시뮬레이션에서 학습한 정책 또는 동역학 모델을 실물에서 추가 정책학습 없이 실행**할 수 있음을 서로 다른 과업에서 보였다. 다만 이 진전을 Isaac Gym·PyBullet 같은 물리 엔진의 발전만으로 설명할 직접 근거는 부족하다. 실제 성과는 관측 변환 모델, 센서 threshold 정합, domain randomization, controller 정합, curriculum과 과업별 reward를 결합한 결과다. 또한 zero-shot은 실물 정책 fine-tuning이 없다는 뜻이지, 실제 촉각 데이터·카메라 보정·초기 목표 계측·센서 보정까지 불필요하다는 뜻은 아니다.
+
+### 4.3. 두 가지 구조적 병목
+
+#### 1. 접촉·연성체 역학과 촉각 표현의 간극
+
+세 촉각 중심 연구는 실물 센서의 연성 접촉을 그대로 재현하기보다 과업별로 필요한 정보를 선택했다. [Tactile Pushing (Yang et al.)](../literature/papers/2023-yang-sim-to-real-tactile-pushing.md)은 영상 또는 접촉 깊이·각도, [Bi-Touch (Lin et al.)](../literature/papers/2023-lin-bi-touch.md)는 실제-시뮬레이션 변환 영상, [Rotating without Seeing (Yin et al.)](../literature/papers/2023-yin-rotating-without-seeing.md)은 Binary contact pattern을 사용했다. 이 우회는 전이를 가능하게 했지만 다음 정보는 완전하게 다루지 못했다.
+
+- [Bi-Touch (Lin et al.)](../literature/papers/2023-lin-bi-touch.md)는 simulation에서 shear deformation을 고려하지 않았고, 날카로운 접촉의 slip 복구에 실패했다.
+- [Rotating without Seeing (Yin et al.)](../literature/papers/2023-yin-rotating-without-seeing.md)은 연속 하중 크기·방향·전단 분포를 정책 입력에서 제거했다.
+- [Tactile Pushing (Yang et al.)](../literature/papers/2023-yang-sim-to-real-tactile-pushing.md)의 pose 표현은 불규칙 접촉에 image-based 방법보다 강했지만, 접촉 깊이·각도로 과업 관련 정보를 미리 선택한 표현이며 실제 데이터로 학습한 PoseNet이 필요했다.
+- [Zero-Shot Haptics Insertion (Brahmbhatt et al.)](../literature/papers/2023-brahmbhatt-zero-shot-haptics-insertion.md)은 6축 Wrench를 사용하지만 국소 분포 접촉을 관측하지 않으며, 강한 jam에서 회복하지 못했다.
+
+따라서 문제는 단순히 ‘촉각 정보가 부족하다’가 아니라, **전이가 쉬운 표현으로 추상화할수록 국소 하중·전단·미끄럼과 같은 복구 단서가 줄고, 풍부한 표현을 유지할수록 실제-시뮬레이션 정합 비용이 커지는 것**이다.
+
+#### 2. 유도된 제약의 유효 범위와 좁은 수렴 영역
+
+고차원 접촉 탐색을 수렴시키기 위해 네 연구는 강한 inductive bias를 사용했다.
+
+| 연구 | 대표적인 유도 제약 |
+| --- | --- |
+| [Tactile Pushing (Yang et al.)](../literature/papers/2023-yang-sim-to-real-tactile-pushing.md) | 안정된 초기 접촉, 고정 전진, 접촉 법선 정렬 reward |
+| [Zero-Shot Haptics Insertion (Brahmbhatt et al.)](../literature/papers/2023-brahmbhatt-zero-shot-haptics-insertion.md) | 초기 target pose, bounded noise curriculum, 50% 부분 삽입 초기화, residual motion |
+| [Bi-Touch (Lin et al.)](../literature/papers/2023-lin-bi-touch.md) | GUM subgoal, 회전각 분할 curriculum, 물체 중심→TCP 정보 전환 curriculum, 접촉 안정화 reward |
+| [Rotating without Seeing (Yin et al.)](../literature/papers/2023-yin-rotating-without-seeing.md) | 지지된 in-hand 축 회전, 물체 중심·축 이탈에 대한 학습용 early reset, 손끝 거리·회전 shaping |
+
+이 제약은 결함이 아니라 탐색 공간을 줄여 학습을 성립시키는 설계다. 문제는 실제 상태가 설계된 수렴 영역을 벗어날 때다. 큰 초기 위치 오차, 로봇 작업영역 경계, 센서가 없는 측면 접촉, 날카로운 모서리의 slip, 강한 jam에서는 정책이 정상 접촉 상태로 돌아오지 못하거나 성능이 급격히 낮아졌다. 따라서 높은 성공률은 **어떤 초기조건·접촉 모드·작업영역 안에서 측정했는지**와 함께 해석해야 한다.
+
+> **요약:** 2023년 연구들은 과업별 추상화와 강한 유도 제약을 결합해 zero-shot Sim-to-Real을 실현했다. 그러나 연성체·전단·미끄럼을 충분히 재현하지 못한 상태에서 관측을 단순화하거나 별도 변환기에 의존했고, 실제 상태가 설계된 접촉·초기조건·작업영역을 벗어나면 복구 성능이 약해지는 구조적 한계를 남겼다.
+
 **다음 장으로 연결:** Binary 촉각이 가능한 표현이라는 사실은 출발점이다. 필요한 정보량과 힘 피드백의 역할을 별도로 비교해야 한다.
 
 ---
@@ -144,6 +185,36 @@ timeline
 | [**Sim2Real Tactile Manipulation (Su et al.)**](../literature/papers/2024-su-sim2real-tactile-manipulation.md) | 촉각 RGB·차영상·Binary 접촉 영상을 비교하며 물체 Pivoting 정책 전이 | 여기서 Binary는 **공간 패턴을 남긴 64×64 영상**. 영역당 1bit와 같지 않음 |
 
 [Force Push (Heins & Schoellig) 원문 근거](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md#p13) · [Pushing in the Dark (Ozdamar et al.) 원문 근거](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md#p17) · [DexTouch (Lee et al.) 원문 근거](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md#p14) · [Sim2Real Tactile Manipulation (Su et al.) 원문 근거](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md#p18) · [Unknown Object Retrieval (Zhao et al.) 원문 근거](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md#p21)
+
+### 5.1. 개별 논문에서 확인되는 한계
+
+| 연구 | 성립을 위해 둔 전제·설계 | 한계가 드러나는 범위 |
+| --- | --- | --- |
+| [Force Push (Heins & Schoellig)](../literature/papers/2024-heins-force-push.md) | 로봇의 전역 Pose와 기준 접촉점, 추종할 경로를 알고 평면 접촉력 방향으로 비학습 제어. 힘이 임계값보다 작아지면 힘 방향 대신 로봇 위치와 경로 오차로 재접촉 방향을 생성 | 물체 중심이나 CoM을 직접 제어하지 않고 **접촉 기준점의 경로**를 추종하므로, CoM과 평가 위치가 어긋난 Box1에서는 측정 궤적이 경로에 일정한 offset을 남겼다. 접촉 소실 시 복구는 힘에 대해서만 open-loop이고 로봇 위치에는 closed-loop이지만, 준정적·볼록 단일 물체와 충분한 기동 공간 밖의 복잡한 slip·clutter에서는 검증되지 않았다. 안정성 증명과 더 정교한 재접촉도 후속 과제다. |
+| [Pushing in the Dark (Ozdamar et al.)](../literature/papers/2024-ozdamar-pushing-in-the-dark.md) | 세계 좌표계의 로봇 Pose, 로봇 좌표계의 대표 접촉점과 목표점을 이용해 전진·횡이동·회전을 반응적으로 조절 | 현재 물체 Pose는 요구하지 않지만 **로봇 자기 위치 추정은 필수**다. 원통은 rolling이 생기고 상자형 물체의 line contact보다 성공률이 낮았으나, 이 원인은 별도 요인 실험으로 분리되지 않았다. 또한 물체의 최종 orientation과 장애물 회피는 다루지 않은 열린 공간 위치 운반이며 후속 과제로 남았다. |
+| [DexTouch (Lee et al.)](../literature/papers/2024-lee-dextouch.md) | 16개 FSR 신호를 thresholding한 Binary contact와 로봇 고유감각, 목표·탐색 영역 prior로 비대칭 PPO 정책을 학습 | Binary 표현은 접촉 부위는 남기지만 연속 force magnitude를 제거하므로 섬세한 하중 조절 가능성을 제한한다. 다만 이 표현 손실이 개별 실패를 일으켰다는 직접 ablation은 없다. 정확한 물체 Pose 없이도 동작하지만 대략적인 2차원 탐색 범위가 필요하고, 학습 밖의 무겁고 미끄러운 tumbler에서는 성공률이 가장 낮아 미경험 물성에 대한 일반화 한계가 드러났다. |
+| [Unknown Object Retrieval (Zhao et al.)](../literature/papers/2024-zhao-unknown-object-retrieval.md) | 물체가 이미 위치 확인되었다고 가정한 뒤, 9차원 연속 촉각과 수평 변위·후퇴 primitive를 사용하는 SAC를 실제 KUKA에서 직접 학습 | 물체를 찾는 search/localization 단계는 범위 밖이지만, 회수 중 접촉 위치를 바꾸는 탐색 행동은 후퇴 primitive로 수행한다. 행동은 수평면에 한정되고 경사·수직 공간은 후속 과제다. Sim-to-Real 접촉 오차를 피한 대신 실물 학습의 시간·마모 부담 때문에 직육면체와 원통 대표 형상에 집중해 약 5시간 학습했으며, 12개 미학습 물체에서 높은 성공률을 보였어도 임의 형상·물성에 대한 보편적 강건성을 뜻하지 않는다. |
+| [Sim2Real Tactile Manipulation (Su et al.)](../literature/papers/2024-su-sim2real-tactile-manipulation.md) | 말단 행동을 $x$–$z$ 평면 병진과 $y$축 회전으로 제한하고 gripper 폭을 고정. RGB 대신 무접촉 기준과의 Diff 또는 픽셀별 Binary 접촉 패턴을 사용 | 제한된 행동 공간은 pivoting 정책의 수렴을 돕지만 일반 6-DoF 조작을 검증하지 않는다. Diff·Binary는 광학 domain gap을 줄이는 대신 RGB의 appearance와 Binary threshold 아래의 강도 정보를 버린다. Binary는 센서당 1bit가 아니라 64×64 공간 패턴을 유지한다. 불안정한 파지와 불완전·특이 접촉에서 실패했으며, soft table 성공률은 0.80에서 0.76으로 소폭 감소했지만 새로운 지지면에서 붕괴했다고 볼 정도는 아니다. |
+
+두 비학습 제어 연구가 물체의 현재 Pose를 요구하지 않는다는 사실과 localization-free라는 주장은 구분해야 한다. 특히 [Pushing in the Dark (Ozdamar et al.)](../literature/papers/2024-ozdamar-pushing-in-the-dark.md)의 목표 변위는 다음과 같이 세계 좌표계의 로봇 위치와 방향을 직접 사용한다.
+
+```math
+\mathbf{d}=\mathbf{p}_T^W-\left(\mathbf{p}_R^W+\mathbf{R}_R^W\mathbf{p}_C^R\right).
+```
+
+따라서 이 식에서 제거된 것은 **물체의 온라인 전역 Pose 추적**이지, 로봇 자신의 전역 Pose 추정이 아니다. [Force Push (Heins & Schoellig)](../literature/papers/2024-heins-force-push.md)도 같은 구분이 필요하다. 실물 실험에서 Vicon은 로봇 base localization과 평가용 물체 궤적 기록에 쓰였고, 물체 Pose만 제안 제어기 입력에서 제외됐다.
+
+### 5.2. 제어·학습 패러다임별 비교
+
+| 패러다임 | 해당 연구 | 확인된 장점 | 구조적 병목 |
+| --- | --- | --- | --- |
+| **규칙·제어 기반** | [Force Push (Heins & Schoellig)](../literature/papers/2024-heins-force-push.md), [Pushing in the Dark (Ozdamar et al.)](../literature/papers/2024-ozdamar-pushing-in-the-dark.md) | 학습 데이터 없이 힘 방향 또는 접촉 위치의 물리적 의미를 즉시 반영하고, 현재 물체 Pose·상세 물성 모델 없이 운반 | 로봇 localization과 목표·경로가 필요하다. 접촉점 조절이 곧 물체 중심·orientation 제어는 아니며, rolling·CoM 편차·접촉 소실·clutter에서 복구 범위가 제한된다. |
+| **Sim-to-Real 강화학습** | [DexTouch (Lee et al.)](../literature/papers/2024-lee-dextouch.md), [Sim2Real Tactile Manipulation (Su et al.)](../literature/papers/2024-su-sim2real-tactile-manipulation.md) | 대규모 simulation으로 접촉 탐색부터 다관절 조작 또는 pivoting까지 학습하고 실물 정책 fine-tuning 없이 실행 | 센서–simulation 차이를 줄이기 위해 threshold·Diff·Binary 표현과 과업별 action prior를 사용한다. 그 결과 하중 크기나 광학 세부가 줄고, 탐색 영역·고정 gripper·제한 DoF·학습 물성 범위 밖에서 취약성이 남는다. |
+| **실환경 직접 강화학습** | [Unknown Object Retrieval (Zhao et al.)](../literature/papers/2024-zhao-unknown-object-retrieval.md) | 실제 접촉 신호로 학습해 접촉 simulation의 reality gap을 우회하고, 미학습 생활 물체에도 추가 학습 없이 적용 | 시간과 hardware wear 때문에 대표 형상, 수평 confined-space 과업, parameterized primitive와 curriculum에 집중해야 했다. 학습 reward에는 OptiTrack 변위가 필요했으며 search/localization과 경사·수직 조작은 해결 범위 밖이다. |
+
+이 비교에서 공통 병목은 단순히 “규칙 기반인가 RL인가”가 아니다. 규칙 기반은 해석 가능하고 데이터가 필요 없지만 robot localization과 접촉 기하 가정에 묶이고, Sim-to-Real RL은 복잡한 행동을 얻는 대신 표현 단순화와 학습 분포에 묶이며, 실환경 RL은 simulation 오차를 제거하는 대신 hardware 비용 때문에 과업·형상·행동을 좁혀야 한다.
+
+> **요약:** 2024년 연구들은 물체의 현재 Pose 없이도 힘·접촉 위치·Binary 또는 저차원 연속 촉각으로 Blind 조작이 가능함을 보였다. 그러나 비학습 제어는 로봇 localization과 접촉점 중심의 목표 정의에, Sim-to-Real RL은 정보 추상화와 과업별 행동 제약에, 실환경 RL은 hardware 비용과 제한된 학습 범위에 의존한다. 따라서 미지 물체 강건성은 성공률 하나가 아니라 **어떤 localization·초기조건·물성·접촉 모드·DoF 안에서 복구했는지**로 비교해야 한다.
 
 **다음 장으로 연결:** 핵심은 시각을 없앴다는 사실보다, **어떤 접촉 정보를 남겼을 때 어떤 과업과 변화에 대응하는가**이다.
 
