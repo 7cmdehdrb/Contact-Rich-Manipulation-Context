@@ -10,7 +10,7 @@
 
 **접촉 피드백으로 시각 의존도를 낮추는 조작은 이미 가능하다. 남는 질문은, 영역별 Binary 촉각으로 접촉을 단순화했을 때 손실되는 하중 정보를 손목 Wrench가 보완하여, 물체의 현재 Pose를 받지 않는 Sweeping의 성능과 적용 범위를 넓힐 수 있는가이다.**
 
-이 문서는 기존 `docs/literature/papers`의 33편을 모집단으로 삼는다. 그중 **동일 계열의 비파지 조작**, **유사한 실행 관측**, **센서 표현·전이의 직접 비교** 중 하나 이상을 제공하는 연구를 본문에 선택하고, 나머지와 원문 확인 상태는 부록에 남긴다. Lloyd는 추정·제어 대안, Dadiotis·Dengler는 현재 물체 관측을 유지하는 밀기의 대조군으로 부록에 배치한다. 따라서 아래 흐름은 **선택한 문헌의 연구지도**이며, 로봇 조작 분야 전체의 체계적 문헌조사나 신규성의 전수 검증은 아니다.
+이 문서는 기존 `docs/literature/papers`의 33편을 모집단으로 삼는다. 그중 **동일 계열의 비파지 조작**, **유사한 실행 관측**, **센서 표현·전이의 직접 비교** 중 하나 이상을 제공하는 연구를 본문에 선택하고, 나머지와 원문 확인 상태는 부록에 남긴다. [Lloyd와 Lepora](../literature/papers/2024-lloyd-pose-and-shear-based-tactile-servoing.md)는 추정·제어 대안, [Dadiotis et al.](../literature/papers/2025-dadiotis-dynamic-object-goal-pushing.md)과 [Dengler et al.](../literature/papers/2025-dengler-location-based-attention-pushing.md)은 현재 물체 관측을 유지하는 밀기의 대조군으로 부록에 배치한다. 따라서 아래 흐름은 **선택한 문헌의 연구지도**이며, 로봇 조작 분야 전체의 체계적 문헌조사나 신규성의 전수 검증은 아니다.
 
 참고 발표 자료에서는 **전체 연대표 → 연도별 대표 연구 → 동향 정리 → 통합 비교표 → Contribution**의 구성을 차용했다. 다른 연구의 과업·평가 기준·성과는 가져오지 않았다. 논문들을 하나의 기술이 순차적으로 대체되는 역사로 묶지 않고, 같은 문제와 관련되는 여러 접근의 시간적 전개로 정리한다.
 
@@ -62,9 +62,9 @@ timeline
 
 | 연구 흐름 | 2019–2022 | 2023 | 2024 | 2025–2026 |
 | --- | --- | --- | --- | --- |
-| **힘·다중 감각을 행동에 연결** | Lee 2019, Learning Force Control, Kato | Zero-Shot Haptics Insertion | Force Push | FORGE, FoAR, Gentle Retraction |
-| **외부 물체 관측 의존도를 줄인 조작** | Tactile Gym 2.0 | Tactile Pushing, Bi-Touch, Rotating without Seeing | Pushing in the Dark, DexTouch | Beyond Binary |
-| **촉각 표현과 실물 적용** | MAT, Ding, Tactile Gym 2.0 | Rotating without Seeing | Su의 Binary 접촉 영상 | Role of Tactile Sensing, Beyond Binary |
+| **힘·다중 감각을 행동에 연결** | [Lee 2019](../literature/papers/2019-lee-making-sense-vision-touch.md), [Learning Force Control](../literature/papers/2020-beltran-hernandez-learning-force-control.md), [Kato](../literature/papers/2022-kato-self-tuning-haptic-exploration.md) | [Zero-Shot Haptics Insertion](../literature/papers/2023-brahmbhatt-zero-shot-haptics-insertion.md) | [Force Push](../literature/papers/2024-heins-force-push.md) | [FORGE](../literature/papers/2025-noseworthy-forge.md), [FoAR](../literature/papers/2025-he-foar.md), [Gentle Retraction](../literature/papers/2026-brouwer-gentle-object-retraction.md) |
+| **외부 물체 관측 의존도를 줄인 조작** | [Tactile Gym 2.0](../literature/papers/2022-lin-tactile-gym-2-0.md) | [Tactile Pushing](../literature/papers/2023-yang-sim-to-real-tactile-pushing.md), [Bi-Touch](../literature/papers/2023-lin-bi-touch.md), [Rotating without Seeing](../literature/papers/2023-yin-rotating-without-seeing.md) | [Pushing in the Dark](../literature/papers/2024-ozdamar-pushing-in-the-dark.md), [DexTouch](../literature/papers/2024-lee-dextouch.md) | [Beyond Binary](../literature/papers/2026-pan-beyond-binary-cop-tactile.md) |
+| **촉각 표현과 실물 적용** | [MAT](../literature/papers/2019-wu-mat-adaptive-tactile-grasping.md), [Ding](../literature/papers/2021-ding-sim-to-real-tactile-manipulation.md), [Tactile Gym 2.0](../literature/papers/2022-lin-tactile-gym-2-0.md) | [Rotating without Seeing](../literature/papers/2023-yin-rotating-without-seeing.md) | [Su et al.](../literature/papers/2024-su-sim2real-tactile-manipulation.md)의 Binary 접촉 영상 | [The Role of Tactile Sensing](../literature/papers/2025-zhang-role-of-tactile-sensing.md), [Beyond Binary](../literature/papers/2026-pan-beyond-binary-cop-tactile.md) |
 
 한 논문은 여러 흐름에 속할 수 있다. **행의 아래쪽이나 연도가 뒤쪽이라고 더 우수한 것은 아니다.** 이 지도는 다음 네 장에서 무엇을 설명할지 보여주는 목차다. 각 논문의 정식 제목·출판연도·원문 위치는 부록에 있다.
 
@@ -76,10 +76,10 @@ timeline
 
 | 대표 연구 | 한 일 | 비교에서 남겨야 할 조건 |
 | --- | --- | --- |
-| **Lee et al., 2019** | 시각·F/T·로봇 상태의 자기지도 표현을 만들고 접촉 조작 정책 학습에 사용 | 여러 감각을 결합하는 것 자체는 기존 접근. 실물 직접 학습을 Sim-to-Real로 표시하지 않음 |
-| **MAT, CoRL 2019 / proceedings 2020** | 초기 시각으로 접근한 뒤 Binary 접촉·촉각 위치·관절 이력으로 파지 정책을 실행하고 미학습 물체에서 실물 전이 | **초기 시각 + Binary 촉각 + Blind RL + 일반화 + 전이**의 조합은 이미 존재 |
-| **Ding et al., 2021** | 30차원 Binary 촉각을 이용한 문 열기 정책의 실물 전이 | 실행 중 손잡이 상대 위치와 Hinge angle을 사용. **Binary 촉각 사용 ≠ 물체 상태 없이 실행** |
-| **Tactile Gym 2.0, 2022** | 광학 촉각 영상을 공통 Depth 표현으로 변환하여 RL 정책을 실물에 적용 | 실물 촉각 데이터를 이용한 GAN 학습 필요. 현재 물체 전체 Pose와 국소 촉각 관측은 구분 |
+| [**Lee et al., 2019**](../literature/papers/2019-lee-making-sense-vision-touch.md) | 시각·F/T·로봇 상태의 자기지도 표현을 만들고 접촉 조작 정책 학습에 사용 | 여러 감각을 결합하는 것 자체는 기존 접근. 실물 직접 학습을 Sim-to-Real로 표시하지 않음 |
+| [**MAT, CoRL 2019 / proceedings 2020**](../literature/papers/2019-wu-mat-adaptive-tactile-grasping.md) | 초기 시각으로 접근한 뒤 Binary 접촉·촉각 위치·관절 이력으로 파지 정책을 실행하고 미학습 물체에서 실물 전이 | **초기 시각 + Binary 촉각 + Blind RL + 일반화 + 전이**의 조합은 이미 존재 |
+| [**Ding et al., 2021**](../literature/papers/2021-ding-sim-to-real-tactile-manipulation.md) | 30차원 Binary 촉각을 이용한 문 열기 정책의 실물 전이 | 실행 중 손잡이 상대 위치와 Hinge angle을 사용. **Binary 촉각 사용 ≠ 물체 상태 없이 실행** |
+| [**Tactile Gym 2.0, 2022**](../literature/papers/2022-lin-tactile-gym-2-0.md) | 광학 촉각 영상을 공통 Depth 표현으로 변환하여 RL 정책을 실물에 적용 | 실물 촉각 데이터를 이용한 GAN 학습 필요. 현재 물체 전체 Pose와 국소 촉각 관측은 구분 |
 
 [Lee 원문 근거](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md#p01) · [MAT 원문 근거](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md#p02) · [Ding 원문 근거](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md#p04) · [Tactile Gym 원문 근거](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md#p06)
 
@@ -95,10 +95,10 @@ timeline
 
 | 대표 연구 | 한 일 | 우리가 비교할 차이 |
 | --- | --- | --- |
-| **Yang et al., Tactile Pushing** | 촉각 영상에서 접촉 깊이·각도를 추정하고, 국소 접촉 상태와 로봇·목표 정보로 밀기 | 비파지 밀기의 근접 비교. **국소 접촉 상태를 추정하며 목표 도달도 접촉 위치 기준**; 물체 중심의 명령 변위와 구분 |
-| **Zero-Shot Haptics Insertion** | 초기 시각 목표 이후 EEF 상대 Pose·추정 Wrench 이력으로 SAC 보정과 OSC 실행 | **초기 시각 + Wrench RL + 실물 전이**의 직접 선행. 이미 파지한 물체의 슬롯 삽입 |
-| **Bi-Touch** | 두 촉각 센서의 영상과 고유감각·목표 정보를 이용해 양팔 조작 정책 실행 | 복수 접촉을 활용하지만 두 TacTip의 영상 변환과 양팔 접촉 구성이 전제 |
-| **Yin et al., Rotating without Seeing** | 16개 Binary 접촉과 로봇 관측 이력으로 시각 없는 손 안 회전 정책 전이 | **Binary 촉각 + Blind RL + 실물 전이**는 이미 존재. 손목 Wrench와 선반 Sweeping을 검증한 연구는 아님 |
+| [**Yang et al., Tactile Pushing**](../literature/papers/2023-yang-sim-to-real-tactile-pushing.md) | 촉각 영상에서 접촉 깊이·각도를 추정하고, 국소 접촉 상태와 로봇·목표 정보로 밀기 | 비파지 밀기의 근접 비교. **국소 접촉 상태를 추정하며 목표 도달도 접촉 위치 기준**; 물체 중심의 명령 변위와 구분 |
+| [**Zero-Shot Haptics Insertion**](../literature/papers/2023-brahmbhatt-zero-shot-haptics-insertion.md) | 초기 시각 목표 이후 EEF 상대 Pose·추정 Wrench 이력으로 SAC 보정과 OSC 실행 | **초기 시각 + Wrench RL + 실물 전이**의 직접 선행. 이미 파지한 물체의 슬롯 삽입 |
+| [**Bi-Touch**](../literature/papers/2023-lin-bi-touch.md) | 두 촉각 센서의 영상과 고유감각·목표 정보를 이용해 양팔 조작 정책 실행 | 복수 접촉을 활용하지만 두 TacTip의 영상 변환과 양팔 접촉 구성이 전제 |
+| [**Yin et al., Rotating without Seeing**](../literature/papers/2023-yin-rotating-without-seeing.md) | 16개 Binary 접촉과 로봇 관측 이력으로 시각 없는 손 안 회전 정책 전이 | **Binary 촉각 + Blind RL + 실물 전이**는 이미 존재. 손목 Wrench와 선반 Sweeping을 검증한 연구는 아님 |
 
 [Yang 원문 근거](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md#p10) · [Zero-Shot Insertion](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md#p07) · [Bi-Touch 원문 근거](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md#p09) · [Yin 원문 근거](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md#p11)
 
@@ -112,11 +112,11 @@ timeline
 
 | 대표 연구 | 한 일 | 우리가 비교할 차이 |
 | --- | --- | --- |
-| **Force Push** | 초기 근사 위치, 로봇 위치와 평면 접촉력으로 미지 물체를 경로에 따라 밀기 | 형상·마찰 모델과 현재 물체 Pose 없이도 가능한 **비학습 제어**. 접촉점 경로 추종이며 물체 중심 위치 보장은 아님 |
-| **Pushing in the Dark** | 모바일 로봇 촉각 배열에서 대표 접촉점을 구해 반응형 밀기 | 촉각 유도 접촉점–목표 거리를 사용. 손목 Wrench 결합이나 학습 기반 전이가 핵심이 아님 |
-| **DexTouch** | Binary 촉각으로 탐색·파지·조작하며 시각 관측 없이 실물 정책 실행 | Binary 촉각만으로 접촉 탐색과 조작이 가능함을 인정. Sweeping에서 하중 정보의 추가 효과는 별도 질문 |
-| **Zhao et al., Unknown Object Retrieval** | 좁은 틈에서 9차원 연속 촉각만으로 SAC 회수 정책을 실물 학습하고 미학습 물체 평가 | **저차원 촉각-only RL과 일반화**도 선행됨. Binary 표현이나 Sim-to-Real을 검증한 결과는 아님 |
-| **Su et al.** | 촉각 RGB·차영상·Binary 접촉 영상을 비교하며 물체 Pivoting 정책 전이 | 여기서 Binary는 **공간 패턴을 남긴 64×64 영상**. 영역당 1bit와 같지 않음 |
+| [**Force Push**](../literature/papers/2024-heins-force-push.md) | 초기 근사 위치, 로봇 위치와 평면 접촉력으로 미지 물체를 경로에 따라 밀기 | 형상·마찰 모델과 현재 물체 Pose 없이도 가능한 **비학습 제어**. 접촉점 경로 추종이며 물체 중심 위치 보장은 아님 |
+| [**Pushing in the Dark**](../literature/papers/2024-ozdamar-pushing-in-the-dark.md) | 모바일 로봇 촉각 배열에서 대표 접촉점을 구해 반응형 밀기 | 촉각 유도 접촉점–목표 거리를 사용. 손목 Wrench 결합이나 학습 기반 전이가 핵심이 아님 |
+| [**DexTouch**](../literature/papers/2024-lee-dextouch.md) | Binary 촉각으로 탐색·파지·조작하며 시각 관측 없이 실물 정책 실행 | Binary 촉각만으로 접촉 탐색과 조작이 가능함을 인정. Sweeping에서 하중 정보의 추가 효과는 별도 질문 |
+| [**Zhao et al., Unknown Object Retrieval**](../literature/papers/2024-zhao-unknown-object-retrieval.md) | 좁은 틈에서 9차원 연속 촉각만으로 SAC 회수 정책을 실물 학습하고 미학습 물체 평가 | **저차원 촉각-only RL과 일반화**도 선행됨. Binary 표현이나 Sim-to-Real을 검증한 결과는 아님 |
+| [**Su et al.**](../literature/papers/2024-su-sim2real-tactile-manipulation.md) | 촉각 RGB·차영상·Binary 접촉 영상을 비교하며 물체 Pivoting 정책 전이 | 여기서 Binary는 **공간 패턴을 남긴 64×64 영상**. 영역당 1bit와 같지 않음 |
 
 [Force Push](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md#p13) · [Pushing in the Dark](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md#p17) · [DexTouch](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md#p14) · [Su](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md#p18) · [Zhao](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md#p21)
 
@@ -130,14 +130,14 @@ timeline
 
 | 대표 연구 | 한 일 | 우리가 비교할 차이 |
 | --- | --- | --- |
-| **The Role of Tactile Sensing** | 촉각의 공간 해상도와 측정량을 분리해 비교 | 정확한 물체 관측과 잡음 있는 관측에서 촉각의 효과가 다름. 손가락 합력과 손목 Wrench는 다름 |
-| **FORGE / FoAR** | 힘 제한으로 조건화한 RL / 접촉 예측을 결합한 반응형 IL | 힘을 이용한 정책 조절도 선행 접근. FORGE는 **고정부의 noisy Pose와 추정 3D 힘**을 사용하되 파지부 현재 Pose는 미제공. FoAR는 실행 중 시각 사용 |
-| **Gentle Object Retraction** | 시각·촉각 힘 분포·추정 Wrench를 융합해 밀집 환경에서 물체 회수 | 환경과 하중 측면의 근접 문헌. 실행 시각과 연속 촉각을 사용하는 실물 IL이라는 조건을 보존 |
-| **Beyond Binary** | 국소 접촉 위치와 하중을 보존하는 CoP 표현을 Binary·Raw taxel과 비교. 실물 정책은 **국소 법선 하중** 사용 | **Binary의 정보 부족을 보완한다는 문제의식도 선행됨.** 본 연구는 손목 전체 하중을 이용하는 역할 분담의 효과를 검증해야 함 |
+| [**The Role of Tactile Sensing**](../literature/papers/2025-zhang-role-of-tactile-sensing.md) | 촉각의 공간 해상도와 측정량을 분리해 비교 | 정확한 물체 관측과 잡음 있는 관측에서 촉각의 효과가 다름. 손가락 합력과 손목 Wrench는 다름 |
+| [**FORGE**](../literature/papers/2025-noseworthy-forge.md) / [**FoAR**](../literature/papers/2025-he-foar.md) | 힘 제한으로 조건화한 RL / 접촉 예측을 결합한 반응형 IL | 힘을 이용한 정책 조절도 선행 접근. 전자는 **고정부의 noisy Pose와 추정 3D 힘**을 사용하되 파지부 현재 Pose는 미제공. 후자는 실행 중 시각 사용 |
+| [**Gentle Object Retraction**](../literature/papers/2026-brouwer-gentle-object-retraction.md) | 시각·촉각 힘 분포·추정 Wrench를 융합해 밀집 환경에서 물체 회수 | 환경과 하중 측면의 근접 문헌. 실행 시각과 연속 촉각을 사용하는 실물 IL이라는 조건을 보존 |
+| [**Beyond Binary**](../literature/papers/2026-pan-beyond-binary-cop-tactile.md) | 국소 접촉 위치와 하중을 보존하는 CoP 표현을 Binary·Raw taxel과 비교. 실물 정책은 **국소 법선 하중** 사용 | **Binary의 정보 부족을 보완한다는 문제의식도 선행됨.** 본 연구는 손목 전체 하중을 이용하는 역할 분담의 효과를 검증해야 함 |
 
 [Role of Tactile](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md#p30) · [FORGE](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md#p28) · [FoAR](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md#p26) · [Gentle Retraction](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md#p31) · [Beyond Binary](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md#p32)
 
-Beyond Binary는 검토한 **2026 arXiv 사전공개본**으로 표시한다. Gentle Retraction은 정규 권호 기준 2026이며 온라인 공개·DOI 연도와 구분한다.
+[Beyond Binary](../literature/papers/2026-pan-beyond-binary-cop-tactile.md)는 검토한 **2026 arXiv 사전공개본**으로 표시한다. [Gentle Retraction](../literature/papers/2026-brouwer-gentle-object-retraction.md)은 정규 권호 기준 2026이며 온라인 공개·DOI 연도와 구분한다.
 
 ---
 
@@ -165,19 +165,19 @@ Beyond Binary는 검토한 **2026 arXiv 사전공개본**으로 표시한다. Ge
 
 | 연구 / 과업 | Observation: 실행 시 물체 정보 | 센서·표현 | Method | 강건성 검증의 대상 | Sim-to-Real |
 | --- | --- | --- | --- | --- | --- |
-| **MAT 2019 / 파지** | 초기 시각 접근; 실행 중 물체 Pose 없음 | Binary taxel + FK 접촉 위치·관절 이력 | Soft PPO | 미학습 물체·Clutter·초기오차 | 정책 전이; 실물 접촉 보정 |
-| **Zero-Shot Insertion 2023 / 삽입** | 초기 목표 + EEF 상대 Pose 이력 | 추정 6축 Wrench + 로봇 상태 | SAC + OSC | 다른 접시·컵·방해물; 일부 Z offset | 정책 전이; 지연 정합 |
-| **Yang 2023 / 밀기** | 전체 Pose 대신 국소 접촉 자세; 접촉 위치 목표 | TacTip 영상 → 접촉 깊이·각도 | 모델 기반 RL / 모델 없는 RL | 물체 형상·물성 및 외란 | 정책 전이; 실물 관측모델 학습 |
-| **Yin 2023 / 손 안 회전** | 현재 물체 Pose 없음; 로봇·접촉 이력 | 16영역 Binary FSR | PPO | 여러 실물 물체·외란 | 정책 전이; DR·센서 전처리 |
-| **Force Push 2024 / 밀기** | 초기 근사 위치; 접촉점 경로 추종 | 손목 F/T의 평면 힘 | 힘 기반 조향·접촉 복구 제어 | 다양한 물체·마찰·경로 | 직접 실물; 학습 전이 해당 없음 |
-| **DexTouch 2024 / 탐색·조작** | 초기 위치 범위; 현재 물체 Pose 없음 | 다영역 Binary 촉각 + 로봇 상태 | PPO | 여러 물체·위치 불확실성 | 정책 전이; 초기조건 무작위화 |
-| **Zhao 2024 / 회수** | Actor에는 촉각 특징만; 물체 Pose 없음 | 9D 연속 국소 촉각 | SAC | 미학습 물체·상황 | 직접 실물 RL |
-| **FoAR 2025 / 도구 조작** | 실행 중 RGB-D 장면 관측 | 영상 + 6축 F/T 이력 | IL + 접촉 예측·행동 보정 | 새 그림·보드 위치·복합 외란 | 직접 실물 시연 학습 |
-| **Gentle 2026 / 밀집 회수** | 실행 중 손목 영상 | 연속 촉각 힘 분포 + 추정 Wrench | Diffusion Policy 기반 IL | 미학습 환경 배치 | 직접 실물 시연 학습 |
-| **Beyond Binary 2026 / 삽입** | 현재 물체 Pose 없음; 로봇 상태 | 촉각 유도 CoP·국소 법선 하중 | Recurrent PPO | OOD 초기조건·센서 손상 | 정책 전이; 센서·구동계 보정 |
+| [**MAT 2019 / 파지**](../literature/papers/2019-wu-mat-adaptive-tactile-grasping.md) | 초기 시각 접근; 실행 중 물체 Pose 없음 | Binary taxel + FK 접촉 위치·관절 이력 | Soft PPO | 미학습 물체·Clutter·초기오차 | 정책 전이; 실물 접촉 보정 |
+| [**Zero-Shot Insertion 2023 / 삽입**](../literature/papers/2023-brahmbhatt-zero-shot-haptics-insertion.md) | 초기 목표 + EEF 상대 Pose 이력 | 추정 6축 Wrench + 로봇 상태 | SAC + OSC | 다른 접시·컵·방해물; 일부 Z offset | 정책 전이; 지연 정합 |
+| [**Yang 2023 / 밀기**](../literature/papers/2023-yang-sim-to-real-tactile-pushing.md) | 전체 Pose 대신 국소 접촉 자세; 접촉 위치 목표 | TacTip 영상 → 접촉 깊이·각도 | 모델 기반 RL / 모델 없는 RL | 물체 형상·물성 및 외란 | 정책 전이; 실물 관측모델 학습 |
+| [**Yin 2023 / 손 안 회전**](../literature/papers/2023-yin-rotating-without-seeing.md) | 현재 물체 Pose 없음; 로봇·접촉 이력 | 16영역 Binary FSR | PPO | 여러 실물 물체·외란 | 정책 전이; DR·센서 전처리 |
+| [**Force Push 2024 / 밀기**](../literature/papers/2024-heins-force-push.md) | 초기 근사 위치; 접촉점 경로 추종 | 손목 F/T의 평면 힘 | 힘 기반 조향·접촉 복구 제어 | 다양한 물체·마찰·경로 | 직접 실물; 학습 전이 해당 없음 |
+| [**DexTouch 2024 / 탐색·조작**](../literature/papers/2024-lee-dextouch.md) | 초기 위치 범위; 현재 물체 Pose 없음 | 다영역 Binary 촉각 + 로봇 상태 | PPO | 여러 물체·위치 불확실성 | 정책 전이; 초기조건 무작위화 |
+| [**Zhao 2024 / 회수**](../literature/papers/2024-zhao-unknown-object-retrieval.md) | Actor에는 촉각 특징만; 물체 Pose 없음 | 9D 연속 국소 촉각 | SAC | 미학습 물체·상황 | 직접 실물 RL |
+| [**FoAR 2025 / 도구 조작**](../literature/papers/2025-he-foar.md) | 실행 중 RGB-D 장면 관측 | 영상 + 6축 F/T 이력 | IL + 접촉 예측·행동 보정 | 새 그림·보드 위치·복합 외란 | 직접 실물 시연 학습 |
+| [**Gentle 2026 / 밀집 회수**](../literature/papers/2026-brouwer-gentle-object-retraction.md) | 실행 중 손목 영상 | 연속 촉각 힘 분포 + 추정 Wrench | Diffusion Policy 기반 IL | 미학습 환경 배치 | 직접 실물 시연 학습 |
+| [**Beyond Binary 2026 / 삽입**](../literature/papers/2026-pan-beyond-binary-cop-tactile.md) | 현재 물체 Pose 없음; 로봇 상태 | 촉각 유도 CoP·국소 법선 하중 | Recurrent PPO | OOD 초기조건·센서 손상 | 정책 전이; 센서·구동계 보정 |
 | **본 연구 / Sweeping** | **초기 Position만; 실행 중 물체 Pose 없음** | **영역별 Binary + 손목 6축 Wrench** | **RL + OSC** | **미학습 물체·접촉조건: 검증 예정** | **검증 예정** |
 
-각 행의 원문은 위 연도별 절과 부록에서 연결된다. 실제 1장 슬라이드에는 Yang·Force Push·DexTouch·Zhao·Gentle·Beyond Binary·본 연구의 7행을 우선 사용하고, MAT·Zero-Shot Insertion·Yin·FoAR는 설명 또는 보조표로 둔다. 표는 과업이 다른 논문 사이의 성공률 순위를 매기지 않는다. 상세 관측 구성·실물 데이터 사용·한계는 부록에서 확인한다.
+각 행의 원문은 위 연도별 절과 부록에서 연결된다. 실제 1장 슬라이드에는 [Yang et al.](../literature/papers/2023-yang-sim-to-real-tactile-pushing.md)·[Force Push](../literature/papers/2024-heins-force-push.md)·[DexTouch](../literature/papers/2024-lee-dextouch.md)·[Zhao et al.](../literature/papers/2024-zhao-unknown-object-retrieval.md)·[Gentle Retraction](../literature/papers/2026-brouwer-gentle-object-retraction.md)·[Beyond Binary](../literature/papers/2026-pan-beyond-binary-cop-tactile.md)·본 연구의 7행을 우선 사용하고, [MAT](../literature/papers/2019-wu-mat-adaptive-tactile-grasping.md)·[Zero-Shot Insertion](../literature/papers/2023-brahmbhatt-zero-shot-haptics-insertion.md)·[Yin et al.](../literature/papers/2023-yin-rotating-without-seeing.md)·[FoAR](../literature/papers/2025-he-foar.md)는 설명 또는 보조표로 둔다. 표는 과업이 다른 논문 사이의 성공률 순위를 매기지 않는다. 상세 관측 구성·실물 데이터 사용·한계는 부록에서 확인한다.
 
 **강조할 셀은 우리 행의 Observation과 센서 역할 분담이다.** 강건성과 Sim-to-Real에 성공 표시를 붙이거나, 타 연구의 직접 실물 검증을 실패 표시로 바꾸지 않는다.
 
@@ -233,7 +233,7 @@ Beyond Binary는 검토한 **2026 arXiv 사전공개본**으로 표시한다. Ge
 | 학습 물체 / Held-out 물체 | 시험 물체로 재튜닝하지 않는 평가 절차 | 물체가 바뀌어도 효과가 유지되는가? |
 | 시뮬레이션 / 실물 | 관측 정의·좌표계·전처리·종료 기준 | 어디에서 차이가 나며 무엇을 보정해야 하는가? |
 
-Force Push는 단일 접촉점 조건을 전제로 한다. 다지 Hand에 그대로 적용한 뒤 그 조건 위반을 알고리즘 열등성으로 해석하지 않는다. 공통 조건의 재현 비교와, Hand 접촉을 고려한 규칙 제어의 확장 비교를 구분한다.
+[Force Push](../literature/papers/2024-heins-force-push.md)는 단일 접촉점 조건을 전제로 한다. 다지 Hand에 그대로 적용한 뒤 그 조건 위반을 알고리즘 열등성으로 해석하지 않는다. 공통 조건의 재현 비교와, Hand 접촉을 고려한 규칙 제어의 확장 비교를 구분한다.
 
 성과는 물체의 명령 방향 변위·종료 오차, 성공률, 원치 않는 회전·전도, 접촉 소실, 최대 하중·하중 변화, 수행시간으로 확인한다. 임계값과 반복 수는 실제 과업·장비 조건에 근거해 별도로 정한다.
 
