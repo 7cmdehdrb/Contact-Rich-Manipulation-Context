@@ -2,6 +2,8 @@
 
 [문서 안내](../../README.md) · [문헌 색인](../README.md) · [조사 그룹](../reviews/README.md) · [전체 논문](README.md) · [260918 Review Dataset B086](../review_dataset/260918/batch_003/papers/2019-wu-mat-adaptive-tactile-grasping.md) · [별도 확인 CHECK-B02](../reviews/2026-09-20_separate-review-paper-list.md)
 
+> **사용자 확인 상태:** **미확인** — 상세 리뷰는 작성되었지만, 사용자가 아직 직접 확인하지 않은 논문이다. (2026-09-22)
+
 ## 1. 논문 정보와 확인 범위
 
 - **제목:** MAT: Multi-Fingered Adaptive Tactile Grasping via Deep Reinforcement Learning
