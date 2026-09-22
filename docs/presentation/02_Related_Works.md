@@ -287,3 +287,50 @@ r_{\mathrm{tactile}}=\|\hat{\mathbf{c}}\|_1.
 | [**Sim-to-Real Transfer**](../literature/papers/2021-ding-sim-to-real-tactile-manipulation.md) | Binary Bit Flip<br>관측 지연 | 촉각 외 관측 잡음<br>Gripper 외 Action 잡음<br>관측 지연 |
 
 **—는 검토한 상세 리뷰에서 해당 항목의 DR 보고를 확인하지 못했다는 뜻이다.** 같은 이유로 DexTouch와 Sim2Real Manipulation에는 별도의 센서 잡음 DR 항목을 추가하지 않았다. 접촉 누락만 만드는 Dropout과 양방향으로 값을 반전하는 Bit Flip은 구분한다.
+
+## 2.5. Dexterous Hand의 제어 공간과 Synergy
+
+Dexterous Hand의 제어는 크게 **모든 구동 자유도를 정책이 직접 출력하고 Reward로 유효한 손 자세를 유도하는 방식**, **저차원 Synergy 좌표를 Action으로 사용하고 이를 전체 관절 명령으로 복원하는 방식**, **Synergy 자체를 기구적으로 구현하여 실제 구동 차원을 줄이는 방식**으로 나눌 수 있다. 여기서는 각 연구가 **Hand를 실제로 어떤 변수로 제어하는지**를 중심으로 정리한다.
+
+### 2.5.1. DexVIP — 전체 관절 Action을 유지하고 Hand Pose Reward로 유도
+
+[**Priyanka Mandikal and Kristen Grauman - DexVIP: Learning Dexterous Grasping with Human Hand Pose Priors from Video**](https://proceedings.mlr.press/v164/mandikal22a.html), CoRL 2021. Adroit의 **24-DoF Hand와 6-DoF Arm을 합친 30개의 연속 관절각을 정책이 직접 출력**한다. 즉 Hand의 독립 제어 자유도를 줄이지 않는다. 대신 인터넷 영상에서 추정한 사람 손 자세를 로봇 관절 자세로 Retargeting하여 물체별 목표 Hand Pose를 만들고, PPO의 Reward에 현재 관절 자세와 목표 자세의 오차를 넣어 **어떤 형태로 물체를 잡을지를 유도**한다.
+
+Pose Reward는 접근 단계 전체에 항상 걸리지 않고 **Hand의 Touch Sensor 중 30% 이상이 활성화된 접촉 상태에서만 적용**된다. 따라서 정책은 물체로 접근할 때는 전체 관절 공간을 비교적 자유롭게 사용하고, 실제 접촉 이후에는 사람의 기능적 파지 자세에 가까워지도록 학습된다. 이는 **Action Space는 Full-DoF로 유지하되 Reward가 손가락 협응을 선호하게 만드는 방식**이다. Pose Prior가 없는 비교군보다 성공률·안정성·자세 지표가 개선되었지만, 목표 자세와 맞지 않는 물체 방향에서는 실패 사례도 보고되어 고정된 자세 Prior가 항상 적합한 것은 아니다. (첨부 원문 §3.1–3.2, Fig. 2–5)
+
+### 2.5.2. Dexterous Functional Grasping — 16D Joint Action을 9D Eigengrasp Action으로 제한
+
+[**Ananye Agarwal et al. - Dexterous Functional Grasping**](https://proceedings.mlr.press/v229/agarwal23a.html), CoRL 2023. LEAP Hand의 **16차원 관절 자세를 직접 Action으로 사용하지 않고**, 소량의 사람 Hand Pose 데이터에 PCA를 적용해 얻은 **9개의 Eigengrasp 계수**를 정책 Action으로 사용한다. 정책이 9D 계수를 출력하면 Eigengrasp의 선형 결합으로 16D 관절각을 복원한다. 따라서 RL은 사람이 보여 준 정확한 동작 순서를 모방하는 것이 아니라, **사람 자세에서 얻은 물리적으로 타당한 Hand Pose Subspace 안에서만 필요한 동작 순서를 탐색**한다.
+
+저자들은 이 제한된 Action Space가 탐색 공간과 Sample Complexity를 줄이고, Self-collision이나 비현실적인 Finger Gaiting을 억제하여 학습을 안정화한다고 설명한다. 실제로 Full 16D Action 기준선보다 성공률과 Seed 간 안정성이 높았고, Eigengrasp를 사용한 경우에는 물체를 들고 손바닥 가까이 유지시키는 비교적 단순한 Reward만으로 학습하여 **추가적인 Hand Pose Reward Shaping이 필요하지 않았다.** 반면 완전 개방–폐쇄 자세를 1초 동안 단순 보간하는 고정 1D식 Grasp Primitive는 얇은 물체에서 자주 실패했으며, 특히 엄지가 너무 일찍 움직이면 물체를 밀어내는 문제가 있었다. 즉 **저차원화 자체보다 필요한 손가락 간 상대 Timing과 자세 자유도를 남기는 것이 중요하다.** (첨부 원문 §2.2, §3–4, Table 1–2)
+
+### 2.5.3. DiscoSyn — 과업과 함께 저차원 Hand Synergy 자체를 학습
+
+[**Zhanpeng He and Matei Ciocarlie - Discovering Synergies for Robot Manipulation with Multi-Task Reinforcement Learning**](https://doi.org/10.1109/ICRA46639.2022.9812170), ICRA 2022. 20-DoF Shadow Hand를 대상으로, Task-dependent Policy가 **저차원 Action z**를 출력하고 공유 Synergy Model이 이를 다시 Full-dimensional Hand Action으로 복원한다. Synergy를 사전 시연에 PCA로 맞춘 뒤 고정하는 대신, 여러 조작 과업의 PPO 학습과 동시에 **3D·4D·6D의 Linear 또는 Non-linear Synergy Space 자체를 학습**한다.
+
+학습된 Synergy Model을 고정하고 새로운 과업의 저차원 정책만 학습하면, Full-dimensional PPO보다 Sparse Reward를 훨씬 빨리 발견하는 사례가 나타났다. Valve 목표 과업에서는 Synergy 정책이 학습 초기에 Reward를 관측한 반면 Full-dimensional 정책은 첫 Reward까지 40,000 Step 이상이 필요했다. 그러나 서로 다른 Dynamics와 목표를 갖는 과업 집합에서는 **4D Linear Synergy로 모든 과업을 해결하지 못했고, 4D Non-linear 또는 6D Synergy가 필요했다.** 따라서 Action 축약은 탐색 효율을 높일 수 있지만, 너무 작은 또는 표현력이 낮은 Synergy Space는 필요한 Finger Motion 자체를 제거할 수 있다. (첨부 원문 §III–V, Tables I–II, Fig. 5)
+
+### 2.5.4. Robotic Hand Synergies for In-Hand Regrasping — 9개 관절 자세를 2D Latent Space에서 제어
+
+[**Dimitrios Dimou et al. - Robotic hand synergies for in-hand regrasping driven by object information**](https://doi.org/10.1007/s10514-023-10101-z), Autonomous Robots, 2023. iCub Hand에서 기록된 **9개 관절각의 Grasp Posture**를 CVAE로 **2차원 Synergy Space**에 인코딩한다. Object Size와 Shape Category를 조건으로 넣고, 초기 Grasp와 목표 Grasp를 각각 Latent Point로 변환한 뒤 **2D 공간에서 두 점 사이를 선형 보간**하고 각 점을 다시 9개 관절각으로 디코딩하여 Regrasp Trajectory를 생성한다. RL이 매 Step 개별 손가락을 직접 선택하는 방식은 아니다.
+
+이 연구는 단순한 자세 복원 오차보다 **Latent Space의 Smoothness**를 중요하게 본다. 가까운 Latent State 사이 이동이 관절각의 급격한 변화로 이어지면 파지가 불안정해질 수 있기 때문에, 부드러운 저차원 공간에서 손 자세를 전환하도록 한다. 실물에서는 물체 질량·재질 때문에 미끄러짐이 발생하자 Object Size 조건값을 낮춰 더 단단한 Grasp를 생성했다. 즉 소수의 Latent 변수로 전체 손 자세를 연속적으로 조절할 수 있지만, 실제 접촉 안정성은 Latent 표현과 물체 조건에 여전히 의존한다. (첨부 원문 §3–5, Fig. 3, Table 2)
+
+### 2.5.5. CrossDex — Human Eigengrasp를 여러 로봇 Hand의 공통 Action Interface로 사용
+
+[**Haoqi Yuan et al. - Cross-Embodiment Dexterous Grasping with Reinforcement Learning**](https://arxiv.org/abs/2410.02479), ICLR 2025. 서로 DoF와 관절 구조가 다른 Hand를 하나의 정책으로 제어하기 위해, 정책이 특정 로봇의 Joint Action을 직접 출력하지 않고 **사람 손 자세의 Eigengrasp 계수**를 출력한다. MANO의 45차원 Hand Pose 데이터에 PCA를 적용해 k개의 Eigengrasp를 만들고, 정책이 출력한 계수의 선형 결합으로 사람 손 자세를 만든 뒤 Retargeting Network가 이를 각 로봇 Hand의 **Target Joint Position**으로 변환한다. 따라서 저차원 Action이 Robot-specific Joint Space와 정책 사이의 공통 Interface 역할을 한다.
+
+Eigengrasp 수를 1개에서 36개까지 바꾼 Ablation에서는 여러 설정이 비슷한 경향을 보였지만, **1개 Eigengrasp만 사용한 경우에는 Action Space의 제한된 표현력 때문에 Training Performance가 낮아졌다.** 반대로 45차원 MANO Pose를 그대로 Action으로 사용한 구성은 새로운 Hand에 대한 Zero-shot 적응이 더 나빴다. 또한 학습에 포함하지 않은 **12-DoF, 5-Finger Inspire Hand**도 평가 Hand로 사용했다. 이는 저차원 표현이 유효할 수 있다는 근거와 동시에, **Open–Close에 가까운 1D Action이 과도하게 제한적일 수 있다는 직접적인 반대 근거**를 제공한다. (첨부 원문 §4.1, §5.1–5.4, Fig. 4, Tables 1–2)
+
+### 2.5.6. SoftHand 2 Pro — 19 DoF를 두 개의 물리적 Synergy 축으로 구동
+
+[**Cristina Piazza et al. - Exploring augmented grasping capabilities in a multi-synergistic soft bionic hand**](https://doi.org/10.1186/s12984-020-00741-y), Journal of NeuroEngineering and Rehabilitation, 2020. SoftHand 2 Pro는 손 구조 자체에 Synergy를 구현하여 **19개의 기구학적 DoF를 두 개의 Motor/DoA로 제어**한다. 첫 번째 구동축은 모든 손가락을 협응하여 닫는 기본 Grasp Synergy이고, 두 번째 구동축은 손가락 그룹 사이의 **상대 운동**을 만든다. 두 축을 동시에 조절하면 Hand Open, Power Grasp, Fine Pinch, Index Point 사이를 연속적으로 이동할 수 있으며 중간 자세에서도 정지할 수 있다.
+
+이 방식의 목적은 모든 Finger Joint를 개별 제어하는 대신 **Dexterity와 Control Complexity 사이의 절충**을 기구적으로 만드는 것이다. 논문은 적은 Actuator와 Sensor로 구조를 단순화하여 Robustness와 Reliability를 높이려는 설계를 강조한다. 다만 이 결과는 독립 Actuator를 가진 Hand의 Software Action을 2D로 묶은 것이 아니라 **Underactuated Mechanical Synergy가 물리적으로 구현된 Hand**에서 얻은 것이다. 따라서 본 연구의 Inspire Hand를 2D Action으로 소프트웨어 그룹화할 때 동일한 기계적 적응성과 Robustness가 자동으로 생긴다고 해석해서는 안 된다. (첨부 원문 §Introduction, Materials and Methods, Fig. 2–5)
+
+### 2.5.7. Hand Action 설계 관점의 구분
+
+위 연구들은 Hand의 자유도를 줄이는 위치가 서로 다르다. **DexVIP는 Full-DoF Action을 유지한 채 Reward가 손 자세를 유도**하고, **Dexterous Functional Grasping·DiscoSyn·CrossDex는 정책이 출력하는 Action 자체를 저차원 Synergy로 제한**한다. **Dimou et al.은 저차원 공간에서 Grasp Trajectory를 생성**하며, **SoftHand 2 Pro는 기구 설계 단계에서 구동 자유도 자체를 줄인다.**
+
+따라서 본 연구에서 6개 Hand 구동 입력을 직접 사용하는 경우와 1D·2D 그룹 Action을 비교할 때에는, 단순히 Action Dimension만 비교하기보다 **Full-DoF + Hand Pose/Coordination Reward**와 **Low-dimensional Action Constraint**를 분리해야 한다. 전자는 필요한 경우 개별 Finger Motion을 선택할 수 있지만 그 협응을 학습해야 하고, 후자는 탐색 공간을 줄이는 대신 Synergy 밖의 예외적인 접촉 복구 동작을 표현하지 못할 수 있다. 현재 Hand Action 후보는 [Method §3.1.2.3](03_Method.md#3123-hand-action-미정)에 정리되어 있다.
+
