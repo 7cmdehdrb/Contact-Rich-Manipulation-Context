@@ -1,0 +1,12 @@
+timestamp=2026-09-22T14:40:12.020728+09:00
+experiment=UR5e-Axia80 thin-face cantilever payload sweep
+verdict=PASS
+num_envs=50
+mass_range_g=10..500 step=10
+settle_time_s=1.495833333
+sensor_radius_m=0.041000000
+sensor_height_m=0.025400000
+bending_lever_arm_m=0.133700000
+metrics={"all_settled": true, "fx_intercept_N": -8.206485895705874e-06, "fx_monotonic": true, "fx_r_squared": 0.9999999999907657, "fx_rmse_N": 0.0014254500818883175, "fx_slope_N_per_kg": 9.805159428381417, "max_abs_fx_error_N": 0.0024190354347215504, "max_abs_lever_arm_error_m": 1.4131494847774428e-05, "max_abs_my_error_Nm": 0.00025414423998071367, "max_abs_sensor_axis_z": 0.0005553960800170898, "max_abs_tare_fx_error_N": 3.695970111450286e-05, "max_abs_tare_my_error_Nm": 4.919953568771618e-06, "max_cross_axis_force_N": 0.03414522538272039, "max_cross_axis_moment_Nm": 0.004565401661804762, "max_sample_position_error_m": 1.9747869828279363e-06, "mean_tare_fx_N": 1.9619636358817423, "mean_tare_my_Nm": 0.2623145589398013, "min_broad_normal_z": 0.9999781847000122, "my_intercept_Nm": -1.143315316235811e-05, "my_monotonic": true, "my_r_squared": 0.9999999993856723, "my_rmse_Nm": 0.00015812355907338183, "my_slope_Nm_per_kg": 1.3110918719965003, "tare_fx_span_N": 8.973810408097194e-07, "tare_my_span_Nm": 1.2550089095730854e-07}
+failures=[]
+artifacts={"plot_png": "/home/min/7cmdehdrb/grad/src/axia80_feasibility/results/cantilever_narrow_10g_to_500g/axia80_cantilever_response.png", "run_log": "/home/min/7cmdehdrb/grad/src/axia80_feasibility/results/cantilever_narrow_10g_to_500g/axia80_cantilever_run.log", "sample_csv": "/home/min/7cmdehdrb/grad/src/axia80_feasibility/results/cantilever_narrow_10g_to_500g/axia80_cantilever_samples.csv", "summary_csv": "/home/min/7cmdehdrb/grad/src/axia80_feasibility/results/cantilever_narrow_10g_to_500g/axia80_cantilever_summary.csv"}

@@ -1,0 +1,447 @@
+{
+  "verdict": "PASS",
+  "failures": [],
+  "metrics": {
+    "num_environments": 25,
+    "num_roll_angles": 5,
+    "num_tilt_angles": 5,
+    "roll_span_deg": 20.0,
+    "tilt_span_deg": 20.0,
+    "complete_angle_grid": true,
+    "force_component_rmse_N": 0.0013560127927416934,
+    "moment_component_rmse_Nm": 0.00018156521056262632,
+    "max_abs_force_component_error_N": 0.002369352181741391,
+    "max_abs_moment_component_error_Nm": 0.0004451041420288071,
+    "max_force_vector_error_N": 0.002391140325486702,
+    "max_moment_vector_error_Nm": 0.00045167323836253043,
+    "max_force_direction_error_deg": 0.0076213991040362875,
+    "max_moment_direction_error_deg": 0.01571139043862431,
+    "max_abs_tare_force_component_error_N": 0.00012140886651146321,
+    "max_abs_tare_moment_component_error_Nm": 1.666533450285501e-05,
+    "max_abs_roll_tracking_error_deg": 0.3827171325683594,
+    "max_abs_tilt_tracking_error_deg": 0.031989097595214844,
+    "max_combined_inclination_deg": 14.398736000061035,
+    "max_required_static_friction": 0.25673189759254456,
+    "all_settled": true,
+    "max_sample_position_error_m": 0.00036446406738832593,
+    "max_tangent_displacement_m": 0.00036446406738832593,
+    "max_payload_tool_angle_deg": 0.07912936061620712,
+    "min_width_edge_margin_m": 0.03963557630777359,
+    "min_length_edge_margin_m": 0.09988009929656982,
+    "fx_range_N": 0.1543120867676162,
+    "expected_fx_range_N": 0.1543837865193689,
+    "fy_range_N": 1.7030957816375683,
+    "expected_fy_range_N": 1.7038474082946777,
+    "fz_range_N": 1.7028026155299605,
+    "expected_fz_range_N": 1.7035634299119313,
+    "mx_range_Nm": 0.22770785712119596,
+    "expected_mx_range_Nm": 0.22780781239271164,
+    "my_range_Nm": 0.05532230676876404,
+    "expected_my_range_Nm": 0.055324703454971313,
+    "mz_range_Nm": 0.046445229151848705,
+    "expected_mz_range_Nm": 0.04643543716520071
+  },
+  "payload_mass_g": 500,
+  "roll_angles_deg": [
+    -10.0,
+    -5.0,
+    0.0,
+    5.0,
+    10.0
+  ],
+  "tilt_angles_deg": [
+    -10.0,
+    -5.0,
+    0.0,
+    5.0,
+    10.0
+  ],
+  "angle_pairs_deg": [
+    [
+      -10.0,
+      -10.0
+    ],
+    [
+      -5.0,
+      -10.0
+    ],
+    [
+      0.0,
+      -10.0
+    ],
+    [
+      5.0,
+      -10.0
+    ],
+    [
+      10.0,
+      -10.0
+    ],
+    [
+      -10.0,
+      -5.0
+    ],
+    [
+      -5.0,
+      -5.0
+    ],
+    [
+      0.0,
+      -5.0
+    ],
+    [
+      5.0,
+      -5.0
+    ],
+    [
+      10.0,
+      -5.0
+    ],
+    [
+      -10.0,
+      0.0
+    ],
+    [
+      -5.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0
+    ],
+    [
+      5.0,
+      0.0
+    ],
+    [
+      10.0,
+      0.0
+    ],
+    [
+      -10.0,
+      5.0
+    ],
+    [
+      -5.0,
+      5.0
+    ],
+    [
+      0.0,
+      5.0
+    ],
+    [
+      5.0,
+      5.0
+    ],
+    [
+      10.0,
+      5.0
+    ],
+    [
+      -10.0,
+      10.0
+    ],
+    [
+      -5.0,
+      10.0
+    ],
+    [
+      0.0,
+      10.0
+    ],
+    [
+      5.0,
+      10.0
+    ],
+    [
+      10.0,
+      10.0
+    ]
+  ],
+  "num_envs": 25,
+  "simulation_dt_s": 0.004166666666666667,
+  "arguments": {
+    "repo_root": null,
+    "output_dir": "src/axia80_feasibility/results/wrist_angle_sweep_500g_roll_tilt_10deg",
+    "payload_mass_g": 500,
+    "roll_angles_deg": [
+      -10.0,
+      -5.0,
+      0.0,
+      5.0,
+      10.0
+    ],
+    "tilt_angles_deg": [
+      -10.0,
+      -5.0,
+      0.0,
+      5.0,
+      10.0
+    ],
+    "env_spacing": 2.0,
+    "physics_hz": 240.0,
+    "gravity": 9.81,
+    "warmup_seconds": 1.0,
+    "tare_duration": 0.75,
+    "min_settle_seconds": 1.0,
+    "max_settle_seconds": 10.0,
+    "stable_window_seconds": 0.5,
+    "sample_duration": 1.0,
+    "linear_speed_threshold": 0.005,
+    "angular_speed_threshold": 0.05,
+    "position_tolerance": 0.006,
+    "slide_tolerance": 0.006,
+    "orientation_tolerance_deg": 2.0,
+    "drop_clearance": 0.0005,
+    "force_conversion": false,
+    "no_sample_csv": false,
+    "overwrite": false,
+    "strict": true,
+    "enable_cameras": false,
+    "xr": false,
+    "device": "cuda:0",
+    "cpu": false,
+    "verbose": false,
+    "info": false,
+    "rendering_mode": null,
+    "kit_args": "",
+    "anim_recording_enabled": false,
+    "anim_recording_start_time": 0,
+    "anim_recording_stop_time": 10,
+    "angle_pairs_deg": [
+      [
+        -10.0,
+        -10.0
+      ],
+      [
+        -5.0,
+        -10.0
+      ],
+      [
+        0.0,
+        -10.0
+      ],
+      [
+        5.0,
+        -10.0
+      ],
+      [
+        10.0,
+        -10.0
+      ],
+      [
+        -10.0,
+        -5.0
+      ],
+      [
+        -5.0,
+        -5.0
+      ],
+      [
+        0.0,
+        -5.0
+      ],
+      [
+        5.0,
+        -5.0
+      ],
+      [
+        10.0,
+        -5.0
+      ],
+      [
+        -10.0,
+        0.0
+      ],
+      [
+        -5.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        5.0,
+        0.0
+      ],
+      [
+        10.0,
+        0.0
+      ],
+      [
+        -10.0,
+        5.0
+      ],
+      [
+        -5.0,
+        5.0
+      ],
+      [
+        0.0,
+        5.0
+      ],
+      [
+        5.0,
+        5.0
+      ],
+      [
+        10.0,
+        5.0
+      ],
+      [
+        -10.0,
+        10.0
+      ],
+      [
+        -5.0,
+        10.0
+      ],
+      [
+        0.0,
+        10.0
+      ],
+      [
+        5.0,
+        10.0
+      ],
+      [
+        10.0,
+        10.0
+      ]
+    ],
+    "headless": true,
+    "hide_ui": true,
+    "create_new_stage": false,
+    "physics_gpu": 0,
+    "active_gpu": 0
+  },
+  "model": {
+    "configuration": "fixed_mass_wrist_roll_tilt_angle_sweep",
+    "sensor_link_name": "axia80_link",
+    "tool_link_name": "payload_tool_link",
+    "measurement_joint_name": "axia80_cantilever_measurement_joint",
+    "sensor_radius_m": 0.041,
+    "sensor_height_m": 0.0254,
+    "sensor_mass_kg": 0.001,
+    "sensor_axis_in_measurement_frame": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "tool_size_sensor_frame_m": [
+      0.012,
+      0.12,
+      0.24
+    ],
+    "tool_mass_kg": 0.2,
+    "tool_gap_m": 0.001,
+    "tool_mount_face_size_m": [
+      0.012,
+      0.12
+    ],
+    "tool_mount_face_outward_normal_axis": "-Z",
+    "tool_extension_axis": "+Z",
+    "tool_broad_face_size_m": [
+      0.12,
+      0.24
+    ],
+    "tool_broad_face_normal_axis": "+X",
+    "tool_start_z_in_sensor_m": 0.0137,
+    "tool_center_z_in_sensor_m": 0.13369999999999999,
+    "payload_size_m": 0.04,
+    "payload_center_in_sensor_m": [
+      0.026000000000000002,
+      0.0,
+      0.13369999999999999
+    ],
+    "payload_bending_lever_arm_m": 0.13369999999999999,
+    "arm_pose": {
+      "shoulder_pan_joint": 0.0,
+      "shoulder_lift_joint": -1.5707963267948966,
+      "elbow_joint": 1.5707963267948966,
+      "wrist_1_joint": -1.5707963267948966,
+      "wrist_2_joint": 3.141592653589793,
+      "wrist_3_joint": 0.0
+    },
+    "wrench_order": [
+      "Fx",
+      "Fy",
+      "Fz",
+      "Mx",
+      "My",
+      "Mz"
+    ],
+    "wrench_frame": "Axia80 center; +X is upward broad-face normal; +Z is cantilever axis",
+    "expected_payload_channels": {
+      "normal_force": "+Fx = mass * gravity",
+      "bending_moment": "+My = mass * gravity * payload_bending_lever_arm_m"
+    },
+    "base_arm_pose": {
+      "shoulder_pan_joint": 0.0,
+      "shoulder_lift_joint": -1.5707963267948966,
+      "elbow_joint": 1.5707963267948966,
+      "wrist_1_joint": -1.5707963267948966,
+      "wrist_2_joint": 3.141592653589793,
+      "wrist_3_joint": 0.0
+    },
+    "roll_joint_name": "wrist_3_joint",
+    "tilt_joint_name": "wrist_2_joint",
+    "roll_definition": "wrist_3 offset about the sensor/tool +Z cantilever axis",
+    "tilt_definition": "wrist_2 offset from the horizontal cantilever pose",
+    "default_roll_angles_deg": [
+      -10.0,
+      -5.0,
+      0.0,
+      5.0,
+      10.0
+    ],
+    "default_tilt_angles_deg": [
+      -10.0,
+      -5.0,
+      0.0,
+      5.0,
+      10.0
+    ],
+    "default_payload_mass_g": 500,
+    "static_friction": 2.0,
+    "dynamic_friction": 1.5,
+    "nominal_payload_force_sensor_frame": {
+      "Fx": "m*g*cos(roll)*cos(tilt)",
+      "Fy": "-m*g*sin(roll)*cos(tilt)",
+      "Fz": "-m*g*sin(tilt)"
+    },
+    "angle_grid_order": "tilt-major rows, roll-minor columns"
+  },
+  "wrench_convention": {
+    "order": [
+      "Fx",
+      "Fy",
+      "Fz",
+      "Mx",
+      "My",
+      "Mz"
+    ],
+    "frame": "Axia80 center coincident with the tool body frame",
+    "roll": "wrist_3 offset about tool +Z",
+    "tilt": "wrist_2 offset from the horizontal cantilever pose",
+    "reported_primary_columns": "per-environment tool-only tare corrected",
+    "expected_columns": "sampled actual-pose payload wrench plus tool pose change since tare"
+  },
+  "contact_checks": {
+    "static_friction": 2.0,
+    "dynamic_friction": 1.5,
+    "nominal_max_required_static_friction": 0.2512947894913793,
+    "nominal_friction_safety_ratio": 7.958780220027643,
+    "slide_tolerance_m": 0.006,
+    "orientation_tolerance_deg": 2.0
+  },
+  "artifacts": {
+    "summary_csv": "/home/min/7cmdehdrb/grad/src/axia80_feasibility/results/wrist_angle_sweep_500g_roll_tilt_10deg/axia80_wrist_angle_summary.csv",
+    "sample_csv": "/home/min/7cmdehdrb/grad/src/axia80_feasibility/results/wrist_angle_sweep_500g_roll_tilt_10deg/axia80_wrist_angle_samples.csv",
+    "response_heatmaps_png": "/home/min/7cmdehdrb/grad/src/axia80_feasibility/results/wrist_angle_sweep_500g_roll_tilt_10deg/axia80_wrist_angle_response_heatmaps.png",
+    "error_heatmaps_png": "/home/min/7cmdehdrb/grad/src/axia80_feasibility/results/wrist_angle_sweep_500g_roll_tilt_10deg/axia80_wrist_angle_error_heatmaps.png",
+    "center_slices_png": "/home/min/7cmdehdrb/grad/src/axia80_feasibility/results/wrist_angle_sweep_500g_roll_tilt_10deg/axia80_wrist_angle_center_slices.png",
+    "run_log": "/home/min/7cmdehdrb/grad/src/axia80_feasibility/results/wrist_angle_sweep_500g_roll_tilt_10deg/axia80_wrist_angle_run.log"
+  }
+}

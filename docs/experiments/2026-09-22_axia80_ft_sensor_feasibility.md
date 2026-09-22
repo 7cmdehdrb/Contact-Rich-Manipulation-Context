@@ -254,31 +254,31 @@ tool compliance를 별도 모델 또는 실측으로 검증해야 한다.
 
 ### 수평 질량 스윕
 
-- [Summary CSV](../../../../src/axia80_feasibility/results/cantilever_narrow_10g_to_500g/axia80_cantilever_summary.csv)
-- [Sample CSV](../../../../src/axia80_feasibility/results/cantilever_narrow_10g_to_500g/axia80_cantilever_samples.csv)
-- [Metadata](../../../../src/axia80_feasibility/results/cantilever_narrow_10g_to_500g/axia80_cantilever_metadata.json)
-- [Run log](../../../../src/axia80_feasibility/results/cantilever_narrow_10g_to_500g/axia80_cantilever_run.log)
+- [Summary CSV](../../artifacts/axia80_feasibility/results/cantilever_narrow_10g_to_500g/axia80_cantilever_summary.csv)
+- [Sample CSV](../../artifacts/axia80_feasibility/results/cantilever_narrow_10g_to_500g/axia80_cantilever_samples.csv)
+- [Metadata](../../artifacts/axia80_feasibility/results/cantilever_narrow_10g_to_500g/axia80_cantilever_metadata.json)
+- [Run log](../../artifacts/axia80_feasibility/results/cantilever_narrow_10g_to_500g/axia80_cantilever_run.log)
 
 ### Wrist3 약 10° 질량 스윕
 
-- [Summary CSV](../../../../src/axia80_feasibility/results/tilted_cantilever_10deg_10g_to_500g_pose_checked/axia80_tilted_cantilever_summary.csv)
-- [Sample CSV](../../../../src/axia80_feasibility/results/tilted_cantilever_10deg_10g_to_500g_pose_checked/axia80_tilted_cantilever_samples.csv)
-- [Metadata](../../../../src/axia80_feasibility/results/tilted_cantilever_10deg_10g_to_500g_pose_checked/axia80_tilted_cantilever_metadata.json)
-- [Run log](../../../../src/axia80_feasibility/results/tilted_cantilever_10deg_10g_to_500g_pose_checked/axia80_tilted_cantilever_run.log)
+- [Summary CSV](../../artifacts/axia80_feasibility/results/tilted_cantilever_10deg_10g_to_500g_pose_checked/axia80_tilted_cantilever_summary.csv)
+- [Sample CSV](../../artifacts/axia80_feasibility/results/tilted_cantilever_10deg_10g_to_500g_pose_checked/axia80_tilted_cantilever_samples.csv)
+- [Metadata](../../artifacts/axia80_feasibility/results/tilted_cantilever_10deg_10g_to_500g_pose_checked/axia80_tilted_cantilever_metadata.json)
+- [Run log](../../artifacts/axia80_feasibility/results/tilted_cantilever_10deg_10g_to_500g_pose_checked/axia80_tilted_cantilever_run.log)
 
 ### 500 g Roll×Tilt 스윕
 
-- [Summary CSV](../../../../src/axia80_feasibility/results/wrist_angle_sweep_500g_roll_tilt_10deg/axia80_wrist_angle_summary.csv)
-- [Sample CSV](../../../../src/axia80_feasibility/results/wrist_angle_sweep_500g_roll_tilt_10deg/axia80_wrist_angle_samples.csv)
-- [Metadata](../../../../src/axia80_feasibility/results/wrist_angle_sweep_500g_roll_tilt_10deg/axia80_wrist_angle_metadata.json)
-- [Run log](../../../../src/axia80_feasibility/results/wrist_angle_sweep_500g_roll_tilt_10deg/axia80_wrist_angle_run.log)
+- [Summary CSV](../../artifacts/axia80_feasibility/results/wrist_angle_sweep_500g_roll_tilt_10deg/axia80_wrist_angle_summary.csv)
+- [Sample CSV](../../artifacts/axia80_feasibility/results/wrist_angle_sweep_500g_roll_tilt_10deg/axia80_wrist_angle_samples.csv)
+- [Metadata](../../artifacts/axia80_feasibility/results/wrist_angle_sweep_500g_roll_tilt_10deg/axia80_wrist_angle_metadata.json)
+- [Run log](../../artifacts/axia80_feasibility/results/wrist_angle_sweep_500g_roll_tilt_10deg/axia80_wrist_angle_run.log)
 
 ### 구현
 
-- [Cantilever 실행 스크립트](../../../../src/axia80_feasibility/scripts/run_cantilever_payload_test.py)
-- [Wrist3 10° 실행 스크립트](../../../../src/axia80_feasibility/scripts/run_tilted_cantilever_payload_test.py)
-- [Roll×Tilt 실행 스크립트](../../../../src/axia80_feasibility/scripts/run_wrist_angle_sweep.py)
-- [기존 CSV 단면 plot 스크립트](../../../../src/axia80_feasibility/scripts/plot_wrist_angle_fixed_sweeps.py)
+- [Cantilever 실행 스크립트](../../artifacts/axia80_feasibility/scripts/run_cantilever_payload_test.py)
+- [Wrist3 10° 실행 스크립트](../../artifacts/axia80_feasibility/scripts/run_tilted_cantilever_payload_test.py)
+- [Roll×Tilt 실행 스크립트](../../artifacts/axia80_feasibility/scripts/run_wrist_angle_sweep.py)
+- [기존 CSV 단면 plot 스크립트](../../artifacts/axia80_feasibility/scripts/plot_wrist_angle_fixed_sweeps.py)
 
 ## 해석 범위와 한계
 

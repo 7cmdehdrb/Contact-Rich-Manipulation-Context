@@ -1,0 +1,16 @@
+timestamp=2026-09-22T16:06:50.214323+09:00
+experiment=UR5e-Axia80 fixed-mass wrist Roll x Tilt angle sweep
+verdict=PASS
+num_envs=25
+payload_mass_g=500
+roll_angles_deg=[-10.0, -5.0, 0.0, 5.0, 10.0]
+tilt_angles_deg=[-10.0, -5.0, 0.0, 5.0, 10.0]
+settle_time_s=1.495833333
+tool_width_m=0.120000000
+static_friction=2.000000000
+dynamic_friction=1.500000000
+nominal_max_required_static_friction=0.251294789
+nominal_friction_safety_ratio=7.958780220
+metrics={"all_settled": true, "complete_angle_grid": true, "expected_fx_range_N": 0.1543837865193689, "expected_fy_range_N": 1.7038474082946777, "expected_fz_range_N": 1.7035634299119313, "expected_mx_range_Nm": 0.22780781239271164, "expected_my_range_Nm": 0.055324703454971313, "expected_mz_range_Nm": 0.04643543716520071, "force_component_rmse_N": 0.0013560127927416934, "fx_range_N": 0.1543120867676162, "fy_range_N": 1.7030957816375683, "fz_range_N": 1.7028026155299605, "max_abs_force_component_error_N": 0.002369352181741391, "max_abs_moment_component_error_Nm": 0.0004451041420288071, "max_abs_roll_tracking_error_deg": 0.3827171325683594, "max_abs_tare_force_component_error_N": 0.00012140886651146321, "max_abs_tare_moment_component_error_Nm": 1.666533450285501e-05, "max_abs_tilt_tracking_error_deg": 0.031989097595214844, "max_combined_inclination_deg": 14.398736000061035, "max_force_direction_error_deg": 0.0076213991040362875, "max_force_vector_error_N": 0.002391140325486702, "max_moment_direction_error_deg": 0.01571139043862431, "max_moment_vector_error_Nm": 0.00045167323836253043, "max_payload_tool_angle_deg": 0.07912936061620712, "max_required_static_friction": 0.25673189759254456, "max_sample_position_error_m": 0.00036446406738832593, "max_tangent_displacement_m": 0.00036446406738832593, "min_length_edge_margin_m": 0.09988009929656982, "min_width_edge_margin_m": 0.03963557630777359, "moment_component_rmse_Nm": 0.00018156521056262632, "mx_range_Nm": 0.22770785712119596, "my_range_Nm": 0.05532230676876404, "mz_range_Nm": 0.046445229151848705, "num_environments": 25, "num_roll_angles": 5, "num_tilt_angles": 5, "roll_span_deg": 20.0, "tilt_span_deg": 20.0}
+failures=[]
+artifacts={"center_slices_png": "/home/min/7cmdehdrb/grad/src/axia80_feasibility/results/wrist_angle_sweep_500g_roll_tilt_10deg/axia80_wrist_angle_center_slices.png", "error_heatmaps_png": "/home/min/7cmdehdrb/grad/src/axia80_feasibility/results/wrist_angle_sweep_500g_roll_tilt_10deg/axia80_wrist_angle_error_heatmaps.png", "response_heatmaps_png": "/home/min/7cmdehdrb/grad/src/axia80_feasibility/results/wrist_angle_sweep_500g_roll_tilt_10deg/axia80_wrist_angle_response_heatmaps.png", "run_log": "/home/min/7cmdehdrb/grad/src/axia80_feasibility/results/wrist_angle_sweep_500g_roll_tilt_10deg/axia80_wrist_angle_run.log", "sample_csv": "/home/min/7cmdehdrb/grad/src/axia80_feasibility/results/wrist_angle_sweep_500g_roll_tilt_10deg/axia80_wrist_angle_samples.csv", "summary_csv": "/home/min/7cmdehdrb/grad/src/axia80_feasibility/results/wrist_angle_sweep_500g_roll_tilt_10deg/axia80_wrist_angle_summary.csv"}
