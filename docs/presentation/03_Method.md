@@ -34,7 +34,7 @@ EEF는 Hand에 고정된 기준점을 사용하며, **Hand 중앙 부근의 고�
 
 **360도 허용은 Sweep Command의 방향 범위이고, Dead Zone은 접근 시 도달 Pose의 제한이다.** 두 조건을 같은 제한으로 취급하지 않는다. 12시·6시의 기준 좌표축, Offset 크기, Pose 유사도 기준과 도달 허용 오차는 아직 수치·구현 방식이 정해지지 않았다.
 
-사전 정의된 접근 절차는 MoveIt 기반 Planner와 Controller로 실행한다. [**Samarth Brahmbhatt et al. - Zero-Shot Transfer of Haptics-Based Object Insertion Policies**](../literature/papers/2023-brahmbhatt-zero-shot-haptics-insertion.md)는 장애물이 없는 접근 경로를 가정하고 **MoveIt으로 목표 근처까지 이동한 뒤, 학습된 Controller로 접촉 구간을 수행**한다. 본 연구에서는 이 **접근과 접촉 정책의 분리**를 참고한다. 논문의 삽입 위치·높이·과업을 본 Sweeping의 도달 조건으로 그대로 가져오지는 않는다. (원문 §III, 상세 리뷰 §2.2)
+사전 정의된 접근 절차는 MoveIt 기반 Planner와 Controller로 실행한다. [**Samarth Brahmbhatt et al. - Zero-Shot Transfer of Haptics-Based Object Insertion Policies**](../literature/papers/2023-brahmbhatt-zero-shot-haptics-insertion.md)는 장애물이 없는 접근 경로를 가정하고 **MoveIt으로 목표 근처까지 이동한 뒤, 학습된 Controller로 접촉 구간을 수행**한다. 본 연구에서는 이 **접근과 접촉 정책의 분리**를 참고한다. 
 
 <a id="31-markov-decision-process"></a>
 
@@ -54,7 +54,7 @@ MDP의 **초기 상태 분포(Event), State/Observation, Action과 제어 경로
 
 모든 무작위화는 **명령된 방향으로 물체를 미는 것이 물리적으로 가능한 환경**에서만 유효하다. Noise로 도달 불가능한 자세나 초기 간섭, 밀 수 없는 물체 배치가 만들어진 경우는 유효한 Reset으로 사용하지 않는다.
 
-Noise를 관절값과 Pose 중 어디에 적용할지, 분포·크기 및 엄지의 별도 관절 초기값은 구체화하지 않는다. 물체 크기·마찰, 제어 Gain, Base 위치 등 기존 Randomization 후보는 [3.3절](#33-domain-randomization-설계)에 통합한다.
+물체 크기·마찰, 제어 Gain, Base 위치 등 기존 Randomization 후보는 [3.3절](#33-domain-randomization-설계)에 통합한다.
 
 ### 3.2.2. State / Observation
 
@@ -115,52 +115,16 @@ m_t=\begin{cases}
 
 기존의 축약 근거와 검증 조건은 아래에 보존한다. 손목 6축 Wrench는 이 18차원 표현과 별도로 제공한다.
 
-<details>
-<summary>기존 촉각 축약 근거·정보 보존 조건·비교 검증</summary>
-
-**축약 근거.** [Wei et al.](02_Related_Works.md#tactile-reduction-wei)은 과업별 센서 위치·종류·미설치를 선택했다. 이는 필요한 센서 부분집합을 선택하는 근거지만 지도학습 인식 과업의 결과이며, Sweeping 제어의 충분성을 직접 검증한 것은 아니다. [Melnik et al.](02_Related_Works.md#tactile-reduction-melnik)은 접촉 영역 단위 축약의 학습 효율을, [Zhang et al.](02_Related_Works.md#tactile-reduction-zhang)은 간결한 합력 표현의 유효성을 비교했다. 이를 차원 축소가 항상 우수하다는 근거로 확대하지 않는다. (기존 정리: Wei §IV–V; Melnik §2.2, Tables 4–5; Zhang §IV-C, Fig. 8)
-
-**영역 대응.** [Wu et al.](02_Related_Works.md#tactile-reduction-wu)의 Canonical Representation처럼 센서 내부 좌표의 대응을 정리하면서 센서 위치 정보를 보존하는 원칙을 참고한다. 본 연구가 해당 논문의 3D 좌표·힘 표현이나 GNN을 그대로 사용하는 것은 아니다. 손바닥·손등의 형상과 접촉 동역학이 같다고 가정하지 않으며, 실제 부착 영역과 면별 감지 조건을 확인해야 한다. (기존 정리: Wu §IV-A, Fig. 3)
-
-**정보 보존 조건.** 비선택 면의 관측이 모두 0인 경우에만 다음과 같이 두 Binary 벡터를 복원할 수 있다.
-
-```math
-m_t=0\Rightarrow\mathbf{d}_t=\mathbf{0},\qquad
-m_t=1\Rightarrow\mathbf{p}_t=\mathbf{0}.
-```
-
-```math
-\mathbf{p}_t=(1-m_t)\mathbf{c}_t,\qquad
-\mathbf{d}_t=m_t\mathbf{c}_t.
-```
-
-이는 이미 이진화한 채널에 대한 대수적 결과이며, 원래 압력 분포·하중 크기를 복원한다는 뜻은 아니다. 비선택 면의 실제 접촉이나 오검출이 발생하면 조건이 깨진다. [Yin et al.](02_Related_Works.md#tactile-reduction-yin)의 센서군 제거 비교와 [Melnik et al.](02_Related_Works.md#tactile-reduction-melnik)의 분석처럼, 드물게 활성화된다는 이유만으로 중요한 접촉 정보를 제외해서는 안 된다. (기존 정리: Yin §V-G, Table IV; Melnik §4, Table 8·Fig. 7)
-
-비선택 면을 생략하는 것은 **Actor의 접촉 지도 구성**이다. 기존 문서의 전체 34채널 취득·기록과 별도 안전 감독 검토는 유지한다. 비선택 면의 정보가 필요한 조건은 18차원 표현의 적용 한계로 구분하며, F/T가 제외한 국소 접촉 정보를 항상 복원한다고 가정하지 않는다.
-
-| 기존 비교 후보 | 촉각 표현 | 확인할 내용 |
-| --- | --- | --- |
-| **전체 채널 기준선** | Palm 17 + Dorsal 17 + 동일한 접촉면 ID 1 = 35D | 선택 전 정보와 비교 |
-| **접촉면 선택** | Header 1 + 선택한 면 17 = 18D | 비선택 면 생략의 성능·학습 효율 영향 |
-
-다른 입력·Action·Controller·Reward·네트워크 구조와 학습 예산은 동일하게 맞춘다. 정상 단면 접촉과 비선택 면 접촉 조건을 구분하여 실제 물체 이동 성공·오차, 접촉 소실, 학습 진행과 비선택 면 활성 빈도를 비교하고, 안전 감독의 개입은 별도로 기록한다. 이는 기존의 비교 검토안이며 새로운 과업을 추가하는 것은 아니다.
-
-</details>
-
 #### 3.2.2.3. Last Action
 
-[3.2.3절](#323-action과-제어-경로)의 **Manipulator 6차원 + Hand 2차원**으로 이루어진 직전 정책 Action $a_{t-1}$을 관측에 포함한다. 이번 설계는 직전 Action 1개만 추가하며, 별도의 Observation Stack·Sliding Window·이력 기반 물성 적응을 추가하지 않는다. Episode 첫 시점의 Last Action 초기값은 구현 시 정한다.
+[3.2.3절](#323-action과-제어-경로)의 **Manipulator 6차원 + Hand 2차원**으로 이루어진 직전 정책 Action $a_{t-1}$을 관측에 포함한다. 
 
 #### 3.2.2.4. Privileged Information
 
 다음 정보는 필요에 따라 **학습 Reward 또는 평가용 정답**으로 사용할 수 있지만, 최종 Blind Actor 입력에는 추가하지 않는다.
 
 - 현재 물체의 Ground-Truth Pose·속도
-- 접촉 물체 ID·Shape·Size
 - 시뮬레이션의 접촉력 벡터
-- 정확한 질량·마찰·형상 파라미터
-
-초기 물체 Position을 Command로 받는 것과, 현재 물체 Position을 목표 도달 Reward 계산에 사용하는 것은 구분한다. 센서에서 얻는 F/T와 시뮬레이션 정답 접촉력도 같은 관측으로 취급하지 않는다.
 
 ### 3.2.3. Action과 제어 경로
 
@@ -180,7 +144,7 @@ a_t^{\mathrm{hand}}=(u_{\mathrm{flex}},u_{\mathrm{thumb}}).
 
 6차원 Delta는 병진만이 아니라 **위치·회전 증분을 합친 것**이다. 기존 문서의 EEF 기준 좌표계와 각 성분의 물리 단위 크기 제한은 유지하고, OSC가 해당 운동 명령을 실행하도록 한다. Gain·Action Scale·제어 주기는 이번에 임의로 정하지 않는다.
 
-OSC를 채택하는 이유는 **Sweep 중 다른 물체와의 접촉·충돌에 순응적으로 대응하여 안정성을 높이려는 것**이다. [**Zero-Shot Transfer**](../literature/papers/2023-brahmbhatt-zero-shot-haptics-insertion.md)는 정책의 6-DoF 운동 목표를 OSC로 실행하고, OSC에 포함된 Impedance와 부드러운 Gripper의 조합으로 순응적인 접촉 실행을 구성한다. 이를 접촉 대응의 설계 근거로 사용하되, **OSC만으로 본 Hand의 충돌 안정성이 보장되거나 다른 Controller보다 우수함이 검증되었다고 주장하지 않는다.** (원문 §I·III, Fig. 3; 상세 리뷰 §4)
+OSC를 채택하는 이유는 **Sweep 중 다른 물체와의 접촉·충돌에 순응적으로 대응하여 안정성을 높이려는 것**이다. [**Zero-Shot Transfer**](../literature/papers/2023-brahmbhatt-zero-shot-haptics-insertion.md)
 
 Cartesian 표현을 선택하는 기존 방향은 유지한다. Joint-space 대비 표현의 비교 근거와, 실제 코드에서 적용할 OSC 경로·파라미터는 별도로 확인해야 한다.
 
@@ -199,7 +163,7 @@ Observation에서 정의한 공통 굽힘과 엄지의 별도 움직임을 각�
 | **목표 도달** | 목표점과 현재 물체의 **Position Error가 작을수록 높은 보상** | 초기 물체 위치와 Command의 방향·거리로 목표점을 정함. 현재 물체 Position은 Privileged Information을 사용 |
 | **접촉면 Normal 정렬** | 손바닥 또는 손등의 Normal이 Sweep 방향과 일치하도록 유도 | Pull·Push 동작을 모두 고려하므로 이 항이 지배적이거나 자세를 고정하는 제약이 되어서는 안 됨 |
 | **Wrench** | 과도한 힘을 억제하고, 유효한 하중을 Sweep 방향과 연결하는 방안 검토 | 큰 힘에 대한 페널티를 후보로 둠. 불필요한 성분을 상쇄·보정한 뒤 미는 방향의 힘을 얻고 방향 정렬을 보상하는 방식은 **추가 구체화 필요** |
-| **Contact** | 접촉 상태를 유지하고, 접촉한 Tactile 영역이 많을수록 보상 | 접촉 유지와 활성 영역 수를 구분하여 설계. **접촉면 Header는 접촉 개수에 포함하지 않음** |
+| **Contact** | 접촉 상태를 유지하고, 접촉한 Tactile 영역이 많을수록 보상 | 접촉 유지와 활성 영역 수를 구분하여 설계. 특정 Tactile에 가중치를 부여할 수도 있음. **접촉면 Header는 접촉 개수에 포함하지 않음** |
 | **기타 보조 항** | 불필요한 Action을 억제하고 빠른 과업 완료를 유도 | Action 페널티·시간 비용 등의 구체식은 미정 |
 
 Wrench의 상쇄·보정 대상과 계산 방법, 힘·모멘트 각 성분의 사용 방식은 정해지지 않았다. 단순히 방향 성분을 투영했다고 해서 순수한 미는 힘이나 개별 접촉력이 분리된 것으로 간주하지 않는다. 기존처럼 힘과 모멘트의 단위·정규화도 구분하여 검토한다.
@@ -222,9 +186,9 @@ Wrench의 상쇄·보정 대상과 계산 방법, 힘·모멘트 각 성분의 �
 | **물체** | 큐브·실린더·비정형 Shape, 크기·질량·질량 중심·초기 Pose | 실린더의 평평한 면 지지, 실제 선반 물체를 상정한 질량. 수치 범위는 미정 |
 | **Manipulator** | MoveIt 도달 가능 Pose 주변의 Initial Joint Configuration, 제어 Gain(Stiffness·Damping) | Noise 이후에도 유효한 시작 상태 유지 |
 | **Hand** | 공통 굽힘의 0.5 + Noise 초기화 | 0~1 범위, 초기 물체 간섭 없음 |
-| **Base** | 선반에 대한 Base의 XY 평면 위치 | 해당 배치에서도 접근과 Sweep이 가능해야 함 |
+| **Base** | 선반에 대한 Base의 XY 평면 위치 및 회전 | 해당 배치에서도 접근과 Sweep이 가능해야 함 |
 
-물체·환경을 넓게 무작위화하는 것 자체가 목적은 아니다. **물리적으로 미는 것이 가능한 범위 안에서 다양한 조건을 제공**하며, 구체적인 범위·분포·갱신 주기는 임의로 추가하지 않는다. Base의 회전이나 실행 중 이동도 추가하지 않는다.
+위 구성은 **물리적으로 미는 것이 가능한 범위 안에서 다양한 조건을 제공**하며, 구체적인 범위·분포·갱신 주기는 임의로 추가하지 않는다. Base의 회전이나 실행 중 이동도 추가하지 않는다.
 
 ### 3.3.2. 센서 불확실성
 
@@ -236,7 +200,7 @@ Wrench의 상쇄·보정 대상과 계산 방법, 힘·모멘트 각 성분의 �
 | **손목 6축 F/T** | 영점 Bias, 힘·모멘트 측정 잡음, Scale 오차, 보정 후 남는 부하 오차, 관측 지연 |
 | **Robot·Hand 고유감각** | 현재 사용하는 Joint Position·Velocity, EEF Pose와 저차원 Hand 상태의 관측 오차·지연, 센서 간 시간 정렬 오차 |
 
-Binary 촉각은 [**Ding et al. - Sim-to-Real Transfer for Robotic Manipulation with Tactile Sensory**](../literature/papers/2021-ding-sim-to-real-tactile-manipulation.md)의 **매 Bit·매 Timestep 반전**을 구현 후보로 유지한다. 여기서 센서 잡음의 대상은 접촉 Bit이며, 계획된 접촉면을 표시하는 Header까지 임의 반전하는 뜻은 아니다. 선행연구의 촉각 잡음 모델을 본 연구의 F/T까지 동일하게 적용했다고 해석하지 않는다.
+Binary 촉각은 [**Ding et al. - Sim-to-Real Transfer for Robotic Manipulation with Tactile Sensory**](../literature/papers/2021-ding-sim-to-real-tactile-manipulation.md)의 **매 Bit·매 Timestep 반전**을 구현을 참조한다.
 
 ## 3.4. 기존 정책 개요도
 
