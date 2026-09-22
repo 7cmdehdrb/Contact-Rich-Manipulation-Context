@@ -2,6 +2,8 @@
 
 [문서 안내](../../README.md) · [문헌 색인](../README.md) · [전체 논문](README.md) · [원래 조사 · IROS-S01](../reviews/2026-09-15_iros-2023-2025-tactile-force-torque-rl-title-screening.md#iros-s01)
 
+> **사용자 확인 상태:** **미확인** — 상세 리뷰는 작성되었지만, 사용자가 아직 직접 확인하지 않은 논문이다. (2026-09-22)
+
 ## 0. 논문 정보와 확인 범위
 
 | 항목 | 내용 |
