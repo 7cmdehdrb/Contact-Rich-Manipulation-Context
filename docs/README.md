@@ -12,6 +12,7 @@
 | 현재 결정·미정 사항과 다음 작업 | [결정 목록](03_DECISIONS_AND_OPEN_QUESTIONS.md) | [다음 작업](04_NEXT_ACTIONS.md) |
 | 방향이 바뀐 이유와 교수 피드백 | [미팅 이력](02_MEETING_HISTORY.md) | [출처와 확인 범위](06_SOURCE_REGISTER.md) |
 | 구현·실험 설계와 실제 준비 상태 | [구현·평가 설계](05_IMPLEMENTATION_AND_EVALUATION.md) | [코드·장비 현황](07_CODE_AND_HARDWARE_STATUS.md) |
+| 발표·논문 구성: Motivation, Related Works, Method | [발표 문서 안내](presentation/README.md) | [Motivation·Contribution](presentation/01_Research_Motivation.md) · [Related Works](presentation/02_Related_Works.md) · [Method](presentation/03_Method.md) |
 | Research Motivation의 물체 정보·축약 촉각 근거 | [2.1 신규 문헌 조사: 4편 비교](literature/reviews/2026-09-18_reduced-tactile-compensation-survey.md) | [Research Motivation 발표 자료](presentation/01_Research_Motivation.md) |
 | 동일 schema의 Review용 PDF 재분석 | [260918 Review Dataset: 106개 전체 검토본](literature/review_dataset/260918/README.md) | [전체 질문별 횡단 비교](literature/review_dataset/260918/synthesis/literature-synthesis.md) |
 | 특정 조사에서 선정한 논문 | [조사 그룹 안내](literature/reviews/README.md) | [문헌조사 전체 색인](literature/README.md) |
