@@ -2,11 +2,54 @@
 
 [발표 문서 안내](README.md) · [Research Motivation and Contributions](01_Research_Motivation.md) · [Method](03_Method.md)
 
-> **문서 상태: 선행연구 정리.** Tactile 활용 방식, RL 보상 설계와 Domain Randomization 사례를 정리한다. F/T·Wrench 선행연구 절은 TODO로 남긴다. 본 연구의 Contribution은 [01 문서](01_Research_Motivation.md), 실행 설계는 [03 문서](03_Method.md)에서 다룬다.
+> **문서 상태: 선행연구 정리.** F/T·Wrench와 Tactile 활용 방식, RL 보상 설계와 Domain Randomization 사례를 정리한다. 본 연구의 Contribution은 [01 문서](01_Research_Motivation.md), 실행 설계는 [03 문서](03_Method.md)에서 다룬다.
 
 ## 2.1. F/T·Wrench를 활용하는 선행연구
 
-> **TODO:** F/T·Wrench를 활용하는 선행연구는 추후 정리한다. 현재는 절만 마련한다.
+힘 피드백의 사용 위치에 따라 **규칙 기반 조향·행동 전환**, **운동·제어 파라미터를 학습하는 정책**, **접촉 예측을 결합한 반응형 정책** 순서로 정리한다. 외장 F/T 측정과 관절 토크 기반 외력 추정, 정책이 실제로 사용하는 힘·모멘트 성분을 구분한다.
+
+### 2.1.1. Force Push — 힘 방향 기반 조향과 접촉 복구
+
+[**Adam Heins and Angela P. Schoellig - Force Push: Robust Single-Point Pushing With Force Feedback**](../literature/papers/2024-heins-force-push.md), 2024. 물체의 현재 Pose와 형상·마찰 모델 없이, 손목 F/T에서 얻은 **평면 접촉력의 방향과 크기**로 단일 접촉점 밀기를 조절하는 규칙 기반 제어다. 로봇의 위치와 주어진 경로는 사용하며, 힘 방향과 경로 방향의 차이 및 횡방향 경로 오차로 **EEF의 미는 속도 방향**을 정한다. 물체와 힘 방향이 반시계 방향으로 틀어지면 미는 방향을 그보다 더 반시계 방향으로 기울여, 결과적으로 물체가 시계 방향으로 돌아오도록 유도한다. 따라서 단순히 오차의 반대쪽으로 툴 자세를 회전시키는 제어와는 다르다.
+
+힘이 하한보다 작으면 힘 방향 기반 조향을 중단하고 **경로로 돌아가는 방향으로 서서히 전환하여 재접촉을 시도**한다. 반대로 하중이 상한을 넘으면 Admittance 속도 보정으로 힘 방향의 진행을 줄인다. 핵심은 힘을 일정 목표값에 계속 맞추는 것이 아니라, **방향은 조향에, 작은 힘은 접촉 복구에, 큰 힘은 과부하 완화에 사용**한다는 점이다. (원문 §IV-A–C, 식 (1)–(4), 상세 리뷰 §5–6)
+
+### 2.1.2. 1 kHz Behavior Tree — 접촉 상태에 따른 행동 전환
+
+[**Yansong Wu et al. - 1 kHz Behavior Tree for Self-adaptable Tactile Insertion**](../literature/papers/2024-wu-1khz-tactile-insertion.md), 2024. Peg-in-Hole 삽입에서 **삽입축 위치·속도와 상호작용 힘 추정값으로 접촉 상태를 판단하고, Behavior Tree가 행동 Primitive를 전환**한다. 전체 과정에는 다음 행동이 포함된다.
+
+| 행동 | 역할 |
+| --- | --- |
+| **Approach** | 초기 위치에서 Hole 방향으로 접근 |
+| **Contact** | 삽입 전 접촉 형성 |
+| **Wiggle** | 진동하는 Feed-forward Force로 탐색·정렬 및 걸림 해소 |
+| **Push** | 정렬되면 Wiggle을 멈추고, 마지막 Feed-forward Force를 유지하여 삽입 |
+
+접촉 이후의 핵심 선택은 **Wiggle과 Push의 전환**이다. Searching·Stuck·Unstuck·Aligned 상태를 갱신하여 Aligned이면 Push를 선택하고, Push 도중 다시 걸리면 Wiggle로 복귀한다. 계속 흔드는 고정 순서 대신 **현재 접촉 상태에 맞는 행동을 선택**한다는 데 의미가 있다. 원문에서 사용한 힘은 관절 토크·로봇 동역학 기반 추정이며 외장 손목 F/T 장착은 확인되지 않는다. 1 kHz는 Behavior Tree의 판단 주기다. (원문 §II-B–C, Algorithm 1, 상세 리뷰 §5.2·6·8–9)
+
+### 2.1.3. Learning Force Control — 위치·힘 제어의 결합과 파라미터 학습
+
+[**Cristian Camilo Beltran-Hernandez et al. - Learning Force Control for Contact-Rich Manipulation Tasks With Rigid Position-Controlled Robots**](../literature/papers/2020-beltran-hernandez-learning-force-control.md), 2020. SAC 정책은 **목표 EEF Pose 오차·EEF 속도·F/T 피드백**을 관측하고, 운동 보정과 Force Controller 파라미터를 함께 출력한다. RL이 기존 힘 제어기를 대체하는 것이 아니라 **어떻게 움직일지와 접촉에 얼마나 반응할지를 함께 조절**하는 구조다.
+
+Parallel Position/Force Control에서는 **위치 오차를 처리하는 PD 경로**와 **측정 힘을 처리하는 PI 경로**를 구분하고, 축별 Selection Matrix로 두 경로의 비중을 조절한 뒤 RL의 운동 보정을 결합한다. 정책은 위치·힘 Gain과 Selection Matrix를 선택하며, 비교한 Admittance 방식에서는 위치 Gain과 Stiffness를 선택한다. 최종 결과는 Pose 명령과 IK를 거쳐 위치 제어 로봇에서 실행된다. 따라서 정책이 독립적인 목표 힘 벡터를 바로 출력한다기보다, **힘 피드백을 사용하는 제어 경로의 파라미터까지 행동 공간에 포함한 방식**이다. (원문 §III, 상세 리뷰 §5–6·8·10–15)
+
+### 2.1.4. Zero-Shot Transfer — 하중 관측을 이용한 슬롯 삽입
+
+[**Samarth Brahmbhatt et al. - Zero-Shot Transfer of Haptics-Based Object Insertion Policies**](../literature/papers/2023-brahmbhatt-zero-shot-haptics-insertion.md), 2023. 이미 파지한 접시 등의 물체를 **슬롯형 홀더에 삽입**하는 접촉 구간을 대상으로 한다. 실행 전 시각으로 얻은 근사 목표와 현재 EEF의 상대 Pose, 관절 토크 기반 **추정 6축 Wrench**를 정책에 제공하며, 삽입 중 물체 Pose를 계속 추적하지 않는다.
+
+SAC 정책은 상대 Pose와 Wrench의 시간 Stack을 사용하여 **목표로 향하는 기본 운동에 더할 병진·회전 보정**을 출력하고, OSC가 이를 실행한다. 목표 오차나 막힌 슬롯에서 발생한 접촉을 이용해 삽입 동작을 조절하며, 시뮬레이션에서 학습한 정책을 실물 미세조정 없이 이전한다. 이는 하중 관측을 실제 삽입 행동의 보정에 연결한 사례지만, **Wrench 자체를 제거한 비교는 없어 그 입력만의 독립 효과를 분리한 결과는 아니다.** (원문 §III–IV, 상세 리뷰 §1–4·6)
+
+### 2.1.5. FORGE — 허용 힘으로 조건화한 조립 정책
+
+[**Michael Noseworthy et al. - FORGE: Force-Guided Exploration for Robust Contact-Rich Manipulation under Uncertainty**](../literature/papers/2025-noseworthy-forge.md), 2025. **Peg 삽입, 기어 맞물림, M16 너트 체결**의 정책을 PPO로 학습하고, Snap-fit과 여러 Primitive를 연결한 Planetary Gearbox 조립에서도 평가한다. 정책에는 EEF 상태·고정부품 Pose 추정값과 함께 **관절 토크에서 추정한 3축 힘 및 사용자가 지정한 허용 힘**을 제공한다. 손목 6축 Wrench 전체를 입력하는 방식과는 다르다.
+
+핵심은 **허용 힘을 정책의 조건으로 제공하고, 그 한계를 초과한 힘에 벌점을 주는 것**이다. 학습 중 허용 힘과 제어 Gain·물성을 변화시켜, 배포 시 지정한 힘 수준에 맞춰 운동을 조절하도록 한다. 따라서 매번 Gain을 다시 조정하는 대신 정책이 힘 관측에 반응하도록 학습한다. Snap-fit에서는 성공 예측 결과에 따라 다음 시도의 허용 힘을 높이는 절차도 사용한다. 다만 Force Limitation은 **허용 힘으로 조건화한 정책과 초과 페널티**로 구현되며, 힘 초과 자체를 불가능하게 만드는 하드 제약은 아니다. (원문 §III-A–C, §V-D–E, 식 (3), 상세 리뷰 §2–6)
+
+### 2.1.6. FoAR — 미래 접촉 예측과 반응형 행동 보정
+
+[**Zihao He et al. - FoAR: Force-Aware Reactive Policy for Contact-Rich Robotic Manipulation**](../literature/papers/2025-he-foar.md), 2025. 외장 OptoForce의 **6축 F/T 이력**과 현재 RGB-D 장면 정보를 사용하는 모방학습 정책으로, Wiping·Peeling·Chopping을 수행한다. 힘 정보를 단순히 시각 특징에 이어 붙이는 대신, **Future Contact Predictor**가 현재 RGB와 F/T 이력으로 접촉 가능성을 예측하고, 그 값에 따라 힘 특징과 중립 특징의 혼합 비율을 조절한다. 접촉이 예상되는 구간에서는 힘 정보를 강조하고, 비접촉 구간에서는 힘 잡음의 영향을 줄이는 구성이다.
+
+예측은 센서 융합에만 쓰이지 않는다. **접촉이 예상되지만 현재 힘·모멘트가 부족하면, 예측한 Action 궤적의 진행 방향으로 위치 명령을 보정**한다. 이때 보정 방향은 측정 힘의 방향이 아니라 정책이 예측한 움직임에서 얻는다. 따라서 핵심은 **미래 접촉 예측 → 힘 특징 반영 비율 조절 → 실행 중 부족한 접촉에 대한 행동 보정**의 연결이다. 실행 중 시각을 계속 사용하는 모방학습이며, RL이나 별도의 힘 추종 제어기를 제안한 연구는 아니다. (원문 §III-B–C, Algorithm 1, 상세 리뷰 §6·9–11)
 
 ## 2.2. Tactile 정보를 활용하는 선행연구
 
