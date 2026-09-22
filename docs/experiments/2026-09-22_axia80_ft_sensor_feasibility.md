@@ -41,6 +41,47 @@ Experiment ID: `AXIA80-FEASIBILITY-2026-09-22`
 | Wrench 순서 | `Fx, Fy, Fz, Mx, My, Mz` |
 | 대표 lever arm | sensor 중심에서 payload 중심까지 `0.1337 m` |
 
+### 센서 좌표계의 실제 방향
+
+기준 수평 자세에서 이 문서와 CSV가 사용하는 Axia80 sensor-local frame의 방향은
+다음과 같다.
+
+- `+X`: 하늘 방향. Tool broad face에서 바깥쪽으로 향하는 normal이다.
+- `+Z`: 정면 방향. Sensor에서 tool 끝으로 뻗어 나가는 cantilever 축이다.
+- `±Y`: 옆 방향. `+Y`의 좌우는 오른손 좌표계로 결정된다.
+
+옆에서 보면 `+X`와 `+Z`의 관계는 다음과 같다.
+
+```text
+          +X: 하늘
+           ↑
+Wrist ─ Sensor ─────────→ Tool 끝
+                         +Z: 정면
+```
+
+Wrist 쪽에서 tool 끝을 바라보면 `+Z`는 화면 안쪽으로 향한다. 이 시점에서는
+`+Y`가 화면의 왼쪽이고 `-Y`가 오른쪽이다. 반대쪽인 tool 끝에서 sensor 방향으로
+바라보면 좌우는 반대로 보인다.
+
+```text
+             +X: 하늘
+              ↑
+     +Y  ←  Sensor
+              ⊗ +Z: 화면 안쪽, tool 끝 방향
+```
+
+현재 실험의 joint 변화와 센서 축의 관계는 다음과 같다.
+
+| 동작 | Joint | 회전축 | 주로 분산되는 힘 |
+| --- | --- | --- | --- |
+| Roll | `wrist_3_joint` | 정면축 `Z` 주위 | `Fx ↔ Fy` |
+| Tilt | `wrist_2_joint` | 옆축 `Y` 주위 | `Fx ↔ Fz` |
+
+따라서 기본 수평 자세에서 중력 반력은 주로 `+Fx`에 나타난다. Wrist3 Roll을 주면
+`Fy`가 생기고, Wrist2 Tilt를 주면 `Fz`가 생긴다. Tool이 정면 `+Z` 방향으로
+길기 때문에 기본 bending moment는 주로 `+My`에 나타난다. 모든
+`Fx, Fy, Fz, Mx, My, Mz`는 world frame이 아니라 이 sensor-local frame 기준이다.
+
 Tool 폭은 로봇과의 self-collision 여유를 확보하기 위해 초기 thin-face 구현의
 `0.160 m`에서 `0.120 m`로 줄였다. Tool과 sensor는 fixed joint로 연결된다. 따라서
 이 시험에서 “휘어짐”은 눈에 보이는 탄성 변형이 아니라, offset payload가 만드는
