@@ -8,6 +8,8 @@
 
 [사용자 확인 대기](#user-unchecked) · [Blind Pushing · R1–R7](#blind-pushing) · [IROS 후속 선정](#iros-selected) · [사용자 발굴](#user-found) · [Binary·F/T 후속 정독](#binary-wrench) · [ICRA 후보 선별 후속 정독](#icra-screening-followup) · [Wrist Wrench 후속 정독](#wrist-wrench-followup) · [작성 지침](#paper-guidelines)
 
+33편의 실행 관측·센서·방법·강건성·Sim-to-Real 조건을 함께 비교하려면 [5축 원문 비교](../reviews/2026-09-22_related-work-five-axis-evidence.md)와 [타임라인·Contribution 발표 초안](../../presentation/04_Related_Work_Timeline_and_Contributions.md)을 참조한다. 개별 노트의 정독·사용자 확인 상태와 별개인 종합 비교다.
+
 <a id="user-unchecked"></a>
 
 ## 사용자 확인 대기 상세 리뷰

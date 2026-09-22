@@ -12,6 +12,7 @@
 
 | 조사 기준일 | 보고서 | 범위와 읽을 때의 주의 |
 | --- | --- | --- |
+| 2026-09-22 | [관련 연구 5축 비교와 33편 원문 근거](reviews/2026-09-22_related-work-five-axis-evidence.md) | 실행 관측·센서 표현·방법·강건성·실물 전이 조건을 원문에서 재검증. [타임라인·Contribution 발표 초안](../presentation/04_Related_Work_Timeline_and_Contributions.md)의 근거 자료이며 신규 논문 추가나 구현 성과 보고가 아니다. |
 | 2026-09-14 | [Blind Sweep을 위한 F/T·촉각 기반 Pushing 문헌 조사](reviews/2026-09-14_blind-sweep-force-torque-tactile.md) | 2022년 이후 SCIE 저널을 대상으로 한 선별 조사. F/T, tactile, 병용을 구분하고 관측→표현→행동의 연결을 비교한다. 직접 pushing과 인접 과업, 원문 확인 범위와 한계를 구분한다. |
 | 2026-09-15 | [IROS 2023–2025 Tactile·F/T 기반 RL 관련 논문 제목 선별](reviews/2026-09-15_iros-2023-2025-tactile-force-torque-rl-title-screening.md) | 제공된 연도별 CSV의 제목 레코드 4,762건, 고유 제목 4,761개를 의미 기반으로 1차 선별했다. 엄격 일치와 원문 확인 후보를 구분하며, 센서 사용·RL 채택·성과는 원문 검증 전까지 미확정이다. 2026-09-16 사용자 임시 선정 5편과 후속 정독 현황을 §11에 추가했다. |
 | 2026-09-16 | [Binary Tactile·F/T 기반 RL 신규 문헌 조사](reviews/2026-09-16_binary-tactile-wrench-rl.md) | 기존 발견 문헌을 제외한 주요 참고 5편·제한적 방법 참고 3편과 Binary 정보 손실 반대 근거 1편. 저항식 센서 이진화, history, force/wrench의 관측·보상·action·controller 연결을 비교한다. RL/POMDP/IL, 실물/sim-only, 직접 pushing/인접 과업을 구분한다. |

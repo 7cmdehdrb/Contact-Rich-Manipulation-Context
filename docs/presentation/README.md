@@ -2,13 +2,17 @@
 
 [연구 문서 안내](../README.md) · [결정·미정 목록](../03_DECISIONS_AND_OPEN_QUESTIONS.md)
 
-발표 자료를 논문의 Motivation·Related Works·Method 역할에 맞춰 다음 세 문서로 나눈다.
+발표 자료를 논문의 Motivation·Related Works·Method 역할에 맞춰 다음 세 본문으로 나누며, 별도의 타임라인·비교 발표 초안을 함께 관리한다.
 
 | 문서 | 다루는 내용 |
 | --- | --- |
 | [01. Research Motivation and Contributions](01_Research_Motivation.md) | 문제의식, Binary Tactile–Wrench 역할 분담, 제안하는 Contribution |
 | [02. Related Works](02_Related_Works.md) | F/T·Wrench 선행연구, Tactile 선행연구, RL Reward Formulation, 항목별 DR 비교 |
 | [03. Method](03_Method.md) | MoveIt 접근 Process, MDP 하위의 Event·Observation·Action·Reward, DR·센서 불확실성 |
+
+## 관련 연구 비교 발표 초안
+
+[04. Related Work Timeline and Contributions](04_Related_Work_Timeline_and_Contributions.md)는 8장 발표 흐름, 연도별 연구지도, Observation·Sensor·Method·강건성·Sim-to-Real 비교표와 검증 전 Contribution 후보를 정리한다. [33편 원문 근거](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md)로 연결하며, 기존 세 본문의 확정 설계를 변경하는 문서는 아니다.
 
 ## 현재 작업 범위
 
