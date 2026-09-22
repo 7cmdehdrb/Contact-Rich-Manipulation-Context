@@ -4,6 +4,8 @@
 
 > **문서 상태: 사용자 지정 설계에 따른 Method 초안.** MoveIt으로 접근한 뒤 접촉 기반 Sweeping 정책을 실행한다. 아래는 구현·성능 검증 결과가 아니라 현재의 입력·출력·초기화·보상 설계다. 보상식과 가중치, Noise·Randomization의 수치 범위는 추후 구체화한다.
 
+![Research Motivation](../../img/method_fig1.png)
+
 ## 3.1. Task와 실행 Process
 
 ### 3.1.1. 과업 입력과 수행 범위
