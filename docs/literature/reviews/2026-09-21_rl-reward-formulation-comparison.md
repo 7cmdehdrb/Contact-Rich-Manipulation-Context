@@ -2,7 +2,7 @@
 
 [문서 안내](../../README.md) · [문헌 색인](../README.md) · [조사 그룹](README.md) · [전체 논문](../papers/README.md)
 
-기준일: **2026-09-21**. 대상 스냅샷: `77adb1e8d3932d55d44ca78e0d19460a953639d4`의 `docs/literature/papers/` 상세 노트 **28편**. 이 중 **RL 학습과 보상 구성요소가 모두 기록된 18편**을 모았다. 나머지 **10편**은 [제외 목록](#excluded)에 사유를 남겼다. 동일 논문이 여러 조사 그룹에 등록되어도 한 편으로 계산한다.
+기준일: **2026-09-22**. 대상 문헌 스냅샷: `2e0b261e86f4d3207e33e3de7193c52685ff63cf`의 `docs/literature/papers/` 상세 노트 **33편**. 이 중 **RL 학습과 보상 구성요소가 모두 기록된 21편**을 모았다. 나머지 **12편**은 [제외 목록](#excluded)에 사유를 남겼다. 동일 논문이 여러 조사 그룹에 등록되어도 한 편으로 계산한다.
 
 목적은 **각 논문이 무엇을, 어떤 함수와 가중치로, 언제 보상했는지 한곳에서 비교하는 것**이다. 새 논문의 원문 정독이나 본 연구의 reward 제안서가 아니다. 기존 노트에서 보상과 직접 관련된 내용만 재구성했으며, 원문 PDF·보충자료·코드를 이번 작업에서 다시 검증하지 않았다. `review_dataset/`만의 논문과 기존 노트에 없는 외부 연구는 추가하지 않았다.
 
@@ -40,6 +40,9 @@ Task reward, PPO/SAC의 최적화 목적, 표현학습 loss, constrained-RL의 c
 | [16](#rw16) | Liu 2024 · Tactile-AIRL / model-based active inference | 목표 진입·거리 또는 촉각 optical-flow entropy | 과업 보상식 제시 |
 | [17](#rw17) | Miller 2025 · Enhancing Tactile RL / PPO | Find 거리, Bounce 재접촉, Baoding 가상 목표 전환 | 과업별 구조 제시 |
 | [18](#rw18) | Pan 2026 · Beyond Binary / recurrent PPO | Insertion의 정렬·접촉, balancing의 상대 운동·낙하 | 과업별 구조 제시 |
+| [19](#rw19) | Brahmbhatt 2023 · Zero-Shot Haptics Insertion / SAC | 시간·drop·성공 사건 + true target 거리 + action 변화량 | 수식·계수·종료 조건 제시 |
+| [20](#rw20) | Noseworthy 2025 · FORGE / recurrent PPO | keypoint task reward + force-threshold 초과량 + success-prediction penalty | 핵심 수식·일부 계수 제시; 전체 bonus 합산계수 일부 미명시 |
+| [21](#rw21) | Lee 2019 · Making Sense of Vision and Touch / TRPO | reaching → alignment → insertion → completion의 staged reward | 단계별 수식 제시; 일부 상수 미명시 |
 
 <a id="rw01"></a>
 
@@ -523,6 +526,102 @@ TR·FR·FD·TFD는 observation encoder를 학습하는 **auxiliary loss**다. �
 
 CoP를 actor 표현으로 쓴다는 사실만으로 “CoP 크기·위치 자체를 직접 최대화하는 reward”라고 해석하지 않는다. Insertion과 balancing은 같은 tactile 표현을 비교하더라도 서로 다른 목표·안정성 항을 사용한다.
 
+<a id="rw19"></a>
+
+## 3.19. Brahmbhatt 2023 — Zero-Shot Transfer of Haptics-Based Object Insertion Policies
+
+**출처:** [상세 노트 §5](../papers/2023-brahmbhatt-zero-shot-haptics-insertion.md). 원문 §III와 Supplementary C. 8-step pose/Wrench 이력을 사용하는 SAC residual insertion policy다.
+
+전체 reward는 하나의 최종 번호 식으로 다시 합쳐 제시되기보다 다음 항의 합으로 설명된다.
+
+| 항 | 값·식 | 역할 |
+| --- | --- | --- |
+| 시간 $R_{\mathrm{time}}$ | $-1/T=-1/128$ | 매 step 시간 비용 |
+| Drop $R_{\mathrm{drop}}$ | $-1.1$ | 물체 drop 시 벌점과 episode 종료 |
+| 성공 $R_{\mathrm{success}}$ | $+0.5$ | 삽입 성공 시 reward와 episode 종료 |
+| 거리 $R_{\mathrm{dist}}$ | 아래 식 | Simulation true target 대비 translation·rotation 오차 억제 |
+| Smoothness $R_{\Delta a}$ | 아래 식 | 이전 action과 현재 action 사이 변화량 억제 |
+
+거리 벌점:
+
+```math
+R_{\mathrm{dist}}=-\sum_{m\in\{trans,rot\}}K_{\mathrm{dist}}^{(m)}\min\!\left(\lambda_{\mathrm{dist}}^{(m)},\left\lVert{}^{\bar e}T_e\right\rVert^{(m)}\right).
+```
+
+Action 변화 벌점:
+
+```math
+R_{\Delta a}=-\sum_{m\in\{trans,rot\}}K_{\Delta a}^{(m)}\min\!\left(\lambda_{\Delta a}^{(m)},\left\lVert{}^{a_{t-1}}T_{a_t}\right\rVert^{(m)}\right).
+```
+
+Translation/rotation scale은 각각 $8.59\times10^{-3}$, $8.21\times10^{-3}$이고 cutoff는 각각 50 cm, 30°로 기록되어 있다. 이 숫자를 서로 다른 항의 최종 누적 기여와 동일시하지 않는다.
+
+Actor 관측에는 **noise가 들어간 target pose**가 주어지지만, 거리 reward는 simulation의 **true target**을 사용한다. 따라서 배포 actor의 관측과 학습용 reward 정답을 구분해야 한다. Wrench는 actor observation의 핵심이지만, 위 reward에 Wrench norm이나 force threshold penalty가 직접 들어가는 구조는 아니다.
+
+성공 상태는 한 번 만족했다고 즉시 끝내지 않고 **10 policy steps 유지**해야 종료한다. Reward는 phase별로 reaching/insertion 공식을 바꾸는 staged 구조가 아니며, target-pose noise curriculum과 partial-insertion initialization도 reward 항 자체와 구분한다.
+
+<a id="rw20"></a>
+
+## 3.20. Noseworthy 2025 — FORGE
+
+**출처:** [상세 노트 §4·6](../papers/2025-noseworthy-forge.md). 원문 식 (2), (3), (7), (8) 및 Appendix A–B. Force threshold로 조건화한 recurrent PPO다.
+
+### Force-threshold 초과량 penalty
+
+현재 end-effector force norm이 사용자가 지정한 threshold를 넘은 양만 선형으로 벌점화한다.
+
+```math
+R_{\mathrm{contact\,pen}}(F_t^{ee})=-\beta\max\!\left(0,\lVert F_t^{ee}\rVert_2-F_{\mathrm{th}}\right).
+```
+
+$\beta$는 peg에서 0.2, gear·nut에서 0.05다. 중요한 정보 경계는 **actor에는 1 N noise가 섞인 force를 주지만, penalty 계산에는 simulation ground-truth force를 사용한다**는 점이다. 즉 실제 로봇이 배포 중 이 reward로 online RL을 계속하는 구조가 아니다.
+
+### Task reward
+
+기본 task reward는 held part와 target의 keypoint 거리, placement bonus, success bonus를 사용한다. Nut threading에서는 sub-millimeter 구간을 구분하기 위해 coarse·fine logistic kernel을 합친다.
+
+```math
+K_{a,b}(d)=\left(e^{-ad}+b+e^{ad}\right)^{-1},\qquad R_{\mathrm{kp}}=K_{a_c,b_c}(d_t^{kp})+K_{a_f,b_f}(d_t^{kp}).
+```
+
+기존 상세 노트는 전체 reward를 하나의 최종 합산식으로 다시 쓰지 않으며 placement/success bonus의 모든 수치 가중치도 완전히 제공하지 않는다. 따라서 위 식과 force penalty만으로 전체 reward coefficient를 임의 복원하지 않는다.
+
+### Success-prediction penalty
+
+정책은 motion action과 함께 early-termination 출력 $a_t^{ET}\in[0,1]$을 내고, simulation의 true success label $y_t$와의 차이를 벌점으로 받는다.
+
+```math
+R_t^{ET}=-\left|a_t^{ET}-y_t\right|.
+```
+
+배포 시에는 $a_t^{ET}>p_{\mathrm{term}}$이면 실행을 종료한다. 따라서 이 항은 단순 task-success bonus와 달리 **정책이 성공 여부 자체를 예측하도록 학습하는 보상**이다.
+
+FORGE에서 force threshold $F_{\mathrm{th}}$는 reward 안에만 숨어 있는 상수가 아니라 actor의 conditioning input이다. 학습 중 threshold를 randomize하고, snap-fit처럼 필요한 힘을 모르는 배포에서는 실패한 다음 trial에서 threshold를 증가시키는 절차도 사용한다. 이 trial-to-trial threshold tuning은 reward 항과 별도다.
+
+<a id="rw21"></a>
+
+## 3.21. Lee 2019 — Making Sense of Vision and Touch
+
+**출처:** [상세 노트 §8](../papers/2019-lee-making-sense-vision-touch.md). 원문 §VI Reward Design, PDF p. 5. RGB·32×6 F/T 이력·proprioception으로 먼저 self-supervised representation을 학습한 뒤, 이를 **고정**하고 TRPO insertion policy를 학습한다.
+
+Peg의 현재 hole-relative 위치를 $s=(s_x,s_y,s_z)$, 평면 성분을 $s_{xy}=(s_x,s_y)$, hole 깊이를 $h_d$로 두고 reaching, alignment, insertion, completion 단계별로 서로 다른 reward를 사용한다.
+
+```math
+r(s)=
+\begin{cases}
+c_r-\dfrac{c_r}{2}\left(\tanh(\lambda\lVert s\rVert)+\tanh(\lambda\lVert s_{xy}\rVert)\right), & \text{reaching},\\
+2-c_a\lVert s_{xy}\rVert_2, & \lVert s_{xy}\rVert_2\leq\epsilon_1 \quad \text{alignment},\\
+4-2\dfrac{s_z}{h_d-\epsilon_2}, & s_z<0 \quad \text{insertion},\\
+10, & h_d-\lvert s_z\rvert\leq\epsilon_2 \quad \text{completion}.
+\end{cases}
+```
+
+이 설계는 하나의 거리 shaping을 끝까지 유지하는 대신 **조작 진행 상태에 따라 목적을 전환**한다. Reaching에서는 전체/평면 거리의 tanh shaping, alignment에서는 평면 오차, insertion에서는 깊이 진행, completion에서는 상수 10을 사용한다.
+
+$c_r,c_a,\lambda,\epsilon_1,\epsilon_2$의 수치는 상세 노트에서 미명시로 기록되어 있다. 다른 insertion 논문의 threshold나 coefficient를 가져와 채우지 않는다.
+
+Actor는 frozen multimodal latent를 보지만 reward는 **hole-relative peg position이라는 privileged task state**를 사용한다. 또한 optical-flow prediction, contact prediction, temporal alignment는 representation pretraining을 위한 self-supervised objective이며 TRPO의 task reward에 더해지는 auxiliary reward가 아니다. F/T history를 강하게 사용하는 정책이라고 해서 force magnitude 자체를 최소화·추종하는 reward로 분류하지 않는다.
+
 <a id="patterns"></a>
 
 ## 4. Reward 설계를 유형별로 비교
@@ -533,13 +632,14 @@ CoP를 actor 표현으로 쓴다는 사실만으로 “CoP 크기·위치 자체
 
 | 구조 | 해당 사례 | 구분할 점 |
 | --- | --- | --- |
-| 현재 오차·현재 근접도 | [Yang](#rw01), [Bi-Touch](#rw02), [Dengler](#rw03), [Su](#rw12), [Liu dense](#rw16) | 가까운 상태 자체의 매 step 보상과, 새 진전량 보상은 다르다. |
+| 현재 오차·현재 근접도 | [Yang](#rw01), [Bi-Touch](#rw02), [Dengler](#rw03), [Su](#rw12), [Liu dense](#rw16), [Brahmbhatt](#rw19), [FORGE](#rw20) | 가까운 상태 자체의 매 step 보상과, 새 진전량 보상은 다르다. |
 | 매 step 물체 진전 | [Zhao](#rw06) | 로봇 이동이 아니라 물체의 의도 방향 이동량을 사용한다. |
 | 최고 기록의 양의 갱신 | [DexTouch](#rw08) | 후퇴 후 같은 기록 복귀만으로는 해당 항의 새 보상이 생기지 않는다. |
 | 목표 영역 안/밖 | [Bergmann](#rw05), [Liu sparse](#rw16) | Bergmann은 안 0·밖 −1, Liu는 도달 indicator이므로 숫자·누적 의미가 다르다. |
 | Terminal 성공 중심 | [MAT](#rw09) | 성공 1·실패 0; 이른 reopen penalty만 추가한다. |
 | Reference / subgoal 추종 | [Bi-Touch GUM](#rw02), [ViViDex](#rw15), [Miller Baoding](#rw17) | 움직임을 중간 목표나 시연 궤적으로 구조화한다. |
 | 안정성 시험의 유지시간 | [Zhang](#rw11) | 순간 도달보다 사후 외란 아래 파지 유지 비율을 보상한다. |
+| 단계별 staged reward | [Lee 2019](#rw21) | Reaching → alignment → insertion → completion에 따라 reward 식 자체가 바뀐다. |
 
 이 비교는 각 논문의 명시 함수 형태에 근거한다. 모두를 potential-based shaping이라고 부르거나 최적 정책 보존이 증명되었다고 해석하지 않는다.
 
@@ -551,10 +651,13 @@ CoP를 actor 표현으로 쓴다는 사실만으로 “CoP 크기·위치 자체
 | 접촉면 정렬·기하학적 접촉 위치 | [Yang](#rw01), [Bi-Touch](#rw02) | 실측 wrench나 양팔 force balance가 아니다. |
 | 연속 normal tactile force | [Zhao](#rw06) | Binary 접촉 수 reward와 다르다. |
 | 측정 접촉 하중의 정규화 | [Beltran-Hernandez](#rw07) | 관절 구동 torque penalty와 다르다. |
+| Force threshold 초과량 | [FORGE](#rw20) | Threshold를 넘은 force norm만 선형 penalty. Actor 입력은 noisy force, reward 계산은 simulation GT force다. |
 | 양측 force relation·상한 | [Zhang](#rw11) | 기존 노트만으로 정확한 force 함수는 재구성할 수 없다. |
 | 촉각 flow entropy | [Liu real](#rw16) | N 단위 shear force나 정보획득 objective와 같지 않다. |
 | 장애물 접촉 사건 | [Dengler](#rw03) | 필요한 대상 물체 접촉 전체를 벌점 처리하는 것이 아니다. |
 | 관절 torque·work | [Yin](#rw13), [Yuan](#rw14) | 외부 손목 wrench penalty가 아니다. |
+
+[Brahmbhatt](#rw19)와 [Lee 2019](#rw21)은 Wrench/F/T를 actor 관측 또는 representation에 사용하지만, 정리된 task reward에는 force norm을 직접 최소화하거나 목표 힘을 추종하는 항이 없다. **센서가 정책 입력에 있다는 사실과 그 센서량이 reward에 직접 들어간다는 사실을 구분한다.**
 
 ### 4.3. 안전·종료·학습 보조를 분리한다
 
@@ -567,6 +670,9 @@ CoP를 actor 표현으로 쓴다는 사실만으로 “CoP 크기·위치 자체
 | Reward + simulation 변경 | [Bi-Touch](#rw02) | 압착 penalty 강화와 센서 stiffness/damping 변경 분리 |
 | Reward + auxiliary loss | [Miller](#rw17) | 표현학습 손실을 task reward에 혼합하지 않음 |
 | RL teacher + imitation student | [Yuan](#rw14), [ViViDex](#rw15) | Teacher reward와 student loss 분리 |
+| Reward + success/drop 종료 | [Brahmbhatt](#rw19) | 성공·drop의 사건 reward와 종료를 dense 거리·smoothness 항과 함께 사용 |
+| Reward + learned early termination | [FORGE](#rw20) | True success label로 early-termination action을 학습하고 배포 종료에 사용 |
+| Self-supervised representation + RL | [Lee 2019](#rw21) | Representation pretraining loss와 이후 TRPO staged task reward를 분리 |
 
 ### 4.4. 숫자를 옮길 때 확인할 사항
 
@@ -576,7 +682,7 @@ CoP를 actor 표현으로 쓴다는 사실만으로 “CoP 크기·위치 자체
 
 <a id="excluded"></a>
 
-## 5. 제외한 10편과 경계 사례
+## 5. 제외한 12편과 경계 사례
 
 상세 노트가 있다는 사실만으로 포함하지 않았다. 아래 제외는 논문의 중요도나 논문 전체의 품질 평가가 아니라 **이번 reward-only 수집 범위**에 따른 것이다.
 
@@ -592,11 +698,13 @@ CoP를 actor 표현으로 쓴다는 사실만으로 “CoP 크기·위치 자체
 | [Tactile Gym 2.0](../papers/2022-lin-tactile-gym-2-0.md) | PPO는 확인되지만 상세 노트 §5.1에 reward 항·수식·계수 미제시로 기록. 다른 논문의 보상을 대입하지 않음 |
 | [Attention for Robot Touch](../papers/2023-lin-attention-for-robot-touch.md) | DRL 제어를 평가하지만 노트 §8.4에 reward function 미제시로 기록. GAN·VAE loss는 제외 |
 | [1 kHz Tactile Insertion](../papers/2024-wu-1khz-tactile-insertion.md) | 경계 사례: 노트 §11은 PIBB/evolution strategy에 의한 skill parameter 최적화와 rollout cost를 기술. 이를 일반적인 stepwise RL reward로 확정하지 않아 본편 제외 |
+| [FoAR](../papers/2025-he-foar.md) | F/T 이력과 future-contact fusion을 사용하는 imitation learning 정책. RL actor/critic과 task reward가 없음 |
+| [Self-Tuning Haptic Exploration](../papers/2022-kato-self-tuning-haptic-exploration.md) | Feedback 기반 planner·impedance control. 학습 actor/critic·reward가 없는 비RL 방법 |
 
 마지막 PIBB 사례는 parameter-space policy search까지 넓게 묶으면 함께 비교할 수 있다. 그러나 이번 본편에서는 기존 노트가 기술한 **RL reward와 rollout cost의 구분**을 유지했다. 제외했다고 해서 모든 형태의 policy search가 RL과 무관하다고 주장하는 것은 아니다.
 
 ## 6. 확인 범위와 갱신 기준
 
-18편의 절은 각 상세 노트로 연결되어 있으며, 개별 논문의 일반 메소드·실험·Limitation·Future Work는 원래 노트를 따른다. 이번 작업으로 기존 28편의 정독 상태나 프로젝트의 reward 사양을 변경하지 않는다.
+21편의 절은 각 상세 노트로 연결되어 있으며, 개별 논문의 일반 메소드·실험·Limitation·Future Work는 원래 노트를 따른다. 이번 작업으로 기존 33편의 정독 상태나 프로젝트의 reward 사양을 변경하지 않는다.
 
-추가 원문·코드 검증으로 미기재 식이 확보되면 해당 **개별 노트를 먼저 보완**하고 이 비교본을 갱신한다. 이후 새 논문이 추가되면 포함·제외 수와 기준 commit도 함께 수정한다. 이 문서의 표는 특정 시점의 28편에 대한 결과이지 저장소 미래 상태에 자동 연동되는 목록이 아니다.
+추가 원문·코드 검증으로 미기재 식이 확보되면 해당 **개별 노트를 먼저 보완**하고 이 비교본을 갱신한다. 이후 새 논문이 추가되면 포함·제외 수와 기준 commit도 함께 수정한다. 이 문서의 표는 특정 시점의 33편에 대한 결과이지 저장소 미래 상태에 자동 연동되는 목록이 아니다.
