@@ -65,18 +65,37 @@ Actor 입력은 **현재 로봇·Hand 상태, 접촉 관측, 초기 Command, 직
 | 구성 | Actor 입력 | 차원 |
 | --- | --- | ---: |
 | **Robot** | Manipulator Joint Position 6 + Joint Velocity 6 | 12 |
-| **Hand** | EEF Pose 6 + 저차원 Finger Joint 상태 2 | 8 |
+| **Hand** | Sweep 시작 EEF Frame 기준의 현재 EEF 상대 Pose 6 + 저차원 Finger Joint 상태 2 | 8 |
 | **Tactile** | 접촉면 Header 1 + 선택한 면의 Binary 접촉 17 | 18 |
-| **F/T** | 보정된 힘 3축 + 모멘트 3축 | 6 |
-| **Command** | Initial Object Position 3 + Direction 1 + Distance 1 | 5 |
+| **F/T** | 현재 EEF Frame의 보정된 힘 3축 + 모멘트 3축 | 6 |
+| **Command** | Sweep 시작 EEF Frame의 Initial Object Relative Position 3 + Direction 1 + Distance 1 | 5 |
 | **Last Action** | 직전 Manipulator Action 6 + Hand Action 2 | 8 |
 | **합계** | Last Action 제외 49차원, 포함 시 **57차원** | **57** |
 
-EEF Pose는 주어진 차원에 맞춰 **Position 3 + Orientation 3**으로 둔다. Orientation의 구체적인 3성분 표현은 미정이며, 이 표에 EEF Twist나 Hand Joint Velocity를 추가하지 않는다. Direction은 360도 방향을 나타내는 1개 값이며, 각도 기준·단위·정규화 방식은 구현 시 정한다.
+EEF 상대 Pose는 주어진 차원에 맞춰 **Position 3 + Orientation 3**으로 둔다. Orientation의 구체적인 3성분 표현은 미정이며, 이 표에 EEF Twist나 Hand Joint Velocity를 추가하지 않는다. Direction은 Sweep 시작 EEF Frame에서 정의한 360도 방향을 나타내는 1개 값이며, 각도 기준·단위·정규화 방식은 구현 시 정한다.
 
 Command의 물체 정보는 **초기 Position만** 제공한다. 현재 물체 Position·Orientation, 초기 Shape·Size는 이 Actor 입력 구성에 추가하지 않는다.
 
-#### 3.2.2.1. Hand의 2차원 상태
+<a id="eef-relative-observation"></a>
+
+#### 3.2.2.1. EEF-relative Task-space Observation
+
+Task-space 관측은 Sweep 시작 시점의 EEF Frame을 $E_0$, 현재 EEF Frame을 $E_t$로 두고 **$E_0$ 기준의 상대량**으로 통일한다.
+
+- 현재 EEF Pose는 절대 Base/World Pose가 아니라 $E_0$에서 본 $E_t$의 상대 Pose로 표현한다.
+- 초기 물체 Position과 Sweep Direction은 $E_0$로 변환하여 Command에 제공한다. Distance는 좌표계 이동에 영향을 받지 않는 scalar다.
+- 손목 Wrench는 센서 보정과 좌표 변환 후 현재 EEF Frame $E_t$에서 표현한다.
+- Manipulator Action도 현재 EEF 기준 Cartesian 증분으로 출력한다.
+
+공통 Global Frame $W$에서 Pose를 얻는 경우 상대 EEF Pose는 다음과 같다.
+
+```math
+{}^{E_0}\mathbf{T}_{E_t}=\left({}^{W}\mathbf{T}_{E_0}\right)^{-1}{}^{W}\mathbf{T}_{E_t}.
+```
+
+이 상대 표현은 **절대 Base 위치·방향의 공통 오차를 Actor 관측에서 별도 항으로 사용하지 않게 한다.** 따라서 정책이 특정 World/Base 좌표값을 외우는 것을 줄이고, 동일한 상대 접촉 과업을 Base 배치와 분리해 표현할 수 있다. 다만 실제 Base–선반 배치가 달라져 접근 가능 자세와 접촉 동역학이 바뀌는 현상, Robot kinematic calibration 오차, EEF extrinsic 오차와 이동 Base의 시간 변화까지 제거하는 것은 아니다. 이러한 물리적 차이는 [Domain Randomization](#32-domain-randomization-설계)과 실물 평가에서 별도로 다룬다.
+
+#### 3.2.2.2. Hand의 2차원 상태
 
 | 성분 | 의미 |
 | --- | --- |
@@ -87,7 +106,7 @@ Command의 물체 정보는 **초기 Position만** 제공한다. 현재 물체 P
 
 <a id="surface-conditioned-tactile"></a>
 
-#### 3.2.2.2. 양면 촉각의 Binary 변환과 18차원 표현
+#### 3.2.2.3. 양면 촉각의 Binary 변환과 18차원 표현
 
 센서 구성은 **전면 17개 저항식 Grid 영역 + 후면 17개 FSR**을 전제로 한다. 다음은 이 구성의 관측 설계이며, 실제 부착·영역 대응·감지 임계값이 검증되었다는 뜻은 아니다.
 
@@ -117,11 +136,11 @@ m_t=\begin{cases}
 
 기존의 축약 근거와 검증 조건은 아래에 보존한다. 손목 6축 Wrench는 이 18차원 표현과 별도로 제공한다.
 
-#### 3.2.2.3. Last Action
+#### 3.2.2.4. Last Action
 
 [3.2.3절](#323-action과-제어-경로)의 **Manipulator 6차원 + Hand 2차원**으로 이루어진 직전 정책 Action $a_{t-1}$을 관측에 포함한다. 
 
-#### 3.2.2.4. Privileged Information
+#### 3.2.2.5. Privileged Information
 
 다음 정보는 필요에 따라 **학습 Reward 또는 평가용 정답**으로 사용할 수 있지만, 최종 Blind Actor 입력에는 추가하지 않는다.
 

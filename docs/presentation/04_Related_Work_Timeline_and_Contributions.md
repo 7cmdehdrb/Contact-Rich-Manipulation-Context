@@ -315,21 +315,43 @@ timeline
 
 ## 9. 발표 8장: 제안하는 Contribution
 
-### 9.1. 발표에 사용할 핵심 문장
+### 9.1. 선행 한계에서 제안 방법으로 이어지는 논리
 
-> **초기 물체 위치 이후 시각적 상태 갱신 없이 수행하는 Sweeping에서, 영역별 Binary 촉각과 손목 Wrench를 결합한 접촉 정책을 제안한다. 접촉 영역 정보와 전체 하중 정보의 역할을 분리해 비교하고, 이 결합이 불확실한 접촉 및 미학습 물체 조건에서 제공하는 이득과 한계를 검증하고자 한다.**
+초기 촉각 Sim-to-Real 연구의 가장 큰 병목은 **실제 센서의 연성 변형·비선형 마찰·전단을 simulation에서 충분히 재현하기 어렵다는 점**이었다. [MAT (Wu et al.)](../literature/papers/2019-wu-mat-adaptive-tactile-grasping.md)과 [Sim-to-Real Transfer with Tactile Sensory (Ding et al.)](../literature/papers/2021-ding-sim-to-real-tactile-manipulation.md)은 Binary contact를 사용했고, [Tactile Gym 2.0 (Lin et al.)](../literature/papers/2022-lin-tactile-gym-2-0.md)은 실제 영상을 simulation-like Depth로 변환했다. 이는 저차원 표현 자체를 목적으로 삼았다기보다, 당시의 센서–simulation 간극 안에서 정책 전이를 성립시키기 위한 현실적인 우회였다.
+
+이후 GPU 병렬 simulation, tactile rendering, domain randomization과 관측 변환이 발전하면서 [Tactile Pushing (Yang et al.)](../literature/papers/2023-yang-sim-to-real-tactile-pushing.md), [Bi-Touch (Lin et al.)](../literature/papers/2023-lin-bi-touch.md), [Sim2Real Tactile Manipulation (Su et al.)](../literature/papers/2024-su-sim2real-tactile-manipulation.md)처럼 영상 또는 영상 기반 latent를 이용한 zero-shot 전이가 가능해졌다. 그러나 이를 연성 접촉 문제가 해결됐다는 뜻으로 해석하지 않는다. 실제 성능은 센서별 변환·threshold·calibration과 학습한 물체·접촉 분포에 여전히 의존했고, 특이 접촉·미경험 물성·불안정 파지에서는 성능이 낮아졌다.
+
+저차원 표현을 유지한 연구에서는 다른 병목이 분명해졌다. Binary tactile은 접촉 위치를 남기지만 하중 크기·방향·전단을 잃었고, [Force Push (Heins & Schoellig)](../literature/papers/2024-heins-force-push.md)와 [Pushing in the Dark (Ozdamar et al.)](../literature/papers/2024-ozdamar-pushing-in-the-dark.md) 같은 비학습 제어는 물체 Pose를 제거해도 robot localization과 전역 목표·경로를 필요로 했다. **정보 축약에 따른 접촉 정보 손실**과 **절대 Base/World 좌표 의존성**은 서로 다른 문제이며, 하나의 원인으로 합치지 않는다.
+
+최근에는 [The Role of Tactile Sensing (Zhang et al.)](../literature/papers/2025-zhang-role-of-tactile-sensing.md), [FORGE (Noseworthy et al.)](../literature/papers/2025-noseworthy-forge.md), [FoAR (He et al.)](../literature/papers/2025-he-foar.md), [Gentle Object Retraction (Brouwer et al.)](../literature/papers/2026-brouwer-gentle-object-retraction.md), [Beyond Binary (Pan et al.)](../literature/papers/2026-pan-beyond-binary-cop-tactile.md)처럼 force vector·Wrench·CoP를 활용해 Binary 또는 영상에서 부족한 하중 정보를 보완하려는 흐름이 강화됐다. 동시에 입력이 풍부해질수록 계산량과 데이터 요구가 증가했고, 고정된 force threshold는 접촉 단계가 바뀔 때 지나치게 보수적이거나 공격적인 행동을 만들 수 있었다.
+
+이 흐름에 대해 본 연구는 다음과 같이 대응한다.
+
+| 선행연구에서 남은 병목 | 본 연구의 설계 대응 | 반드시 필요한 검증 |
+| --- | --- | --- |
+| 연성 광학 촉각의 변형·영상 렌더링과 실물 정합 비용 | 저항식 tactile을 영역별 Binary contact로 변환하여, simulation에서는 접촉 여부만 정합 | Bit 오검출·누락·threshold·지연 randomization, 실물 접촉 bit 분포와 zero-shot 성능 |
+| Binary tactile의 하중 크기·방향 손실 | 손목 6축 Wrench를 함께 제공하여 전체 합력·모멘트 단서를 보완 | 접촉센서 없음 / Binary-only / Wrench-only / 결합 ablation. Wrench가 국소 접촉 분포를 복원한다고 주장하지 않음 |
+| 절대 Base/World 좌표와 robot localization 오차 의존 | [Method의 EEF-relative 관측](03_Method.md#eef-relative-observation)처럼 Sweep 시작 EEF Frame의 상대 물체 위치·EEF Pose·명령 방향을 사용 | Base Pose noise 및 Base 배치 변화 조건에서 Base-frame 관측과 상대 관측 비교. 상대화가 실제 기구학·배치 변화를 없앤다고 주장하지 않음 |
+| 단일 hard threshold의 보수적·공격적 전환 | 목표 진행·접촉 유지·연속 Wrench 비용을 함께 최적화하는 **force-aware reward shaping under soft constraints**를 사용 | Wrench reward 제거, 고정 threshold baseline, 전체 reward 비교. 별도 safety termination과 학습 reward의 역할 분리 |
+
+여기서 “힘을 흡수하는 Reward”는 **힘을 정책의 최적화 목표에 내재화하는 연속적 force shaping**으로 표현한다. 즉, 단일 임계값을 넘는 순간 동일하게 차단하는 방식보다 하중의 크기·방향과 과업 진행을 함께 평가하는 soft constraint다. 장비 보호를 위한 hard termination은 별도로 둘 수 있으며, reward가 물리적 안전을 보장한다고 표현하지 않는다.
+
+### 9.2. 발표에 사용할 핵심 문장
+
+> **초기 물체 위치 이후 시각적 상태 갱신 없이 수행하는 Sweeping에서, EEF-relative 관측과 영역별 Binary 촉각–손목 Wrench의 상보적 표현을 사용하는 접촉 정책을 제안한다. 연속적인 force-aware reward shaping으로 목표 진행과 접촉 안정성을 함께 학습하고, 센서 조합·Base 위치 오차·미학습 물체 조건에서 각 설계의 이득과 한계를 검증하고자 한다.**
 
 현재 단계에서는 `제안한다 / 검증하고자 한다`를 사용한다. 결과가 확보된 후에만 실제 개선량·적용 범위를 넣어 `보였다`로 바꾼다.
 
 | Contribution 후보 | 기존 연구와 연결되는 차이 | 이 주장을 성립시키는 증거 |
 | --- | --- | --- |
-| **C1. Binary 접촉 영역과 손목 하중을 결합한 Sweeping 정책** | 국소 촉각 상태 추정, Binary-only 정책, Force-only 제어 사이에서 전체 하중 보완의 효과를 평가 | 동일 조건의 접촉센서 없음 / Binary-only / F/T-only / 결합 비교, 유효한 규칙 기반 제어와 비교 |
-| **C2. 센서 정보의 상보성과 한계에 대한 실험적 분석** | 센서를 추가했다는 사실을 넘어, 어느 접촉조건에서 어느 정보가 필요한지 설명 | 초기 접촉 편차, 센서 사각지대, 약한 신호, 접촉은 같고 하중이 다른 조건별 분석 |
-| **C3. 미학습 물체와 실물에서의 유지 범위 검증** | 조합의 장점이 학습 환경에 한정되는지 평가 | 물체 단위 Train/Test 분리, 조건별 결과, 실물 보정·추가학습 내역과 실패 공개 |
+| **C1. Sim-to-Real을 고려한 Binary–Wrench 상보 표현** | 연성 tactile image를 직접 재현하지 않는 영역별 Binary contact와 전체 6축 하중을 역할 분담 | 접촉센서 없음 / Binary-only / Wrench-only / 결합 비교, tactile bit와 Wrench의 simulation–real 정합 오차 |
+| **C2. EEF-relative Blind Sweeping 관측** | 절대 Base/World Pose 대신 초기 물체–EEF 상대 위치와 EEF 상대 운동으로 task geometry를 표현 | Base Pose noise 수준별 평가, Base-frame 관측과 EEF-relative 관측 비교, 접근 가능 조건에서 Base 배치 변화 평가 |
+| **C3. 연속적 Force Shaping을 포함한 Reward 설계** | 고정 force threshold만으로 행동을 차단하지 않고 목표 진행·접촉 유지·과도 하중을 공동 최적화 | Wrench reward ablation, hard-threshold 규칙 기준선, 하중·성공률·회전·접촉 소실의 동시 비교 |
+| **C4. 센서·좌표계·Reward의 적용 범위 분석** | 설계 요소를 한 번에 묶어 주장하지 않고 어느 조건에서 각각 필요한지 분리 | 물체 단위 Train/Test 분리, 접촉 편차·센서 누락·Base noise·미학습 물체별 결과와 실물 실패 공개 |
 
-석사 연구의 핵심 기여는 **C1 + C2**로 두는 편이 명확하다. C3는 반드시 확인할 평가 축이지만, 독립적인 전이 방법을 제안하지 않았다면 “새로운 Sim-to-Real 알고리즘”으로 분리해 부르지 않는다.
+석사 연구의 중심은 **C1**이며, C2·C3는 C1이 실제 Sweeping에서 작동하도록 만드는 방법적 기여 후보, C4는 이를 성립시키는 검증 구조다. 독립적인 센서 변환기나 전이 알고리즘을 제안하지 않았다면 “새로운 Sim-to-Real 알고리즘”으로 부르지 않는다.
 
-### 9.2. 보상 설계는 어떻게 주장할 것인가
+### 9.3. 보상 설계는 어떻게 주장할 것인가
 
 목표 진행, 접촉 유지, 과도한 하중 억제의 항목을 더하는 것만으로 강한 신규성을 주장하기는 어렵다. 기존 [Motivation](01_Research_Motivation.md)의 보상 Contribution은 다음 조건이 확인될 때 보강할 수 있다.
 
@@ -337,14 +359,17 @@ timeline
 - 같은 관측·훈련조건에서 해당 보상항을 제거했을 때의 변화를 비교한다.
 - 촉각 활성 영역 수가 증가한 것과 실제 물체 조작이 개선된 것을 분리한다.
 
-현재 Method의 **활성 촉각 영역 수 보상**은 접촉 품질의 대리 지표다. 더 많은 영역을 활성화하기 위해 과도하게 누르거나 진행을 멈추는 정책도 점검해야 한다. 그 검증 전에는 보상을 센서 상보성을 구현하는 **설계 요소**로 소개하는 편이 타당하다.
+현재 Method의 **활성 촉각 영역 수 보상**은 접촉 품질의 대리 지표다. 더 많은 영역을 활성화하기 위해 과도하게 누르거나 진행을 멈추는 정책도 점검해야 한다. Wrench 항은 **연속적인 force-aware shaping 또는 soft force constraint**로 부르되, 실제 하중 범위에서 정책을 유도하는 목적함수이지 hard safety guarantee가 아님을 명시한다. 그 검증 전에는 Reward를 센서 상보성을 구현하는 **설계 요소**로 소개하는 편이 타당하다.
 
-### 9.3. 기여를 과장하지 않기 위한 적용 경계
+### 9.4. 기여를 과장하지 않기 위한 적용 경계
 
 | 경계 | 본 연구에서 필요한 처리 |
 | --- | --- |
+| 저항식 Binary tactile도 threshold·hysteresis·지연이 존재 | 연성 영상 renderer가 불필요하다는 것과 Sim-to-Real gap이 없다는 주장을 구분 |
 | 손목 Wrench는 전체 합력·모멘트 | 어느 물체가 어느 위치에 접촉했는지 유일하게 복원한다고 주장하지 않음 |
 | 같은 Binary 패턴·비슷한 Wrench에도 다른 상태가 가능 | 완전한 접촉 상태 식별 대신, 목표 조작에 필요한 행동 선택의 개선을 평가 |
+| EEF-relative 표현은 절대 Base Pose 항을 제거 | 실제 Base–선반 배치 변화, kinematic calibration·extrinsic 오차까지 제거한다고 주장하지 않음 |
+| Soft force constraint는 학습 목적함수 | 장비 보호용 hard limit·termination을 대체하거나 안전을 보장한다고 주장하지 않음 |
 | 현재 촉각은 지정된 한 면만 입력 | 양면 동시 접촉을 지원한다고 쓰지 않음. 단면 가정 위반을 평가·제한조건으로 명시 |
 | 물체 Pose가 Actor에 없음 | EEF 이동을 물체 목표 달성으로 대신하지 않음. 평가용 추적과 실행용 종료 판단 분리 |
 | 미학습 물체·실물 성능 없음 | 표에는 검증 예정으로 유지. 실물 실패 시에도 실패 조건 분석은 연구 결과로 남김 |
