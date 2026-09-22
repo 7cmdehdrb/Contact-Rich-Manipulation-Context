@@ -235,6 +235,40 @@ timeline
 
 [Beyond Binary (Pan et al.)](../literature/papers/2026-pan-beyond-binary-cop-tactile.md)는 검토한 **2026 arXiv 사전공개본**으로 표시한다. [Gentle Object Retraction (Brouwer et al.)](../literature/papers/2026-brouwer-gentle-object-retraction.md)은 정규 권호 기준 2026이며 온라인 공개·DOI 연도와 구분한다.
 
+### 6.1. 개별 논문에서 확인되는 한계
+
+| 연구 | 사용한 설계·표현 | 기술적 병목과 해석 범위 |
+| --- | --- | --- |
+| [The Role of Tactile Sensing (Zhang et al.)](../literature/papers/2025-zhang-role-of-tactile-sensing.md) | 실제 연성 센서의 FEM 대신 45개 cuboid와 5개 sphere의 rigid-body collision으로 fingertip force map을 근사하고, Binary·크기·3D force vector를 global/local 표현으로 비교 | 실제 센서 변형을 무시한 tactile model이라는 한계가 있다. Local 3D vector인 VK는 state의 큰 비중을 차지했고 실물에서는 계산 자원 때문에 배포하지 못했으므로, VK가 현실에서 실패했다고 결론낼 수 없다. 실물에서 평가한 denser local BK·MK는 robot motion error에 따른 aggressive touch와 distribution shift 가능성이 제기됐고, 간결한 global 3D vector V가 강했다. 단, V는 손목 Wrench가 아니라 **손끝별 합력**이다. |
+| [FORGE (Noseworthy et al.)](../literature/papers/2025-noseworthy-forge.md) | 관절 토크에서 추정한 말단 3축 force와 episode 전체의 scalar 허용값 $F_{th}$로 recurrent PPO 정책을 조건화 | Torque를 관측하지 않으며 완전히 미지인 thread orientation도 범위 밖이다. Gear·nut의 회전 정렬 실패가 보고됐지만, 이를 torque 부재의 직접 결과로 분리한 ablation은 없다. 더 명확한 한계는 **한 episode에 하나의 $F_{th}$만 사용**한다는 점이다. Snap-fit은 정렬 전 낮은 힘과 체결 시 높은 힘이 필요해, 큰 threshold를 처음부터 주면 slip이 증가했다. Trial 사이에 threshold를 높이는 절차는 있지만 phase 내부의 연속 적응은 아니다. |
+| [FoAR (He et al.)](../literature/papers/2025-he-foar.md) | 현재 RGB-D point cloud와 약 2초의 6축 F/T 이력을 사용한 실물 IL. 미래 접촉 확률과 force·torque threshold로 action chunk를 6 mm 보정 | 접촉 label과 보정은 고정된 $\delta_{\phi}$·$\delta_f$·$\delta_t$에 의존하며, 과도한 하중에서 retreat·stop을 수행하는 구조는 아니다. 과업별 40–50회 haptic teleoperation 시연이 필요했고 저수준은 단순 position control이어서, 저자들은 compliance 또는 hybrid force/position control을 후속 과제로 남겼다. Point-cloud encoder를 접촉 분류와 공유한 3D-cls는 성능이 크게 낮아 별도 ResNet18을 사용했지만, 이는 두 목적의 visual feature 충돌에 대한 실험 관찰이지 모든 공유 encoder가 불가능하다는 증거는 아니다. |
+| [Gentle Object Retraction (Brouwer et al.)](../literature/papers/2026-brouwer-gentle-object-retraction.md) | 100개 실물 시연으로 vision·관절토크 기반 Wrench·98 taxel의 분포형 3축 force를 사용하는 Diffusion Policy를 학습 | Wrench+Tactile 정책은 40개 새 배치에서 성공이 가장 많았지만 과도 외력 실패가 11회로 각 단일 force modality의 7회보다 많았다. 이 차이는 통계적으로 유의하지 않았고, 저자들은 다중모달 입력의 데이터 효율 또는 우연을 가능한 설명으로 제시했을 뿐 원인을 입증하지 않았다. 또한 26 N net force와 6 N peak tactile 기준은 plastic cup과 cardboard tea box가 손상될 때까지 시험해 만든 **해당 과업용 기준**이며, 0.8초 반응창의 impulse 판정에 사용된다. 보편적 안전 임계값으로 전이할 수 없다. |
+| [Beyond Binary (Pan et al.)](../literature/papers/2026-pan-beyond-binary-cop-tactile.md) | 각 tactile array의 분산 접촉을 resultant force와 centroidal contact position으로 이루어진 CoP로 축약 | CoP는 Binary보다 하중·위치를 더 보존하지만 sensor-specific detail과 복잡한 분산·다중 접촉 응력을 버린다. 또한 IsaacLab의 curved fingertip shear가 신뢰하기 어려워 실물 전이 정책에는 surface-normal force만 사용했다. Simulation contact sensor는 task object contact만 보고하지만 실제 uSkin은 손가락 self-collision과 환경 접촉에도 반응해 추가 OOD 신호가 생긴다. 이 결과는 손목 6축 Wrench 결합이 아니라 **sensor array별 국소 CoP**의 결과다. |
+
+### 6.2. 2025–2026년 연구를 관통하는 세 가지 딜레마
+
+#### 1. 정적 임계값과 다단계 과업의 충돌
+
+[FORGE (Noseworthy et al.)](../literature/papers/2025-noseworthy-forge.md)는 episode 전체의 $F_{th}$, [FoAR (He et al.)](../literature/papers/2025-he-foar.md)는 접촉 판정과 보정을 위한 고정 threshold, [Gentle Object Retraction (Brouwer et al.)](../literature/papers/2026-brouwer-gentle-object-retraction.md)은 특정 물체를 손상시켜 정한 impulse 기준을 사용했다. 임계값은 안전성과 정책 조건화를 단순하게 만들지만, 정렬·접촉 탐색·체결·장애물 이탈처럼 단계마다 필요한 힘이 달라지는 과업에서는 하나의 값이 지나치게 보수적이거나 공격적일 수 있다. 따라서 남는 문제는 임계값의 존재 자체가 아니라, **접촉 단계와 물체 취약성에 따라 허용 하중을 어떻게 바꿀 것인가**이다.
+
+#### 2. 표현력과 전이·데이터 효율의 Trade-off
+
+풍부한 관측이 항상 더 좋은 실물 정책을 만들지는 않았다.
+
+- [The Role of Tactile Sensing (Zhang et al.)](../literature/papers/2025-zhang-role-of-tactile-sensing.md)은 local VK의 실물 배포 비용을 감당하지 못했고, 실물에서는 간결한 global force V가 강했다. 그러나 simulation에서는 V와 VK가 모두 유용했으므로 이를 고차원 촉각의 일반적 실패로 확대하지 않는다.
+- [Gentle Object Retraction (Brouwer et al.)](../literature/papers/2026-brouwer-gentle-object-retraction.md)은 병용 정책의 성공률 이득과 함께 단일 modality보다 많은 과도 외력 실패를 관찰했다. 작은 시연 집합에서 modality 증가가 data efficiency를 낮췄다는 설명은 **저자 가설**이다.
+- [Beyond Binary (Pan et al.)](../literature/papers/2026-pan-beyond-binary-cop-tactile.md)은 Raw taxel보다 CoP가 강했지만, CoP도 taxel masking에 민감했고 ball balancing에서는 force-vector-only와 거의 같았다. 접촉 위치의 추가 가치가 과업에 따라 달랐다.
+
+따라서 비교해야 할 것은 센서 개수나 입력 차원 자체가 아니라, **과업에 필요한 위치·방향·크기 정보를 최소한의 전이 가능한 표현으로 남겼는가**이다.
+
+#### 3. 연성 접촉·전단 Simulation Gap과 정보 축약
+
+[The Role of Tactile Sensing (Zhang et al.)](../literature/papers/2025-zhang-role-of-tactile-sensing.md)은 실제 연성 변형을 rigid contact primitive로 대체했고, [Beyond Binary (Pan et al.)](../literature/papers/2026-pan-beyond-binary-cop-tactile.md)은 simulator의 shear component를 신뢰하지 못해 실물 전이에서 normal force만 남겼다. 전자를 global force로 합치면 공간 분포가 줄고, 후자를 CoP로 합치면 sensor-specific 분산 응력이 줄며, shear를 제거하면 slip·비틀림 단서가 줄어든다. 반대로 raw taxel과 3축 분포를 그대로 쓰면 sensor model 정합과 계산·학습 비용이 커진다. 최신 연구에서도 **연성 변형과 전단을 정확히 모사하는 문제를 해결했다기보다, 과업에 필요한 물리량을 선택해 우회하는 전략**이 계속 사용된다.
+
+> **요약:** 2025–2026년 연구는 더 많은 접촉 정보를 넣는 것보다, 과업 단계에 맞는 하중 기준과 전이 가능한 최소 표현을 선택하는 문제가 중요함을 보여준다. 정적 threshold는 다단계 접촉을 충분히 표현하지 못하고, 풍부한 다중모달·분산 촉각은 계산량과 데이터 요구를 높이며, simulation의 연성 변형·shear 오차를 피하려는 축약은 다시 접촉 정보를 잃는다.
+
+**본 연구로의 연결:** 영역별 Binary 촉각과 손목 6축 Wrench의 역할 분담은 이 trade-off를 겨냥한 설계다. 그러나 결합 자체가 우수성을 보장하지 않으므로, Binary-only·Wrench-only·결합 관측을 같은 과업과 데이터 예산에서 비교하고, 고정 threshold와 정책 기반 반응을 분리해 검증해야 한다.
+
 ---
 
 ## 7. 발표 6장: 선행연구를 종합하면 남는 질문
