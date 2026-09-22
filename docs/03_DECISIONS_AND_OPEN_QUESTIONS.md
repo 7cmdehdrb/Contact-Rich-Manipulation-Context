@@ -4,7 +4,9 @@
 
 기준일: 2026-09-14. 출처는 [출처 목록](06_SOURCE_REGISTER.md)을 따른다. 이 문서는 현재 요구사항을 판별할 때의 기준이며 실험 검증 완료를 뜻하지 않는다.
 
-> **발표 문서 재구성에 따른 사용자 결정:** Motivation·Contribution, Related Works, Method를 [세 문서](presentation/README.md)로 분리한다. 이력 설계는 현재 보류하며 P-09·O-11·O-17에 반영한다. 기존 brief·next-actions의 이력 검토 제안은 현재 우선 작업으로 해석하지 않는다. Related Works의 RL·Reward는 TODO만 두고, Method의 보상식·세부 정책은 추후 구체화한다.
+> **발표 문서 재구성에 따른 사용자 결정:** Motivation·Contribution, Related Works, Method를 [세 문서](presentation/README.md)로 분리한다. Observation Stack·Sliding Window·이력 기반 물성 적응은 보류하며 P-09·O-11·O-17에 반영한다. 기존 brief·next-actions의 이력 검토 제안은 현재 우선 작업으로 해석하지 않는다. Related Works의 선행연구 보상 정리와 본 연구 Method의 보상 초안은 구분한다.
+
+> **2026-09-22 Method 개편 — 사용자 지정 설계:** [Method](presentation/03_Method.md)를 기준으로 360도 Sweep, 간섭 없는 MoveIt 접근 후 정책 실행, Observation 57D(직전 Action 8D 포함), Action 8D(Manipulator 6D + Hand 2D), Arm OSC·Hand Joint Position Controller를 채택하는 설계를 정리했다. 목표 도달이 주보상이며 다른 보상은 안정화 보조 항이다. 이는 구현 완료 보고가 아니며, Noise·Randomization·보상식·가중치의 미정 수치는 유지한다.
 
 ## 1. 상태 정의
 
@@ -38,15 +40,15 @@
 
 | ID | 상태 | 현재 정보 | 주의 |
 | --- | --- | --- | --- |
-| P-01 | PROPOSED | 초기 대상 pose+방향·거리+F/T+촉각이 입력의 중심 | 전체 observation dimension은 미정 |
-| P-02 | PROPOSED | 선반 좌표계의 좌우 Sweep을 구체적인 시작안으로 사용 | 9/11의 전방향 지향을 영구 삭제하지 않음 |
-| P-03 | PROPOSED | tactile 영역별 Grid를 scalar/Boolean으로 축약하여 17차원 사용 | 원시 출력·축약 함수·threshold 실측 미완료 |
-| P-04 | PROPOSED | EEF 기준 Cartesian arm command | 실제 controller 경로와 허용 DOF는 미정 |
+| P-01 | PROPOSED | 현재 Method는 초기 물체 Position·방향·거리, Robot·Hand 상태, 18D 촉각·6D Wrench·직전 Action을 포함한 57D 관측 | 사용자 지정 차원의 설계. Orientation 3성분 표현과 정규화 세부는 미정 |
+| P-02 | CONFIRMED_DIRECTION | 선반 평면의 Sweep 방향은 360도 전 방향 허용 | 접근 Pose의 12시·6시 Dead Zone과 구분. 상세 조건은 Method |
+| P-03 | PROPOSED | 전면 17 Grid·후면 17 FSR을 Binary화하고, 접촉면 Header 1 + 선택 면 17의 18D 관측 | 부착·영역 대응·임계값 및 단면 접촉 가정 검증 필요 |
+| P-04 | CONFIRMED_DIRECTION | EEF 기준 Cartesian 위치·회전 증분 6D를 OSC로 실행하는 설계 | 실제 Controller 구현·Gain·Action Scale·주기는 검증·구체화 전 |
 | P-05 | PROPOSED | 초기 접촉→sweep→근처 대기 자세 | 전체 상태기계·학습 action 구조는 확정되지 않음 |
-| P-06 | PROPOSED | 9/13안에서는 명시 Geometry 입력 없음 | 9/14에 전체 입력 계약을 확정하지 않음. geometry 필요성을 임의 확정하지 않음 |
+| P-06 | CONFIRMED_DIRECTION | Command는 초기 물체 Position 3D + Direction 1D + Distance 1D | 현재 Actor에는 Object Orientation·Shape·Size를 추가하지 않음 |
 | P-07 | REPORTED_IMPLEMENTED | 9/10의 Cartesian/OSC sweep·일부 relative obs·초기 상태 랜덤화 | 센서 기반 최종 정책과 다름. 최신 코드 재확인 필요 |
 | P-08 | HISTORICAL | 9/11 PPO config 코드 | 현재 환경·실행에 적용되는지 미확인 |
-| P-09 | DEFERRED | 관측·행동·로봇 상태 이력으로 숨은 환경 차이에 간접 적응 | 사용자가 발표 문서 재구성 시 현재 다루지 않도록 지시. Method 입력 후보에서 제외 |
+| P-09 | DEFERRED | Observation Stack·Sliding Window·이력 기반 물성 적응 | 직전 Action 8D는 이번 사용자 지정으로 포함. 일반적인 이력 설계와 구분 |
 | P-10 | PROPOSED | Base Randomization은 정지 후 XY 위치 편차로 한정 | 범위는 실측 전 미정이며 Yaw·동적 이동·위치 추정 오차는 자동 포함하지 않음 |
 
 ## 4. 변경되었거나 후순위가 된 내용
@@ -73,14 +75,14 @@
 | O-03 | 각 tactile 영역은 어디이며 실제 접촉면을 덮는가? | hand–sensor 대응표, 센서/비센서 접촉 실험 | P0 |
 | O-04 | F/T와 tactile의 실효 신호·noise·지연은 어느 수준인가? | 무부하/자세변화/약한 접촉/가벼운 물체의 동기 로그 | P0 |
 | O-05 | 초기 정보에 주변·geometry를 어디까지 포함하는가? | 상위/하위 정보 계약과 비교 목적 정리. 완전 GT를 디폴트로 넣지 않음 | P0 |
-| O-06 | 정책 action, control DOF, 실물 controller는 무엇인가? | 기존 OSC와 후속 Diff-IK 구상의 실제 연결 경로 확인 | P0 |
+| O-06 | 선택한 Action·Controller를 실제로 어떻게 구현하는가? | Arm 6D Cartesian 증분→OSC, Hand 2D→Joint Position 매핑의 코드·파라미터 확인 | P0 |
 | O-07 | 시뮬레이션 센서 모델이 실물에서 얻을 정보와 대응하는가? | tactile 영역 mapping, wrist wrench 정의, 물체 ID 누출 검사 | P0 |
 | O-08 | Blind 실행에서 목표 도달·종료를 어떻게 판정하는가? | 물체 GT 평가와 실물 종료 로직을 분리하고 오류 측정 | P0 |
-| O-09 | 최초 학습의 방향 범위·물체 종류·초기 접촉 조건은? | 최소 실험 정의. 좌우 시작안과 전방향 확장 범위 구분 | P1 |
+| O-09 | 초기 상태 분포의 구체적인 범위는 무엇인가? | 360도 방향·MoveIt 도달 가능 상태·Hand 0.5+Noise·큐브/실린더/비정형 물체의 유효 조건 구체화 | P1 |
 | O-10 | 실제 approach error 분포는? | 반복 접근 후 EEF–물체 relative pose error 측정 | P1, 장비 의존 |
-| O-11 | 고유감각·action history·sensor history를 어떤 구조와 길이로 제공할 것인가? | 현재 검토 보류. 사용자가 다시 범위를 구체화한 이후 다룸 | DEFERRED |
+| O-11 | Observation Stack·Sliding Window·이력 기반 적응을 추가할 것인가? | 현재 검토 보류. 직전 Action 8D만 관측에 포함 | DEFERRED |
 | O-12 | 보상·성공 기준·허용 force·rotation·timeout은? | 물리 목표와 실물 안전 한계 및 관측 조건에 근거해 결정 | P1 |
-| O-13 | Hand의 6차원 직접 제어와 2차원 근사 중 무엇을 쓰는가? | 접촉면과 tactile coverage, 표현 가능 자세, 기본 제어 가능성 확인 | P1 |
+| O-13 | Hand의 공통 굽힘과 엄지 별도 Joint의 2D 표현을 어떻게 매핑하는가? | 관측 집계, 0~1 정규화 범위와 Joint Position 목표 매핑 구체화 | P1 |
 | O-14 | 어떤 비교 실험으로 F/T·촉각의 기여를 입증하는가? | 동일 조건의 무접촉센서/F/T-only/tactile-only/결합 baseline 제안 검토 | P1 |
 | O-15 | 최종 clutter 범위와 실물 검증 수준은? | 기본 feasibility·센싱 실패 조건과 연구 일정의 근거로 결정 | P2 |
 | O-16 | 간섭 판별이 센서만으로 충분히 가능한가, 추가 기여가 있는가? | 기본 문제 및 문헌 결과 이후 식별 가능성과 rule-based 기준 비교 | P2/DEFERRED |
