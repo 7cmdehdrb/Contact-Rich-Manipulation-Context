@@ -2,6 +2,8 @@
 
 [문서 안내](../../README.md) · [문헌 색인](../README.md) · [전체 논문](README.md) · [원래 조사 C1](../reviews/2026-09-16_binary-tactile-wrench-rl.md#c1) · [별도 확인 CHECK-A15](../reviews/2026-09-20_separate-review-paper-list.md)
 
+> **사용자 확인 상태:** **미확인** — 상세 리뷰는 작성되었지만, 사용자가 아직 직접 확인하지 않은 논문이다. (2026-09-22)
+
 ## 1. 논문 정보와 확인 범위
 
 - **저자:** Jiahe Pan, Stelian Coros, Jitendra Malik, Toru Lin
