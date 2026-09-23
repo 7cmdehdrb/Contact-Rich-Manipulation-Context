@@ -7,6 +7,8 @@ Experiment ID: `AXIA80-FEASIBILITY-2026-09-22`
 - 환경: Isaac Lab, GPU simulation, physics 240 Hz
 - 목적: UR5e–Axia80–tool 구조에서 질량과 wrist 자세 변화가 6축 F/T 출력에
   의도한 방향과 크기로 반영되는지 확인
+- 구현·재현 절차:
+  [Isaac Lab UR5e–Axia80 F/T 구현 가이드](2026-09-22_axia80_ft_sensor_implementation.md)
 
 ## 요약
 
