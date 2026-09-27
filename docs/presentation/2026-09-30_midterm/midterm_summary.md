@@ -3,32 +3,32 @@
 *A Study on Goal-Conditioned Object Sweeping without Online Visual Feedback Using Binary Tactile and Wrist Force/Torque Sensing*
 
 **민동규 — 숭실대학교 기계공학과 지능로봇시스템연구실(IROL)**  
-**발표일: 2026년 9월 30일** fileciteturn54file1L2-L8
+**발표일: 2026년 9월 30일**
 
 ## 1. 목적
 
-본 연구는 선반 내 물체 조작에서 로봇 Hand와 주변 구조물에 의한 가림으로 시각 관측이 제한되는 상황을 대상으로, **초기 시각 정보 이후에는 힘·촉각 피드백을 이용하여 대상 물체를 지정된 방향과 거리만큼 이동시키는 Blind Sweeping 정책**을 개발하는 것을 목적으로 한다. 조작 중 물체의 현재 위치·자세를 시각적으로 갱신하지 않으며, 다른 물체의 간섭이 없는 조건에서 비파지 방식의 밀기 작업을 수행한다. fileciteturn54file1L12-L16 fileciteturn54file1L286-L295
+본 연구는 선반 내 물체 조작에서 로봇 Hand와 주변 구조물에 의한 가림으로 시각 관측이 제한되는 상황을 대상으로, **초기 시각 정보 이후에는 힘·촉각 피드백을 이용하여 대상 물체를 지정된 방향과 거리만큼 이동시키는 Blind Sweeping 정책**을 개발하는 것을 목적으로 한다. 조작 중 물체의 현재 위치·자세를 시각적으로 갱신하지 않으며, 다른 물체의 간섭이 없는 조건에서 비파지 방식의 밀기 작업을 수행한다.
 
-촉각 영상과 같은 세밀한 표현은 풍부한 접촉 정보를 제공하지만 시뮬레이션과 실제 센서 응답을 대응시키는 부담이 있으며[1], 영역별 접촉 여부를 사용하는 이진 표현은 센서 응답을 단순화하는 대신 하중과 세부 접촉 정보를 축약한다[2, 3]. 이에 본 연구는 **영역별 이진 촉각(Binary Tactile)과 손목 힘·토크(Wrench)를 결합하여 접촉 영역과 연속적인 하중 정보를 함께 활용하는 관측 구성**을 제안한다. 또한 **목표 달성과 접촉 유지를 함께 고려하는 강화학습 보상**을 설계하여, 제한된 관측 아래에서 물체를 안정적으로 이동시키는 행동을 학습하고자 한다. fileciteturn54file1L236-L243 fileciteturn54file1L280-L283
+촉각 영상과 같은 세밀한 표현은 풍부한 접촉 정보를 제공하지만 시뮬레이션과 실제 센서 응답을 대응시키는 부담이 있으며[1], 영역별 접촉 여부를 사용하는 이진 표현은 센서 응답을 단순화하는 대신 하중과 세부 접촉 정보를 축약한다[2, 3]. 이에 본 연구는 **영역별 이진 촉각(Binary Tactile)과 손목 힘·토크(Wrench)를 결합하여 접촉 영역과 연속적인 하중 정보를 함께 활용하는 관측 구성**을 제안한다. 또한 **목표 달성과 접촉 유지를 함께 고려하는 강화학습 보상**을 설계하여, 제한된 관측 아래에서 물체를 안정적으로 이동시키는 행동을 학습하고자 한다.
 
 ## 2. 연구 요약 및 결과
 
-전체 실행 과정은 초기 시각 관측, MoveIt 기반 접근, 접촉 피드백 기반 Sweeping으로 구성한다. 초기 물체 위치와 이동 방향·거리를 입력받아 Hand를 물체 옆으로 이동시킨 뒤 학습 정책을 실행한다. 정책 관측은 로봇·Hand 상태 20차원, 촉각·Wrench 24차원, 초기 물체 위치와 목표 명령 5차원, 직전 행동 8차원을 결합한 **총 57차원**으로 구성한다. 출력은 로봇 팔의 Cartesian 위치·회전 증분 6차원과 Hand의 공통 굽힘·엄지 관절 명령 2차원이며, 각각 Operational Space Controller와 관절 위치 제어기로 실행한다. fileciteturn54file1L308-L344 fileciteturn54file1L403-L433
+전체 실행 과정은 초기 시각 관측, MoveIt 기반 접근, 접촉 피드백 기반 Sweeping으로 구성한다. 초기 물체 위치와 이동 방향·거리를 입력받아 Hand를 물체 옆으로 이동시킨 뒤 학습 정책을 실행한다. 정책 관측은 로봇·Hand 상태 20차원, 촉각·Wrench 24차원, 초기 물체 위치와 목표 명령 5차원, 직전 행동 8차원을 결합한 **총 57차원**으로 구성한다. 출력은 로봇 팔의 Cartesian 위치·회전 증분 6차원과 Hand의 공통 굽힘·엄지 관절 명령 2차원이며, 각각 Operational Space Controller와 관절 위치 제어기로 실행한다.
 
-촉각 관측은 손바닥의 17개 영역과 손등에 부착할 17개 FSR을 위치별로 대응시키고, 작업면 정보 1차원과 선택한 면의 이진 접촉 정보 17차원을 결합하여 구성한다. 시뮬레이션에서는 영역별 접촉력을 임계값으로 이진화하며, 실물에서도 동일한 표현을 사용하여 세부 센서 응답 차이에 대한 의존도를 낮추고자 한다. 손목 Wrench는 3축 힘과 3축 모멘트를 제공하여 이진 접촉 패턴에 나타나지 않는 하중 차이를 보완한다. 가상 F/T 센서는 손목 장착 위치의 측정용 Fixed Joint를 통해 전달되는 6축 반력·모멘트를 관측하는 방식으로 구성한다. fileciteturn54file1L371-L374 fileciteturn54file1L393-L396
+촉각 관측은 손바닥의 17개 영역과 손등에 부착할 17개 FSR을 위치별로 대응시키고, 작업면 정보 1차원과 선택한 면의 이진 접촉 정보 17차원을 결합하여 구성한다. 시뮬레이션에서는 영역별 접촉력을 임계값으로 이진화하며, 실물에서도 동일한 표현을 사용하여 세부 센서 응답 차이에 대한 의존도를 낮추고자 한다. 손목 Wrench는 3축 힘과 3축 모멘트를 제공하여 이진 접촉 패턴에 나타나지 않는 하중 차이를 보완한다. 가상 F/T 센서는 손목 장착 위치의 측정용 Fixed Joint를 통해 전달되는 6축 반력·모멘트를 관측하는 방식으로 구성한다.
 
-정책은 Isaac Lab 시뮬레이션에서 PPO로 학습하도록 설계한다. 보상은 물체와 목표 사이의 위치 오차를 줄이는 주 보상에 접촉 법선 정렬, 접촉 유지, 행동 변화량 억제 및 시간 비용을 결합한다. 시뮬레이션의 현재 물체 상태와 접촉 정보는 **학습용 특권정보(Privileged Information)**로 활용하되, 실행 정책에 현재 물체의 정답 상태를 제공하지 않는다. 목표 위치 오차를 성공 기준으로 설정하고 물체 전도, 로봇–선반 충돌 및 시간 제한을 종료 조건으로 둔다. 또한 물체의 형상·크기·질량·마찰, 로봇과 Hand의 초기 상태·제어 파라미터, 센서의 Bias·잡음을 무작위화하여 조건 변화에 대한 강건성을 학습하고자 한다. fileciteturn54file1L345-L367 fileciteturn54file1L454-L503 fileciteturn54file1L621-L645
+정책은 Isaac Lab 시뮬레이션에서 PPO로 학습하도록 설계한다. 보상은 물체와 목표 사이의 위치 오차를 줄이는 주 보상에 접촉 법선 정렬, 접촉 유지, 행동 변화량 억제 및 시간 비용을 결합한다. 시뮬레이션의 현재 물체 상태와 접촉 정보는 **학습용 특권정보(Privileged Information)**로 활용하되, 실행 정책에 현재 물체의 정답 상태를 제공하지 않는다. 목표 위치 오차를 성공 기준으로 설정하고 물체 전도, 로봇–선반 충돌 및 시간 제한을 종료 조건으로 둔다. 또한 물체의 형상·크기·질량·마찰, 로봇과 Hand의 초기 상태·제어 파라미터, 센서의 Bias·잡음을 무작위화하여 조건 변화에 대한 강건성을 학습하고자 한다.
 
 ## 3. 결론 및 향후 계획
 
-현재는 접촉 표현, 정책 입출력, 보상 및 평가 절차를 설계한 단계이며, 학습 성능과 실물 전이 결과는 아직 확보하지 않았다. 향후 **접촉 관측 없음, 이진 촉각만 사용, Wrench만 사용, 두 관측 모두 사용**의 네 조건을 각각 학습하여 비교할 계획이다. 센서 외의 관측·행동·보상·종료 기준과 학습 조건을 통제하고, 결합 정책과 촉각 단독 정책의 비교로 **F/T의 추가 기여**를, 결합 정책과 Wrench 단독 정책의 비교로 **촉각의 추가 기여**를 평가한다. 성공률과 최종 물체 위치 오차뿐 아니라 접촉 상실, 힘·모멘트 변화, 전도 및 충돌을 분석하여 센서별 역할과 결합 효과가 나타나는 조건을 정량적으로 정리하고자 한다. fileciteturn54file1L651-L672 fileciteturn54file1L698-L700 fileciteturn61file0L2-L2
+현재는 접촉 표현, 정책 입출력, 보상 및 평가 절차를 설계한 단계이며, 학습 성능과 실물 전이 결과는 아직 확보하지 않았다. 향후 **접촉 관측 없음, 이진 촉각만 사용, Wrench만 사용, 두 관측 모두 사용**의 네 조건을 각각 학습하여 비교할 계획이다. 센서 외의 관측·행동·보상·종료 기준과 학습 조건을 통제하고, 결합 정책과 촉각 단독 정책의 비교로 **F/T의 추가 기여**를, 결합 정책과 Wrench 단독 정책의 비교로 **촉각의 추가 기여**를 평가한다. 성공률과 최종 물체 위치 오차뿐 아니라 접촉 상실, 힘·모멘트 변화, 전도 및 충돌을 분석하여 센서별 역할과 결합 효과가 나타나는 조건을 정량적으로 정리하고자 한다.
 
-후속 단계에서는 접촉 유지와 법선 정렬 보상 항의 비교를 통해 보상 설계가 유도하는 행동 차이를 검토하고, 장비 확보 후 센서·제어기의 대응 관계를 확인하여 실물 정책 평가를 추진할 계획이다. 이를 통해 단일한 성공 사례에 그치지 않고, **센서 결합과 보상 설계의 효과, 물체·접촉 조건에 따른 실패 유형, 시뮬레이션에서 실물로 전이할 때의 적용 범위와 한계**를 연구 결과로 남기고자 한다. fileciteturn61file0L2-L2
+후속 단계에서는 접촉 유지와 법선 정렬 보상 항의 비교를 통해 보상 설계가 유도하는 행동 차이를 검토하고, 장비 확보 후 센서·제어기의 대응 관계를 확인하여 실물 정책 평가를 추진할 계획이다. 이를 통해 단일한 성공 사례에 그치지 않고, **센서 결합과 보상 설계의 효과, 물체·접촉 조건에 따른 실패 유형, 시뮬레이션에서 실물로 전이할 때의 적용 범위와 한계**를 연구 결과로 남기고자 한다.
 
 ## 4. 참고문헌
 
-1. **Tactile Gym 2.0: Sim-to-Real Deep Reinforcement Learning for Comparing Low-Cost High-Resolution Robot Touch.** fileciteturn56file0L2-L2
-2. **Sim-to-Real Transfer for Robotic Manipulation with Tactile Sensory.** fileciteturn57file0L2-L2
-3. **DexTouch: Learning to Seek and Manipulate Objects With Tactile Dexterity.** fileciteturn58file0L2-L2
-4. **Force Push: Robust Single-Point Pushing With Force Feedback.** fileciteturn59file0L2-L2
-5. **Gentle Object Retraction in Dense Clutter Using Multimodal Force Sensing and Imitation Learning.** fileciteturn60file0L2-L2
+1. **Tactile Gym 2.0: Sim-to-Real Deep Reinforcement Learning for Comparing Low-Cost High-Resolution Robot Touch.**
+2. **Sim-to-Real Transfer for Robotic Manipulation with Tactile Sensory.**
+3. **DexTouch: Learning to Seek and Manipulate Objects With Tactile Dexterity.**
+4. **Force Push: Robust Single-Point Pushing With Force Feedback.**
+5. **Gentle Object Retraction in Dense Clutter Using Multimodal Force Sensing and Imitation Learning.**
