@@ -10,6 +10,12 @@
 | [02. Related Works](02_Related_Works.md) | F/T·Wrench 선행연구, Tactile 선행연구, RL Reward Formulation, 항목별 DR 비교 |
 | [03. Method](03_Method.md) | MoveIt 접근 Process, MDP 하위의 Event·Observation·Action·Reward, DR·센서 불확실성 |
 
+## 2026-09-30 중간발표 정리본
+
+[이진 촉각과 손목 힘·토크 기반 목표 지향형 Sweeping — 중간발표 본문](2026-09-30_midterm/README.md)은 `졸업발표_ver1(6).pdf`와 발표 검토 대화를 기준으로 정리한 독립 문서다. 슬라이드 순서가 아니라 **연구 동기 → 선행연구의 설계 선택 → 제안 방향 → 과업·센서·정책·보상 → 종료·학습 조건 → 센서 기여 검증**의 논리로 구성한다.
+
+센서 Ablation은 **Case 4–Case 2: F/T의 추가 기여**, **Case 4–Case 3: Tactile의 추가 기여**로 정리한다. 발표본의 수식·조건과 대화 보완을 구분하며, 남은 확인 사항과 발표본에 없는 후속 제안은 별도로 표시한다. 기존 세 본문과 문헌 노트는 변경하지 않는다.
+
 ## 관련 연구 비교 발표 초안
 
 [04. Related Work Timeline and Contributions](04_Related_Work_Timeline_and_Contributions.md)는 8장 발표 흐름, 연도별 연구지도, Observation·Sensor·Method·강건성·Sim-to-Real 비교표와 검증 전 Contribution 후보를 정리한다. [33편 원문 근거](../literature/reviews/2026-09-22_related-work-five-axis-evidence.md)로 연결하며, 기존 세 본문의 확정 설계를 변경하는 문서는 아니다.
