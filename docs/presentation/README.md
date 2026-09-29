@@ -10,6 +10,12 @@
 | [02. Related Works](02_Related_Works.md) | F/T·Wrench 선행연구, Tactile 선행연구, RL Reward Formulation, 항목별 DR 비교 |
 | [03. Method](03_Method.md) | MoveIt 접근 Process, MDP 하위의 Event·Observation·Action·Reward, DR·센서 불확실성 |
 
+## 2026-09-30 최종 슬라이드 발표 대본
+
+[15분 이내 발표 대본](05_Midterm_Presentation_Script_15min.md)은 `졸업발표_ver2_최종.pdf`의 1–35쪽에 맞춘 실제 발화용 원고다. [페이지별 발표 흐름 메모](HELP.md)를 바탕으로 완결된 문장과 화면 전환을 구성하고, 페이지별 시간과 누적 체크포인트를 제공한다.
+
+센서의 상보성, CoP 기반 회전 Sub-Goal의 학습용 보상 역할, 센서·보상 Ablation을 중심으로 설명한다. DR은 학습 설정으로만 다루며 별도 평가 실험은 포함하지 않는다. 시간은 발화 분량과 전환을 바탕으로 산정한 편집 예산이며, 실제 리허설 측정값과 구분한다.
+
 ## 2026-09-30 중간발표 정리본
 
 [이진 촉각과 손목 힘·토크 기반 목표 지향형 Sweeping — 중간발표 본문](2026-09-30_midterm/README.md)은 `졸업발표_ver1(6).pdf`와 발표 검토 대화를 기준으로 정리한 독립 문서다. 슬라이드 순서가 아니라 **연구 동기 → 선행연구의 설계 선택 → 제안 방향 → 과업·센서·정책·보상 → 종료·학습 조건 → 센서 기여 검증**의 논리로 구성한다.
