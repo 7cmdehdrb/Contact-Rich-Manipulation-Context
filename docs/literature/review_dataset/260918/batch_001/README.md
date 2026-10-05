@@ -1,6 +1,6 @@
 # 260918 Review Dataset — Batch 001
 
-[문헌 색인](../../../README.md) · [260918 데이터셋 안내](../README.md) · [Research Motivation](../../../../presentation/01_Research_Motivation.md)
+[문헌 색인](../../../README.md) · [260918 데이터셋 안내](../README.md) · [Research Motivation](../../../../presentation/1st_draft/01_Research_Motivation.md)
 
 작성일: 2026-09-18. Schema version: **1.0**. `test_pdfs` 검증본에서 확인한 16절 분석·54열 Master·7개 Excel 시트 형식을 유지했다.
 
@@ -49,7 +49,7 @@ PASS 자료는 상세 Markdown·Master·상세 Excel 시트에서 제외했다. 
 
 ## Context와 사실 근거
 
-최신 GitHub `main`과 로컬 HEAD가 같은 것을 확인했다. Context 기준 커밋은 `189cb2cdae62eee3454dea3d2316452af1aaea35`다. `AGENTS.md`, 문서 형식 규칙, handoff·결정·next-actions, [Research Motivation](../../../../presentation/01_Research_Motivation.md), [문헌 안내](../../../README.md), [9월 18일 조사본](../../../reviews/2026-09-18_reduced-tactile-compensation-survey.md)을 조사 질문의 배경으로 확인했다.
+최신 GitHub `main`과 로컬 HEAD가 같은 것을 확인했다. Context 기준 커밋은 `189cb2cdae62eee3454dea3d2316452af1aaea35`다. `AGENTS.md`, 문서 형식 규칙, handoff·결정·next-actions, [Research Motivation](../../../../presentation/1st_draft/01_Research_Motivation.md), [문헌 안내](../../../README.md), [9월 18일 조사본](../../../reviews/2026-09-18_reduced-tactile-compensation-survey.md)을 조사 질문의 배경으로 확인했다.
 
 논문 사실은 선택한 PDF의 title/abstract/introduction/method/observation을 먼저 screening하고, 포함 논문에 한해 본문·실험·discussion·conclusion·관련 appendix를 새로 읽어 추출했다. 중요한 표·그림은 PDF 렌더링으로 확인했다. 기존 `docs/literature/papers/`의 상세 노트를 근거로 재사용하거나 수정하지 않았다. 검증본에서는 **형식과 검증 절차만** 재사용했다. 외부 논문 버전·연결 코드·영상·별도 supplement를 제공 PDF의 사실로 채우지 않았다.
 

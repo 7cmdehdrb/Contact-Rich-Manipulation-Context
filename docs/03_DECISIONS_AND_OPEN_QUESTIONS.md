@@ -4,9 +4,11 @@
 
 기준일: 2026-09-14. 출처는 [출처 목록](06_SOURCE_REGISTER.md)을 따른다. 이 문서는 현재 요구사항을 판별할 때의 기준이며 실험 검증 완료를 뜻하지 않는다.
 
+> **2026-10-05 최종 중간발표 문서화:** `중간발표_최종.pdf`의 설계와 아래 과거 기록의 차이는 [발표 구성과 설계 현황](presentation/00_Presentation_Overview_and_Design_Status.md)에 정리했다. Base 기준 관측, 갱신된 보상식, CoP 회전 Sub-Goal 및 센서·보상 비교 계획은 해당 설명 문서를 함께 확인한다. 이는 기존 발표 설계를 문서화한 것이며 새로운 구현·실험 완료 보고가 아니다.
+
 > **발표 문서 재구성에 따른 사용자 결정:** Motivation·Contribution, Related Works, Method를 [세 문서](presentation/README.md)로 분리한다. Observation Stack·Sliding Window·이력 기반 물성 적응은 보류하며 P-09·O-11·O-17에 반영한다. 기존 brief·next-actions의 이력 검토 제안은 현재 우선 작업으로 해석하지 않는다. Related Works의 선행연구 보상 정리와 본 연구 Method의 보상 초안은 구분한다.
 
-> **2026-09-22 Method 개편 — 사용자 지정 설계:** [Method](presentation/03_Method.md)를 기준으로 360도 Sweep, 간섭 없는 MoveIt 접근 후 정책 실행, Observation 57D(직전 Action 8D 포함), Action 8D(Manipulator 6D + Hand 2D), Arm OSC·Hand Joint Position Controller를 채택하는 설계를 정리했다. 목표 도달이 주보상이며 다른 보상은 안정화 보조 항이다. 이는 구현 완료 보고가 아니며, Noise·Randomization·보상식·가중치의 미정 수치는 유지한다.
+> **2026-09-22 Method 개편 — 사용자 지정 설계:** [Method](presentation/1st_draft/03_Method.md)를 기준으로 360도 Sweep, 간섭 없는 MoveIt 접근 후 정책 실행, Observation 57D(직전 Action 8D 포함), Action 8D(Manipulator 6D + Hand 2D), Arm OSC·Hand Joint Position Controller를 채택하는 설계를 정리했다. 목표 도달이 주보상이며 다른 보상은 안정화 보조 항이다. 이는 구현 완료 보고가 아니며, Noise·Randomization·보상식·가중치의 미정 수치는 유지한다.
 
 ## 1. 상태 정의
 

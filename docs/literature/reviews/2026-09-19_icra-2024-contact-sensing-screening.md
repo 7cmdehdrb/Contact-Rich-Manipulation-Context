@@ -1,6 +1,6 @@
 # ICRA 2024 후보 논문 선별 — 축약 촉각 보완 구조와 F/T·촉각 역할 분담
 
-[문서 안내](../../README.md) · [문헌 색인](../README.md) · [조사 그룹](README.md) · [Research Motivation](../../presentation/01_Research_Motivation.md)
+[문서 안내](../../README.md) · [문헌 색인](../README.md) · [조사 그룹](README.md) · [Research Motivation](../../presentation/1st_draft/01_Research_Motivation.md)
 
 ## 1. 조사 목적
 

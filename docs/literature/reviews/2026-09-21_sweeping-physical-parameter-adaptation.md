@@ -1,6 +1,6 @@
 # Sweeping의 숨은 물리 조건에 대한 명시적 추정과 이력 기반 대응 — 신규 문헌 조사
 
-[문헌 색인](../README.md) · [조사 그룹](README.md) · [발표 설계 2.4절](../../presentation/02_Tactile_Representation_and_Policy_Design.md#24-sweeping에서-중요하게-다뤄야-할-것은-무엇인가)
+[문헌 색인](../README.md) · [조사 그룹](README.md) · [발표 설계 2.4절](../../presentation/1st_draft/02_Tactile_Representation_and_Policy_Design.md#24-sweeping에서-중요하게-다뤄야-할-것은-무엇인가)
 
 조사일: 2026-09-21  
 대상: `docs/presentation/02_Tactile_Representation_and_Policy_Design.md`의 2.4절  

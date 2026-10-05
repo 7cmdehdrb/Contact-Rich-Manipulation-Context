@@ -1,6 +1,6 @@
 # 발표 문서 이동 안내
 
-이 문서의 본문은 [발표 문서 안내](README.md)에 따라 분리되었다. 기존 문헌조사에서 참조한 경로·앵커를 유지하기 위한 안내이며, 새 내용은 아래 문서에서 관리한다.
+이 문서의 본문은 [발표 문서 안내](../README.md)에 따라 분리되었다. 기존 문헌조사에서 참조한 경로·앵커를 유지하기 위한 안내이며, 새 내용은 아래 문서에서 관리한다.
 
 | 내용 | 현재 문서 |
 | --- | --- |
@@ -18,7 +18,7 @@
 
 <a id="24-sweeping에서-중요하게-다뤄야-할-것은-무엇인가"></a>
 
-기존 Sweeping 물성·이력 적응 절은 삭제했다. 이력 관련 설계는 현재 보류하며, 이전 문헌조사 자체는 [조사 원문](../literature/reviews/2026-09-21_sweeping-physical-parameter-adaptation.md)에 보존한다.
+기존 Sweeping 물성·이력 적응 절은 삭제했다. 이력 관련 설계는 현재 보류하며, 이전 문헌조사 자체는 [조사 원문](../../literature/reviews/2026-09-21_sweeping-physical-parameter-adaptation.md)에 보존한다.
 
 <a id="25-markov-decision-process"></a>
 

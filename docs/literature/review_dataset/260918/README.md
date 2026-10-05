@@ -1,6 +1,6 @@
 # 260918 Review Dataset
 
-[문헌 색인](../../README.md) · [Research Motivation](../../../presentation/01_Research_Motivation.md)
+[문헌 색인](../../README.md) · [Research Motivation](../../../presentation/1st_draft/01_Research_Motivation.md)
 
 공통 Review 질문에 맞추어 `260918/`의 PDF 원문을 처음부터 다시 읽고 비교한 독립 데이터셋이다. 기존 `docs/literature/papers/`의 지식베이스와 목적이 다르며, 동일 논문이 있어도 이번 분석용 Markdown을 별도로 유지한다.
 

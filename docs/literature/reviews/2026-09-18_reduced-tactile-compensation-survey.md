@@ -1,6 +1,6 @@
 # Research Motivation 보강 — 신규 문헌에서 본 축약 촉각의 보완 구조
 
-[문서 안내](../../README.md) · [문헌 색인](../README.md) · [조사 그룹](README.md) · [Research Motivation](../../presentation/01_Research_Motivation.md)
+[문서 안내](../../README.md) · [문헌 색인](../README.md) · [조사 그룹](README.md) · [Research Motivation](../../presentation/1st_draft/01_Research_Motivation.md)
 
 **조사 기준일: 2026-09-18.** Research Motivation 보강 계획 중 **2.1. 물체 정보의 제공 조건과 축약 촉각의 보완 구조**만 다룬다. F/T 단독 사용의 한계와 Reward Formulation은 이번 조사 범위에서 제외한다.
 

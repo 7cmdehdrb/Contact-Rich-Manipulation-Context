@@ -1,6 +1,6 @@
 # 손목 Wrench를 관측·피드백으로 사용하는 Manipulation 연구 조사
 
-[문헌 색인](../README.md) · [조사 그룹](README.md) · [전체 논문](../papers/README.md) · [발표 설계 2.3절](../../presentation/02_Tactile_Representation_and_Policy_Design.md#23-본-연구에서-ft를-추가하는-이유와-한계)
+[문헌 색인](../README.md) · [조사 그룹](README.md) · [전체 논문](../papers/README.md) · [발표 설계 2.3절](../../presentation/1st_draft/02_Tactile_Representation_and_Policy_Design.md#23-본-연구에서-ft를-추가하는-이유와-한계)
 
 후속 상세 리뷰: [W1 · FoAR](../papers/2025-he-foar.md) · [W4 · Zero-Shot Transfer](../papers/2023-brahmbhatt-zero-shot-haptics-insertion.md) · [W7 · FORGE](../papers/2025-noseworthy-forge.md) · [C1 · Self-Tuning Planner](../papers/2022-kato-self-tuning-haptic-exploration.md) · [연결 문헌 · Lee 2019](../papers/2019-lee-making-sense-vision-touch.md)
 

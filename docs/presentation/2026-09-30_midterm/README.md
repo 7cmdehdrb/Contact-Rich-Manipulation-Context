@@ -2,7 +2,7 @@
 
 *A Study on Goal-Conditioned Object Sweeping without Online Visual Feedback Using Binary Tactile and Wrist Force/Torque Sensing*
 
-[발표 문서 안내](../README.md) · [기존 Motivation](../01_Research_Motivation.md) · [Related Works](../02_Related_Works.md) · [기존 Method](../03_Method.md)
+[발표 문서 안내](../README.md) · [기존 Motivation](../1st_draft/01_Research_Motivation.md) · [Related Works](../1st_draft/02_Related_Works.md) · [기존 Method](../1st_draft/03_Method.md)
 
 | 항목 | 내용 |
 | --- | --- |
@@ -176,7 +176,7 @@ Sweeping과 같은 Contact-rich Manipulation에서 시각 정보는 물체의 �
 
 접근 단계는 Sweep 방향의 반대쪽으로 Offset된 위치와, Sweep 방향에 평행한 Hand Normal을 기준으로 한다. 발표의 접근 그림에는 Dead Zone이 포함되어 있다. 접근 Planner 자체나 Home에서 물체까지의 전체 이동을 RL의 학습 과업으로 확장하지 않는다.
 
-**기존 Method의 상세 설정:** Sweep Command의 360도 방향 범위와 접근 Pose의 Dead Zone은 별개로 정리되어 있다. 구체적인 Offset·도달 허용 오차·좌표축 설정은 [기존 Method](../03_Method.md)를 참고하되, 발표본에 없는 수치를 이 문서에서 새로 확정하지 않는다.
+**기존 Method의 상세 설정:** Sweep Command의 360도 방향 범위와 접근 Pose의 Dead Zone은 별개로 정리되어 있다. 구체적인 Offset·도달 허용 오차·좌표축 설정은 [기존 Method](../1st_draft/03_Method.md)를 참고하되, 발표본에 없는 수치를 이 문서에서 새로 확정하지 않는다.
 
 ### 4.3. 플랫폼과 시뮬레이션
 
@@ -226,7 +226,7 @@ b^{\mathrm{dorsal}}_{t,i}
 \mathbf{z}_t\in\{0,1\}^{18}.
 ```
 
-Header는 접촉 개수가 아니라 작업 면을 나타낸다. [기존 Method](../03_Method.md)는 손바닥과 손등의 단면 접촉 조건 아래 비선택 면을 생략하는 설계를 설명한다. 양면 동시 접촉이나 작업 면 전환의 상세 처리는 이번 발표에서 별도로 정의하지 않았다.
+Header는 접촉 개수가 아니라 작업 면을 나타낸다. [기존 Method](../1st_draft/03_Method.md)는 손바닥과 손등의 단면 접촉 조건 아래 비선택 면을 생략하는 설계를 설명한다. 양면 동시 접촉이나 작업 면 전환의 상세 처리는 이번 발표에서 별도로 정의하지 않았다.
 
 ### 5.2. 시뮬레이션과 실물의 표현 대응
 
@@ -613,9 +613,9 @@ Case 2 또는 Case 3의 성능 하나만으로 빠진 센서의 기여가 증명
 | --- | --- |
 | `졸업발표_ver1(6).pdf` | 제목, Motivation, 발표 대상 12편의 비교, Contribution, 과업·센서·정책·보상·종료·Randomization·센서 평가 계획의 기준 |
 | 발표 검토 대화 | 관측과 학습용 정답의 역할 분리, 선행연구 해석 범위, 종료 조건의 구분, Case 4–2 및 Case 4–3의 Ablation 해석 |
-| [기존 Motivation](../01_Research_Motivation.md) | 접촉 영역과 하중 정보의 역할 분담에 관한 기존 설명 |
-| [기존 Related Works](../02_Related_Works.md) | 발표에 등장한 논문들의 상세 설명과 개별 노트 연결 |
-| [기존 Method](../03_Method.md) | EEF 기준 관측·Action, 양면 촉각 Header 등 발표에서 축약된 기존 설계 설명 |
+| [기존 Motivation](../1st_draft/01_Research_Motivation.md) | 접촉 영역과 하중 정보의 역할 분담에 관한 기존 설명 |
+| [기존 Related Works](../1st_draft/02_Related_Works.md) | 발표에 등장한 논문들의 상세 설명과 개별 노트 연결 |
+| [기존 Method](../1st_draft/03_Method.md) | EEF 기준 관측·Action, 양면 촉각 Header 등 발표에서 축약된 기존 설계 설명 |
 
 원자료 식별을 위한 PDF SHA-256: `5a7d2af915ba58b60f13fe7fde6296099c14744290b6c3c46150e7b5c38cb1d4`.
 

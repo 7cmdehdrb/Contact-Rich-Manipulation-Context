@@ -1,6 +1,6 @@
 # 260918 Review Dataset — Batch 003
 
-[문헌 색인](../../../README.md) · [260918 데이터셋 안내](../README.md) · [Research Motivation](../../../../presentation/01_Research_Motivation.md)
+[문헌 색인](../../../README.md) · [260918 데이터셋 안내](../README.md) · [Research Motivation](../../../../presentation/1st_draft/01_Research_Motivation.md)
 
 최초 분석일은 2026-09-18이며, 중단된 작업을 2026-09-20에 재개해 완성했다. Schema version은 **1.0**이다. `test_pdfs` 검증본과 Batch 001의 16절 분석·54열 Master·7개 Excel 시트 형식을 유지했다.
 

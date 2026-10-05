@@ -1,10 +1,10 @@
 # 1. Research Motivation and Contributions
 
-[발표 문서 안내](README.md) · [Related Works](02_Related_Works.md) · [Method](03_Method.md)
+[발표 문서 안내](../README.md) · [Related Works](02_Related_Works.md) · [Method](03_Method.md)
 
 > **문서 상태: 연구 설계 초안.** 아래 Contribution은 제안하는 기여이며, 구현·실험으로 검증된 성과를 뜻하지 않는다.
 
-![Research Motivation](../../img/research_motivation_fig1.png)
+![Research Motivation](../../../img/research_motivation_fig1.png)
 
 ## 1.1. 시각 관측이 제한되는 조작에서 접촉 피드백의 필요성
 
@@ -43,7 +43,7 @@
 
 > **연구 목표: 단순한 촉각 표현과 연속적인 손목 하중 정보를 결합하여, 시각 보정 없이 접촉과 하중을 고려하는 Sweeping 정책을 학습한다.**
 
-![기존 Tactile 활용 방식과 우리의 선택](../../img/tactile_representation_fig1.png)
+![기존 Tactile 활용 방식과 우리의 선택](../../../img/tactile_representation_fig1.png)
 
 ## 1.5. 제안하는 Contributions
 

@@ -2,7 +2,7 @@
 
 [문헌 색인](../README.md) · [조사 그룹](README.md) · [전체 논문](../papers/README.md)
 
-작성일: 2026-09-22 · [타임라인·통합 비교표·Contribution 본문](../../presentation/04_Related_Work_Timeline_and_Contributions.md)
+작성일: 2026-09-22 · [타임라인·통합 비교표·Contribution 본문](../../presentation/1st_draft/04_Related_Work_Timeline_and_Contributions.md)
 
 ## 확인 범위와 읽는 방법
 
@@ -719,4 +719,4 @@
 
 ---
 
-현재 연구의 센서·성능·실물 전이 행은 기존 연구 결과와 같은 완료 상태가 아니다. 발표용 해석과 검증 제안은 [본문](../../presentation/04_Related_Work_Timeline_and_Contributions.md)에 있다.
+현재 연구의 센서·성능·실물 전이 행은 기존 연구 결과와 같은 완료 상태가 아니다. 발표용 해석과 검증 제안은 [본문](../../presentation/1st_draft/04_Related_Work_Timeline_and_Contributions.md)에 있다.

@@ -1,10 +1,10 @@
 # 3. Method
 
-[발표 문서 안내](README.md) · [Research Motivation and Contributions](01_Research_Motivation.md) · [Related Works](02_Related_Works.md)
+[발표 문서 안내](../README.md) · [Research Motivation and Contributions](01_Research_Motivation.md) · [Related Works](02_Related_Works.md)
 
 > **문서 상태: 사용자 지정 설계에 따른 Method 초안.** MoveIt으로 접근한 뒤 접촉 기반 Sweeping 정책을 실행한다. 아래는 구현·성능 검증 결과가 아니라 현재의 입력·출력·초기화·보상 설계다. 보상식과 가중치, Noise·Randomization의 수치 범위는 추후 구체화한다.
 
-![Research Motivation](../../img/method_fig1.png)
+![Research Motivation](../../../img/method_fig1.png)
 
 ## 3.1. Task와 실행 Process
 
@@ -36,7 +36,7 @@ EEF는 Hand에 고정된 기준점을 사용하며, **Hand 중앙 부근의 고�
 
 **360도 허용은 Sweep Command의 방향 범위이고, Dead Zone은 접근 시 도달 Pose의 제한이다.** 두 조건을 같은 제한으로 취급하지 않는다. 12시·6시의 기준 좌표축, Offset 크기, Pose 유사도 기준과 도달 허용 오차는 아직 수치·구현 방식이 정해지지 않았다.
 
-사전 정의된 접근 절차는 MoveIt 기반 Planner와 Controller로 실행한다. [**Samarth Brahmbhatt et al. - Zero-Shot Transfer of Haptics-Based Object Insertion Policies**](../literature/papers/2023-brahmbhatt-zero-shot-haptics-insertion.md)는 장애물이 없는 접근 경로를 가정하고 **MoveIt으로 목표 근처까지 이동한 뒤, 학습된 Controller로 접촉 구간을 수행**한다. 본 연구에서는 이 **접근과 접촉 정책의 분리**를 참고한다. 
+사전 정의된 접근 절차는 MoveIt 기반 Planner와 Controller로 실행한다. [**Samarth Brahmbhatt et al. - Zero-Shot Transfer of Haptics-Based Object Insertion Policies**](../../literature/papers/2023-brahmbhatt-zero-shot-haptics-insertion.md)는 장애물이 없는 접근 경로를 가정하고 **MoveIt으로 목표 근처까지 이동한 뒤, 학습된 Controller로 접촉 구간을 수행**한다. 본 연구에서는 이 **접근과 접촉 정책의 분리**를 참고한다.
 
 <a id="31-markov-decision-process"></a>
 
@@ -165,7 +165,7 @@ a_t^{\mathrm{hand}}=(u_{\mathrm{flex}},u_{\mathrm{thumb}}).
 
 6차원 Delta는 병진만이 아니라 **위치·회전 증분을 합친 것**이다. 기존 문서의 EEF 기준 좌표계와 각 성분의 물리 단위 크기 제한은 유지하고, OSC가 해당 운동 명령을 실행하도록 한다. Gain·Action Scale·제어 주기는 이번에 임의로 정하지 않는다.
 
-OSC를 채택하는 이유는 **Sweep 중 다른 물체와의 접촉·충돌에 순응적으로 대응하여 안정성을 높이려는 것**이다. [**Zero-Shot Transfer**](../literature/papers/2023-brahmbhatt-zero-shot-haptics-insertion.md)
+OSC를 채택하는 이유는 **Sweep 중 다른 물체와의 접촉·충돌에 순응적으로 대응하여 안정성을 높이려는 것**이다. [**Zero-Shot Transfer**](../../literature/papers/2023-brahmbhatt-zero-shot-haptics-insertion.md)
 
 Cartesian 표현을 선택하는 기존 방향은 유지한다. Joint-space 대비 표현의 비교 근거와, 실제 코드에서 적용할 OSC 경로·파라미터는 별도로 확인해야 한다.
 
@@ -221,7 +221,7 @@ Wrench의 상쇄·보정 대상과 계산 방법, 힘·모멘트 각 성분의 �
 | **손목 6축 F/T** | 영점 Bias, 힘·모멘트 측정 잡음, Scale 오차, 보정 후 남는 부하 오차, 관측 지연 |
 | **Robot·Hand 고유감각** | 현재 사용하는 Joint Position·Velocity, EEF Pose와 저차원 Hand 상태의 관측 오차·지연, 센서 간 시간 정렬 오차 |
 
-Binary 촉각은 [**Ding et al. - Sim-to-Real Transfer for Robotic Manipulation with Tactile Sensory**](../literature/papers/2021-ding-sim-to-real-tactile-manipulation.md)의 **매 Bit·매 Timestep 반전**을 구현을 참조한다.
+Binary 촉각은 [**Ding et al. - Sim-to-Real Transfer for Robotic Manipulation with Tactile Sensory**](../../literature/papers/2021-ding-sim-to-real-tactile-manipulation.md)의 **매 Bit·매 Timestep 반전**을 구현을 참조한다.
 
 ## 3.4. 기존 정책 개요도
 
@@ -230,6 +230,6 @@ Binary 촉각은 [**Ding et al. - Sim-to-Real Transfer for Robotic Manipulation 
 
 아래 그림은 이전 설계의 참고 자료다. 현재 Observation 57차원·Action 8차원, 양면 촉각의 18차원 표현과 직전 Action 입력은 위 본문을 기준으로 한다. 그림의 이력·Hand Action 대안 등은 현재 설계와 다를 수 있으며, 원본 이미지는 수정하지 않았다.
 
-![기존 강화학습 정책 설계 개요도](../../img/tactile_representation_fig2.png)
+![기존 강화학습 정책 설계 개요도](../../../img/tactile_representation_fig2.png)
 
 </details>
