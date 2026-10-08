@@ -4,17 +4,17 @@
 
 이 폴더는 제공된 논문 원문을 읽고 **그 논문 자체의 문제 상황, 관련 연구, 환경·센서, 핵심 메소드, 실험, 저자들이 밝힌 Limitation과 Future Work**를 정리하는 곳이다. 여러 논문을 비교하거나 프로젝트 적용안을 제안하는 `reviews/`와 구분한다. 개별 노트에는 별도 연구 주제에 억지로 대응시킨 설명을 넣지 않는다.
 
-현재 상세 노트는 **33편**이다(2026-09-22). 제목으로 찾거나 아래 조사 그룹으로 이동한다. 각 표의 **ID를 누르면 원래 조사 항목**, 마지막 열을 누르면 상세 노트가 열린다.
+현재 상세 노트는 **34편**이다(2026-10-08). 제목으로 찾거나 아래 조사 그룹으로 이동한다. 각 표의 **ID를 누르면 원래 조사 항목**, 마지막 열을 누르면 상세 노트가 열린다.
 
 [사용자 확인 대기](#user-unchecked) · [Blind Pushing · R1–R7](#blind-pushing) · [IROS 후속 선정](#iros-selected) · [사용자 발굴](#user-found) · [Binary·F/T 후속 정독](#binary-wrench) · [ICRA 후보 선별 후속 정독](#icra-screening-followup) · [Wrist Wrench 후속 정독](#wrist-wrench-followup) · [작성 지침](#paper-guidelines)
 
-33편의 실행 관측·센서·방법·강건성·Sim-to-Real 조건을 함께 비교하려면 [5축 원문 비교](../reviews/2026-09-22_related-work-five-axis-evidence.md)와 [타임라인·Contribution 발표 초안](../../presentation/1st_draft/04_Related_Work_Timeline_and_Contributions.md)을 참조한다. 개별 노트의 정독·사용자 확인 상태와 별개인 종합 비교다.
+2026-09-22 기준 33편의 실행 관측·센서·방법·강건성·Sim-to-Real 조건을 함께 비교하려면 [5축 원문 비교](../reviews/2026-09-22_related-work-five-axis-evidence.md)와 [타임라인·Contribution 발표 초안](../../presentation/1st_draft/04_Related_Work_Timeline_and_Contributions.md)을 참조한다. 개별 노트의 정독·사용자 확인 상태와 별개인 종합 비교다.
 
 <a id="user-unchecked"></a>
 
 ## 사용자 확인 대기 상세 리뷰
 
-기준일: 2026-09-22. 아래 **9편은 원문 정독 및 상세 리뷰 작성은 완료되었지만, 사용자가 아직 직접 내용을 확인하지 않은 문헌**이다. 이 상태는 기존의 `원문 정독 완료` 여부와 별도로 관리하며, 사용자가 확인을 마치면 이 목록과 각 상세 노트의 상태 표기를 갱신한다.
+기준일: 2026-10-08. 아래 **10편은 원문 정독 및 상세 리뷰 작성은 완료되었지만, 사용자가 아직 직접 내용을 확인하지 않은 문헌**이다. 이 상태는 기존의 `원문 정독 완료` 여부와 별도로 관리하며, 사용자가 확인을 마치면 이 목록과 각 상세 노트의 상태 표기를 갱신한다.
 
 | 논문 | 사용자 확인 상태 | 상세 노트 |
 | --- | --- | --- |
@@ -27,6 +27,7 @@
 | Enhancing Tactile-based Reinforcement Learning for Robotic Control | **미확인** | [2025 · Miller et al.](2025-miller-enhancing-tactile-rl.md) |
 | Beyond Binary: Sim-to-Real Dexterous Manipulation with Physics-Grounded Contact Representation | **미확인** | [2026 · Pan et al.](2026-pan-beyond-binary-cop-tactile.md) |
 | Framework for Robot Door Opening Based on Visual, Force, and Tactile Integration | **미확인** | [2026 · Šimundić et al.](2026-simundic-visuo-force-tactile-door-opening.md) |
+| Memory-based Deep Reinforcement Learning for POMDPs | **미확인** | [2021 · Meng et al.](2021-meng-memory-based-deep-rl-pomdps.md) |
 
 <a id="blind-pushing"></a>
 
@@ -71,6 +72,7 @@
 | [USER-P001](../reviews/user-found-papers.md#user-p001) | Gentle Object Retraction in Dense Clutter Using Multimodal Force Sensing and Imitation Learning | 제공된 출판본 PDF 8쪽 전체 정독·정리 완료. Limitation·Future Work 포함 | [2026 · Brouwer et al.](2026-brouwer-gentle-object-retraction.md) |
 | [USER-P002](../reviews/user-found-papers.md#user-p002) | Sim2Real Manipulation on Unknown Objects with Tactile-based Reinforcement Learning | 제공된 arXiv:2403.12170v1 (2024-03-18) PDF 8쪽 전체 정독·정리 완료. 촉각 표현·PPO/reward·Table I–III·한계·향후 공개 계획 포함 | [2024 · Su et al.](2024-su-sim2real-tactile-manipulation.md) |
 | [USER-P003](../reviews/user-found-papers.md#user-p003) | Sim-to-Real Transfer for Robotic Manipulation with Tactile Sensory | 제공된 IEEE 출판본 PDF 8쪽 전체 정독·정리 완료. 30-element binary tactile, TD3 observation/reward, domain randomization·bit flipping, zero-shot door-opening 실험, Limitation·Future Work 포함 | [2021 · Ding et al.](2021-ding-sim-to-real-tactile-manipulation.md) |
+| [USER-P004](../reviews/user-found-papers.md#user-p004) | Memory-based Deep Reinforcement Learning for POMDPs | 제공된 arXiv:2102.12344v5 PDF 15쪽(본문 8쪽·보충 7쪽) 전체 정독·정리 완료. LSTM-TD3의 입력·구조·학습식, 6개 태스크, stacking 비교·ablation·저자 한계/Future Work·결과 예외 포함 | [2021 · Meng et al.](2021-meng-memory-based-deep-rl-pomdps.md) |
 
 <a id="binary-wrench"></a>
 

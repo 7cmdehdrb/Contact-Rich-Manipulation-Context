@@ -1,10 +1,10 @@
 # 사용자 별도 발굴 논문 — 누적 목록
 
-**최초 작성일: 2026-09-16 · 최근 갱신일: 2026-09-20**
+**최초 작성일: 2026-09-16 · 최근 갱신일: 2026-10-08**
 
 [문서 안내](../../README.md) · [문헌 색인](../README.md) · [조사 그룹](README.md) · [전체 논문](../papers/README.md)
 
-**상세 노트 바로가기:** [USER-P001 · Gentle Object Retraction](../papers/2026-brouwer-gentle-object-retraction.md) · [USER-P002 · Sim2Real Tactile Manipulation](../papers/2024-su-sim2real-tactile-manipulation.md) · [USER-P003 · Tactile Sim-to-Real Door Opening](../papers/2021-ding-sim-to-real-tactile-manipulation.md)
+**상세 노트 바로가기:** [USER-P001 · Gentle Object Retraction](../papers/2026-brouwer-gentle-object-retraction.md) · [USER-P002 · Sim2Real Tactile Manipulation](../papers/2024-su-sim2real-tactile-manipulation.md) · [USER-P003 · Tactile Sim-to-Real Door Opening](../papers/2021-ding-sim-to-real-tactile-manipulation.md) · [USER-P004 · Memory-based Deep RL for POMDPs](../papers/2021-meng-memory-based-deep-rl-pomdps.md)
 
 ## 1. 이 목록의 범위
 
@@ -21,8 +21,9 @@
 | USER-P001 | 2026-09-16 | **Gentle Object Retraction in Dense Clutter Using Multimodal Force Sensing and Imitation Learning** — Brouwer et al., IEEE RA-L 11(2), 1578–1585, 2026. [DOI](https://doi.org/10.1109/LRA.2025.3643332) | 사용자 별도 발굴·출판본 PDF 제공. 8쪽 전체 정독 완료. Limitation·Future Work 포함. 코드·보충 영상 미확인 | [2026 · Brouwer et al.](../papers/2026-brouwer-gentle-object-retraction.md) |
 | USER-P002 | 2026-09-18 | **Sim2Real Manipulation on Unknown Objects with Tactile-based Reinforcement Learning** — Su et al., arXiv:2403.12170v1, 2024-03-18. [v1 원문](https://arxiv.org/abs/2403.12170v1) | 사용자 별도 발굴·arXiv v1 PDF 제공. 8쪽 전체 정독 완료. 저자 명시 한계·향후 공개 계획 포함. 이후 출판본·코드 미확인 | [2024 · Su et al.](../papers/2024-su-sim2real-tactile-manipulation.md) |
 | USER-P003 | 2026-09-20 | **Sim-to-Real Transfer for Robotic Manipulation with Tactile Sensory** — Ding et al., IROS 2021, pp. 6778–6785. [DOI](https://doi.org/10.1109/IROS51168.2021.9636259) | 사용자 제공 IEEE 출판본 PDF 8쪽 전체 정독 완료. 30-element binary tactile, TD3, zero-shot sim-to-real, Limitation·Future Work 포함. 코드·보충자료 미확인 | [2021 · Ding et al.](../papers/2021-ding-sim-to-real-tactile-manipulation.md) |
+| USER-P004 | 2026-10-08 | **Memory-based Deep Reinforcement Learning for POMDPs** — Meng, Gorbet, Kulić, IROS 2021. [arXiv v5](https://arxiv.org/abs/2102.12344v5) | 사용자 지정 별도 발굴 분류·arXiv v5 PDF 제공. 본문 8쪽·보충자료 7쪽 전체 정독 완료. LSTM-TD3·stacking 비교·학습식·ablation·Limitation/Future Work 포함. 코드·실험 재현 미수행 | [2021 · Meng et al.](../papers/2021-meng-memory-based-deep-rl-pomdps.md) |
 
-현재 등록 3편, 첨부 원문 정독 완료 3편이다. 코드 실행·정책 재학습·실험 재현 완료 수를 뜻하지 않는다.
+현재 등록 4편, 첨부 원문 정독 완료 4편이다. 코드 실행·정책 재학습·실험 재현 완료 수를 뜻하지 않는다.
 
 ## 3. 등록 논문별 확인 내용
 
@@ -58,6 +59,16 @@ Franka Panda gripper 양 finger pad에 총 30개의 in-house resistive tactile e
 
 저자들은 joint-based force/torque sensing이 kinematic chain과 multiple contact force의 entanglement 때문에 **contact area를 직접 제공하기 어렵고**, tactile은 local/direct contact detail을 제공할 수 있다고 명시한다. 실물에서 tactile policy의 평균 door angle은 21.5°에서 31.2°로 증가하고 step 수는 275.6에서 176.3으로 감소했다. 단, proposed actor에 별도 F/T input은 없으며 tactile-vs-F/T ablation도 아니다. Sensor modeling, 25D+30D observation, reward, randomization, calibration, 결과·한계·Future Work는 [상세 노트](../papers/2021-ding-sim-to-real-tactile-manipulation.md)에 기록했다. [첨부 출판본 §I, §IV–VI, Table III, PDF pp. 1, 4–8]
 
+<a id="user-p004"></a>
+
+### 3.4. USER-P004 — 확인된 내용과 분류 주의
+
+**서지:** L. Meng, R. Gorbet, and D. Kulić, “Memory-based Deep Reinforcement Learning for POMDPs,” IROS 2021. 이번 정독은 사용자 제공 **arXiv:2102.12344v5, 2021-09-13**의 본문 8쪽과 보충자료 7쪽을 기준으로 한다. [제공 버전](https://arxiv.org/abs/2102.12344v5) · [저자 게재 안내](https://linghengmeng.github.io/publications/meng-2021-iros/).
+
+현재 관측의 MLP 특징과 과거 관측·행동의 LSTM memory를 분리한 뒤 결합하는 **LSTM-TD3의 actor·critic을 직접 학습**한다. 6개 PyBullet-Gym 연속 제어 태스크에서 MDP와 속도 제거·관측 전체 누락·잡음·일부 항목 누락을 비교한다. Feedforward TD3, 관측 stacking, 관측·행동 stacking, LSTM을 비교하므로 정책 구조 비교 문헌에 해당하지만 CNN·Transformer 비교는 없다. **Privileged critic·teacher 또는 특권 상태 복원 모듈을 사용하는 논문이 아니며 실물 검증도 없다.** [첨부 v5 본문 §IV–VI; 보충 Table II]
+
+보충 Table II의 지표는 최종 return·성공률이 아닌 **Maximum Average Return**이다. Hopper–FLK에서는 LSTM-TD3(5)가 TD3-OW보다 높지만 HalfCheetah–FLK에서는 반대다. TD target·actor objective, CFE/PA/DC/TPS ablation, 고정 history와 계산 비용·memory 해석의 한계, 동적 history·SAC 확장 등 저자의 향후 연구와 표기 불일치는 [상세 노트](../papers/2021-meng-memory-based-deep-rl-pomdps.md)에 구분했다. [첨부 v5 본문 §VII–VIII; 보충 §II, Table II–III]
+
 ## 4. 이후 추가·갱신 규칙
 
 `USER-P001`, `USER-P002`, …처럼 **등록 순서의 고유 ID**를 부여한다. 이 번호는 우선순위나 논문 평가 점수가 아니며, R 번호·IROS-S 번호·논문 자체의 참고문헌 번호와 섞지 않는다. 등록 후 순서를 바꾸어도 ID를 재사용하거나 재번호화하지 않는다.
@@ -80,3 +91,4 @@ Franka Panda gripper 양 finger pad에 총 30개의 in-house resistive tactile e
 | 2026-09-17 | 목록을 `reviews/user-found-papers.md`로 이동하고 조사 그룹 안내·상세 노트와 양방향으로 연결. 등록 ID와 기존 내용·정독 상태 유지 |
 | 2026-09-18 | USER-P002 등록. arXiv:2403.12170v1 8쪽 상세 정리·고정 anchor·상단 바로가기와 색인 연결 추가. 기존 등록·조사 분류 유지 |
 | 2026-09-20 | USER-P003 등록. IROS 2021 IEEE 출판본 8쪽 상세 정리·binary tactile sim-to-real·F/T contact-area motivation·TD3/door-opening 실험·고정 anchor와 색인 연결 추가 |
+| 2026-10-08 | USER-P004 등록. arXiv:2102.12344v5 본문·보충자료 15쪽 정독, LSTM-TD3 구조·학습·baseline/ablation·저자 한계/Future Work·결과 예외를 정리하고 고정 anchor·색인을 연결 |
