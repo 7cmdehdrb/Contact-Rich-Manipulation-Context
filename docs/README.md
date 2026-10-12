@@ -20,7 +20,7 @@
 | 선행연구를 바탕으로 논의할 적용 후보 | [9월 18일 미팅 검토 자료](literature/reviews/2026-09-17_force-tactile-sweeping-meeting.md) | 촉각·F/T·RL 결합·보상별 검토안과 근거 |
 | 제목을 아는 논문의 상세 정리 | [전체 논문 색인](literature/papers/README.md) | 각 노트 상단의 원래 조사 링크 |
 | 직접 제공한 논문의 등록·정독 상태 | [사용자 발굴 논문](literature/reviews/user-found-papers.md) | [전체 논문 색인](literature/papers/README.md) |
-| Inspire Hand Sweeping의 단계별 학습 결과와 후속 검증 | [학습 기록](logs/README.md) | [구현·평가 설계](05_IMPLEMENTATION_AND_EVALUATION.md) |
+| Inspire Hand Sweeping의 단계별 학습 결과와 후속 검증 | [학습 기록](logs/README.md) | [최종 정책 구현·검증 TODO](logs/TODO.md) · [구현·평가 설계](05_IMPLEMENTATION_AND_EVALUATION.md) |
 | 새 실험 기록 작성 | [연구 로그 템플릿](../templates/RESEARCH_LOG.md) | [다음 작업의 완료 기준](04_NEXT_ACTIONS.md) |
 
 ## 문헌을 읽는 경로

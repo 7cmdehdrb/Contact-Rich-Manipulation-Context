@@ -1,6 +1,6 @@
 # Inspire Hand Sweeping 학습 기록
 
-[문서 안내](../README.md)
+[문서 안내](../README.md) · [최종 정책 구현·검증 TODO](TODO.md)
 
 기준일: 2026-10-12.
 
