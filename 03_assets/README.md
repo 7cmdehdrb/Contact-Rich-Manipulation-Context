@@ -6,6 +6,7 @@
 
 | 위치 | 저장 자료 | 설명 문서 |
 | --- | --- | --- |
+| [학습 실행 UML](inspire-sweep-training.html), [환경 상속 UML](inspire-sweep-inheritance.html) | Baseline의 Isaac Lab·RSL-RL 연결, 네 환경의 설정 상속과 callable 연결을 보여주는 자체 포함 HTML | [활성 환경](../02_implementation/08_ACTIVE_ENVIRONMENTS.md), [작성·검증 기록](../02_implementation/logs/2026-10-14_inspire_sweep_uml.md) |
 | [img/](img/) | 연구·발표·실험 그림과 이미지 | [발표 안내](../01_plan/presentation/README.md), [실험 기록](../02_implementation/README.md#수행한-실험과-재현) |
 | [csv/](csv/) | 학회별 논문 제목 목록 | [문헌조사 안내](../01_plan/literature/README.md) |
 | [pdf/](pdf/) | 보관된 발표 PDF | [발표 안내](../01_plan/presentation/README.md) |
