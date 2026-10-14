@@ -1,0 +1,108 @@
+# Agent Operating Instructions
+
+기준일: 2026-10-14. 이 문서는 이 저장소를 읽고 연구·코드·문서 작업을 이어받는 에이전트의 프로젝트 지침이다.
+
+[에이전트 진입점](../AGENTS.md) · [전체 문서 안내](../README.md) · [문서 구조와 생산 규칙](DOCUMENT_STRUCTURE.md)
+
+폴더 분류·문서 생산·읽기·이동·참조 검사에는 [문서 구조 규칙](DOCUMENT_STRUCTURE.md)을 적용한다. 네 콘텐츠 폴더는 지침, 연구·계획, 실제 구현 기록, 정적 자산을 각각 담당한다. 본문의 저장소 기준 경로는 모두 저장소 루트에서 해석한다.
+
+## 1. 담당 연구를 정확히 식별하라
+
+대상은 **석사생 1의 초기 시각 정보 이후 힘·촉각 기반 Blind Sweeping 하위 정책**이다. 플랫폼 계획은 UR5e–손목 6축 F/T–Inspire Hand다. 상위 탐색·판단, 접근 계획, 석사생 2의 시각 기반 접근·회전·밀기 연구는 관련 배경일 뿐 본 작업의 자동 포함 범위가 아니다.
+
+작업 전에 `01_plan/00_HANDOFF_BRIEF.md`, `01_plan/03_DECISIONS_AND_OPEN_QUESTIONS.md`, `01_plan/04_NEXT_ACTIONS.md`를 읽어라. 문서를 새로 작성하거나 수정할 때는 `00_guidelines/rules/document-formatting.md`도 읽고 따른다. 코드 수정이면 `02_implementation/07_CODE_AND_HARDWARE_STATUS.md`, `02_implementation/08_ACTIVE_ENVIRONMENTS.md`, `00_guidelines/09_DEVELOPMENT_GUIDE.md`와 실제 활성 코드를 읽어라. 설계·평가 작업은 `01_plan/05_IMPLEMENTATION_AND_EVALUATION.md`와 `01_plan/presentation/README.md`를, workspace·문서 이동은 `00_guidelines/10_WORKSPACE_GUIDE.md`를 먼저 확인한다.
+
+## 2. 사실·방향·설계·성과를 분리하라
+
+- 현재 사용자의 명시적 지시와 후속 결정이 과거 문서보다 우선한다. 날짜가 늦어도 다른 학생이나 다른 연구의 결정이면 자동 적용하지 않는다.
+- 교수 피드백, 학생 제안, 회의 정리자의 해석, 이번 인계에서 작성한 실험 제안을 구분한다.
+- `CONFIRMED_DIRECTION`을 구현 완료로, `REPORTED_IMPLEMENTED`를 코드 검증 완료로 해석하지 않는다.
+- 출처가 없는 주장을 교수의 지시로 쓰지 않는다. STT의 정확한 발언·시간표시를 확인하지 못했으면 만들지 않는다.
+- 미정 항목을 필요한 만큼 제안할 수는 있다. 다만 `PROPOSED`로 표시하고 이유, 대안, 검증 방법을 함께 남긴다. 임의의 수치나 선택을 확정 사양으로 저장하지 않는다.
+- 출처를 못 읽었으면 무엇을 못 읽었는지 기록하고, 확보된 근거로 가능한 작업을 진행한다. 존재하지 않는 파일 경로·실험 결과·논문 내용을 만들지 않는다.
+
+## 3. 범위를 잘못 확장하지 말라
+
+금지되는 자동 추론은 다음과 같다.
+
+| 잘못된 추론 | 유지해야 할 구분 |
+| --- | --- |
+| Blind이므로 초기 시각도 쓰면 안 된다 | 초기 시각 허용, 실행 중 연속 시각 추적 없음 |
+| Blind이므로 주변 정보는 처음부터 전부 금지다 | 초기 주변 정보 허용; 하위 입력 범위는 미정 |
+| 상위 계획이 있으니 항상 센서 부위에 정확히 접촉한다 | 실제 접촉·센서 커버리지 불확실성이 핵심 연구 문제 |
+| 성공하려면 Home부터 접근까지 RL로 학습해야 한다 | 접근 완료 후 물체 근처에서 시작 |
+| 9월 13일 문서가 ‘최종’이므로 간섭 중단을 먼저 구현한다 | 9월 14일에 기본 센싱 검증 이후로 연기 |
+| 후순위 중단 기능을 빼므로 안전 정지도 없앤다 | 연구용 간섭 판별과 독립적인 안전 감독은 별개 |
+| 물체 하나부터 하라 했으니 최종 연구는 단일 물체다 | 단순 환경은 문제 분리용; 최종 clutter 범위는 미정 |
+| 두 연구를 합쳐야 하니 Pivoting·접근·장면 판단을 추가한다 | 석사생 2와 책임 범위를 구분 |
+| 과거 Rotation-Constrained Sweep이므로 회전 0을 하드 제약으로 둔다 | 엄격한 무회전 제약은 최신 확정 사양이 아님 |
+| `research_roadmap.md`를 반드시 모두 구현해야 한다 | 사용자가 초안에 매몰되지 말라고 명시 |
+
+## 4. 센서 정보와 시뮬레이션 정답을 혼동하지 말라
+
+정책 실행 입력, 학습용 정답, 평가용 정답, 안전 감독 입력을 분리한다. 현재 물체의 GT Pose·속도·접촉 물체 ID·주변 물체 정답 상태가 최종 Blind actor에 들어가지 않는지 검사한다. 정확한 초기 GT를 이용한 디버그와 실행 중 GT를 계속 받는 oracle 정책은 다르다. Oracle 실험은 허용할 수 있지만 결과에 명시한다.
+
+6축 F/T+17차원 촉각의 23차원은 **한 시점의 접촉 표현 후보**이지 전체 observation dimension이 아니다. 17개 영역의 원시 Grid를 scalar/Boolean으로 축약하는 안과 실제 센서 출력 차원을 구분한다. 센서 무출력·통신 끊김·비센서 부위 접촉·정상 무접촉을 동일하게 단정하지 않는다.
+
+EEF 이동 거리를 물체 이동 거리로 대체하여 성공했다고 쓰지 않는다. 실물에서 사용할 종료 판정과 GT 기반 평가용 성공 판정을 따로 명시한다. 물체·센서 성능의 실측값이 없으면 임계값을 발명하지 않는다.
+
+## 5. 코드 작업 전의 필수 확인
+
+이 저장소는 문서 전용 submodule이며 상위 workspace의 활성 코드는 `src/inspire_sweep_baseline`, `src/axia80_feasibility`다. 그 밖의 패키지는 `src/trash`에 보존한다. 구현 저장소·브랜치·커밋, 환경 클래스와 설정 상속, observation/action/reward/termination/reset, controller와 실제 적용 runner를 읽어라. 발표의 OSC 설계와 현재 baseline의 Joint Position action을 구분한다. Manager-based RL의 OOP 원칙과 환경 계약·로그 기준은 `00_guidelines/09_DEVELOPMENT_GUIDE.md`를 따른다.
+
+수정은 요청 범위의 최소 변경으로 한다. 기존 동작을 확인하지 않고 재작성하거나, 모든 문제를 PPO learning rate·entropy·네트워크 크기로 설명하지 않는다. 실행하지 않은 테스트는 통과했다고 쓰지 않는다. 변경 내역, 확인한 테스트, 실행하지 못한 테스트를 남긴다.
+
+장비 이상은 관측·로그·전원·연결·설정·소프트웨어를 구분해 진단한다. 원인 불명이라는 이유로 시스템 네트워크·드라이버·공통 환경을 무차별 변경하거나 안전 정지를 자동 해제하지 않는다. 반대로 소프트웨어가 정상이라고 근거 없이 단정하지도 않는다. 구체적인 환경 자동화 프로젝트는 별도 범위다.
+
+## 6. 연구 지원 방식
+
+당면 우선순위는 제한 센싱의 가용성과 실패 조건, 기본 조작 가능성, 센서별 기여 비교다. 추가 기능으로 기여를 꾸미기 전에 현재 문제가 기존 연구에서 어떻게 다뤄졌는지 확인한다. 논문은 실제 원문을 읽고 센서·관측·태스크·실물 검증 조건을 비교한다. 과거 대화에서 이름만 등장한 논문을 읽은 것으로 취급하지 않는다.
+
+실험 수·seed 수·분포·성공 임계값·훈련량은 제안과 실제 수행값을 구분한다. 불리한 실패 사례와 소음·접촉·센서 사각지대 문제도 기록한다. 피드백은 무조건 긍정하거나 부정하지 말고 관측 가능성, 실행 가능성, 연구 가치의 근거로 제시한다.
+
+### 논문 정리의 Main Method — 2026-09-21 추가
+
+논문 상세 정리에서 메인 메소드는 구성요소의 이름과 입출력만 나열하지 않는다. 독자가 원문을 다시 열기 전에 **무엇이 어떤 순서로 처리되어 행동 또는 추정 결과가 되는지**, 그리고 그 과정이 학습과 실행에서 어떻게 다른지를 따라갈 수 있을 정도로 설명한다.
+
+원문에 해당 내용이 존재하는 범위에서 다음을 확인한다.
+
+- 문제 정의와 방법이 전제로 두는 상태·관측 가능성·환경 가정
+- 센서 또는 raw state에서 전처리, history·latent·feature, fusion을 거쳐 정책·추정기로 들어가는 정보 흐름
+- actor·critic·teacher·reward·controller 등 구성요소별 입력과 privileged information의 경계
+- action·prediction의 표현, 좌표계, scale·clip, 명령 주기와 low-level controller 또는 후처리로의 연결
+- network block, algorithm stage, state transition과 학습·추론 절차의 실행 순서
+- loss·reward·constraint의 각 항이 어느 변수에 작용하고 메소드에서 수행하는 역할
+- curriculum, domain randomization, data collection·replay·demonstration 등 학습을 성립시키는 핵심 절차
+- ablation의 각 조건이 메소드의 어느 구성요소를 제거·교체하며 무엇을 검증하는지
+
+핵심 식은 옮겨 적는 데 그치지 않고 변수, 계산 대상, 다음 단계에 미치는 영향을 설명한다. 원문 figure나 algorithm이 메소드 이해에 필수이면 그 흐름을 본문 또는 간결한 표로 재구성한다. 표준 backbone과 논문의 새 기여, simulation에서만 쓰는 정보와 실제 배포 입력을 분리한다. 반대로 원문에 없는 architecture·parameter·처리 순서는 보완해 만들지 않고 `미명시`로 남긴다.
+
+메소드 설명의 완료 여부는 문서 길이가 아니라 **입력 → 내부 처리 → 출력·제어 → 학습 신호 → 검증 ablation**의 연결을 추적할 수 있는지로 판단한다. 이후 새로 작성하거나 사용자가 재검토를 요청한 개별 논문 노트에 적용하며, 이 지침만을 이유로 기존 노트를 일괄 수정하지 않는다. 세부 기준은 [개별 논문 정독 지침](../01_plan/literature/papers/README.md)을 따른다.
+
+### 논문 정리의 Limitation 및 Future Work — 2026-09-15 추가
+
+논문 내용 정리 시, **각 연구의 저자들이 밝히는 Limitation(한계) 및 Future Work(향후 연구)도 반드시 정리한다.** 두 항목을 구분하고 원문의 절·페이지 등 근거 위치를 함께 기록한다. 독립된 제목의 절이 없더라도 Discussion, Conclusion 또는 본문에 명시된 내용을 확인한다. 저자들이 제시한 한계·향후 연구와 정리자의 비판·추론·제안을 혼합하지 않으며, 원문에 명시되지 않은 항목은 미명시로 남긴다. 향후 계획을 이미 구현·검증된 성과로 서술하지 않는다.
+
+이 추가 지침은 **이후 새로 작성하는 논문 정리부터 적용**한다. 사용자의 요청에 따라 이번 변경 이전에 완료한 R1–R4 정리본과 기존 종합 조사본은 소급 수정 대상에서 제외한다. 이 지침 추가를 이유로 기존 문서를 일괄 보완하지 않는다. 공통 정리 구조와 세부 기준은 [개별 논문 정독 지침](../01_plan/literature/papers/README.md)을 따른다.
+
+## 7. 결과물과 문서 갱신
+
+결과는 한국어의 직접적이고 전문적인 문장으로 작성한다. 현재 상태, 새로 확인한 사실, 수정한 결정, 다음 행동을 구분한다. 논의만 진행했다면 ‘구현했다’고 쓰지 않는다.
+
+전체 프로젝트 flow·연구·계획·결정·상태·로그는 이 문서 저장소에서 관리한다. `example/Sweep-Policy/docs`에는 해당 참고 환경의 설명을, workspace 루트 `docs`에는 두 프로젝트와 무관한 일반 지식을 둔다. 새 결정은 `01_plan/03_DECISIONS_AND_OPEN_QUESTIONS.md`에, 미팅은 `01_plan/02_MEETING_HISTORY.md`에, 개발 로그는 `02_implementation/logs/YYYY-MM-DD_<topic>.md`에 남긴다. 실험은 `00_guidelines/templates/RESEARCH_LOG.md` 형식으로 기록하며, 수행 전 계획은 `01_plan/experiments/`, 수행한 조건·결과는 `02_implementation/experiments/`, 원시 근거는 `03_assets/`에 둔다. 환경의 상속 구조와 정확한 실행 명령·기준 commit·검증·미실행 항목을 기록한다. 범위가 바뀌면 brief와 next actions도 갱신한다. 공개 저장소에 원본 녹취 전체, 무관한 개인 정보, 인증 정보, 센서 접속 비밀정보를 추가하지 않는다.
+
+### Markdown 수식 렌더링 검사 — 2026-09-20 추가
+
+Markdown 문서를 새로 작성하거나 수정할 때는 [Markdown 문서 형식 규칙](rules/document-formatting.md)을 따른다. 특히 `$$` display math 내부에서 `=`·`-` 같은 Markdown 구조 문법을 독립된 물리적 줄로 두지 않는다. GitHub가 이를 Setext heading 등으로 해석하여 수식 블록을 깨뜨릴 수 있다. 또한 일반 MathJax에서 동작하는 매크로라도 GitHub Markdown에서 차단될 수 있다. 2026-09-21에는 `\operatorname`이 `The following macros are not allowed: operatorname` 오류를 발생시키는 사례를 확인했으므로 사용하지 않는다. 사용자 정의 연산자 표기는 `\mathrm{...}` 같은 GitHub 안전 기본 표기를 우선한다.
+
+Push 전에 **이번 작업에서 생성·수정한 Markdown 파일만** 다음 검사기에 전달한다.
+
+`python 00_guidelines/scripts/check_markdown_math.py <changed-file.md> [more.md ...]`
+
+검사가 실패하면 복잡한 display 수식은 `math` fence로 옮기고, inline 수식은 GFM-sensitive escape를 named macro로 바꾸며, 금지 매크로가 있으면 GitHub 안전 표기로 교체한다. 검사기는 `\operatorname`, GFM-sensitive escape, HTML entity, brace·delimiter·environment 불균형을 확인한다. `git diff --check` 통과만으로 수식 렌더링이 안전하다고 판단하지 않는다. 기존 문서를 일괄 수정하기 위해 검사기를 저장소 전체에 무조건 적용하지 않는다.
+
+### 문서 구조와 양방향 연결 — 2026-09-17 추가
+
+문서 탐색은 [전체 문서 안내](../README.md)에서 시작한다. 문헌의 조사·선별·사용자 발굴 목록은 `01_plan/literature/reviews/`에, 개별 상세 정리는 `01_plan/literature/papers/`에 둔다. 사용자 발굴 목록의 고정 경로는 `01_plan/literature/reviews/user-found-papers.md`다.
+
+논문 노트를 추가할 때 원래 보고서의 상단 바로가기·해당 논문 항목에서 노트로 연결하고, 노트 상단에서 원래 조사 항목으로 돌아오도록 한다. 조사 그룹 안내·전체 논문 색인·문헌 색인도 함께 갱신한다. 상세 파일이 없는 항목에는 가짜 링크나 빈 노트를 만들지 않는다. 경로를 옮기면 모든 참조와 관리 규칙을 갱신하고 파일·anchor·도달성을 검사한다. 구체적인 절차는 [문서 연결 관리](../01_plan/literature/README.md#literature-navigation)를 따른다.
