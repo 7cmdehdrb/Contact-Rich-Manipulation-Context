@@ -23,6 +23,7 @@
 | 2026-10-15 | [패드·F/T 코드 구현 상세](2026-10-15_sensor_code_flow_diagrams.md) | 기존 Flow 유지, USD 패드 구성·영역 생성·PhysX view·텐서 계산·F/T authoring의 상세도와 실제 소스 발췌 |
 | 2026-10-15 | [Dex Omni 기록 갱신 보상](2026-10-15_dex_omni_rewards.md) | DexTouch 거리 개선량 shaping, OmniV2 페널티·종료·스폰 보존, 새 task 등록과 CPU 회귀 검증 |
 | 2026-10-15 | [환경별 구성 문서 작성](2026-10-15_environment_contract_notes.md) | Sweep Omni v3·Dex Omni v0 독립 설명, 현재 작업트리 기준·CPU 및 문서 검증 |
+| 2026-10-15 | [Omni v4 속도 비용과 종료 조건](2026-10-15_omni_v4_speed_penalty.md) | V3 상속·Arm/물체 속도 기준 변경·외곽/성공 종료 제거·제곱 속도 비용과 CPU 검증 |
 
 - [Omni v2 접근·목표 진전 보상](2026-10-15_omni_v2_rewards.md) — 로컬 구현·후속 보상 및 종료 변경 기록.
 - [Omni v3 높이 조건부 XY Reaching](2026-10-15_omni_v3_height_gated_reaching.md) — 현재 v2 상속, Z gate와 XY 기록 갱신, CPU 83개 검사.
@@ -32,3 +33,11 @@
 Pull/rebase 중 문서 이관 충돌의 처리 내역은 [충돌 해결 기록](2026-10-14_rebase_conflict_resolution.md)에 남겼다.
 
 - [2026-10-15 Omni 공통 운동 페널티](2026-10-15_omni_penalty_contract.md): 모든 Omni 파생에 raw Action·관절 속도 제곱합과 필수 사용 규칙 적용.
+
+- [2026-10-15 V4 초기 Arm 속도 종료](2026-10-15_omni_v4_early_termination.md): 로컬 V3/V4·보관 Dex·원격 TensorBoard 비교, 현재 코드와 run 저장 설정 구분 및 미확정 원인.
+
+- [2026-10-15 V4에 저장 V3 파라미터 적용](2026-10-15_omni_v4_saved_parameters.md): 원격 정상 run의 Arm 속도 threshold 5.0을 코드 기본값에 반영하고 V4 전용 조건 유지.
+
+- [2026-10-15 V4 최대 Arm 속도 추가 비용](2026-10-15_omni_v4_arm_speed_excess.md): 기존 비용 유지, 최대 절대속도 1.0부터 제곱 증가·2.0에서 weighted −0.03.
+
+- [2026-10-15 Renewal 환경 재구성](2026-10-15_omni_renewal_environments.md): V4 동작과 동일한 명시적 환경 구성·Dex의 두 보상 교체·Gym 등록과 CPU 계약 검증.
