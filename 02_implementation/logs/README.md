@@ -22,6 +22,7 @@
 | 2026-10-15 | [Tactile·F/T 구현 Flow](2026-10-15_sensor_flow_diagrams.md) | 직접 접촉·영역 투영·6축 반력 변환의 HTML 흐름도, 코드 근거와 검증 범위 |
 | 2026-10-15 | [패드·F/T 코드 구현 상세](2026-10-15_sensor_code_flow_diagrams.md) | 기존 Flow 유지, USD 패드 구성·영역 생성·PhysX view·텐서 계산·F/T authoring의 상세도와 실제 소스 발췌 |
 | 2026-10-15 | [Dex Omni 기록 갱신 보상](2026-10-15_dex_omni_rewards.md) | DexTouch 거리 개선량 shaping, OmniV2 페널티·종료·스폰 보존, 새 task 등록과 CPU 회귀 검증 |
+| 2026-10-15 | [환경별 구성 문서 작성](2026-10-15_environment_contract_notes.md) | Sweep Omni v3·Dex Omni v0 독립 설명, 현재 작업트리 기준·CPU 및 문서 검증 |
 
 - [Omni v2 접근·목표 진전 보상](2026-10-15_omni_v2_rewards.md) — 로컬 구현·후속 보상 및 종료 변경 기록.
 - [Omni v3 높이 조건부 XY Reaching](2026-10-15_omni_v3_height_gated_reaching.md) — 현재 v2 상속, Z gate와 XY 기록 갱신, CPU 83개 검사.
