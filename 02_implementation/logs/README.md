@@ -23,6 +23,9 @@
 | 2026-10-15 | [패드·F/T 코드 구현 상세](2026-10-15_sensor_code_flow_diagrams.md) | 기존 Flow 유지, USD 패드 구성·영역 생성·PhysX view·텐서 계산·F/T authoring의 상세도와 실제 소스 발췌 |
 | 2026-10-15 | [Dex Omni 기록 갱신 보상](2026-10-15_dex_omni_rewards.md) | DexTouch 거리 개선량 shaping, OmniV2 페널티·종료·스폰 보존, 새 task 등록과 CPU 회귀 검증 |
 
+- [Omni v2 접근·목표 진전 보상](2026-10-15_omni_v2_rewards.md) — 로컬 구현·후속 보상 및 종료 변경 기록.
+- [Omni v3 높이 조건부 XY Reaching](2026-10-15_omni_v3_height_gated_reaching.md) — 현재 v2 상속, Z gate와 XY 기록 갱신, CPU 83개 검사.
+
 새 기록은 `YYYY-MM-DD_<topic>.md` 형식으로 만든다. 환경의 상속 관계·전체 task ID·실행 명령·기준 commit·변경과 검증·미확인 항목을 남긴다. 실험 조건과 정량 결과는 `02_implementation/experiments/`에 연결하고, 연구 방향의 변화는 결정·brief·다음 작업 문서도 갱신한다. 과거 로그의 당시 결론은 유지하며 새 관찰은 새 날짜의 기록으로 추가한다.
 
 Pull/rebase 중 문서 이관 충돌의 처리 내역은 [충돌 해결 기록](2026-10-14_rebase_conflict_resolution.md)에 남겼다.
