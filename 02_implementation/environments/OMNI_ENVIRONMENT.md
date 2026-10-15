@@ -4,6 +4,8 @@
 
 2026-10-14 문서 위치 정리: 기존 패키지 문서의 내용과 초기 시험값을 보존하고 구현 링크를 갱신했다.
 
+2026-10-14 후속 변경: Omni v0/v1의 Arm action 변화 비용과 속도 비용을 Baseline의 제곱합/가중치 −0.03 수준으로 변경했다. 아래 보상 설명은 변경 후 코드 기준이며, [변경·검증 로그](../logs/2026-10-14_omni_arm_costs_baseline.md)에 이전 값과 검증을 기록했다.
+
 `Isaac-Inspire-Sweep-Omni-v0`는 UR5e와 Inspire Hand로 선반 위의 단일 실린더를 임의의 수평 방향 목표로 이동시키는 환경이다. Initial Joint에서 접근을 시작하고, 목표에서 물체를 안정적으로 정지시키면 성공한다. 목표 도달 후 Homing은 수행하지 않는다.
 
 환경 설정은 `InspireSweepOmniEnvCfg`가 `InspireSweepEnvCfg`를 직접 상속한다. Scene, Action, Observation, 목표 Command와 제어 주기는 Baseline을 사용하며, Event, Reward, Termination은 새 구성으로 교체한다. 질량·마찰은 Realistic Physics의 함수를 재사용한다. PPO는 `InspireSweepPPORunnerCfg`를 그대로 사용한다.
@@ -302,7 +304,7 @@ Wrench에는 손의 무게와 동역학 반력이 포함된다. 중력 보상, t
 r_step = reaching_progress + 30 × success − 80 × failure
        + Δt × [6 × goal_cost
                − 0.03 × arm_action_rate − 0.03 × hand_action_rate
-               − 0.01 × arm_joint_velocity − 0.01 × hand_joint_velocity
+               − 0.03 × arm_joint_velocity − 0.01 × hand_joint_velocity
                − 2 × object_tilt − 0.5 × shelf_collision − 0.1]
 ```
 
@@ -310,9 +312,9 @@ r_step = reaching_progress + 30 × success − 80 × failure
 | --- | ---: | --- |
 | `goal_distance` | +6.0 | 목표 평면 거리 비용 |
 | `reaching` | +1.0 | 새롭게 갱신한 최단 접근 거리의 진척 |
-| `arm_action_rate` | −0.03 | Arm 명령 급변 억제 |
+| `arm_action_rate` | −0.03 | Arm 6개 명령 변화량의 제곱합 |
 | `hand_action_rate` | −0.03 | Hand 명령 급변 억제 |
-| `arm_joint_velocity` | −0.01 | 실제 Arm 관절 속도 비용 |
+| `arm_joint_velocity` | −0.03 | 실제 Arm 6개 관절 속도의 제곱합 |
 | `hand_joint_velocity` | −0.01 | 실제 Hand 관절 속도 비용 |
 | `object_tilt` | −2.0 | 허용 범위 이상의 기울기 억제 |
 | `shelf_collision` | −0.5 | 기존 선반 이동·가상 손 기준점 높이 비용 |
@@ -353,22 +355,26 @@ reaching_progress[t] = (b[t−1] − b[t]) / max(d_reach[0], epsilon)
 ### 5.4 Arm과 Hand Action Rate
 
 ```text
-cost = mean(((u_current − u_previous) / normalization_scale)²)
+arm_cost = sum(((u_current − u_previous) / normalization_scale)²)
+hand_cost = mean(((u_current − u_previous) / normalization_scale)²)
 ```
 
 `action_group="arm"`은 앞 6개 입력, `action_group="hand"`는 뒤 2개 입력을 선택한다. `normalization_scale=1.0`은 명령 변화량을 나누는 기준 스케일이며 양수 scalar 또는 해당 그룹 크기의 벡터를 사용할 수 있다.
 
-Arm은 `0.5 × action` 변환 전의 입력 좌표에서 계산한다. Hand는 현재와 이전 입력을 각각 `[0, 1]`로 clip한 뒤 계산한다. 따라서 clip 범위 밖의 입력 변화가 실제 openness를 바꾸지 않으면 Hand Action Rate 비용도 늘지 않는다. 그룹별 제곱합이 아닌 제곱 평균을 사용한다.
+Arm은 `0.5 × action` 변환 전의 입력 좌표에서 계산하며 `reduction="sum"`으로 Baseline의 Arm 비용을 복원한다. Hand는 현재와 이전 입력을 각각 `[0, 1]`로 clip한 뒤 계산한다. 따라서 clip 범위 밖의 입력 변화가 실제 openness를 바꾸지 않으면 Hand Action Rate 비용도 늘지 않는다. Hand는 기본 `reduction="mean"`을 유지한다.
 
 ### 5.5 Arm과 Hand 관절 속도
 
 ```text
-cost = mean((actual_joint_velocity / reference_velocity)²)
+arm_cost = sum((actual_joint_velocity / reference_velocity)²)
+hand_cost = mean((actual_joint_velocity / reference_velocity)²)
 ```
 
 `asset_cfg`는 `robot`에서 평가할 관절을 지정한다. Arm은 6개 `ARM_JOINT_NAMES`, Hand는 12개 `HAND_JOINT_NAMES`를 각각 이름 순서로 선택한다. 현재 Hand 관절은 각 한 번만 포함한다.
 
 `reference_velocity=1.0 rad/s`는 속도 정규화 기준이다. 양수 scalar 또는 그룹별 관절 수에 맞는 벡터를 사용할 수 있다. 구동기 속도 한도나 종료 임계값과는 별도다. Hand의 절대 Action이나 특정 기준 자세와의 차이에 대한 비용은 없다.
+
+Arm은 `reduction="sum"`, weight −0.03으로 Baseline과 동일한 비용을 적용한다. Hand는 기본 `reduction="mean"`, weight −0.01을 유지한다. Reduction 함수 기본값은 평균이며 Omni Cfg가 Arm에만 합산을 명시한다.
 
 ### 5.6 물체 기울기
 

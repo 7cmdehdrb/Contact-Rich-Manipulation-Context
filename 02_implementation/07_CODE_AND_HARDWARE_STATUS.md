@@ -10,7 +10,7 @@
 
 | 항목 | 현재 확인한 사실 | 추가 확인 또는 적용 경계 |
 | --- | --- | --- |
-| 활성 학습 코드 | 독립 `inspire_sweep_baseline`에 Baseline·Realistic Physics·Initial Privileged·Omni task가 등록됨 | 등록·정적 계약과 실제 학습 성공을 구분 |
+| 활성 학습 코드 | 독립 `inspire_sweep_baseline`에 Baseline·Realistic Physics·Initial Privileged·Omni v0/v1·Baseline Tactile task가 등록됨 | Tactile은 17개 bit/57D. 등록·CPU 계약과 실제 GPU 접촉·학습 성공을 구분 |
 | 환경 상속 | 공통 `InspireSweepEnv`는 Isaac Lab `ManagerBasedRLEnv`를 상속하고, 설정 변형은 공통 기반 설정에서 분기 | 참고 프로젝트에서 가져온 이력과 Python 상속 의존성은 별개 |
 | 제어와 관측 | Arm Joint Position 6D + Hand 2D. 기본 baseline은 현재 물체 위치와 tactile/F/T를 포함한 41D | 발표의 57D/8D·OSC 또는 최종 Blind 정책과 동일하지 않음. 변형별 GT 경계는 활성 환경 문서 확인 |
 | 센서 검증 코드 | Axia80 정하중·cantilever·tilt·angle sweep 코드와 CPU 계약 검사가 있음 | 실제 물리 응답·새 실행 결과는 simulator 로그로 확인 |

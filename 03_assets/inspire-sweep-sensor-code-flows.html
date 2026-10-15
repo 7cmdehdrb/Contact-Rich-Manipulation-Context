@@ -1,0 +1,390 @@
+<!doctype html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Inspire Sweep · 센서 코드 구현 상세</title><link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&family=Noto+Serif:ital@0;1&family=Noto+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@400&family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@400&display=swap" rel="stylesheet"><style>*{box-sizing:border-box} :root{--sans:'Geist','Noto Sans KR',system-ui,sans-serif;--serif:'Instrument Serif','Noto Serif KR',serif;--mono:'Geist Mono',ui-monospace,monospace}body{margin:0;padding:48px 32px;background:#f5f5f5;color:#2d3142;font:15px/1.8 var(--sans)}main{max-width:1344px;min-width:0;margin:auto}h1,h2{font-family:var(--serif);font-weight:400;line-height:1.3;font-size:28px}h1{margin:12px 0 24px}h2{margin:0 0 16px}a{color:#2e5aa8;text-underline-offset:4px}.eyebrow{font:11px var(--mono);letter-spacing:.1em;color:#4f5d75}nav{display:flex;flex-wrap:wrap;gap:12px 24px;margin:28px 0}section{margin:56px 0 72px;scroll-margin-top:24px}.intro,.small{color:#4f5d75}.small{font-size:12px}.diagram-container{width:100%;overflow-x:auto;border:1px solid #bfc0c0;border-radius:6px}svg{width:100%;min-width:1280px;display:block}.name{font:600 12px var(--sans);fill:#2d3142}.note{font:12px var(--sans);fill:#4f5d75}.sub{font:9px var(--mono);fill:#4f5d75}.tag{font:8px var(--mono);fill:#4f5d75;letter-spacing:.06em}.explain{border-left:3px solid #bfc0c0;margin:24px 0;padding:0 24px;max-width:1180px}p{margin:12px 0}code{font-family:var(--mono);font-size:.9em;overflow-wrap:anywhere}details{border:1px solid #bfc0c0;border-radius:6px;margin:12px 0;background:#f5f5f5}summary{font-weight:600;cursor:pointer;padding:12px 20px}pre{margin:0;padding:20px;overflow-x:auto;border-top:1px solid #bfc0c0;background:#ececec;font:12px/1.65 var(--mono)}pre code{font-size:inherit;overflow-wrap:normal}pre,details{max-width:100%;min-width:0}.source{padding:0 20px;font-size:12px;overflow-wrap:anywhere}table{border-collapse:collapse;width:100%;font-size:13px;margin:24px 0}caption{text-align:left;font-weight:600;padding:12px 0}th,td{text-align:left;padding:12px 16px;border-bottom:1px solid #bfc0c0;vertical-align:top}footer{border-top:1px solid #bfc0c0;padding-top:20px;color:#4f5d75;font-size:12px}@media(max-width:600px){body{padding:24px 16px}table{font-size:12px}th,td{padding:8px}}@media print{body{padding:0}.diagram-container{overflow-x:visible}svg{min-width:0}section{break-before:page}nav{display:none}pre{white-space:pre-wrap}}
+</style></head><body><main><header><p class="eyebrow">SOURCE-LEVEL IMPLEMENTATION · 2026-10-15</p><h1>패드와 F/T 센서: 코드에서 어떻게 만드는가</h1><p>USD prim·collider·고정 조인트에서 PhysX view, 접촉점 텐서와 관측 term까지 실제 구현을 따라갑니다.<br>패드 구조는 원본 USD를 직접 읽어 확인했고, 코드 블록은 현재 파일에서 줄 번호와 함께 발췌했습니다.</p><p><a href="inspire-sweep-sensor-flows.html">기존 전체 흐름도</a> · <a href="../02_implementation/logs/2026-10-15_sensor_code_flow_diagrams.md">작성·검증 기록</a></p><nav><a href="#pad">01 · 패드 자산</a><a href="#metadata">02 · 영역 생성</a><a href="#views">03 · PhysX 연결</a><a href="#mapping">04 · 채널 계산</a><a href="#ft">05 · F/T 구현</a></nav></header><section id="pad"><p class="eyebrow">01 / CODE IMPLEMENTATION</p><h2>패드 하나는 무엇으로 구현되어 있는가?</h2><p class="intro">구조도 · 기존 USD의 손바닥 패드 한 개를 예로 든다. 17개 패드는 같은 방식으로 선택한다.</p><div class="diagram-container"><svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="inspire-sweep-sensor-code-flows-pad-title inspire-sweep-sensor-code-flows-pad-desc"><title id="inspire-sweep-sensor-code-flows-pad-title">패드 하나의 USD 구성과 런타임 연결</title><desc id="inspire-sweep-sensor-code-flows-pad-desc">손바닥 패드의 기존 rigid body와 fixed joint, 시각 mesh와 충돌 mesh가 런타임 접촉 보고와 ContactSensor view로 연결된다.</desc><defs><marker id="inspire-sweep-sensor-code-flows-pad-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#4f5d75"/></marker></defs><rect width="1280" height="720" fill="#f5f5f5"/><path class="connector" d="M 288 132 V 172" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#inspire-sweep-sensor-code-flows-pad-arrow)"/><path class="connector" d="M 288 248 V 288" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#inspire-sweep-sensor-code-flows-pad-arrow)"/><path class="connector" d="M 208 364 V 396 Q 208 404 200 404 H 196 Q 188 404 188 412 V 452" fill="none" stroke="#4f5d75" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#inspire-sweep-sensor-code-flows-pad-arrow)"/><path class="connector" d="M 368 364 V 396 Q 368 404 376 404 H 616 Q 624 404 624 412 V 452" fill="none" stroke="#4f5d75" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#inspire-sweep-sensor-code-flows-pad-arrow)"/><path class="connector" d="M 528 326 H 880" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#inspire-sweep-sensor-code-flows-pad-arrow)"/><path class="connector" d="M 1048 364 V 452" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#inspire-sweep-sensor-code-flows-pad-arrow)"/><g class="node"><rect x="48" y="56" width="480" height="76" rx="6" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/><rect x="64" y="68" width="52" height="16" rx="2" fill="#ececec"/><text x="72" y="79" class="tag">PARENT</text><text x="64" y="100" class="name">손바닥 부모 링크</text><text x="64" y="120" class="sub">inspire_base_link</text></g><g class="node"><rect x="48" y="172" width="480" height="76" rx="6" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/><rect x="64" y="184" width="82" height="16" rx="2" fill="#ececec"/><text x="72" y="195" class="tag">FIXED JOINT</text><text x="64" y="216" class="name">부모에 패드 pose를 고정</text><text x="64" y="236" class="sub">inspire_palm_force_sensor_joint · body0=parent / body1=pad</text></g><g class="node"><rect x="48" y="288" width="480" height="76" rx="6" fill="#f5f5f5" stroke="#bf4520" stroke-width="2"/><rect x="49" y="289" width="478" height="74" rx="6" fill="rgba(191,69,32,0.08)"/><rect x="64" y="300" width="64" height="16" rx="2" fill="#ececec"/><text x="72" y="311" class="tag">PAD BODY</text><text x="64" y="332" class="name">기존 독립 강체 패드 · 질량 약 0.001 kg</text><text x="64" y="352" class="sub">inspire_palm_force_sensor · RigidBodyAPI + MassAPI</text></g><g class="node"><rect x="48" y="452" width="280" height="76" rx="6" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/><rect x="64" y="464" width="52" height="16" rx="2" fill="#ececec"/><text x="72" y="475" class="tag">VISUAL</text><text x="64" y="496" class="name">보이는 표면 mesh</text><text x="64" y="516" class="sub">visuals/.../node_STL_BINARY_/mesh</text></g><g class="node"><rect x="448" y="452" width="352" height="76" rx="6" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/><rect x="464" y="464" width="70" height="16" rx="2" fill="#ececec"/><text x="472" y="475" class="tag">COLLISION</text><text x="464" y="496" class="name">물리 접촉용 convex hull</text><text x="464" y="516" class="sub">CollisionAPI + MeshCollisionAPI</text></g><g class="node"><rect x="880" y="288" width="336" height="76" rx="6" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/><rect x="896" y="300" width="48" height="16" rx="2" fill="#ececec"/><text x="904" y="311" class="tag">SPAWN</text><text x="896" y="332" class="name">접촉 보고 API 활성화</text><text x="896" y="352" class="sub">PhysxContactReportAPI · threshold=0</text></g><g class="node"><rect x="880" y="452" width="336" height="76" rx="20" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/><rect x="896" y="464" width="70" height="16" rx="2" fill="#ececec"/><text x="904" y="475" class="tag">READ VIEW</text><text x="896" y="496" class="name">기존 body를 센서 view로 선택</text><text x="896" y="516" class="sub">ContactSensorCfg(prim_path=...)</text></g><text x="48" y="580" class="note">패드 추가 생성 위치는 Python이 아니라 기존 로봇 USD다. Python은 body를 선택하고 관측을 구성한다.</text><text x="48" y="608" class="sub">Palm collider: collisions/palm_force_sensor/node_STL_BINARY_ → mesh</text><line x1="40" y1="656" x2="1240" y2="656" stroke="#bfc0c0"/><text x="48" y="684" class="note">실선: 고정 연결·런타임 설정   ·   점선: body의 자식 구성   ·   주황 테두리: 실제 pad body</text><text x="48" y="706" class="sub"></text></svg></div><div class="explain"><p><strong>패드라는 이름의 파이썬 센서 객체가 곧 물리 패드는 아닙니다.</strong> 원본 USD에는 패드 body·고정 조인트·mesh가 이미 있습니다. <code>spawn_ur5e_axia80_inspire()</code>가 이 USD를 로드하고 <code>activate_contact_sensors=True</code>를 넘깁니다. Isaac Lab이 강체에 contact-report API를 적용한 뒤 <code>ContactSensor</code>가 그 body의 물리 접촉을 읽습니다.</p><p>손바닥 collider는 Xform prim에 <code>CollisionAPI</code>와 <code>MeshCollisionAPI(approximation="convexHull")</code>가 붙고, 그 아래 <code>mesh</code>에 점이 저장되어 있습니다. 시각·충돌 mesh 각각의 authored 점 항목은 96,852개입니다. 이 개수는 촉각 taxel 수나 PhysX가 만든 hull 정점 수를 의미하지 않습니다. 손바닥 패드의 관측 출력은 1 bit입니다.</p></div><details open><summary>실제 USD를 pxr로 읽은 손바닥 패드 구조</summary><pre><code>{
+  &quot;body&quot;: &quot;/ur5e_inspire/inspire_palm_force_sensor&quot;,
+  &quot;type&quot;: &quot;Xform&quot;,
+  &quot;apis&quot;: [
+    &quot;PhysicsRigidBodyAPI&quot;,
+    &quot;PhysicsMassAPI&quot;
+  ],
+  &quot;mass_kg&quot;: 0.0010000000474974513,
+  &quot;joints&quot;: [
+    {
+      &quot;path&quot;: &quot;/ur5e_inspire/joints/inspire_palm_force_sensor_joint&quot;,
+      &quot;body0&quot;: [
+        &quot;/ur5e_inspire/inspire_base_link&quot;
+      ],
+      &quot;body1&quot;: [
+        &quot;/ur5e_inspire/inspire_palm_force_sensor&quot;
+      ],
+      &quot;localPos0&quot;: &quot;(0.00036819, 0.012296, 0.1196)&quot;,
+      &quot;localRot0&quot;: &quot;(-0.5000027, -0.5000009, 0.49999908, 0.4999973)&quot;
+    }
+  ]
+}</code></pre></details><div class="sources"><details ><summary>USD를 로드하고 contact reporting을 켜는 코드 · robot.py:216–223</summary><p class="source"><a href="../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/robot.py">src/inspire_sweep_baseline/inspire_sweep_baseline/assets/robot.py</a> · 현재 소스 그대로 발췌</p><pre><code> 216          usd_path=cfg.usd_path,
+ 217          rigid_props=cfg.rigid_props,
+ 218          articulation_props=cfg.articulation_props,
+ 219          activate_contact_sensors=True,
+ 220      )
+ 221      usd_cfg.func(prim_path, usd_cfg, translation=translation, orientation=orientation)
+ 222  
+ 223      stage = get_current_stage()</code></pre></details><details ><summary>RigidBody에 접촉 보고 API 적용 · schemas.py:550–563</summary><p class="source"><a href="../../../IsaacLab/source/isaaclab/isaaclab/sim/schemas/schemas.py">IsaacLab/source/isaaclab/isaaclab/sim/schemas/schemas.py</a> · 현재 소스 그대로 발췌</p><pre><code> 550          # check its children
+ 551          if child_prim.HasAPI(UsdPhysics.RigidBodyAPI):
+ 552              # set sleep threshold to zero
+ 553              rb = PhysxSchema.PhysxRigidBodyAPI.Get(stage, prim.GetPrimPath())
+ 554              rb.CreateSleepThresholdAttr().Set(0.0)
+ 555              # add contact report API with threshold of zero
+ 556              if not child_prim.HasAPI(PhysxSchema.PhysxContactReportAPI):
+ 557                  logger.debug(f&quot;Adding contact report API to prim: &#x27;{child_prim.GetPrimPath()}&#x27;&quot;)
+ 558                  cr_api = PhysxSchema.PhysxContactReportAPI.Apply(child_prim)
+ 559              else:
+ 560                  logger.debug(f&quot;Contact report API already exists on prim: &#x27;{child_prim.GetPrimPath()}&#x27;&quot;)
+ 561                  cr_api = PhysxSchema.PhysxContactReportAPI.Get(stage, child_prim.GetPrimPath())
+ 562              # set threshold to zero
+ 563              cr_api.CreateThresholdAttr().Set(threshold)</code></pre></details></div></section><section id="metadata"><p class="eyebrow">02 / CODE IMPLEMENTATION</p><h2>감지 영역은 mesh에서 어떻게 만드는가?</h2><p class="intro">Flowchart · build_metadata()의 실제 연산 순서. 좌표 변환 식은 Gf의 행벡터 관례를 따른다.</p><div class="diagram-container"><svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="inspire-sweep-sensor-code-flows-metadata-title inspire-sweep-sensor-code-flows-metadata-desc"><title id="inspire-sweep-sensor-code-flows-metadata-title">패드 mesh에서 감지 영역 JSON 생성</title><desc id="inspire-sweep-sensor-code-flows-metadata-desc">원본 패드와 부모 collider를 센서 로컬 좌표로 읽고 XY halfspace 및 Z 구간을 계산하여 관측용 JSON을 만든다.</desc><defs><marker id="inspire-sweep-sensor-code-flows-metadata-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#4f5d75"/></marker></defs><rect width="1280" height="720" fill="#f5f5f5"/><path class="connector" d="M 384 108 V 132" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#inspire-sweep-sensor-code-flows-metadata-arrow)"/><path class="connector" d="M 384 208 V 232" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#inspire-sweep-sensor-code-flows-metadata-arrow)"/><path class="connector" d="M 384 308 V 332" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#inspire-sweep-sensor-code-flows-metadata-arrow)"/><path class="connector" d="M 384 408 V 432" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#inspire-sweep-sensor-code-flows-metadata-arrow)"/><path class="connector" d="M 384 508 V 532" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#inspire-sweep-sensor-code-flows-metadata-arrow)"/><g class="node"><rect x="48" y="32" width="672" height="76" rx="6" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/><rect x="64" y="44" width="70" height="16" rx="2" fill="#ececec"/><text x="72" y="55" class="tag">01 / OPEN</text><text x="64" y="76" class="name">USD를 열고 17개 pad와 부모 관계를 찾음</text><text x="64" y="96" class="sub">Usd.Stage.Open → FixedJoint.body1 / body0</text></g><g class="node"><rect x="48" y="132" width="672" height="76" rx="6" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/><rect x="64" y="144" width="76" height="16" rx="2" fill="#ececec"/><text x="72" y="155" class="tag">02 / LOCAL</text><text x="64" y="176" class="name">pad와 부모 collider 정점을 pad 좌표로 변환</text><text x="64" y="196" class="sub">[v,1] @ (T_mesh_world @ inverse(T_pad_world))</text></g><g class="node"><rect x="48" y="232" width="672" height="76" rx="6" fill="#f5f5f5" stroke="#bf4520" stroke-width="2"/><rect x="49" y="233" width="670" height="74" rx="6" fill="rgba(191,69,32,0.08)"/><rect x="64" y="244" width="58" height="16" rx="2" fill="#ececec"/><text x="72" y="255" class="tag">03 / XY</text><text x="64" y="276" class="name">패드 XY 투영의 convex polygon 계산</text><text x="64" y="296" class="sub">footprint = ConvexHull(pad[:, :2])</text></g><g class="node"><rect x="48" y="332" width="672" height="76" rx="6" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/><rect x="64" y="344" width="52" height="16" rx="2" fill="#ececec"/><text x="72" y="355" class="tag">04 / Z</text><text x="64" y="376" class="name">감지 영역의 바깥 방향 깊이 구간 계산</text><text x="64" y="396" class="sub">z_min = min(top_facet_vertices.z)-0.0005; z_max = max(parent.z)+0.0005</text></g><g class="node"><rect x="48" y="432" width="672" height="76" rx="6" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/><rect x="64" y="444" width="76" height="16" rx="2" fill="#ececec"/><text x="72" y="455" class="tag">05 / CHECK</text><text x="64" y="476" class="name">+Z ray로 부모 hull의 실제 표면 포함 확인</text><text x="64" y="496" class="sub">support point + surface normal + source layer SHA256</text></g><g class="node"><rect x="48" y="532" width="672" height="76" rx="20" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/><rect x="64" y="544" width="70" height="16" rx="2" fill="#ececec"/><text x="72" y="555" class="tag">06 / JSON</text><text x="64" y="576" class="name">17개 영역을 채널 순서대로 저장</text><text x="64" y="596" class="sub">tactile_regions.json → assets/tactile_regions.py</text></g><text x="768" y="68" class="name">저장하는 경계 데이터</text><text x="768" y="96" class="sub">footprint_halfspaces: [edges,3]</text><text x="768" y="120" class="sub">pad_bounds_m: min / max xyz</text><text x="768" y="144" class="sub">outward_z_min_m / outward_z_max_m</text><text x="768" y="168" class="sub">parent_name + sensor name</text><text x="768" y="268" class="name">손바닥 패드의 실제 값</text><text x="768" y="296" class="sub">XY: x -25.076 .. 24.914 mm</text><text x="768" y="320" class="sub">XY: y -14.408 .. 15.665 mm</text><text x="768" y="344" class="sub">Z interval: -0.555 .. 18.347 mm</text><text x="768" y="368" class="sub">parent surface at xy=(0,0): z=5.584 mm</text><text x="768" y="392" class="sub">gap above pad max Z: 5.160 mm</text><text x="768" y="500" class="name">생성 시점과 의미</text><text x="768" y="528" class="note">개발 시 실행하는 CPU 전처리다.</text><text x="768" y="552" class="note">매 simulation step마다 hull을 만들지 않는다.</text><text x="768" y="576" class="note">JSON은 가상 관측 영역이며 collider가 아니다.</text><line x1="40" y1="656" x2="1240" y2="656" stroke="#bfc0c0"/><text x="48" y="684" class="note">실선: 처리 순서   ·   주황 테두리: 핵심 계산   ·   둥근 끝: 출력</text><text x="48" y="706" class="sub"></text></svg></div><div class="explain"><p><code>build_tactile_regions.py</code>가 collision mesh를 읽고 <code>scipy.spatial.ConvexHull</code>로 영역을 만듭니다. <code>footprint.equations</code>의 각 행은 <code>a·x + b·y + c ≤ 0</code>인 반평면입니다. 런타임은 모든 변에 대해 <code>≤ 0.0005 m</code>를 적용합니다.</p><p>Z 하한은 pad hull의 법선 Z 성분이 0.5 이상인 facet에 속하는 정점들의 최소 Z에서 0.5 mm를 뺍니다. Z 상한은 같은 pad frame에서 부모 collider 정점의 최대 Z에 0.5 mm를 더합니다. 따라서 이 구간은 패드 두께와 다릅니다. 부모 hull에 묻힌 패드 위의 접촉을 감지하려고 바깥쪽으로 확장한 <strong>관측용 영역</strong>입니다.</p><p><code>--check</code>는 geometry에서 metadata를 재생성해 저장 JSON·source hash와 비교하며 파일을 쓰지 않습니다. <code>--check</code> 없이 실행할 때만 JSON을 저장합니다. 기존 USD를 수정하는 단계는 없습니다.</p></div><div class="sources"><details ><summary>충돌 mesh를 찾아 센서 좌표로 옮기기 · build_tactile_regions.py:43–69</summary><p class="source"><a href="../../../src/inspire_sweep_baseline/scripts/build_tactile_regions.py">src/inspire_sweep_baseline/scripts/build_tactile_regions.py</a> · 현재 소스 그대로 발췌</p><pre><code>  43      def collision_points_in_frame(body, frame):
+  44          colliders = [
+  45              prim for prim in Usd.PrimRange(body, Usd.TraverseInstanceProxies())
+  46              if prim.HasAPI(UsdPhysics.CollisionAPI)
+  47          ]
+  48          if len(colliders) != 1:
+  49              raise RuntimeError(f&quot;Expected one collider for {body.GetPath()}&quot;)
+  50          collider = colliders[0]
+  51          if not UsdPhysics.CollisionAPI(collider).GetCollisionEnabledAttr().Get():
+  52              raise RuntimeError(f&quot;Disabled collider: {collider.GetPath()}&quot;)
+  53          if UsdPhysics.MeshCollisionAPI(collider).GetApproximationAttr().Get() != &quot;convexHull&quot;:
+  54              raise RuntimeError(f&quot;Expected convexHull collider: {collider.GetPath()}&quot;)
+  55          meshes = [
+  56              prim for prim in Usd.PrimRange(collider, Usd.TraverseInstanceProxies())
+  57              if prim.IsA(UsdGeom.Mesh)
+  58          ]
+  59          if len(meshes) != 1:
+  60              raise RuntimeError(f&quot;Expected one collision mesh: {collider.GetPath()}&quot;)
+  61          mesh = meshes[0]
+  62          vertices = np.asarray(UsdGeom.Mesh(mesh).GetPointsAttr().Get(), dtype=np.float64)
+  63          matrix = np.asarray(
+  64              cache.GetLocalToWorldTransform(mesh) * cache.GetLocalToWorldTransform(frame).GetInverse()
+  65          )
+  66          vertices = (np.c_[vertices, np.ones(len(vertices))] @ matrix)[:, :3]
+  67          return np.unique(vertices, axis=0)
+  68  
+  69      joints = {}</code></pre></details><details open><summary>XY hull과 Z 범위 생성 · build_tactile_regions.py:90–103</summary><p class="source"><a href="../../../src/inspire_sweep_baseline/scripts/build_tactile_regions.py">src/inspire_sweep_baseline/scripts/build_tactile_regions.py</a> · 현재 소스 그대로 발췌</p><pre><code>  90              raise RuntimeError(f&quot;Sensor parent is not a rigid body: {parent.GetPath()}&quot;)
+  91          pad = collision_points_in_frame(sensor, sensor)
+  92          parent_vertices = collision_points_in_frame(parent, sensor)
+  93          footprint = ConvexHull(pad[:, :2])
+  94          pad_hull = ConvexHull(pad)
+  95          parent_hull = ConvexHull(parent_vertices)
+  96          top_facets = pad_hull.equations[:, 2] &gt;= 0.5
+  97          if not top_facets.any():
+  98              raise RuntimeError(f&quot;No outward-facing pad facets: {name}&quot;)
+  99          top_vertices = np.unique(pad_hull.simplices[top_facets])
+ 100          z_min = float(pad[top_vertices, 2].min() - VIRTUAL_MARGIN_M)
+ 101          z_max = float(parent_vertices[:, 2].max() + VIRTUAL_MARGIN_M)
+ 102          if z_max &lt;= z_min:
+ 103              raise RuntimeError(f&quot;Invalid virtual region depth bounds: {name}&quot;)</code></pre></details><details ><summary>부모 표면 확인과 JSON 항목 구성 · build_tactile_regions.py:105–148</summary><p class="source"><a href="../../../src/inspire_sweep_baseline/scripts/build_tactile_regions.py">src/inspire_sweep_baseline/scripts/build_tactile_regions.py</a> · 현재 소스 그대로 발췌</p><pre><code> 105          # Intersect a +Z ray with the authored parent convex hull. This proves
+ 106          # each virtual footprint includes a real parent collision surface.
+ 107          xy_vertices = pad[footprint.vertices, :2]
+ 108          candidates = [np.zeros(2), xy_vertices.mean(axis=0), *xy_vertices]
+ 109          planes = parent_hull.equations
+ 110          support = None
+ 111          for xy in candidates:
+ 112              if (footprint.equations[:, :2] @ xy + footprint.equations[:, 2]).max() &gt; 1e-8:
+ 113                  continue
+ 114              c = planes[:, :2] @ xy + planes[:, 3]
+ 115              nz = planes[:, 2]
+ 116              if np.any(c[np.abs(nz) &lt;= 1e-10] &gt; 1e-8):
+ 117                  continue
+ 118              upper = np.min(-c[nz &gt; 1e-10] / nz[nz &gt; 1e-10])
+ 119              lower = np.max(-c[nz &lt; -1e-10] / nz[nz &lt; -1e-10])
+ 120              if lower &gt; upper + 1e-8 or not (z_min &lt;= upper &lt;= z_max):
+ 121                  continue
+ 122              support = [float(xy[0]), float(xy[1]), float(upper)]
+ 123              if np.max(planes[:, :3] @ np.asarray(support) + planes[:, 3]) &gt;= 1e-7:
+ 124                  raise RuntimeError(f&quot;Parent surface probe lies outside convex hull: {name}&quot;)
+ 125              break
+ 126          if support is None:
+ 127              raise RuntimeError(f&quot;No parent collision surface inside virtual region: {name}&quot;)
+ 128          support_errors = planes[:, :3] @ np.asarray(support) + planes[:, 3]
+ 129          support_normal = planes[support_errors.argmax(), :3]
+ 130          maximum_separation = float((pad @ planes[:, :3].T + planes[:, 3]).max())
+ 131          regions.append({
+ 132              &quot;name&quot;: name,
+ 133              &quot;parent_name&quot;: parent.GetName(),
+ 134              &quot;footprint_halfspaces&quot;: np.unique(np.round(footprint.equations, 12), axis=0).tolist(),
+ 135              &quot;pad_bounds_m&quot;: {&quot;min&quot;: pad.min(axis=0).tolist(), &quot;max&quot;: pad.max(axis=0).tolist()},
+ 136              &quot;outward_z_min_m&quot;: z_min,
+ 137              &quot;outward_z_max_m&quot;: z_max,
+ 138              &quot;normal_axis&quot;: [0.0, 0.0, 1.0],
+ 139              &quot;verification&quot;: {
+ 140                  &quot;parent_surface_point_local_m&quot;: support,
+ 141                  &quot;parent_surface_outward_z_m&quot;: support[2],
+ 142                  &quot;parent_surface_outward_normal_local&quot;: support_normal.tolist(),
+ 143                  &quot;parent_surface_gap_to_pad_max_z_m&quot;: support[2] - float(pad[:, 2].max()),
+ 144                  &quot;pad_max_signed_parent_plane_distance_m&quot;: maximum_separation,
+ 145                  &quot;pad_wholly_buried_in_parent_convex_hull&quot;: bool(maximum_separation &lt; -1e-6),
+ 146                  &quot;footprint_edge_count&quot;: len(footprint.equations),
+ 147              },
+ 148          })</code></pre></details></div></section><section id="views"><p class="eyebrow">03 / CODE IMPLEMENTATION</p><h2>설정한 센서는 어떤 물리 데이터를 읽는가?</h2><p class="intro">Flowchart · 초기화 때 view와 인덱스를 준비하고, 관측 평가 때 직접 힘과 상세 접촉점을 읽는다.</p><div class="diagram-container"><svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="inspire-sweep-sensor-code-flows-views-title inspire-sweep-sensor-code-flows-views-desc"><title id="inspire-sweep-sensor-code-flows-views-title">ContactSensor 설정과 PhysX 데이터 연결</title><desc id="inspire-sweep-sensor-code-flows-views-desc">17개 패드 view와 부모별 단일 body view를 만들고 직접 합력과 필터링된 개별 접촉점을 각각 Torch 텐서로 읽는다.</desc><defs><marker id="inspire-sweep-sensor-code-flows-views-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#4f5d75"/></marker></defs><rect width="1280" height="720" fill="#f5f5f5"/><path class="connector" d="M 256 140 V 200" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#inspire-sweep-sensor-code-flows-views-arrow)"/><path class="connector" d="M 256 276 V 336" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#inspire-sweep-sensor-code-flows-views-arrow)"/><path class="connector" d="M 1024 140 V 200" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#inspire-sweep-sensor-code-flows-views-arrow)"/><path class="connector" d="M 1024 276 V 336" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#inspire-sweep-sensor-code-flows-views-arrow)"/><path class="connector" d="M 1024 412 V 468" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#inspire-sweep-sensor-code-flows-views-arrow)"/><path class="connector" d="M 256 412 V 560" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#inspire-sweep-sensor-code-flows-views-arrow)"/><g class="node"><rect x="48" y="64" width="416" height="76" rx="6" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/><rect x="64" y="76" width="76" height="16" rx="2" fill="#ececec"/><text x="72" y="87" class="tag">PAD CONFIG</text><text x="64" y="108" class="name">17개 body 이름을 regex로 선택</text><text x="64" y="128" class="sub">hand_tactile / no counterpart filter</text></g><g class="node"><rect x="48" y="200" width="416" height="76" rx="6" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/><rect x="64" y="212" width="48" height="16" rx="2" fill="#ececec"/><text x="72" y="223" class="tag">INIT</text><text x="64" y="244" class="name">Rigid body view + contact view 생성</text><text x="64" y="264" class="sub">create_rigid_body_view / create_rigid_contact_view</text></g><g class="node"><rect x="48" y="336" width="416" height="76" rx="6" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/><rect x="64" y="348" width="48" height="16" rx="2" fill="#ececec"/><text x="72" y="359" class="tag">READ</text><text x="64" y="380" class="name">직접 법선 합력 읽기</text><text x="64" y="400" class="sub">get_net_contact_forces(dt) → [N,17,3]</text></g><g class="node"><rect x="48" y="560" width="416" height="76" rx="20" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/><rect x="64" y="572" width="48" height="16" rx="2" fill="#ececec"/><text x="72" y="583" class="tag">ORDER</text><text x="64" y="604" class="name">정책 채널 순서로 재배열</text><text x="64" y="624" class="sub">_body_ids → index_select(1, ids)</text></g><g class="node"><rect x="816" y="64" width="416" height="76" rx="6" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/><rect x="832" y="76" width="94" height="16" rx="2" fill="#ececec"/><text x="840" y="87" class="tag">PARENT CONFIG</text><text x="832" y="108" class="name">12개 부모에 단일-body view 각각 생성</text><text x="832" y="128" class="sub">filter=[mass_cylinder] / max_contact_data_count_per_prim=16</text></g><g class="node"><rect x="816" y="200" width="416" height="76" rx="6" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/><rect x="832" y="212" width="48" height="16" rx="2" fill="#ececec"/><text x="840" y="223" class="tag">INIT</text><text x="832" y="244" class="name">각 view의 상세 접촉 buffer 확보</text><text x="832" y="264" class="sub">capacity = 16 × 1 body × N environments</text></g><g class="node"><rect x="816" y="336" width="416" height="76" rx="6" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/><rect x="832" y="348" width="48" height="16" rx="2" fill="#ececec"/><text x="840" y="359" class="tag">READ</text><text x="832" y="380" class="name">부모의 개별 접촉점 buffer 읽기</text><text x="832" y="400" class="sub">get_contact_data(dt=env.physics_dt)</text></g><g class="node"><rect x="816" y="468" width="416" height="96" rx="20" fill="#f5f5f5" stroke="#bf4520" stroke-width="2"/><rect x="817" y="469" width="414" height="94" rx="6" fill="rgba(191,69,32,0.08)"/><rect x="832" y="480" width="52" height="16" rx="2" fill="#ececec"/><text x="840" y="491" class="tag">UNPACK</text><text x="832" y="512" class="name">counts / starts로 유효 구간만 gather</text><text x="832" y="532" class="sub">points, normals, scalar forces → [M,3]</text></g><text x="500" y="104" class="note">설정 → view 생성 → 매 관측 읽기</text><text x="500" y="252" class="note">N: 병렬 환경 수</text><text x="500" y="276" class="note">M: 해당 부모의 유효 접촉점 수</text><text x="500" y="356" class="note">reset 행: counts=0, forces=0</text><text x="500" y="380" class="note">미사용 buffer 구간은 읽지 않음</text><text x="500" y="476" class="note">각 부모 counts의 합을 모아</text><text x="500" y="500" class="note">한 번의 CPU readback으로 총량 확인</text><line x1="40" y1="656" x2="1240" y2="656" stroke="#bfc0c0"/><text x="48" y="684" class="note">왼쪽: 패드 직접 힘   ·   오른쪽: 실린더에 대한 부모 접촉점   ·   주황 테두리: buffer 해석</text><text x="48" y="706" class="sub"></text></svg></div><div class="explain"><p><code>TactileContactBits.__init__()</code>는 센서의 실제 <code>body_names</code>와 17개 기대 이름을 대조하고 <code>_body_ids</code>를 만듭니다. <code>ProjectedTactileContactBits.__init__()</code>는 로봇 pose용 <code>_robot_ids</code>와 부모별 <code>ParentContactRegions</code>도 캐시합니다. 두 인덱스는 서로 다른 배열의 순서를 맞추는 역할입니다.</p><p><code>get_contact_data()</code> 반환을 <code>scalars, points, normals, _, counts, starts</code>로 풉니다. <code>counts</code>와 <code>starts</code>는 <code>[N,K]</code>(K는 filter 수), 원시 점 buffer는 <code>[C,3]</code>(C는 capacity)입니다. uint32 인덱스를 long으로 바꾸고 reset 행의 count를 0으로 만듭니다. <code>repeat_interleave</code>로 각 유효 점의 행을 만들고 <code>indices = starts[rows] + offsets</code>로 gather합니다. <code>env_ids = rows // K</code>, <code>force = scalar × normal</code>입니다.</p><p><strong>세 임계값을 구분합니다.</strong> ContactReport의 0은 접촉 보고 설정, <code>ContactSensorCfg.force_threshold</code>는 air/contact 시간 추적용, 실제 정책 Binary의 0.05 N은 <code>ObsTerm.params["threshold_n"]</code>입니다. buffer 범위 초과·포화·비정상 수치는 오류로 처리합니다.</p></div><div class="sources"><details open><summary>센서 선택과 부모 filter 설정 · tactile_env_cfg.py:18–43</summary><p class="source"><a href="../../../src/inspire_sweep_baseline/inspire_sweep_baseline/tactile_env_cfg.py">src/inspire_sweep_baseline/inspire_sweep_baseline/tactile_env_cfg.py</a> · 현재 소스 그대로 발췌</p><pre><code>  18  class TactileSweepSceneCfg(SweepSceneCfg):
+  19      # Replace the single-pad reader rather than maintaining duplicate sensors.
+  20      palm_tactile = None
+  21      hand_tactile = ContactSensorCfg(
+  22          prim_path=&quot;{ENV_REGEX_NS}/Robot/&quot; + TACTILE_BODY_REGEX,
+  23          update_period=0.0, history_length=0, force_threshold=0.05, debug_vis=False,
+  24      )
+  25  
+  26      def __post_init__(self):
+  27          super().__post_init__()
+  28          # Keep frame transforms for observations, without creating the optional
+  29          # Fabric PointInstancer that warns about mismatched debug prototypes.
+  30          self.ee_frame.debug_vis = False
+  31          # Individual parent bodies satisfy ContactSensor&#x27;s one-to-many filter
+  32          # contract. Read every contact point, never their averaged position.
+  33          for parent in TACTILE_PARENT_BODY_NAMES:
+  34              setattr(self, parent_sensor_name(parent), ContactSensorCfg(
+  35                  prim_path=&quot;{ENV_REGEX_NS}/Robot/&quot; + parent,
+  36                  # Imported Shelf colliders and the static ground are not valid
+  37                  # detailed-contact GPU filters on the supported backend. Keep
+  38                  # all 17 raw pad contacts unfiltered; project object contacts
+  39                  # only, using the package&#x27;s known primitive cylinder collider.
+  40                  filter_prim_paths_expr=[&quot;{ENV_REGEX_NS}/mass_cylinder&quot;],
+  41                  update_period=0.0, history_length=0, debug_vis=False,
+  42                  max_contact_data_count_per_prim=16,
+  43              ))</code></pre></details><details ><summary>Isaac Lab에서 PhysX view 생성 · contact_sensor.py:286–304</summary><p class="source"><a href="../../../IsaacLab/source/isaaclab/isaaclab/sensors/contact_sensor/contact_sensor.py">IsaacLab/source/isaaclab/isaaclab/sensors/contact_sensor/contact_sensor.py</a> · 현재 소스 그대로 발췌</p><pre><code> 286          # convert regex expressions to glob expressions for PhysX
+ 287          body_names_glob = body_names_regex.replace(&quot;.*&quot;, &quot;*&quot;)
+ 288          filter_prim_paths_glob = [
+ 289              expr.replace(&quot;.*&quot;, &quot;*&quot;) for expr in self.cfg.filter_prim_paths_expr
+ 290          ]
+ 291  
+ 292          # create a rigid prim view for the sensor
+ 293          self._body_physx_view = self._physics_sim_view.create_rigid_body_view(
+ 294              body_names_glob
+ 295          )
+ 296          self._contact_physx_view = self._physics_sim_view.create_rigid_contact_view(
+ 297              body_names_glob,
+ 298              filter_patterns=filter_prim_paths_glob,
+ 299              max_contact_data_count=self.cfg.max_contact_data_count_per_prim
+ 300              * len(body_names)
+ 301              * self._num_envs,
+ 302          )
+ 303          # resolve the true count of bodies
+ 304          self._num_bodies = self.body_physx_view.count // self._num_envs</code></pre></details><details ><summary>원시 접촉 buffer에서 유효 점 gather · tactile_observations.py:106–144</summary><p class="source"><a href="../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/tactile_observations.py">src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/tactile_observations.py</a> · 현재 소스 그대로 발췌</p><pre><code> 106  def unpack_contact_points(raw, fresh, num_envs, total_contacts=None):
+ 107      &quot;&quot;&quot;Gather live per-pair slices with a known allocation size.
+ 108  
+ 109      The runtime batches all parent counts into one host readback, then supplies
+ 110      total_contacts to avoid a separate CUDA synchronization per parent view.
+ 111      Unused/reset slices are never gathered or classified.
+ 112      &quot;&quot;&quot;
+ 113      scalars, points, normals, _, counts, starts = raw
+ 114      if counts.ndim != 2 or counts.shape[0] != num_envs or starts.shape != counts.shape:
+ 115          raise RuntimeError(&quot;Expected contact counts/starts shaped (num_envs, filters) for one parent body&quot;)
+ 116      if counts.shape[1] == 0 or points.ndim != 2 or points.shape[1] != 3 or normals.shape != points.shape or scalars.numel() != len(points):
+ 117          raise RuntimeError(&quot;Expected a filtered tactile contact buffer with scalar forces and 3D points/normals&quot;)
+ 118      # PhysX provides uint32 indices; torch indexing requires signed long.
+ 119      counts, starts = counts.to(torch.long), starts.to(torch.long)
+ 120      filter_count = counts.shape[1]
+ 121      counts = torch.where(fresh[:, None], counts, 0)
+ 122      live = counts &gt; 0
+ 123      torch._assert_async(
+ 124          ~((counts &lt; 0) | (live &amp; ((starts &lt; 0) | (starts + counts &gt; len(points))))).any(),
+ 125          &quot;Invalid or truncated tactile contact buffer&quot;,
+ 126      )
+ 127      total = int(counts.sum()) if total_contacts is None else total_contacts
+ 128      if total == 0:
+ 129          return points[:0], points[:0], normals[:0], torch.empty(0, dtype=torch.long, device=points.device)
+ 130      torch._assert_async(counts.sum() &lt; len(points), &quot;Tactile contact buffer full; increase max_contact_data_count_per_prim&quot;)
+ 131      counts = counts.flatten()
+ 132      rows = torch.repeat_interleave(
+ 133          torch.arange(counts.numel(), device=counts.device), counts, output_size=total,
+ 134      )
+ 135      block_starts = counts.cumsum(0) - counts
+ 136      offsets = torch.arange(total, device=counts.device) - block_starts[rows]
+ 137      indices = starts.flatten()[rows] + offsets
+ 138      position, normal = points[indices], normals[indices]
+ 139      force = scalars[indices].reshape(-1, 1) * normal
+ 140      torch._assert_async(
+ 141          torch.isfinite(position).all() &amp; torch.isfinite(normal).all() &amp; torch.isfinite(force).all(),
+ 142          &quot;Tactile contact point data contains non-finite values&quot;,
+ 143      )
+ 144      return position, force, normal, rows // filter_count</code></pre></details><details ><summary>body index와 부모별 영역 캐시 · tactile_observations.py:156–173</summary><p class="source"><a href="../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/tactile_observations.py">src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/tactile_observations.py</a> · 현재 소스 그대로 발췌</p><pre><code> 156      def __init__(self, cfg, env):
+ 157          super().__init__(cfg, env)
+ 158          from ..assets.tactile_regions import TACTILE_PARENT_BODY_NAMES, TACTILE_REGIONS, parent_sensor_name
+ 159  
+ 160          robot_names = tuple(env.scene[&quot;robot&quot;].body_names)
+ 161          if any(robot_names.count(name) != 1 for name in PALM_SENSOR_BODY_NAMES):
+ 162              raise RuntimeError(&quot;Robot must contain each tactile sensor body exactly once&quot;)
+ 163          self._robot_ids = torch.tensor(
+ 164              [robot_names.index(name) for name in PALM_SENSOR_BODY_NAMES], device=env.device, dtype=torch.long,
+ 165          )
+ 166          self._parents = []
+ 167          for parent in TACTILE_PARENT_BODY_NAMES:
+ 168              sensor_name = parent_sensor_name(parent)
+ 169              if tuple(env.scene[sensor_name].body_names) != (parent,):
+ 170                  raise RuntimeError(f&quot;Expected one tactile parent body {parent}&quot;)
+ 171              channels = [index for index, region in enumerate(TACTILE_REGIONS) if region[&quot;parent_name&quot;] == parent]
+ 172              regions = [TACTILE_REGIONS[index] for index in channels]
+ 173              self._parents.append((sensor_name, ParentContactRegions(regions, channels, env.device)))</code></pre></details></div></section><section id="mapping"><p class="eyebrow">04 / CODE IMPLEMENTATION</p><h2>한 접촉점이 어떻게 17개 중 한 bit가 되는가?</h2><p class="intro">Flowchart · ParentContactRegions.accumulate()와 ProjectedTactileContactBits.__call__()의 텐서 연산.</p><div class="diagram-container"><svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="inspire-sweep-sensor-code-flows-mapping-title inspire-sweep-sensor-code-flows-mapping-desc"><title id="inspire-sweep-sensor-code-flows-mapping-title">접촉점 하나를 촉각 채널로 배정</title><desc id="inspire-sweep-sensor-code-flows-mapping-desc">부모별 접촉점을 각 후보 패드의 로컬 프레임으로 변환하고 polygon, 깊이, 법선 조건과 중복 선택을 적용하여 영역별 힘을 누적한다.</desc><defs><marker id="inspire-sweep-sensor-code-flows-mapping-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#4f5d75"/></marker></defs><rect width="1280" height="720" fill="#f5f5f5"/><path class="connector" d="M 384 108 V 132" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#inspire-sweep-sensor-code-flows-mapping-arrow)"/><path class="connector" d="M 384 208 V 232" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#inspire-sweep-sensor-code-flows-mapping-arrow)"/><path class="connector" d="M 384 308 V 332" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#inspire-sweep-sensor-code-flows-mapping-arrow)"/><path class="connector" d="M 384 408 V 432" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#inspire-sweep-sensor-code-flows-mapping-arrow)"/><path class="connector" d="M 384 508 V 532" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#inspire-sweep-sensor-code-flows-mapping-arrow)"/><g class="node"><rect x="48" y="32" width="672" height="76" rx="6" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/><rect x="64" y="44" width="76" height="16" rx="2" fill="#ececec"/><text x="72" y="55" class="tag">01 / INPUT</text><text x="64" y="76" class="name">부모 하나의 점·힘·법선과 후보 채널 준비</text><text x="64" y="96" class="sub">points/forces/normals [M,3] + parent channels [P]</text></g><g class="node"><rect x="48" y="132" width="672" height="76" rx="6" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/><rect x="64" y="144" width="76" height="16" rx="2" fill="#ececec"/><text x="72" y="155" class="tag">02 / LOCAL</text><text x="64" y="176" class="name">각 점을 후보 패드 P개의 좌표로 동시에 변환</text><text x="64" y="196" class="sub">local = quat_apply_inverse(q, point - pad_pos) → [M,P,3]</text></g><g class="node"><rect x="48" y="232" width="672" height="76" rx="6" fill="#f5f5f5" stroke="#bf4520" stroke-width="2"/><rect x="49" y="233" width="670" height="74" rx="6" fill="rgba(191,69,32,0.08)"/><rect x="64" y="244" width="82" height="16" rx="2" fill="#ececec"/><text x="72" y="255" class="tag">03 / INSIDE</text><text x="64" y="276" class="name">XY 모든 변 + Z 구간 + 법선 방향으로 후보 판정</text><text x="64" y="296" class="sub">inside: [M,P] / plane_distance &lt;= 0.0005 / abs(local_normal_z) &gt;= 0.2</text></g><g class="node"><rect x="48" y="332" width="672" height="76" rx="6" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/><rect x="64" y="344" width="82" height="16" rx="2" fill="#ececec"/><text x="72" y="355" class="tag">04 / SELECT</text><text x="64" y="376" class="name">겹치는 후보 중 정규화 중심 거리 최소 하나 선택</text><text x="64" y="396" class="sub">selected = where(inside, score, inf).argmin(-1); valid = inside.any(-1)</text></g><g class="node"><rect x="48" y="432" width="672" height="76" rx="6" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/><rect x="64" y="444" width="88" height="16" rx="2" fill="#ececec"/><text x="72" y="455" class="tag">05 / SCATTER</text><text x="64" y="476" class="name">환경·채널 인덱스로 법선 힘을 누적</text><text x="64" y="496" class="sub">flat_ids = env_ids*17 + channels[selected] → index_add_</text></g><g class="node"><rect x="48" y="532" width="672" height="76" rx="20" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/><rect x="64" y="544" width="64" height="16" rx="2" fill="#ececec"/><text x="72" y="555" class="tag">06 / BIT</text><text x="64" y="576" class="name">직접 힘과 투영 힘 각각 norm 후 Binary OR</text><text x="64" y="596" class="sub">(norm(direct)&gt;=0.05) | (norm(mapped)&gt;=0.05) → float32 [N,17]</text></g><text x="768" y="72" class="name">연산의 shape</text><text x="768" y="100" class="note">P: 이 부모에 연결된 pad 수</text><text x="768" y="124" class="note">E: 후보 polygon의 최대 변 수</text><text x="768" y="148" class="sub">planes [P,E,3]</text><text x="768" y="172" class="sub">plane_distance [M,P,E]</text><text x="768" y="196" class="sub">mapped [N,17,3]</text><text x="768" y="276" class="name">겹침을 정리하는 score</text><text x="768" y="304" class="sub">sum(((local_xy - center_xy) / radius_xy)^2)</text><text x="768" y="328" class="sub">center_xy = (min_xy + max_xy)/2</text><text x="768" y="352" class="sub">radius_xy = clamp((max_xy-min_xy)/2, 1e-6)</text><text x="768" y="376" class="note">polygon centroid가 아닌 bounds 중심 사용</text><text x="768" y="500" class="name">정책에 전달하는 정보</text><text x="768" y="528" class="note">영역 밖 점은 0 힘으로 더해져 무시된다.</text><text x="768" y="552" class="note">좌표·법선·접촉 물체 ID는 bit 계산 내부용.</text><text x="768" y="576" class="note">17D 결과에는 채널별 접촉 유무만 남는다.</text><line x1="40" y1="656" x2="1240" y2="656" stroke="#bfc0c0"/><text x="48" y="684" class="note">실선: 처리 순서   ·   주황 테두리: 핵심 계산   ·   둥근 끝: 출력</text><text x="48" y="706" class="sub"></text></svg></div><div class="explain"><p><code>torch.einsum("mpd,ped-&gt;mpe", local[..., :2], planes[..., :2]) + planes[..., 2]</code>가 모든 점·패드·polygon 변의 부등식을 한 번에 평가합니다. 부모별 영역의 변 개수가 다르면 남는 plane을 <code>[0,0,-1]</code>로 채워 항상 통과하게 합니다. normal은 회전만 하고 point는 pad 위치를 뺀 뒤 회전합니다.</p><p>한 접촉점은 같은 부모의 후보 영역 중 하나에만 배정합니다. 영역 밖이면 <code>argmin</code>의 값이 생겨도 <code>valid=False</code>로 force를 0으로 만들어 누적합니다. <code>output.view(-1,3).index_add_(...)</code>로 Python 환경별 반복 없이 같은 환경·채널의 벡터를 합산합니다. 그 뒤 norm을 계산하므로 채널 내부에서 서로 반대인 접촉력의 상쇄는 가능합니다. 직접 경로와 투영 경로 사이의 결합은 bit OR입니다.</p></div><table><caption>손바닥 채널 0의 계산 예 — 저장 geometry + 설명용 0.1 N 입력</caption><thead><tr><th>입력·검사</th><th>값·결과</th></tr></thead><tbody><tr><td>sensor-local 접촉점</td><td>(0, 0, 5.584) mm — metadata의 실제 부모 표면 probe</td></tr><tr><td>법선</td><td>metadata 표면 법선의 반대 방향 사용, |local normal Z| ≈ 0.973 ≥ 0.2</td></tr><tr><td>영역</td><td>XY polygon 내부, −0.555 ≤ 5.584 ≤ 18.347 mm → 통과</td></tr><tr><td>힘·Binary</td><td>한 점의 법선 힘 크기 0.1 N → mapped norm ≥ 0.05 N → projected[0]=1</td></tr><tr><td>최종</td><td>직접 pad 힘 0을 가정하면 direct[0]=0, 0 OR 1 → tactile[0]=1</td></tr></tbody></table><p class="small">0.1 N은 계산 설명과 CPU probe의 합성 입력입니다. 시뮬레이터나 실물에서 관측한 하중으로 해석하지 않습니다.</p><div class="sources"><details open><summary>좌표 변환·영역 판정·단일 배정·누적 · tactile_observations.py:79–103</summary><p class="source"><a href="../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/tactile_observations.py">src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/tactile_observations.py</a> · 현재 소스 그대로 발췌</p><pre><code>  79      def accumulate(self, output, points, forces, normals, env_ids, positions, quaternions):
+  80          if not points.numel():
+  81              return
+  82          count = len(self.channels)
+  83          quat = quaternions[env_ids][:, self.channels]
+  84          delta = points[:, None, :] - positions[env_ids][:, self.channels]
+  85          local = quat_apply_inverse(quat.reshape(-1, 4), delta.reshape(-1, 3)).reshape(-1, count, 3)
+  86          normal = normals[:, None, :].expand(-1, count, -1)
+  87          local_normal = quat_apply_inverse(quat.reshape(-1, 4), normal.reshape(-1, 3)).reshape(-1, count, 3)
+  88          plane_distance = torch.einsum(&quot;mpd,ped-&gt;mpe&quot;, local[..., :2], self.planes[..., :2]) + self.planes[..., 2]
+  89          inside = (
+  90              (plane_distance &lt;= 0.0005).all(dim=-1)
+  91              &amp; (local[..., 2] &gt;= self.z_min)
+  92              &amp; (local[..., 2] &lt;= self.z_max)
+  93              # Normal orientation conventions differ; front/back is determined
+  94              # by z bounds. Reject nearly tangential parent-side contacts.
+  95              &amp; (local_normal[..., 2].abs() &gt;= 0.2)
+  96          )
+  97          score = ((local[..., :2] - self.center_xy) / self.radius_xy).square().sum(dim=-1)
+  98          selected = torch.where(inside, score, torch.inf).argmin(dim=-1)
+  99          valid = inside.any(dim=-1)
+ 100          flat_ids = env_ids * output.shape[1] + self.channels[selected]
+ 101          # Keep fixed-size GPU buffers: boolean indexing would synchronize CUDA
+ 102          # to allocate a dynamically sized contact list on every parent view.
+ 103          output.view(-1, 3).index_add_(0, flat_ids, torch.where(valid[:, None], forces, 0.0))</code></pre></details><details ><summary>영역별 누적 뒤 직접/투영 Binary OR · tactile_observations.py:204–216</summary><p class="source"><a href="../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/tactile_observations.py">src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/tactile_observations.py</a> · 현재 소스 그대로 발췌</p><pre><code> 204              mapped = torch.zeros_like(forces)
+ 205              for (_, regions), raw, total in zip(self._parents, raw_contacts, totals):
+ 206                  if total == 0:
+ 207                      continue
+ 208                  points, point_forces, normals, env_ids = unpack_contact_points(
+ 209                      raw, env.sensor_data_fresh, env.num_envs, total_contacts=total,
+ 210                  )
+ 211                  regions.accumulate(mapped, points, point_forces, normals, env_ids, live_positions, live_quaternions)
+ 212              _, direct_bits = contact_magnitudes_and_bits(forces, threshold_n)
+ 213              _, projected_bits = contact_magnitudes_and_bits(mapped, threshold_n)
+ 214              return (direct_bits | projected_bits).to(torch.float32)
+ 215          _, bits = contact_magnitudes_and_bits(forces, threshold_n)
+ 216          return bits.to(torch.float32)</code></pre></details><details ><summary>실제 Binary threshold 함수 · sensors.py:15–24</summary><p class="source"><a href="../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/sensors.py">src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/sensors.py</a> · 현재 소스 그대로 발췌</p><pre><code>  15  def contact_magnitudes_and_bits(forces_w, threshold_n=0.05):
+  16      threshold_n = float(threshold_n)
+  17      if not math.isfinite(threshold_n) or threshold_n &lt;= 0.0:
+  18          raise ValueError(&quot;threshold_n must be positive and finite&quot;)
+  19      if forces_w.ndim &lt; 2 or forces_w.shape[-1] != 3:
+  20          raise ValueError(&quot;forces_w must have shape (..., channels, 3)&quot;)
+  21      if not torch.isfinite(forces_w).all():
+  22          raise RuntimeError(&quot;Contact force contains non-finite values&quot;)
+  23      magnitude = torch.linalg.vector_norm(forces_w, dim=-1)
+  24      return magnitude, (magnitude &gt;= threshold_n).to(torch.uint8)</code></pre></details></div></section><section id="ft"><p class="eyebrow">05 / CODE IMPLEMENTATION</p><h2>F/T는 어떤 body·joint·API로 구현하는가?</h2><p class="intro">Flowchart · assets/robot.py의 stage 작성부터 mdp/sensors.py의 반력 변환까지.</p><div class="diagram-container"><svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="inspire-sweep-sensor-code-flows-ft-title inspire-sweep-sensor-code-flows-ft-desc"><title id="inspire-sweep-sensor-code-flows-ft-title">F/T body와 측정 조인트 생성 및 반력 읽기</title><desc id="inspire-sweep-sensor-code-flows-ft-desc">Hand 강체를 센서 높이만큼 이동하고 Axia80 cylinder 및 두 fixed joint를 만든 뒤 자식 body의 반력을 EEF 기준으로 변환한다.</desc><defs><marker id="inspire-sweep-sensor-code-flows-ft-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#4f5d75"/></marker></defs><rect width="1280" height="720" fill="#f5f5f5"/><path class="connector" d="M 384 108 V 132" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#inspire-sweep-sensor-code-flows-ft-arrow)"/><path class="connector" d="M 384 208 V 232" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#inspire-sweep-sensor-code-flows-ft-arrow)"/><path class="connector" d="M 384 308 V 332" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#inspire-sweep-sensor-code-flows-ft-arrow)"/><path class="connector" d="M 384 408 V 432" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#inspire-sweep-sensor-code-flows-ft-arrow)"/><path class="connector" d="M 384 508 V 532" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#inspire-sweep-sensor-code-flows-ft-arrow)"/><g class="node"><rect x="48" y="32" width="672" height="76" rx="6" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/><rect x="64" y="44" width="70" height="16" rx="2" fill="#ececec"/><text x="72" y="55" class="tag">01 / LOAD</text><text x="64" y="76" class="name">기존 USD를 로드하고 mount pose를 저장</text><text x="64" y="96" class="sub">mount_world = world_transform(inspire_base_link)</text></g><g class="node"><rect x="48" y="132" width="672" height="76" rx="6" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/><rect x="64" y="144" width="70" height="16" rx="2" fill="#ececec"/><text x="72" y="155" class="tag">02 / MOVE</text><text x="64" y="176" class="name">손 강체 전체를 H만큼 이동하고 기존 mount 비활성화</text><text x="64" y="196" class="sub">desired_hand = offset(0,0,H) * mount_world; old_mount.SetActive(False)</text></g><g class="node"><rect x="48" y="232" width="672" height="76" rx="6" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/><rect x="64" y="244" width="70" height="16" rx="2" fill="#ececec"/><text x="72" y="255" class="tag">03 / BODY</text><text x="64" y="276" class="name">H/2 위치에 Axia80 원통 강체 생성</text><text x="64" y="296" class="sub">CylinderCfg(radius=.041, height=.0254, mass=.001)</text></g><g class="node"><rect x="48" y="332" width="672" height="76" rx="6" fill="#f5f5f5" stroke="#bf4520" stroke-width="2"/><rect x="49" y="333" width="670" height="74" rx="6" fill="rgba(191,69,32,0.08)"/><rect x="64" y="344" width="76" height="16" rx="2" fill="#ececec"/><text x="72" y="355" class="tag">04 / JOINT</text><text x="64" y="376" class="name">wrist→Axia80 / Axia80→hand 고정 조인트 작성</text><text x="64" y="396" class="sub">FixedJoint.Define → Body0/1Rel + LocalPos/Rot0/1</text></g><g class="node"><rect x="48" y="432" width="672" height="76" rx="6" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/><rect x="64" y="444" width="70" height="16" rx="2" fill="#ececec"/><text x="72" y="455" class="tag">05 / READ</text><text x="64" y="476" class="name">Hand base 인덱스의 incoming joint wrench 읽기</text><text x="64" y="496" class="sub">get_link_incoming_joint_force() → body_incoming_joint_wrench_b[:, child_id]</text></g><g class="node"><rect x="48" y="532" width="672" height="76" rx="20" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/><rect x="64" y="544" width="64" height="16" rx="2" fill="#ececec"/><text x="72" y="555" class="tag">06 / EEF</text><text x="64" y="576" class="name">F/C pose로 좌표 회전 + 모멘트 이동 후 출력</text><text x="64" y="596" class="sub">F_C = R_CF F_F; M_C = R_CF M_F + cross(r_C,F_C) → [N,6]</text></g><text x="768" y="76" class="name">고정 조인트의 frame 구성</text><text x="768" y="104" class="sub">parent_local = joint_world * inverse(parent_world)</text><text x="768" y="128" class="sub">child_local = joint_world * inverse(child_world)</text><text x="768" y="152" class="note">localPos / localRot에 각 pose 저장</text><text x="768" y="176" class="sub">joint.CollisionEnabled = False</text><text x="768" y="284" class="name">어떤 조인트를 측정하는가?</text><text x="768" y="312" class="note">ur5e_to_axia80_joint: 기존 mount 위치</text><text x="768" y="336" class="note">axia80_measurement_joint: 이동한 hand 위치</text><text x="768" y="360" class="sub">child_id = index(&quot;inspire_base_link&quot;)</text><text x="768" y="384" class="sub">raw axes: parent axia80_link</text><text x="768" y="500" class="name">현재 코드의 처리</text><text x="768" y="528" class="sub">F pose = axia80_link body pose</text><text x="768" y="552" class="sub">C pose = ee_frame target pose</text><text x="768" y="576" class="note">reset 행 0 · tare/중력/시간필터 보정 없음</text><line x1="40" y1="656" x2="1240" y2="656" stroke="#bfc0c0"/><text x="48" y="684" class="note">실선: 처리 순서   ·   주황 테두리: 핵심 계산   ·   둥근 끝: 출력</text><text x="48" y="706" class="sub"></text></svg></div><div class="explain"><p><code>_move_hand_rigid_bodies()</code>는 모든 <code>inspire_*</code> 강체의 hand-base 상대 변환을 보존하며 손 전체를 이동합니다. 패드와 손가락의 상대 구조도 함께 이동합니다. 센서의 H=25.4 mm 이동은 원래 mount의 로컬 +Z 기준입니다.</p><p><code>_create_fixed_joint()</code>는 joint world pose를 부모·자식 각각의 로컬 pose로 바꿔 <code>CreateLocalPos0/1Attr</code>, <code>CreateLocalRot0/1Attr</code>에 저장합니다. 조인트로 직접 연결된 body 쌍의 collision은 끕니다. Axia80 하우징 자체는 활성 collider를 갖고 다른 물체와 충돌할 수 있습니다. 여기의 1 g은 현재 코드 모델의 설정값이며 실제 Axia80 사양을 뜻하지 않습니다.</p><p><code>FixedJointWrenchReader</code>는 body 이름으로 자식 index를 한 번 찾습니다. Isaac Lab의 <code>ArticulationData</code>가 PhysX tensor API를 통해 제공하는 <code>[N,B,6]</code>에서 해당 행을 고릅니다. 코드가 사용하는 F 기준점은 Axia80 body 위치입니다. 실제 PhysX 반력 기준점·부호·단위의 물리적 일치는 이번 문서 작업에서 GPU 실행으로 새로 검증하지 않았습니다.</p></div><div class="sources"><details open><summary>FixedJoint authoring · robot.py:163–181</summary><p class="source"><a href="../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/robot.py">src/inspire_sweep_baseline/inspire_sweep_baseline/assets/robot.py</a> · 현재 소스 그대로 발췌</p><pre><code> 163  def _create_fixed_joint(
+ 164      stage: Usd.Stage,
+ 165      joint_path: str,
+ 166      parent_body: Usd.Prim,
+ 167      child_body: Usd.Prim,
+ 168      joint_frame_world: Gf.Matrix4d,
+ 169  ) -&gt; None:
+ 170      parent_local = joint_frame_world * _world_transform(parent_body).GetInverse()
+ 171      child_local = joint_frame_world * _world_transform(child_body).GetInverse()
+ 172      parent_pos, parent_rot = _matrix_to_pose(parent_local)
+ 173      child_pos, child_rot = _matrix_to_pose(child_local)
+ 174      joint = UsdPhysics.FixedJoint.Define(stage, Sdf.Path(joint_path))
+ 175      joint.CreateBody0Rel().SetTargets([parent_body.GetPath()])
+ 176      joint.CreateBody1Rel().SetTargets([child_body.GetPath()])
+ 177      joint.CreateLocalPos0Attr().Set(Gf.Vec3f(*parent_pos))
+ 178      joint.CreateLocalRot0Attr().Set(Gf.Quatf(parent_rot[0], Gf.Vec3f(*parent_rot[1:])))
+ 179      joint.CreateLocalPos1Attr().Set(Gf.Vec3f(*child_pos))
+ 180      joint.CreateLocalRot1Attr().Set(Gf.Quatf(child_rot[0], Gf.Vec3f(*child_rot[1:])))
+ 181      joint.CreateCollisionEnabledAttr().Set(False)</code></pre></details><details ><summary>Hand 이동, 원통 body와 조인트 생성 · robot.py:233–284</summary><p class="source"><a href="../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/robot.py">src/inspire_sweep_baseline/inspire_sweep_baseline/assets/robot.py</a> · 현재 소스 그대로 발췌</p><pre><code> 233      hand_base = _move_hand_rigid_bodies(stage, prim_path, desired_hand_base_world)
+ 234  
+ 235      old_joint = UsdPhysics.Joint(old_mount)
+ 236      old_joint.GetJointEnabledAttr().Set(False)
+ 237      old_mount.SetActive(False)
+ 238  
+ 239      sensor_world = _offset_matrix((0.0, 0.0, 0.5 * cfg.sensor_height)) * mount_world
+ 240      sensor_pos, sensor_rot = _matrix_to_pose(sensor_world * _world_transform(robot_root).GetInverse())
+ 241      sensor_cfg = sim_utils.CylinderCfg(
+ 242          radius=cfg.sensor_radius,
+ 243          height=cfg.sensor_height,
+ 244          axis=&quot;Z&quot;,
+ 245          rigid_props=sim_utils.RigidBodyPropertiesCfg(
+ 246              disable_gravity=False,
+ 247              max_depenetration_velocity=0.5,
+ 248          ),
+ 249          mass_props=sim_utils.MassPropertiesCfg(mass=cfg.sensor_mass),
+ 250          # The fixed joints disable collision only for their directly connected
+ 251          # pairs.  Keeping the housing collider active lets reset/safety sensors
+ 252          # detect an Axia80--board or Axia80--object collision.
+ 253          collision_props=sim_utils.CollisionPropertiesCfg(
+ 254              collision_enabled=True,
+ 255              contact_offset=0.001,
+ 256              rest_offset=0.0,
+ 257          ),
+ 258          visual_material=sim_utils.PreviewSurfaceCfg(diffuse_color=(0.93, 0.38, 0.08)),
+ 259          activate_contact_sensors=True,
+ 260      )
+ 261      sensor_cfg.func(
+ 262          f&quot;{prim_path}/{FT_SENSOR_BODY_NAME}&quot;,
+ 263          sensor_cfg,
+ 264          translation=sensor_pos,
+ 265          orientation=sensor_rot,
+ 266      )
+ 267      sensor_body = stage.GetPrimAtPath(f&quot;{prim_path}/{FT_SENSOR_BODY_NAME}&quot;)
+ 268      if not sensor_body.IsValid() or not sensor_body.HasAPI(UsdPhysics.RigidBodyAPI):
+ 269          raise RuntimeError(&quot;Failed to create the Axia80 measurement body.&quot;)
+ 270  
+ 271      _create_fixed_joint(
+ 272          stage,
+ 273          f&quot;{prim_path}/joints/ur5e_to_axia80_joint&quot;,
+ 274          wrist_body,
+ 275          sensor_body,
+ 276          mount_world,
+ 277      )
+ 278      _create_fixed_joint(
+ 279          stage,
+ 280          f&quot;{prim_path}/joints/axia80_measurement_joint&quot;,
+ 281          sensor_body,
+ 282          hand_base,
+ 283          desired_hand_base_world,
+ 284      )</code></pre></details><details ><summary>자식 body 반력 선택과 변환 호출 · sensors.py:48–80</summary><p class="source"><a href="../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/sensors.py">src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/sensors.py</a> · 현재 소스 그대로 발췌</p><pre><code>  48  class FixedJointWrenchReader:
+  49      &quot;&quot;&quot;The preserved mount reaction is indexed by its downstream child body.&quot;&quot;&quot;
+  50  
+  51      def __init__(self, robot, child_body_name=&quot;inspire_base_link&quot;):
+  52          self.robot = robot
+  53          names = tuple(robot.body_names)
+  54          if names.count(child_body_name) != 1:
+  55              raise RuntimeError(f&quot;Expected exactly one {child_body_name!r}; got {names}&quot;)
+  56          self.child_body_index = names.index(child_body_name)
+  57  
+  58      def read_raw_f(self, valid_env_mask=None):
+  59          wrenches = self.robot.data.body_incoming_joint_wrench_b
+  60          if wrenches.ndim != 3 or wrenches.shape[-1] != 6:
+  61              raise ValueError(&quot;body_incoming_joint_wrench_b must have shape (envs, bodies, 6)&quot;)
+  62          if self.child_body_index &gt;= wrenches.shape[1]:
+  63              raise RuntimeError(&quot;Wrench body dimension does not include the mount child body&quot;)
+  64          raw = wrenches[:, self.child_body_index]
+  65          if valid_env_mask is not None:
+  66              # Reset samples may be stale or invalid; exclude those rows before validation.
+  67              raw = torch.where(valid_env_mask[:, None], raw, torch.zeros_like(raw))
+  68          if not torch.isfinite(raw).all():
+  69              raise RuntimeError(&quot;Fixed-joint wrench contains non-finite values&quot;)
+  70          return raw
+  71  
+  72      def read(self, rotation_c_from_f=None, r_c_to_f_c=None, valid_env_mask=None):
+  73          raw = self.read_raw_f(valid_env_mask)
+  74          if rotation_c_from_f is None and r_c_to_f_c is None:
+  75              measured_c = raw
+  76          elif rotation_c_from_f is None or r_c_to_f_c is None:
+  77              raise ValueError(&quot;Rotation and moment arm must be provided together&quot;)
+  78          else:
+  79              measured_c = transform_wrench_f_to_c(raw, rotation_c_from_f, r_c_to_f_c)
+  80          return FixedJointWrenchSample(raw_f=raw, measured_f=raw, measured_c=measured_c)</code></pre></details><details ><summary>EEF 관측의 frame·moment arm 계산 · observations.py:69–90</summary><p class="source"><a href="../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observations.py">src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observations.py</a> · 현재 소스 그대로 발췌</p><pre><code>  69  def wrist_wrench_eef(env, asset_name=&quot;robot&quot;, frame_name=&quot;ee_frame&quot;):
+  70      &quot;&quot;&quot;[Fx,Fy,Fz,Mx,My,Mz], uncancelled N/Nm, expressed/referenced at EEF.&quot;&quot;&quot;
+  71      fresh = env.sensor_data_fresh
+  72      if not bool(fresh.any()):
+  73          return torch.zeros((env.num_envs, 6), device=env.device)
+  74      robot = env.scene[asset_name]
+  75      cache = getattr(env, &quot;_baseline_wrench_readers&quot;, None)
+  76      if cache is None:
+  77          cache = env._baseline_wrench_readers = {}
+  78      if asset_name not in cache:
+  79          names = tuple(robot.body_names)
+  80          if names.count(&quot;axia80_link&quot;) != 1:
+  81              raise RuntimeError(&quot;Expected exactly one Axia80 body&quot;)
+  82          cache[asset_name] = (FixedJointWrenchReader(robot), names.index(&quot;axia80_link&quot;))
+  83      reader, f_body_id = cache[asset_name]
+  84      frame = env.scene[frame_name].data
+  85      c_pos_w, c_quat_w = frame.target_pos_w[:, 0], frame.target_quat_w[:, 0]
+  86      f_pos_w, f_quat_w = robot.data.body_pos_w[:, f_body_id], robot.data.body_quat_w[:, f_body_id]
+  87      rotation = matrix_from_quat(c_quat_w).transpose(-1, -2) @ matrix_from_quat(f_quat_w)
+  88      moment_arm = quat_apply_inverse(c_quat_w, f_pos_w - c_pos_w)
+  89      result = reader.read(rotation, moment_arm, valid_env_mask=fresh).measured_c
+  90      return torch.where(fresh[:, None], result, torch.zeros_like(result))</code></pre></details></div></section><footer>적용: src/inspire_sweep_baseline · 기본 스타일 · Architecture 1개 + Flowchart 4개 · doc-wide 1280×720.<br>각 그림은 9개 이하의 노드로 분리했습니다. 실패 시 예외 분기와 buffer 최적화 세부는 소스 발췌로 보완합니다.<br>Google Fonts: Instrument Serif / Geist / Geist Mono / Noto Sans·Serif KR. 연결이 없으면 로컬 대체 서체를 사용합니다. 브라우저 화면·GPU 런타임·실물 센서 검증은 이번 문서 작업의 확인 범위에 포함되지 않습니다.</footer></main></body></html>

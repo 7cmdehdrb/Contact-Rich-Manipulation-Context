@@ -12,6 +12,16 @@
 | 2026-10-14 | [Workspace 정리](2026-10-14_workspace_cleanup.md) | 활성 범위·보관 이동·문서 역할 정리와 검증 |
 | 2026-10-14 | [문서 네 폴더 재구성](2026-10-14_document_reorganization.md) | 지침·계획·실제 코드 기록·정적 자산 분류, 내부·workspace·CSV/XLSX 참조와 검증 |
 | 2026-10-14 | [Baseline 환경 UML](2026-10-14_inspire_sweep_uml.md) | Isaac Lab·PPO 실행 연결, 환경 Cfg 상속·callable 연결과 HTML 검증 |
+| 2026-10-14 | [Omni 첫 스텝 종료 진단](2026-10-14_omni_immediate_termination.md) | 4,138개 iteration의 Arm 속도 종료·1스텝 에피소드 확인, 제어 경로와 GPU 재현 미실행 범위 |
+| 2026-10-14 | [Omni v1 Arm 속도 기준](2026-10-14_omni_v1_arm_velocity.md) | v0 상속·종료 기준 2.0 rad/s·새 task 등록과 CPU 경계·격리 검증 |
+| 2026-10-14 | [Omni Arm 비용 복원](2026-10-14_omni_arm_costs_baseline.md) | Arm action 변화·속도 비용의 Baseline 동등성, v0/v1 공통 적용과 CPU 검증 |
+| 2026-10-14 | [ContactSensor 계약 대조](2026-10-14_contact_sensor_contract.md) | USD의 17개 sensor body/collider와 현행 1D palm bit 관측의 차이·CPU 검증 |
+| 2026-10-14 | [Baseline 17채널 Tactile 구현](2026-10-14_baseline_tactile17.md) | 기존 자산·물리 유지, 독립 Binary·부모 접촉 영역 분류·57D policy 및 CPU·USD 검증 |
+| 2026-10-15 | [Omni 재생 속도 기준 차이](2026-10-15_omni_play_threshold_mismatch.md) | 최근 checkpoint 학습 기준 100.0과 v0 기본값 1.0의 차이, 학습 종료 통계와 재생 미확인 범위 |
+| 2026-10-15 | [Tactile GPU 필터 경고 수정](2026-10-15_tactile_gpu_filter_fix.md) | 미지원 Shelf·ground filter 제거, 17개 독립 입력 유지·디버그 marker 분리와 센싱 범위 명시 |
+| 2026-10-15 | [Tactile·F/T 구현 Flow](2026-10-15_sensor_flow_diagrams.md) | 직접 접촉·영역 투영·6축 반력 변환의 HTML 흐름도, 코드 근거와 검증 범위 |
+| 2026-10-15 | [패드·F/T 코드 구현 상세](2026-10-15_sensor_code_flow_diagrams.md) | 기존 Flow 유지, USD 패드 구성·영역 생성·PhysX view·텐서 계산·F/T authoring의 상세도와 실제 소스 발췌 |
+| 2026-10-15 | [Dex Omni 기록 갱신 보상](2026-10-15_dex_omni_rewards.md) | DexTouch 거리 개선량 shaping, OmniV2 페널티·종료·스폰 보존, 새 task 등록과 CPU 회귀 검증 |
 
 새 기록은 `YYYY-MM-DD_<topic>.md` 형식으로 만든다. 환경의 상속 관계·전체 task ID·실행 명령·기준 commit·변경과 검증·미확인 항목을 남긴다. 실험 조건과 정량 결과는 `02_implementation/experiments/`에 연결하고, 연구 방향의 변화는 결정·brief·다음 작업 문서도 갱신한다. 과거 로그의 당시 결론은 유지하며 새 관찰은 새 날짜의 기록으로 추가한다.
 

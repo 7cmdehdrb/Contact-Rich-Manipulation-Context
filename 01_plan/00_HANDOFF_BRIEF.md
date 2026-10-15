@@ -14,7 +14,7 @@
 
 | 구성 | 현재 역할과 확인 범위 |
 | --- | --- |
-| `inspire_sweep_baseline` | 독립 Manager-based Sweep RL 기준선, Realistic Physics, Initial Privileged, Omni의 4개 task. Arm은 Joint Position command를 사용한다. 기본 baseline은 현재 물체 위치를 받는 41D/8D 기준선이며 최종 Blind actor와 구분한다. |
+| `inspire_sweep_baseline` | 독립 Manager-based Sweep RL 기준선, Realistic Physics, Initial Privileged, Omni v0/v1, Baseline Tactile의 6개 task. Arm은 Joint Position command를 사용한다. 기본 baseline은 현재 물체 위치를 받는 41D/8D이며, 새 Tactile은 17개 bit를 포함한 57D/8D다. 둘 다 최종 Blind actor와 구분한다. |
 | `axia80_feasibility` | 정하중·cantilever·각도별 6축 반력과 frame·raw/tare를 검증하는 simulation 실험. Hand 기반 RL 패키지와 구분한다. |
 | `example/Sweep-Policy` | 이전 Sweeping RL 프로젝트를 참고하고 내부 환경 변형을 비교하는 submodule. 전체 프로젝트의 현재 코드 기준은 활성 패키지 안내를 따른다. |
 | `scene_randomization` | NumPy 장면·분포·접근 경로의 기하 검증 도구. 로봇 IK·접촉 물리·마찰·전도나 활성 RL reset 연결을 증명하지 않는다. |

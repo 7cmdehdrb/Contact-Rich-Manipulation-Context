@@ -7,6 +7,8 @@
 | 위치 | 저장 자료 | 설명 문서 |
 | --- | --- | --- |
 | [학습 실행 UML](inspire-sweep-training.html), [환경 상속 UML](inspire-sweep-inheritance.html) | Baseline의 Isaac Lab·RSL-RL 연결, 네 환경의 설정 상속과 callable 연결을 보여주는 자체 포함 HTML | [활성 환경](../02_implementation/08_ACTIVE_ENVIRONMENTS.md), [작성·검증 기록](../02_implementation/logs/2026-10-14_inspire_sweep_uml.md) |
+| [Tactile·F/T 구현 Flow](inspire-sweep-sensor-flows.html) | 17채널 촉각과 EEF 6축 wrench의 구현 흐름도 두 개와 코드 근거를 포함한 HTML | [작성·검증 기록](../02_implementation/logs/2026-10-15_sensor_flow_diagrams.md) |
+| [패드·F/T 코드 구현 상세](inspire-sweep-sensor-code-flows.html) | USD 패드 구조, 감지 영역 생성, PhysX 연결, 채널별 텐서 연산, F/T body·joint 구현의 상세 그림 5개와 코드 발췌 | [작성·검증 기록](../02_implementation/logs/2026-10-15_sensor_code_flow_diagrams.md) |
 | [img/](img/) | 연구·발표·실험 그림과 이미지 | [발표 안내](../01_plan/presentation/README.md), [실험 기록](../02_implementation/README.md#수행한-실험과-재현) |
 | [csv/](csv/) | 학회별 논문 제목 목록 | [문헌조사 안내](../01_plan/literature/README.md) |
 | [pdf/](pdf/) | 보관된 발표 PDF | [발표 안내](../01_plan/presentation/README.md) |
