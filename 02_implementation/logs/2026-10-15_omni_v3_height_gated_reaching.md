@@ -49,3 +49,12 @@ git -C example/Contact-Rich-Manipulation-Context diff --check
 ```
 
 Isaac Sim 환경 생성·GPU 학습·재생은 실행하지 않았다. EEF 높이 gate만으로 손 전체의 충돌을 방지한다고 보장할 수 없으며, 실제 선반 종료 감소와 학습 성능은 다음 run에서 확인해야 한다.
+
+
+## 원격 main 병합과 publish 검증
+
+사용자의 commit/push 요청에 따라 루트 원격 `7094a55`의 Dex Omni 추가와 문서 원격 `f4b65dc`의 네 폴더 개편을 병합했다. v2·v3 개발 로그를 `02_implementation/logs/`로 이동하고 관련 색인·링크를 갱신했다. 원격의 Dex Omni·센서 문서·Sweep-Policy 참조를 유지했으며 v3 등록·Reaching·회귀 테스트도 함께 보존했다.
+
+위 CPU 검증 명령에 `src/inspire_sweep_baseline/tests/test_dex_rewards.py`를 추가해 병합 결과를 검사했다. 결과는 **101 passed in 1.97s**다. `check_document_links.py --check-external`로 병합한 문서 5개와 패키지 README의 내부·Workspace 링크를 확인한 결과 **errors: 0 (6 files)**였다. Markdown 수식 검사와 양쪽 `git diff --check`도 통과했다. 학습·재생은 이번 병합에서 실행하지 않았다.
+
+기존 미추적 `src/Universal_Robots_ROS2_Description/`는 작업과 무관하여 커밋에 포함하지 않았다. 문서 main을 먼저 push한 뒤 해당 commit을 가리키는 루트 main을 push하는 순서로 게시한다.
