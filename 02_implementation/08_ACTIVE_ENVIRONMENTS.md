@@ -14,10 +14,11 @@
 | `Isaac-Inspire-Sweep-Omni-v0` | `InspireSweepOmniEnvCfg` | `InspireSweepEnvCfg` |
 | `Isaac-Inspire-Sweep-Omni-v1` | `InspireSweepOmniV1EnvCfg` | `InspireSweepOmniEnvCfg` |
 | `Isaac-Inspire-Sweep-Omni-v2` | `InspireSweepOmniV2EnvCfg` | `InspireSweepOmniV1EnvCfg` |
+| `Isaac-Inspire-Sweep-Omni-v3` | `InspireSweepOmniV3EnvCfg` | `InspireSweepOmniV2EnvCfg` |
 
 Omni v1의 현재 Arm 속도 종료 임계값은 3 rad/s이며 v2가 그대로 상속한다. v2는 `OmniV2RewardsCfg`를 사용하고, v0/v1의 보상 설정과 상태는 공유하여 수정하지 않는다. 물체 spawn 반경 2cm, 최대 목표 이동 15cm, live-object 41D 관측, Arm 6 + Hand 2 action, 50Hz 제어와 10초 제한을 상속한다. 목표는 episode 동안 고정된다. 목표 방향은 선반 평면 전방향이며 가장자리 여유에 따라 이동 거리가 짧아질 수 있다.
 
-Runner는 네 환경 모두 `InspireSweepPPORunnerCfg`다. v2의 변경 범위는 보상이며, PPO·행동 분포·controller 설정은 그대로다. v2 로그를 분리하려면 아래 experiment 이름을 지정한다.
+Runner는 위 환경 모두 `InspireSweepPPORunnerCfg`다. v2의 변경 범위는 보상이며, PPO·행동 분포·controller 설정은 그대로다. v2 로그를 분리하려면 아래 experiment 이름을 지정한다.
 
 ## v2 보상 계약
 
@@ -64,3 +65,23 @@ Workspace 루트에서 실행한다. 접근 가능한 선반 USD와 Isaac Lab �
 ```
 
 `--sweep-direction`은 지정하지 않는다. CPU 검증 명령·결과·미검증 범위는 [개발 로그](../docs/logs/2026-10-15_omni_v2_rewards.md)에 남긴다. 보상 수치, 학습 수렴, 실물 안전성은 별개 검증 대상이다.
+
+## v3: 높이 조건과 XY 접근
+
+현재 코드에서 v2의 Reaching/Goal weight는 30/40으로 조정되어 있다. 위 v2 계약의 200/400은 이전 구현 기록이며 v3 작업에서 복원하지 않는다. v3는 작업 시점 v2 전체 설정을 상속하고 Reaching의 함수와 Z 파라미터만 변경한다.
+
+`HeightGatedPlanarReachProgress`는 현재 물체 바닥 Z + 9cm를 EEF 목표 높이로 사용한다. 허용 오차 ±2cm 안에서 `max(현재 물체와 EEF의 XY 거리 − 10cm, 0)`의 episode 최소 기록을 갱신할 때만 정규화한 진전 보상을 지급한다. 초기 거리도 XY 기준이다. 9cm는 참고 Sweep 기본 Reaching의 높이 오프셋이며, 2cm는 이번 구현의 실험 허용 오차다.
+
+높이 밖에서 만든 XY 기록도 저장하되 보상하지 않는다. 높이만 뒤늦게 맞추거나 높이 범위를 반복 출입해 과거 접근 진전을 보상받는 것을 막는다. Reaching 가중치·Goal·운동 패널티·종료 조건·PPO는 v2와 동일하다. 성공 종료 제거도 상속한다. [상세 개발 로그](../docs/logs/2026-10-15_omni_v3_height_gated_reaching.md).
+
+```bash
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
+  --task Isaac-Inspire-Sweep-Omni-v3 --num_envs 2048 \
+  --experiment_name inspire_sweep_omni_v3 \
+  --run_name height_gated_xy_reach --headless
+
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/play.py \
+  --task Isaac-Inspire-Sweep-Omni-v3 --num_envs 1 \
+  --experiment_name inspire_sweep_omni_v3 \
+  --checkpoint "<v3-checkpoint.pt>" --real-time
+```

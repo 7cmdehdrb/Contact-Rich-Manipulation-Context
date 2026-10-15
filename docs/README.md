@@ -25,6 +25,8 @@
 
 ## 문헌을 읽는 경로
 
+활성 환경 후속 구현: [2026-10-15 Omni v3 높이 조건부 XY Reaching](logs/2026-10-15_omni_v3_height_gated_reaching.md).
+
 조사별로 읽을 때는 **[조사 그룹](literature/reviews/README.md) → 보고서의 논문 바로가기 → 상세 노트** 순서로 이동한다. 상세 노트의 상단에는 원래 조사 항목으로 돌아가는 링크가 있다. 제목만 알고 있으면 **[전체 논문 색인](literature/papers/README.md)**에서 찾는다.
 
 `literature/reviews/`는 주제별 조사·선별·사용자 발굴 목록과 그 조사에서 나온 설계 제안을 모은다. `literature/papers/`는 논문별 상세 정리를 보관한다. 상세 노트가 아직 없는 항목은 보고서의 요약·서지만 연결하고, 정독 완료로 표시하지 않는다.
