@@ -12,6 +12,7 @@
 | 현재 결정·미정 사항과 다음 작업 | [결정 목록](03_DECISIONS_AND_OPEN_QUESTIONS.md) | [다음 작업](04_NEXT_ACTIONS.md) |
 | 방향이 바뀐 이유와 교수 피드백 | [미팅 이력](02_MEETING_HISTORY.md) | [출처와 확인 범위](06_SOURCE_REGISTER.md) |
 | 구현·실험 설계와 실제 준비 상태 | [구현·평가 설계](05_IMPLEMENTATION_AND_EVALUATION.md) | [코드·장비 현황](07_CODE_AND_HARDWARE_STATUS.md) |
+| 활성 Baseline·Omni 환경의 상속과 실행 | [활성 환경 안내](../02_implementation/08_ACTIVE_ENVIRONMENTS.md) | [2026-10-15 Omni v2 개발 로그](logs/2026-10-15_omni_v2_rewards.md) |
 | Axia80 simulation 구현과 재현 | [구현 가이드](experiments/2026-09-22_axia80_ft_sensor_implementation.md) | [실험 결과](experiments/2026-09-22_axia80_ft_sensor_feasibility.md) |
 | 최종 중간발표의 연구 동기·방법·평가 계획 | [발표 문서 안내](presentation/README.md) | [발표 구성과 설계 현황](presentation/00_Presentation_Overview_and_Design_Status.md) · [보상 설계](presentation/04_Reward_Formulation.md) · [평가와 일정](presentation/06_Evaluation_and_Schedule.md) |
 | Research Motivation의 물체 정보·축약 촉각 근거 | [2.1 신규 문헌 조사: 4편 비교](literature/reviews/2026-09-18_reduced-tactile-compensation-survey.md) | [당시 Research Motivation 초안](presentation/1st_draft/01_Research_Motivation.md) |

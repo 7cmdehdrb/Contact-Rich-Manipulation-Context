@@ -1,5 +1,7 @@
 # 결정·변경·미정 목록
 
+> **2026-10-15 사용자 요청 — Omni v2 보상 실험:** v1을 유지하고 이를 상속하는 v2에서 현재 물체 위치 기준의 episode 최소 접근 기록 보상, time/success/failure 보상 제거를 구현했다. 후속 사용자 요청으로 v2의 success DoneTerm도 제거했으며 실패·시간 초과 종료는 유지한다. 추가 사용자 지시에 따라 운동 비용은 v1 원래 값으로 복원하고 Reaching·목표 이동 진전 보상만 각각 누적 +200·+400으로 강화했다. 보상 계수의 학습 효과는 미검증이다. [구현·검증 로그](logs/2026-10-15_omni_v2_rewards.md) · [환경 안내](../02_implementation/08_ACTIVE_ENVIRONMENTS.md).
+
 [문서 안내](README.md) · [문헌조사](literature/README.md) · [조사 그룹](literature/reviews/README.md)
 
 기준일: 2026-09-14. 출처는 [출처 목록](06_SOURCE_REGISTER.md)을 따른다. 이 문서는 현재 요구사항을 판별할 때의 기준이며 실험 검증 완료를 뜻하지 않는다.
