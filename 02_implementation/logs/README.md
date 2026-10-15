@@ -41,3 +41,5 @@ Pull/rebase 중 문서 이관 충돌의 처리 내역은 [충돌 해결 기록](
 - [2026-10-15 V4 최대 Arm 속도 추가 비용](2026-10-15_omni_v4_arm_speed_excess.md): 기존 비용 유지, 최대 절대속도 1.0부터 제곱 증가·2.0에서 weighted −0.03.
 
 - [2026-10-15 Renewal 환경 재구성](2026-10-15_omni_renewal_environments.md): V4 동작과 동일한 명시적 환경 구성·Dex의 두 보상 교체·Gym 등록과 CPU 계약 검증.
+
+- [Reaching 최고 기록 이탈 페널티](2026-10-15_reaching_regression.md)

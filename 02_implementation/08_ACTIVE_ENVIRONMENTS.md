@@ -453,3 +453,9 @@ Workspace 루트에서 실행한다. `--sweep-direction`은 생략한다. 기본
 위 명령은 실행 안내이며 이번 추가 작업에서 새 학습·재생을 수행하지 않았다.
 
 코드: [Renewal 설정](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/omni_renewal_env_cfg.py), [Dex Renewal 설정](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/dex_omni_renewal_env_cfg.py). [구현·검증 로그](logs/2026-10-15_omni_renewal_environments.md).
+
+## 2026-10-15 reaching 이탈 페널티 정정
+
+`HeightGatedPlanarReachProgress`를 사용하는 Omni v3, v4, Sweep Renewal은 현재 물체와 EEF의 XY 거리에서 10cm를 뺀 값을 0 이상으로 제한한다. 이전 episode 최소 거리보다 작아지면 Z gate 안에서 보상하고, 커지면 Z gate와 관계없이 매 step 페널티를 적용한다. 10cm 이내는 모두 0이며, 물체가 움직여 반경 밖으로 나가도 이탈로 계산한다. 이전 기록 복귀에는 재보상이 없다. 위의 기존 진전 전용 설명은 이 변경으로 대체한다. Dex 계열의 별도 reaching 함수는 변경하지 않았다.
+
+물체 원점은 바닥 중심이므로 Z offset 0.09m를 유지한다. 직립한 높이 10cm 물체의 기하학적 중심보다 4cm 위다. 초기 남은 거리로 정규화하며, 초기부터 반경 안이면 0.1m를 분모로 사용한다. 함수의 step_dt 나눗셈을 유지하므로 가중치 적용 후 이탈 페널티는 매 step 부과된다. [변경 및 검증 기록](logs/2026-10-15_reaching_regression.md).
