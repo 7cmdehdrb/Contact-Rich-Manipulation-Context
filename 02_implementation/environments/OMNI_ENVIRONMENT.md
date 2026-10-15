@@ -354,27 +354,20 @@ reaching_progress[t] = (b[t−1] − b[t]) / max(d_reach[0], epsilon)
 
 ### 5.4 Arm과 Hand Action Rate
 
+2026-10-15부터 Omni 베이스와 모든 파생(Dex Omni 포함)은 로컬 `mdp/goal_rewards.py`의 `action_rate_l2`를 사용한다.
+
 ```text
-arm_cost = sum(((u_current − u_previous) / normalization_scale)²)
-hand_cost = mean(((u_current − u_previous) / normalization_scale)²)
+arm_cost = sum((raw_action_current[:6] − raw_action_previous[:6])²)
+hand_cost = sum((raw_action_current[6:8] − raw_action_previous[6:8])²)
 ```
 
-`action_group="arm"`은 앞 6개 입력, `action_group="hand"`는 뒤 2개 입력을 선택한다. `normalization_scale=1.0`은 명령 변화량을 나누는 기준 스케일이며 양수 scalar 또는 해당 그룹 크기의 벡터를 사용할 수 있다.
-
-Arm은 `0.5 × action` 변환 전의 입력 좌표에서 계산하며 `reduction="sum"`으로 Baseline의 Arm 비용을 복원한다. Hand는 현재와 이전 입력을 각각 `[0, 1]`로 clip한 뒤 계산한다. 따라서 clip 범위 밖의 입력 변화가 실제 openness를 바꾸지 않으면 Hand Action Rate 비용도 늘지 않는다. Hand는 기본 `reduction="mean"`을 유지한다.
+두 항의 weight는 각각 −0.03이다. 평균·정규화·보상 내부 clamp는 없다. Hand raw 입력이 [0, 1] 밖에 있어도 변화량을 계산한다. 실제 Hand 제어에서 openness를 clamp하는 동작은 유지한다. Action Rate는 명령 크기 자체나 시간 미분에 대한 페널티가 아니다.
 
 ### 5.5 Arm과 Hand 관절 속도
 
-```text
-arm_cost = sum((actual_joint_velocity / reference_velocity)²)
-hand_cost = mean((actual_joint_velocity / reference_velocity)²)
-```
+로컬 `goal_rewards.joint_vel_l2`는 이름으로 선택한 실제 관절 속도의 제곱합을 반환한다. Arm 6개/Hand 12개를 별도 항으로 유지하며 weight는 각각 −0.03/−0.01이다. 평균이나 기준 속도 정규화는 없다. 관절 배열의 앞 6개를 Arm이라고 가정하지 않는다.
 
-`asset_cfg`는 `robot`에서 평가할 관절을 지정한다. Arm은 6개 `ARM_JOINT_NAMES`, Hand는 12개 `HAND_JOINT_NAMES`를 각각 이름 순서로 선택한다. 현재 Hand 관절은 각 한 번만 포함한다.
-
-`reference_velocity=1.0 rad/s`는 속도 정규화 기준이다. 양수 scalar 또는 그룹별 관절 수에 맞는 벡터를 사용할 수 있다. 구동기 속도 한도나 종료 임계값과는 별도다. Hand의 절대 Action이나 특정 기준 자세와의 차이에 대한 비용은 없다.
-
-Arm은 `reduction="sum"`, weight −0.03으로 Baseline과 동일한 비용을 적용한다. Hand는 기본 `reduction="mean"`, weight −0.01을 유지한다. Reduction 함수 기본값은 평균이며 Omni Cfg가 Arm에만 합산을 명시한다.
+네 항 모두 RewardManager가 weight와 step_dt를 한 번 곱한다. 참고 Inspire 환경의 수식을 로컬로 구현하며 해당 환경에서 import하지 않는다. [필수 개발 규칙](../../00_guidelines/09_DEVELOPMENT_GUIDE.md)과 [검증 로그](../logs/2026-10-15_omni_penalty_contract.md)를 따른다.
 
 ### 5.6 물체 기울기
 

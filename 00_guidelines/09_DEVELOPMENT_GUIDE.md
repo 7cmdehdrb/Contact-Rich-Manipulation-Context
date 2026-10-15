@@ -12,6 +12,21 @@ Isaac Lab의 Manager-based Reinforcement Learning 구조와 OOP 원칙을 지킨
 
 활성 패키지 `inspire_sweep_baseline`은 Isaac Lab 기반 클래스를 상속하지만, 보관된 프로젝트 패키지를 import하거나 상속하지 않는 독립 패키지다. 참고 구현에서 코드를 가져온 이력과 실행 중 Python 상속 관계를 구분한다. 아카이브 패키지를 다시 의존성으로 연결하려면 활성 범위 변경을 먼저 문서에 남긴다.
 
+## Omni 운동 페널티 필수 규칙 — 2026-10-15 사용자 지시
+
+Omni 베이스와 모든 파생 환경(v0/v1/v2/v3 및 Dex Omni, 향후 파생 포함)은 아래 네 항을 반드시 사용한다. 공통 `OmniRewardsCfg`에서 상속하며 임의로 제거·대체하지 않는다.
+
+| 항 | 로컬 함수와 대상 | 가중치 |
+| --- | --- | --- |
+| Arm Action Rate | `goal_rewards.action_rate_l2`, raw Arm 6D 변화량 제곱합 | −0.03 |
+| Hand Action Rate | `goal_rewards.action_rate_l2`, raw Hand 2D 변화량 제곱합 | −0.03 |
+| Arm Joint Velocity | `goal_rewards.joint_vel_l2`, 이름으로 선택한 Arm 6개 실제 관절 속도 제곱합 | −0.03 |
+| Hand Joint Velocity | `goal_rewards.joint_vel_l2`, 이름으로 선택한 Hand 12개 실제 관절 속도 제곱합 | −0.01 |
+
+참고 Inspire 환경의 raw 제곱합 계산을 따르되 활성 패키지의 `mdp/goal_rewards.py`에 정의한 함수를 사용한다. `example/Sweep-Policy`의 함수를 import하지 않는다. Arm/Hand 항을 합치거나 mean, 기준값 정규화, 보상 내부 Hand 입력 clamp를 적용하지 않는다. Action 자체의 처리에서 수행하는 Hand clamp와 보상 계산은 구분한다. 함수에서 dt로 나누거나 곱하지 않고 RewardManager가 weight와 step_dt를 한 번 적용한다.
+
+이전 정규화 함수는 과거 설정의 참조를 위해 남아 있지만 Omni 설정에서 사용하지 않는다. 구조·계수 변경은 사용자 명시 지시가 있을 때만 수행한다. 다른 보상의 상대 크기를 이유로 이 페널티를 임의로 낮추지 않는다. 모든 파생 환경에 대한 callable·계수·그룹 분리 검증을 유지한다. [적용·검증 로그](../02_implementation/logs/2026-10-15_omni_penalty_contract.md).
+
 ## 환경마다 남길 계약
 
 환경 추가·변경 시 아래 표의 항목을 코드 위치와 함께 기록한다. 현재 환경의 공통 탐색 문서는 [활성 환경 안내](../02_implementation/08_ACTIVE_ENVIRONMENTS.md)이며, 세부 계약은 해당 패키지 README와 설정 파일에 연결한다.

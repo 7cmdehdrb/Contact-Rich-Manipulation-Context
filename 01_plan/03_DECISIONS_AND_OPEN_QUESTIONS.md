@@ -124,3 +124,7 @@ Decision ID:
 ```
 
 새 결정이 나면 해당 행과 미팅 이력, brief, 다음 작업을 함께 갱신한다. 미정 항목을 해결하지 못했다고 매번 같은 배경 질문을 반복하지 말고, 이미 읽을 수 있는 코드·문서를 먼저 확인한다.
+
+## 2026-10-15 Omni 운동 페널티 고정 — 사용자 지시
+
+Omni 베이스 및 모든 파생(Dex 포함)은 참고 Inspire와 같은 raw Action 변화량·실제 관절 속도의 제곱합을 로컬 MDP 함수로 사용한다. Arm/Hand 네 항은 분리 유지하며 임의로 평균·정규화·보상 입력 clamp를 도입하거나 계수를 낮추지 않는다. [필수 개발 규칙](../00_guidelines/09_DEVELOPMENT_GUIDE.md), [적용·검증 로그](../02_implementation/logs/2026-10-15_omni_penalty_contract.md).
