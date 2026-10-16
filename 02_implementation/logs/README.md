@@ -49,3 +49,11 @@ Pull/rebase 중 문서 이관 충돌의 처리 내역은 [충돌 해결 기록](
 - [체크포인트 재생 배속 옵션](2026-10-16_playback_speed.md)
 
 - [OSC 선반 종료와 목표 시각화](2026-10-16_osc_shelf_goal_visualization.md)
+
+- [Inspire Hand 촉각 벡터 검증](2026-10-16_tactile_validation.md)
+
+- [촉각 검증 결과 시각화](2026-10-16_tactile_visualization.md)
+
+- [촉각 검증 루프 수정 및 배치 비교](2026-10-16_tactile_validation_correction.md)
+
+- [Renewal 17채널 촉각 환경 두 종류](2026-10-16_tactile_renewal_environments.md)

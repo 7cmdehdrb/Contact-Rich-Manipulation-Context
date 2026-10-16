@@ -19,7 +19,7 @@
 
 ## 2. RL 환경 등록과 상속 구조
 
-등록 근거는 [`inspire_sweep_baseline/__init__.py`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py)다. 아래 열세 task의 실행 클래스는 모두 [`InspireSweepEnv`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/env.py)이며 `ManagerBasedRLEnv`를 상속한다. 환경별 차이는 등록된 Cfg와 PPO 설정에서 결정한다.
+등록 근거는 [`inspire_sweep_baseline/__init__.py`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py)다. 아래 task의 실행 클래스는 모두 [`InspireSweepEnv`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/env.py)이며 `ManagerBasedRLEnv`를 상속한다. 환경별 차이는 등록된 Cfg와 PPO 설정에서 결정한다.
 
 | Gym task ID | 환경 Cfg | PPO Cfg | 기본 로그 폴더 |
 | --- | --- | --- | --- |
@@ -34,6 +34,8 @@
 | `Isaac-Inspire-Sweep-Omni-Renewal-v0` | `InspireSweepOmniRenewalEnvCfg` | `InspireSweepPPORunnerCfg` | CLI로 `inspire_sweep_omni_renewal` 지정 권장 |
 | `Isaac-Inspire-Sweep-Omni-Renewal-OSC-v0` | `InspireSweepOmniRenewalOSCEnvCfg` | `InspireSweepPPORunnerCfg` | CLI로 `inspire_sweep_omni_renewal_osc` 지정 권장 |
 | `Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0` | `InspireDexSweepOmniRenewalEnvCfg` | `InspireSweepPPORunnerCfg` | CLI로 `inspire_dex_sweep_omni_renewal` 지정 권장 |
+| `Isaac-Inspire-Tactile-Sweep-Omni-Renewal-v0` | `InspireTactileSweepOmniRenewalEnvCfg` | `InspireTactileSweepOmniRenewalPPORunnerCfg` | `logs/rsl_rl/inspire_tactile_sweep_omni_renewal` |
+| `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v0` | `InspireDexTactileSweepOmniRenewalEnvCfg` | `InspireDexTactileSweepOmniRenewalPPORunnerCfg` | `logs/rsl_rl/inspire_dex_tactile_sweep_omni_renewal` |
 | `Isaac-Inspire-Dex-Omni-v0` | `InspireDexOmniEnvCfg` | `InspireSweepPPORunnerCfg` | Baseline과 동일. CLI로 `inspire_dex_omni` 지정 권장 |
 | `Isaac-Inspire-Sweep-Baseline-Tactile-v0` | `InspireSweepTactileEnvCfg` | `InspireSweepTactilePPORunnerCfg` | `logs/rsl_rl/inspire_sweep_tactile` |
 
@@ -46,6 +48,8 @@ flowchart TD
     Baseline --> Renewal[InspireSweepOmniRenewalEnvCfg]
     Renewal --> RenewalOSC[InspireSweepOmniRenewalOSCEnvCfg]
     Renewal --> DexRenewal[InspireDexSweepOmniRenewalEnvCfg]
+    Renewal --> TactileRenewal[InspireTactileSweepOmniRenewalEnvCfg]
+    DexRenewal --> DexTactileRenewal[InspireDexTactileSweepOmniRenewalEnvCfg]
     Baseline --> Tactile[InspireSweepTactileEnvCfg]
     Omni --> OmniV1[InspireSweepOmniV1EnvCfg]
     OmniV1 --> OmniV2[InspireSweepOmniV2EnvCfg]
@@ -488,3 +492,36 @@ Joint Position 정책과 action 의미가 달라 새 정책으로 학습한다. 
 `OmniRenewalTerminationsCfg`에서 `terminations.shelf_collision.params["check_fingers"] = False`를 설정한다. Renewal과 OSC·Dex Renewal을 포함한 모든 파생 환경에 적용된다. 선반 root 6D 속도 norm > 0.1 또는 손목 frame Z가 선반 root Z +1.05m 기준 7cm 미만이면 종료한다. 손가락 frame 높이는 종료에 사용하지 않는다. Renewal 계열 밖의 환경은 기본값 True로 기존 판정을 유지하며 선반 보상 항은 변경하지 않았다.
 
 Renewal 부모의 `commands.target_goal_pos.debug_vis=True`를 모든 파생 환경이 상속하여 현재 목표 월드 위치에 반지름 2.5cm 초록색 구형 마커를 표시한다. reset 이후 command 위치를 따라 갱신되며 충돌용 형상이 아니다. 현재 사용자 설정인 OSC 위치/회전 scale 1.0/1.0은 유지했다.
+
+## Inspire Hand 촉각 standalone 검증
+
+2026-10-16 사용자 요청으로 새 활성 패키지 `src/inspire_tactile_validation`을 추가했다. Gym 환경이나 PPO가 아닌 Isaac Lab standalone이며, 기존 Tactile의 Hand 충돌 자산과 `ProjectedTactileContactBits`를 그대로 재사용한다. Arm 없이 고정 palm-up/open Hand에 막대를 접근·유지·복귀시키고, 17채널의 중앙·네 모서리 × 반복을 벡터화해 수집한다.
+
+```bash
+./IsaacLab/isaaclab.sh -p src/inspire_tactile_validation/scripts/run_probe_test.py \
+  --num-envs 85 --repeats 3 --headless
+```
+
+기본 출력은 `outputs/inspire_tactile_validation/<날짜_시각>/`이며 원시 frame, 위치별 판정, 혼동행렬, 집계 JSON을 저장한다. 독립 막대 접촉력과 외력·가속도 평형을 함께 확인한다. 실제 255회 실행에서 검출 66회·기준 불일치 186회·오접촉 3회가 관찰되어 전체 판정은 보류다. 상세 계약은 [패키지 안내](../../../src/inspire_tactile_validation/README.md), 재현과 검증은 [개발 로그](logs/2026-10-16_tactile_validation.md)를 따른다. 기존 Tactile·Renewal 환경의 센서나 RL 설정은 변경하지 않았다.
+
+### 촉각 검증 수정 결과 (2026-10-16)
+
+검증 standalone의 physics/render 시간 불일치를 수정하고 무중력 조건을 명시했다. 기본 원본 패드 배치에서 255/255 trial 검출, 유효 frame 8430/8475(99.47%)를 확인했다. 선택적 `--pad-layout exposed`는 시험용 패드 부착 위치만 변경하며 255/255 trial 및 8130/8130 유효 frame 검출이었다. trial 통과와 frame 검출률을 구분한다. 기존 Sweep 자산·환경은 변경하지 않았다. [구현·명령·검증 기록](logs/2026-10-16_tactile_validation_correction.md).
+
+### Renewal 촉각 파생 환경 (2026-10-16)
+
+`InspireTactileSweepOmniRenewalEnvCfg`는 Sweep Renewal을, `InspireDexTactileSweepOmniRenewalEnvCfg`는 Dex Sweep Renewal을 직접 상속한다. 원본 Hand와 검증 standalone의 기본 `original` 배치 판독기를 재사용하여 tactile 1D를 17D로 교체한다. Actor/Critic policy는 57D, Action은 기존 8D다. 센서 순서는 palm → thumb 1–4 → index/middle/ring/little 각각 1–3이다.
+
+각 패드 직접 NetForce 또는 해당 센서 영역으로 투영한 부모 접촉력 벡터합의 크기가 0.01 N 이상이면 1.0, 아니면 0.0이다. 두 경로는 OR로 결합하며 reset 직후 미갱신 행은 0이다. 직접 접촉은 모든 상대를, 부모 영역 투영은 GPU에서 지원되는 `mass_cylinder`만 읽는다. standalone의 `exposed` 배치, 무중력, 고정 자세는 RL에 적용하지 않는다. 보상·종료·이벤트·제어·물성과 다른 관측은 각 부모와 같다.
+
+```bash
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
+  --task Isaac-Inspire-Tactile-Sweep-Omni-Renewal-v0 \
+  --num_envs 2048 --run_name tactile_renewal_v0 --headless
+
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
+  --task Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v0 \
+  --num_envs 2048 --run_name dex_tactile_renewal_v0 --headless
+```
+
+PPO는 부모 설정을 상속하고 위 등록 표의 기본 실험 폴더만 분리한다. 실제 GPU 검증은 각 8개 환경·1 iteration이며 양쪽 모두 완료했다. 장시간 학습·2048개 환경 성능은 미검증이다. [코드](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/tactile_omni_renewal_env_cfg.py) · [개발·검증 기록](logs/2026-10-16_tactile_renewal_environments.md).

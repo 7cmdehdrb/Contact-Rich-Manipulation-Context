@@ -23,6 +23,7 @@
 ├── IsaacLab/                         Isaac Lab framework submodule
 ├── src/
 │   ├── inspire_sweep_baseline/        활성 Manager-based Sweep RL
+│   ├── inspire_tactile_validation/   독립 Hand 촉각 벡터 접촉 검증
 │   ├── axia80_feasibility/            활성 정하중·cantilever F/T 검증
 │   ├── scene_randomization/          독립적인 NumPy 기하 장면 검증 도구
 │   └── trash/                        과거 패키지·UR description 보관
@@ -40,7 +41,7 @@
 └── outputs/                          센서·기하 검증 등 생성 산출물
 ```
 
-`src`의 활성 범위는 두 패키지다. `src/trash/COLCON_IGNORE`는 colcon의 재귀 package discovery를 차단한다. Isaac Lab의 Python/Gym 등록은 ROS2 빌드와 별개이므로 활성 launcher는 활성 패키지만 등록하고, 보관된 환경을 기본 실행 대상으로 안내하지 않는다. 과거 코드는 삭제하지 않아 당시 구현을 추적할 수 있다.
+`src`의 활성 범위는 위 세 패키지다. `src/trash/COLCON_IGNORE`는 colcon의 재귀 package discovery를 차단한다. Isaac Lab의 Python/Gym 등록은 ROS2 빌드와 별개이므로 활성 launcher는 활성 패키지만 등록하고, 보관된 환경을 기본 실행 대상으로 안내하지 않는다. 과거 코드는 삭제하지 않아 당시 구현을 추적할 수 있다.
 
 참고 submodule과 문서 submodule, `build`, `install`, `log`, `logs`, `outputs`, `videos`, `reports`에도 ignore marker를 두어 저장된 source snapshot이나 생성 결과가 colcon package로 다시 검색되지 않게 한다. 산출물 자체는 보존하며, 각 도구의 명시적 실행은 해당 launcher·문서의 명령을 따른다.
 
