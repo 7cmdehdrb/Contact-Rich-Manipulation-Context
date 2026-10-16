@@ -43,3 +43,9 @@ Pull/rebase 중 문서 이관 충돌의 처리 내역은 [충돌 해결 기록](
 - [2026-10-15 Renewal 환경 재구성](2026-10-15_omni_renewal_environments.md): V4 동작과 동일한 명시적 환경 구성·Dex의 두 보상 교체·Gym 등록과 CPU 계약 검증.
 
 - [Reaching 최고 기록 이탈 페널티](2026-10-15_reaching_regression.md)
+
+- [Renewal OSC 환경 추가](2026-10-15_renewal_osc.md)
+
+- [체크포인트 재생 배속 옵션](2026-10-16_playback_speed.md)
+
+- [OSC 선반 종료와 목표 시각화](2026-10-16_osc_shelf_goal_visualization.md)

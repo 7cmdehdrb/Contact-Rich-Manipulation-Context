@@ -19,7 +19,7 @@
 
 ## 2. RL 환경 등록과 상속 구조
 
-등록 근거는 [`inspire_sweep_baseline/__init__.py`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py)다. 아래 열두 task의 실행 클래스는 모두 [`InspireSweepEnv`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/env.py)이며 `ManagerBasedRLEnv`를 상속한다. 환경별 차이는 등록된 Cfg와 PPO 설정에서 결정한다.
+등록 근거는 [`inspire_sweep_baseline/__init__.py`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py)다. 아래 열세 task의 실행 클래스는 모두 [`InspireSweepEnv`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/env.py)이며 `ManagerBasedRLEnv`를 상속한다. 환경별 차이는 등록된 Cfg와 PPO 설정에서 결정한다.
 
 | Gym task ID | 환경 Cfg | PPO Cfg | 기본 로그 폴더 |
 | --- | --- | --- | --- |
@@ -32,6 +32,7 @@
 | `Isaac-Inspire-Sweep-Omni-v3` | `InspireSweepOmniV3EnvCfg` | `InspireSweepPPORunnerCfg` | Baseline과 동일. CLI로 `inspire_sweep_omni_v3` 지정 권장 |
 | `Isaac-Inspire-Sweep-Omni-v4` | `InspireSweepOmniV4EnvCfg` | `InspireSweepPPORunnerCfg` | Baseline과 동일. CLI로 `inspire_sweep_omni_v4` 지정 권장 |
 | `Isaac-Inspire-Sweep-Omni-Renewal-v0` | `InspireSweepOmniRenewalEnvCfg` | `InspireSweepPPORunnerCfg` | CLI로 `inspire_sweep_omni_renewal` 지정 권장 |
+| `Isaac-Inspire-Sweep-Omni-Renewal-OSC-v0` | `InspireSweepOmniRenewalOSCEnvCfg` | `InspireSweepPPORunnerCfg` | CLI로 `inspire_sweep_omni_renewal_osc` 지정 권장 |
 | `Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0` | `InspireDexSweepOmniRenewalEnvCfg` | `InspireSweepPPORunnerCfg` | CLI로 `inspire_dex_sweep_omni_renewal` 지정 권장 |
 | `Isaac-Inspire-Dex-Omni-v0` | `InspireDexOmniEnvCfg` | `InspireSweepPPORunnerCfg` | Baseline과 동일. CLI로 `inspire_dex_omni` 지정 권장 |
 | `Isaac-Inspire-Sweep-Baseline-Tactile-v0` | `InspireSweepTactileEnvCfg` | `InspireSweepTactilePPORunnerCfg` | `logs/rsl_rl/inspire_sweep_tactile` |
@@ -43,6 +44,7 @@ flowchart TD
     Realistic --> Initial[InspireSweepRealisticInitialPrivilegedEnvCfg]
     Baseline --> Omni[InspireSweepOmniEnvCfg]
     Baseline --> Renewal[InspireSweepOmniRenewalEnvCfg]
+    Renewal --> RenewalOSC[InspireSweepOmniRenewalOSCEnvCfg]
     Renewal --> DexRenewal[InspireDexSweepOmniRenewalEnvCfg]
     Baseline --> Tactile[InspireSweepTactileEnvCfg]
     Omni --> OmniV1[InspireSweepOmniV1EnvCfg]
@@ -459,3 +461,30 @@ Workspace 루트에서 실행한다. `--sweep-direction`은 생략한다. 기본
 `HeightGatedPlanarReachProgress`를 사용하는 Omni v3, v4, Sweep Renewal은 현재 물체와 EEF의 XY 거리에서 10cm를 뺀 값을 0 이상으로 제한한다. 이전 episode 최소 거리보다 작아지면 Z gate 안에서 보상하고, 커지면 Z gate와 관계없이 매 step 페널티를 적용한다. 10cm 이내는 모두 0이며, 물체가 움직여 반경 밖으로 나가도 이탈로 계산한다. 이전 기록 복귀에는 재보상이 없다. 위의 기존 진전 전용 설명은 이 변경으로 대체한다. Dex 계열의 별도 reaching 함수는 변경하지 않았다.
 
 물체 원점은 바닥 중심이므로 Z offset 0.09m를 유지한다. 직립한 높이 10cm 물체의 기하학적 중심보다 4cm 위다. 초기 남은 거리로 정규화하며, 초기부터 반경 안이면 0.1m를 분모로 사용한다. 함수의 step_dt 나눗셈을 유지하므로 가중치 적용 후 이탈 페널티는 매 step 부과된다. [변경 및 검증 기록](logs/2026-10-15_reaching_regression.md).
+
+## Renewal OSC 환경
+
+`Isaac-Inspire-Sweep-Omni-Renewal-OSC-v0`는 `InspireSweepOmniRenewalOSCEnvCfg(InspireSweepOmniRenewalEnvCfg)`다. Arm만 Isaac Lab `OperationalSpaceControllerActionCfg`로 교체한다. 제어점은 `scene.ee_frame`의 첫 target과 같은 body(`axia80_link`), 위치 및 quaternion offset을 사용한다.
+
+- Arm action: relative pose 6D (`pose_rel`), fixed impedance. 위치 scale 0.05m, axis-angle 회전 scale 0.1rad. task frame 미지정으로 robot root 좌표계를 사용한다.
+- OSC: 모든 6축 stiffness 200, damping ratio 1, 관성 보정 및 중력 보상 사용.
+- 토크 출력과 중복되지 않도록 Arm implicit actuator stiffness/damping은 0. 노력·속도 제한은 부모 설정을 상속한다.
+- Hand 2D와 관측 41D, reward/termination/event, 물성, reset, PPO는 부모와 같다. raw Arm action 페널티는 Cartesian 6D 입력 변화량에 적용된다.
+
+Workspace 루트에서 실행:
+
+```bash
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
+  --task Isaac-Inspire-Sweep-Omni-Renewal-OSC-v0 --num_envs 2048 \
+  --experiment_name inspire_sweep_omni_renewal_osc --run_name renewal_osc_v0 --headless
+```
+
+Joint Position 정책과 action 의미가 달라 새 정책으로 학습한다. CPU 설정 검증은 완료했으며 실제 Isaac Sim OSC 동작·학습 성능은 미검증이다.
+
+[OSC 환경 개발 로그](logs/2026-10-15_renewal_osc.md).
+
+### Renewal 계열 선반 종료와 목표 시각화 (2026-10-16)
+
+`OmniRenewalTerminationsCfg`에서 `terminations.shelf_collision.params["check_fingers"] = False`를 설정한다. Renewal과 OSC·Dex Renewal을 포함한 모든 파생 환경에 적용된다. 선반 root 6D 속도 norm > 0.1 또는 손목 frame Z가 선반 root Z +1.05m 기준 7cm 미만이면 종료한다. 손가락 frame 높이는 종료에 사용하지 않는다. Renewal 계열 밖의 환경은 기본값 True로 기존 판정을 유지하며 선반 보상 항은 변경하지 않았다.
+
+Renewal 부모의 `commands.target_goal_pos.debug_vis=True`를 모든 파생 환경이 상속하여 현재 목표 월드 위치에 반지름 2.5cm 초록색 구형 마커를 표시한다. reset 이후 command 위치를 따라 갱신되며 충돌용 형상이 아니다. 현재 사용자 설정인 OSC 위치/회전 scale 1.0/1.0은 유지했다.
