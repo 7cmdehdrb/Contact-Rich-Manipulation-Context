@@ -57,3 +57,11 @@ Pull/rebase 중 문서 이관 충돌의 처리 내역은 [충돌 해결 기록](
 - [촉각 검증 루프 수정 및 배치 비교](2026-10-16_tactile_validation_correction.md)
 
 - [Renewal 17채널 촉각 환경 두 종류](2026-10-16_tactile_renewal_environments.md)
+
+- [Renewal Tactile v1 지수 속도 비용](2026-10-16_tactile_renewal_v1_exponential.md)
+
+- [지수 속도 비용의 OSC·Dex 부모 적용 정정](2026-10-16_renewal_exponential_parent_scope.md)
+
+- [촉각 v0 지수 비용 통합 및 중복 v1 삭제](2026-10-16_tactile_v0_exponential_cleanup.md)
+
+- [Renewal 기본 속도 비용 exp 통일 및 중복 클래스 삭제](2026-10-16_renewal_only_exponential.md)
