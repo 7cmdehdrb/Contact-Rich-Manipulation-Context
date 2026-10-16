@@ -36,6 +36,7 @@
 | `Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0` | `InspireDexSweepOmniRenewalEnvCfg` | `InspireSweepPPORunnerCfg` | CLI로 `inspire_dex_sweep_omni_renewal` 지정 권장 |
 | `Isaac-Inspire-Tactile-Sweep-Omni-Renewal-v0` | `InspireTactileSweepOmniRenewalEnvCfg` | `InspireTactileSweepOmniRenewalPPORunnerCfg` | `logs/rsl_rl/inspire_tactile_sweep_omni_renewal` |
 | `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v0` | `InspireDexTactileSweepOmniRenewalEnvCfg` | `InspireDexTactileSweepOmniRenewalPPORunnerCfg` | `logs/rsl_rl/inspire_dex_tactile_sweep_omni_renewal` |
+| `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1` | `InspireDexTactileSweepOmniRenewalV1EnvCfg` | `InspireDexTactileSweepOmniRenewalV1PPORunnerCfg` | `logs/rsl_rl/inspire_dex_tactile_sweep_omni_renewal_v1` |
 | `Isaac-Inspire-Dex-Omni-v0` | `InspireDexOmniEnvCfg` | `InspireSweepPPORunnerCfg` | Baseline과 동일. CLI로 `inspire_dex_omni` 지정 권장 |
 | `Isaac-Inspire-Sweep-Baseline-Tactile-v0` | `InspireSweepTactileEnvCfg` | `InspireSweepTactilePPORunnerCfg` | `logs/rsl_rl/inspire_sweep_tactile` |
 
@@ -530,8 +531,48 @@ PPO는 부모 설정을 상속하고 위 등록 표의 기본 실험 폴더만 �
 
 Sweep Renewal v0, Dex Renewal v0, Tactile Renewal v0, Dex Tactile Renewal v0 모두 Renewal 부모의 지수 비용을 사용한다. OSC도 exp다. Renewal 밖의 Omni v4는 기존 제곱 속도 비용을 유지한다. `ExponentialSpeedRewardsCfg`는 삭제했으며 `OmniRenewalRewardsCfg`가 두 exp 항을 직접 정의한다. 물체 속도 0.3m/s, Arm 6개 관절의 최대 절대 속도 1.0rad/s를 임계값으로 `expm1(2 * max(x - t, 0)) / 2`를 계산하고 두 항의 weight는 -1.0이다. 기존 RewardManager의 step_dt 곱셈을 유지한다. 임계값 이하에서 0, 초과하면 지수적으로 증가하는 비용이며 상한·reference_speed 정규화는 없다.
 
-일반 촉각 v0와 OSC는 Renewal 부모에서, Dex 촉각 v0는 Dex 부모에서 rewards를 상속한다. 두 Tactile v1은 중복이므로 Gym ID·Cfg·전용 PPO를 삭제했다. 위의 촉각 v0 명령으로 학습한다. 각 환경의 하위 클래스도 지수 비용을 상속하며, 센서·관측·제어·종료·나머지 보상은 그대로다. 기존 제곱 함수는 보존하며 일반 Sweep Renewal v0도 지수 속도 비용으로 통일했다.
+일반 촉각 v0와 OSC는 Renewal 부모에서, Dex 촉각 v0는 Dex 부모에서 rewards를 상속한다. 당시 두 Tactile v1은 중복이므로 Gym ID·Cfg·전용 PPO를 삭제했다. 이후 아래의 독립적인 변경 조건을 갖춘 Dex Tactile v1을 새로 등록했다. 위의 촉각 v0 명령으로 학습한다. 각 환경의 하위 클래스도 지수 비용을 상속하며, 센서·관측·제어·종료·나머지 보상은 그대로다. 기존 제곱 함수는 보존하며 일반 Sweep Renewal v0도 지수 속도 비용으로 통일했다.
 
 [촉각 Cfg](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/tactile_omni_renewal_env_cfg.py) · [정리·검증 로그](logs/2026-10-16_tactile_v0_exponential_cleanup.md). 앞선 v1 추가와 부모 적용 정정은 개발 로그에 당시 기록으로 보존한다. 장시간 학습과 실물 성능은 미검증이다.
 
 [Renewal 계열 속도 초과 비용의 exp 통일·검증 기록](logs/2026-10-16_renewal_only_exponential.md). `joint_vel_l2` 등 별도 운동 제곱합 페널티는 기존 규칙대로 유지한다.
+
+
+### Dex Tactile Renewal v1 — 비용 상한·손목 높이·목표 방향 (2026-10-16)
+
+앞으로의 파생 작업 기준은 사용자 지정 `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v0`다. 기존 실행기의 기본 task를 바꾸라는 의미가 아니며, 이번 v1은 `InspireDexTactileSweepOmniRenewalV1EnvCfg(InspireDexTactileSweepOmniRenewalEnvCfg)`로 직접 상속한다. 등록 runtime은 `InspireSweepEnv`, runner는 `InspireDexTactileSweepOmniRenewalV1PPORunnerCfg`이며 v0 PPO 설정에서 실험 폴더만 분리한다.
+
+| 항목 | v0 | v1 |
+| --- | --- | --- |
+| `rewards.pushing_speed.func` | `exponential_pushing_speed_cost` | `exponential_pushing_speed_cost_limit`, `max_cost=100.0` |
+| `rewards.arm_speed_excess.func` | `exponential_joint_speed_cost` | `exponential_joint_speed_cost_limit`, `max_cost=100.0` |
+| 손목 높이 종료 | 선반면 상대 높이 < 0.07 m | `wrist_clearance=0.03`: 상대 높이 < 0.03 m |
+| 목표 방향 | 선반 로컬 XY 전방향 균등 | 로컬 +X와 −X 각각 ±15° 제외, 남은 300°에서 균등 |
+
+두 비용의 임계 속도 0.3 m/s·1.0 rad/s와 weight −1.0은 유지한다. 제한 함수는 기존 지수 비용을 최대 100으로 제한하며, 지수 계산 전 초과 속도를 역함수로 구한 포화점까지 제한해 큰 입력에서도 exp overflow를 방지한다. 비용 $c$와 최종 스텝 기여 $R$은 다음과 같다.
+
+```math
+c(v)=\min\left(100,\frac{\exp(2\max(v-v_{\mathrm{free}},0))-1}{2}\right),\qquad R=-c(v)\Delta t.
+```
+
+따라서 −100은 weight 적용 후·시간 곱셈 전의 각 항 하한이다. 현재 제어 주기 0.02 s에서는 각 항 스텝 기여 하한이 −2이며 두 항 합은 −4다. 다른 운동 비용에는 이 상한을 적용하지 않는다. 기존 무제한 함수와 v0의 보상 설정은 유지한다.
+
+손목 기준은 기존 **0.07 m**에서 **0.03 m**로 낮췄다. 같은 높이에서 종료가 덜 발생하여 선반에 더 가까워질 수 있다. 선반 root 6D 속도 norm >0.1 검사, `check_fingers=False`, 선반 변위 0.05 m 종료와 나머지 종료는 상속한다. 손목 높이는 기존처럼 `wrist_frame`의 월드 Z에서 `shelf.root_pos_w.z + 1.05`를 뺀 값이다.
+
+목표 방향은 사용자의 추가 답변에 따라 **선반 로컬 ±X**를 제외하며 기존 좌·우 ±Y는 허용한다. 각도는 로컬 +X를 0°로 하여 허용 구간 [15°,165°], [195°,345°]에서 균등 샘플링한다. 명시된 ±15°를 적용하며 시계 11–1시의 엄밀한 ±30°로 확장하지 않는다. 원판 물체 스폰은 기존 반경 2 cm, 목표 거리는 최대 15 cm이며 선반 가장자리에서는 방향을 유지한 채 거리만 단축한다. `excluded_x_half_angle`은 radian 단위이고 기본값 0이므로 v0는 전방향이다.
+
+관측 57D(현재 물체 GT 포함), 17개 촉각 채널·0.01 N 판정, Arm Joint Position 6D + Hand 2D, 물성·reset 순서·명령, Dex 접근·목표 보상, 네 필수 운동 비용과 나머지 설정은 v0에서 상속한다. 최종 Blind actor와 구분한다.
+
+Workspace 루트에서 실행한다.
+
+```bash
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
+  --task Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1 \
+  --num_envs 2048 --headless
+
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/play.py \
+  --task Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1 \
+  --num_envs 1 --checkpoint "<v1-checkpoint.pt>" --real-time
+```
+
+[v1 설정](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/dex_tactile_omni_renewal_v1_env_cfg.py) · [실행·검증 로그](logs/2026-10-16_dex_tactile_renewal_v1.md). 전체 CPU 검증은 299 passed·17 subtests passed다. GPU 8개 환경·1 iteration 학습을 완료했으며 장시간 학습·실물 성능은 미검증이다. 정확한 명령과 산출물은 로그에 기록한다.

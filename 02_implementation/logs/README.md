@@ -65,3 +65,7 @@ Pull/rebase 중 문서 이관 충돌의 처리 내역은 [충돌 해결 기록](
 - [촉각 v0 지수 비용 통합 및 중복 v1 삭제](2026-10-16_tactile_v0_exponential_cleanup.md)
 
 - [Renewal 기본 속도 비용 exp 통일 및 중복 클래스 삭제](2026-10-16_renewal_only_exponential.md)
+
+- [접근·목표 진행 보상 4종 수식 정리](2026-10-16_reward_formulas.md)
+
+- [Dex Tactile Renewal v1](2026-10-16_dex_tactile_renewal_v1.md): 지수 비용 상한 100·손목 높이 3 cm·로컬 ±X 각각 ±15° 제외.

@@ -14,6 +14,7 @@
 | [Baseline Tactile 환경](environments/TACTILE_ENVIRONMENT.md) | 기존 물리 형상 유지·17개 Binary 접촉 영역·57D 관측과 검증 범위 |
 | [Sweep Omni v3 구성](environments/SWEEP_OMNI_V3_ENVIRONMENT.md) | 관측 41D·높이 조건부 접근 진행·목표 진행·종료·이벤트의 독립 설명 |
 | [Dex Omni v0 구성](environments/DEX_OMNI_V0_ENVIRONMENT.md) | 관측 41D·거리 기록 개선 보상·종료·이벤트의 독립 설명 |
+| [접근·목표 진행 보상 수식](environments/REACH_AND_GOAL_REWARD_FORMULAS.md) | 높이 조건부 XY 접근·정규화 목표 진행·Dex 거리 개선 보상 4종의 수식과 차이 |
 | [개발 로그](logs/README.md) | 변경·실행 조건·검사 결과·미실행 항목과 당시 관찰 |
 
 활성 패키지는 workspace의 `src/inspire_sweep_baseline`, `src/axia80_feasibility`다. 실제 환경·등록·config·runner는 활성 환경 문서에서 코드로 이어서 확인한다. 현재 기준선의 Arm Joint Position 제어와 발표의 57D/8D·OSC 설계는 각 문서의 확인 단계에 따라 읽는다.

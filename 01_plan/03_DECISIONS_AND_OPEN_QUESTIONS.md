@@ -1,5 +1,7 @@
 # 결정·변경·미정 목록
 
+> **2026-10-16 사용자 지정 개발 기준:** 이후 추가 작업은 `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v0`를 기반으로 상속한다. 실행기 기본 task 변경 요청은 아니다. 이번 v1에는 지수 속도 비용 상한 100, 손목 종료 0.03 m, 선반 로컬 ±X 각각 ±15° 목표 제외를 적용한다. [구현 계약·실행 안내](../02_implementation/08_ACTIVE_ENVIRONMENTS.md) · [검증 로그](../02_implementation/logs/2026-10-16_dex_tactile_renewal_v1.md).
+
 > **2026-10-15 사용자 요청 — Omni v2 보상 실험:** v1을 유지하고 이를 상속하는 v2에서 현재 물체 위치 기준의 episode 최소 접근 기록 보상, time/success/failure 보상 제거를 구현했다. 후속 사용자 요청으로 v2의 success DoneTerm도 제거했으며 실패·시간 초과 종료는 유지한다. 추가 사용자 지시에 따라 운동 비용은 v1 원래 값으로 복원하고 Reaching·목표 이동 진전 보상만 각각 누적 +200·+400으로 강화했다. 보상 계수의 학습 효과는 미검증이다. [구현·검증 로그](../02_implementation/logs/2026-10-15_omni_v2_rewards.md) · [환경 안내](../02_implementation/08_ACTIVE_ENVIRONMENTS.md).
 
 [문서 안내](README.md) · [문헌조사](literature/README.md) · [조사 그룹](literature/reviews/README.md)

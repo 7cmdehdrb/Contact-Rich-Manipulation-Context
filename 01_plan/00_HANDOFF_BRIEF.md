@@ -72,6 +72,8 @@ Clutter는 배경으로 유지할 수 있다. 다만 물체 수나 기능 수를
 
 위 표는 9월 14일의 범위·미정 상태를 보존한다. 이후 360도 방향·57D/8D·OSC 발표 설계와 후속 변경은 [결정 목록](03_DECISIONS_AND_OPEN_QUESTIONS.md), 실행 코드의 구체값은 [활성 환경](../02_implementation/08_ACTIVE_ENVIRONMENTS.md)을 따른다. ‘확인된 방향’은 ‘실험 완료’가 아니다. ‘미정’은 임의로 선택해도 된다는 뜻이 아니다. 필요한 제안은 제안이라고 표시하고 검증 방법을 남긴다.
 
+2026-10-16 사용자 지정에 따라 이후 환경 확장의 기준은 `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v0`다. 실행기 기본 task는 바꾸지 않으며 상속으로 확장한다. 비용 상한·손목 높이·방향 제한을 갖춘 v1의 계약과 검증은 [활성 환경](../02_implementation/08_ACTIVE_ENVIRONMENTS.md), [개발 로그](../02_implementation/logs/2026-10-16_dex_tactile_renewal_v1.md)에서 확인한다.
+
 ## 실제로 어느 정도 진행됐나
 
 9월 10일에는 기존 Sweeping 환경을 Joint action에서 Cartesian/OSC로 바꾸고, 일부 상대 관측과 EEF·물체 초기 랜덤화를 시험했다고 보고했다. 다른 초기 joint configuration에서 sweeping이 가능했다는 보고도 있다.
