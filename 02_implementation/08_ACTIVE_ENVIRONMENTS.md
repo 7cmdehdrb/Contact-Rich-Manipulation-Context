@@ -38,6 +38,7 @@
 | `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v0` | `InspireDexTactileSweepOmniRenewalEnvCfg` | `InspireDexTactileSweepOmniRenewalPPORunnerCfg` | `logs/rsl_rl/inspire_dex_tactile_sweep_omni_renewal` |
 | `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1` | `InspireDexTactileSweepOmniRenewalV1EnvCfg` | `InspireDexTactileSweepOmniRenewalV1PPORunnerCfg` | `logs/rsl_rl/inspire_dex_tactile_sweep_omni_renewal_v1` |
 | `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v2` | `InspireDexTactileSweepOmniRenewalV2EnvCfg` | `InspireDexTactileSweepOmniRenewalV2PPORunnerCfg` | `logs/rsl_rl/inspire_dex_tactile_sweep_omni_renewal_v2` |
+| `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-OSC-v2` | `InspireDexTactileSweepOmniRenewalV2OSCEnvCfg` | `InspireDexTactileSweepOmniRenewalV2OSCPPORunnerCfg` | `logs/rsl_rl/inspire_dex_tactile_sweep_omni_renewal_v2_osc` |
 | `Isaac-Inspire-Dex-Omni-v0` | `InspireDexOmniEnvCfg` | `InspireSweepPPORunnerCfg` | Baseline과 동일. CLI로 `inspire_dex_omni` 지정 권장 |
 | `Isaac-Inspire-Sweep-Baseline-Tactile-v0` | `InspireSweepTactileEnvCfg` | `InspireSweepTactilePPORunnerCfg` | `logs/rsl_rl/inspire_sweep_tactile` |
 
@@ -605,3 +606,27 @@ Workspace 루트에서 실행한다.
 ```
 
 [v2 설정](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/dex_tactile_omni_renewal_v2_env_cfg.py) · [개발·검증과 미검증 범위](logs/2026-10-18_dex_tactile_renewal_v2_goal_hold.md).
+
+## Dex Tactile Renewal OSC v2 (2026-10-18)
+
+`InspireDexTactileSweepOmniRenewalV2OSCEnvCfg(InspireDexTactileSweepOmniRenewalV2EnvCfg)`가 v2의 모든 보상·성공/실패·timeout·물성·스폰·Hand·촉각·F/T·관측 순서와 57D/8D 크기를 상속하고 Arm 제어만 교체한다. Runtime은 공통 `InspireSweepEnv`다. Runner는 `InspireDexTactileSweepOmniRenewalV2OSCPPORunnerCfg`가 v2 PPO를 상속하며 experiment 이름만 바꾼다.
+
+참고 구현은 `omni_renewal_osc_env_cfg.py`다. OSC는 `target_types=["pose_rel"]`, fixed impedance, stiffness **100.0**, damping ratio 1.0, 중력 보상·관성 decoupling을 사용한다. 기존 EEF와 같은 `axia80_link`와 body-local pose offset을 사용하고 명령은 robot root frame의 현재 EEF에 대한 상대 위치·axis-angle 회전이다. 정책 주기 0.02초, 물리 주기 0.01초를 유지한다. Arm의 implicit joint PD stiffness/damping만 기존 OSC처럼 0으로 바꾸며 effort·velocity limit은 상속한다.
+
+`BoundedOperationalSpaceControllerAction`은 upstream OSC의 전처리 뒤, controller `set_command` 전에 물리 단위의 두 벡터를 제한한다. `position_scale=0.005`, `orientation_scale=0.025`를 적용한 다음 translation norm을 **0.005 m**, rotation-vector norm을 **0.025 rad**로 각각 제한한다. norm이 상한 이하면 선형 입력을 유지하고 초과하면 방향을 보존해 축소한다. raw policy action·이전 action 관측·필수 raw 제곱합 비용 입력은 제한 전 값으로 유지한다. Hand에는 이 제한을 적용하지 않는다. upstream OSC는 `clip` 필드가 있어도 실제 pose 전처리에 적용하지 않으므로 이 전용 action term이 필요하다.
+
+정책 스텝마다 현재 pose에 새 증분을 더하므로 도달 가능한 누적 작업영역을 제한하지 않는다. 1.5 rad/s는 명령 상한 선택을 위한 목표이며 관절 속도 hard limit이나 새 종료 기준이 아니다. 기존 `hand_velocity`의 Arm 기준 **5.0 rad/s**와 비용은 그대로 유지한다. 네 필수 운동 비용의 callable·raw 제곱합·계수, v2의 +100 및 유지 보상도 바꾸지 않는다.
+
+64개 환경·seed 42에서 초기 0.1초 포화 명령의 Arm 최대속도는 약 0.891 rad/s, 표준정규 무작위 명령은 약 0.691 rad/s였다. 그러나 2초 실행에서는 0 명령에서도 과속 종료가 재현되므로 전체 OSC 동작 안정성은 미해결이다. 정확한 대조군 결과와 검증 범위는 [개발 로그](logs/2026-10-18_dex_tactile_renewal_v2_osc.md)에 기록한다.
+
+```bash
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
+  --task Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-OSC-v2 \
+  --num_envs 2048 --headless
+
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/play.py \
+  --task Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-OSC-v2 \
+  --num_envs 1 --checkpoint "<osc-v2-checkpoint.pt>" --real-time
+```
+
+[OSC v2 설정](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/dex_tactile_omni_renewal_v2_osc_env_cfg.py) · [제한 action 구현](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/osc_actions.py).

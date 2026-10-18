@@ -134,3 +134,7 @@ Omni 베이스 및 모든 파생(Dex 포함)은 참고 Inspire와 같은 raw Act
 ## 2026-10-18 Dex Tactile 목표 정착 보상 — 사용자 지시
 
 기존 텍타일 환경을 상속하여 안정된 목표 도달의 큰 일회성 성공 보상과 목표에 연속해서 머무를수록 증가하는 양의 보상을 추가한다. 새 속도·목표 통과 후 위치 오차 비용과 액션 clipping은 추가하지 않는다. 구현은 v0를 직접 상속한 `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v2`다. 앞서 제시한 성공 조건을 0.5초 연속 만족하면 성공 종료하며, +100 보너스·최대 +20/초 선형 체류 보상은 구현자가 선택한 초기 실험 계수다. 기존 v0 보상·실패 종료는 상속한다. [활성 계약](../02_implementation/08_ACTIVE_ENVIRONMENTS.md), [구현·검증 로그](../02_implementation/logs/2026-10-18_dex_tactile_renewal_v2_goal_hold.md). 장시간 학습과 오버슈트 개선 성과는 아직 미검증이다.
+
+## 2026-10-18 v2의 OSC 파생 — 사용자 지시
+
+v2를 상속한 `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-OSC-v2`에서 Arm 제어만 OSC로 교체한다. 기존 Renewal OSC를 참조하되 stiffness를 100으로 낮추고 작은 Cartesian 증분 상한을 적용한다. 이 요청에서는 OSC 명령 크기 제한을 명시적으로 허용했으며, 이전 Joint Position 환경의 가동 범위 제한 금지와 구분한다. 보상·실패 종료·성공 조건·Hand·센서·물성 등은 v2에서 그대로 상속한다. 1.5 rad/s는 대략적인 명령 범위 선택 목표이고 새 종료 임계값이 아니다. 구현자는 translation norm 5 mm·rotation-vector norm 0.025 rad를 초기 실험값으로 설정했다. 초기 응답은 감소했지만 0 명령에서도 이후 과속이 발생하는 대조 결과가 있어 지속 안정성은 미해결이다. [실측·검증 로그](../02_implementation/logs/2026-10-18_dex_tactile_renewal_v2_osc.md).

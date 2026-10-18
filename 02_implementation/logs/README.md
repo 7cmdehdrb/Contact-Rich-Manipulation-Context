@@ -4,6 +4,7 @@
 
 | 기록일 | 문서 | 기록의 범위 |
 | --- | --- | --- |
+| 2026-10-18 | [Dex Tactile OSC v2](2026-10-18_dex_tactile_renewal_v2_osc.md) | v2 상속·OSC stiffness 100·5 mm/0.025 rad 명령 제한·GPU 속도 대조 및 안정성 한계 |
 | 2026-10-18 | [Dex Tactile v2 목표 유지·성공 보상](2026-10-18_dex_tactile_renewal_v2_goal_hold.md) | v0 직접 상속, 0.5초 안정 유지 성공, +100 일회성 보너스와 증가하는 양의 체류 보상 |
 | 2026-10-09 | [OSC와 Hand 이식 진행](1009.md) | Reach·Sweep 실패 관찰, 참고 환경의 Hand 교체·2D action·센서·무거운 물체 확장 |
 | 2026-10-10 | [무거운 물체·센서·도달 스킵 환경](1010.md) | 참고 환경 변형의 구현·CPU 검증, 목표 높이·정렬축 수정 |

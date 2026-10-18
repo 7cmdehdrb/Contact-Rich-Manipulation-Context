@@ -76,6 +76,8 @@ Clutter는 배경으로 유지할 수 있다. 다만 물체 수나 기능 수를
 
 2026-10-18에는 v0 직접 상속의 `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v2`에 안정된 목표 위치 0.5초 유지 성공·일회성 +100 보너스·연속 유지 시간에 비례하는 최대 +20/초 보상을 추가했다. 새 속도·위치 오차 비용이나 액션 제한은 추가하지 않는다. [구현·검증 로그](../02_implementation/logs/2026-10-18_dex_tactile_renewal_v2_goal_hold.md). 장시간 학습·정착 성능 개선은 미검증이다.
 
+같은 날 v2를 직접 상속한 `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-OSC-v2`를 추가했다. Arm만 stiffness 100의 OSC로 교체하고 Cartesian 명령 norm을 5 mm/0.025 rad로 제한한다. v2 보상·종료·센서는 상속한다. 초기 응답 감소와 별개로 0 명령에서도 이후 과속이 재현되어 지속 안정성은 미해결이다. [실측과 실행 안내](../02_implementation/logs/2026-10-18_dex_tactile_renewal_v2_osc.md).
+
 ## 실제로 어느 정도 진행됐나
 
 9월 10일에는 기존 Sweeping 환경을 Joint action에서 Cartesian/OSC로 바꾸고, 일부 상대 관측과 EEF·물체 초기 랜덤화를 시험했다고 보고했다. 다른 초기 joint configuration에서 sweeping이 가능했다는 보고도 있다.
