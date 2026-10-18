@@ -4,6 +4,8 @@
 
 기준일: **2026-10-15**. 이 문서는 현재 Workspace의 활성 코드를 읽어 확인한 구성, 상속 관계와 실행 방법을 기록한다. 과거 구현 보고나 발표 설계와 실제 코드가 다르면 이 문서의 코드 근거를 함께 확인한다. 코드가 존재한다는 사실, CPU 테스트 통과, 학습 성능, 실물 검증은 각각 별개의 확인 수준이다.
 
+2026-10-18 공통 갱신: Omni 계열의 `goal_rewards.action_rate_l2`·`joint_vel_l2`는 raw 제곱합을 계산한 뒤 기본 `max_cost=100.0`으로 **함수 출력**을 제한한다. v2·OSC v2를 포함한 해당 함수를 참조하는 모든 파생 환경에 적용된다. 반환은 [0, 100], 기존 음의 가중치·dt는 이후 적용되며 입력·그룹·가중치는 유지한다. `mdp/rewards.py`의 별도 Baseline 동명 함수는 이번 변경 범위가 아니다. [검증 로그](logs/2026-10-18_omni_squared_cost_caps.md).
+
 [학습 실행 UML](../03_assets/inspire-sweep-training.html)은 환경 생성부터 Isaac Lab step과 PPO 업데이트까지를, [환경 상속 UML](../03_assets/inspire-sweep-inheritance.html)은 네 Cfg의 상속과 공유 물성·MDP term 연결을 보여준다. HTML 파일은 브라우저에서 열며, 표와 코드 링크에서 정확한 설정·함수 이름을 확인할 수 있다.
 
 ## 1. 두 활성 패키지의 역할
