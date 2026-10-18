@@ -130,3 +130,7 @@ Decision ID:
 ## 2026-10-15 Omni 운동 페널티 고정 — 사용자 지시
 
 Omni 베이스 및 모든 파생(Dex 포함)은 참고 Inspire와 같은 raw Action 변화량·실제 관절 속도의 제곱합을 로컬 MDP 함수로 사용한다. Arm/Hand 네 항은 분리 유지하며 임의로 평균·정규화·보상 입력 clamp를 도입하거나 계수를 낮추지 않는다. [필수 개발 규칙](../00_guidelines/09_DEVELOPMENT_GUIDE.md), [적용·검증 로그](../02_implementation/logs/2026-10-15_omni_penalty_contract.md).
+
+## 2026-10-18 Dex Tactile 목표 정착 보상 — 사용자 지시
+
+기존 텍타일 환경을 상속하여 안정된 목표 도달의 큰 일회성 성공 보상과 목표에 연속해서 머무를수록 증가하는 양의 보상을 추가한다. 새 속도·목표 통과 후 위치 오차 비용과 액션 clipping은 추가하지 않는다. 구현은 v0를 직접 상속한 `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v2`다. 앞서 제시한 성공 조건을 0.5초 연속 만족하면 성공 종료하며, +100 보너스·최대 +20/초 선형 체류 보상은 구현자가 선택한 초기 실험 계수다. 기존 v0 보상·실패 종료는 상속한다. [활성 계약](../02_implementation/08_ACTIVE_ENVIRONMENTS.md), [구현·검증 로그](../02_implementation/logs/2026-10-18_dex_tactile_renewal_v2_goal_hold.md). 장시간 학습과 오버슈트 개선 성과는 아직 미검증이다.
