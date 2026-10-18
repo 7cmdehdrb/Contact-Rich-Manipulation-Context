@@ -80,6 +80,8 @@ Clutter는 배경으로 유지할 수 있다. 다만 물체 수나 기능 수를
 
 같은 날 v2를 직접 상속한 `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-OSC-v2`를 추가했다. Arm만 stiffness 100의 OSC로 교체하고 Cartesian 명령 norm을 5 mm/0.025 rad로 제한한다. v2 보상·종료·센서는 상속한다. 초기 응답 감소와 별개로 0 명령에서도 이후 과속이 재현되어 지속 안정성은 미해결이다. [실측과 실행 안내](../02_implementation/logs/2026-10-18_dex_tactile_renewal_v2_osc.md).
 
+후속 사용자 지시로 v2의 부모를 v0에서 v1로 변경했다. **현재 체인은 v0 → v1 → v2 → OSC v2**다. 따라서 v2와 OSC v2에 v1의 지수 속도 비용 상한 100·손목 종료 높이 3 cm·±X 각각 ±15° 목표 방향 제외가 적용되고, +100 일회성 보너스·목표 유지 보상·성공 후 timeout까지 실행하는 동작은 유지한다. 물체 스폰 위치 분포는 바꾸지 않는다. [상속 전환·검증](../02_implementation/logs/2026-10-18_v2_inherits_v1.md).
+
 ## 실제로 어느 정도 진행됐나
 
 9월 10일에는 기존 Sweeping 환경을 Joint action에서 Cartesian/OSC로 바꾸고, 일부 상대 관측과 EEF·물체 초기 랜덤화를 시험했다고 보고했다. 다른 초기 joint configuration에서 sweeping이 가능했다는 보고도 있다.

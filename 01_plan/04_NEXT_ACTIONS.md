@@ -24,6 +24,8 @@ Observation Stack·Sliding Window·이력 기반 물성 적응은 현재 보류�
 
 후속 명확화에 따라 v2/OSC v2는 성공 시 종료하지 않고 +100을 한 번 지급한 뒤 기존 실패 또는 timeout까지 유지한다. 평가도 목표 최초 도달만으로 성공 처리하지 말고 잔여 episode의 유지율·최종 위치 오차를 함께 확인한다. [수정·검증 로그](../02_implementation/logs/2026-10-18_v2_goal_hold_until_timeout.md).
 
+이후 v2의 부모를 v1로 바꿔 v1의 비용 상한·손목 높이·목표 방향 제한을 상속하도록 했다. 현재 `v0 → v1 → v2 → OSC v2` 조건에서 학습·평가하며 초기 v0 직접 상속 run과 같은 조건으로 해석하지 않는다. [상속 전환·검증](../02_implementation/logs/2026-10-18_v2_inherits_v1.md).
+
 같은 날 [OSC v2](../02_implementation/logs/2026-10-18_dex_tactile_renewal_v2_osc.md)를 추가했다. 명령 범위 5 mm/0.025 rad·stiffness 100에서 초기 0.1초 응답은 감소했지만, 0 명령 대조군도 이후 과속 종료한다. 장시간 학습 전에 이 명령 크기와 별개인 불안정성을 재현·원인 분리해야 한다. 이번 요청 범위에서는 reward·termination·물리·OSC 동역학 변형을 추가하지 않았다.
 
 교수 지시의 근거는 S-0910·S-0911·S-0914다. 아래 작업 분해, 우선순위 번호, 산출물 이름, 완료 기준은 그 지시를 실행 가능한 형태로 바꾼 **인계용 제안(PROPOSED)**이다. 확정된 일정표나 이미 수행한 실험표로 취급하지 않는다. 출처는 [출처 목록](06_SOURCE_REGISTER.md)을 따른다.

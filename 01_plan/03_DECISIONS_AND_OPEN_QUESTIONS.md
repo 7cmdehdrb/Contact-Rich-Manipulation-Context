@@ -142,3 +142,7 @@ v2를 상속한 `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-OSC-v2`에서 Arm 
 ## 2026-10-18 성공 이후 timeout까지 유지 — 사용자 명확화
 
 사용자의 의도는 물체를 목표에 계속 놓아 둔 채 timeout까지 유지하는 것이다. v2의 `terminations.success`는 `None`으로 바꾸고 +100은 reward term의 episode latch로 최초 한 번만 지급한다. 기존 실패 조건은 유지한다. 목표 유지 보상은 성공 후에도 계속 지급하며 이탈하면 0으로 초기화하고 재진입 시 다시 증가한다. 이탈/재진입으로 +100을 반복 획득하지 않으며, 다음 episode reset에서만 재지급 가능해진다. OSC v2에도 부모 상속으로 동일하게 적용한다. [수정·검증 로그](../02_implementation/logs/2026-10-18_v2_goal_hold_until_timeout.md).
+
+## 2026-10-18 v2의 부모를 v1로 변경 — 사용자 지시
+
+v2를 v0 직접 상속에서 v1 직접 상속으로 변경한다. 현재 체인은 `v0 → v1 → v2 → OSC v2`이며 runner도 같은 버전 상속을 따른다. v1의 지수 속도 비용 두 항 상한 100·손목 높이 종료 기준 0.03 m·±X 각각 ±15° 목표 방향 제외를 적용한다. v1의 스폰 관련 변경은 목표 방향 제한이며 반경 2 cm의 물체 위치 분포는 그대로다. v2의 +100 최초 달성 보너스·최대 +20/초 유지 보상·성공으로 종료하지 않는 동작은 유지한다. OSC는 수정된 v2 위에서 Arm 제어만 교체한다. 기존 task ID·실행 명령은 유지한다. [구현·검증 로그](../02_implementation/logs/2026-10-18_v2_inherits_v1.md).

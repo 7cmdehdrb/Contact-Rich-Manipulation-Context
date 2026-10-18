@@ -4,6 +4,7 @@
 
 | 기록일 | 문서 | 기록의 범위 |
 | --- | --- | --- |
+| 2026-10-18 | [v2의 v1 상속 전환](2026-10-18_v2_inherits_v1.md) | v0→v1→v2→OSC v2 체인·비용 상한·손목 높이·목표 방향 상속·기존 양의 보상 유지 |
 | 2026-10-18 | [Omni 제곱합 비용 출력 상한](2026-10-18_omni_squared_cost_caps.md) | action_rate_l2·joint_vel_l2 반환 [0,100], 입력·그룹·가중치 유지 및 CPU 경계 검증 |
 | 2026-10-18 | [v2 성공 후 timeout까지 목표 유지](2026-10-18_v2_goal_hold_until_timeout.md) | 성공 종료 제거·episode당 +100 한 번·성공 후 유지 보상 계속 지급·OSC 상속 적용 |
 | 2026-10-18 | [Dex Tactile OSC v2](2026-10-18_dex_tactile_renewal_v2_osc.md) | v2 상속·OSC stiffness 100·5 mm/0.025 rad 명령 제한·GPU 속도 대조 및 안정성 한계 |

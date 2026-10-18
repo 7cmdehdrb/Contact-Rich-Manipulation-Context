@@ -583,9 +583,9 @@ Workspace 루트에서 실행한다.
 
 ## Dex Tactile Renewal v2: 목표 유지·성공 보상 (2026-10-18)
 
-`InspireDexTactileSweepOmniRenewalV2EnvCfg(InspireDexTactileSweepOmniRenewalEnvCfg)`는 v0를 직접 상속한다. Runtime은 공통 `InspireSweepEnv`, Reward Cfg는 `DexTactileOmniRenewalV2RewardsCfg(DexOmniRenewalRewardsCfg)`, Termination Cfg는 `DexTactileOmniRenewalV2TerminationsCfg(OmniRenewalTerminationsCfg)`다. Runner는 기존 Dex Tactile runner를 상속하고 experiment 이름만 분리한다. v1의 비용 상한·손목 높이·방향 제한은 상속하지 않는다.
+`InspireDexTactileSweepOmniRenewalV2EnvCfg(InspireDexTactileSweepOmniRenewalV1EnvCfg)`는 사용자 후속 지시에 따라 **v1을 직접 상속**한다. Runtime은 공통 `InspireSweepEnv`, Reward Cfg는 `DexTactileOmniRenewalV2RewardsCfg(DexOmniRenewalRewardsCfg)`, Termination Cfg는 `DexTactileOmniRenewalV2TerminationsCfg(OmniRenewalTerminationsCfg)`다. v1의 `__post_init__`가 v2의 실제 reward/termination/event 설정에도 적용되어 지수 속도 비용 상한 100·손목 높이 종료 기준 0.03 m·선반 로컬 ±X 각각 ±15° 목표 방향 제외를 유지한다. Runner도 v1 runner를 상속하며 experiment 이름만 v2로 분리한다.
 
-사용자 요청을 명확히 반영하여 양의 보상 두 항만 추가하고 성공 종료는 비활성화했다. 성공 보너스를 받은 후에도 기존 실패 조건 또는 10초 timeout까지 환경을 유지한다. 관측 순서·57D Actor/Critic(현재 물체 GT 포함), 촉각 17채널/0.01 N, F/T, Arm Joint Position 6D+Hand 2D, 제어 주기 0.02초, 장면·물성·전방향 목표·reset·기존 10개 보상·실패/timeout은 v0와 같다. 네 필수 운동 비용의 callable·raw 제곱합·계수도 유지한다. 새 속도·지나간 위치 오차 비용이나 액션 clipping은 없다.
+v1 위에 양의 보상 두 항을 추가하고 성공 종료는 비활성화했다. 성공 보너스를 받은 후에도 기존 실패 조건 또는 10초 timeout까지 환경을 유지한다. 관측 순서·57D Actor/Critic(현재 물체 GT 포함), 촉각 17채널/0.01 N, F/T, Arm Joint Position 6D+Hand 2D, 제어 주기 0.02초, 장면·물성·reset·기존 10개 보상·실패/timeout은 v1과 같다. 물체 스폰 반경 2 cm·목표 거리 최대 15 cm는 유지하며, v1의 방향 제한으로 목표를 샘플링한다. 네 필수 운동 비용의 callable·raw 제곱합·계수와 공통 출력 상한 100도 유지한다. 별도의 새 속도·지나간 위치 오차 비용이나 Joint Position 액션 clipping은 없다.
 
 | 추가 항목 | 계약 |
 | --- | --- |
@@ -610,6 +610,8 @@ Workspace 루트에서 실행한다.
 [v2 설정](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/dex_tactile_omni_renewal_v2_env_cfg.py) · [개발·검증과 미검증 범위](logs/2026-10-18_dex_tactile_renewal_v2_goal_hold.md).
 
 성공 종료를 제거하고 timeout까지 유지하도록 한 후속 변경·검증은 [timeout 유지 수정 로그](logs/2026-10-18_v2_goal_hold_until_timeout.md)를 따른다. OSC v2도 아래 상속 관계를 통해 같은 동작을 적용한다.
+
+현행 상속 구조는 `v0 → v1 → v2 → OSC v2`다. 초기 기록의 v0 직접 상속에서 전환한 내역과 실제 Cfg 검사 결과는 [v1 상속 전환 로그](logs/2026-10-18_v2_inherits_v1.md)를 따른다. 환경 ID와 train/play 명령은 바꾸지 않았다.
 
 ## Dex Tactile Renewal OSC v2 (2026-10-18)
 
