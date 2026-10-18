@@ -1,5 +1,7 @@
 # Dex Tactile Renewal v2: 목표 유지와 일회성 성공 보상
 
+후속 변경: 이 문서는 최초 구현 당시의 성공 종료를 기록한다. 사용자 명확화에 따라 v2와 OSC v2는 성공으로 종료하지 않으며 bonus를 한 번 지급한 뒤 timeout까지 유지하도록 [수정했다](2026-10-18_v2_goal_hold_until_timeout.md). 현행 계약은 해당 후속 로그와 활성 환경 안내를 따른다.
+
 [개발 로그 목록](README.md) · [활성 환경 계약](../08_ACTIVE_ENVIRONMENTS.md) · [사용자 결정](../../01_plan/03_DECISIONS_AND_OPEN_QUESTIONS.md) · [패키지 실행 안내](../../../../src/inspire_sweep_baseline/README.md)
 
 기준일: 2026-10-18. Workspace `main`, 기준 commit `10f4d0bbaed1832d3662e0b3695a34e84448a369`. 문서 저장소 기준 commit `8adbde54af951da10b2d881e5329282a40133a38`. 작업 시작 시 상위 저장소의 문서 submodule 참조 차이가 있었고 문서 내부 작업트리는 깨끗했다. 참조 차이는 보존했으며 commit·push는 수행하지 않았다.

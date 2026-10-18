@@ -1,5 +1,7 @@
 # Dex Tactile Renewal OSC v2: 명령 상한과 실제 관절 속도
 
+후속 변경: 이 문서의 최초 구성은 성공 종료를 포함한 당시 v2를 상속한다. 이후 사용자 명확화에 따라 부모 v2의 성공 종료를 제거하고 일회성 +100과 지속 유지 보상을 timeout까지 지급하도록 [수정했다](2026-10-18_v2_goal_hold_until_timeout.md). OSC v2에도 같은 동작이 적용되며 제어 설정은 그대로다.
+
 [개발 로그](README.md) · [활성 환경](../08_ACTIVE_ENVIRONMENTS.md) · [사용자 결정](../../01_plan/03_DECISIONS_AND_OPEN_QUESTIONS.md) · [패키지 안내](../../../../src/inspire_sweep_baseline/README.md)
 
 기준일: 2026-10-18. Workspace `main`, 기준 commit `8b6551b9654a4c7fa11c47f85d0ef8744b659826`, 문서 저장소 기준 commit `51433d8897fa7081eed532117ec66624641ba29e`. 작업 시작 시 상위 저장소에 문서 submodule 참조 차이만 있었고 문서 내부 작업트리는 깨끗했다. 해당 참조 차이를 보존했다. 이번 작업에서 commit·push는 수행하지 않았다.

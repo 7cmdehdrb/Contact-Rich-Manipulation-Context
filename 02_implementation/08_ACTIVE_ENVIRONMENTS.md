@@ -583,17 +583,17 @@ Workspace 루트에서 실행한다.
 
 `InspireDexTactileSweepOmniRenewalV2EnvCfg(InspireDexTactileSweepOmniRenewalEnvCfg)`는 v0를 직접 상속한다. Runtime은 공통 `InspireSweepEnv`, Reward Cfg는 `DexTactileOmniRenewalV2RewardsCfg(DexOmniRenewalRewardsCfg)`, Termination Cfg는 `DexTactileOmniRenewalV2TerminationsCfg(OmniRenewalTerminationsCfg)`다. Runner는 기존 Dex Tactile runner를 상속하고 experiment 이름만 분리한다. v1의 비용 상한·손목 높이·방향 제한은 상속하지 않는다.
 
-사용자 요청에 따라 양의 보상 두 항과 성공 종료만 추가했다. 관측 순서·57D Actor/Critic(현재 물체 GT 포함), 촉각 17채널/0.01 N, F/T, Arm Joint Position 6D+Hand 2D, 제어 주기 0.02초, 장면·물성·전방향 목표·reset·기존 10개 보상·실패/timeout은 v0와 같다. 네 필수 운동 비용의 callable·raw 제곱합·계수도 유지한다. 새 속도·지나간 위치 오차 비용이나 액션 clipping은 없다.
+사용자 요청을 명확히 반영하여 양의 보상 두 항만 추가하고 성공 종료는 비활성화했다. 성공 보너스를 받은 후에도 기존 실패 조건 또는 10초 timeout까지 환경을 유지한다. 관측 순서·57D Actor/Critic(현재 물체 GT 포함), 촉각 17채널/0.01 N, F/T, Arm Joint Position 6D+Hand 2D, 제어 주기 0.02초, 장면·물성·전방향 목표·reset·기존 10개 보상·실패/timeout은 v0와 같다. 네 필수 운동 비용의 callable·raw 제곱합·계수도 유지한다. 새 속도·지나간 위치 오차 비용이나 액션 clipping은 없다.
 
 | 추가 항목 | 계약 |
 | --- | --- |
-| `terminations.success` | `StableGoalSuccess`: 목표 XY 오차 <0.01 m, XY 속도 <0.02 m/s, 선반 법선 대비 기울기 ≤10°, 바닥 지지 높이 오차 ≤0.01 m, 선반 경계 안에 반경 0.04 m의 물체가 들어오는 조건을 0.5초 연속 유지. 활성 실패 플래그가 있으면 무효. 성공은 timeout이 아닌 종료 |
-| `rewards.success` | `goal_rewards.success_event`, weight +100. dt 상쇄 후 성공 종료 스텝에 한 번 지급 |
-| `rewards.goal_hold` | `goal_rewards.stable_goal_hold`, weight +20. 성공 term의 공개 `hold_duration_s`를 읽어 `min(h/0.5, 1)` 반환. RewardManager가 dt를 한 번 곱함 |
+| `terminations.success` | `None`. 성공 시 termination이나 reset이 발생하지 않음 |
+| `rewards.success` | `StableGoalAchievement`, weight +100. 목표 XY 오차 <0.01 m, XY 속도 <0.02 m/s, 선반 법선 대비 기울기 ≤10°, 바닥 지지 높이 오차 ≤0.01 m, 선반 경계 안에 반경 0.04 m의 물체가 들어오는 조건을 0.5초 연속 유지하면 최초 한 번 지급. 활성 실패 플래그가 있으면 무효. dt 상쇄·episode latch로 이탈/재진입 시 중복 지급 방지 |
+| `rewards.goal_hold` | `goal_rewards.stable_goal_hold`, weight +20. reward manager의 success term에서 `hold_duration_s`를 읽어 `min(h/0.5, 1)` 반환. 성공 이후에도 계속 지급. RewardManager가 dt를 한 번 곱함 |
 
-실패 term은 `object_drop`, `push_fast`, `shelf_collision`, `hand_velocity`, `shelf_displacement`이며 모두 success보다 먼저 계산된다. 비활성 `object_outside_shelf`는 참조하지 않는다. 위치 이탈·속도·기울기·지지·실패 조건 중 하나라도 만족하지 못하면 연속 카운터가 0으로 돌아간다. 부분 reset은 해당 환경의 시간만 초기화한다. 목표를 고속 통과하는 것만으로 두 보상을 얻지 못한다. 기존 속도 비용은 그대로 유지되며 속도는 새 성공/유지 자격 조건에만 사용한다.
+실패 term은 `object_drop`, `push_fast`, `shelf_collision`, `hand_velocity`, `shelf_displacement`다. termination manager가 먼저 계산하고 reward manager는 success, goal_hold 순서로 계산한다. 비활성 `object_outside_shelf`는 참조하지 않는다. 위치 이탈·속도·기울기·지지·실패 조건 중 하나라도 만족하지 못하면 연속 카운터가 0으로 돌아가지만 bonus 지급 이력은 episode 동안 유지한다. 부분 reset은 해당 환경의 시간과 지급 이력만 초기화한다. 목표를 고속 통과하는 것만으로 두 보상을 얻지 못한다. 기존 속도 비용은 그대로 유지되며 속도는 새 성공/유지 자격 조건에만 사용한다.
 
-50 Hz에서 체류 보상은 +0.016, +0.032, …, +0.4로 증가하여 25스텝 합계 +5.2가 되고 성공 보너스 +100을 함께 지급한 뒤 reset한다. 성공 후 계속 보상을 쌓는 환경은 아니다. 계수는 구현자가 설정한 초기 실험값이며 성능 최적값으로 검증하지 않았다. 물체 GT는 학습 보상·평가에 사용하므로 이 성공 판정을 실물 Blind 종료 구현으로 해석하지 않는다.
+50 Hz에서 체류 보상은 +0.016, +0.032, …, +0.4로 증가하여 첫 25스텝 합계 +5.2가 되고, +100 보너스를 지급한 후에도 조건을 만족하는 매 스텝 +0.4를 계속 지급한다. episode 시작부터 10초 유지하면 체류 보상 +195.2·bonus +100이다. 이탈하면 유지 보상은 0이고 재진입 시 처음부터 증가하지만 +100은 다시 지급하지 않는다. 기존 실패나 timeout에서만 reset한다. 계수는 초기 실험값이며 성능 최적값으로 검증하지 않았다. 물체 GT 기반의 학습/평가 보상이며 실물 Blind 종료 구현과 구분한다.
 
 ```bash
 ./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
@@ -606,6 +606,8 @@ Workspace 루트에서 실행한다.
 ```
 
 [v2 설정](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/dex_tactile_omni_renewal_v2_env_cfg.py) · [개발·검증과 미검증 범위](logs/2026-10-18_dex_tactile_renewal_v2_goal_hold.md).
+
+성공 종료를 제거하고 timeout까지 유지하도록 한 후속 변경·검증은 [timeout 유지 수정 로그](logs/2026-10-18_v2_goal_hold_until_timeout.md)를 따른다. OSC v2도 아래 상속 관계를 통해 같은 동작을 적용한다.
 
 ## Dex Tactile Renewal OSC v2 (2026-10-18)
 
