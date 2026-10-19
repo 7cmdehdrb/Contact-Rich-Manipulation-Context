@@ -23,6 +23,10 @@
 
 등록 근거는 [`inspire_sweep_baseline/__init__.py`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py)다. 아래 task의 실행 클래스는 모두 [`InspireSweepEnv`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/env.py)이며 `ManagerBasedRLEnv`를 상속한다. 환경별 차이는 등록된 Cfg와 PPO 설정에서 결정한다.
 
+2026-10-19 후속 요청으로 아래 종료 진단 블록은 전체 주석 처리했다. 현재 v1·v2·OSC를 포함한 모든 환경에서 종료 진단 print가 비활성화되어 있다.
+
+2026-10-19 종료 진단: 공통 `InspireSweepEnv._reset_idx`가 reset 직전에 active termination 중 True인 모든 항목을 print하며, 동시에 발생한 항목도 각각 표시한다. v1에서는 `time_out`, `object_drop`, `push_fast`, `shelf_collision`, `hand_velocity`(실제 Arm 속도), `shelf_displacement`를 포함한다. v2·OSC 등 모든 파생 환경에도 적용한다. 종료 판정·threshold·reset·task 등록은 바꾸지 않는다. [구현·검증](logs/2026-10-19_v1_termination_prints.md).
+
 | Gym task ID | 환경 Cfg | PPO Cfg | 기본 로그 폴더 |
 | --- | --- | --- | --- |
 | `Isaac-Inspire-Sweep-Baseline-v0` | `InspireSweepEnvCfg` | `InspireSweepPPORunnerCfg` | `logs/rsl_rl/inspire_sweep_baseline` |
@@ -552,6 +556,9 @@ Sweep Renewal v0, Dex Renewal v0, Tactile Renewal v0, Dex Tactile Renewal v0 모
 | `rewards.arm_speed_excess.func` | `exponential_joint_speed_cost` | `exponential_joint_speed_cost_limit`, `max_cost=100.0` |
 | 손목 높이 종료 | 선반면 상대 높이 < 0.07 m | `wrist_clearance=0.03`: 상대 높이 < 0.03 m |
 | 목표 방향 | 선반 로컬 XY 전방향 균등 | 로컬 +X와 −X 각각 ±15° 제외, 남은 300°에서 균등 |
+| Arm `velocity_limit_sim` (2026-10-19) | 앞 3개 3.14 / 손목3개 6.28 rad/s | shoulder pan/lift·elbow 2.0 / wrist 1/2/3 4.0 rad/s |
+
+2026-10-19 Arm 속도 제한은 v1 `__post_init__`에서 이름으로 매핑하며 v2·OSC v2에도 상속된다. `joint_vel` 종료 판정과 동일한 rad/s 단위다. 위치 목표·관절 가동 범위와 >5.0 rad/s 종료 조건은 유지한다. PhysX solver 제한이며 순간 초과까지 보장하는 상태 clamp는 아니다. 실제 재생에서 과속 종료 해소 여부는 미검증이다. [변경·검증 로그](logs/2026-10-19_v1_arm_velocity_limits.md).
 
 두 비용의 임계 속도 0.3 m/s·1.0 rad/s와 weight −1.0은 유지한다. 제한 함수는 기존 지수 비용을 최대 100으로 제한하며, 지수 계산 전 초과 속도를 역함수로 구한 포화점까지 제한해 큰 입력에서도 exp overflow를 방지한다. 비용 $c$와 최종 스텝 기여 $R$은 다음과 같다.
 
