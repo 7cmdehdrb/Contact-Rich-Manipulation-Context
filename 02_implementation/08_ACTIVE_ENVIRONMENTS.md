@@ -21,7 +21,7 @@
 
 ## 2. RL 환경 등록과 상속 구조
 
-등록 근거는 [`inspire_sweep_baseline/__init__.py`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py)다. 아래 task의 실행 클래스는 모두 [`InspireSweepEnv`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/env.py)이며 `ManagerBasedRLEnv`를 상속한다. 환경별 차이는 등록된 Cfg와 PPO 설정에서 결정한다.
+등록 근거는 [`inspire_sweep_baseline/__init__.py`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py)다. 기존 task의 실행 클래스는 [`InspireSweepEnv`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/env.py)이며 `ManagerBasedRLEnv`를 상속한다. 2026-10-20 추가한 독립 기준 Contact Sweep은 별도의 `ContactSweepEnv`와 Manager별 Cfg를 사용한다. 환경별 차이는 등록된 Cfg와 PPO 설정에서 결정한다.
 
 2026-10-19 후속 요청으로 아래 종료 진단 블록은 전체 주석 처리했다. 현재 v1·v2·OSC를 포함한 모든 환경에서 종료 진단 print가 비활성화되어 있다.
 
@@ -29,6 +29,7 @@
 
 | Gym task ID | 환경 Cfg | PPO Cfg | 기본 로그 폴더 |
 | --- | --- | --- | --- |
+| `Isaac-Inspire-Contact-Sweep-v0` | `ContactSweepEnvCfg` | `ContactSweepPPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep` |
 | `Isaac-Inspire-Sweep-Baseline-v0` | `InspireSweepEnvCfg` | `InspireSweepPPORunnerCfg` | `logs/rsl_rl/inspire_sweep_baseline` |
 | `Isaac-Inspire-Sweep-Realistic-Physics-v0` | `InspireSweepRealisticPhysicsEnvCfg` | `InspireSweepRealisticPhysicsPPORunnerCfg` | `logs/rsl_rl/inspire_sweep_realistic_physics` |
 | `Isaac-Inspire-Sweep-Realistic-Physics-Initial-Privileged-v0` | `InspireSweepRealisticInitialPrivilegedEnvCfg` | `InspireSweepRealisticInitialPrivilegedPPORunnerCfg` | `logs/rsl_rl/inspire_sweep_realistic_initial_privileged` |
@@ -285,6 +286,62 @@ USD 검사에는 `pxr`를 제공하는 Python이 필요하다. 기본 탐색 경
 이번 문서 정리에서는 네 RL task의 실제 시뮬레이터 생성, GPU 물성 업데이트, 선반 자산 서버 접속, train/play, 새 checkpoint 성능, Axia80 하중 시뮬레이션 재실행, 실물 센서·로봇 제어를 수행하지 않았다. 관련 과거 결과는 [실험 문서 목록](../01_plan/README.md)과 저장된 metadata·로그를 확인하되, 이번 테스트 결과와 혼합하지 않는다.
 
 이동과 자산 경로 수정 이후 루트 `pytest.ini`의 기본 탐색으로 Scene 기하 검사까지 함께 실행한 결과는 **135 passed, 26 subtests passed**였다. 최종 명령과 Workspace 제외 검증은 [정리 개발 로그](logs/2026-10-14_workspace_cleanup.md)에 기록한다.
+
+## Contact Sweep v0 — 2026-10-20 독립 기준 환경
+
+사용자가 Renewal v3를 새 기준점으로 정리하도록 요청했다. 새 [contact_sweep/](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep) 디렉터리에 Observation, Action, Command, Event, Reward, Termination, Scene, Env, PPO 클래스를 직접 선언한다. 기존 환경 Cfg·runtime·PPO를 상속하지 않으며 기존 v3는 유지한다. 자산·관절 mapping·MDP 함수는 공통 유틸리티로 재사용한다.
+
+```mermaid
+flowchart LR
+    FrameworkEnv[ManagerBasedRLEnv] --> Env[ContactSweepEnv]
+    FrameworkCfg[ManagerBasedRLEnvCfg] --> Cfg[ContactSweepEnvCfg]
+    SceneBase[InteractiveSceneCfg] --> Scene[ContactSweepSceneCfg]
+    RunnerBase[RslRlOnPolicyRunnerCfg] --> Runner[ContactSweepPPORunnerCfg]
+    Cfg --> Scene
+    Cfg --> Managers[독립 Observation/Action/Command/Event/Reward/Termination Cfg]
+```
+
+등록 task는 `Isaac-Inspire-Contact-Sweep-v0`, runtime은 `inspire_sweep_baseline.contact_sweep.env:ContactSweepEnv`, 환경 entry point는 `contact_sweep.env_cfg:ContactSweepEnvCfg`, runner는 `contact_sweep.ppo_cfg:ContactSweepPPORunnerCfg`다. 실험 폴더는 `logs/rsl_rl/inspire_contact_sweep`다.
+
+Actor/Critic은 policy 57D(현재 물체 GT·17 tactile bit·F/T 포함), Action은 Joint Position Arm 6D+Hand 2D다. v3의 최종 값인 reaching=30, goal_distance=94, pushing_speed free_speed=0.2/weight=−2, cap=100, 질량 중심 0.5475 kg·범위 0.345–0.750 kg, 기존 마찰 분포·리셋·제어 주기 0.02초·에피소드 10초·실패 종료를 명시한다. success/goal_hold는 활성화하지 않는다. 필수 네 운동 페널티는 기존 로컬 callable·계수·Arm/Hand 구분을 유지한다.
+
+```bash
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
+  --task Isaac-Inspire-Contact-Sweep-v0 --num_envs 2048 --headless
+
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/play.py \
+  --task Isaac-Inspire-Contact-Sweep-v0 --num_envs 1 \
+  --checkpoint "<checkpoint.pt>" --real-time
+```
+
+CPU 관련 검사 131개, GPU 8 env·PPO 1 iteration을 통과했다. 저장 환경 YAML과 Manager/관측 순서는 v3와 log_dir 외 동일하고 PPO도 experiment/run 이름 외 동일하다. 동일 seed·1 iteration 후 Actor/Critic tensor가 전부 일치했다. 장시간 학습과 실물 성능은 미검증이다. [검증·재현 로그](logs/2026-10-20_contact_sweep_reference.md).
+
+## Dex Tactile Renewal v3 — 2026-10-20
+
+| 항목 | 값 |
+| --- | --- |
+| Gym 등록 | `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v3` |
+| 실행 클래스 | `InspireSweepEnv` → `ManagerBasedRLEnv` |
+| 환경 Cfg | `InspireDexTactileSweepOmniRenewalV3EnvCfg` → **`InspireDexTactileSweepOmniRenewalV1EnvCfg` 직접 상속** |
+| PPO Cfg | `InspireDexTactileSweepOmniRenewalV3PPORunnerCfg` → v1 runner |
+| 실험 폴더 | `logs/rsl_rl/inspire_dex_tactile_sweep_omni_renewal_v3` |
+| 관측·행동 | Actor/Critic policy 57D(현재 물체 GT 포함), Arm Joint Position 6D + Hand 2D |
+| 제어·종료 | 0.02 s 정책 주기, 최대 10초, 기존 v1 실패·timeout 종료 |
+
+부모 대비 pushing_speed free_speed 0.3→0.2 m/s, weight −1→−2, goal_distance weight 300→94다. Reaching은 30을 유지한다. `logs/2026-10-19_12-15-47`의 39027–39036 평균 reaching 0.7783182442, goal_distance 3.3145449400으로부터 `300 × (4/3) × reaching / goal_distance ≈ 93.9276`을 사용했다. 기존 궤적을 가정한 경험적 3:4 보정이며 새 학습 결과의 기여 비율을 보장하지 않는다.
+
+생성 질량과 reset 샘플의 1.5배 적용으로 질량 중심 0.5475 kg, 범위 0.345–0.750 kg다. 새 reset callable `randomize_scaled_episode_physics(env, env_ids, mass_scale=1.5)`가 기존 물성 갱신 경로를 재사용하고 관성을 일관되게 갱신한다. 기본 reset callable은 기존 인터페이스를 유지한다. 마찰·센서·관측·네 운동 페널티·다른 보상·종료 조건과 PPO hyperparameter는 v1에서 상속한다. v2 success/goal_hold 추가는 적용하지 않는다.
+
+```bash
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
+  --task Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v3 --num_envs 2048 --headless
+
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/play.py \
+  --task Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v3 \
+  --num_envs 1 --checkpoint "<v3-checkpoint.pt>" --real-time
+```
+
+[설정 소스](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/dex_tactile_omni_renewal_v3_env_cfg.py) · [실제 검증·미검증 범위](logs/2026-10-20_renewal_v3_reward_mass.md).
 
 ## 6. 다음 변경에서 남길 개발 기록
 

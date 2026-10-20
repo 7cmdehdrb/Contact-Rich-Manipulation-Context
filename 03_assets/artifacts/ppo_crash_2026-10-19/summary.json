@@ -1,0 +1,37 @@
+{
+  "2026-10-19_12-16-03": {
+    "scalar_tags": 30,
+    "iterations": 9968,
+    "first_step": 0,
+    "last_step": 9967,
+    "first_value_loss_gt_1000": [
+      8846,
+      53006596.0
+    ],
+    "nonfinite_value_steps": [
+      8935,
+      9843,
+      9966,
+      9967
+    ],
+    "checkpoint_count": 200,
+    "nonfinite_checkpoint_tensors": [],
+    "minimum_saved_std": 0.022370854392647743
+  },
+  "2026-10-19_17-52-20_resume_8500": {
+    "scalar_tags": 30,
+    "iterations": 2975,
+    "first_step": 8500,
+    "last_step": 11474,
+    "first_value_loss_gt_1000": [
+      8501,
+      49574152.0
+    ],
+    "nonfinite_value_steps": [
+      11203
+    ],
+    "checkpoint_count": 60,
+    "nonfinite_checkpoint_tensors": [],
+    "minimum_saved_std": 0.031907081604003906
+  }
+}

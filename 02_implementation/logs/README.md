@@ -1,5 +1,9 @@
 # 개발·실험 진행 로그
 
+- [2026-10-20 Contact Sweep 독립 기준 환경](2026-10-20_contact_sweep_reference.md): 기존 v3 보존, 독립 Env·Manager/PPO Cfg 구성, 설정·가중치 동등성 및 CPU 131개·GPU 검증.
+
+- [2026-10-20 Dex Tactile Renewal v3](2026-10-20_renewal_v3_reward_mass.md): v1 직접 상속, 경험적 goal weight=94, 질량 1.5배, pushing speed 비용 강화와 CPU·GPU 검증.
+
 [문서 안내](../../01_plan/README.md) · [현재 상태](../07_CODE_AND_HARDWARE_STATUS.md) · [현재 활성 환경](../08_ACTIVE_ENVIRONMENTS.md) · [로그 작성 지침](../../00_guidelines/09_DEVELOPMENT_GUIDE.md)
 
 | 기록일 | 문서 | 기록의 범위 |
@@ -76,3 +80,7 @@ Pull/rebase 중 문서 이관 충돌의 처리 내역은 [충돌 해결 기록](
 - [접근·목표 진행 보상 4종 수식 정리](2026-10-16_reward_formulas.md)
 
 - [Dex Tactile Renewal v1](2026-10-16_dex_tactile_renewal_v1.md): 지수 비용 상한 100·손목 높이 3 cm·로컬 ±X 각각 ±15° 제외.
+
+- [2026-10-19 Renewal v2 PPO 중단 진단](2026-10-19_renewal_v2_ppo_crash_audit.md): 두 실행의 12943 iteration·260 checkpoint, reward/termination 반환 범위와 CPU 합성 입력 조사.
+
+- [2026-10-20 Pull/Rebase 충돌 해결](2026-10-20_rebase_conflict_resolution.md): 환경 설명·로그 색인의 양쪽 변경 보존과 문서 검증.

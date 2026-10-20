@@ -1,0 +1,17 @@
+{
+  "reference_run": "logs/rsl_rl/inspire_dex_tactile_sweep_omni_renewal_v3/2026-10-20_13-12-56_smoke_v3",
+  "contact_run": "logs/rsl_rl/inspire_contact_sweep/2026-10-20_13-19-15_smoke_contact_reference",
+  "env_equal_except_log_dir": true,
+  "manager_and_observation_order_equal": true,
+  "ppo_equal_except_experiment_and_run_name": true,
+  "models_after_one_iteration": {
+    "actor_state_dict": {
+      "all_tensors_exactly_equal": true,
+      "tensor_count": 9
+    },
+    "critic_state_dict": {
+      "all_tensors_exactly_equal": true,
+      "tensor_count": 8
+    }
+  }
+}

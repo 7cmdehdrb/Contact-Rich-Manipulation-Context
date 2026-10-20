@@ -1,5 +1,7 @@
 # Blind Sweeping — 단일 파일 인계 요약
 
+**2026-10-20 구현 추가:** 사용자 요청으로 Renewal v3를 보존하면서 독립 기준 task `Isaac-Inspire-Contact-Sweep-v0`를 구성했다. 기존 환경 Cfg를 상속하지 않는 별도 Env·Scene·Manager·PPO 클래스를 사용한다. v3와의 설정·짧은 GPU 실행 동등성 검사 범위는 [활성 환경](../02_implementation/08_ACTIVE_ENVIRONMENTS.md)과 [검증 로그](../02_implementation/logs/2026-10-20_contact_sweep_reference.md)를 따른다. 아래 연구 범위와 실물 성과 구분은 유지한다.
+
 [문서 안내](README.md) · [문헌조사](literature/README.md) · [조사 그룹](literature/reviews/README.md)
 
 **기준일: 2026-10-14.** 아래 연구 범위는 9월 14일 피드백에서 출발하며, 이후 발표 설계·코드·로그를 연결해 현재 인계 상태를 정리한다. 연구 방향, 계획, 적용 코드, 실험 성과는 각각 구분한다.
