@@ -290,6 +290,8 @@ USD 검사에는 `pxr`를 제공하는 Python이 필요하다. 기본 탐색 경
 
 ## Contact Sweep v0 — 2026-10-20 독립 기준 환경
 
+두 환경의 상세 계약은 [Contact Sweep와 Clutter 통합 설명](environments/CONTACT_SWEEP_ENVIRONMENTS.md)을 따른다.
+
 사용자가 Renewal v3를 새 기준점으로 정리하도록 요청했다. 새 [contact_sweep/](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep) 디렉터리에 Observation, Action, Command, Event, Reward, Termination, Scene, Env, PPO 클래스를 직접 선언한다. 기존 환경 Cfg·runtime·PPO를 상속하지 않으며 기존 v3는 유지한다. 자산·관절 mapping·MDP 함수는 공통 유틸리티로 재사용한다.
 
 ```mermaid
