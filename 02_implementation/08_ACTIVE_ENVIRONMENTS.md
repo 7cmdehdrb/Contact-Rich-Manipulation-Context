@@ -354,6 +354,8 @@ Actor/Critic 모두 기존 policy 57D와 장애물 초기 위치 40D를 받는�
 
 ## Contact Sweep Clutter v1 — 2026-10-20
 
+2026-10-20 후속 수정: `shelf_collision` 실패의 마지막 step에 `shelf_failure` 비용 **−3을 한 번** 추가한다. 현재 실패 판정값을 사용해 reset 전에 보상에 반영하고, 시간 배율을 상쇄하여 실제 차감액을 −3으로 유지한다. Timeout이나 다른 실패만으로는 부과하지 않는다. 이 보상은 v1을 상속하는 v2에도 적용된다. [변경·검증 기록](logs/2026-10-20_clutter_v1_shelf_failure.md).
+
 사용자 요청으로 `Isaac-Inspire-Contact-Sweep-Clutter-v0`를 직접 상속한 `Isaac-Inspire-Contact-Sweep-Clutter-v1`를 추가했다. Runtime은 `contact_sweep_clutter_v1.env:ContactSweepClutterV1Env`, 환경 설정은 `contact_sweep_clutter_v1.env_cfg:ContactSweepClutterV1EnvCfg`, runner는 `contact_sweep_clutter_v1.ppo_cfg:ContactSweepClutterV1PPORunnerCfg`다. 모두 `inspire_sweep_baseline` 패키지 아래이며 부모 Env·Cfg·관측·보상·runner를 상속한다. [구현 소스](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_v1).
 
 Actor의 타겟 위치 3D는 reset 당시 robot-root frame 좌표로 고정하고 reset당 ±1 cm 관측 오차를 한 번만 적용한다. Critic은 별도 `privileged` 그룹으로 현재 타겟 robot-root 위치 3D를 매 step 받는다. `initial_privileged_ppo_cfg.py`의 Actor/Critic 분리 방식을 참조하며, 실시간 타겟 위치는 Actor 입력으로 연결하지 않는다.
