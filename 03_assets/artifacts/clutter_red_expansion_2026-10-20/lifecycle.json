@@ -1,0 +1,75 @@
+{
+  "task": "Isaac-Inspire-Contact-Sweep-Clutter-v0",
+  "num_envs": 4,
+  "physical_objects": 4,
+  "observation_shapes": {
+    "policy": [
+      4,
+      57
+    ],
+    "obstacles": [
+      4,
+      40
+    ]
+  },
+  "real_obstacle_slots": 3,
+  "zero_dummy_slots": 7,
+  "initial_observation_max_noise_m": 0.009934499859809875,
+  "identical_actual_mass_inertia_material": true,
+  "arm_velocity_limits_rad_s": [
+    2.0,
+    2.0,
+    2.0,
+    4.0,
+    4.0,
+    4.0
+  ],
+  "hand_velocity_limits_rad_s": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "stable_step_transitions": 20,
+  "natural_reset_count": 0,
+  "partial_reset_indices": [
+    1,
+    3
+  ],
+  "partial_reset_preserved_other_rows": true,
+  "goal_equals_initial_target_plus_direction": true,
+  "repeated_explicit_reset_seed_reproducible": true,
+  "obstacle_drop_and_tilt_manager_checks": true,
+  "parent_filter_columns": {
+    "inspire_base_link": 4,
+    "inspire_left_thumb_2": 4,
+    "inspire_left_thumb_3": 4,
+    "inspire_left_thumb_4": 4,
+    "inspire_left_index_1": 4,
+    "inspire_left_index_2": 4,
+    "inspire_left_middle_1": 4,
+    "inspire_left_middle_2": 4,
+    "inspire_left_ring_1": 4,
+    "inspire_left_ring_2": 4,
+    "inspire_left_little_1": 4,
+    "inspire_left_little_2": 4
+  },
+  "obstacle_contact_counts_per_column": [
+    0,
+    12,
+    0,
+    0
+  ],
+  "obstacle_palm_tactile_detected": true,
+  "controlled_contact_steps": 3,
+  "manipulated_states": true,
+  "passed": true
+}
