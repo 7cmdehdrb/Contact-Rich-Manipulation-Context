@@ -30,6 +30,7 @@
 | Gym task ID | 환경 Cfg | PPO Cfg | 기본 로그 폴더 |
 | --- | --- | --- | --- |
 | `Isaac-Inspire-Contact-Sweep-v0` | `ContactSweepEnvCfg` | `ContactSweepPPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep` |
+| `Isaac-Inspire-Contact-Sweep-Clutter-v0` | `ContactSweepClutterEnvCfg` | `ContactSweepClutterPPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter` |
 | `Isaac-Inspire-Sweep-Baseline-v0` | `InspireSweepEnvCfg` | `InspireSweepPPORunnerCfg` | `logs/rsl_rl/inspire_sweep_baseline` |
 | `Isaac-Inspire-Sweep-Realistic-Physics-v0` | `InspireSweepRealisticPhysicsEnvCfg` | `InspireSweepRealisticPhysicsPPORunnerCfg` | `logs/rsl_rl/inspire_sweep_realistic_physics` |
 | `Isaac-Inspire-Sweep-Realistic-Physics-Initial-Privileged-v0` | `InspireSweepRealisticInitialPrivilegedEnvCfg` | `InspireSweepRealisticInitialPrivilegedPPORunnerCfg` | `logs/rsl_rl/inspire_sweep_realistic_initial_privileged` |
@@ -315,6 +316,38 @@ Actor/Critic은 policy 57D(현재 물체 GT·17 tactile bit·F/T 포함), Action
 ```
 
 CPU 관련 검사 131개, GPU 8 env·PPO 1 iteration을 통과했다. 저장 환경 YAML과 Manager/관측 순서는 v3와 log_dir 외 동일하고 PPO도 experiment/run 이름 외 동일하다. 동일 seed·1 iteration 후 Actor/Critic tensor가 전부 일치했다. 장시간 학습과 실물 성능은 미검증이다. [검증·재현 로그](logs/2026-10-20_contact_sweep_reference.md).
+
+## Contact Sweep Clutter v0 — 2026-10-20
+
+사용자 요청으로 Contact Sweep을 상속하는 장애물 환경을 추가했다. 기존 Contact Sweep·Renewal v3는 보존한다. 같은 날 후속 요청으로 v0 ID를 유지하며 장애물을 6→3개로 줄이고 RED 제외 반경을 8.3→10.3 cm로 확대했다. RED 형태·전면 방향 확장은 유지하며 여유값만 0.3→2.3 cm로 변경했다. [후속 검증](logs/2026-10-20_clutter_red_expansion.md).
+
+```mermaid
+flowchart LR
+    Env[ContactSweepEnv] --> ChildEnv[ContactSweepClutterEnv]
+    Cfg[ContactSweepEnvCfg] --> ChildCfg[ContactSweepClutterEnvCfg]
+    Scene[ContactSweepSceneCfg] --> ChildScene[ContactSweepClutterSceneCfg]
+    Runner[ContactSweepPPORunnerCfg] --> ChildRunner[ContactSweepClutterPPORunnerCfg]
+    Managers[부모 Observation/Event/Reward/Termination] --> ChildManagers[Clutter 파생 Manager Cfg]
+```
+
+등록 entry point는 `inspire_sweep_baseline.contact_sweep_clutter.env:ContactSweepClutterEnv`, 환경 Cfg는 `contact_sweep_clutter.env_cfg:ContactSweepClutterEnvCfg`, runner는 `contact_sweep_clutter.ppo_cfg:ContactSweepClutterPPORunnerCfg`다.
+
+명시적으로 확인한 사용자 선택은 **부모 타겟·목표 분포 및 초기 관절 자세 유지**, **모든 물체의 촉각 접촉 반영**, **장애물 위치에 reset당 한 번 ±1 cm 노이즈 적용**이다. `scene_randomization`의 배치 규칙을 재사용하되 360°·5–20 cm 명령 분포를 가져오지 않는다. 목표 확정 후 장애물 3개를 배치하며 타겟·목표를 재샘플링하지 않는다. 뒤쪽 GRAY 1개·WHITE 2개, RED와 손목 점유 회피, 간격·밀도·접근 경로 조건을 지킨다. 참조 cm 좌표를 현재 선반 m 좌표로 회전·이동해 front 방향을 보존한다.
+
+모든 실린더는 타겟과 같은 크기·물성이고, 환경별 질량·마찰 샘플도 공유한다. 타겟은 파란색, 장애물은 주황색이다. `object_tilt`는 기존 물체별 비용의 합, `object_drop`는 물체 중 하나라도 기존 낙하·전도 조건에 해당하면 True다. 나머지 보상·종료·물리적 관절 속도 제한은 부모를 상속한다.
+
+Actor/Critic 모두 기존 policy 57D와 장애물 초기 위치 40D를 받는다. 장애물만 `[HEADER, x, y, z] × 10`으로 넣고 실제 3칸·더미 7칸을 사용한다. robot-root frame의 초기 위치와 노이즈를 episode 동안 유지한다. 별도 Actor/Critic MLP `40 → 32(ReLU) → 16`을 PPO로 학습하며, 57D+16D=73D로 연결한다. rollout과 JIT/ONNX 외부 입력은 원시 97D다. 타겟의 현재 위치 관측이 남으므로 완전한 Blind 환경은 아니다.
+
+```bash
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
+  --task Isaac-Inspire-Contact-Sweep-Clutter-v0 --num_envs 2048 --headless
+
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/play.py \
+  --task Isaac-Inspire-Contact-Sweep-Clutter-v0 --num_envs 1 \
+  --checkpoint "<clutter-checkpoint.pt>" --real-time
+```
+
+[패키지 상세 계약](../../../src/inspire_sweep_baseline/README.md#contact-sweep-clutter-v0--장애물-초기-관측과-mlp-임베딩) · [구현·검증 로그](logs/2026-10-20_contact_sweep_clutter.md).
 
 ## Dex Tactile Renewal v3 — 2026-10-20
 

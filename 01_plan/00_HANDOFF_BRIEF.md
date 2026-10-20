@@ -1,5 +1,7 @@
 # Blind Sweeping — 단일 파일 인계 요약
 
+**2026-10-20 장애물 확장:** 사용자 확인에 따라 Contact Sweep을 상속하는 `Isaac-Inspire-Contact-Sweep-Clutter-v0`를 추가했다. 부모 타겟·목표 분포와 고정 로봇 초기 자세를 유지하고, 목표를 확정한 뒤 `scene_randomization` 규칙으로 장애물 3개(뒤쪽 GRAY 1개·WHITE 2개)를 배치한다. 같은 날 후속 요청으로 v0의 RED 제외 반경을 8.3→10.3 cm로 확대했다. 모든 물체의 tilt·낙하·촉각을 반영하며, 초기 장애물 40D를 MLP 16D로 압축한다. [환경 계약·실행](../02_implementation/08_ACTIVE_ENVIRONMENTS.md#contact-sweep-clutter-v0--2026-10-20)과 [검증 로그](../02_implementation/logs/2026-10-20_contact_sweep_clutter.md)를 따른다. 연구·실물 성과와 구분한다.
+
 **2026-10-20 구현 추가:** 사용자 요청으로 Renewal v3를 보존하면서 독립 기준 task `Isaac-Inspire-Contact-Sweep-v0`를 구성했다. 기존 환경 Cfg를 상속하지 않는 별도 Env·Scene·Manager·PPO 클래스를 사용한다. v3와의 설정·짧은 GPU 실행 동등성 검사 범위는 [활성 환경](../02_implementation/08_ACTIVE_ENVIRONMENTS.md)과 [검증 로그](../02_implementation/logs/2026-10-20_contact_sweep_reference.md)를 따른다. 아래 연구 범위와 실물 성과 구분은 유지한다.
 
 [문서 안내](README.md) · [문헌조사](literature/README.md) · [조사 그룹](literature/reviews/README.md)

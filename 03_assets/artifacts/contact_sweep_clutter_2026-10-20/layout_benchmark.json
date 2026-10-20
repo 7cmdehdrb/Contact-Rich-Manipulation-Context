@@ -1,0 +1,47 @@
+{
+  "count": 10000,
+  "seed": 20261020,
+  "seconds": 2.1140728450845927,
+  "milliseconds_per_scene": 0.21140728450845928,
+  "attempt_max": 1,
+  "retried_scenes": 0,
+  "target_exact": true,
+  "goal_exact": true,
+  "target_to_goal_cm_range": [
+    12.564369843509478,
+    15.000002349637978
+  ],
+  "validation": {
+    "scenes_checked": 10000,
+    "valid": true,
+    "failures": {
+      "nonfinite": 0,
+      "command_bounds": 0,
+      "goal_displacement": 0,
+      "object_bounds": 0,
+      "target_spawn": 0,
+      "goal_bounds": 0,
+      "minimum_gap": 0,
+      "local_density": 0,
+      "cell_capacity": 0,
+      "front_entry": 0,
+      "approach_walls": 0,
+      "contact_pose": 0,
+      "approach_target": 0,
+      "red_obstacle": 0,
+      "wrist_projection_obstacle": 0,
+      "gray_count": 0,
+      "white_count": 0,
+      "rear_count": 0,
+      "approach_obstacle": 0
+    },
+    "minima": {
+      "surface_gap_cm": 1.6007693232234885,
+      "target_sweep_clearance_cm": 0.30137041950548316,
+      "wrist_projection_clearance_cm": 0.30058022182569033,
+      "approach_obstacle_clearance_cm": 0.10059169886613262,
+      "approach_target_clearance_cm": -2.6645352591003757e-15
+    },
+    "scenes_with_hand_push_interference": 0
+  }
+}

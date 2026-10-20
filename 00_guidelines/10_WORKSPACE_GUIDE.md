@@ -57,7 +57,9 @@
 | `src/trash` | 이전 Sweep·Hand·촉각·로봇 예제와 ROS description 보관 | [보관 목록과 제외 방법](../../../src/trash/README.md) |
 | `tests`, `logs`, `rsl_rl`, `outputs` | 검증 코드와 실행 산출물; 프로젝트 해석과 결과 설명은 이 문서 저장소에 기록 | [로그 작성 원칙](09_DEVELOPMENT_GUIDE.md), [개발 로그 목록](../02_implementation/logs/README.md) |
 
-`scene_randomization`은 접촉·마찰·전도·로봇 IK를 계산하지 않는 기하 검증 도구다. 방향·거리→가능한 타겟 위치→접근 경로→장애물 순서로 생성하고, 작은 원으로 근사한 손가락 접근 및 Tool/Wrist의 월드 −Y 점유를 검사한다. 360도 command를 생성하는 이 도구의 실험 범위와 좌우 Sweep 또는 Omni RL 환경의 범위는 구분한다. 현재 활성 RL reset에 연결되어 있다고 가정하지 않는다.
+`scene_randomization`은 접촉·마찰·전도·로봇 IK를 계산하지 않는 기하 검증 도구다. 방향·거리→가능한 타겟 위치→접근 경로→장애물 순서로 생성하고, 작은 원으로 근사한 손가락 접근 및 Tool/Wrist의 월드 −Y 점유를 검사한다. 360도 command를 생성하는 이 도구의 실험 범위와 좌우 Sweep 또는 Omni RL 환경의 범위는 구분한다.
+
+2026-10-20 추가한 `Isaac-Inspire-Contact-Sweep-Clutter-v0`는 이 도구의 장애물 배치 규칙을 reset에 연결한다. 사용자 선택에 따라 기존 Contact Sweep의 타겟·목표 분포를 유지하고 목표 확정 후 장애물만 배치한다. 생성기 파일을 읽기 전용으로 참조하며 standalone 생성기의 명령 분포는 변경하지 않는다. [구현·실제 검증 범위](../02_implementation/logs/2026-10-20_contact_sweep_clutter.md)를 따른다.
 
 ## 전체 연구와 개발 흐름
 

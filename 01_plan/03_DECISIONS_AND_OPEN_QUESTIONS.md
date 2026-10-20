@@ -1,5 +1,7 @@
 # 결정·변경·미정 목록
 
+> **2026-10-20 사용자 확인 — Contact Sweep Clutter:** 독립 Contact Sweep을 상속해 장애물 환경을 만든다. 부모 타겟·목표 분포와 로봇 초기 관절 자세를 유지하고, 목표 확정 후 참고 Scene 생성기의 장애물 배치 규칙만 적용한다. 장애물 3개·10개 관측 슬롯(최초 6개에서 후속 요청으로 감소), 모든 물체의 tilt 합·하나라도 낙하/전도 시 종료, 모든 물체의 촉각 접촉, reset 때 한 번 ±1 cm 노이즈를 적용한 초기 장애물 위치를 채택한다. 후속 확인으로 뒤쪽 GRAY 1개·WHITE 2개와 RED 반경 10.3 cm(기존 8.3 cm)를 선택했으며 v0 ID를 유지한다. [변경 검증](../02_implementation/logs/2026-10-20_clutter_red_expansion.md). MLP 구조는 구현 재량으로 `40 → 32(ReLU) → 16`을 사용한다. 장기 학습·실물 성과는 미확인이다. [구현·검증](../02_implementation/logs/2026-10-20_contact_sweep_clutter.md).
+
 > **2026-10-16 사용자 지정 개발 기준:** 이후 추가 작업은 `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v0`를 기반으로 상속한다. 실행기 기본 task 변경 요청은 아니다. 이번 v1에는 지수 속도 비용 상한 100, 손목 종료 0.03 m, 선반 로컬 ±X 각각 ±15° 목표 제외를 적용한다. [구현 계약·실행 안내](../02_implementation/08_ACTIVE_ENVIRONMENTS.md) · [검증 로그](../02_implementation/logs/2026-10-16_dex_tactile_renewal_v1.md).
 
 > **2026-10-15 사용자 요청 — Omni v2 보상 실험:** v1을 유지하고 이를 상속하는 v2에서 현재 물체 위치 기준의 episode 최소 접근 기록 보상, time/success/failure 보상 제거를 구현했다. 후속 사용자 요청으로 v2의 success DoneTerm도 제거했으며 실패·시간 초과 종료는 유지한다. 추가 사용자 지시에 따라 운동 비용은 v1 원래 값으로 복원하고 Reaching·목표 이동 진전 보상만 각각 누적 +200·+400으로 강화했다. 보상 계수의 학습 효과는 미검증이다. [구현·검증 로그](../02_implementation/logs/2026-10-15_omni_v2_rewards.md) · [환경 안내](../02_implementation/08_ACTIVE_ENVIRONMENTS.md).
