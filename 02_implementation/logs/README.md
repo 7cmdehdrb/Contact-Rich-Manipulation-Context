@@ -1,5 +1,7 @@
 # 개발·실험 진행 로그
 
+- [2026-10-20 Clutter v1 Curriculum](2026-10-20_clutter_v1_curriculum.md): Learning iteration 기반 물체·Arm free speed와 Arm 두 운동 비용 가중치 일정, checkpoint 재개·재생 연결과 CPU 검증·GPU 실행 제한.
+
 - [2026-10-20 Clutter v1 선반 실패 비용](2026-10-20_clutter_v1_shelf_failure.md): shelf 실패의 마지막 전이에 일회성 −3, reset 전 보상 반영과 시간 배율·다음 에피소드 반복 방지 검증.
 
 - [2026-10-20 Contact Sweep Clutter v2](2026-10-20_contact_sweep_clutter_v2.md): Hand 중력·관성 하중을 제거한 6축 F/T 관측, 급격한 힘·모멘트 변화의 제곱 비용과 실제 양의 보상 대비 누적 5% 한도.

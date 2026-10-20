@@ -32,6 +32,7 @@
 | `Isaac-Inspire-Contact-Sweep-v0` | `ContactSweepEnvCfg` | `ContactSweepPPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep` |
 | `Isaac-Inspire-Contact-Sweep-Clutter-v0` | `ContactSweepClutterEnvCfg` | `ContactSweepClutterPPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter` |
 | `Isaac-Inspire-Contact-Sweep-Clutter-v1` | `ContactSweepClutterV1EnvCfg` | `ContactSweepClutterV1PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_v1` |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Curriculum-v1` | `ContactSweepClutterV1CurriculumEnvCfg` | `ContactSweepClutterV1CurriculumPPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_v1_curriculum` |
 | `Isaac-Inspire-Sweep-Baseline-v0` | `InspireSweepEnvCfg` | `InspireSweepPPORunnerCfg` | `logs/rsl_rl/inspire_sweep_baseline` |
 | `Isaac-Inspire-Sweep-Realistic-Physics-v0` | `InspireSweepRealisticPhysicsEnvCfg` | `InspireSweepRealisticPhysicsPPORunnerCfg` | `logs/rsl_rl/inspire_sweep_realistic_physics` |
 | `Isaac-Inspire-Sweep-Realistic-Physics-Initial-Privileged-v0` | `InspireSweepRealisticInitialPrivilegedEnvCfg` | `InspireSweepRealisticInitialPrivilegedPPORunnerCfg` | `logs/rsl_rl/inspire_sweep_realistic_initial_privileged` |
@@ -389,6 +390,31 @@ python src/inspire_sweep_baseline/scripts/analyze_clutter_rewards.py \
 ```
 
 분석 스크립트는 TensorBoard만 사용하는 독립 실행 경로이며, v1 run에서는 측정된 신규 보상 비중도 출력한다. CPU 320개, 실제 GPU lifecycle 4환경과 PPO 8환경·2 iteration이 통과했다. 장기 학습과 보상 비중의 실제 수렴·실물 성능은 미검증이다. [패키지 상세 계약](../../../src/inspire_sweep_baseline/README.md#contact-sweep-clutter-v1--초기-타겟-관측과-보상-균형) · [계수 산정·실제 검사·미검증 범위](logs/2026-10-20_contact_sweep_clutter_v1.md).
+
+## Contact Sweep Clutter Curriculum v1 — 2026-10-20
+
+현재 v1을 직접 상속한 `Isaac-Inspire-Contact-Sweep-Clutter-Curriculum-v1`를 추가했다. `inspire_sweep_baseline.contact_sweep_clutter_v1_curriculum` 아래의 `env:ContactSweepClutterV1CurriculumEnv`, `env_cfg:ContactSweepClutterV1CurriculumEnvCfg`, `rewards_cfg:ContactSweepClutterV1CurriculumRewardsCfg`, `ppo_cfg:ContactSweepClutterV1CurriculumPPORunnerCfg`는 각각 v1을 상속한다. `curriculum_cfg:ContactSweepClutterV1CurriculumCfg`가 네 항을 정의하며, 실제 runner는 `inspire_sweep_baseline.agents.curriculum_runner:CurriculumOnPolicyRunner`로 RSL-RL `OnPolicyRunner`를 상속한다.
+
+| 항 | 일정 |
+| --- | --- |
+| 물체 free speed | 0.1 m/s에서 매 3,000 Learning iteration마다 0.01 감소, 15,000부터 0.05 고정 |
+| Arm free speed | 1.0 rad/s에서 매 5,000 iteration마다 0.05 감소, 20,000부터 0.8 고정 |
+| Arm action-rate / joint-velocity 가중치 | 각각 −0.03에서 매 3,000 iteration마다 0.005 감소, 18,000부터 −0.06 고정 |
+
+사용자 명시 요청에 따른 Arm 가중치 변형이다. Hand −0.03/−0.01과 로컬 raw 제곱합 함수·출력 상한·dt 규칙은 유지한다. Actor `policy57 + obstacles40` / Critic `policy57 + privileged3 + obstacles40`, Arm Joint Position 6D + Hand 2D, 0.02초 제어, 장면·물성·분포·reset·실패 종료·10초 timeout·나머지 보상은 현재 v1 상속이다.
+
+시점은 로그의 0-based Learning iteration이다. 새 rollout 전에 모든 환경의 보상 설정을 갱신하며, reset마다 동일 절대값을 재계산한다. Runner의 시작 iteration과 실제 rollout 길이를 사용하고 `common_step_counter`를 학습 iteration으로 가정하지 않는다. Checkpoint 재개와 재생은 내부 `iter`를 반영하고, 재생 중에는 고정한다. 기본 train/play가 전용 runner를 선택한다.
+
+```bash
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
+  --task Isaac-Inspire-Contact-Sweep-Clutter-Curriculum-v1 --num_envs 2048 --headless
+
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/play.py \
+  --task Isaac-Inspire-Contact-Sweep-Clutter-Curriculum-v1 --num_envs 1 \
+  --checkpoint "<curriculum-checkpoint.pt>" --real-time
+```
+
+[패키지 실행·재개 안내](../../../src/inspire_sweep_baseline/README.md#contact-sweep-clutter-curriculum-v1--learning-iteration-기반-보상) · [개발·검증 기록](logs/2026-10-20_clutter_v1_curriculum.md). CPU PPO runner 검사와 실제 GPU·장기 학습 검증을 구분한다.
 
 ## Contact Sweep Clutter v2 — 2026-10-20
 

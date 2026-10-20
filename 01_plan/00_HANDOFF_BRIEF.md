@@ -1,5 +1,7 @@
 # Blind Sweeping — 단일 파일 인계 요약
 
+**2026-10-20 Clutter v1 Curriculum 추가:** 현재 v1을 상속한 `Isaac-Inspire-Contact-Sweep-Clutter-Curriculum-v1`에 Learning iteration 기반 네 보상 일정을 추가했다. 물체 free speed 0.1→0.05, Arm free speed 1.0→0.8, Arm action-rate·joint-velocity 가중치 각각 −0.03→−0.06이며 사용자 명시 요청에 따른 변형이다. [일정·runner 재개 의미·실제 검증 범위](../02_implementation/logs/2026-10-20_clutter_v1_curriculum.md)를 확인한다. 정책 성능 향상은 미검증이다.
+
 **2026-10-20 Clutter v2 추가:** v1을 상속한 `Isaac-Inspire-Contact-Sweep-Clutter-v2`에서 F/T 관측을 Hand 중력·관성 하중을 제거한 6축 외력 반력 추정값으로 교체했다. 힘·모멘트 변화 제곱 비용은 작은 변화의 허용 구간, 최대 −0.1/초, 실제 누적 양의 보상 대비 5% 예산 제한을 갖는다. 관측 차원·Action·나머지 보상·종료는 v1을 유지한다. 모델 기반 시뮬레이션 보정과 실물 캔슬레이션 성능은 구분하며 [구현·검증 기록](../02_implementation/logs/2026-10-20_contact_sweep_clutter_v2.md)을 확인한다.
 
 **2026-10-20 Clutter v1 추가:** 사용자 요청으로 `Isaac-Inspire-Contact-Sweep-Clutter-v1`을 v0에서 상속했다. Actor는 타겟 시작 위치, Critic만 추가 현재 XYZ를 사용한다. 월드 XY 1 cm 목표 체류·촉각 접촉 두 항·상한 있는 장애물 이동 비용을 추가하고, 지정 v0 로그로 양의 보상 비중 약 35/35/20/10의 초기 계수를 산정했다. [구현·계수 근거·실제 검증](../02_implementation/logs/2026-10-20_contact_sweep_clutter_v1.md)을 확인한다. 이 비중은 체류 5초·접촉 7초 가정이며 학습된 v1 성과가 아니다.
