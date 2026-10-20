@@ -1,5 +1,7 @@
 # 개발·실험 진행 로그
 
+- [2026-10-20 Contact Sweep 통합 문서](2026-10-20_contact_sweep_documentation.md): 두 환경의 최신 구성·차이·실행·검증 범위를 하나의 설명으로 정리.
+
 - [2026-10-20 Clutter v0 RED 확대·장애물 감소](2026-10-20_clutter_red_expansion.md): RED 제외 반경 8.3→10.3 cm, 장애물 6→3개(뒤쪽 GRAY 1·WHITE 2), 40D 관측 유지.
 
 - [2026-10-20 Contact Sweep Clutter](2026-10-20_contact_sweep_clutter.md): Contact Sweep 상속, 목표 확정 후 장애물 6개 배치, 전체 물체 tilt·낙하와 초기 장애물 40D→16D 학습 임베딩.
