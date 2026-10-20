@@ -1,7 +1,10 @@
 # 개발·실험 진행 로그
 
+<<<<<<< HEAD
 - [2026-10-20 Clutter v1 Curriculum](2026-10-20_clutter_v1_curriculum.md): Learning iteration 기반 물체·Arm free speed와 Arm 두 운동 비용 가중치 일정, checkpoint 재개·재생 연결과 CPU 검증·GPU 실행 제한.
 
+=======
+>>>>>>> e133c09 (feat: Add one-time penalty for shelf failure in Clutter v1 and update logs)
 - [2026-10-20 Clutter v1 선반 실패 비용](2026-10-20_clutter_v1_shelf_failure.md): shelf 실패의 마지막 전이에 일회성 −3, reset 전 보상 반영과 시간 배율·다음 에피소드 반복 방지 검증.
 
 - [2026-10-20 Contact Sweep Clutter v2](2026-10-20_contact_sweep_clutter_v2.md): Hand 중력·관성 하중을 제거한 6축 F/T 관측, 급격한 힘·모멘트 변화의 제곱 비용과 실제 양의 보상 대비 누적 5% 한도.
@@ -98,3 +101,5 @@ Pull/rebase 중 문서 이관 충돌의 처리 내역은 [충돌 해결 기록](
 - [2026-10-19 Renewal v2 PPO 중단 진단](2026-10-19_renewal_v2_ppo_crash_audit.md): 두 실행의 12943 iteration·260 checkpoint, reward/termination 반환 범위와 CPU 합성 입력 조사.
 
 - [2026-10-20 Pull/Rebase 충돌 해결](2026-10-20_rebase_conflict_resolution.md): 환경 설명·로그 색인의 양쪽 변경 보존과 문서 검증.
+
+- [2026-10-21 TEMP 학습 로그 정리](2026-10-21_temp_training_log_cleanup.md): 35개 run 환경별 이동·500 iteration 미만 7개 삭제·rsl_rl 보존 검증 및 명시적 요청 시에만 정리하는 지침.

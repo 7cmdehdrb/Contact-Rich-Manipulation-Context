@@ -108,3 +108,7 @@ git -C example/Sweep-Policy status --short
 정리 전 루트 README의 세 설계안, 7월 `sweep_rl` TODO, 과거 설정 개정 요청은 [역사 자료 안내](../01_plan/history/README.md)에 보존한다. 10월 9–12일 로그에는 당시 패키지·환경과 checkpoint가 남아 있다. 파일 이동 후 코드 링크는 새 보관 위치를 가리키며 당시 실행 명령은 역사적 스냅샷으로 읽는다. 이전 README가 가리켰으나 현 작업트리에 없는 자료는 [이관 기록](../01_plan/history/2026-10-14_legacy_workspace_design.md)에 미확보로 표시했다.
 
 이 문서 submodule의 내부 배치와 에이전트 읽기·문서 생산 규칙은 [문서 구조 규칙](DOCUMENT_STRUCTURE.md)을 따른다. 상위 workspace의 `docs` 및 참고 프로젝트의 `docs`는 위 역할을 유지한다.
+
+## 학습 로그 정리
+
+사용자의 명시적 요청이 있을 때만 `logs/TEMP`를 정리한다. `logs/rsl_rl`은 건드리지 않는다. 환경 ID별 `logs/backup` 이동과 500 iteration 미만 run 삭제 절차는 [학습 로그 정리 지침](11_TRAINING_LOG_CLEANUP.md)을 따른다. 임의·자동 정리는 금지한다.
