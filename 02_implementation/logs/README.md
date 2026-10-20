@@ -1,5 +1,7 @@
 # 개발·실험 진행 로그
 
+- [2026-10-20 Contact Sweep Clutter v1](2026-10-20_contact_sweep_clutter_v1.md): 초기 타겟 Actor·현재 XYZ Critic, 목표 유지·촉각·장애물 이동 보상, 지정 v0 로그 기반 계수 산정과 CPU·GPU 검증.
+
 - [2026-10-20 Contact Sweep 통합 문서](2026-10-20_contact_sweep_documentation.md): 두 환경의 최신 구성·차이·실행·검증 범위를 하나의 설명으로 정리.
 
 - [2026-10-20 Clutter v0 RED 확대·장애물 감소](2026-10-20_clutter_red_expansion.md): RED 제외 반경 8.3→10.3 cm, 장애물 6→3개(뒤쪽 GRAY 1·WHITE 2), 40D 관측 유지.

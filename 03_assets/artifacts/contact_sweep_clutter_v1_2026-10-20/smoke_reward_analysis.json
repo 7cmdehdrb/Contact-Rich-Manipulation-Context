@@ -1,0 +1,166 @@
+{
+  "log_dir": "/home/min/7cmdehdrb/grad/logs/rsl_rl/inspire_contact_sweep_clutter_v1/2026-10-20_20-37-27_smoke_clutter_v1",
+  "source_configuration": {
+    "path": "/home/min/7cmdehdrb/grad/logs/rsl_rl/inspire_contact_sweep_clutter_v1/2026-10-20_20-37-27_smoke_clutter_v1/params/env.yaml",
+    "assumption": null,
+    "episode_length_s": 10.0,
+    "reward_weights": {
+      "reaching": 30.0,
+      "goal_distance": 100.0,
+      "arm_action_rate": -0.03,
+      "hand_action_rate": -0.03,
+      "arm_joint_velocity": -0.03,
+      "hand_joint_velocity": -0.01,
+      "object_tilt": -2.0,
+      "shelf_collision": -0.5,
+      "pushing_speed": -2.0,
+      "arm_speed_excess": -1.0,
+      "goal_hold": 0.9,
+      "contact_any": 0.16,
+      "contact_count": 0.16,
+      "obstacle_displacement": -5.0
+    }
+  },
+  "records": {
+    "available": 2,
+    "selected": 2,
+    "requested_last_n": 0,
+    "first_step": 0,
+    "last_step": 1,
+    "validation": "All reward series aligned, strictly increasing, unique and finite."
+  },
+  "measured": {
+    "weighted_logged_means": {
+      "arm_action_rate": -0.023569207085529342,
+      "arm_joint_velocity": -0.03133555263048038,
+      "arm_speed_excess": -3.199524387717247,
+      "contact_any": 0.0,
+      "contact_count": 0.0,
+      "goal_distance": 0.00028345527971396223,
+      "goal_hold": 0.0,
+      "hand_action_rate": -0.013796368453768082,
+      "hand_joint_velocity": -0.0035496746277203783,
+      "object_tilt": 0.0,
+      "obstacle_displacement": -7.831429073235086e-06,
+      "pushing_speed": 0.0,
+      "reaching": 0.15063369018025696,
+      "shelf_collision": -0.0011069225147366524
+    },
+    "absolute_mean_sum": 3.423807089918526,
+    "share_percent_of_absolute_mean_sum": {
+      "arm_action_rate": 0.6883917950555504,
+      "arm_joint_velocity": 0.915225414502721,
+      "arm_speed_excess": 93.44931836663099,
+      "contact_any": 0.0,
+      "contact_count": 0.0,
+      "goal_distance": 0.008278950077199221,
+      "goal_hold": 0.0,
+      "hand_action_rate": 0.4029540243196466,
+      "hand_joint_velocity": 0.1036762450247992,
+      "object_tilt": 0.0,
+      "obstacle_displacement": 0.00022873453052582598,
+      "pushing_speed": 0.0,
+      "reaching": 4.399596303886429,
+      "shelf_collision": 0.03233016597214281
+    },
+    "signed_mean_sum": -3.121972798998584,
+    "positive_mean_sum": 0.15091714545997093,
+    "negative_mean_sum": -3.272889944458555,
+    "penalty_percent_of_positive_mean_sum": 2168.66674391655
+  },
+  "v1_scenario": {
+    "weights": {
+      "reaching": 30.0,
+      "goal_distance": 100.0,
+      "goal_hold": 0.9,
+      "contact_any": 0.16,
+      "contact_count": 0.16,
+      "obstacle_displacement": -5.0
+    },
+    "episode_length_s": 10.0,
+    "goal_hold_seconds": 5.0,
+    "goal_hold_world_xy_radius_m": 0.01,
+    "contact_seconds": 7.0,
+    "contact_active_count": 5,
+    "contact_count_saturation": 5,
+    "projection": {
+      "weighted_logged_means": {
+        "reaching": 0.15063369018025696,
+        "goal_distance": 0.00028345527971396223,
+        "goal_hold": 0.45,
+        "contact": 0.22400000000000003
+      },
+      "positive_group_sum": 0.824917145459971,
+      "share_percent_of_positive_groups": {
+        "reaching": 18.260463006410678,
+        "goal_distance": 0.03436166665634141,
+        "goal_hold": 54.55093308178018,
+        "contact": 27.1542422451528
+      },
+      "contact_components": {
+        "contact_any": {
+          "weighted_logged_mean": 0.11200000000000002,
+          "share_percent_of_positive_groups": 13.5771211225764
+        },
+        "contact_count": {
+          "weighted_logged_mean": 0.11200000000000002,
+          "share_percent_of_positive_groups": 13.5771211225764
+        }
+      },
+      "episode_equivalent_rewards": {
+        "reaching": 1.5063369018025696,
+        "goal_distance": 0.0028345527971396223,
+        "goal_hold": 4.5,
+        "contact": 2.24
+      },
+      "episode_equivalent_positive_sum": 8.24917145459971
+    },
+    "obstacle": {
+      "object_count": 2,
+      "displacement_each_m": 0.1,
+      "duration_s": 10.0,
+      "sum_squared_xyz_displacement_m2": 0.020000000000000004,
+      "max_sum_squared_xyz_displacement_m2": 0.04,
+      "weighted_logged_mean": -0.10000000000000002,
+      "episode_reward": -1.0000000000000002,
+      "penalty_percent_of_projected_positive_sum": 12.12242957372893,
+      "max_weighted_cost_per_second": 0.2,
+      "max_episode_penalty_magnitude": 2.0
+    }
+  },
+  "v1_measured_positive_groups": {
+    "weighted_logged_means": {
+      "reaching": 0.15063369018025696,
+      "goal_distance": 0.00028345527971396223,
+      "goal_hold": 0.0,
+      "contact": 0.0
+    },
+    "positive_group_sum": 0.15091714545997093,
+    "share_percent_of_positive_groups": {
+      "reaching": 99.81217821285313,
+      "goal_distance": 0.18782178714687228,
+      "goal_hold": 0.0,
+      "contact": 0.0
+    },
+    "contact_components": {
+      "contact_any": {
+        "weighted_logged_mean": 0.0,
+        "share_percent_of_positive_groups": 0.0
+      },
+      "contact_count": {
+        "weighted_logged_mean": 0.0,
+        "share_percent_of_positive_groups": 0.0
+      }
+    }
+  },
+  "missing_v1_positive_terms": [],
+  "interpretation": [
+    "Means equally weight logged iterations, not individual episodes.",
+    "Episode_Reward includes weights and dt, divided by maximum episode length.",
+    "Absolute shares use abs(mean(term)), not mean(abs(term)).",
+    "35/35/20/10 targets use the four positive groups; penalties are reported separately.",
+    "Scenario rescales measured progress but assumes 5s goal hold and 7s contact at 5 pads.",
+    "Scenario does not predict behavior changes from blind observations or speed thresholds.",
+    "Scalar logs cannot reconstruct new reward values from an earlier v0 rollout."
+  ]
+}

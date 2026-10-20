@@ -31,6 +31,7 @@
 | --- | --- | --- | --- |
 | `Isaac-Inspire-Contact-Sweep-v0` | `ContactSweepEnvCfg` | `ContactSweepPPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep` |
 | `Isaac-Inspire-Contact-Sweep-Clutter-v0` | `ContactSweepClutterEnvCfg` | `ContactSweepClutterPPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter` |
+| `Isaac-Inspire-Contact-Sweep-Clutter-v1` | `ContactSweepClutterV1EnvCfg` | `ContactSweepClutterV1PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_v1` |
 | `Isaac-Inspire-Sweep-Baseline-v0` | `InspireSweepEnvCfg` | `InspireSweepPPORunnerCfg` | `logs/rsl_rl/inspire_sweep_baseline` |
 | `Isaac-Inspire-Sweep-Realistic-Physics-v0` | `InspireSweepRealisticPhysicsEnvCfg` | `InspireSweepRealisticPhysicsPPORunnerCfg` | `logs/rsl_rl/inspire_sweep_realistic_physics` |
 | `Isaac-Inspire-Sweep-Realistic-Physics-Initial-Privileged-v0` | `InspireSweepRealisticInitialPrivilegedEnvCfg` | `InspireSweepRealisticInitialPrivilegedPPORunnerCfg` | `logs/rsl_rl/inspire_sweep_realistic_initial_privileged` |
@@ -350,6 +351,42 @@ Actor/Critic 모두 기존 policy 57D와 장애물 초기 위치 40D를 받는�
 ```
 
 [패키지 상세 계약](../../../src/inspire_sweep_baseline/README.md#contact-sweep-clutter-v0--장애물-초기-관측과-mlp-임베딩) · [구현·검증 로그](logs/2026-10-20_contact_sweep_clutter.md).
+
+## Contact Sweep Clutter v1 — 2026-10-20
+
+사용자 요청으로 `Isaac-Inspire-Contact-Sweep-Clutter-v0`를 직접 상속한 `Isaac-Inspire-Contact-Sweep-Clutter-v1`를 추가했다. Runtime은 `contact_sweep_clutter_v1.env:ContactSweepClutterV1Env`, 환경 설정은 `contact_sweep_clutter_v1.env_cfg:ContactSweepClutterV1EnvCfg`, runner는 `contact_sweep_clutter_v1.ppo_cfg:ContactSweepClutterV1PPORunnerCfg`다. 모두 `inspire_sweep_baseline` 패키지 아래이며 부모 Env·Cfg·관측·보상·runner를 상속한다. [구현 소스](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_v1).
+
+Actor의 타겟 위치 3D는 reset 당시 robot-root frame 좌표로 고정하고 reset당 ±1 cm 관측 오차를 한 번만 적용한다. Critic은 별도 `privileged` 그룹으로 현재 타겟 robot-root 위치 3D를 매 step 받는다. `initial_privileged_ppo_cfg.py`의 Actor/Critic 분리 방식을 참조하며, 실시간 타겟 위치는 Actor 입력으로 연결하지 않는다.
+
+Actor는 원시 `policy57 + obstacles40`에서 장애물 인코더 후 **73D**, Critic은 `policy57 + privileged3 + obstacles40`에서 **76D**다. 장애물 관측·10개 슬롯 중 실제 3개·초기 관측 노이즈·개별 40→32→16 인코더는 v0에서 상속한다. 장애물 비용용 초기 위치는 reset 배치 완료 뒤 실제 월드 XYZ를 따로 저장하며 관측 노이즈가 없다. 부분·자동 reset에서도 해당 환경의 초기값만 갱신한다.
+
+| 보상 | 계수와 적용 조건 |
+| --- | --- |
+| Reaching / Goal distance | 기존 progress 함수, 각각 30 / 100 |
+| Goal 유지 | `goal_hold=0.9`; 월드 XY 목표 반경 1 cm에서 일정한 +0.9/초 |
+| Contact | `contact_any=0.16`, `contact_count=0.16`; 동일한 현재 tactile bit에서 하나 이상 ON과 `min(개수,5)/5` |
+| 장애물 이동 | `obstacle_displacement=-5`; 타겟 제외 초기 대비 XYZ 이동 거리 제곱합을 0.04 m²로 제한 |
+| 속도 비용 | pushing free speed 1.0 m/s, arm free speed 0.5 rad/s; 기존 가중치·상한 유지 |
+
+Goal 유지는 높이·속도·연속 체류 시간에 의존하지 않는 일정 보상률이다. 조건 안에서 5초면 +4.5, 5개 접촉을 7초면 두 contact 항 합 +2.24다. 장애물 2개가 각각 10 cm 이동한 상태로 10초 있으면 −1.0이며 최대 비용은 초당 −0.2다. Arm/Hand action·velocity 네 필수 페널티의 로컬 함수와 raw 제곱합·계수는 그대로 상속한다.
+
+v0 run `logs/TEMP/2026-10-20_14-04-31` 전체 9,655개를 재가중한 양의 보상 비중은 **34.92/34.61/20.35/10.13%**, 마지막 1,000개는 **33.88/36.91/19.50/9.71%**다. 순서는 Reaching/Goal distance/Goal 유지/Contact이며, 유지 5초·접촉 7초를 가정한다. 분모는 양의 네 그룹 합이고 페널티는 별도로 보고한다. 새 정책의 실제 달성 비율은 학습 뒤 대조한다.
+
+부모의 reset·배치·물성·Arm 6D+Hand 2D Joint Position action·0.02초 제어·10초 timeout·실패 종료를 상속한다. 성공 종료는 추가하지 않으며 `push_fast` 0.8 m/s 종료도 유지한다. 보상의 free speed 변경과 종료 threshold는 별개의 설정이다.
+
+```bash
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
+  --task Isaac-Inspire-Contact-Sweep-Clutter-v1 --num_envs 2048 --headless
+
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/play.py \
+  --task Isaac-Inspire-Contact-Sweep-Clutter-v1 --num_envs 1 \
+  --checkpoint "<clutter-v1-checkpoint.pt>" --real-time
+
+python src/inspire_sweep_baseline/scripts/analyze_clutter_rewards.py \
+  --log-dir logs/TEMP/2026-10-20_14-04-31 --last-n 1000
+```
+
+분석 스크립트는 TensorBoard만 사용하는 독립 실행 경로이며, v1 run에서는 측정된 신규 보상 비중도 출력한다. CPU 320개, 실제 GPU lifecycle 4환경과 PPO 8환경·2 iteration이 통과했다. 장기 학습과 보상 비중의 실제 수렴·실물 성능은 미검증이다. [패키지 상세 계약](../../../src/inspire_sweep_baseline/README.md#contact-sweep-clutter-v1--초기-타겟-관측과-보상-균형) · [계수 산정·실제 검사·미검증 범위](logs/2026-10-20_contact_sweep_clutter_v1.md).
 
 ## Dex Tactile Renewal v3 — 2026-10-20
 

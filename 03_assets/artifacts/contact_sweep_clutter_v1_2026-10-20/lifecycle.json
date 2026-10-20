@@ -1,0 +1,69 @@
+{
+  "task": "Isaac-Inspire-Contact-Sweep-Clutter-v1",
+  "seed": 42,
+  "num_envs": 4,
+  "observation_shapes": {
+    "policy": [
+      4,
+      57
+    ],
+    "obstacles": [
+      4,
+      40
+    ],
+    "privileged": [
+      4,
+      3
+    ]
+  },
+  "initial_target_noise_max_m": 0.009649574756622314,
+  "reward_terms": [
+    "reaching",
+    "goal_distance",
+    "arm_action_rate",
+    "hand_action_rate",
+    "arm_joint_velocity",
+    "hand_joint_velocity",
+    "object_tilt",
+    "shelf_collision",
+    "pushing_speed",
+    "arm_speed_excess",
+    "goal_hold",
+    "contact_any",
+    "contact_count",
+    "obstacle_displacement"
+  ],
+  "two_obstacles_10cm_cost_m2": [
+    0.02000000886619091,
+    0.02000000886619091,
+    0.02000000886619091,
+    0.02000000886619091
+  ],
+  "two_obstacles_10cm_penalty_over_10s": -1.0000004433095455,
+  "max_obstacle_penalty_per_second": -0.2,
+  "normal_physics_steps": 20,
+  "contact_environment_steps": 0,
+  "controlled_positive_contact": {
+    "active_channels": 1,
+    "weighted_contact_rates": [
+      0.1599999964237213,
+      0.03200000151991844
+    ],
+    "obstacle_parent_contact_points": 4
+  },
+  "checks": [
+    "v0_config_unchanged",
+    "four_motion_penalties_inherited",
+    "actor_initial_target_fixed",
+    "critic_target_live",
+    "world_xy_hold_ignores_height",
+    "target_excluded_from_displacement",
+    "obstacle_3d_cost_uses_noiseless_snapshot",
+    "obstacle_cap",
+    "partial_reset",
+    "fresh_contact_rewards",
+    "timeout_auto_reset",
+    "real_obstacle_contact_positive_rewards"
+  ],
+  "scope": "Manipulated-state contract probe; not learned-policy performance."
+}

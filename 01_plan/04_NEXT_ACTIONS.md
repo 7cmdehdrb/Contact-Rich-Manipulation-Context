@@ -10,6 +10,8 @@
 
 ## 현재 이어서 할 일
 
+2026-10-20 Clutter v1 후속: [계수 산정·구현 로그](../02_implementation/logs/2026-10-20_contact_sweep_clutter_v1.md)의 이론상 양의 보상 비중과 v1 학습의 실제 `Episode_Reward`를 대조한다. 목표 반경 내 체류 시간·촉각 접촉 수·장애물 변위를 함께 보고, 변경된 Arm 속도 비용이 차지하는 비중도 별도로 확인한다. 짧은 PPO 연결 검증을 수렴 성능이나 보상 비중 달성으로 해석하지 않는다.
+
 | 작업 | 이미 정리된 근거 | 다음에 확인할 사항 |
 | --- | --- | --- |
 | 현재 코드 계약 | [활성 환경·상속·실행](../02_implementation/08_ACTIVE_ENVIRONMENTS.md), [코드·장비 현황](../02_implementation/07_CODE_AND_HARDWARE_STATUS.md) | 적용 config·runner·설치 버전·외부 자산 가용성을 실제 실행 조건과 연결 |
