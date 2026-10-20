@@ -1,5 +1,7 @@
 # Blind Sweeping — 단일 파일 인계 요약
 
+**2026-10-20 Clutter v2 추가:** v1을 상속한 `Isaac-Inspire-Contact-Sweep-Clutter-v2`에서 F/T 관측을 Hand 중력·관성 하중을 제거한 6축 외력 반력 추정값으로 교체했다. 힘·모멘트 변화 제곱 비용은 작은 변화의 허용 구간, 최대 −0.1/초, 실제 누적 양의 보상 대비 5% 예산 제한을 갖는다. 관측 차원·Action·나머지 보상·종료는 v1을 유지한다. 모델 기반 시뮬레이션 보정과 실물 캔슬레이션 성능은 구분하며 [구현·검증 기록](../02_implementation/logs/2026-10-20_contact_sweep_clutter_v2.md)을 확인한다.
+
 **2026-10-20 Clutter v1 추가:** 사용자 요청으로 `Isaac-Inspire-Contact-Sweep-Clutter-v1`을 v0에서 상속했다. Actor는 타겟 시작 위치, Critic만 추가 현재 XYZ를 사용한다. 월드 XY 1 cm 목표 체류·촉각 접촉 두 항·상한 있는 장애물 이동 비용을 추가하고, 지정 v0 로그로 양의 보상 비중 약 35/35/20/10의 초기 계수를 산정했다. [구현·계수 근거·실제 검증](../02_implementation/logs/2026-10-20_contact_sweep_clutter_v1.md)을 확인한다. 이 비중은 체류 5초·접촉 7초 가정이며 학습된 v1 성과가 아니다.
 
 **2026-10-20 장애물 확장:** 사용자 확인에 따라 Contact Sweep을 상속하는 `Isaac-Inspire-Contact-Sweep-Clutter-v0`를 추가했다. 부모 타겟·목표 분포와 고정 로봇 초기 자세를 유지하고, 목표를 확정한 뒤 `scene_randomization` 규칙으로 장애물 3개(뒤쪽 GRAY 1개·WHITE 2개)를 배치한다. 같은 날 후속 요청으로 v0의 RED 제외 반경을 8.3→10.3 cm로 확대했다. 모든 물체의 tilt·낙하·촉각을 반영하며, 초기 장애물 40D를 MLP 16D로 압축한다. [환경 계약·실행](../02_implementation/08_ACTIVE_ENVIRONMENTS.md#contact-sweep-clutter-v0--2026-10-20)과 [검증 로그](../02_implementation/logs/2026-10-20_contact_sweep_clutter.md)를 따른다. 연구·실물 성과와 구분한다.

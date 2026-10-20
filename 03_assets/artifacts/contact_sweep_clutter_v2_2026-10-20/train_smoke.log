@@ -1,0 +1,308 @@
+[INFO][AppLauncher]: Using device: cuda:0
+[INFO][AppLauncher]: Loading experience file: /home/min/7cmdehdrb/grad/IsaacLab/apps/isaaclab.python.headless.kit
+Loading user config located at: '/home/min/miniconda3/envs/env_isaaclab/lib/python3.11/site-packages/isaacsim/kit/data/Kit/Isaac-Sim/5.1/user.config.json'
+[Info] [carb] Logging to file: /home/min/miniconda3/envs/env_isaaclab/lib/python3.11/site-packages/isaacsim/kit/logs/Kit/Isaac-Sim/5.1/kit_20261020_210819.log
+2026-10-20T12:08:19Z [111ms] [Warning] [omni.usd_config.extension] Enable omni.materialx.libs extension to use MaterialX
+2026-10-20T12:08:19Z [622ms] [Warning] [carb] Acquiring non optional plugin interface which is not listed as dependency: [omni::physx::IPhysxBenchmarks v1.0] (plugin: <default plugin>), by client: omni.physics.physx.plugin. Add it to CARB_PLUGIN_IMPL_DEPS() macro of a client.
+2026-10-20T12:08:19Z [631ms] [Warning] [omni.isaac.dynamic_control] omni.isaac.dynamic_control is deprecated as of Isaac Sim 4.5. No action is needed from end-users.
+
+|---------------------------------------------------------------------------------------------|
+| Driver Version: 560.35.03     | Graphics API: Vulkan
+|=============================================================================================|
+| GPU | Name                             | Active | LDA | GPU Memory | Vendor-ID | LUID       |
+|     |                                  |        |     |            | Device-ID | UUID       |
+|     |                                  |        |     |            | Bus-ID    |            |
+|---------------------------------------------------------------------------------------------|
+| 0   | NVIDIA GeForce RTX 3090          | Yes: 0 |     | 24822   MB | 10de      | 0          |
+|     |                                  |        |     |            | 2204      | 3a74b06d.. |
+|     |                                  |        |     |            | 1         |            |
+|=============================================================================================|
+| OS: 22.04.5 LTS (Jammy Jellyfish) ubuntu, Version: 22.04.5, Kernel: 6.8.0-138-generic
+| XServer Vendor: The X.Org Foundation, XServer Version: 12101004 (1.21.1.4)
+| Processor: Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz
+| Cores: 8 | Logical Cores: 16
+|---------------------------------------------------------------------------------------------|
+| Total Memory (MB): 64211 | Free Memory: 53659
+| Total Page/Swap (MB): 2047 | Free Page/Swap: 2047
+|---------------------------------------------------------------------------------------------|
+2026-10-20T12:08:29Z [10,341ms] [Warning] [gpu.foundation.plugin] CPU performance profile is set to powersave. This profile sets the CPU to the lowest frequency reducing performance.
+2026-10-20T12:08:29Z [10,349ms] [Warning] [gpu.foundation.plugin] IOMMU is enabled.
+[INFO]: Parsing configuration from: inspire_sweep_baseline.contact_sweep_clutter_v2.env_cfg:ContactSweepClutterV2EnvCfg
+[INFO]: Parsing configuration from: inspire_sweep_baseline.contact_sweep_clutter_v2.ppo_cfg:ContactSweepClutterV2PPORunnerCfg
+[INFO] Logging experiment in directory: /home/min/7cmdehdrb/grad/logs/rsl_rl/inspire_contact_sweep_clutter_v2
+Exact experiment name requested from command line: 2026-10-20_21-08-32
+
+[36m======================================================================================[0m
+[36m[1m[INFO][IsaacLab]: Logging to file: /tmp/isaaclab/logs/isaaclab_2026-10-20_21-08-32.log[0m
+[36m======================================================================================[0m
+
+[33m21:08:32 [simulation_context.py] WARNING: The `enable_external_forces_every_iteration` parameter in the PhysxCfg is set to False. If you are experiencing noisy velocities, consider enabling this flag. You may need to slightly increase the number of velocity iterations (setting it to 1 or 2 rather than 0), together with this flag, to improve the accuracy of velocity updates.[0m
+[INFO]: Base environment:
+	Environment device    : cuda:0
+	Environment seed      : 42
+	Physics step-size     : 0.01
+	Rendering step-size   : 0.02
+	Environment step-size : 0.02
+[33m21:08:33 [prims.py] WARNING: Could not perform 'modify_mass_properties' on any prims under: '/World/envs/env_0/Shelf'. This might be because of the following reasons:
+	(1) The desired attribute does not exist on any of the prims.
+	(2) The desired attribute exists on an instanced prim.
+		Discovered list of instanced prim paths: [][0m
+[INFO]: Time taken for scene creation : 1.963917 seconds
+[INFO]: Scene manager:  <class InteractiveScene>
+	Number of environments: 8
+	Environment spacing   : 2.5
+	Source prim name      : /World/envs/env_0
+	Global prim paths     : []
+	Replicate physics     : True
+[INFO]: Starting the simulation. This may take a few seconds. Please wait...
+2026-10-20T12:08:36Z [17,191ms] [Warning] [omni.physx.fabric.plugin] FabricManager::initializePointInstancer mismatched prototypes on point instancer: /Visuals/InspireSweepBaseline/end_effector.
+[INFO]: Time taken for simulation start : 2.034333 seconds
+[INFO] Command Manager:  <CommandManager> contains 1 active terms.
++--------------------------------------------+
+|            Active Command Terms            |
++-------+-----------------+------------------+
+| Index | Name            |       Type       |
++-------+-----------------+------------------+
+|   0   | target_goal_pos | SweepGoalCommand |
++-------+-----------------+------------------+
+
+[INFO] Event Manager:  <EventManager> contains 2 active terms.
++--------------------------------------+
+| Active Event Terms in Mode: 'reset'  |
++---------+----------------------------+
+|  Index  | Name                       |
++---------+----------------------------+
+|    0    | reset_all                  |
+|    1    | object_spawn               |
+|    2    | physics_randomization      |
++---------+----------------------------+
++--------------------------------------+
+| Active Event Terms in Mode: 'startup' |
++----------+---------------------------+
+|  Index   | Name                      |
++----------+---------------------------+
+|    0     | physics_materials         |
++----------+---------------------------+
+
+[INFO] Recorder Manager:  <RecorderManager> contains 0 active terms.
++---------------------+
+| Active Recorder Terms |
++-----------+---------+
+|   Index   | Name    |
++-----------+---------+
++-----------+---------+
+
+[INFO] Action Manager:  <ActionManager> contains 2 active terms.
++------------------------------------+
+|   Active Action Terms (shape: 8)   |
++-------+----------------+-----------+
+| Index | Name           | Dimension |
++-------+----------------+-----------+
+|   0   | arm_action     |         6 |
+|   1   | gripper_action |         2 |
++-------+----------------+-----------+
+
+[INFO] Observation Manager: <ObservationManager> contains 3 groups.
++----------------------------------------------------------+
+| Active Observation Terms in Group: 'policy' (shape: (57,)) |
++------------+--------------------------------+------------+
+|   Index    | Name                           |   Shape    |
++------------+--------------------------------+------------+
+|     0      | joint_pos                      |    (6,)    |
+|     1      | joint_vel                      |    (6,)    |
+|     2      | actions                        |    (8,)    |
+|     3      | target_obs_state               |    (3,)    |
+|     4      | target_obj_width               |    (1,)    |
+|     5      | ee_pose                        |    (7,)    |
+|     6      | goal_pos                       |    (3,)    |
+|     7      | tactile                        |   (17,)    |
+|     8      | wrist_wrench                   |    (6,)    |
++------------+--------------------------------+------------+
++------------------------------------------------------------+
+| Active Observation Terms in Group: 'obstacles' (shape: (40,)) |
++------------+----------------------------------+------------+
+|   Index    | Name                             |   Shape    |
++------------+----------------------------------+------------+
+|     0      | initial_positions                |   (40,)    |
++------------+----------------------------------+------------+
++----------------------------------------------------------+
+| Active Observation Terms in Group: 'privileged' (shape: (3,)) |
++------------+--------------------------------+------------+
+|   Index    | Name                           |   Shape    |
++------------+--------------------------------+------------+
+|     0      | target_position                |    (3,)    |
++------------+--------------------------------+------------+
+
+[INFO] Termination Manager:  <TerminationManager> contains 6 active terms.
++---------------------------------------+
+|        Active Termination Terms       |
++-------+--------------------+----------+
+| Index | Name               | Time Out |
++-------+--------------------+----------+
+|   0   | time_out           |   True   |
+|   1   | object_drop        |  False   |
+|   2   | push_fast          |  False   |
+|   3   | shelf_collision    |  False   |
+|   4   | hand_velocity      |  False   |
+|   5   | shelf_displacement |  False   |
++-------+--------------------+----------+
+
+[INFO] Reward Manager:  <RewardManager> contains 15 active terms.
++----------------------------------------+
+|          Active Reward Terms           |
++-------+-----------------------+--------+
+| Index | Name                  | Weight |
++-------+-----------------------+--------+
+|   0   | reaching              |   30.0 |
+|   1   | goal_distance         |  100.0 |
+|   2   | arm_action_rate       |  -0.03 |
+|   3   | hand_action_rate      |  -0.03 |
+|   4   | arm_joint_velocity    |  -0.03 |
+|   5   | hand_joint_velocity   |  -0.01 |
+|   6   | object_tilt           |   -2.0 |
+|   7   | shelf_collision       |   -0.5 |
+|   8   | pushing_speed         |   -2.0 |
+|   9   | arm_speed_excess      |   -1.0 |
+|   10  | goal_hold             |    0.9 |
+|   11  | contact_any           |   0.16 |
+|   12  | contact_count         |   0.16 |
+|   13  | obstacle_displacement |   -5.0 |
+|   14  | wrench_change         |   -0.1 |
++-------+-----------------------+--------+
+
+[INFO] Curriculum Manager:  <CurriculumManager> contains 0 active terms.
++----------------------+
+| Active Curriculum Terms |
++-----------+----------+
+|   Index   | Name     |
++-----------+----------+
++-----------+----------+
+
+[INFO]: Completed setting up the environment...
+2026-10-20T12:08:36Z [17,702ms] [Warning] [omni.physx.fabric.plugin] FabricManager::initializePointInstancer mismatched prototypes on point instancer: /Visuals/InspireSweepBaseline/target_goal.
+2026-10-20T12:08:36Z [17,702ms] [Warning] [omni.physx.fabric.plugin] FabricManager::initializePointInstancer mismatched prototypes on point instancer: /Visuals/InspireSweepBaseline/end_effector.
+--------------------------------------------------------------------------------
+Resolved observation sets: 
+	 actor :  ['policy', 'obstacles']
+	 critic :  ['policy', 'privileged', 'obstacles']
+--------------------------------------------------------------------------------
+Actor Model: ObstacleEncoderModel(
+  (obs_normalizer): Identity()
+  (distribution): GaussianDistribution()
+  (mlp): MLP(
+    (0): Linear(in_features=73, out_features=256, bias=True)
+    (1): ELU(alpha=1.0)
+    (2): Linear(in_features=256, out_features=128, bias=True)
+    (3): ELU(alpha=1.0)
+    (4): Linear(in_features=128, out_features=64, bias=True)
+    (5): ELU(alpha=1.0)
+    (6): Linear(in_features=64, out_features=8, bias=True)
+  )
+  (obstacle_encoder): MaskedObstacleEncoder(
+    (mlp): MLP(
+      (0): Linear(in_features=40, out_features=32, bias=True)
+      (1): ReLU()
+      (2): Linear(in_features=32, out_features=16, bias=True)
+    )
+  )
+)
+Critic Model: PrivilegedObstacleEncoderModel(
+  (obs_normalizer): Identity()
+  (mlp): MLP(
+    (0): Linear(in_features=76, out_features=256, bias=True)
+    (1): ELU(alpha=1.0)
+    (2): Linear(in_features=256, out_features=128, bias=True)
+    (3): ELU(alpha=1.0)
+    (4): Linear(in_features=128, out_features=64, bias=True)
+    (5): ELU(alpha=1.0)
+    (6): Linear(in_features=64, out_features=1, bias=True)
+  )
+  (obstacle_encoder): MaskedObstacleEncoder(
+    (mlp): MLP(
+      (0): Linear(in_features=40, out_features=32, bias=True)
+      (1): ReLU()
+      (2): Linear(in_features=32, out_features=16, bias=True)
+    )
+  )
+)
+Could not find git repository in /home/min/miniconda3/envs/env_isaaclab/lib/python3.11/site-packages/rsl_rl/__init__.py. Skipping.
+Storing git diff for 'grad' in: /home/min/7cmdehdrb/grad/logs/rsl_rl/inspire_contact_sweep_clutter_v2/2026-10-20_21-08-32_smoke_clutter_v2/git/grad.diff
+################################################################################
+[1m                             Learning iteration 0/2                             [0m 
+
+                               Run name: smoke_clutter_v2
+                            Total steps: 288 
+                       Steps per second: 93 
+                        Collection time: 2.808s 
+                          Learning time: 0.262s 
+                        Mean value loss: 244.6895
+                    Mean surrogate loss: -0.0455
+                      Mean entropy loss: 11.3310
+                        Mean action std: 1.00
+                Episode_Reward/reaching: 0.0000
+           Episode_Reward/goal_distance: 0.0000
+         Episode_Reward/arm_action_rate: 0.0000
+        Episode_Reward/hand_action_rate: 0.0000
+      Episode_Reward/arm_joint_velocity: 0.0000
+     Episode_Reward/hand_joint_velocity: 0.0000
+             Episode_Reward/object_tilt: 0.0000
+         Episode_Reward/shelf_collision: 0.0000
+           Episode_Reward/pushing_speed: 0.0000
+        Episode_Reward/arm_speed_excess: 0.0000
+               Episode_Reward/goal_hold: 0.0000
+             Episode_Reward/contact_any: 0.0000
+           Episode_Reward/contact_count: 0.0000
+   Episode_Reward/obstacle_displacement: 0.0000
+           Episode_Reward/wrench_change: 0.0000
+           Episode_Termination/time_out: 0.0000
+        Episode_Termination/object_drop: 0.0000
+          Episode_Termination/push_fast: 0.0000
+    Episode_Termination/shelf_collision: 0.0000
+      Episode_Termination/hand_velocity: 0.0000
+ Episode_Termination/shelf_displacement: 0.0000
+--------------------------------------------------------------------------------
+                         Iteration time: 3.07s
+                           Time elapsed: 00:00:03
+                                    ETA: 00:00:03
+
+################################################################################
+[1m                             Learning iteration 1/2                             [0m 
+
+                               Run name: smoke_clutter_v2
+                            Total steps: 576 
+                       Steps per second: 165 
+                        Collection time: 1.569s 
+                          Learning time: 0.174s 
+                        Mean value loss: 265.3604
+                    Mean surrogate loss: -0.0417
+                      Mean entropy loss: 11.3237
+                            Mean reward: -89.30
+                    Mean episode length: 56.50
+                        Mean action std: 1.00
+                Episode_Reward/reaching: 0.1321
+           Episode_Reward/goal_distance: 0.0002
+         Episode_Reward/arm_action_rate: -0.0295
+        Episode_Reward/hand_action_rate: -0.0121
+      Episode_Reward/arm_joint_velocity: -0.0619
+     Episode_Reward/hand_joint_velocity: -0.0070
+             Episode_Reward/object_tilt: 0.0000
+         Episode_Reward/shelf_collision: -0.0020
+           Episode_Reward/pushing_speed: 0.0000
+        Episode_Reward/arm_speed_excess: -5.8083
+               Episode_Reward/goal_hold: 0.0000
+             Episode_Reward/contact_any: 0.0000
+           Episode_Reward/contact_count: 0.0000
+   Episode_Reward/obstacle_displacement: -0.0000
+           Episode_Reward/wrench_change: -0.0016
+           Episode_Termination/time_out: 0.0000
+        Episode_Termination/object_drop: 0.0000
+          Episode_Termination/push_fast: 0.0000
+    Episode_Termination/shelf_collision: 0.1146
+      Episode_Termination/hand_velocity: 0.0000
+ Episode_Termination/shelf_displacement: 0.0000
+--------------------------------------------------------------------------------
+                         Iteration time: 1.74s
+                           Time elapsed: 00:00:04
+                                    ETA: 00:00:00
+
+Training time: 5.62 seconds

@@ -1,5 +1,7 @@
 # 결정·변경·미정 목록
 
+> **2026-10-20 사용자 요청 — Clutter v2 F/T 보정:** v1을 계승하고 기존 F/T 관측을 보정한 6축 Wrench로 대체한다. 급격한 힘·모멘트 변화의 제곱 비용에는 상한을 두어 밀기 회피를 과도하게 유도하지 않도록 한다. 구현은 정적 tare를 참조하되 움직이는 Hand의 중력·관성 하중을 매 physics step 계산해 제거한다. 변화 허용폭 0.5 N·0.01 N·m, 스케일 5 N·0.1 N·m와 −0.1/초는 구현자가 정한 초기 실험값이다. 5%의 분모는 v1 비중 계산과 동일한 양의 보상 합이며, 실제 에피소드 누적값을 이용해 제한한다. [구현·검증·미검증 범위](../02_implementation/logs/2026-10-20_contact_sweep_clutter_v2.md).
+
 > **2026-10-20 사용자 확인 — Contact Sweep Clutter:** 독립 Contact Sweep을 상속해 장애물 환경을 만든다. 부모 타겟·목표 분포와 로봇 초기 관절 자세를 유지하고, 목표 확정 후 참고 Scene 생성기의 장애물 배치 규칙만 적용한다. 장애물 3개·10개 관측 슬롯(최초 6개에서 후속 요청으로 감소), 모든 물체의 tilt 합·하나라도 낙하/전도 시 종료, 모든 물체의 촉각 접촉, reset 때 한 번 ±1 cm 노이즈를 적용한 초기 장애물 위치를 채택한다. 후속 확인으로 뒤쪽 GRAY 1개·WHITE 2개와 RED 반경 10.3 cm(기존 8.3 cm)를 선택했으며 v0 ID를 유지한다. [변경 검증](../02_implementation/logs/2026-10-20_clutter_red_expansion.md). MLP 구조는 구현 재량으로 `40 → 32(ReLU) → 16`을 사용한다. 장기 학습·실물 성과는 미확인이다. [구현·검증](../02_implementation/logs/2026-10-20_contact_sweep_clutter.md).
 
 > **2026-10-16 사용자 지정 개발 기준:** 이후 추가 작업은 `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v0`를 기반으로 상속한다. 실행기 기본 task 변경 요청은 아니다. 이번 v1에는 지수 속도 비용 상한 100, 손목 종료 0.03 m, 선반 로컬 ±X 각각 ±15° 목표 제외를 적용한다. [구현 계약·실행 안내](../02_implementation/08_ACTIVE_ENVIRONMENTS.md) · [검증 로그](../02_implementation/logs/2026-10-16_dex_tactile_renewal_v1.md).

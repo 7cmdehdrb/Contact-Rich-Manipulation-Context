@@ -1,0 +1,13 @@
+........................................................................ [ 20%]
+........................................................................ [ 41%]
+........................................................................ [ 62%]
+........................................................................ [ 83%]
+.........................................................                [100%]
+=============================== warnings summary ===============================
+src/inspire_sweep_baseline/tests/test_clutter_models.py::test_framework_jit_and_onnx_exports_include_encoder
+src/inspire_sweep_baseline/tests/test_clutter_v1_models.py::test_exported_actor_needs_only_97d_initial_observations
+  /home/min/miniconda3/envs/env_isaaclab/lib/python3.11/site-packages/torch/onnx/utils.py:185: DeprecationWarning: The feature will be removed. Please remove usage of this function
+    setup_onnx_logging(verbose) as log_ctx,
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+345 passed, 2 warnings in 13.15s

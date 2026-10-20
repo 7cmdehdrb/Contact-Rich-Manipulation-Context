@@ -1,0 +1,503 @@
+[INFO][AppLauncher]: Using device: cuda:0
+[INFO][AppLauncher]: Loading experience file: /home/min/7cmdehdrb/grad/IsaacLab/apps/isaaclab.python.headless.kit
+Loading user config located at: '/home/min/miniconda3/envs/env_isaaclab/lib/python3.11/site-packages/isaacsim/kit/data/Kit/Isaac-Sim/5.1/user.config.json'
+[Info] [carb] Logging to file: /home/min/miniconda3/envs/env_isaaclab/lib/python3.11/site-packages/isaacsim/kit/logs/Kit/Isaac-Sim/5.1/kit_20261020_211521.log
+2026-10-20T12:15:21Z [107ms] [Warning] [omni.usd_config.extension] Enable omni.materialx.libs extension to use MaterialX
+2026-10-20T12:15:22Z [579ms] [Warning] [carb] Acquiring non optional plugin interface which is not listed as dependency: [omni::physx::IPhysxBenchmarks v1.0] (plugin: <default plugin>), by client: omni.physics.physx.plugin. Add it to CARB_PLUGIN_IMPL_DEPS() macro of a client.
+2026-10-20T12:15:22Z [588ms] [Warning] [omni.isaac.dynamic_control] omni.isaac.dynamic_control is deprecated as of Isaac Sim 4.5. No action is needed from end-users.
+
+|---------------------------------------------------------------------------------------------|
+| Driver Version: 560.35.03     | Graphics API: Vulkan
+|=============================================================================================|
+| GPU | Name                             | Active | LDA | GPU Memory | Vendor-ID | LUID       |
+|     |                                  |        |     |            | Device-ID | UUID       |
+|     |                                  |        |     |            | Bus-ID    |            |
+|---------------------------------------------------------------------------------------------|
+| 0   | NVIDIA GeForce RTX 3090          | Yes: 0 |     | 24822   MB | 10de      | 0          |
+|     |                                  |        |     |            | 2204      | 3a74b06d.. |
+|     |                                  |        |     |            | 1         |            |
+|=============================================================================================|
+| OS: 22.04.5 LTS (Jammy Jellyfish) ubuntu, Version: 22.04.5, Kernel: 6.8.0-138-generic
+| XServer Vendor: The X.Org Foundation, XServer Version: 12101004 (1.21.1.4)
+| Processor: Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz
+| Cores: 8 | Logical Cores: 16
+|---------------------------------------------------------------------------------------------|
+| Total Memory (MB): 64211 | Free Memory: 53207
+| Total Page/Swap (MB): 2047 | Free Page/Swap: 2047
+|---------------------------------------------------------------------------------------------|
+2026-10-20T12:15:31Z [10,057ms] [Warning] [gpu.foundation.plugin] CPU performance profile is set to powersave. This profile sets the CPU to the lowest frequency reducing performance.
+2026-10-20T12:15:31Z [10,065ms] [Warning] [gpu.foundation.plugin] IOMMU is enabled.
+[INFO]: Parsing configuration from: inspire_sweep_baseline.contact_sweep_clutter_v2.env_cfg:ContactSweepClutterV2EnvCfg
+[INFO]: Parsing configuration from: inspire_sweep_baseline.contact_sweep_clutter_v1.env_cfg:ContactSweepClutterV1EnvCfg
+
+[36m======================================================================================[0m
+[36m[1m[INFO][IsaacLab]: Logging to file: /tmp/isaaclab/logs/isaaclab_2026-10-20_21-15-32.log[0m
+[36m======================================================================================[0m
+
+[33m21:15:32 [simulation_context.py] WARNING: The `enable_external_forces_every_iteration` parameter in the PhysxCfg is set to False. If you are experiencing noisy velocities, consider enabling this flag. You may need to slightly increase the number of velocity iterations (setting it to 1 or 2 rather than 0), together with this flag, to improve the accuracy of velocity updates.[0m
+[INFO]: Base environment:
+	Environment device    : cuda:0
+	Environment seed      : 42
+	Physics step-size     : 0.01
+	Rendering step-size   : 0.02
+	Environment step-size : 0.02
+[33m21:15:33 [prims.py] WARNING: Could not perform 'modify_mass_properties' on any prims under: '/World/envs/env_0/Shelf'. This might be because of the following reasons:
+	(1) The desired attribute does not exist on any of the prims.
+	(2) The desired attribute exists on an instanced prim.
+		Discovered list of instanced prim paths: [][0m
+[INFO]: Time taken for scene creation : 1.952702 seconds
+[INFO]: Scene manager:  <class InteractiveScene>
+	Number of environments: 4
+	Environment spacing   : 2.5
+	Source prim name      : /World/envs/env_0
+	Global prim paths     : []
+	Replicate physics     : True
+[INFO]: Starting the simulation. This may take a few seconds. Please wait...
+2026-10-20T12:15:36Z [14,417ms] [Warning] [omni.physx.fabric.plugin] FabricManager::initializePointInstancer mismatched prototypes on point instancer: /Visuals/InspireSweepBaseline/end_effector.
+[INFO]: Time taken for simulation start : 2.027021 seconds
+[INFO] Command Manager:  <CommandManager> contains 1 active terms.
++--------------------------------------------+
+|            Active Command Terms            |
++-------+-----------------+------------------+
+| Index | Name            |       Type       |
++-------+-----------------+------------------+
+|   0   | target_goal_pos | SweepGoalCommand |
++-------+-----------------+------------------+
+
+[INFO] Event Manager:  <EventManager> contains 2 active terms.
++--------------------------------------+
+| Active Event Terms in Mode: 'reset'  |
++---------+----------------------------+
+|  Index  | Name                       |
++---------+----------------------------+
+|    0    | reset_all                  |
+|    1    | object_spawn               |
+|    2    | physics_randomization      |
++---------+----------------------------+
++--------------------------------------+
+| Active Event Terms in Mode: 'startup' |
++----------+---------------------------+
+|  Index   | Name                      |
++----------+---------------------------+
+|    0     | physics_materials         |
++----------+---------------------------+
+
+[INFO] Recorder Manager:  <RecorderManager> contains 0 active terms.
++---------------------+
+| Active Recorder Terms |
++-----------+---------+
+|   Index   | Name    |
++-----------+---------+
++-----------+---------+
+
+[INFO] Action Manager:  <ActionManager> contains 2 active terms.
++------------------------------------+
+|   Active Action Terms (shape: 8)   |
++-------+----------------+-----------+
+| Index | Name           | Dimension |
++-------+----------------+-----------+
+|   0   | arm_action     |         6 |
+|   1   | gripper_action |         2 |
++-------+----------------+-----------+
+
+[INFO] Observation Manager: <ObservationManager> contains 3 groups.
++----------------------------------------------------------+
+| Active Observation Terms in Group: 'policy' (shape: (57,)) |
++------------+--------------------------------+------------+
+|   Index    | Name                           |   Shape    |
++------------+--------------------------------+------------+
+|     0      | joint_pos                      |    (6,)    |
+|     1      | joint_vel                      |    (6,)    |
+|     2      | actions                        |    (8,)    |
+|     3      | target_obs_state               |    (3,)    |
+|     4      | target_obj_width               |    (1,)    |
+|     5      | ee_pose                        |    (7,)    |
+|     6      | goal_pos                       |    (3,)    |
+|     7      | tactile                        |   (17,)    |
+|     8      | wrist_wrench                   |    (6,)    |
++------------+--------------------------------+------------+
++------------------------------------------------------------+
+| Active Observation Terms in Group: 'obstacles' (shape: (40,)) |
++------------+----------------------------------+------------+
+|   Index    | Name                             |   Shape    |
++------------+----------------------------------+------------+
+|     0      | initial_positions                |   (40,)    |
++------------+----------------------------------+------------+
++----------------------------------------------------------+
+| Active Observation Terms in Group: 'privileged' (shape: (3,)) |
++------------+--------------------------------+------------+
+|   Index    | Name                           |   Shape    |
++------------+--------------------------------+------------+
+|     0      | target_position                |    (3,)    |
++------------+--------------------------------+------------+
+
+[INFO] Termination Manager:  <TerminationManager> contains 6 active terms.
++---------------------------------------+
+|        Active Termination Terms       |
++-------+--------------------+----------+
+| Index | Name               | Time Out |
++-------+--------------------+----------+
+|   0   | time_out           |   True   |
+|   1   | object_drop        |  False   |
+|   2   | push_fast          |  False   |
+|   3   | shelf_collision    |  False   |
+|   4   | hand_velocity      |  False   |
+|   5   | shelf_displacement |  False   |
++-------+--------------------+----------+
+
+[INFO] Reward Manager:  <RewardManager> contains 15 active terms.
++----------------------------------------+
+|          Active Reward Terms           |
++-------+-----------------------+--------+
+| Index | Name                  | Weight |
++-------+-----------------------+--------+
+|   0   | reaching              |   30.0 |
+|   1   | goal_distance         |  100.0 |
+|   2   | arm_action_rate       |  -0.03 |
+|   3   | hand_action_rate      |  -0.03 |
+|   4   | arm_joint_velocity    |  -0.03 |
+|   5   | hand_joint_velocity   |  -0.01 |
+|   6   | object_tilt           |   -2.0 |
+|   7   | shelf_collision       |   -0.5 |
+|   8   | pushing_speed         |   -2.0 |
+|   9   | arm_speed_excess      |   -1.0 |
+|   10  | goal_hold             |    0.9 |
+|   11  | contact_any           |   0.16 |
+|   12  | contact_count         |   0.16 |
+|   13  | obstacle_displacement |   -5.0 |
+|   14  | wrench_change         |   -0.1 |
++-------+-----------------------+--------+
+
+[INFO] Curriculum Manager:  <CurriculumManager> contains 0 active terms.
++----------------------+
+| Active Curriculum Terms |
++-----------+----------+
+|   Index   | Name     |
++-----------+----------+
++-----------+----------+
+
+[INFO]: Completed setting up the environment...
+2026-10-20T12:15:36Z [14,934ms] [Warning] [omni.physx.fabric.plugin] FabricManager::initializePointInstancer mismatched prototypes on point instancer: /Visuals/InspireSweepBaseline/target_goal.
+2026-10-20T12:15:36Z [14,934ms] [Warning] [omni.physx.fabric.plugin] FabricManager::initializePointInstancer mismatched prototypes on point instancer: /Visuals/InspireSweepBaseline/end_effector.
+{
+  "task": "Isaac-Inspire-Contact-Sweep-Clutter-v2",
+  "checks": [
+    "v1_rewards_actions_events_terminations_commands_scene_preserved",
+    "only_wrist_observation_replaced",
+    "reset_wrench_zero",
+    "finite_normal_steps",
+    "partial_reset_wrench_zero",
+    "partial_reset_preserves_other_rows",
+    "shared_observation_reward_sample",
+    "first_fresh_sample_no_change_penalty",
+    "penalty_absolute_cap",
+    "penalty_prefix_positive_reward_budget",
+    "automatic_reset_wrench_zero"
+  ],
+  "scope": "Manipulated-state PhysX sensor and reset checks; no trained-policy claims.",
+  "observation_shapes": {
+    "policy": [
+      4,
+      57
+    ],
+    "obstacles": [
+      4,
+      40
+    ],
+    "privileged": [
+      4,
+      3
+    ]
+  },
+  "free_static_raw": {
+    "sample_count": 40,
+    "force_rms_N": 4.974698066711426,
+    "force_max_norm_N": 8.61652660369873,
+    "moment_rms_Nm": 0.13042311370372772,
+    "moment_max_norm_Nm": 0.22590228915214539,
+    "mean_per_env": [
+      [
+        0.001923144212923944,
+        1.6752948795328848e-05,
+        8.616429328918457,
+        -0.02738935314118862,
+        -0.22423294186592102,
+        6.68631355438265e-06
+      ],
+      [
+        0.001923144212923944,
+        1.6752948795328848e-05,
+        8.616429328918457,
+        -0.02738935314118862,
+        -0.22423294186592102,
+        6.68631355438265e-06
+      ],
+      [
+        0.0019229230238124728,
+        1.675271414569579e-05,
+        8.616429328918457,
+        -0.02738936059176922,
+        -0.22423283755779266,
+        6.670427865174133e-06
+      ],
+      [
+        0.0019229230238124728,
+        1.675271414569579e-05,
+        8.616429328918457,
+        -0.02738936059176922,
+        -0.22423283755779266,
+        6.670427865174133e-06
+      ]
+    ]
+  },
+  "free_static_pure": {
+    "sample_count": 40,
+    "force_rms_N": 2.3632508145965403e-06,
+    "force_max_norm_N": 6.205359113664599e-06,
+    "moment_rms_Nm": 4.597464453581779e-07,
+    "moment_max_norm_Nm": 1.0424157608213136e-06,
+    "mean_per_env": [
+      [
+        2.2030610580259236e-06,
+        -3.18579765234972e-07,
+        -3.4809113458322827e-06,
+        4.360917955636978e-07,
+        7.320195436477661e-07,
+        -1.4652562185801798e-07
+      ],
+      [
+        2.2030610580259236e-06,
+        -3.18579765234972e-07,
+        -3.4809113458322827e-06,
+        4.360917955636978e-07,
+        7.320195436477661e-07,
+        -1.4652562185801798e-07
+      ],
+      [
+        2.1956600448902464e-06,
+        -3.783959527936531e-07,
+        -3.0279159091151087e-06,
+        4.297122302432399e-07,
+        4.1984023368968337e-07,
+        -1.6297957472488633e-07
+      ],
+      [
+        2.1956600448902464e-06,
+        -3.783959527936531e-07,
+        -3.0279159091151087e-06,
+        4.297122302432399e-07,
+        4.1984023368968337e-07,
+        -1.6297957472488633e-07
+      ]
+    ]
+  },
+  "moving_raw": {
+    "sample_count": 160,
+    "force_rms_N": 4.971622943878174,
+    "force_max_norm_N": 8.809647560119629,
+    "moment_rms_Nm": 0.13882918655872345,
+    "moment_max_norm_Nm": 0.2637845575809479,
+    "mean_per_env": [
+      [
+        0.011871692724525928,
+        -0.05704009532928467,
+        8.600951194763184,
+        0.006091787945479155,
+        -0.23937220871448517,
+        -0.0009692400926724076
+      ],
+      [
+        0.011871692724525928,
+        -0.05704009532928467,
+        8.600951194763184,
+        0.006091787945479155,
+        -0.23937220871448517,
+        -0.0009692400926724076
+      ],
+      [
+        0.011871892027556896,
+        -0.05704030022025108,
+        8.600951194763184,
+        0.00609178189188242,
+        -0.239372119307518,
+        -0.0009692535968497396
+      ],
+      [
+        0.011871892027556896,
+        -0.05704030022025108,
+        8.600951194763184,
+        0.00609178189188242,
+        -0.239372119307518,
+        -0.0009692535968497396
+      ]
+    ]
+  },
+  "moving_pure": {
+    "sample_count": 160,
+    "force_rms_N": 1.1545639608812053e-06,
+    "force_max_norm_N": 5.3766975725011434e-06,
+    "moment_rms_Nm": 0.0004258437256794423,
+    "moment_max_norm_Nm": 0.0012068272335454822,
+    "mean_per_env": [
+      [
+        5.649009722219489e-07,
+        3.7888820969556036e-08,
+        -9.00030158845766e-07,
+        -0.00014360850036609918,
+        6.628660776186734e-05,
+        2.3603864974575117e-05
+      ],
+      [
+        5.649009722219489e-07,
+        3.7888820969556036e-08,
+        -9.00030158845766e-07,
+        -0.00014360850036609918,
+        6.628660776186734e-05,
+        2.3603864974575117e-05
+      ],
+      [
+        5.836133141201572e-07,
+        -3.3892867179474706e-08,
+        -8.225441092690744e-07,
+        -0.00014361039211507887,
+        6.630029383813962e-05,
+        2.3592563593410887e-05
+      ],
+      [
+        5.836133141201572e-07,
+        -3.3892867179474706e-08,
+        -8.225441092690744e-07,
+        -0.00014361039211507887,
+        6.630029383813962e-05,
+        2.3592563593410887e-05
+      ]
+    ]
+  },
+  "moving_joint_max_change_rad": 0.6626105308532715,
+  "moving_max_arm_speed_rad_s": 0.24175016582012177,
+  "moving_max_hand_speed_rad_s": 1.0000249147415161,
+  "known_external_pure": {
+    "sample_count": 40,
+    "force_rms_N": 2.943920135498047,
+    "force_max_norm_N": 5.385165691375732,
+    "moment_rms_Nm": 0.16202355921268463,
+    "moment_max_norm_Nm": 0.32972416281700134,
+    "mean_per_env": [
+      [
+        -4.999998092651367,
+        -5.097231223771814e-07,
+        -6.437301749429025e-07,
+        1.1478550732135773e-07,
+        -0.18882553279399872,
+        -0.012411470524966717
+      ],
+      [
+        1.806911313906312e-07,
+        -5.0,
+        -1.0251999356114538e-06,
+        -0.16097722947597504,
+        8.139759302139282e-07,
+        -0.23670831322669983
+      ],
+      [
+        6.178423177516379e-07,
+        1.470120025715005e-07,
+        -5.000000953674316,
+        0.012442250736057758,
+        0.236697718501091,
+        -0.17990992963314056
+      ],
+      [
+        -1.9999992847442627,
+        2.9999988079071045,
+        -4.000000953674316,
+        -0.08326797932386398,
+        0.3138759136199951,
+        0.057150162756443024
+      ]
+    ]
+  },
+  "known_external_expected": {
+    "sample_count": 40,
+    "force_rms_N": 2.943920373916626,
+    "force_max_norm_N": 5.385164737701416,
+    "moment_rms_Nm": 0.16205847263336182,
+    "moment_max_norm_Nm": 0.3297875225543976,
+    "mean_per_env": [
+      [
+        -5.0,
+        0.0,
+        0.0,
+        0.0,
+        -0.18892662227153778,
+        -0.01241147518157959
+      ],
+      [
+        0.0,
+        -5.0,
+        0.0,
+        -0.16105201840400696,
+        0.0,
+        -0.2367086261510849
+      ],
+      [
+        0.0,
+        0.0,
+        -5.0,
+        0.012442514300346375,
+        0.23669719696044922,
+        -0.18000002205371857
+      ],
+      [
+        -2.0,
+        3.0,
+        -4.0,
+        -0.08331763744354248,
+        0.3139355480670929,
+        0.05711045861244202
+      ]
+    ]
+  },
+  "known_external_error": {
+    "sample_count": 40,
+    "force_rms_N": 1.1651752629404655e-06,
+    "force_max_norm_N": 5.01922386320075e-06,
+    "moment_rms_Nm": 5.125502866576426e-05,
+    "moment_max_norm_Nm": 0.00010265539458487183,
+    "mean_per_env": [
+      [
+        2.169609160773689e-06,
+        -5.097231223771814e-07,
+        -6.437301749429025e-07,
+        1.1478550732135773e-07,
+        0.00010107346315635368,
+        5.983747719540133e-09
+      ],
+      [
+        1.806911313906312e-07,
+        3.9339064983323624e-07,
+        -1.0251999356114538e-06,
+        7.47948870412074e-05,
+        8.139759302139282e-07,
+        2.894550732435164e-07
+      ],
+      [
+        6.178423177516379e-07,
+        1.470120025715005e-07,
+        -1.1086464155596332e-06,
+        -2.6361087179793685e-07,
+        5.140900611877441e-07,
+        9.009092900669202e-05
+      ],
+      [
+        7.271766548910819e-07,
+        -9.89437126008852e-07,
+        -7.152557373046875e-07,
+        4.966631604474969e-05,
+        -5.960241105640307e-05,
+        3.970954639953561e-05
+      ]
+    ]
+  },
+  "maximum_observed_penalty_rate": 0.0
+}

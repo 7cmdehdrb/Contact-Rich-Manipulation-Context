@@ -388,6 +388,36 @@ python src/inspire_sweep_baseline/scripts/analyze_clutter_rewards.py \
 
 분석 스크립트는 TensorBoard만 사용하는 독립 실행 경로이며, v1 run에서는 측정된 신규 보상 비중도 출력한다. CPU 320개, 실제 GPU lifecycle 4환경과 PPO 8환경·2 iteration이 통과했다. 장기 학습과 보상 비중의 실제 수렴·실물 성능은 미검증이다. [패키지 상세 계약](../../../src/inspire_sweep_baseline/README.md#contact-sweep-clutter-v1--초기-타겟-관측과-보상-균형) · [계수 산정·실제 검사·미검증 범위](logs/2026-10-20_contact_sweep_clutter_v1.md).
 
+## Contact Sweep Clutter v2 — 2026-10-20
+
+`Isaac-Inspire-Contact-Sweep-Clutter-v2`는 Clutter v1을 직접 상속하며, 기존 손목 F/T 6D 관측을 Hand 자체 하중이 제거된 wrench로 교체하고 `wrench_change` 비용 하나를 추가한다. Runtime·환경 Cfg·PPO runner는 `inspire_sweep_baseline.contact_sweep_clutter_v2` 아래의 `ContactSweepClutterV2Env`·`ContactSweepClutterV2EnvCfg`·`ContactSweepClutterV2PPORunnerCfg`이며 각각 v1 클래스를 상속한다. 로그는 `logs/rsl_rl/inspire_contact_sweep_clutter_v2`에 저장한다.
+
+| 항목 | v2 계약 |
+| --- | --- |
+| Actor / Critic | 원시 97D / 100D, 장애물 인코더 후 73D / 76D 유지. Actor는 초기 타겟 위치, Critic만 추가 현재 위치 사용 |
+| F/T 관측 | `policy.wrist_wrench`: EEF 기준점·EEF 축의 `[Fx,Fy,Fz,Mx,My,Mz]`, N/N·m |
+| 하중 보정 | fixed-joint 반력에서 하류 Hand 13개 링크·tactile pad 17개의 현재 중력·관성 지지 wrench를 차감 |
+| 힘·모멘트 변화 비용 | 월드 축으로 표현한 연속 제어 step 사이 차이. 힘 0.5 N·모멘트 0.01 N·m까지 무비용, 초과분을 각각 5 N·0.1 N·m로 나눈 제곱합의 절반, raw 상한 1 |
+| 비용 계수·한도 | weight −0.1, 초당 최대 −0.1·10초당 최대 −1. 추가로 매 시점 실제 누적 양의 보상 합의 5% 이내로 제한 |
+| 유지 사항 | v1의 14개 보상, Arm/Hand 네 운동 비용·계수, 8D Joint Position/Hand action, 물성·배치·reset·종료, 0.02초 제어·10초 timeout |
+
+`axia80_feasibility`의 tool-only 하중 차감 원리를 참조하되, 동작하는 Hand에는 고정 tare 대신 현재 질량중심 가속도·각속도·각가속도와 실제 질량·관성을 사용한다. 관측은 외력에 대한 반력 부호를 유지한다. 물체 위치나 접촉 대상 ID는 보정 입력에 포함하지 않는다. 이 값은 simulator의 Hand 모델과 운동 상태를 이용한 외부 하중 추정값이며, solver·수치 오차까지 없는 이상적인 센서 출력을 보장하지는 않는다.
+
+관측·보상은 동일한 보정 표본을 공유한다. 변화 비용은 EEF 기준점에서 월드 축으로 비교해 관측 축 회전만으로 발생하는 성분 변화를 제외한다. reset 직후 미갱신 관측은 0이며 첫 유효 표본에는 변화 비용을 부과하지 않는다. 부분 reset은 해당 환경의 이력·누적 비용만 초기화한다.
+
+5%의 분모는 기존 페널티를 차감하기 전 **실제 양의 보상 합**이다. 양의 보상을 아직 얻지 못했다면 비용도 0이고, 조기 종료에도 한도를 유지한다. 일정한 힘이나 작은 변화에는 비용이 없으며, 허용 범위·계수는 부드러운 밀기를 허용하기 위한 초기 설정이다. 학습 후 충돌 회피로 편향되는지는 별도 평가한다.
+
+```bash
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
+  --task Isaac-Inspire-Contact-Sweep-Clutter-v2 --num_envs 2048 --headless
+
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/play.py \
+  --task Isaac-Inspire-Contact-Sweep-Clutter-v2 --num_envs 1 \
+  --checkpoint "<clutter-v2-checkpoint.pt>" --real-time
+```
+
+입력 차원은 v1과 같지만 F/T의 의미가 바뀌므로 v2 학습 checkpoint를 사용한다. [환경 설정](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_v2/env_cfg.py) · [하중 보정](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_v2/wrench.py) · [계산식·실제 검증·미검증 범위](logs/2026-10-20_contact_sweep_clutter_v2.md).
+
 ## Dex Tactile Renewal v3 — 2026-10-20
 
 | 항목 | 값 |
