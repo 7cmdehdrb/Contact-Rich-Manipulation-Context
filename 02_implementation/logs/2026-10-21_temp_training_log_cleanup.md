@@ -151,3 +151,56 @@ workspace 루트에서 다음 명령을 실행했다. 스크립트와 전후 man
 ### 문서 검사 결과
 
 이번 이동으로 달라진 10월 14일 진단 로그의 Baseline·Realistic Physics run 링크 두 개를 백업 위치로 갱신했다. `python 00_guidelines/scripts/check_markdown_math.py`에 수정 Markdown 두 파일을 전달했고 `git diff --check`를 실행했다. 내부 링크 검사도 실행했다. `check_document_links.py --check-external`은 이번 이동 링크 수정 후에도 작업 전부터 없던 Omni v0 run 폴더와 루트 DexTouch PDF 참조 두 개 때문에 실패한다. 두 자료는 이번 TEMP 입력에 없었으며 임의 대체하지 않았다.
+
+
+## 같은 날 추가 요청에 따른 세 번째 정리
+
+사용자가 다시 채운 `logs/TEMP` 정리를 명시적으로 요청했다. 이번 기준 commit은 workspace `a952418`, Context `c421a09`다. 시작 시 Context 작업트리는 깨끗했고 상위 submodule 참조 차이와 미추적 UR Description 폴더는 보존했다. 색인에 이미 있던 충돌 표식은 수정하지 않았다.
+
+입력 5개 run 중 Clutter v0와 Curriculum v1의 장기 run 2개를 환경 ID별 백업으로 이동했다. 나머지 Clutter v0 run 3개는 500 iteration 미만으로 삭제했다. 삭제 일반 파일 크기는 4,943,532바이트이며 `logs/TEMP`는 빈 폴더로 남았다. 목적지 충돌은 없었다.
+
+### 분류와 진행량 근거
+
+현재 패키지의 실제 `gym.register` 호출 26개를 AST로 확인했다. `params/agent.yaml`의 실험 이름을 현재 PPO 설정 및 등록 ID와 대조했다. 저장 `env.yaml`에는 Clutter scene reset 함수가 있으며 Curriculum run에는 `contact_sweep_clutter_v1_curriculum.mdp:reward_schedule`이 포함된다. 아래 Loss step은 TensorBoard RawEventFileLoader로 각 이벤트 파일의 `Loss/*` 태그를 읽어 구한 최대 0 기반 iteration 인덱스다. 최대 step 499 이상은 보존한다.
+
+입력은 `logs/TEMP/`, 목적지는 `logs/backup/` 기준이다.
+
+| 원래 경로 | 목적지 또는 처리 | 최대 checkpoint | 최대 Loss step | 완료 iteration 수 |
+| --- | --- | --- | --- | --- |
+| `inspire_contact_sweep_clutter/2026-10-20_13-48-42_smoke_clutter` | `삭제` | 0 | 0 | 1 |
+| `inspire_contact_sweep_clutter/2026-10-20_13-55-54` | `삭제` | 0 | 43 | 44 |
+| `inspire_contact_sweep_clutter/2026-10-20_14-02-23` | `삭제` | 0 | 17 | 18 |
+| `inspire_contact_sweep_clutter/2026-10-20_14-04-31` | `Isaac-Inspire-Contact-Sweep-Clutter-v0/2026-10-20_14-04-31` | 38650 | 38680 | 38681 |
+| `inspire_contact_sweep_clutter_v1_curriculum/2026-10-20_22-49-30` | `Isaac-Inspire-Contact-Sweep-Clutter-Curriculum-v1/2026-10-20_22-49-30` | 12800 | 12823 | 12824 |
+
+### 실행과 파일 보존 검증
+
+workspace 루트에서 실행했다. 감사 스크립트·manifest·전후 metadata·결과 JSON은 `outputs/temp_cleanup_2026-10-21_third_6npyo6b1/`에 보존했으며 자동 실행으로 등록하지 않았다.
+
+```bash
+python -B /tmp/crm_temp_cleanup_third.py plan
+python -B /tmp/crm_temp_cleanup_third.py apply outputs/temp_cleanup_2026-10-21_third_6npyo6b1
+```
+
+- `/home/ssu/miniconda3/envs/jd_isaaclab/bin/python -B`로 TensorBoard RawEventFileLoader와 Event protobuf를 사용해 5개 run의 Loss step을 확인했다.
+- 샌드박스 안에서는 호스트 프로세스가 보이지 않아 읽기 전용 호스트 `/proc` 검사를 실행했다. 접근 가능한 프로세스 중 TEMP 참조는 Nautilus PID 14303의 `videos/play` 디렉터리 읽기 참조 두 개였다. Fusion 학습 PID 1341338은 별도 run에서 실행 중이었다. 권한 때문에 723개 시스템 프로세스는 검사하지 못했다. 사용자 프로세스·학습은 중단하지 않았다.
+- 적용 직전 모든 대상 run의 사전 metadata가 동일함을 확인했다. 입력의 미분류 일반 파일과 심볼릭 링크는 없었다. `Path.rename`으로 2개를 이동하고 확정한 3개에만 `shutil.rmtree`를 적용했다.
+- 이동 전후 상대 경로·inode·크기·mtime_ns·mode가 모두 동일했다. 원래 run 경로 소멸·목적지 존재·TEMP 잔여 0개 및 기존 백업 항목의 metadata 보존을 확인했다.
+- `logs/rsl_rl`에는 쓰기·이동·삭제를 수행하지 않았다. 전후 metadata 차이는 실행 중인 Fusion 학습 PID 1341338이 파일명에 포함된 TensorBoard 이벤트 파일 한 개의 크기·mtime 증가뿐이었다. 해당 학습의 자연스러운 갱신으로 판단하며 나머지 항목은 동일했다.
+
+수집 스크립트의 `DEFAULT_RUN`, 기존 체크포인트 추론 테스트, 패키지 README와 활성 환경 안내의 실행 경로를 백업 위치로 갱신했다. 관련 과거 개발 로그 네 개에는 현재 경로를 추가하고 당시 경로·명령을 역사적 기록으로 유지했다. 환경 설정·보상·학습 파라미터는 변경하지 않았다.
+
+내용 전체 해시, 재학습·재생·물리 검증과 정책 성능 평가는 이번 정리에서 수행하지 않았다. 이동 검증은 metadata 기반이며 테스트의 CPU 추론을 실제 물리 성능으로 해석하지 않는다.
+
+### 세 번째 정리의 후속 검증
+
+```bash
+env -u PYTHONPATH -u ROS_PACKAGE_PATH -u AMENT_PREFIX_PATH \
+  PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONDONTWRITEBYTECODE=1 \
+  /home/ssu/miniconda3/envs/jd_isaaclab/bin/python -B -m pytest -q -p no:cacheprovider \
+  src/inspire_sweep_baseline/tests/test_clutter_ft_telemetry.py
+```
+
+7개 테스트가 1.79초에 통과했다. 이동한 `model_12800.pt`를 strict 로딩하고 합성 관측으로 CPU 추론하여 유한한 8×8 Action을 확인하는 기존 테스트도 포함한다. 수집 도구의 실제 `DEFAULT_RUN`을 `checkpoint_path`에 전달해 해당 백업 체크포인트가 선택됨을 확인했다.
+
+Context 루트에서 `python 00_guidelines/scripts/check_markdown_math.py`에 이번 수정 Markdown 8개를 전달해 통과했고, `python 00_guidelines/scripts/check_document_links.py`는 내부 링크 오류 0개였다. `python 00_guidelines/scripts/check_document_links.py --check-external`은 기존 누락 자료 두 개(10월 14일 Omni v0 TEMP 폴더·루트 DexTouch PDF)로 실패했다. 이번 이동으로 생긴 누락 링크는 없었다. 상위 workspace와 Context 모두 `git diff --check`를 통과했다. 전체 CPU 테스트·새 Isaac Sim 실행은 수행하지 않았다.

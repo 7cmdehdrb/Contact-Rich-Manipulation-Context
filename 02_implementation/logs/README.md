@@ -103,4 +103,4 @@ Pull/rebase 중 문서 이관 충돌의 처리 내역은 [충돌 해결 기록](
 
 - [2026-10-20 Pull/Rebase 충돌 해결](2026-10-20_rebase_conflict_resolution.md): 환경 설명·로그 색인의 양쪽 변경 보존과 문서 검증.
 
-- [2026-10-21 TEMP 학습 로그 정리](2026-10-21_temp_training_log_cleanup.md): 35개 run 환경별 이동·500 iteration 미만 7개 삭제·rsl_rl 보존 검증 및 명시적 요청 시에만 정리하는 지침.
+- [2026-10-21 TEMP 학습 로그 정리](2026-10-21_temp_training_log_cleanup.md): 명시적 요청에 따른 세 차례 정리 기록·환경별 이동과 500 iteration 미만 삭제·rsl_rl 보존 검증.

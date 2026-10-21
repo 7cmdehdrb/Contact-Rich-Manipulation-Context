@@ -375,7 +375,7 @@ Actor는 원시 `policy57 + obstacles40`에서 장애물 인코더 후 **73D**, 
 
 Goal 유지는 높이·속도·연속 체류 시간에 의존하지 않는 일정 보상률이다. 조건 안에서 5초면 +4.5, 5개 접촉을 7초면 두 contact 항 합 +2.24다. 장애물 2개가 각각 10 cm 이동한 상태로 10초 있으면 −1.0이며 최대 비용은 초당 −0.2다. Arm/Hand action·velocity 네 필수 페널티의 로컬 함수와 raw 제곱합·계수는 그대로 상속한다.
 
-v0 run `logs/TEMP/2026-10-20_14-04-31` 전체 9,655개를 재가중한 양의 보상 비중은 **34.92/34.61/20.35/10.13%**, 마지막 1,000개는 **33.88/36.91/19.50/9.71%**다. 순서는 Reaching/Goal distance/Goal 유지/Contact이며, 유지 5초·접촉 7초를 가정한다. 분모는 양의 네 그룹 합이고 페널티는 별도로 보고한다. 새 정책의 실제 달성 비율은 학습 뒤 대조한다.
+v0 run `logs/backup/Isaac-Inspire-Contact-Sweep-Clutter-v0/2026-10-20_14-04-31` 전체 9,655개를 재가중한 양의 보상 비중은 **34.92/34.61/20.35/10.13%**, 마지막 1,000개는 **33.88/36.91/19.50/9.71%**다. 순서는 Reaching/Goal distance/Goal 유지/Contact이며, 유지 5초·접촉 7초를 가정한다. 분모는 양의 네 그룹 합이고 페널티는 별도로 보고한다. 새 정책의 실제 달성 비율은 학습 뒤 대조한다.
 
 부모의 reset·배치·물성·Arm 6D+Hand 2D Joint Position action·0.02초 제어·10초 timeout·실패 종료를 상속한다. 성공 종료는 추가하지 않으며 `push_fast` 0.8 m/s 종료도 유지한다. 보상의 free speed 변경과 종료 threshold는 별개의 설정이다.
 
@@ -388,7 +388,7 @@ v0 run `logs/TEMP/2026-10-20_14-04-31` 전체 9,655개를 재가중한 양의 �
   --checkpoint "<clutter-v1-checkpoint.pt>" --real-time
 
 python src/inspire_sweep_baseline/scripts/analyze_clutter_rewards.py \
-  --log-dir logs/TEMP/2026-10-20_14-04-31 --last-n 1000
+  --log-dir logs/backup/Isaac-Inspire-Contact-Sweep-Clutter-v0/2026-10-20_14-04-31 --last-n 1000
 ```
 
 분석 스크립트는 TensorBoard만 사용하는 독립 실행 경로이며, v1 run에서는 측정된 신규 보상 비중도 출력한다. CPU 320개, 실제 GPU lifecycle 4환경과 PPO 8환경·2 iteration이 통과했다. 장기 학습과 보상 비중의 실제 수렴·실물 성능은 미검증이다. [패키지 상세 계약](../../../src/inspire_sweep_baseline/README.md#contact-sweep-clutter-v1--초기-타겟-관측과-보상-균형) · [계수 산정·실제 검사·미검증 범위](logs/2026-10-20_contact_sweep_clutter_v1.md).
@@ -840,6 +840,30 @@ v1 위에 양의 보상 두 항을 추가하고 성공 종료는 비활성화했
 `push_fast.speed_condition=1.5` m/s를 적용한다. 보상 일정은 500에서 첫 증감을 적용하며 pushing 0.1→0.03(−0.01/100), arm 1.0→0.8(−0.02/100), 통합 action rate −0.03→−0.06(−0.005/100), EEF 1.5→0.5(−0.02/500)다. Contact 두 항은 각각 0.4→2.0(+0.02/100)이다. Wrench의 free force/moment와 saturation force/moment는 각각 2000/100/5000/250에서 시작하여 100마다 50/2.5/125/6.25씩 감소하고 500/25/1250/62.5에서 멈춘다. Goal deadzone은 ±60°·1000 유지 조건에 interval=100만 적용하여 1100부터 감소하고 7000에 제거된다.
 
 Actor는 policy55D·초기 obstacles40D, Critic은 추가 현재 타겟 privileged3D를 사용한다. 8D Action·Joint Position 제어·Scene·reset·보상 함수와 나머지 종료는 부모를 따른다. 보상 일정은 rollout 전에 적용하고 goal은 다음 reset에만 반영한다. Checkpoint 로드 시 iteration 단계를 복원하며 재생 중에는 고정한다. [전체 수치·코드·검증](logs/2026-10-21_clutter_fusion_v1.md)과 [패키지 안내](../../../src/inspire_sweep_baseline/README.md#contact-sweep-clutter-fusion-v1--수치-일정-변경)를 확인한다.
+사용자 요청에 따라 `Isaac-Inspire-Contact-Sweep-Clutter-FT-Test-v0`를 추가했다. `contact_sweep_clutter_ft_test.env:ContactSweepClutterFTTestEnv`는 Curriculum v1 runtime을, `env_cfg:ContactSweepClutterFTTestEnvCfg`는 Curriculum v1 Cfg를 직접 상속한다. 등록된 runner Cfg는 기존 `ContactSweepClutterV1CurriculumPPORunnerCfg`이며, checkpoint의 iteration을 그대로 복원한다.
+
+Actor/Critic 관측·학습된 원본 F/T·15개 기존 보상·Action 8D·물리·초기 배치·실패 종료는 Curriculum v1 그대로다. v2의 `PureWrenchReader`만 별도 telemetry로 결합한다. 별도 관측 그룹이나 추가 reward term 없이 원본/보정 F/T를 수집하고, 전체 episode step loop는 복사하지 않는다. 종료 행은 `_reset_idx`의 부모 reset 전에, 나머지는 부모 step 직후에 읽어 한 제어 step당 환경별 한 행을 구성한다. 추가 noisy observation 계산을 호출하지 않는다.
+
+```bash
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/collect_clutter_ft.py --headless --num_envs 16 --steps 5000 --checkpoint logs/backup/Isaac-Inspire-Contact-Sweep-Clutter-Curriculum-v1/2026-10-20_22-49-30
+python src/inspire_sweep_baseline/scripts/validate_clutter_ft.py <output-directory>
+```
+
+CSV는 `outputs/clutter_ft/<UTC timestamp>/wrench.csv`에 생성한다. 50 Hz 제어 step 말단 표본이며 physics substep 전체를 기록하지 않는다. 원본 v1 transform과 v2 transform은 구분된 열로 저장한다. 보정값은 EEF 기준점·EEF/월드 축의 N/N·m이며, parent-on-child 반력 부호다. `delta_valid=0`은 첫 표본 또는 reset 직후로 변화량 분석에서 제외한다. 새 보상 계수 선택·통합 학습은 후속 작업이다.
+
+[패키지 계약·CSV 열](../../../src/inspire_sweep_baseline/README.md#clutter-ft-테스트--curriculum-v1-정책과-v2-하중-보정) · [실제 수집·검증 기록](logs/2026-10-21_clutter_ft_collection.md).
+
+## Contact Sweep Clutter Fusion — 2026-10-21
+
+[환경 자체의 구성·관측·행동·보상·종료·커리큘럼 설명](environments/CONTACT_SWEEP_CLUTTER_FUSION_ENVIRONMENT.md)을 별도 문서로 제공한다.
+
+`Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v0`는 기존 Curriculum v1 및 v2 Cfg 상속을 끊은 독립 환경이다. 소스는 [`contact_sweep_clutter_fusion`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion)이며 `env:ContactSweepClutterFusionEnv`→`ManagerBasedRLEnv`, `env_cfg:ContactSweepClutterFusionEnvCfg`→`ManagerBasedRLEnvCfg`, Scene→`InteractiveSceneCfg`, PPO→`RslRlOnPolicyRunnerCfg`다. 나머지 Manager Cfg도 새로 선언하고 기존 MDP·센서 함수·장면 생성기·`CurriculumOnPolicyRunner`를 재사용한다.
+
+policy 55D·초기 장애물 40D·Critic 전용 현재 타겟 3D를 사용한다. v2의 Hand 하중 보정 F/T를 사용하고 target width를 제거했다. 초기 타겟→goal 변위를 기존 root 축의 distance/theta로 바꾸되 실제 목표를 유지한다. 장애물은 reset 시 전면 가시 폭 35% 이상일 때 관측하며 물체별 1% flip을 적용한다. Actor 71D·Critic 74D는 장애물 16D encoder를 포함한 신경망 입력이고 raw Actor는 95D다.
+
+Action rate·joint velocity·object cost를 각각 통합하고 기존 내부 상한과 상대 비율을 유지한다. Contact 두 항의 가중치는 각각 0.4이며, tilt/displacement 각각 15배에 해당하는 weight를 사용한다. EEF 실제 점 속도 지수 비용·위쪽 +Z orientation 비용·보정 F/T 변화율의 유한 지수 비용을 추가한다. Joint velocity의 이전 curriculum은 제거했다.
+
+물체 free speed 0.1→0.05(−0.01), Arm 1.0→0.8(−0.02), 통합 action weight −0.03→−0.06(−0.005), EEF 1.5→0.7(−0.02)는 모두 500 iteration 주기다. Goal ±X deadzone은 각각 ±60°로 시작하여 1000까지 유지하고, 1200부터 200마다 1° 줄어 13000에 사라진다. 변경은 다음 reset의 분포에만 적용된다. Arm/Hand 제어·기본 물리·실패 종료는 기존과 같다.
 
 ```bash
 ./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \

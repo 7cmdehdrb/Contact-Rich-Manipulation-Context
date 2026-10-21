@@ -1,5 +1,7 @@
 # Clutter Fusion — 독립 환경과 가림 관측·보상·커리큘럼
 
+> 2026-10-21 로그 정리 후 참조 run의 현재 위치는 `logs/backup/Isaac-Inspire-Contact-Sweep-Clutter-Curriculum-v1/2026-10-20_22-49-30`다. 아래 당시 경로·실행 명령은 수행 이력으로 보존한다. [정리 기록](2026-10-21_temp_training_log_cleanup.md).
+
 [활성 환경](../08_ACTIVE_ENVIRONMENTS.md) · [개발 로그](README.md) · [소스](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion)
 
 ## 요청과 기준

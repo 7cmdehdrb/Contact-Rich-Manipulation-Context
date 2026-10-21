@@ -1,5 +1,7 @@
 # Clutter Curriculum v1 — 12000 iteration 이후 보상 비중
 
+> 2026-10-21 로그 정리 후 참조 run의 현재 위치는 `logs/backup/Isaac-Inspire-Contact-Sweep-Clutter-Curriculum-v1/2026-10-20_22-49-30`다. 아래 당시 경로·실행 명령은 수행 이력으로 보존한다. [정리 기록](2026-10-21_temp_training_log_cleanup.md).
+
 [개발 로그](README.md)
 
 기준일: 2026-10-21. 환경·보상 설정·학습 로그는 변경하지 않았다.

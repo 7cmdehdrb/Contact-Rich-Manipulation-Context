@@ -1,5 +1,7 @@
 # Curriculum v1 정책의 원본·v2 보정 F/T 동시 수집
 
+> 2026-10-21 로그 정리 후 참조 run의 현재 위치는 `logs/backup/Isaac-Inspire-Contact-Sweep-Clutter-Curriculum-v1/2026-10-20_22-49-30`다. 아래 당시 경로·실행 명령은 수행 이력으로 보존한다. [정리 기록](2026-10-21_temp_training_log_cleanup.md).
+
 [개발 로그](README.md) · [활성 환경](../08_ACTIVE_ENVIRONMENTS.md#clutter-ft-테스트--2026-10-21) · [실행·CSV 계약](../../../../src/inspire_sweep_baseline/README.md#clutter-ft-테스트--curriculum-v1-정책과-v2-하중-보정)
 
 기준일: 2026-10-21. 테스트 환경 구축과 실제 GPU 재생·CSV 수집 완료. 새 F/T 보상 계수 선택·학습은 수행하지 않았다.
