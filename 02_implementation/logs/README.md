@@ -1,8 +1,8 @@
 # 개발·실험 진행 로그
 
-- [2026-10-21 Clutter Fusion v3 재구성](2026-10-21_clutter_fusion_v3.md): v0 → v2 → v3, 기존 v1 커리큘럼을 v3으로 이동하고 v2의 보상·종료를 상속.
+- [2026-10-21 Clutter Fusion v3 재구성](2026-10-21_clutter_fusion_v3.md): v0 → v2 → v3, 기존 v1 커리큘럼을 v3으로 이동. 사용자 정정에 따라 push_fast는 v2=0.8, v3=1.5.
 
-- [2026-10-21 Clutter Fusion v2](2026-10-21_clutter_fusion_v2.md): Fusion v0 직접 상속, EEF orientation 보상 제거와 push_fast=1.5 적용. v3에도 상속.
+- [2026-10-21 Clutter Fusion v2](2026-10-21_clutter_fusion_v2.md): Fusion v0 직접 상속, EEF orientation 보상 제거. v2 push_fast=0.8 유지, v3에서만 1.5 적용.
 
 - [2026-10-21 Clutter Fusion v1](2026-10-21_clutter_fusion_v1.md): 최초 v1의 역사 기록. 현재는 v3으로 재작명했으며 당시 수치·명령과 현재 계약을 구분한다.
 
