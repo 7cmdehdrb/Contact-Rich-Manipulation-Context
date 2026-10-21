@@ -35,6 +35,7 @@
 | `Isaac-Inspire-Contact-Sweep-Clutter-Curriculum-v1` | `ContactSweepClutterV1CurriculumEnvCfg` | `ContactSweepClutterV1CurriculumPPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_v1_curriculum` |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v0` | `ContactSweepClutterFusionEnvCfg` | `ContactSweepClutterFusionPPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion` |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1` | `ContactSweepClutterFusionV1EnvCfg` | `ContactSweepClutterFusionV1PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_v1` |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v2` | `ContactSweepClutterFusionV2EnvCfg` | `ContactSweepClutterFusionV2PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_v2` |
 | `Isaac-Inspire-Sweep-Baseline-v0` | `InspireSweepEnvCfg` | `InspireSweepPPORunnerCfg` | `logs/rsl_rl/inspire_sweep_baseline` |
 | `Isaac-Inspire-Sweep-Realistic-Physics-v0` | `InspireSweepRealisticPhysicsEnvCfg` | `InspireSweepRealisticPhysicsPPORunnerCfg` | `logs/rsl_rl/inspire_sweep_realistic_physics` |
 | `Isaac-Inspire-Sweep-Realistic-Physics-Initial-Privileged-v0` | `InspireSweepRealisticInitialPrivilegedEnvCfg` | `InspireSweepRealisticInitialPrivilegedPPORunnerCfg` | `logs/rsl_rl/inspire_sweep_realistic_initial_privileged` |
@@ -832,6 +833,21 @@ v1 위에 양의 보상 두 항을 추가하고 성공 종료는 비활성화했
 ```
 
 [OSC v2 설정](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/dex_tactile_omni_renewal_v2_osc_env_cfg.py) · [제한 action 구현](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/osc_actions.py).
+
+## Contact Sweep Clutter Fusion v2 — 2026-10-21
+
+`Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v2`는 Fusion v0를 직접 상속하여 `rewards.eef_orientation=None`만 적용한다. Env는 기존 `contact_sweep_clutter_fusion.env:ContactSweepClutterFusionEnv`를 재사용한다. 새 `contact_sweep_clutter_fusion_v2.env_cfg:ContactSweepClutterFusionV2EnvCfg`와 `ppo_cfg:ContactSweepClutterFusionV2PPORunnerCfg`는 각각 v0의 Cfg와 PPO Cfg를 상속한다. PPO의 experiment 이름만 `inspire_contact_sweep_clutter_fusion_v2`로 분리한다.
+
+직접 연결된 EEF 자세 termination은 없으므로 모든 종료 조건을 유지한다. 물체 전도·낙하 및 손목 높이는 별도 조건이다. 관측·Action·Scene·reset·나머지 보상·커리큘럼·PPO 동작은 v0를 상속한다. `push_fast.speed_condition=0.8`, v0의 5개 커리큘럼을 사용하며 v1의 contact·wrench 일정은 없다. [구현·검증 기록](logs/2026-10-21_clutter_fusion_v2.md)과 [실행 안내](../../../src/inspire_sweep_baseline/README.md#contact-sweep-clutter-fusion-v2--eef-자세-보상-제거)를 확인한다.
+
+```bash
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
+  --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v2 --num_envs 2048 --headless
+
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/play.py \
+  --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v2 --num_envs 1 \
+  --checkpoint "<fusion-v2-checkpoint.pt>"
+```
 
 ## Contact Sweep Clutter Fusion v1 — 2026-10-21
 
