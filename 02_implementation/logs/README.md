@@ -1,8 +1,10 @@
 # 개발·실험 진행 로그
 
-- [2026-10-21 Clutter Fusion v2](2026-10-21_clutter_fusion_v2.md): 후속 요청으로 Fusion v0 직접 상속으로 변경, EEF orientation 보상만 비활성화하고 직접 연결된 자세 종료 조건이 없음을 확인.
+- [2026-10-21 Clutter Fusion v3 재구성](2026-10-21_clutter_fusion_v3.md): v0 → v2 → v3, 기존 v1 커리큘럼을 v3으로 이동하고 v2의 보상·종료를 상속.
 
-- [2026-10-21 Clutter Fusion v1](2026-10-21_clutter_fusion_v1.md): Fusion v0 상속, push_fast 1.5와 500부터 시작하는 속도·action·contact·wrench 일정 및 goal 간격 변경.
+- [2026-10-21 Clutter Fusion v2](2026-10-21_clutter_fusion_v2.md): Fusion v0 직접 상속, EEF orientation 보상 제거와 push_fast=1.5 적용. v3에도 상속.
+
+- [2026-10-21 Clutter Fusion v1](2026-10-21_clutter_fusion_v1.md): 최초 v1의 역사 기록. 현재는 v3으로 재작명했으며 당시 수치·명령과 현재 계약을 구분한다.
 
 - [2026-10-20 Clutter v1 Curriculum](2026-10-20_clutter_v1_curriculum.md): Learning iteration 기반 물체·Arm free speed와 Arm 두 운동 비용 가중치 일정, checkpoint 재개·재생 연결과 CPU 검증·GPU 실행 제한.
 
