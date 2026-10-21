@@ -855,7 +855,7 @@ CSV는 `outputs/clutter_ft/<UTC timestamp>/wrench.csv`에 생성한다. 50 Hz �
 
 policy 55D·초기 장애물 40D·Critic 전용 현재 타겟 3D를 사용한다. v2의 Hand 하중 보정 F/T를 사용하고 target width를 제거했다. 초기 타겟→goal 변위를 기존 root 축의 distance/theta로 바꾸되 실제 목표를 유지한다. 장애물은 reset 시 전면 가시 폭 35% 이상일 때 관측하며 물체별 1% flip을 적용한다. Actor 71D·Critic 74D는 장애물 16D encoder를 포함한 신경망 입력이고 raw Actor는 95D다.
 
-Action rate·joint velocity·object cost를 각각 통합하고 기존 내부 상한과 상대 비율을 유지한다. Contact 두 항 각각 10배, tilt/displacement 각각 15배에 해당하는 weight를 사용한다. EEF 실제 점 속도 지수 비용·위쪽 +Z orientation 비용·보정 F/T 변화율의 유한 지수 비용을 추가한다. Joint velocity의 이전 curriculum은 제거했다.
+Action rate·joint velocity·object cost를 각각 통합하고 기존 내부 상한과 상대 비율을 유지한다. Contact 두 항의 가중치는 각각 0.4이며, tilt/displacement 각각 15배에 해당하는 weight를 사용한다. EEF 실제 점 속도 지수 비용·위쪽 +Z orientation 비용·보정 F/T 변화율의 유한 지수 비용을 추가한다. Joint velocity의 이전 curriculum은 제거했다.
 
 물체 free speed 0.1→0.05(−0.01), Arm 1.0→0.8(−0.02), 통합 action weight −0.03→−0.06(−0.005), EEF 1.5→0.7(−0.02)는 모두 500 iteration 주기다. Goal ±X deadzone은 각각 ±60°로 시작하여 1000까지 유지하고, 1200부터 200마다 1° 줄어 13000에 사라진다. 변경은 다음 reset의 분포에만 적용된다. Arm/Hand 제어·기본 물리·실패 종료는 기존과 같다.
 
