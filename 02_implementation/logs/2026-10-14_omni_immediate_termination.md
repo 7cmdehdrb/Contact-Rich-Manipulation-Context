@@ -71,8 +71,8 @@ GPU 머신에서 필요한 다음 진단은 동일 reset·seed에서 Arm action 
 
 | Run | 첫 iteration 평균 길이 | iteration 50 | iteration 4137 | 처음 평균 길이 10스텝 초과 |
 | --- | ---: | ---: | ---: | --- |
-| [Baseline](../../../../logs/TEMP/2026-10-13_17-00-33_baseline_mass_z9cm_1rad/) | 1 | 464.39 | 449.51 | iteration 28, 13.02스텝 |
-| [Realistic Physics](../../../../logs/TEMP/2026-10-13_17-39-41_realistic_mass_friction/) | 1 | 446.93 | 451.93 | iteration 28, 11.42스텝 |
+| [Baseline](../../../../logs/backup/Isaac-Inspire-Sweep-Baseline-v0/2026-10-13_17-00-33_baseline_mass_z9cm_1rad/) | 1 | 464.39 | 449.51 | iteration 28, 13.02스텝 |
+| [Realistic Physics](../../../../logs/backup/Isaac-Inspire-Sweep-Realistic-Physics-v0/2026-10-13_17-39-41_realistic_mass_friction/) | 1 | 446.93 | 451.93 | iteration 28, 11.42스텝 |
 | Omni v0 | 1 | 1 | 1 | 전체 4,138 iteration에서 없음 |
 
 Baseline와 Realistic도 첫 iteration의 `hand_velocity` 종료 통계는 약 0.999986이다. 따라서 초기에 제한을 넘는 것 자체는 Omni만의 현상이 아니다. 두 비교 run은 빠르게 1스텝 종료를 벗어났고 Omni는 그렇지 못했다. 에피소드 길이 증가는 Sweep 성공을 입증하지 않는다.

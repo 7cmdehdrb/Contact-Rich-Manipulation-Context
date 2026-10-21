@@ -10,6 +10,7 @@
 | --- | --- |
 | [코드·장비 상태](07_CODE_AND_HARDWARE_STATUS.md) | 코드와 하드웨어 준비 상태 및 확인 근거 |
 | [활성 환경 안내](08_ACTIVE_ENVIRONMENTS.md) | 활성 패키지·환경 상속·observation/action/controller/reward/termination/reset와 실행 명령 |
+| [Contact Sweep Clutter Fusion 환경 설명](environments/CONTACT_SWEEP_CLUTTER_FUSION_ENVIRONMENT.md) | Scene 의도·Actor/Critic 관측과 노이즈/Frame·Action 범위·15개 보상 수치·종료·커리큘럼의 독립 설명 |
 | [Contact Sweep Clutter v1 MDP](environments/CONTACT_SWEEP_CLUTTER_V1_MDP.md) | v1 자체의 관측·8D Action·14개 보상·상태 전이·종료를 설명하는 독립 문서 |
 | [Contact Sweep와 Clutter 구성](environments/CONTACT_SWEEP_ENVIRONMENTS.md) | 두 v0 환경의 공통 제어·물성·관측·보상·종료와 장애물 배치·MLP·실행 비교 |
 | [Omni 환경](environments/OMNI_ENVIRONMENT.md) | 현재 적용된 환경 구성과 확인한 동작 범위 |

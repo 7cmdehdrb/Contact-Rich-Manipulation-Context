@@ -1,5 +1,7 @@
 # 앞으로 집중할 것과 진행할 작업
 
+2026-10-21 F/T 후속: [원본·보정 동시 수집](../02_implementation/logs/2026-10-21_clutter_ft_collection.md)의 유효 rate 분포를 분석하여 사용자 확인을 받은 계수를 [Clutter Fusion](../02_implementation/logs/2026-10-21_clutter_fusion.md)에 적용했다. 독립 CFG·가림·극좌표 관측·보상 및 목표 커리큘럼의 CPU/GPU 연결과 짧은 PPO update를 검증했다. 다음은 새 입력으로 장기 학습하여 접촉 초기 허용·큰 F/T 변화 억제·손바닥 방향·목표 유지·장애물 변위의 실제 비중을 평가하는 것이다. 장기 성능·실물 검증은 미실행이다.
+
 [문서 안내](README.md) · [문헌조사](literature/README.md) · [조사 그룹](literature/reviews/README.md)
 
 기준일: 2026-10-14. 연구 검증 계획의 출발점은 9월 14일 피드백이며 이후 코드·문헌·실험 기록을 반영한다. 현재 활성 기준선과 완성된 Blind 정책의 성능 결과를 구분한다.

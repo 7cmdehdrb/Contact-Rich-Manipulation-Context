@@ -1,5 +1,9 @@
 # Blind Sweeping — 단일 파일 인계 요약
 
+**2026-10-21 Clutter Fusion:** 사용자 확인에 따라 Curriculum v1과 v2 보정 F/T를 결합한 독립 `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v0`를 추가했다. 초기 가림·1% flip, policy 55D, 보상 통합·Contact/object 강화, EEF 자세·속도 및 유한 F/T 변화율 비용, 보상·Goal deadzone 커리큘럼을 사용한다. 기존 환경 Cfg를 상속하지 않으며 [계약·계수 근거·검증](../02_implementation/logs/2026-10-21_clutter_fusion.md)을 따른다. 새 학습 성과와는 구분한다.
+
+**2026-10-21 F/T 수집 완료:** Curriculum v1 정책의 기존 입력을 유지하는 테스트 환경에서 v2 보정 F/T를 동시 수집했다. `model_12800.pt`, 16환경·5000 제어 step의 CSV 80000행·125열과 전체 검증을 완료했다. 새 F/T 보상 계수·정책 입력 변경은 후속 작업이며 [수집·재현 기록](../02_implementation/logs/2026-10-21_clutter_ft_collection.md)을 따른다.
+
 **2026-10-20 Clutter v1 Curriculum 추가:** 현재 v1을 상속한 `Isaac-Inspire-Contact-Sweep-Clutter-Curriculum-v1`에 Learning iteration 기반 네 보상 일정을 추가했다. 물체 free speed 0.1→0.05, Arm free speed 1.0→0.8, Arm action-rate·joint-velocity 가중치 각각 −0.03→−0.06이며 사용자 명시 요청에 따른 변형이다. [일정·runner 재개 의미·실제 검증 범위](../02_implementation/logs/2026-10-20_clutter_v1_curriculum.md)를 확인한다. 정책 성능 향상은 미검증이다.
 
 **2026-10-20 Clutter v2 추가:** v1을 상속한 `Isaac-Inspire-Contact-Sweep-Clutter-v2`에서 F/T 관측을 Hand 중력·관성 하중을 제거한 6축 외력 반력 추정값으로 교체했다. 힘·모멘트 변화 제곱 비용은 작은 변화의 허용 구간, 최대 −0.1/초, 실제 누적 양의 보상 대비 5% 예산 제한을 갖는다. 관측 차원·Action·나머지 보상·종료는 v1을 유지한다. 모델 기반 시뮬레이션 보정과 실물 캔슬레이션 성능은 구분하며 [구현·검증 기록](../02_implementation/logs/2026-10-20_contact_sweep_clutter_v2.md)을 확인한다.

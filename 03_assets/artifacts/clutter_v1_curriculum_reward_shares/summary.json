@@ -1,0 +1,674 @@
+{
+  "source": "logs/inspire_contact_sweep_clutter_v1_curriculum/2026-10-20_22-49-30",
+  "source_files": [
+    {
+      "name": "events.out.tfevents.1792504191.min-System-Product-Name.409000.0",
+      "bytes": 30931902,
+      "sha256": "2d012c827edcbb35b9a6c4174fc83577eb7b9bf67cd5e34ac0bde58000859be6"
+    }
+  ],
+  "validation": "15 aligned finite scalar series; unique consecutive steps.",
+  "available": {
+    "first": 0,
+    "last": 12823,
+    "n": 12824
+  },
+  "main": {
+    "first": 12000,
+    "last": 12823,
+    "n": 824,
+    "positive": 2.060421459066577,
+    "negative": -0.3413511604879743,
+    "net": 1.7190702985786026,
+    "absolute": 2.4017726195545515,
+    "penalty_of_positive_pct": 16.567055200571197,
+    "rows": [
+      {
+        "term": "arm_action_rate",
+        "mean": -0.0050857155962431245,
+        "share_absolute_pct": 0.21174842093030252,
+        "share_positive_pct": null,
+        "share_penalty_pct": 1.489877927754194,
+        "share_net_pct": -0.29584104852769555
+      },
+      {
+        "term": "arm_joint_velocity",
+        "mean": -0.03239800760441107,
+        "share_absolute_pct": 1.3489206821926305,
+        "share_positive_pct": null,
+        "share_penalty_pct": 9.491108088836405,
+        "share_net_pct": -1.8846237778175252
+      },
+      {
+        "term": "arm_speed_excess",
+        "mean": -0.1957851155000983,
+        "share_absolute_pct": 8.151692375292791,
+        "share_positive_pct": null,
+        "share_penalty_pct": 57.355924971872405,
+        "share_net_pct": -11.389011587366813
+      },
+      {
+        "term": "contact_any",
+        "mean": 0.00034579883076819065,
+        "share_absolute_pct": 0.014397650633236246,
+        "share_positive_pct": 0.016782917361229884,
+        "share_penalty_pct": null,
+        "share_net_pct": 0.02011545607262898
+      },
+      {
+        "term": "contact_count",
+        "mean": 7.026363381405601e-05,
+        "share_absolute_pct": 0.002925490666434842,
+        "share_positive_pct": 0.0034101583200306608,
+        "share_penalty_pct": null,
+        "share_net_pct": 0.004087304275581566
+      },
+      {
+        "term": "goal_distance",
+        "mean": 1.273574159851352,
+        "share_absolute_pct": 53.0264251279356,
+        "share_positive_pct": 61.81134224977026,
+        "share_penalty_pct": null,
+        "share_net_pct": 74.0850540495287
+      },
+      {
+        "term": "goal_hold",
+        "mean": 0.007124040598779899,
+        "share_absolute_pct": 0.29661594693760684,
+        "share_positive_pct": 0.34575647460045716,
+        "share_penalty_pct": null,
+        "share_net_pct": 0.41441240679164465
+      },
+      {
+        "term": "hand_action_rate",
+        "mean": -0.027201766889650845,
+        "share_absolute_pct": 1.1325704468517033,
+        "share_positive_pct": null,
+        "share_penalty_pct": 7.968851446341913,
+        "share_net_pct": -1.582353375085497
+      },
+      {
+        "term": "hand_joint_velocity",
+        "mean": -0.003025420385896617,
+        "share_absolute_pct": 0.12596614522392763,
+        "share_positive_pct": null,
+        "share_penalty_pct": 0.8863073386279587,
+        "share_net_pct": -0.1759916617952249
+      },
+      {
+        "term": "object_tilt",
+        "mean": -0.0013135360040022648,
+        "share_absolute_pct": 0.05469027306364587,
+        "share_positive_pct": null,
+        "share_penalty_pct": 0.3848049035850693,
+        "share_net_pct": -0.07640967359440448
+      },
+      {
+        "term": "obstacle_displacement",
+        "mean": -0.005532868999085904,
+        "share_absolute_pct": 0.23036606188441214,
+        "share_positive_pct": null,
+        "share_penalty_pct": 1.6208730596305752,
+        "share_net_pct": -0.3218523991520711
+      },
+      {
+        "term": "pushing_speed",
+        "mean": -0.05715157409442715,
+        "share_absolute_pct": 2.379558065951591,
+        "share_positive_pct": null,
+        "share_penalty_pct": 16.742750782720886,
+        "share_net_pct": -3.3245629420555054
+      },
+      {
+        "term": "reaching",
+        "mean": 0.7793071961518631,
+        "share_absolute_pct": 32.44716797114618,
+        "share_positive_pct": 37.82270819994803,
+        "share_penalty_pct": null,
+        "share_net_pct": 45.33306152728169
+      },
+      {
+        "term": "shelf_collision",
+        "mean": -0.013617667021428786,
+        "share_absolute_pct": 0.5669840229902533,
+        "share_positive_pct": null,
+        "share_penalty_pct": 3.9893425298340333,
+        "share_net_pct": -0.7921530046030362
+      },
+      {
+        "term": "shelf_failure",
+        "mean": -0.0002394883927302288,
+        "share_absolute_pct": 0.009971318299675092,
+        "share_positive_pct": null,
+        "share_penalty_pct": 0.07015895079655542,
+        "share_net_pct": -0.01393127395245253
+      }
+    ],
+    "extra": {
+      "Curriculum/pushing_free_speed": {
+        "mean": 0.059999994933605194,
+        "min": 0.059999994933605194,
+        "max": 0.059999994933605194
+      },
+      "Curriculum/arm_free_speed": {
+        "mean": 0.9000000357627869,
+        "min": 0.9000000357627869,
+        "max": 0.9000000357627869
+      },
+      "Curriculum/arm_action_rate_weight": {
+        "mean": -0.05000000074505806,
+        "min": -0.05000000074505806,
+        "max": -0.05000000074505806
+      },
+      "Curriculum/arm_joint_velocity_weight": {
+        "mean": -0.05000000074505806,
+        "min": -0.05000000074505806,
+        "max": -0.05000000074505806
+      },
+      "Train/mean_reward": {
+        "mean": 17.201703698889723,
+        "min": 15.33144474029541,
+        "max": 18.202510833740234
+      },
+      "Train/mean_episode_length": {
+        "mean": 97.46547337411677,
+        "min": 50.68000030517578,
+        "max": 151.1300048828125
+      }
+    }
+  },
+  "windows": [
+    {
+      "first": 11000,
+      "last": 11999,
+      "n": 1000,
+      "positive": 1.9889581992606218,
+      "negative": -0.36293478110460275,
+      "net": 1.6260234181560191,
+      "absolute": 2.3518929803652244,
+      "penalty_of_positive_pct": 18.247481583047882,
+      "rows": [
+        {
+          "term": "arm_action_rate",
+          "mean": -0.006876713332720101,
+          "share_absolute_pct": 0.2923905717704986,
+          "share_positive_pct": null,
+          "share_penalty_pct": 1.89475180962007,
+          "share_net_pct": -0.42291600821583436
+        },
+        {
+          "term": "arm_joint_velocity",
+          "mean": -0.031212048538029193,
+          "share_absolute_pct": 1.3271032652677202,
+          "share_positive_pct": null,
+          "share_penalty_pct": 8.599905592689243,
+          "share_net_pct": -1.9195325349880266
+        },
+        {
+          "term": "arm_speed_excess",
+          "mean": -0.21605021911859512,
+          "share_absolute_pct": 9.186226623502435,
+          "share_positive_pct": null,
+          "share_penalty_pct": 59.528661998456,
+          "share_net_pct": -13.287029984082604
+        },
+        {
+          "term": "contact_any",
+          "mean": 0.00034987922094296666,
+          "share_absolute_pct": 0.014876494120435449,
+          "share_positive_pct": 0.017591079645265108,
+          "share_penalty_pct": null,
+          "share_net_pct": 0.02151747736448623
+        },
+        {
+          "term": "contact_count",
+          "mean": 7.129643535517971e-05,
+          "share_absolute_pct": 0.003031448962618534,
+          "share_positive_pct": 0.003584612053771847,
+          "share_penalty_pct": null,
+          "share_net_pct": 0.004384711472116002
+        },
+        {
+          "term": "goal_distance",
+          "mean": 1.2076820413470268,
+          "share_absolute_pct": 51.34936204280377,
+          "share_positive_pct": 60.71932742457696,
+          "share_penalty_pct": null,
+          "share_net_pct": 74.27211858465054
+        },
+        {
+          "term": "goal_hold",
+          "mean": 0.005475446999480482,
+          "share_absolute_pct": 0.23281021054921477,
+          "share_positive_pct": 0.2752922108426377,
+          "share_penalty_pct": null,
+          "share_net_pct": 0.33673850808925465
+        },
+        {
+          "term": "hand_action_rate",
+          "mean": -0.029642850503325463,
+          "share_absolute_pct": 1.2603826258592021,
+          "share_positive_pct": null,
+          "share_penalty_pct": 8.167541951506156,
+          "share_net_pct": -1.8230272806858918
+        },
+        {
+          "term": "hand_joint_velocity",
+          "mean": -0.003191530208103359,
+          "share_absolute_pct": 0.13570048615085145,
+          "share_positive_pct": null,
+          "share_penalty_pct": 0.8793674164790275,
+          "share_net_pct": -0.19627824374895486
+        },
+        {
+          "term": "object_tilt",
+          "mean": -0.001467692250793334,
+          "share_absolute_pct": 0.062404720922523305,
+          "share_positive_pct": null,
+          "share_penalty_pct": 0.4043955903940562,
+          "share_net_pct": -0.09026267607251073
+        },
+        {
+          "term": "obstacle_displacement",
+          "mean": -0.005951124338898808,
+          "share_absolute_pct": 0.25303550750743176,
+          "share_positive_pct": null,
+          "share_penalty_pct": 1.6397227955905425,
+          "share_net_pct": -0.3659925356823975
+        },
+        {
+          "term": "pushing_speed",
+          "mean": -0.05468239698186517,
+          "share_absolute_pct": 2.3250376372726604,
+          "share_positive_pct": null,
+          "share_penalty_pct": 15.066728191615494,
+          "share_net_pct": -3.36295261010923
+        },
+        {
+          "term": "reaching",
+          "mean": 0.7753795352578163,
+          "share_absolute_pct": 32.968317084623806,
+          "share_positive_pct": 38.98420467288136,
+          "share_penalty_pct": null,
+          "share_net_pct": 47.68563149829234
+        },
+        {
+          "term": "shelf_collision",
+          "mean": -0.01350224036630243,
+          "share_absolute_pct": 0.5741009679873135,
+          "share_positive_pct": null,
+          "share_penalty_pct": 3.720293856986636,
+          "share_net_pct": -0.8303841270388684
+        },
+        {
+          "term": "shelf_failure",
+          "mean": -0.0003579654659697553,
+          "share_absolute_pct": 0.015220312699524577,
+          "share_positive_pct": null,
+          "share_penalty_pct": 0.09863079666277144,
+          "share_net_pct": -0.022014779244428326
+        }
+      ],
+      "extra": {
+        "Curriculum/pushing_free_speed": {
+          "mean": 0.07000000029802322,
+          "min": 0.07000000029802322,
+          "max": 0.07000000029802322
+        },
+        "Curriculum/arm_free_speed": {
+          "mean": 0.9000000357627869,
+          "min": 0.9000000357627869,
+          "max": 0.9000000357627869
+        },
+        "Curriculum/arm_action_rate_weight": {
+          "mean": -0.04500000551342964,
+          "min": -0.04500000551342964,
+          "max": -0.04500000551342964
+        },
+        "Curriculum/arm_joint_velocity_weight": {
+          "mean": -0.04500000551342964,
+          "min": -0.04500000551342964,
+          "max": -0.04500000551342964
+        },
+        "Train/mean_reward": {
+          "mean": 16.28235069656372,
+          "min": 11.034669876098633,
+          "max": 18.14381217956543
+        },
+        "Train/mean_episode_length": {
+          "mean": 98.47135008621215,
+          "min": 53.63999938964844,
+          "max": 152.00999450683594
+        }
+      }
+    },
+    {
+      "first": 12000,
+      "last": 12399,
+      "n": 400,
+      "positive": 2.071553419239972,
+      "negative": -0.33774589987122455,
+      "net": 1.7338075193687472,
+      "absolute": 2.4092993191111964,
+      "penalty_of_positive_pct": 16.303991812827086,
+      "rows": [
+        {
+          "term": "arm_action_rate",
+          "mean": -0.0050494679110124705,
+          "share_absolute_pct": 0.20958242385903494,
+          "share_positive_pct": null,
+          "share_penalty_pct": 1.4950493589819231,
+          "share_net_pct": -0.29123578336140243
+        },
+        {
+          "term": "arm_joint_velocity",
+          "mean": -0.032209599111229184,
+          "share_absolute_pct": 1.336886573442086,
+          "share_positive_pct": null,
+          "share_penalty_pct": 9.536636602697481,
+          "share_net_pct": -1.8577378833237617
+        },
+        {
+          "term": "arm_speed_excess",
+          "mean": -0.19261622697114944,
+          "share_absolute_pct": 7.994698933555779,
+          "share_positive_pct": null,
+          "share_penalty_pct": 57.029923100351475,
+          "share_net_pct": -11.109435437289951
+        },
+        {
+          "term": "contact_any",
+          "mean": 0.00037457423699379435,
+          "share_absolute_pct": 0.0155470195845976,
+          "share_positive_pct": 0.018081804384809014,
+          "share_penalty_pct": null,
+          "share_net_pct": 0.02160414191364051
+        },
+        {
+          "term": "contact_count",
+          "mean": 7.617164515977493e-05,
+          "share_absolute_pct": 0.0031615683678470905,
+          "share_positive_pct": 0.0036770302156978116,
+          "share_penalty_pct": null,
+          "share_net_pct": 0.004393316115476755
+        },
+        {
+          "term": "goal_distance",
+          "mean": 1.2835136446356774,
+          "share_absolute_pct": 53.27331620668754,
+          "share_positive_pct": 61.95899331944735,
+          "share_penalty_pct": null,
+          "share_net_pct": 74.02861219006508
+        },
+        {
+          "term": "goal_hold",
+          "mean": 0.007628127878997475,
+          "share_absolute_pct": 0.31661188041224914,
+          "share_positive_pct": 0.3682322554731002,
+          "share_penalty_pct": null,
+          "share_net_pct": 0.43996394027491353
+        },
+        {
+          "term": "hand_action_rate",
+          "mean": -0.026813009148463608,
+          "share_absolute_pct": 1.1128965560972754,
+          "share_positive_pct": null,
+          "share_penalty_pct": 7.938811147281684,
+          "share_net_pct": -1.5464813048120714
+        },
+        {
+          "term": "hand_joint_velocity",
+          "mean": -0.0029638121771859006,
+          "share_absolute_pct": 0.12301552379466354,
+          "share_positive_pct": null,
+          "share_penalty_pct": 0.8775272115267543,
+          "share_net_pct": -0.17094239954992116
+        },
+        {
+          "term": "object_tilt",
+          "mean": -0.0012370805779937655,
+          "share_absolute_pct": 0.051346072618745076,
+          "share_positive_pct": null,
+          "share_penalty_pct": 0.3662755279828529,
+          "share_net_pct": -0.07135051406653073
+        },
+        {
+          "term": "obstacle_displacement",
+          "mean": -0.005583282369771041,
+          "share_absolute_pct": 0.23173884313513793,
+          "share_positive_pct": null,
+          "share_penalty_pct": 1.6531014504986827,
+          "share_net_pct": -0.3220243485738157
+        },
+        {
+          "term": "pushing_speed",
+          "mean": -0.05744574850425124,
+          "share_absolute_pct": 2.3843342356251234,
+          "share_positive_pct": null,
+          "share_penalty_pct": 17.00857020800374,
+          "share_net_pct": -3.3132713904232203
+        },
+        {
+          "term": "reaching",
+          "mean": 0.7799609008431435,
+          "share_absolute_pct": 32.37293492993122,
+          "share_positive_pct": 37.65101559047904,
+          "share_penalty_pct": null,
+          "share_net_pct": 44.9854376642175
+        },
+        {
+          "term": "shelf_collision",
+          "mean": -0.013616082973312587,
+          "share_absolute_pct": 0.5651470062397906,
+          "share_positive_pct": null,
+          "share_penalty_pct": 4.031457666400722,
+          "share_net_pct": -0.7853284070581257
+        },
+        {
+          "term": "shelf_failure",
+          "mean": -0.0002115901268552989,
+          "share_absolute_pct": 0.008782226648922793,
+          "share_positive_pct": null,
+          "share_penalty_pct": 0.06264772627468572,
+          "share_net_pct": -0.01220378412779843
+        }
+      ],
+      "extra": {
+        "Curriculum/pushing_free_speed": {
+          "mean": 0.059999994933605194,
+          "min": 0.059999994933605194,
+          "max": 0.059999994933605194
+        },
+        "Curriculum/arm_free_speed": {
+          "mean": 0.9000000357627869,
+          "min": 0.9000000357627869,
+          "max": 0.9000000357627869
+        },
+        "Curriculum/arm_action_rate_weight": {
+          "mean": -0.05000000074505806,
+          "min": -0.05000000074505806,
+          "max": -0.05000000074505806
+        },
+        "Curriculum/arm_joint_velocity_weight": {
+          "mean": -0.05000000074505806,
+          "min": -0.05000000074505806,
+          "max": -0.05000000074505806
+        },
+        "Train/mean_reward": {
+          "mean": 17.34375982284546,
+          "min": 16.339923858642578,
+          "max": 18.202510833740234
+        },
+        "Train/mean_episode_length": {
+          "mean": 100.29642518043518,
+          "min": 55.83000183105469,
+          "max": 151.1300048828125
+        }
+      }
+    },
+    {
+      "first": 12400,
+      "last": 12823,
+      "n": 424,
+      "positive": 2.0499196098463934,
+      "negative": -0.34475234974905894,
+      "net": 1.7051672600973344,
+      "absolute": 2.394671959595452,
+      "penalty_of_positive_pct": 16.81784729962617,
+      "rows": [
+        {
+          "term": "arm_action_rate",
+          "mean": -0.005119911525706005,
+          "share_absolute_pct": 0.2138042960410722,
+          "share_positive_pct": null,
+          "share_penalty_pct": 1.4850983697232887,
+          "share_net_pct": -0.3002586107250118
+        },
+        {
+          "term": "arm_joint_velocity",
+          "mean": -0.03257575146590342,
+          "share_absolute_pct": 1.360342962023352,
+          "share_positive_pct": null,
+          "share_penalty_pct": 9.44902956850473,
+          "share_net_pct": -1.9104138478499715
+        },
+        {
+          "term": "arm_speed_excess",
+          "mean": -0.19877463298023873,
+          "share_absolute_pct": 8.300704076971739,
+          "share_positive_pct": null,
+          "share_penalty_pct": 57.65722354754779,
+          "share_net_pct": -11.657192677326696
+        },
+        {
+          "term": "contact_any",
+          "mean": 0.00031865222112139474,
+          "share_absolute_pct": 0.013306717015854931,
+          "share_positive_pct": 0.015544620364174783,
+          "share_penalty_pct": null,
+          "share_net_pct": 0.01868744659706904
+        },
+        {
+          "term": "contact_count",
+          "mean": 6.469003820488722e-05,
+          "share_absolute_pct": 0.002701415446306714,
+          "share_positive_pct": 0.003155735370995091,
+          "share_penalty_pct": null,
+          "share_net_pct": 0.003793764970668893
+        },
+        {
+          "term": "goal_distance",
+          "mean": 1.2641972874133092,
+          "share_absolute_pct": 52.792086295898265,
+          "share_positive_pct": 61.670578755429304,
+          "share_penalty_pct": null,
+          "share_net_pct": 74.13919543242615
+        },
+        {
+          "term": "goal_hold",
+          "mean": 0.006648486560838789,
+          "share_absolute_pct": 0.277636631363987,
+          "share_positive_pct": 0.3243291360746083,
+          "share_penalty_pct": null,
+          "share_net_pct": 0.38990231142833925
+        },
+        {
+          "term": "hand_action_rate",
+          "mean": -0.02756851947567654,
+          "share_absolute_pct": 1.1512440927538932,
+          "share_positive_pct": null,
+          "share_penalty_pct": 7.996615395295588,
+          "share_net_pct": -1.61676335927907
+        },
+        {
+          "term": "hand_joint_velocity",
+          "mean": -0.0030835413375105004,
+          "share_absolute_pct": 0.12876675342335506,
+          "share_positive_pct": null,
+          "share_penalty_pct": 0.8944221380231268,
+          "share_net_pct": -0.18083512448711253
+        },
+        {
+          "term": "object_tilt",
+          "mean": -0.0013856637643876416,
+          "share_absolute_pct": 0.05786445023650467,
+          "share_positive_pct": null,
+          "share_penalty_pct": 0.40193018710278533,
+          "share_net_pct": -0.08126263017204219
+        },
+        {
+          "term": "obstacle_displacement",
+          "mean": -0.005485309215420681,
+          "share_absolute_pct": 0.22906307452430144,
+          "share_positive_pct": null,
+          "share_penalty_pct": 1.5910868249087704,
+          "share_net_pct": -0.3216874581035275
+        },
+        {
+          "term": "pushing_speed",
+          "mean": -0.05687405106629122,
+          "share_absolute_pct": 2.375024722630457,
+          "share_positive_pct": null,
+          "share_penalty_pct": 16.497074235371898,
+          "share_net_pct": -3.3353942687736526
+        },
+        {
+          "term": "reaching",
+          "mean": 0.7786904936129192,
+          "share_absolute_pct": 32.5176269130603,
+          "share_positive_pct": 37.986391752760916,
+          "share_penalty_pct": null,
+          "share_net_pct": 45.6665168183249
+        },
+        {
+          "term": "shelf_collision",
+          "mean": -0.013619161406444069,
+          "share_absolute_pct": 0.5687276435451661,
+          "share_positive_pct": null,
+          "share_penalty_pct": 3.9504187328548426,
+          "share_net_pct": -0.7986994428726399
+        },
+        {
+          "term": "shelf_failure",
+          "mean": -0.0002658075114801627,
+          "share_absolute_pct": 0.011099955065455702,
+          "share_positive_pct": null,
+          "share_penalty_pct": 0.07710100066718639,
+          "share_net_pct": -0.01558835415740916
+        }
+      ],
+      "extra": {
+        "Curriculum/pushing_free_speed": {
+          "mean": 0.059999994933605194,
+          "min": 0.059999994933605194,
+          "max": 0.059999994933605194
+        },
+        "Curriculum/arm_free_speed": {
+          "mean": 0.9000000357627869,
+          "min": 0.9000000357627869,
+          "max": 0.9000000357627869
+        },
+        "Curriculum/arm_action_rate_weight": {
+          "mean": -0.05000000074505806,
+          "min": -0.05000000074505806,
+          "max": -0.05000000074505806
+        },
+        "Curriculum/arm_joint_velocity_weight": {
+          "mean": -0.05000000074505806,
+          "min": -0.05000000074505806,
+          "max": -0.05000000074505806
+        },
+        "Train/mean_reward": {
+          "mean": 17.067688487610727,
+          "min": 15.33144474029541,
+          "max": 18.05210304260254
+        },
+        "Train/mean_episode_length": {
+          "mean": 94.79476412287298,
+          "min": 50.68000030517578,
+          "max": 142.35000610351562
+        }
+      }
+    }
+  ]
+}

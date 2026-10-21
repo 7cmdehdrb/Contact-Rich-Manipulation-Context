@@ -1,5 +1,15 @@
 # 개발·실험 진행 로그
 
+- [2026-10-21 Clutter Fusion 환경 설명서](2026-10-21_clutter_fusion_documentation.md): 비교 없이 Scene 의도·관측/Frame/노이즈·Action 범위·15개 보상 수치·종료·커리큘럼을 설명.
+
+- [2026-10-21 Clutter Fusion](2026-10-21_clutter_fusion.md): 독립 CFG·가림 관측·보상 통합·EEF/F/T 비용·학습 iteration 및 Goal deadzone 커리큘럼.
+
+- [2026-10-21 전면 가시성 판정](2026-10-21_scene_visibility.md): 기존 랜덤 씬의 35% 인식/비인식 시각화·NumPy/Torch 텐서 경로·생성/판정 시간과 실제 10000씬 CPU/CUDA 교차 검증.
+
+- [2026-10-21 Curriculum/v2 F/T 동시 수집](2026-10-21_clutter_ft_collection.md): 원본 정책 입력을 유지하는 테스트 환경·동일 시점의 보정 F/T·종료 전 CSV와 실제 GPU 수집 검증.
+
+- [2026-10-21 Curriculum 후기 보상 비중](2026-10-21_clutter_curriculum_reward_shares.md): 12000–12823 iteration의 15항 평균·양의/절댓값/순보상 비중과 기존 분석기 대조.
+
 <<<<<<< HEAD
 - [2026-10-20 Clutter v1 Curriculum](2026-10-20_clutter_v1_curriculum.md): Learning iteration 기반 물체·Arm free speed와 Arm 두 운동 비용 가중치 일정, checkpoint 재개·재생 연결과 CPU 검증·GPU 실행 제한.
 

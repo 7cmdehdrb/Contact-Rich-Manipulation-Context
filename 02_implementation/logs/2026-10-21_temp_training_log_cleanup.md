@@ -74,3 +74,80 @@ TensorBoard 열의 `미조회`는 checkpoint 자체가 이미 500 이상이어�
 | `inspire_sweep_omni_v0/2026-10-14_22-34-42_centered_spawn_goal15cm_arm2rad` | `Isaac-Inspire-Sweep-Omni-v0/2026-10-14_22-34-42_centered_spawn_goal15cm_arm2rad` | 3550 | 미조회 |
 | `inspire_sweep_omni_v1/2026-10-14_22-31-30_centered_spawn_goal15cm_arm2rad` | `삭제` | 100 | 136 |
 | `inspire_sweep_omni_v1/2026-10-15_11-37-21_centered_spawn_goal15cm_arm2rad` | `Isaac-Inspire-Sweep-Omni-v1/2026-10-15_11-37-21_centered_spawn_goal15cm_arm2rad` | 5900 | 미조회 |
+
+
+## 같은 날 추가 요청에 따른 두 번째 정리
+
+사용자가 다시 채운 `logs/TEMP`에 대해 명시적으로 정리를 요청하여 수행했다. 이전 42개 run 정리와 별개이며, 이번 기준 commit은 workspace `0e314e9`, Context `a953e0a`다. 시작 시 Context 내부 작업트리는 깨끗했고, 상위 submodule 참조 차이와 미추적 UR Description 폴더는 보존했다.
+
+40개 run 중 37개를 이동하고 3개를 삭제했다. 등록 환경 11종에 21개, `Unregistered`에 16개를 보존했다. 삭제한 일반 파일 크기 합계는 4,239,366바이트다. 목적지 충돌은 없었고, 원래 run 이름과 전체 내부 파일을 유지했다. `TEMP`는 빈 폴더로 남겼다.
+
+현재 등록 코드의 Gym ID 24개를 AST로 확인하고 `agent.yaml`의 experiment_name, `env.yaml`의 관측·보상 함수와 패키지 실행 안내를 대조했다. `inspire_dex_sweep_omni_renewal_shelf`는 Dex progress 보상과 Renewal 관측 구성을 사용하는 사용자 지정 실험 이름이므로 Dex Renewal v0로 분류했다. 과거 설정 수치가 현행 코드와 완전히 같다는 의미는 아니다. UR5e 과거 run의 함수는 `sweeping_policy`/`single_object_sweep`에 속해 Unregistered로 분류했다.
+
+### 실행과 검증
+
+workspace 루트에서 다음 명령을 실행했다. 스크립트와 전후 manifest는 로컬 Git 관리 영역의 감사 자료이며 자동 실행으로 등록하지 않았다.
+
+```bash
+/home/ssu/miniconda3/envs/jd_isaaclab/bin/python .git/temp-cleanup-2026-10-21-second/plan.py
+/home/ssu/miniconda3/envs/jd_isaaclab/bin/python .git/temp-cleanup-2026-10-21-second/apply.py
+```
+
+- 삭제 후보는 TensorBoard RawEventFileLoader의 `Loss/*` 최대 step으로 확인했다. 각각 19, 0, 0으로, 0 기반 인덱스를 고려해도 500회 미만이다.
+- `/proc`의 접근 가능한 cwd·fd를 검사해 TEMP 사용 프로세스가 없음을 확인하고, 적용 직전 모든 run의 사전 metadata가 동일함을 재검사했다. 미분류 일반 파일과 심볼릭 링크는 없었다.
+- `Path.rename`으로 이동하고 확정한 3개에만 `shutil.rmtree`를 적용했다. 이동 전후 상대 경로·inode·크기·mtime_ns·mode가 모두 일치했다. 원래 경로 소멸, 목적지 존재, TEMP 잔여 0개를 확인했다.
+- `logs/rsl_rl`에는 쓰기·이동·삭제를 수행하지 않았다. 전후 비교에서 실행 중인 Clutter v0 학습 PID 3898329가 파일명에 포함된 TensorBoard 이벤트 파일 하나의 크기·mtime만 증가했다. 해당 학습의 쓰기로 판단하며 다른 항목은 동일했다. 프로세스는 중단하지 않았다.
+- 기본 Python 및 `env_isaaclab`에는 필요한 yaml/tensorboard 의존성이 없어 최초 조회가 실패했다. 두 모듈이 있는 `jd_isaaclab` Python으로 계획과 실행을 완료했다.
+
+내용 전체 해시, checkpoint 역직렬화·재생·학습 성능, Isaac Sim 및 CPU pytest는 수행하지 않았다. 이번 검증 범위는 파일 이동 보존·삭제 기준·대상 경로에 한정한다.
+
+### 두 번째 정리 경로 대응
+
+입력은 `logs/TEMP/`, 목적지는 `logs/backup/` 기준이다. Loss step의 `미조회`는 checkpoint만으로 보존 기준을 충족했다는 뜻이다.
+
+| 원래 경로 | 목적지 또는 처리 | 최대 checkpoint | 최대 Loss step |
+| --- | --- | --- | --- |
+| `2026-10-13_17-00-33_baseline_mass_z9cm_1rad` | `Isaac-Inspire-Sweep-Baseline-v0/2026-10-13_17-00-33_baseline_mass_z9cm_1rad` | 39200 | 미조회 |
+| `2026-10-13_17-39-41_realistic_mass_friction` | `Isaac-Inspire-Sweep-Realistic-Physics-v0/2026-10-13_17-39-41_realistic_mass_friction` | 35250 | 미조회 |
+| `2026-10-13_17-40-08_realistic_initial_privileged` | `Isaac-Inspire-Sweep-Realistic-Physics-Initial-Privileged-v0/2026-10-13_17-40-08_realistic_initial_privileged` | 26850 | 미조회 |
+| `2026-10-15_11-37-21_centered_spawn_goal15cm_arm2rad` | `Isaac-Inspire-Sweep-Omni-v1/2026-10-15_11-37-21_centered_spawn_goal15cm_arm2rad` | 4600 | 미조회 |
+| `2026-10-15_15-14-04_dex_best_distance` | `Isaac-Inspire-Dex-Omni-v0/2026-10-15_15-14-04_dex_best_distance` | 2350 | 미조회 |
+| `2026-10-19_12-15-47` | `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1/2026-10-19_12-15-47` | 39000 | 미조회 |
+| `UR5e_shelf_sweep_random/2026-08-11_21-01-27` | `Unregistered/2026-08-11_21-01-27` | 43400 | 미조회 |
+| `UR5e_shelf_sweep_random/2026-08-12_20-20-09` | `Unregistered/2026-08-12_20-20-09` | 89999 | 미조회 |
+| `UR5e_shelf_sweep_random/2026-08-14_22-50-21` | `Unregistered/2026-08-14_22-50-21` | 4450 | 미조회 |
+| `UR5e_shelf_sweep_random/2026-08-17_14-30-47` | `Unregistered/2026-08-17_14-30-47` | 89999 | 미조회 |
+| `UR5e_shelf_sweep_random/2026-08-21_18-18-18` | `Unregistered/2026-08-21_18-18-18` | 89999 | 미조회 |
+| `UR5e_shelf_sweep_random/2026-08-25_00-58-46` | `Unregistered/2026-08-25_00-58-46` | 13300 | 미조회 |
+| `UR5e_shelf_sweep_random/2026-08-25_22-44-28` | `Unregistered/2026-08-25_22-44-28` | 46500 | 미조회 |
+| `UR5e_shelf_sweep_random/2026-08-26_23-25-47` | `Unregistered/2026-08-26_23-25-47` | 16000 | 미조회 |
+| `UR5e_shelf_sweep_random/2026-08-27_11-14-32` | `Unregistered/2026-08-27_11-14-32` | 66850 | 미조회 |
+| `UR5e_shelf_sweep_random/2026-08-28_22-56-51` | `Unregistered/2026-08-28_22-56-51` | 89999 | 미조회 |
+| `UR5e_shelf_sweep_random/2026-09-01_22-37-56` | `삭제` | 0 | 19 |
+| `UR5e_shelf_sweep_random/2026-09-01_22-39-00` | `Unregistered/2026-09-01_22-39-00` | 89999 | 미조회 |
+| `UR5e_shelf_sweep_random/2026-09-04_21-33-15` | `Unregistered/2026-09-04_21-33-15` | 89999 | 미조회 |
+| `UR5e_shelf_sweep_random/2026-09-07_21-58-38` | `Unregistered/2026-09-07_21-58-38` | 84450 | 미조회 |
+| `UR5e_single_object_shelf_sweep_diff_ik_abs_v2/2026-08-10_22-32-40` | `Unregistered/2026-08-10_22-32-40` | 45200 | 미조회 |
+| `UR5e_single_object_shelf_sweep_diff_ik_abs_v2/2026-08-11_11-21-29` | `Unregistered/2026-08-11_11-21-29` | 5300 | 미조회 |
+| `UR5e_single_object_shelf_sweep_random/2026-08-10_22-01-08` | `Unregistered/2026-08-10_22-01-08` | 1550 | 미조회 |
+| `inspire_contact_sweep/2026-10-20_13-19-15_smoke_contact_reference` | `삭제` | 0 | 0 |
+| `inspire_contact_sweep/2026-10-20_13-30-06` | `Isaac-Inspire-Contact-Sweep-v0/2026-10-20_13-30-06` | 600 | 미조회 |
+| `inspire_dex_sweep_omni_renewal/2026-10-15_21-12-26_dex_renewal_v0` | `Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0/2026-10-15_21-12-26_dex_renewal_v0` | 1600 | 미조회 |
+| `inspire_dex_sweep_omni_renewal/2026-10-15_22-04-26_dex_renewal_v0` | `Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0/2026-10-15_22-04-26_dex_renewal_v0` | 33750 | 미조회 |
+| `inspire_dex_sweep_omni_renewal/2026-10-16_15-26-16` | `Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0/2026-10-16_15-26-16` | 5950 | 미조회 |
+| `inspire_dex_sweep_omni_renewal/2026-10-16_19-13-47` | `Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0/2026-10-16_19-13-47` | 95199 | 미조회 |
+| `inspire_dex_sweep_omni_renewal_shelf/2026-10-16_12-41-16_dex_renewal_v0` | `Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0/2026-10-16_12-41-16_dex_renewal_v0` | 6050 | 미조회 |
+| `inspire_dex_tactile_sweep_omni_renewal_v2/2026-10-18_20-07-29` | `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v2/2026-10-18_20-07-29` | 1150 | 미조회 |
+| `inspire_dex_tactile_sweep_omni_renewal_v2/2026-10-18_20-42-27` | `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v2/2026-10-18_20-42-27` | 6400 | 미조회 |
+| `inspire_dex_tactile_sweep_omni_renewal_v2/2026-10-18_23-47-52` | `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v2/2026-10-18_23-47-52` | 12100 | 미조회 |
+| `inspire_dex_tactile_sweep_omni_renewal_v2/2026-10-19_12-16-03` | `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v2/2026-10-19_12-16-03` | 9950 | 미조회 |
+| `inspire_dex_tactile_sweep_omni_renewal_v2/2026-10-19_17-52-20_resume_8500` | `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v2/2026-10-19_17-52-20_resume_8500` | 11450 | 미조회 |
+| `inspire_dex_tactile_sweep_omni_renewal_v2/2026-10-19_20-37-46_resume_10300` | `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v2/2026-10-19_20-37-46_resume_10300` | 11750 | 미조회 |
+| `inspire_dex_tactile_sweep_omni_renewal_v3/2026-10-20_13-12-56_smoke_v3` | `삭제` | 0 | 0 |
+| `inspire_sweep_omni_v2/2026-10-15_13-50-41_live_reach200_sweep400` | `Isaac-Inspire-Sweep-Omni-v2/2026-10-15_13-50-41_live_reach200_sweep400` | 2100 | 미조회 |
+| `inspire_sweep_omni_v3/2026-10-15_15-32-26_height_gated_xy_reach` | `Isaac-Inspire-Sweep-Omni-v3/2026-10-15_15-32-26_height_gated_xy_reach` | 1550 | 미조회 |
+| `inspire_sweep_omni_v3/2026-10-15_16-53-58_height_gated_xy_reach` | `Isaac-Inspire-Sweep-Omni-v3/2026-10-15_16-53-58_height_gated_xy_reach` | 7850 | 미조회 |
+
+### 문서 검사 결과
+
+이번 이동으로 달라진 10월 14일 진단 로그의 Baseline·Realistic Physics run 링크 두 개를 백업 위치로 갱신했다. `python 00_guidelines/scripts/check_markdown_math.py`에 수정 Markdown 두 파일을 전달했고 `git diff --check`를 실행했다. 내부 링크 검사도 실행했다. `check_document_links.py --check-external`은 이번 이동 링크 수정 후에도 작업 전부터 없던 Omni v0 run 폴더와 루트 DexTouch PDF 참조 두 개 때문에 실패한다. 두 자료는 이번 TEMP 입력에 없었으며 임의 대체하지 않았다.
