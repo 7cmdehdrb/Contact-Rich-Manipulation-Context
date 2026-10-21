@@ -2,7 +2,7 @@
 
 [활성 환경](../08_ACTIVE_ENVIRONMENTS.md#contact-sweep-clutter-fusion-v3--2026-10-21) · [로그 목록](README.md) · [실행·수치 안내](../../../../src/inspire_sweep_baseline/README.md#contact-sweep-clutter-fusion-v3--수치-일정-변경) · [최초 v1 기록](2026-10-21_clutter_fusion_v1.md)
 
-기준일: 2026-10-21. 사용자 요청에 따라 기존 `v0 → v1`, `v0 → v2`를 **`v0 → v2 → v3`**으로 재구성했다. v2는 v0에서 EEF orientation 보상만 제거한다. 최신 사용자 정정에 따라 push_fast는 v2=0.8을 유지하고 v3에서만 1.5를 적용한다. v3은 커리큘럼과 push_fast 두 조건을 변경한다.
+기준일: 2026-10-21. 사용자 요청에 따라 기존 `v0 → v1`, `v0 → v2`를 **`v0 → v2 → v3`**으로 재구성했다. v2는 v0에서 EEF orientation 보상만 제거한다. 최신 사용자 지시에 따라 push_fast는 v0·v2·v3 모두 0.8로 고정한다. v3은 커리큘럼만 변경한다. [현재 버전 비교 문서](../environments/CONTACT_SWEEP_CLUTTER_FUSION_VERSIONS.md)를 따른다.
 
 ## 기준 상태와 변경
 
@@ -19,11 +19,11 @@
 | --- | --- | --- |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v0` | Isaac Lab `ManagerBasedRLEnvCfg` | 독립 Fusion 기준 |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v2` | `ContactSweepClutterFusionEnvCfg` | `eef_orientation=None` |
-| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v3` | `ContactSweepClutterFusionV2EnvCfg` | curriculum을 `ContactSweepClutterFusionV3CurriculumCfg`로 교체, `push_fast=1.5` |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v3` | `ContactSweepClutterFusionV2EnvCfg` | curriculum을 `ContactSweepClutterFusionV3CurriculumCfg`로 교체, `push_fast=0.8` 유지 |
 
 PPO Cfg도 Fusion v0 → v2 → v3을 따른다. v3의 experiment 이름은 `inspire_contact_sweep_clutter_fusion_v3`이며, runtime은 기존 `ContactSweepClutterFusionEnv`, runner는 `CurriculumOnPolicyRunner`다. Curriculum Cfg는 v2가 그대로 사용하는 v0의 `ContactSweepClutterFusionCurriculumCfg`를 확장한다. 별도 v2 Curriculum 클래스는 만들지 않는다.
 
-v3의 관측 policy55D·obstacles40D·Critic 추가 privileged3D, Action 8D, 제어·Scene·reset·보상 설정은 v2와 같다. `eef_orientation=None`이며, 종료 설정은 push_fast만 v2의 0.8에서 v3의 1.5로 변경한다. v2에 1.5를 추가했던 변경은 사용자 정정으로 취소했다.
+v3의 관측 policy55D·obstacles40D·Critic 추가 privileged3D, Action 8D, 제어·Scene·reset·보상 설정은 v2와 같다. `eef_orientation=None`이며, 종료 설정도 v2와 동일하며 push_fast=0.8을 유지한다. v2에 1.5를 추가했던 변경은 사용자 정정으로 취소했다.
 
 현재 v0/v2의 보상 커리큘럼은 300 간격이며 goal hold=500·interval=200이다. 기존 테스트와 문서가 이전 500 간격·hold=1000을 기대하고 있어, 현재 코드에 맞게 기대값·문서만 수정했다. 이 작업에서 v0의 수치를 바꾼 것은 아니다.
 
@@ -73,8 +73,18 @@ logs/backup/Isaac-Inspire-Contact-Sweep-Clutter-Curriculum-v1/2026-10-20_22-49-3
 
 위 관련 CPU 검사 명령을 다시 실행한 결과 **33 passed**(1.59초)였다. 실제 GPU 실행은 미검증이다.
 
-## 최종 사용자 정정: v3에서만 push_fast=1.5
+## 과거 사용자 정정: v3에서만 push_fast=1.5 — 이후 0.8 고정으로 대체
 
 사용자가 직전 지시를 정정하여 v2의 push_fast override를 제거하고, v3의 `__post_init__`에서 부모 초기화 후 `self.terminations.push_fast.params["speed_condition"] = 1.5`를 적용했다. 현재 값은 v0=0.8, v2=0.8, v3=1.5다. EEF orientation 제거는 v2에, 변경된 커리큘럼과 push_fast=1.5는 v3에 둔다.
 
 상속 검사를 갱신하여 v2=0.8·v3=1.5, 부모 격리와 두 차이(curriculum·push_fast)만 존재하는지 확인했다. 위 관련 CPU 검사 명령의 최신 결과는 **33 passed**(1.83초)다. 실제 GPU 실행은 미검증이다.
+
+## 최신 확정: push_fast=0.8 고정과 버전 비교 문서 추가
+
+사용자가 모든 버전의 `push_fast.speed_condition`을 0.8로 고정하고, 기본 환경 설명과 별도로 버전 차이를 정리하도록 요청했다. [버전 비교 문서](../environments/CONTACT_SWEEP_CLUTTER_FUSION_VERSIONS.md)에 v0 → v2 → v3 상속, orientation 텀 제거, 5개→11개 커리큘럼, 일정·단위·경계·최종값과 공통 설정을 작성했다. 기존 기본 환경 문서의 커리큘럼 표도 현재 v0 코드(보상 300 간격, goal hold=500)에 맞췄다.
+
+이 작업 시작 시 Workspace HEAD는 `7bff9a4fcb113842e49ef0a7f21a7aa98fa35832`, 문서 submodule HEAD는 `9673a059c325aa6bbb009ae3b605dc32a7790591`이었다. 사용자가 이미 v3 Env Cfg를 0.8로 수정한 상태였다. 해당 수치를 보존하고 docstring과 상속 검사를 맞췄다. 현재 v0=0.8, v2=0.8, v3=0.8이며 v3과 v2의 동작 차이는 커리큘럼뿐이다.
+
+위 관련 CPU 검사 명령을 실행한 최신 결과는 **33 passed**(1.61초)다. 부모 격리와 세 버전의 push_fast=0.8, v3의 curriculum만 교체되는지 확인했다. 실제 GPU 학습·재생은 미실행이며 새로운 run·checkpoint를 생성하거나 기존 학습 로그를 정리하지 않았다.
+
+변경 Markdown 9파일에 대한 수식 검사, 변경 submodule Markdown 8파일에 대한 workspace 외부 링크 포함 링크 검사, 양쪽 저장소의 `git diff --check`가 모두 통과했다.

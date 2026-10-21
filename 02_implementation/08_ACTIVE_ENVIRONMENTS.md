@@ -851,13 +851,13 @@ v1 위에 양의 보상 두 항을 추가하고 성공 종료는 비활성화했
 
 ## Contact Sweep Clutter Fusion v3 — 2026-10-21
 
-현재 상속은 **Fusion v0 → v2 → v3**다. v2는 v0의 EEF orientation 보상만 제거한다. v3은 v2에서 커리큘럼과 push_fast 임계값을 변경한다. 기존 Fusion v1의 패키지·클래스·task ID·experiment 이름을 v3으로 변경했으며 v1 task 등록은 제거했다. 기존 학습 로그·checkpoint는 이동하거나 삭제하지 않았다.
+현재 상속은 **Fusion v0 → v2 → v3**다. v2는 v0의 EEF orientation 보상만 제거한다. v3은 v2에서 커리큘럼만 변경한다. push_fast는 v0·v2·v3 모두 0.8로 고정한다. 기존 Fusion v1의 패키지·클래스·task ID·experiment 이름을 v3으로 변경했으며 v1 task 등록은 제거했다. 기존 학습 로그·checkpoint는 이동하거나 삭제하지 않았다.
 
-`contact_sweep_clutter_fusion_v3.env_cfg:ContactSweepClutterFusionV3EnvCfg`는 v2 Env Cfg를 상속하고 curriculum 교체와 push_fast=1.5를 적용한다. `ppo_cfg:ContactSweepClutterFusionV3PPORunnerCfg`도 v2 PPO Cfg를 상속하고 experiment 이름을 `inspire_contact_sweep_clutter_fusion_v3`로 지정한다. Runtime과 runner는 기존 Fusion Env·`CurriculumOnPolicyRunner`를 재사용한다. `curriculum_cfg:ContactSweepClutterFusionV3CurriculumCfg`는 v2가 사용하는 v0 Curriculum Cfg를 확장한다.
+`contact_sweep_clutter_fusion_v3.env_cfg:ContactSweepClutterFusionV3EnvCfg`는 v2 Env Cfg를 상속하고 curriculum을 교체한다. push_fast=0.8을 유지한다. `ppo_cfg:ContactSweepClutterFusionV3PPORunnerCfg`도 v2 PPO Cfg를 상속하고 experiment 이름을 `inspire_contact_sweep_clutter_fusion_v3`로 지정한다. Runtime과 runner는 기존 Fusion Env·`CurriculumOnPolicyRunner`를 재사용한다. `curriculum_cfg:ContactSweepClutterFusionV3CurriculumCfg`는 v2가 사용하는 v0 Curriculum Cfg를 확장한다.
 
 기존 v1의 사용자 수정 커리큘럼을 보존했다. 보상 일정은 500에서 첫 증감 후 200 간격이다. Pushing 0.1→0.03(−0.01), Arm 1.0→0.7(−0.02), action weight −0.03→−0.06(−0.005), EEF 1.5→0.3(−0.02), contact 두 항 각각 0.4→2.0(+0.02)를 적용한다. Wrench free force/moment는 2000/100→1000/50(−50/−2.5), saturation force/moment는 5000/250→2500/125(−125/−6.25)다. Goal deadzone은 ±60°·1000 유지·100 간격으로 1100부터 줄어 7000에 제거된다.
 
-`eef_orientation=None`과 나머지 보상·종료·관측·Action·Scene·reset은 v2를 상속한다. push_fast는 v2의 0.8을 v3에서만 1.5로 변경한다. [수치·검증 기록](logs/2026-10-21_clutter_fusion_v3.md)과 [실행 안내](../../../src/inspire_sweep_baseline/README.md#contact-sweep-clutter-fusion-v3--수치-일정-변경)를 따른다.
+`eef_orientation=None`과 나머지 보상·종료·관측·Action·Scene·reset은 v2를 상속한다. push_fast는 모든 버전에서 0.8로 고정한다. [버전별 변경 비교](environments/CONTACT_SWEEP_CLUTTER_FUSION_VERSIONS.md)를 따른다. [수치·검증 기록](logs/2026-10-21_clutter_fusion_v3.md)과 [실행 안내](../../../src/inspire_sweep_baseline/README.md#contact-sweep-clutter-fusion-v3--수치-일정-변경)를 따른다.
 
 ```bash
 ./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \

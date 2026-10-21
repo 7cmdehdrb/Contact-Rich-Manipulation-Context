@@ -2,7 +2,7 @@
 
 [활성 환경](../08_ACTIVE_ENVIRONMENTS.md#contact-sweep-clutter-fusion-v2--2026-10-21) · [로그 목록](README.md) · [패키지 실행 안내](../../../../src/inspire_sweep_baseline/README.md#contact-sweep-clutter-fusion-v2--eef-자세-보상-제거)
 
-기준일: 2026-10-21. 최초 요청으로 Fusion v1을 상속하여 EEF orientation 보상을 제거했다. 같은 날 후속 사용자 지시에 따라 **현재 부모는 Fusion v0**로 변경했다. push_fast=1.5를 추가했던 요청은 사용자 정정으로 취소하고, v2는 0.8을 유지하며 v3에서만 1.5를 적용한다. 아래 환경 계약은 현재 기준이며 최초 검사 결과는 별도로 구분한다.
+기준일: 2026-10-21. 최초 요청으로 Fusion v1을 상속하여 EEF orientation 보상을 제거했다. 같은 날 후속 사용자 지시에 따라 **현재 부모는 Fusion v0**로 변경했다. 최신 사용자 지시에 따라 push_fast는 v0·v2·v3 모두 0.8로 고정한다. 아래 환경 계약은 현재 기준이며 최초 검사 결과는 별도로 구분한다.
 
 ## 코드와 상속
 
@@ -22,7 +22,7 @@ Runtime은 기존 `contact_sweep_clutter_fusion.env:ContactSweepClutterFusionEnv
 - `shelf_collision`: 선반 이동 속도·손목 높이. EEF 자세를 직접 판정하지 않는다.
 - `push_fast`, `hand_velocity`(실제 Arm 관절 속도), `shelf_displacement`, `time_out`: 각각 물체 속도·Arm 속도·선반 이동·시간 조건이다.
 
-따라서 제거할 직접 연관 termination은 없고 모든 종료 조건을 v0에서 상속한다. `push_fast.speed_condition=0.8`이며 v3은 이를 1.5로 override한다. 코드 근거는 Fusion의 `terminations_cfg.py`, 로컬 `mdp/terminations.py`, `contact_sweep_clutter/mdp.py`다.
+따라서 제거할 직접 연관 termination은 없고 모든 종료 조건을 v0에서 상속한다. `push_fast.speed_condition=0.8`이며 v3도 같은 값을 유지한다. 코드 근거는 Fusion의 `terminations_cfg.py`, 로컬 `mdp/terminations.py`, `contact_sweep_clutter/mdp.py`다.
 
 ## 실행
 

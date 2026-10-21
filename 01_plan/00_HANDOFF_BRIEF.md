@@ -1,6 +1,6 @@
 # Blind Sweeping — 단일 파일 인계 요약
 
-**2026-10-21 Fusion 상속 재구성:** 현재 체인은 Fusion v0 → v2 → v3이다. v2는 EEF orientation 보상만 제거하며 push_fast=0.8을 유지한다. v3은 v2에서 커리큘럼과 push_fast=1.5를 적용한다. 기존 Fusion v1은 v3으로 재작명했으며 사용자 수정 일정은 보존했다. [현재 계약·검증](../02_implementation/logs/2026-10-21_clutter_fusion_v3.md)을 따른다.
+**2026-10-21 Fusion 상속 재구성:** 현재 체인은 Fusion v0 → v2 → v3이다. v2는 EEF orientation 보상만 제거하며 push_fast=0.8을 유지한다. v3은 v2에서 커리큘럼만 변경하며 push_fast는 모든 버전에서 0.8로 고정한다. 기존 Fusion v1은 v3으로 재작명했으며 사용자 수정 일정은 보존했다. [현재 계약·검증](../02_implementation/logs/2026-10-21_clutter_fusion_v3.md)을 따른다.
 
 **2026-10-21 Clutter Fusion:** 사용자 확인에 따라 Curriculum v1과 v2 보정 F/T를 결합한 독립 `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v0`를 추가했다. 초기 가림·1% flip, policy 55D, 보상 통합·Contact/object 강화, EEF 자세·속도 및 유한 F/T 변화율 비용, 보상·Goal deadzone 커리큘럼을 사용한다. 기존 환경 Cfg를 상속하지 않으며 [계약·계수 근거·검증](../02_implementation/logs/2026-10-21_clutter_fusion.md)을 따른다. 새 학습 성과와는 구분한다.
 
