@@ -1,5 +1,7 @@
 # 개발·실험 진행 로그
 
+- [2026-10-22 Fusion v1_3_1 Goal·접촉 fade 커리큘럼](2026-10-22_clutter_fusion_v1_3_1.md)
+
 - [2026-10-22 Fusion v1_3 선형 커리큘럼](2026-10-22_clutter_fusion_v1_3.md)
 
 - [2026-10-22 Fusion v1_1_2 힘 커리큘럼 실험 분기](2026-10-22_clutter_fusion_v1_1_2.md)

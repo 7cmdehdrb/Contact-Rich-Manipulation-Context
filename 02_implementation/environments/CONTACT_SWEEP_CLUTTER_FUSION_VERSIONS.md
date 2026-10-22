@@ -15,6 +15,7 @@ flowchart LR
     V11 --> V111["Fusion v1_1_1: 힘 허용치 고정·가속도 실험"]
     V11 --> V112["Fusion v1_1_2: 큰 가속도 허용치 고정"]
     V11 --> V13["Fusion v1_3: point 선형 보간"]
+    V13 --> V131["Fusion v1_3_1: Goal・fade 커리큘럼"]
     V11 --> V12["Fusion v1_2: Goal 반경 2단계·접촉 fade"]
 ```
 
@@ -257,3 +258,9 @@ v1_1을 직접 상속한다. v1_1_1과 반대로 장애물 무료 힘100→50N(1
 사용자 확인에 따라 v1_1을 직접 상속한 별도 분기다. Goal1cm·fade0·PPO·기타 비용/종료는 유지한다. 장애물 힘 points는(1000,200N)→(5000,100N)→(10000,50N), wrench는(1000,1000N/100Nm)→(5000,500N/50Nm)→(10000,100N/10Nm)→(20000,5N/0.5Nm), 가속도는(2000,100)→(5000,20)→(10000,10)→(20000,5)m/s²다.
 
 250주기 계단을 제거하고 매 iteration 선형 보간한다. 첫 point까지 유지·최종 point 이후 고정한다. 보상 초기값도 첫 point와 일치한다. 보상17·커리큘럼9·종료6항이며 독립 RewardsCfg/CurriculumCfg를 사용한다. [독립 구성](CONTACT_SWEEP_CLUTTER_FUSION_V1_3_ENVIRONMENT.md) · [검증 기록](../logs/2026-10-22_clutter_fusion_v1_3.md)
+
+## v1_3_1: Goal 반경·접촉 fade width
+
+v1_3을 직접 상속한다. Goal hold 반경은(5000,0.02),(10000,0.01),(20000,0.005)m, hand contact fade width는(5000,0.001),(10000,0.01)m points로 선형 보간한다. 첫 점까지 유지하고 마지막 점 이후 고정한다. Fade 계산은 현재 Goal 반경과 동기화된다. 나머지 모든 보상·커리큘럼·종료·PPO는 유지하며 experiment 이름을 분리한다. 보상17·커리큘럼11·종료6항이다.
+
+[환경 구성](CONTACT_SWEEP_CLUTTER_FUSION_V1_3_1_ENVIRONMENT.md) · [검증 기록](../logs/2026-10-22_clutter_fusion_v1_3_1.md)

@@ -967,3 +967,11 @@ Workspace 루트에서 `./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scr
 `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3`은 v1_1 EnvCfg/PPOCfg를 직접 상속하며 독립 Reward/Curriculum CFG와 공용 v1_0 runtime을 사용한다. 장애물 힘·wrench 힘/모멘트·가속도 무료 기준을 point 기반 선형 보간으로 교체한다. Goal1cm 고정·fade0·나머지 커리큘럼·보상·종료는 유지한다. PPO는 experiment 이름만 바꾼다. 상세 point는 [환경 구성](environments/CONTACT_SWEEP_CLUTTER_FUSION_V1_3_ENVIRONMENT.md)을 따른다.
 
 Workspace 루트에서 `./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train_resilient.py --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3 --num_envs 2048 --headless --max_iterations 90000`를 사용한다. Play는 `scripts/play.py --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3 --checkpoint <절대경로> --num_envs 1`이다. [검증 기록](logs/2026-10-22_clutter_fusion_v1_3.md).
+
+## Contact Sweep Clutter Fusion v1_3_1 — 2026-10-22
+
+`Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3_1`: v1_3 EnvCfg/PPOCfg를 직접 상속하고 독립 RewardsCfg/CurriculumCfg를 사용한다. Runtime은 공용 v1_0이다. Goal hold2cm와 fade1mm를5000까지 유지한다. 이후 Goal hold는10000에서1cm·20000에서0.5cm, fade는10000에서1cm로 매 iteration 선형 변화한다. 현재 Goal 반경을 읽어 접촉 alpha를 동기화한다. 기존9개 커리큘럼·나머지 보상·종료·PPO는 유지한다.
+
+Workspace 루트에서 `./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train_resilient.py --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3_1 --num_envs 2048 --headless --max_iterations 90000`를 사용한다. Play는 `scripts/play.py --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3_1 --checkpoint <절대경로> --num_envs 1`이다.
+
+[환경 구성](environments/CONTACT_SWEEP_CLUTTER_FUSION_V1_3_1_ENVIRONMENT.md) · [검증 기록](logs/2026-10-22_clutter_fusion_v1_3_1.md)
