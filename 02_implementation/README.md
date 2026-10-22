@@ -10,7 +10,8 @@
 | --- | --- |
 | [코드·장비 상태](07_CODE_AND_HARDWARE_STATUS.md) | 코드와 하드웨어 준비 상태 및 확인 근거 |
 | [활성 환경 안내](08_ACTIVE_ENVIRONMENTS.md) | 활성 패키지·환경 상속·observation/action/controller/reward/termination/reset와 실행 명령 |
-| [Fusion v0 → v2 → v3 변경 비교](environments/CONTACT_SWEEP_CLUTTER_FUSION_VERSIONS.md) | EEF orientation 제거·커리큘럼 일정 비교·push_fast=0.8 고정·상속과 실행 |
+| [Fusion v0 → v2 → v3 → v1_0 변경 비교](environments/CONTACT_SWEEP_CLUTTER_FUSION_VERSIONS.md) | 단계별 보상·커리큘럼·장애물·wrench 변화와 상속·실행 |
+| [Contact Sweep Clutter Fusion v1_0 환경 설명](environments/CONTACT_SWEEP_CLUTTER_FUSION_V1_0_ENVIRONMENT.md) | v1_0 자체의 Scene·관측·Action·17개 보상·6개 종료·9개 curriculum·학습 복구 |
 | [Contact Sweep Clutter Fusion 환경 설명](environments/CONTACT_SWEEP_CLUTTER_FUSION_ENVIRONMENT.md) | Scene 의도·Actor/Critic 관측과 노이즈/Frame·Action 범위·15개 보상 수치·종료·커리큘럼의 독립 설명 |
 | [Contact Sweep Clutter v1 MDP](environments/CONTACT_SWEEP_CLUTTER_V1_MDP.md) | v1 자체의 관측·8D Action·14개 보상·상태 전이·종료를 설명하는 독립 문서 |
 | [Contact Sweep와 Clutter 구성](environments/CONTACT_SWEEP_ENVIRONMENTS.md) | 두 v0 환경의 공통 제어·물성·관측·보상·종료와 장애물 배치·MLP·실행 비교 |

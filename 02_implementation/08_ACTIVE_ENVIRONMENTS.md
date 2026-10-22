@@ -35,6 +35,7 @@
 | `Isaac-Inspire-Contact-Sweep-Clutter-Curriculum-v1` | `ContactSweepClutterV1CurriculumEnvCfg` | `ContactSweepClutterV1CurriculumPPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_v1_curriculum` |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v0` | `ContactSweepClutterFusionEnvCfg` | `ContactSweepClutterFusionPPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion` |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v3` | `ContactSweepClutterFusionV3EnvCfg` | `ContactSweepClutterFusionV3PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_v3` |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_0` | `ContactSweepClutterFusionV1_0EnvCfg` | `ContactSweepClutterFusionV1_0PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_v1_0` |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v2` | `ContactSweepClutterFusionV2EnvCfg` | `ContactSweepClutterFusionV2PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_v2` |
 | `Isaac-Inspire-Sweep-Baseline-v0` | `InspireSweepEnvCfg` | `InspireSweepPPORunnerCfg` | `logs/rsl_rl/inspire_sweep_baseline` |
 | `Isaac-Inspire-Sweep-Realistic-Physics-v0` | `InspireSweepRealisticPhysicsEnvCfg` | `InspireSweepRealisticPhysicsPPORunnerCfg` | `logs/rsl_rl/inspire_sweep_realistic_physics` |
@@ -849,7 +850,32 @@ v1 위에 양의 보상 두 항을 추가하고 성공 종료는 비활성화했
   --checkpoint "<fusion-v2-checkpoint.pt>"
 ```
 
+## Contact Sweep Clutter Fusion v1.0 — 2026-10-22
+
+현재 구성 전체는 [v1_0 독립 환경 설명](environments/CONTACT_SWEEP_CLUTTER_FUSION_V1_0_ENVIRONMENT.md), 단계별 차이는 [v0 → v2 → v3 → v1_0 비교](environments/CONTACT_SWEEP_CLUTTER_FUSION_VERSIONS.md)에서 확인한다.
+
+`Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_0`의 Env/PPO Cfg는 v3을 직접 상속한다. 전체 체인은 **v0 → v2 → v3 → v1_0**이며 이후 v1_1의 기반이다. 보상·종료·커리큘럼은 각각 독립 `ContactSweepClutterFusionV1_0*Cfg` 클래스를 새로 선언하고, 실행 클래스는 `ContactSweepClutterFusionV1_0Env` → `ContactSweepClutterFusionEnv`, runner는 `CurriculumOnPolicyRunner`다. Experiment 이름은 `inspire_contact_sweep_clutter_fusion_v1_0`이다.
+
+관측55/40/3D·Action8D·기존 tactile17D와 제어를 유지한다. 30개 Hand 바디 전체의 resultant normal contact force≥0.01N에 rate+0.29를 지급하되, 현재 Goal hold tolerance 안에서는0, 그 경계+3cm에서1이 되는 선형 alpha를 곱한다. 물체별 필터로 타겟 외 장애물의 Net Force>20N에 지수 비용을 부여한다. F/T는 관측과 같은 EEF 기준점에서 Force/Moment 크기의 절대 변화량을 사용한다. 타겟 포함 활성 물체별 가속도 크기에 지수 비용을 합산하며 급감속도 포함한다. Isaac Lab `object_com_lin_acc_w`의 마지막 물리 step COM 선가속도를 직접 사용하며 물체당 raw 비용 상한100(최종7개 합700)을 유지한다. [가속도 상한·native API 검증](logs/2026-10-22_clutter_fusion_v1_0_native_acceleration.md)을 따른다. raw 운동 페널티 네 항은 로컬 함수·고정 계수로 분리하며, 기존 tactile 두 보상과 weight 커리큘럼·통합 action-rate weight 커리큘럼은 새 CFG에서 제외한다. Termination 여섯 항은 v3 기준을 사용하되 물체 낙하·기울기는 활성 물체만 검사하며 push_fast=0.8이다.
+
+Deadzone30°·hold3000·500마다5° 감소(첫3500), Goal hold tolerance0.05→0.01m(1000부터500마다0.01), wrench 변화량50→10N 및5→1N·m(1000부터250마다1/0.1), 가속도0.3→0.05m/s²(1000부터250마다0.01)를 적용한다. 기존 v3의 pushing/Arm/EEF free-speed 일정은 유지한다. [전체 계약·계수 근거·CPU/GPU 검증](logs/2026-10-22_clutter_fusion_v1_0.md)을 따른다.
+
+후속 수정의 장애물 개수는 Gray1/White1에서 시작하여 White는3000·6000, Gray는4500·7500에서 늘어나 최종 Gray3/White3/Target1이다. 최대 capacity는 EnvCfg의 `max_gray_obstacles`·`max_white_obstacles`, 일정은 `curriculum.obstacle_population.params`에서 조정한다. 기존40D의10개 슬롯을 유지하고 비활성 물체는 관측·가림·보상·종료에서 제외한다. [최신 변경·복구 검증](logs/2026-10-22_clutter_fusion_v1_0_population_recovery.md)이 최초 v1.0 계약 중 관련 항목을 대체한다.
+
+자동 복구는 `scripts/train_resilient.py --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_0 --max_iterations 90000 --headless`를 Isaac Lab Python으로 실행한다. 최신 checkpoint−500 이하의 유효 파일에서 새 프로세스로 재개하고, checkpoint iteration의 커리큘럼을 적용한 뒤 reset한다. 절대 목표·기본 최대10회 재시작·Ctrl+C 종료·독립 attempt 폴더와 기존 파일 보존 규칙을 사용한다. 저장 위치는 `logs/resilient/<task>/<UTC시각_uuid>`이며 일반 train.py의 experiment 경로와 구분한다.
+
+```bash
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
+  --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_0 --num_envs 2048 --headless
+
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/play.py \
+  --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_0 --num_envs 1 \
+  --checkpoint "<v1_0-checkpoint.pt>"
+```
+
 ## Contact Sweep Clutter Fusion v3 — 2026-10-21
+
+2026-10-22 추가: 지정 `model_7200.pt`의 16환경 F/T·물체 선속도 수집은 [`collect_fusion_telemetry.py`](../../../src/inspire_sweep_baseline/scripts/collect_fusion_telemetry.py)를 사용한다. v3 등록 Cfg·`CurriculumOnPolicyRunner`와 checkpoint iteration을 유지하고, 실행 클래스만 `ContactSweepClutterFusionEnv` → `ContactSweepClutterFusionTelemetryEnv`로 확장한다. 등록 ID·Manager 구성·관측·보상은 동일하며 전체 step loop를 복제하지 않는다. 매 제어 step(0.02초)에 월드·EEF 축 보정 F/T와 Target·장애물 3개의 월드 축 선속도를 환경별 열로 저장한다. 종료 표본을 reset 전에 보존하고 `episodes.csv`로 차분 경계를 구분한다. [실행·CSV 계약](../../../src/inspire_sweep_baseline/README.md#fusion-v3-ft물체-선속도-csv-수집), [수집·검증 기록](logs/2026-10-22_fusion_telemetry.md)을 따른다.
 
 현재 상속은 **Fusion v0 → v2 → v3**다. v2는 v0의 EEF orientation 보상만 제거한다. v3은 v2에서 커리큘럼만 변경한다. push_fast는 v0·v2·v3 모두 0.8로 고정한다. 기존 Fusion v1의 패키지·클래스·task ID·experiment 이름을 v3으로 변경했으며 v1 task 등록은 제거했다. 기존 학습 로그·checkpoint는 이동하거나 삭제하지 않았다.
 

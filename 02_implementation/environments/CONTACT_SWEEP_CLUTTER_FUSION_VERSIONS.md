@@ -1,8 +1,8 @@
-# Contact Sweep Clutter Fusion 버전 비교 — v0 → v2 → v3
+# Contact Sweep Clutter Fusion 버전 비교 — v0 → v2 → v3 → v1_0
 
 [Fusion 기본 환경](CONTACT_SWEEP_CLUTTER_FUSION_ENVIRONMENT.md) · [구현 문서 안내](../README.md) · [활성 환경](../08_ACTIVE_ENVIRONMENTS.md) · [개발·검증 기록](../logs/2026-10-21_clutter_fusion_v3.md)
 
-**기준일: 2026-10-21.** 이 문서는 Fusion의 기본 Scene·관측·제어 설명을 반복하지 않고, 현재 코드에서 확인한 v0·v2·v3의 상속과 차이를 설명한다. 과거에 논의한 push_fast=1.5는 현재 적용하지 않는다. **세 버전 모두 `terminations.push_fast.params["speed_condition"]=0.8`로 고정한다.**
+**기준일: 2026-10-22.** 현재 코드의 상속 순서는 **v0 → v2 → v3 → v1_0**이다. v1_0의 장애물 개수·접촉 alpha·PhysX 직접 가속도·자동 복구 후속 수정까지 포함한다. 환경 자체의 구성은 [v0 설명서](CONTACT_SWEEP_CLUTTER_FUSION_ENVIRONMENT.md)와 [v1_0 독립 설명서](CONTACT_SWEEP_CLUTTER_FUSION_V1_0_ENVIRONMENT.md)를 읽고, 이 문서에서는 단계별 변경을 확인한다. **네 버전 모두 push_fast 종료 기준은 0.8 m/s**이며 비용의 free speed 커리큘럼과 구분한다.
 
 ## 1. 버전의 역할과 상속
 
@@ -10,16 +10,22 @@
 flowchart LR
     V0["Fusion v0: 기준 환경"] --> V2["Fusion v2: EEF orientation 보상 제거"]
     V2 --> V3["Fusion v3: 커리큘럼 변경"]
+    V3 --> V10["Fusion v1_0: 접촉·Goal·wrench·가속도·장애물 개수"]
 ```
 
-| 구분 | v0 | v2 | v3 |
-| --- | --- | --- | --- |
-| Gym task ID | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v0` | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v2` | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v3` |
-| Env Cfg 부모 | Isaac Lab `ManagerBasedRLEnvCfg` | Fusion v0 Cfg | Fusion v2 Cfg |
-| EEF orientation 보상 | 사용, weight −0.02 | 제거 | v2의 제거 상태 상속 |
-| 커리큘럼 | 5개 | v0와 동일 | 11개로 교체·확장 |
-| push_fast 종료 속도 | 0.8 m/s | 0.8 m/s | 0.8 m/s |
-| 학습 experiment 이름 | `inspire_contact_sweep_clutter_fusion` | `inspire_contact_sweep_clutter_fusion_v2` | `inspire_contact_sweep_clutter_fusion_v3` |
+| 구분 | v0 | v2 | v3 | v1_0 |
+| --- | --- | --- | --- | --- |
+| Gym ID의 Fusion 접미사 | `-v0` | `-v2` | `-v3` | `-v1_0` |
+| Env Cfg 부모 | Isaac Lab `ManagerBasedRLEnvCfg` | v0 Cfg | v2 Cfg | v3 Cfg |
+| EEF orientation 비용 | −0.02 | 제거 | 없음 | 없음 |
+| 활성 보상 / 커리큘럼 / 종료 수 | 15 / 5 / 6 | 14 / 5 / 6 | 14 / 11 / 6 | 17 / 9 / 6 |
+| 활성 장애물 Gray / White | 1 / 2 고정 | 1 / 2 고정 | 1 / 2 고정 | 1 / 1 → 3 / 3 |
+| Goal hold 반경 | 1 cm 고정 | 1 cm 고정 | 1 cm 고정 | 5→1 cm |
+| 접촉 보상 | tactile any + count | 동일 | 두 weight 증가 | 손 전체 합력 + Goal 거리 alpha |
+| push_fast 종료 속도 | 0.8 m/s | 0.8 m/s | 0.8 m/s | 0.8 m/s |
+| Experiment 이름 | `inspire_contact_sweep_clutter_fusion` | `inspire_contact_sweep_clutter_fusion_v2` | `inspire_contact_sweep_clutter_fusion_v3` | `inspire_contact_sweep_clutter_fusion_v1_0` |
+
+모든 Gym ID의 공통 앞부분은 `Isaac-Inspire-Contact-Sweep-Clutter-Fusion`이다. v1_0은 v3을 상속하지만 Reward·Termination·Curriculum CFG는 부모 클래스에서 상속하지 않고 독립 클래스로 선언한다. Scene·Event·runtime은 가변 개수의 활성 물체를 관리하도록 구성한다.
 
 기존 Fusion v1은 v3으로 재작명했으며 현재 v1 task 등록은 없다. 기존 v1의 로그·checkpoint는 당시 조건의 결과로 보존한다. v3은 orientation 보상과 커리큘럼 조건이 달라 과거 v1 학습 결과와 같은 실험으로 취급하지 않는다.
 
@@ -99,13 +105,91 @@ v0·v2에서는 아래 네 임계값이 고정이다. v3은 iteration 500에서 
 
 속도·보상 가중치는 rollout 전에 갱신하여 진행 중 episode에도 적용한다. Goal 일정은 다음 reset의 목표 샘플링에만 적용하며 이미 생성된 목표점은 바꾸지 않는다. 반복 reset으로 일정이 중복 진행되지 않는다. Checkpoint 로드 시 저장된 iteration의 단계를 복원하고 재생 중에는 그 단계로 유지한다.
 
-## 4. 세 버전에서 유지하는 설정
+## 4. v3 → v1_0: 보상 입력·물체 수·Goal 허용 범위 변경
 
-세 버전 모두 Actor의 policy55D·초기 obstacles40D, Critic 전용 현재 타겟 위치3D, 8D Action, 로봇·Hand 제어, 물성·초기 배치·센서 모델과 관측 노이즈를 공유한다. 차이는 위 orientation 보상과 커리큘럼이다.
+v1_0은 v3의 Env/PPO 설정을 기반으로 하되 보상·종료·커리큘럼 CFG를 독립 선언한다. 명시되지 않은 부모 항이 자동으로 남는 구성이 아니다. 아래 표는 현재 최종 구현 기준이며, v1_0을 처음 만든 뒤 같은 task에 적용한 추가 수정까지 포함한다.
 
-**`push_fast.speed_condition=0.8`은 세 버전 모두 동일하다.** 타겟의 월드 선속도 3D norm이 0.8 m/s를 초과하면 종료한다. 커리큘럼의 `pushing_speed.free_speed`는 비용이 시작되는 속도이며 이 종료 임계값을 바꾸지 않는다. EEF의 free speed 역시 타겟 속도 종료 조건과 다른 항목이다.
+### 4.1 Scene과 접촉 관측·보상
 
-## 5. 코드 위치와 실행
+| 항목 | v3 | v1_0 |
+| --- | --- | --- |
+| 장애물 수 | Gray1 + White2 고정 | Gray1 + White1로 시작, 최종 Gray3 + White3 |
+| White 증가 | 없음 | 3000·6000에서 1개씩 증가 |
+| Gray 증가 | 없음 | 4500·7500에서 1개씩 증가 |
+| 물체 활성 관리 | 타겟 포함 4개 항상 참여 | 최대 7개 중 episode별 active mask. 다음 reset에서 수 변경 |
+| 가림·보상·물체 종료 | 모든 물체 참여 | 활성 물체만 참여. 가려진 활성 장애물은 계속 비용/종료 대상 |
+| 촉각 17D | 관측과 any/count 보상 | 관측 전용 |
+| 접촉 유지 | tactile ON 여부 | 손 전체 30개 body의 합력 norm ≥ 0.01 N |
+| 접촉 수 보상 | `contact_count`, 5개에서 포화 | 삭제 |
+| 접촉 weight 일정 | 각 0.4→2.0 | 삭제, `hand_contact` weight 0.29 고정 |
+| 목표 근처 접촉 감쇠 | 없음 | `alpha=clamp((d-r)/0.03,0,1)` 곱셈 |
+| 비타겟 접촉력 비용 | 별도 항 없음 | 활성 장애물→손 합력 norm > 20 N부터 지수 비용, raw cap100 |
+
+r은 현재 Goal hold 인정 반경이다. 따라서 목표 반경 안에서는 접촉 유지 보상이0, 반경+3cm 바깥에서는 최대이며 Goal 커리큘럼과 자동 동기화된다. 손 전체 접촉 보상은 타겟·장애물·선반·바닥을 구분하지 않지만, 비타겟 접촉 비용은 타겟·선반·바닥을 제외한 활성 원기둥들만 계산한다. 두 접촉력은 법선력 벡터를 먼저 합한 뒤 norm을 구한다.
+
+최대 Gray/White 용량과 일정은 설정으로 조정하며 장애물 관측은 계속40D다. 비활성 슬롯은0으로 만들고 가림·1% visibility flip·비용·낙하/전도 판정에서 제외한다. 추가 Gray는 모두 뒤쪽으로 몰지 않고, 첫1개만 후방 조건을 적용하며 나머지는 일반 Gray 영역을 사용한다.
+
+### 4.2 목표와 운동 비용
+
+| 항목 | v3 | v1_0 |
+| --- | --- | --- |
+| Goal hold 반경 | 0.01 m 고정 | 0.05→0.01 m, 1000부터500마다−0.01, 2500에 최종 |
+| Goal progress tolerance | 0.01 m | 0.01 m 고정 유지 |
+| Goal deadzone | 60°, hold1000, 100마다1° 감소 | 30°, hold3000, 500마다5° 감소 |
+| 첫 deadzone 감소 / 0° 도달 | 1100 / 7000 | 3500 / 6000 |
+| Action 변화 비용 | Arm/Hand 합산 `action_rate`, weight−0.03→−0.06 | Arm/Hand 독립 두 항, 각각−0.03 고정 |
+| 관절 속도 제곱 비용 | `joint_velocity` 한 항으로 합산, Arm−0.03·Hand−0.01 | Arm/Hand 독립 두 항, −0.03/−0.01 고정 |
+| 물체 가속도 비용 | 없음 | PhysX COM 선가속도 norm에 물체별 지수 비용, 활성 합산 |
+| 가속도 무료 기준 | 없음 | 0.30→0.05 m/s², 1000부터250마다−0.01, 7000에 최종 |
+
+운동 네 항은 raw Action 변화량·실제 관절 속도의 제곱합과 그룹별 cap100을 사용한다. Action weight 커리큘럼은 제거한다. 타겟·Arm·EEF의 free-speed 일정은 v3과 같으며 각각0.10→0.03m/s, 1.0→0.7rad/s, 1.5→0.3m/s다. 현재 코드의 `pushing_speed` weight는 v3·v1_0 모두−5이므로 이 전환의 차이로 취급하지 않는다.
+
+가속도는 현재 `object_com_lin_acc_w`로 마지막 물리 step의 월드 COM 값을 직접 읽는다. 초기 v1_0 작업 중 사용한 속도 차분은 이후 같은 task에서 교체됐다. 급감속도 포함하고 물체당 raw 상한100, 최종7개 합700으로 제한한다. 0.5m/s²에서 MAX가 되는 곡선은 아니다. 이미 상한이 존재했기 때문에 조건부 포화점 변경은 적용하지 않았다.
+
+### 4.3 Wrench 변화 비용
+
+| 구분 | v3 | v1_0 |
+| --- | --- | --- |
+| 입력 | 보정 F/T의 world 축 벡터 | 관측과 동일한 보정 EEF 축 표본 |
+| 모멘트 기준점 | EEF | EEF |
+| 힘 변화량 | `norm(F_current−F_previous)/dt` | `abs(norm(F_current)−norm(F_previous))` |
+| 모멘트 변화량 | 벡터 변화율 norm | 모멘트 크기 차의 절댓값 |
+| 단위 | N/s, N·m/s | N, N·m |
+| 초기 무료 기준 | 2000 N/s, 100 N·m/s | 50 N, 5 N·m |
+| 최종 무료 기준 | 1000 N/s, 50 N·m/s | 10 N, 1 N·m |
+| 감소 일정 | 500부터200마다 | 1000부터250마다1 N / 0.1 N·m 감소 |
+| 최종 도달 | 4300 | 10750 |
+| 포화 기준 | 별도 두 curriculum, 5000→2500 N/s 및250→125 N·m/s | 현재 무료 기준의2.5배, 125→25 N 및12.5→2.5 N·m |
+
+기준점이 새로 EEF로 이동한 것이 아니라 **축·참조 표본과 변화량의 정의**가 바뀐 것이다. v1_0은 힘 방향만 바뀌고 크기가 같으면 비용을 주지 않는다. 두 버전 모두 normalized exponential의 raw cap1, weight−0.1, sharpness3, episode 누적 양의 보상 대비5% 예산 제한을 사용한다.
+
+### 4.4 항목 수와 종료 조건
+
+보상은14개에서17개로 바뀐다. Tactile 두 항을 손 전체 한 항으로 바꾸어1개 감소하고, Action/관절 속도 통합 두 항을 네 항으로 분리하여2개 증가하며, 장애물 힘·물체 가속도 두 항을 추가해 최종17개다.
+
+커리큘럼은11개에서9개다. 속도 세 항과 deadzone 한 항을 두고, action weight 한 항·tactile weight 두 항을 제거한다. Wrench 네 기준 일정은 무료 force/moment 두 일정으로 바꾸고, Goal tolerance·물체 가속도·population 세 항을 추가한다. Population 한 항 안에 Gray/White 두 일정이 있다.
+
+종료는6개이며 수치 기준은 유지한다. 다만 물체 낙하/전도 판정은 활성 물체만 대상으로 하는 함수로 명시한다. `push_fast=0.8`, Arm 속도5rad/s, 손목 여유3cm, 선반 변위5cm 및10초 timeout을 유지하고 성공 즉시 종료는 없다.
+
+### 4.5 실행기와 재개
+
+v1_0과 함께 `train_resilient.py`를 추가했다. 이는 새로운 환경 ID나 PPO 알고리즘 변경이 아니라 다른 task에도 지정할 수 있는 학습 supervisor다. 미완료 종료 시 최신 저장 checkpoint−500 이하의 유효 파일에서 새 프로세스로 재개하고, 복원 iteration의 커리큘럼을 적용한 뒤 reset한다. 전체 목표를 절대 iteration으로 해석하고 기본 최대10회 재시작한다.
+
+```bash
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train_resilient.py \
+  --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_0 \
+  --num_envs 2048 --headless --max_iterations 90000
+```
+
+일반 train의 experiment 경로와 supervisor의 `logs/resilient/<task>/<job>/attempt_*`는 구분한다. 상세 복구·중단·checkpoint 검사 규칙은 [v1_0 학습 실행](CONTACT_SWEEP_CLUTTER_FUSION_V1_0_ENVIRONMENT.md#7-정책과-학습-실행)과 [복구 검증 기록](../logs/2026-10-22_clutter_fusion_v1_0_population_recovery.md)을 따른다.
+
+## 5. 네 버전에서 유지하는 설정
+
+네 버전 모두 Actor의 policy55D·초기 obstacles40D, Critic 전용 현재 타겟 위치3D, 8D Action, 로봇·Hand 제어, 타겟/Goal 기본 샘플링, 물성 랜덤화 및 기존 관측 노이즈를 사용한다. 물리 주기0.01초·제어 주기0.02초·최대 episode10초도 같다. v1_0은 장애물 개수·활성 mask·보상용 접촉 센서를 확장하지만 정책 입력 차원을 늘리지 않는다.
+
+**`push_fast.speed_condition=0.8`은 네 버전 모두 동일하다.** 타겟의 월드 선속도 3D norm이 0.8 m/s를 초과하면 종료한다. 커리큘럼의 `pushing_speed.free_speed`는 비용이 시작되는 속도이며 이 종료 임계값을 바꾸지 않는다. EEF의 free speed 역시 타겟 속도 종료 조건과 다른 항목이다.
+
+## 6. 코드 위치와 실행
 
 코드 루트는 Workspace의 `src/inspire_sweep_baseline/inspire_sweep_baseline`이다.
 
@@ -115,11 +199,13 @@ v0·v2에서는 아래 네 임계값이 고정이다. v3은 iteration 500에서 
 | `contact_sweep_clutter_fusion_v2/env_cfg.py` | v0 상속, `eef_orientation=None` |
 | `contact_sweep_clutter_fusion_v3/env_cfg.py` | v2 상속, v3 curriculum 지정, push_fast=0.8 유지 |
 | `contact_sweep_clutter_fusion_v3/curriculum_cfg.py`, `curriculum.py` | v3의 11개 일정과 지연 시작 함수 |
-| 각 버전의 `ppo_cfg.py` | v0 → v2 → v3 PPO 상속, experiment 이름 분리 |
+| `contact_sweep_clutter_fusion_v1_0/` | v1_0 Env/Scene/Event·독립 Reward/Termination/Curriculum·활성 물체 runtime |
+| 각 버전의 `ppo_cfg.py` | v0 → v2 → v3 → v1_0 PPO 상속, experiment 이름 분리 |
+| `scripts/train_resilient.py`, `training_recovery.py` | 절대 목표 iteration·checkpoint 선택·커리큘럼 복원을 포함한 재사용 실행기 |
 
-세 task 모두 기존 `ContactSweepClutterFusionEnv` runtime과 `CurriculumOnPolicyRunner`를 사용한다. v2는 v0 Curriculum Cfg를 그대로 상속하므로 별도의 v2 Curriculum 클래스를 만들지 않는다.
+v0·v2·v3은 `ContactSweepClutterFusionEnv` runtime을 사용한다. v1_0의 `ContactSweepClutterFusionV1_0Env`는 이 runtime을 상속하여 활성 mask와 population reset을 관리한다. 네 task 모두 `CurriculumOnPolicyRunner`를 사용한다. v2는 v0 Curriculum Cfg를 그대로 상속하므로 별도의 v2 Curriculum 클래스를 만들지 않는다.
 
-Workspace 루트에서 v3 학습을 시작하는 명령은 다음과 같다. v0·v2는 task ID를 첫 표의 값으로 교체한다.
+Workspace 루트에서 v3 학습을 시작하는 명령은 다음과 같다. 다른 버전은 task ID의 접미사를 첫 표에 맞춰 교체한다.
 
 ```bash
 ./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
@@ -127,6 +213,6 @@ Workspace 루트에서 v3 학습을 시작하는 명령은 다음과 같다. v0�
   --num_envs 2048 --headless
 ```
 
-## 6. 확인 범위
+## 7. 확인 범위
 
-현재 코드의 Env·PPO 상속, 활성 보상 설정, 커리큘럼 수치와 iteration 계산을 근거로 작성했다. CPU 검사는 설정·상속·수치 경계를 확인하는 범위이며 실제 Isaac Sim/PhysX 실행이나 정책의 성능 향상을 입증하지 않는다. 실제 실행한 검사와 미검증 범위는 연결된 개발 로그에 남긴다.
+현재 코드의 Env·PPO 상속, 활성 보상 설정, 커리큘럼 수치와 iteration 계산을 근거로 작성했다. 정적 계약과 학습 성능은 구분한다. v1_0은 앞선 CPU543개 검사, 실제 GPU의 population·접촉·직접 가속도·PPO update·checkpoint 복원을 통과했다. 이번 문서 수정에서 새 학습을 실행하지 않았으며 장기 정책 성능 향상은 확인하지 않았다. 실제 실행한 검사와 미검증 범위는 연결된 개발 로그에 남긴다.

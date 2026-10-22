@@ -1,5 +1,9 @@
 # Blind Sweeping — 단일 파일 인계 요약
 
+**2026-10-22 Fusion v1.0 후속 수정:** 같은 task에 Gray1/White1→3/3 개수 curriculum, Goal hold tolerance와 동기화한 접촉 alpha, 비활성 물체 mask를 적용했다. 가속·감속에는 같은 기존 지수 비용을 사용한다. 재사용 가능한 `train_resilient.py`는 조기 중단 시 최신 checkpoint−500에서 커리큘럼을 복원한 뒤 재개한다. [현재 계약·실행·실제 검증](../02_implementation/logs/2026-10-22_clutter_fusion_v1_0_population_recovery.md)을 따른다.
+
+**2026-10-22 Fusion v1.0 추가:** v3을 직접 상속한 `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_0`을 추가했다. 보상·종료·커리큘럼 CFG는 독립 선언이며, 손 전체 접촉 유지·비타겟 접촉 힘·EEF wrench 크기 변화량·물체별 가속도 비용과 새 Goal 일정을 사용한다. 이후 v1_1의 상속 기준이다. [계수·계약·실제 검증](../02_implementation/logs/2026-10-22_clutter_fusion_v1_0.md)을 따르며 장시간 학습 성과와 구분한다.
+
 **2026-10-21 Fusion 상속 재구성:** 현재 체인은 Fusion v0 → v2 → v3이다. v2는 EEF orientation 보상만 제거하며 push_fast=0.8을 유지한다. v3은 v2에서 커리큘럼만 변경하며 push_fast는 모든 버전에서 0.8로 고정한다. 기존 Fusion v1은 v3으로 재작명했으며 사용자 수정 일정은 보존했다. [현재 계약·검증](../02_implementation/logs/2026-10-21_clutter_fusion_v3.md)을 따른다.
 
 **2026-10-21 Clutter Fusion:** 사용자 확인에 따라 Curriculum v1과 v2 보정 F/T를 결합한 독립 `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v0`를 추가했다. 초기 가림·1% flip, policy 55D, 보상 통합·Contact/object 강화, EEF 자세·속도 및 유한 F/T 변화율 비용, 보상·Goal deadzone 커리큘럼을 사용한다. 기존 환경 Cfg를 상속하지 않으며 [계약·계수 근거·검증](../02_implementation/logs/2026-10-21_clutter_fusion.md)을 따른다. 새 학습 성과와는 구분한다.

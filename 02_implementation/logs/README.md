@@ -1,5 +1,17 @@
 # 개발·실험 진행 로그
 
+- [2026-10-22 Fusion v1_0 독립 설명·버전 비교 문서](2026-10-22_clutter_fusion_v1_0_documentation.md)
+
+- [2026-10-22 Fusion v1.0 가속도 상한 점검·PhysX 직접 가속도](2026-10-22_clutter_fusion_v1_0_native_acceleration.md)
+
+- [2026-10-22 Fusion v1.0 개수·접촉 감쇠·학습 복구](2026-10-22_clutter_fusion_v1_0_population_recovery.md): 같은 task의 장애물1/1→3/3, Goal tolerance와 동기화한 alpha, 가속·감속 대칭, 최신 checkpoint−500 자동 재개와 커리큘럼 복원.
+
+- [2026-10-22 Fusion v1.0](2026-10-22_clutter_fusion_v1_0.md): v3 상속, 독립 보상·종료·커리큘럼 CFG, 손 전체 접촉 및 비타겟 힘, EEF wrench 크기 변화량, 물체별 가속도와 보상 계수 근거.
+
+- [2026-10-22 Fusion v3 후반 보상 비중](2026-10-22_fusion_v3_reward_balance.md): 지정 run의 iteration 6000~7389, 14개 보상 평균과 전체·군내 비중, 원본 event 대조와 재현 CSV.
+
+- [2026-10-22 Fusion v3 F/T·물체 선속도 수집](2026-10-22_fusion_telemetry.md): 지정 model_7200의 16환경 재생, 월드·EEF 보정 F/T와 Target·장애물 선속도 CSV, 종료 직전 표본과 reset 차분 경계.
+
 - [2026-10-21 Clutter Fusion v3 재구성](2026-10-21_clutter_fusion_v3.md): v0 → v2 → v3, 기존 v1 커리큘럼을 v3으로 이동. 현재 push_fast는 v0·v2·v3 모두 0.8 고정. 별도 버전 비교 문서를 추가했다.
 
 - [2026-10-21 Clutter Fusion v2](2026-10-21_clutter_fusion_v2.md): Fusion v0 직접 상속, EEF orientation 보상 제거. push_fast는 v0·v2·v3 모두 0.8 유지.
@@ -108,3 +120,5 @@ Pull/rebase 중 문서 이관 충돌의 처리 내역은 [충돌 해결 기록](
 - [2026-10-20 Pull/Rebase 충돌 해결](2026-10-20_rebase_conflict_resolution.md): 환경 설명·로그 색인의 양쪽 변경 보존과 문서 검증.
 
 - [2026-10-21 TEMP 학습 로그 정리](2026-10-21_temp_training_log_cleanup.md): 명시적 요청에 따른 세 차례 정리 기록·환경별 이동과 500 iteration 미만 삭제·rsl_rl 보존 검증.
+
+- [2026-10-22 TEMP 학습 로그 정리](2026-10-22_temp_training_log_cleanup.md): 17개 run 중 9개 이동·500회 미만 8개 삭제, 파일 보존 및 rsl_rl 불변 확인.
