@@ -945,3 +945,25 @@ v1_1은 Goal hold 1cm 고정, fade 0, 장애물 힘 100→50N(10000), 가속도 
 `train_resilient.py --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1 --num_envs 2048 --headless --max_iterations 90000`를 Isaac Lab Python으로 실행한다. v1_2는 task 접미사만 교체한다. Play는 `scripts/play.py --task <task-ID> --checkpoint <절대경로> --num_envs 1`이다. 실제 실행은 수행하지 않았다.
 
 [독립 v1_1 설명](environments/CONTACT_SWEEP_CLUTTER_FUSION_V1_1_ENVIRONMENT.md) · [독립 v1_2 설명](environments/CONTACT_SWEEP_CLUTTER_FUSION_V1_2_ENVIRONMENT.md) · [개발 로그](logs/2026-10-22_clutter_fusion_v1_1_v1_2.md)
+
+## Contact Sweep Clutter Fusion v1_1_1 — 2026-10-22
+
+`Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1_1`의 EnvCfg/PPORunnerCfg는 v1_1을 상속한다. 독립 RewardsCfg/CurriculumCfg와 공용 v1_0 runtime을 사용한다. Goal1cm·fade0·가속도100→5 일정은 유지하고 장애물 힘2000N·wrench5000N/500Nm는 커리큘럼 없이 고정한다. 나머지 물리·관측·행동·보상·종료·PPO는 유지한다. v1_2와는 별도 분기다.
+
+Workspace 루트에서 `./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train_resilient.py --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1_1 --num_envs 2048 --headless --max_iterations 90000`를 사용한다. Play는 `scripts/play.py --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1_1 --checkpoint <절대경로> --num_envs 1`이다. 이번에는 simulator를 실행하지 않았다.
+
+[환경 구성](environments/CONTACT_SWEEP_CLUTTER_FUSION_V1_1_1_ENVIRONMENT.md) · [개발 로그](logs/2026-10-22_clutter_fusion_v1_1_1.md)
+
+## Contact Sweep Clutter Fusion v1_1_2 — 2026-10-22
+
+`Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1_2`: v1_1 EnvCfg/PPORunnerCfg를 상속하고 독립 RewardsCfg/CurriculumCfg를 사용한다. Runtime은 공용 v1_0이다. Goal1cm·fade0·장애물 힘100→50N·wrench500→5N/50→0.5Nm 일정은 v1_1과 동일하다. 가속도 무료 기준만1,000,000m/s² 고정이며 가속도 커리큘럼은 없다. PPO는 experiment 이름만 바뀐다.
+
+Workspace 루트에서 `./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train_resilient.py --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1_2 --num_envs 2048 --headless --max_iterations 90000`를 사용한다. Play는 `scripts/play.py --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1_2 --checkpoint <절대경로> --num_envs 1`이다.
+
+[환경 구성](environments/CONTACT_SWEEP_CLUTTER_FUSION_V1_1_2_ENVIRONMENT.md) · [검증 기록](logs/2026-10-22_clutter_fusion_v1_1_2.md)
+
+## Contact Sweep Clutter Fusion v1_3 — 2026-10-22
+
+`Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3`은 v1_1 EnvCfg/PPOCfg를 직접 상속하며 독립 Reward/Curriculum CFG와 공용 v1_0 runtime을 사용한다. 장애물 힘·wrench 힘/모멘트·가속도 무료 기준을 point 기반 선형 보간으로 교체한다. Goal1cm 고정·fade0·나머지 커리큘럼·보상·종료는 유지한다. PPO는 experiment 이름만 바꾼다. 상세 point는 [환경 구성](environments/CONTACT_SWEEP_CLUTTER_FUSION_V1_3_ENVIRONMENT.md)을 따른다.
+
+Workspace 루트에서 `./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train_resilient.py --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3 --num_envs 2048 --headless --max_iterations 90000`를 사용한다. Play는 `scripts/play.py --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3 --checkpoint <절대경로> --num_envs 1`이다. [검증 기록](logs/2026-10-22_clutter_fusion_v1_3.md).

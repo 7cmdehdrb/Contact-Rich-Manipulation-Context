@@ -1,5 +1,11 @@
 # 개발·실험 진행 로그
 
+- [2026-10-22 Fusion v1_3 선형 커리큘럼](2026-10-22_clutter_fusion_v1_3.md)
+
+- [2026-10-22 Fusion v1_1_2 힘 커리큘럼 실험 분기](2026-10-22_clutter_fusion_v1_1_2.md)
+
+- [2026-10-22 Fusion v1_1_1 가속도 실험 분기](2026-10-22_clutter_fusion_v1_1_1.md)
+
 - [2026-10-22 Fusion v1_1 / v1_2 파라미터 커리큘럼](2026-10-22_clutter_fusion_v1_1_v1_2.md)
 
 - [2026-10-22 Fusion v1_0 접촉 감쇠·Goal 반경·가속도 기준 수정](2026-10-22_clutter_fusion_v1_0_reward_thresholds.md)

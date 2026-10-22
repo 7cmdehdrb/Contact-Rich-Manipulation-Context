@@ -12,6 +12,9 @@ flowchart LR
     V2 --> V3["Fusion v3: 커리큘럼 변경"]
     V3 --> V10["Fusion v1_0: 접촉·Goal·wrench·가속도·장애물 개수"]
     V10 --> V11["Fusion v1_1: 높은 무료 기준부터 단계적 감소"]
+    V11 --> V111["Fusion v1_1_1: 힘 허용치 고정·가속도 실험"]
+    V11 --> V112["Fusion v1_1_2: 큰 가속도 허용치 고정"]
+    V11 --> V13["Fusion v1_3: point 선형 보간"]
     V11 --> V12["Fusion v1_2: Goal 반경 2단계·접촉 fade"]
 ```
 
@@ -236,3 +239,21 @@ v1_1 EnvCfg는 v1_0을, v1_2 EnvCfg는 v1_1을 상속한다. 공용 runtime은 v
 모든 새 일정은 250 iteration 간격이다. 시작 1000에서 첫 감소가 발생한다. v1_2 Goal은 1000~5000 17회, 5250~10000 20회로 감소한다. 감소량을 endpoint에서 산출해 지정 마지막 iteration에 정확히 도달하고 이후 고정한다. 관측·행동·센서·물리·장애물 개수 일정·다른 보상·종료는 유지한다. 이 변경은 접촉 회피 해결을 입증하는 학습 결과가 아니다.
 
 [독립 v1_1 설명](CONTACT_SWEEP_CLUTTER_FUSION_V1_1_ENVIRONMENT.md) · [독립 v1_2 설명](CONTACT_SWEEP_CLUTTER_FUSION_V1_2_ENVIRONMENT.md) · [검증 기록](../logs/2026-10-22_clutter_fusion_v1_1_v1_2.md)
+
+## v1_1_1 실험 분기
+
+v1_1→v1_1_1은 v1_2와 별도 분기다. Goal hold1cm 고정·fade0·가속도100→5(1000~20000, 주기250)는 v1_1을 유지한다. 장애물 무료 힘은2000N, wrench 무료 변화량은5000N/500Nm로 고정하며 해당3개 커리큘럼을 제거한다. 즉 큰 초기값을 다시 낮추지 않는다. 보상17·커리큘럼6·종료6항이며 PPO는 experiment 이름만 다르다.
+
+이는 가속도 관련 학습 영향을 탐색하기 위한 조건이다. 다른 비용과 종료 조건도 남아 있으므로 실패만으로 가속도100이 접촉을 억제한다고 입증할 수 없다. [독립 환경 설명](CONTACT_SWEEP_CLUTTER_FUSION_V1_1_1_ENVIRONMENT.md) · [검증 기록](../logs/2026-10-22_clutter_fusion_v1_1_1.md)
+
+## v1_1_2 실험 분기
+
+v1_1을 직접 상속한다. v1_1_1과 반대로 장애물 무료 힘100→50N(10000), wrench 무료 변화500→5N/50→0.5Nm(20000)를 유지하고, 가속도만1,000,000m/s² 고정으로 설정한다. 가속도 커리큘럼은 제거한다. Goal1cm 고정·fade0·나머지 보상·종료·PPO는 v1_1과 같다. 가속도 계산식도 기존 PhysX COM norm 그대로다. 보상17·커리큘럼8·종료6항이다.
+
+[독립 환경 설명](CONTACT_SWEEP_CLUTTER_FUSION_V1_1_2_ENVIRONMENT.md) · [검증 기록](../logs/2026-10-22_clutter_fusion_v1_1_2.md)
+
+## v1_3: 구간별 선형 보간
+
+사용자 확인에 따라 v1_1을 직접 상속한 별도 분기다. Goal1cm·fade0·PPO·기타 비용/종료는 유지한다. 장애물 힘 points는(1000,200N)→(5000,100N)→(10000,50N), wrench는(1000,1000N/100Nm)→(5000,500N/50Nm)→(10000,100N/10Nm)→(20000,5N/0.5Nm), 가속도는(2000,100)→(5000,20)→(10000,10)→(20000,5)m/s²다.
+
+250주기 계단을 제거하고 매 iteration 선형 보간한다. 첫 point까지 유지·최종 point 이후 고정한다. 보상 초기값도 첫 point와 일치한다. 보상17·커리큘럼9·종료6항이며 독립 RewardsCfg/CurriculumCfg를 사용한다. [독립 구성](CONTACT_SWEEP_CLUTTER_FUSION_V1_3_ENVIRONMENT.md) · [검증 기록](../logs/2026-10-22_clutter_fusion_v1_3.md)

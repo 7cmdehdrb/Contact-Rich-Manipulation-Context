@@ -2,7 +2,7 @@
 
 [구현 문서 안내](../README.md) · [등록·실행 안내](../08_ACTIVE_ENVIRONMENTS.md) · [문서 작성·검증 기록](../logs/2026-10-22_environment_catalog.md)
 
-**기준일: 2026-10-22.** [패키지 등록 코드](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py)에 등록된 **31개 환경 전체**를 대상으로 한다. 변경 흐름을 먼저 보고 아래 표의 상대 링크를 통해 각 환경의 기본 구성·관측·전체 보상·종료·커리큘럼을 확인할 수 있다. 기존 독립 문서 7개를 유지하고, 독립 문서가 없던 22개는 과거 실험을 찾아볼 수 있는 짧은 설명으로 추가했다.
+**기준일: 2026-10-22.** [패키지 등록 코드](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py)에 등록된 **34개 환경 전체**를 대상으로 한다. 변경 흐름을 먼저 보고 아래 표의 상대 링크를 통해 각 환경의 기본 구성·관측·전체 보상·종료·커리큘럼을 확인할 수 있다. 기존 독립 문서 7개를 유지하고, 독립 문서가 없던 22개는 과거 실험을 찾아볼 수 있는 짧은 설명으로 추가했다.
 
 여기서 환경의 계층은 **등록된 EnvCfg의 직접 상속**이다. Runtime, Scene, Reward 같은 구성요소의 상속은 다를 수 있다. 실선은 실제 EnvCfg 상속, 점선은 동작의 재구성이나 기능 결합을 뜻한다. 버전 번호는 시간순 단일 계보를 뜻하지 않는다. 문서화 대상인 과거 실험도 코드에는 등록되어 있으며, 문서 추가가 새 학습·성능 검증이나 환경 삭제를 뜻하지 않는다.
 
@@ -126,6 +126,9 @@ flowchart TD
     F3["Fusion v3"]
     F10["Fusion v1_0"]
     F10 --> F11["Fusion v1_1: 무료 기준 감소"]
+    F11 --> F111["Fusion v1_1_1: 큰 힘 허용치 고정"]
+    F11 --> F112["Fusion v1_1_2: 가속도 허용치 고정"]
+    F11 --> F13["Fusion v1_3: 선형 보간 커리큘럼"]
     F11 --> F12["Fusion v1_2: Goal 2단계·fade"]
     M --> C
     C -->|"장애물 3개"| C0
@@ -190,6 +193,9 @@ flowchart TD
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v3` | [Fusion v3](CONTACT_SWEEP_CLUTTER_FUSION_V3_ENVIRONMENT.md) | 신규 |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_0` | [Fusion v1_0](CONTACT_SWEEP_CLUTTER_FUSION_V1_0_ENVIRONMENT.md) | 기존 |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1` | [Fusion v1_1](CONTACT_SWEEP_CLUTTER_FUSION_V1_1_ENVIRONMENT.md) | 신규 |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1_1` | [Fusion v1_1_1](CONTACT_SWEEP_CLUTTER_FUSION_V1_1_1_ENVIRONMENT.md) | 신규 |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1_2` | [Fusion v1_1_2](CONTACT_SWEEP_CLUTTER_FUSION_V1_1_2_ENVIRONMENT.md) | 신규 |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3` | [Fusion v1_3](CONTACT_SWEEP_CLUTTER_FUSION_V1_3_ENVIRONMENT.md) | 신규 |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_2` | [Fusion v1_2](CONTACT_SWEEP_CLUTTER_FUSION_V1_2_ENVIRONMENT.md) | 신규 |
 
 ## 6. 기록을 읽을 때의 기준
