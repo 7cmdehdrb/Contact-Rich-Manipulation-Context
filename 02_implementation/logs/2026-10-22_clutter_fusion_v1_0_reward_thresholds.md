@@ -37,3 +37,9 @@ env -u PYTHONPATH -u ROS_PACKAGE_PATH -u AMENT_PREFIX_PATH \
 **551 passed, 기존 ONNX DeprecationWarning3개, 28.31초.** 관련 CFG·보상 검사34개도 별도 통과했다. 새 초기값·첫 변경·최종 직전/직후·90000 clamp·rewind, 부분 env ID 호출과 현재 Goal 반경에 따른 alpha0/0.5/1을 확인했다. 가속도 norm·가속/감속 대칭·상한 검사도 새 callable 기본값에 맞춰 통과했다.
 
 실제 GPU probe의 기대값도 새 일정과1.5cm 감쇠로 갱신했으나 이번에는 GPU 실행·PPO 학습을 재실행하지 않았다. 변경은 기준 수치와 일정이며 CPU 검증을 실제 물리·정책 성능 검증으로 해석하지 않는다. 환경 설명·버전 비교·활성 환경·패키지 README를 현재 수치로 갱신하고 문서 수식·링크와 `git diff --check`를 검사했다.
+
+## 후속 수정: 0 폭으로 감쇠 비활성화
+
+사용자 요청에 따라 `hand_contact_any`는 `goal_contact_fade_width=0.0`일 때 alpha=1로 처리한다. Goal 설정·거리 조회와 나눗셈을 생략하며 접촉력 임계값, 유한 센서 값, fresh 조건은 유지한다. 양수의 기존 감쇠와 기본 인자는 유지하며 음수·NaN·Inf는 거부한다.
+
+검증: `env -u PYTHONPATH -u ROS_PACKAGE_PATH -u AMENT_PREFIX_PATH PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONDONTWRITEBYTECODE=1 /home/min/miniconda3/envs/env_isaaclab/bin/python -B -m pytest -q -p no:cacheprovider src/inspire_sweep_baseline/tests/test_clutter_fusion_v1_0_rewards.py` — 31 passed (1.71s). 0 폭의 접촉 조건, 잘못된 폭, 기존 양수 감쇠·커리큘럼 동기화를 확인했다. IsaacLab·Sim과 학습은 실행하지 않았다.

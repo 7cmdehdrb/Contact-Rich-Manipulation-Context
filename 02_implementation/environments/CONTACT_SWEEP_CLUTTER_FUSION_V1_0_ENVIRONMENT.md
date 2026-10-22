@@ -240,6 +240,8 @@ Net Force는 `sqrt(Fx²+Fy²+Fz²)`, Net Moment는 `sqrt(Mx²+My²+Mz²)`다. �
 
 `hand_contact`는 손 전체에 작용하는 법선 접촉력 벡터의 합을 구한 뒤 Net Force가 0.01 N 이상인 유효 표본에 지급한다. 접촉한 손가락 수나 접촉 상대 ID는 지급 조건이 아니다. 연속 유지 시간이 길어질수록 단가가 증가하지 않고, 매 step의 접촉 여부에 같은 단가를 적용한다.
 
+`goal_contact_fade_width=0.0`은 거리 감쇠를 비활성화한다. 이때 alpha는 목표 안팎에서 항상 1이며, 유효 센서 표본·0.01 N 접촉 조건은 그대로 적용한다. 음수·NaN·Inf는 허용하지 않는다. 양수일 때는 아래 선형 감쇠와 Goal 반경 커리큘럼 동기화를 사용한다.
+
 현재 타겟–Goal의 world XY 거리를 d, `goal_hold`의 현재 인정 반경을 r이라고 하면 다음과 같다.
 
 ```text
