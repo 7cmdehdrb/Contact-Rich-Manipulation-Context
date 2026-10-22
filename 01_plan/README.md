@@ -14,6 +14,7 @@
 | Workspace 구조·패키지 역할·문서 위치 | [Workspace와 문서 지도](../00_guidelines/10_WORKSPACE_GUIDE.md) | [개발 지침](../00_guidelines/09_DEVELOPMENT_GUIDE.md) |
 | 현재 활성 환경의 상속·관측·제어·명령 | [활성 환경 안내](../02_implementation/08_ACTIVE_ENVIRONMENTS.md) | [코드·장비 현황](../02_implementation/07_CODE_AND_HARDWARE_STATUS.md) |
 | Omni 환경의 실제 구성과 보상 변경 계획 | [Omni 환경](../02_implementation/environments/OMNI_ENVIRONMENT.md) | [Omni 보상 계획](environments/OMNI_REWARD_PLAN.md): 적용 코드와 계획 구분 |
+| 고밀도 스폰 규칙과 reset Event 개발 | [스폰 Event 계획](environments/CLUTTER_SPAWN_EVENT_PLAN.md) | 영역별 개수·RED/최소 거리·부분 배치·고정 슬롯 확장, 미구현 |
 | 개발 방식·새 환경의 기록 항목·검증 | [개발 지침](../00_guidelines/09_DEVELOPMENT_GUIDE.md) | [연구 로그 템플릿](../00_guidelines/templates/RESEARCH_LOG.md) |
 | 개발·재생 실패 관찰과 이관 내역 | [개발 로그 목록](../02_implementation/logs/README.md) | [과거 설계와 요청](history/README.md) |
 | 단일 물체 Blind 환경의 과거 구현 명세 | [2026-09-26 구현 계획](experiments/2026-09-26_blind_sweeping_build_plan.md) | 57D/8D·OSC 계획이며 현 활성 코드와 구분 |

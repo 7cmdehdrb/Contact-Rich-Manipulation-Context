@@ -31,6 +31,8 @@
 - [2026-10-23 Fusion v1_0 마지막 5% 보상 구성](2026-10-23_fusion_v1_0_last5pct_rewards.md): iteration 15612~16433, 822개 기록의 17개 보상 평균·전체/군내 비중.
 
 - [2026-10-23 Fusion v1_0 종료 원인 출력](2026-10-23_fusion_v1_0_termination_prints.md): timeout 포함 활성 종료 항목·환경 ID·동시 원인 출력과 CPU 검증.
+- [2026-10-23 스폰 규칙 고도화와 Event 개발 계획](2026-10-23_clutter_spawn_event_plan.md): 영역별 개수·불변 제약·유효 부분 배치·reset Event·고밀도 용량 확장 계획, 코드 변경 없음.
+
 - [2026-10-23 후속 연구·개발 TODO 구체화](2026-10-23_workspace_todo.md): OSC·고밀도·실사용 에셋·물성 비교·가제본 작업과 완료 기준 정리.
 
 - [2026-10-22 Fusion v1_3_1 Goal·접촉 fade 커리큘럼](2026-10-22_clutter_fusion_v1_3_1.md)
