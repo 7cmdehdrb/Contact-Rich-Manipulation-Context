@@ -1,8 +1,8 @@
-# Contact Sweep Clutter Fusion 버전 비교 — v0 → v2 → v3 → v1_0
+# Contact Sweep Clutter Fusion 버전 비교 — v0 → v2 → v3 → v1_0 → v1_1 → v1_2
 
 [Fusion 기본 환경](CONTACT_SWEEP_CLUTTER_FUSION_ENVIRONMENT.md) · [구현 문서 안내](../README.md) · [활성 환경](../08_ACTIVE_ENVIRONMENTS.md) · [개발·검증 기록](../logs/2026-10-21_clutter_fusion_v3.md)
 
-**기준일: 2026-10-22.** 현재 코드의 상속 순서는 **v0 → v2 → v3 → v1_0**이다. v1_0의 장애물 개수·접촉 alpha·PhysX 직접 가속도·자동 복구 후속 수정까지 포함한다. 환경 자체의 구성은 [v0 설명서](CONTACT_SWEEP_CLUTTER_FUSION_ENVIRONMENT.md)와 [v1_0 독립 설명서](CONTACT_SWEEP_CLUTTER_FUSION_V1_0_ENVIRONMENT.md)를 읽고, 이 문서에서는 단계별 변경을 확인한다. **네 버전 모두 push_fast 종료 기준은 0.8 m/s**이며 비용의 free speed 커리큘럼과 구분한다.
+**기준일: 2026-10-22.** 현재 코드의 상속 순서는 **v0 → v2 → v3 → v1_0 → v1_1 → v1_2**이다. 아래 기존 v1_0 표는 긴급 완화 이전의 기록이며, 최신 파라미터 분기는 마지막 절을 따른다. v1_0의 장애물 개수·접촉 alpha·PhysX 직접 가속도·자동 복구 후속 수정까지 포함한다. 환경 자체의 구성은 [v0 설명서](CONTACT_SWEEP_CLUTTER_FUSION_ENVIRONMENT.md)와 [v1_0 독립 설명서](CONTACT_SWEEP_CLUTTER_FUSION_V1_0_ENVIRONMENT.md)를 읽고, 이 문서에서는 단계별 변경을 확인한다. **네 버전 모두 push_fast 종료 기준은 0.8 m/s**이며 비용의 free speed 커리큘럼과 구분한다.
 
 ## 1. 버전의 역할과 상속
 
@@ -11,6 +11,8 @@ flowchart LR
     V0["Fusion v0: 기준 환경"] --> V2["Fusion v2: EEF orientation 보상 제거"]
     V2 --> V3["Fusion v3: 커리큘럼 변경"]
     V3 --> V10["Fusion v1_0: 접촉·Goal·wrench·가속도·장애물 개수"]
+    V10 --> V11["Fusion v1_1: 높은 무료 기준부터 단계적 감소"]
+    V11 --> V12["Fusion v1_2: Goal 반경 2단계·접촉 fade"]
 ```
 
 | 구분 | v0 | v2 | v3 | v1_0 |
@@ -217,3 +219,20 @@ Workspace 루트에서 v3 학습을 시작하는 명령은 다음과 같다. 다
 ## 7. 확인 범위
 
 현재 코드의 Env·PPO 상속, 활성 보상 설정, 커리큘럼 수치와 iteration 계산을 근거로 작성했다. 정적 계약과 학습 성능은 구분한다. v1_0은 앞선 CPU543개 검사, 실제 GPU의 population·접촉·직접 가속도·PPO update·checkpoint 복원을 통과했다. 이번 문서 수정에서 새 학습을 실행하지 않았으며 장기 정책 성능 향상은 확인하지 않았다. 실제 실행한 검사와 미검증 범위는 연결된 개발 로그에 남긴다.
+
+## 파라미터 분기 v1_1 → v1_2 (2026-10-22)
+
+v1_1 EnvCfg는 v1_0을, v1_2 EnvCfg는 v1_1을 상속한다. 공용 runtime은 v1_0이며 보상·커리큘럼은 각각 독립 CFG를 선언한다. PPO는 experiment 이름만 다르다. v1_0 사용자 변경은 보존했다: Goal 1cm 고정·fade 0·장애물 무료 힘 2000N·가속도 100·wrench 5000/500 시작이며 Goal 커리큘럼은 없다.
+
+| 항목 | v1_1 | v1_2 |
+| --- | --- | --- |
+| Goal hold | 1cm 고정, curriculum 없음 | 2cm→1cm(5000)→0.5cm(10000) |
+| Hand fade width | 0: alpha=1 | 1cm, 현재 Goal hold 반경과 동기화 |
+| 장애물 무료 힘 | 100→50N, 1000~10000 | 동일 |
+| 물체 무료 가속도 | 100→5m/s², 1000~20000 | 동일 |
+| 무료 wrench 크기 변화 | 500→5N / 50→0.5Nm, 1000~20000 | 동일 |
+| 보상 / 커리큘럼 / 종료 수 | 17 / 9 / 6 | 17 / 10 / 6 |
+
+모든 새 일정은 250 iteration 간격이다. 시작 1000에서 첫 감소가 발생한다. v1_2 Goal은 1000~5000 17회, 5250~10000 20회로 감소한다. 감소량을 endpoint에서 산출해 지정 마지막 iteration에 정확히 도달하고 이후 고정한다. 관측·행동·센서·물리·장애물 개수 일정·다른 보상·종료는 유지한다. 이 변경은 접촉 회피 해결을 입증하는 학습 결과가 아니다.
+
+[독립 v1_1 설명](CONTACT_SWEEP_CLUTTER_FUSION_V1_1_ENVIRONMENT.md) · [독립 v1_2 설명](CONTACT_SWEEP_CLUTTER_FUSION_V1_2_ENVIRONMENT.md) · [검증 기록](../logs/2026-10-22_clutter_fusion_v1_1_v1_2.md)

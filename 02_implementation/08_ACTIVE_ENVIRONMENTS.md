@@ -935,3 +935,13 @@ Action rate·joint velocity·object cost를 각각 통합하고 기존 내부 �
   --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v0 --num_envs 1 \
   --checkpoint "<fusion-v0-checkpoint.pt>"
 ```
+
+## Contact Sweep Clutter Fusion v1_1 / v1_2 — 2026-10-22
+
+등록 ID는 `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1`, `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_2`다. EnvCfg 상속은 v1_0→v1_1→v1_2이며 공용 runtime `ContactSweepClutterFusionV1_0Env`를 사용한다. 독립 Reward·Curriculum CFG를 주입하고 Scene·관측·Action·Event·Termination은 유지한다. PPOCfg도 같은 순서로 상속하며 experiment 이름만 분리한다.
+
+v1_1은 Goal hold 1cm 고정, fade 0, 장애물 힘 100→50N(10000), 가속도 100→5m/s²(20000), wrench 500→5N/50→0.5Nm(20000)이다. v1_2는 Goal 2→1cm(5000)→0.5cm(10000), fade 1cm를 추가한다. 새 감소 일정은 1000에서 첫 적용·주기250이며 종료 iteration에서 정확히 최종값에 도달한다.
+
+`train_resilient.py --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1 --num_envs 2048 --headless --max_iterations 90000`를 Isaac Lab Python으로 실행한다. v1_2는 task 접미사만 교체한다. Play는 `scripts/play.py --task <task-ID> --checkpoint <절대경로> --num_envs 1`이다. 실제 실행은 수행하지 않았다.
+
+[독립 v1_1 설명](environments/CONTACT_SWEEP_CLUTTER_FUSION_V1_1_ENVIRONMENT.md) · [독립 v1_2 설명](environments/CONTACT_SWEEP_CLUTTER_FUSION_V1_2_ENVIRONMENT.md) · [개발 로그](logs/2026-10-22_clutter_fusion_v1_1_v1_2.md)
