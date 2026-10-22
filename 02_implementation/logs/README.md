@@ -1,5 +1,7 @@
 # 개발·실험 진행 로그
 
+- [2026-10-22 Fusion v1_0 장애물 관측 정렬·압축·순차 교환](2026-10-22_clutter_fusion_v1_0_observation_order.md)
+
 - [2026-10-22 Fusion v1_0 독립 설명·버전 비교 문서](2026-10-22_clutter_fusion_v1_0_documentation.md)
 
 - [2026-10-22 Fusion v1.0 가속도 상한 점검·PhysX 직접 가속도](2026-10-22_clutter_fusion_v1_0_native_acceleration.md)

@@ -860,7 +860,7 @@ v1 위에 양의 보상 두 항을 추가하고 성공 종료는 비활성화했
 
 Deadzone30°·hold3000·500마다5° 감소(첫3500), Goal hold tolerance0.05→0.01m(1000부터500마다0.01), wrench 변화량50→10N 및5→1N·m(1000부터250마다1/0.1), 가속도0.3→0.05m/s²(1000부터250마다0.01)를 적용한다. 기존 v3의 pushing/Arm/EEF free-speed 일정은 유지한다. [전체 계약·계수 근거·CPU/GPU 검증](logs/2026-10-22_clutter_fusion_v1_0.md)을 따른다.
 
-후속 수정의 장애물 개수는 Gray1/White1에서 시작하여 White는3000·6000, Gray는4500·7500에서 늘어나 최종 Gray3/White3/Target1이다. 최대 capacity는 EnvCfg의 `max_gray_obstacles`·`max_white_obstacles`, 일정은 `curriculum.obstacle_population.params`에서 조정한다. 기존40D의10개 슬롯을 유지하고 비활성 물체는 관측·가림·보상·종료에서 제외한다. [최신 변경·복구 검증](logs/2026-10-22_clutter_fusion_v1_0_population_recovery.md)이 최초 v1.0 계약 중 관련 항목을 대체한다.
+후속 수정의 장애물 개수는 Gray1/White1에서 시작하여 White는3000·6000, Gray는4500·7500에서 늘어나 최종 Gray3/White3/Target1이다. 장애물 관측은 가시성 판정 후 노이즈 포함 root 좌표의−Y 오름차순으로 앞쪽에 압축하고, 점유된 인접 쌍만 왼쪽부터10% 확률로 순차 교환한다. 마스크는 항상1의 연속 구간 뒤에0이 오며 episode 동안 고정한다. 최대 capacity는 EnvCfg의 `max_gray_obstacles`·`max_white_obstacles`, 일정은 `curriculum.obstacle_population.params`에서 조정한다. 기존40D의10개 슬롯을 유지하고 비활성 물체는 관측·가림·보상·종료에서 제외한다. [최신 변경·복구 검증](logs/2026-10-22_clutter_fusion_v1_0_population_recovery.md)이 최초 v1.0 계약 중 관련 항목을 대체한다.
 
 자동 복구는 `scripts/train_resilient.py --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_0 --max_iterations 90000 --headless`를 Isaac Lab Python으로 실행한다. 최신 checkpoint−500 이하의 유효 파일에서 새 프로세스로 재개하고, checkpoint iteration의 커리큘럼을 적용한 뒤 reset한다. 절대 목표·기본 최대10회 재시작·Ctrl+C 종료·독립 attempt 폴더와 기존 파일 보존 규칙을 사용한다. 저장 위치는 `logs/resilient/<task>/<UTC시각_uuid>`이며 일반 train.py의 experiment 경로와 구분한다.
 
