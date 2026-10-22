@@ -1,5 +1,7 @@
 # 개발·실험 진행 로그
 
+- [2026-10-22 Fusion v1_0 접촉 감쇠·Goal 반경·가속도 기준 수정](2026-10-22_clutter_fusion_v1_0_reward_thresholds.md)
+
 - [2026-10-22 전체 환경 독립 문서·계층도](2026-10-22_environment_catalog.md): 등록 29종 대조, 기존 7개 유지·간략 문서 22개 추가, 변경 의도·상대 링크와 문서 검증.
 
 - [2026-10-22 Fusion v1_0 장애물 관측 정렬·압축·순차 교환](2026-10-22_clutter_fusion_v1_0_observation_order.md)

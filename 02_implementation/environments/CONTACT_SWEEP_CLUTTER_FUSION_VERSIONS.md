@@ -20,7 +20,7 @@ flowchart LR
 | EEF orientation 비용 | −0.02 | 제거 | 없음 | 없음 |
 | 활성 보상 / 커리큘럼 / 종료 수 | 15 / 5 / 6 | 14 / 5 / 6 | 14 / 11 / 6 | 17 / 9 / 6 |
 | 활성 장애물 Gray / White | 1 / 2 고정 | 1 / 2 고정 | 1 / 2 고정 | 1 / 1 → 3 / 3 |
-| Goal hold 반경 | 1 cm 고정 | 1 cm 고정 | 1 cm 고정 | 5→1 cm |
+| Goal hold 반경 | 1 cm 고정 | 1 cm 고정 | 1 cm 고정 | 3→1 cm |
 | 접촉 보상 | tactile any + count | 동일 | 두 weight 증가 | 손 전체 합력 + Goal 거리 alpha |
 | push_fast 종료 속도 | 0.8 m/s | 0.8 m/s | 0.8 m/s | 0.8 m/s |
 | Experiment 이름 | `inspire_contact_sweep_clutter_fusion` | `inspire_contact_sweep_clutter_fusion_v2` | `inspire_contact_sweep_clutter_fusion_v3` | `inspire_contact_sweep_clutter_fusion_v1_0` |
@@ -123,10 +123,10 @@ v1_0은 v3의 Env/PPO 설정을 기반으로 하되 보상·종료·커리큘럼
 | 접촉 유지 | tactile ON 여부 | 손 전체 30개 body의 합력 norm ≥ 0.01 N |
 | 접촉 수 보상 | `contact_count`, 5개에서 포화 | 삭제 |
 | 접촉 weight 일정 | 각 0.4→2.0 | 삭제, `hand_contact` weight 0.29 고정 |
-| 목표 근처 접촉 감쇠 | 없음 | `alpha=clamp((d-r)/0.03,0,1)` 곱셈 |
+| 목표 근처 접촉 감쇠 | 없음 | `alpha=clamp((d-r)/0.015,0,1)` 곱셈 |
 | 비타겟 접촉력 비용 | 별도 항 없음 | 활성 장애물→손 합력 norm > 20 N부터 지수 비용, raw cap100 |
 
-r은 현재 Goal hold 인정 반경이다. 따라서 목표 반경 안에서는 접촉 유지 보상이0, 반경+3cm 바깥에서는 최대이며 Goal 커리큘럼과 자동 동기화된다. 손 전체 접촉 보상은 타겟·장애물·선반·바닥을 구분하지 않지만, 비타겟 접촉 비용은 타겟·선반·바닥을 제외한 활성 원기둥들만 계산한다. 두 접촉력은 법선력 벡터를 먼저 합한 뒤 norm을 구한다.
+r은 현재 Goal hold 인정 반경이다. 따라서 목표 반경 안에서는 접촉 유지 보상이0, 반경+1.5cm 바깥에서는 최대이며 Goal 커리큘럼과 자동 동기화된다. 손 전체 접촉 보상은 타겟·장애물·선반·바닥을 구분하지 않지만, 비타겟 접촉 비용은 타겟·선반·바닥을 제외한 활성 원기둥들만 계산한다. 두 접촉력은 법선력 벡터를 먼저 합한 뒤 norm을 구한다.
 
 최대 Gray/White 용량과 일정은 설정으로 조정하며 장애물 관측은 계속40D다. 비활성 슬롯은0으로 만들고 가림·1% visibility flip·비용·낙하/전도 판정에서 제외한다. 추가 Gray는 모두 뒤쪽으로 몰지 않고, 첫1개만 후방 조건을 적용하며 나머지는 일반 Gray 영역을 사용한다.
 
@@ -134,14 +134,14 @@ r은 현재 Goal hold 인정 반경이다. 따라서 목표 반경 안에서는 
 
 | 항목 | v3 | v1_0 |
 | --- | --- | --- |
-| Goal hold 반경 | 0.01 m 고정 | 0.05→0.01 m, 1000부터500마다−0.01, 2500에 최종 |
+| Goal hold 반경 | 0.01 m 고정 | 0.03→0.01 m, 1000부터500마다−0.01, 1500에 최종 |
 | Goal progress tolerance | 0.01 m | 0.01 m 고정 유지 |
 | Goal deadzone | 60°, hold1000, 100마다1° 감소 | 30°, hold3000, 500마다5° 감소 |
 | 첫 deadzone 감소 / 0° 도달 | 1100 / 7000 | 3500 / 6000 |
 | Action 변화 비용 | Arm/Hand 합산 `action_rate`, weight−0.03→−0.06 | Arm/Hand 독립 두 항, 각각−0.03 고정 |
 | 관절 속도 제곱 비용 | `joint_velocity` 한 항으로 합산, Arm−0.03·Hand−0.01 | Arm/Hand 독립 두 항, −0.03/−0.01 고정 |
 | 물체 가속도 비용 | 없음 | PhysX COM 선가속도 norm에 물체별 지수 비용, 활성 합산 |
-| 가속도 무료 기준 | 없음 | 0.30→0.05 m/s², 1000부터250마다−0.01, 7000에 최종 |
+| 가속도 무료 기준 | 없음 | 1.0→0.1 m/s², 1000부터250마다−0.02, 12000에 최종 |
 
 운동 네 항은 raw Action 변화량·실제 관절 속도의 제곱합과 그룹별 cap100을 사용한다. Action weight 커리큘럼은 제거한다. 타겟·Arm·EEF의 free-speed 일정은 v3과 같으며 각각0.10→0.03m/s, 1.0→0.7rad/s, 1.5→0.3m/s다. 현재 코드의 `pushing_speed` weight는 v3·v1_0 모두−5이므로 이 전환의 차이로 취급하지 않는다.
 

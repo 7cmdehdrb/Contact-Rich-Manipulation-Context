@@ -232,7 +232,7 @@ Net Force는 `sqrt(Fx²+Fy²+Fz²)`, Net Moment는 `sqrt(Mx²+My²+Mz²)`다. �
 
 `goal_distance`는 타겟 밑면 중심과 목표의 world XY 거리에서 **1 cm 고정 tolerance**를 제외한 거리의 최단 기록을 관리한다. 그 기록을 새로 개선한 거리만큼 +100/m를 지급한다. 새롭게 1 cm 접근하면 +1이며, 멀어졌다가 같은 위치로 돌아와도 반복 지급되지 않는다. 초기 목표 거리가 15 cm이면 누적 상한은 +14다.
 
-`goal_hold`는 현재 world XY 오차가 인정 반경 이하이면 +0.9/초, 즉 +0.018/step을 지급한다. 5초 체류는 +4.5다. 인정 반경은 5 cm에서 시작하여 1 cm까지 줄어든다. 속도·높이·연속 체류 시간은 이 보상의 조건에 들어가지 않는다. 목표 안에서 episode를 즉시 종료하지 않는다.
+`goal_hold`는 현재 world XY 오차가 인정 반경 이하이면 +0.9/초, 즉 +0.018/step을 지급한다. 5초 체류는 +4.5다. 인정 반경은 3 cm에서 시작하여 1 cm까지 줄어든다. 속도·높이·연속 체류 시간은 이 보상의 조건에 들어가지 않는다. 목표 안에서 episode를 즉시 종료하지 않는다.
 
 두 보상의 tolerance는 구분해야 한다. `goal_distance`의 진전 계산은 항상 1 cm를 기준으로 하고, `goal_hold`의 체류 인정 반경만 커리큘럼으로 변한다. 초기에는 체류 보상을 받으면서도 더 안쪽으로 이동해 진전 보상을 받을 수 있다.
 
@@ -243,15 +243,15 @@ Net Force는 `sqrt(Fx²+Fy²+Fz²)`, Net Moment는 `sqrt(Mx²+My²+Mz²)`다. �
 현재 타겟–Goal의 world XY 거리를 d, `goal_hold`의 현재 인정 반경을 r이라고 하면 다음과 같다.
 
 ```text
-alpha = clamp((d - r) / 0.03, 0, 1)
+alpha = clamp((d - r) / 0.015, 0, 1)
 reward rate = 0.29 × alpha × (hand Net Force >= 0.01 N)
 ```
 
 | 거리 | alpha | 접촉 보상 |
 | --- | ---: | ---: |
 | d ≤ r | 0 | 0 |
-| d = r + 1.5 cm | 0.5 | +0.145/초 |
-| d ≥ r + 3 cm | 1 | +0.29/초 |
+| d = r + 0.75 cm | 0.5 | +0.145/초 |
+| d ≥ r + 1.5 cm | 1 | +0.29/초 |
 
 r은 매 계산에서 RewardManager의 실제 `goal_hold` 설정을 읽는다. 별도의 복사본을 사용하지 않으므로 커리큘럼 진행·checkpoint 복원과 함께 즉시 바뀐다. 목표에 가까워질수록 추가 접촉을 유지하려는 유인을 줄이고 목표 안에서는 체류 보상으로 평가한다.
 
@@ -305,7 +305,7 @@ C(x, t) = min(0.5 × expm1(2 × excess), 100)
 | `pushing_speed` | 타겟의 3D 선속도 norm | 0.10 → 0.03 m/s | −5 | 100 |
 | `arm_speed_excess` | Arm 6관절의 최대 절대 속도 | 1.0 → 0.7 rad/s | −1 | 100 |
 | `eef_linear_speed` | 현재 EEF 점의 3D 선속도 norm | 1.5 → 0.3 m/s | −1 | 100 |
-| `object_acceleration` | 활성 물체 각각의 3D COM 선가속도 norm | 0.30 → 0.05 m/s² | −1 | 물체당 100 |
+| `object_acceleration` | 활성 물체 각각의 3D COM 선가속도 norm | 1.0 → 0.1 m/s² | −1 | 물체당 100 |
 
 EEF 속도에는 손목 회전으로 EEF 점이 이동하는 효과가 포함된다. 타겟 속도 0.2 m/s의 비용은 초기 약 −0.554/초, 최종 약 −1.012/초다. 비용의 무료 기준과 타겟 과속 종료 0.8 m/s는 별개다.
 
@@ -393,12 +393,12 @@ delta_moment = abs(norm(M_current) - norm(M_previous))
 | 타겟 free speed | 0.10 m/s | 500 | 200 | −0.01 | 0.03 | 1700 |
 | Arm free speed | 1.0 rad/s | 500 | 200 | −0.02 | 0.7 | 3300 |
 | EEF free speed | 1.5 m/s | 500 | 200 | −0.02 | 0.3 | 12300 |
-| Goal hold 반경 | 0.05 m | 1000 | 500 | −0.01 | 0.01 | 2500 |
+| Goal hold 반경 | 0.03 m | 1000 | 500 | −0.01 | 0.01 | 1500 |
 | 힘 크기 변화 무료 기준 | 50 N | 1000 | 250 | −1 | 10 | 10750 |
 | 모멘트 크기 변화 무료 기준 | 5 N·m | 1000 | 250 | −0.1 | 1 | 10750 |
-| 물체 가속도 무료 기준 | 0.30 m/s² | 1000 | 250 | −0.01 | 0.05 | 7000 |
+| 물체 가속도 무료 기준 | 1.0 m/s² | 1000 | 250 | −0.02 | 0.1 | 12000 |
 
-첫 변경 시점에 한 번 감소한다. 예를 들어 iteration 1000의 Goal 반경은 0.04 m, 힘 변화 기준은 49 N, 모멘트는 4.9 N·m, 가속도는 0.29 m/s²다. 각 값은 최종값에서 멈춘다. 접촉 alpha의 r은 이 Goal hold 반경과 자동으로 일치하며 별도 curriculum 항을 두지 않는다.
+첫 변경 시점에 한 번 감소한다. 예를 들어 iteration 1000의 Goal 반경은 0.02 m, 힘 변화 기준은 49 N, 모멘트는 4.9 N·m, 가속도는 0.98 m/s²다. 각 값은 최종값에서 멈춘다. 접촉 alpha의 r은 이 Goal hold 반경과 자동으로 일치하며 별도 curriculum 항을 두지 않는다.
 
 ### 6.3 Goal 방향
 
@@ -458,7 +458,7 @@ Actor와 Critic은 각각 장애물 인코더 `40→32→16`(ReLU)을 갖고, �
 
 `--max_iterations`는 재시도마다 추가하는 양이 아니라 전체 절대 목표다. 목표 이전에 오류 또는 완료 표식 없는 조기 종료가 발생하면 최신 저장 iteration에서 500을 뺀 값 이하의 가장 큰 유효 checkpoint를 찾는다. 모델·optimizer와 커리큘럼을 복원한 **뒤 reset**하므로 첫 rollout부터 복원 단계의 Goal 반경·목표 방향·장애물 수·비용 기준을 사용한다.
 
-예를 들어 iteration 2500에서 재개하면 Gray1/White1, Goal 반경 0.01 m, deadzone 30°, 힘 변화 기준 43 N, 모멘트 4.3 N·m, 가속도 0.23 m/s²다. 전체 목표가 90000이면 남은 87500회를 실행한다. Runner의 index 관례에 따라 마지막 저장 iteration은 목표−1이다.
+예를 들어 iteration 2500에서 재개하면 Gray1/White1, Goal 반경 0.01 m, deadzone 30°, 힘 변화 기준 43 N, 모멘트 4.3 N·m, 가속도 0.86 m/s²다. 전체 목표가 90000이면 남은 87500회를 실행한다. Runner의 index 관례에 따라 마지막 저장 iteration은 목표−1이다.
 
 기본 재시작 상한은 10회이며 `--max-restarts`로 바꾼다. Ctrl+C/SIGTERM은 의도적 중단으로 처리한다. `--resume-checkpoint <파일>`로 최초 복원 지점을 지정할 수 있다. 로그는 새 `logs/resilient/<task>/<UTC시각_uuid>/attempt_*`에 분리하고 되돌린 이후의 오래된 분기는 삭제하지 않되 재선택하지 않는다. `--job-dir <새 경로>`로 위치를 지정한다.
 
