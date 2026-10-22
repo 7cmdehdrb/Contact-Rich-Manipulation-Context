@@ -43,6 +43,7 @@ Contact-Rich-Manipulation-Context/
 | [출처와 확인 범위](01_plan/06_SOURCE_REGISTER.md) | 첨부 문서·대화 기반 정보·추가 확인 자료와 주장별 근거 |
 | [코드·장비 현황](02_implementation/07_CODE_AND_HARDWARE_STATUS.md) | 현재 활성 코드·과거 구현/센서 보고·실물 미확인, 과거 PPO와 실행 확인 항목 |
 | [활성 환경](02_implementation/08_ACTIVE_ENVIRONMENTS.md) | 두 활성 패키지의 역할, 환경 상속, 적용 설정과 실행 명령 |
+| [전체 환경 계층과 변경 의도](02_implementation/environments/ENVIRONMENT_EVOLUTION.md) | Inspire Sweep 등록 29개 환경의 변화 흐름과 독립 설명 문서 |
 | [개발 지침](00_guidelines/09_DEVELOPMENT_GUIDE.md) | Manager-based RL의 OOP 원칙, 계약·로그·검증·문서 갱신 |
 | [Workspace와 문서 지도](00_guidelines/10_WORKSPACE_GUIDE.md) | 전체 구조, 세 문서 영역, 패키지·도구의 연결 |
 | [개발 로그](02_implementation/logs/README.md) | 10월 진행·재생 기록과 Workspace 정리 |

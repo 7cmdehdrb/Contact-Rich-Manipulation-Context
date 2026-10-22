@@ -1,5 +1,7 @@
 # 활성 패키지와 환경 구현 현황
 
+등록된 Inspire Sweep 29개 환경의 전체 변화 흐름과 개별 문서는 [환경 계층·변경 의도](environments/ENVIRONMENT_EVOLUTION.md)에서 찾는다. 2026-10-22 코드 대조로 확인한 과거 문서와의 수치 차이도 그 문서에 정리했다.
+
 [문서 안내](../01_plan/README.md) · [Workspace 구성](../00_guidelines/10_WORKSPACE_GUIDE.md) · [개발 지침](../00_guidelines/09_DEVELOPMENT_GUIDE.md) · [과거 코드·장비 기록](07_CODE_AND_HARDWARE_STATUS.md)
 
 기준일: **2026-10-15**. 이 문서는 현재 Workspace의 활성 코드를 읽어 확인한 구성, 상속 관계와 실행 방법을 기록한다. 과거 구현 보고나 발표 설계와 실제 코드가 다르면 이 문서의 코드 근거를 함께 확인한다. 코드가 존재한다는 사실, CPU 테스트 통과, 학습 성능, 실물 검증은 각각 별개의 확인 수준이다.
@@ -834,6 +836,10 @@ v1 위에 양의 보상 두 항을 추가하고 성공 종료는 비활성화했
 ```
 
 [OSC v2 설정](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/dex_tactile_omni_renewal_v2_osc_env_cfg.py) · [제한 action 구현](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/osc_actions.py).
+
+## Clutter FT 테스트 — 2026-10-21
+
+`Isaac-Inspire-Contact-Sweep-Clutter-FT-Test-v0`는 Curriculum v1의 정책 입력·보상·종료를 유지하면서 Clutter v2의 보정 F/T를 별도로 수집하는 진단 분기다. [독립 환경 설명](environments/CONTACT_SWEEP_CLUTTER_FT_TEST_ENVIRONMENT.md)에서 관측·전체 보상·종료·커리큘럼을, [수집 기록](logs/2026-10-21_clutter_ft_collection.md)에서 당시 데이터와 검증 범위를 확인한다.
 
 ## Contact Sweep Clutter Fusion v2 — 2026-10-21
 
