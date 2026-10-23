@@ -1,5 +1,7 @@
 # Blind Sweeping — 단일 파일 인계 요약
 
+2026-10-23 Holding 이후 환경 개발은 [Holding·OSC·OSC-Random 계열 운영 원칙](../02_implementation/environments/FUSION_HOLDING_FAMILY.md)을 따른다. 목표 유지·성공 종료, OSC에서 결과 재현, 물체 다양화의 세 목적을 구분하고 각 버전의 기준 부모를 명시한다.
+
 **2026-10-22 Fusion v1.0 후속 수정:** 같은 task에 Gray1/White1→3/3 개수 curriculum, Goal hold tolerance와 동기화한 접촉 alpha, 비활성 물체 mask를 적용했다. 가속·감속에는 같은 기존 지수 비용을 사용한다. 재사용 가능한 `train_resilient.py`는 조기 중단 시 최신 checkpoint−500에서 커리큘럼을 복원한 뒤 재개한다. [현재 계약·실행·실제 검증](../02_implementation/logs/2026-10-22_clutter_fusion_v1_0_population_recovery.md)을 따른다.
 
 **2026-10-22 Fusion v1.0 추가:** v3을 직접 상속한 `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_0`을 추가했다. 보상·종료·커리큘럼 CFG는 독립 선언이며, 손 전체 접촉 유지·비타겟 접촉 힘·EEF wrench 크기 변화량·물체별 가속도 비용과 새 Goal 일정을 사용한다. 이후 v1_1의 상속 기준이다. [계수·계약·실제 검증](../02_implementation/logs/2026-10-22_clutter_fusion_v1_0.md)을 따르며 장시간 학습 성과와 구분한다.

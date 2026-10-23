@@ -4,6 +4,8 @@
 
 **[환경 계층과 변경 의도](ENVIRONMENT_EVOLUTION.md)부터 읽는다.** Baseline → Omni → Renewal과 Contact Sweep → Clutter → Fusion의 관계를 흐름도와 변경표로 확인하고, 전체 등록 ID 표에서 개별 환경 문서로 이동할 수 있다. 실제 Python 상속과 기능을 가져와 독립 구성한 관계는 구분해서 표시했다.
 
+Holding 이후의 세 계열과 버전 증가 기준은 [Fusion Holding 환경 계열과 개발 방향](FUSION_HOLDING_FAMILY.md)을 따른다.
+
 | 찾는 내용 | 문서 |
 | --- | --- |
 | 전체 계층·부모에서 바꾼 이유·독립 문서 링크 | [환경 계층과 변경 의도](ENVIRONMENT_EVOLUTION.md) |
