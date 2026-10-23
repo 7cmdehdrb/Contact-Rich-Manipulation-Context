@@ -858,6 +858,8 @@ v1 위에 양의 보상 두 항을 추가하고 성공 종료는 비활성화했
 
 ## Contact Sweep Clutter Fusion v1.0 — 2026-10-22
 
+2026-10-23 종료 원인·매 step 속도 모니터링을 추가했으나 후속 사용자 요청으로 관련 코드를 모두 주석 처리했다. 현재 모니터링 출력은 비활성이고 기존 종료 판정·임계값·자동 reset은 유지한다. [변경·검증 기록](logs/2026-10-23_fusion_v1_0_termination_prints.md)을 따른다.
+
 현재 구성 전체는 [v1_0 독립 환경 설명](environments/CONTACT_SWEEP_CLUTTER_FUSION_V1_0_ENVIRONMENT.md), 단계별 차이는 [v0 → v2 → v3 → v1_0 비교](environments/CONTACT_SWEEP_CLUTTER_FUSION_VERSIONS.md)에서 확인한다.
 
 `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_0`의 Env/PPO Cfg는 v3을 직접 상속한다. 전체 체인은 **v0 → v2 → v3 → v1_0**이며 이후 v1_1의 기반이다. 보상·종료·커리큘럼은 각각 독립 `ContactSweepClutterFusionV1_0*Cfg` 클래스를 새로 선언하고, 실행 클래스는 `ContactSweepClutterFusionV1_0Env` → `ContactSweepClutterFusionEnv`, runner는 `CurriculumOnPolicyRunner`다. Experiment 이름은 `inspire_contact_sweep_clutter_fusion_v1_0`이다.
@@ -974,4 +976,18 @@ Workspace 루트에서 `./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scr
 
 Workspace 루트에서 `./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train_resilient.py --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3_1 --num_envs 2048 --headless --max_iterations 90000`를 사용한다. Play는 `scripts/play.py --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3_1 --checkpoint <절대경로> --num_envs 1`이다.
 
+페널티 입력 수집은 `scripts/collect_fusion_reward_inputs.py --headless --num_envs 16 --steps 25000`를 Isaac Lab Python으로 실행한다. 기본 checkpoint는 지정된 `model_14500.pt`이며 별도 계측 runtime은 v1_0을 상속한다. 환경별 표본과 reset 원인·episode 경계를 CSV로 보존한다. [측정 계약·실행·검증](logs/2026-10-23_fusion_v1_3_1_reward_inputs.md).
+
 [환경 구성](environments/CONTACT_SWEEP_CLUTTER_FUSION_V1_3_1_ENVIRONMENT.md) · [검증 기록](logs/2026-10-22_clutter_fusion_v1_3_1.md)
+
+## Contact Sweep Clutter Fusion v1_4 — 2026-10-23
+
+`Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_4`: `ContactSweepClutterFusionV1_4EnvCfg`/`ContactSweepClutterFusionV1_4PPORunnerCfg`는 v1_0을 직접 상속한다. Runtime은 `ContactSweepClutterFusionV1_0Env`, runner는 `CurriculumOnPolicyRunner`, experiment는 `inspire_contact_sweep_clutter_fusion_v1_4`다. v1_0_x 및 v1_1–v1_3 계열과 독립된 분기다.
+
+Arm·EEF·Pushing은 기존 감소율을 250 간격으로 적용하고 최종값은 각각 0.7/0.2/0.02다. 후반 가속도·Wrench 계단 및 ramp, Goal 반경0→0.01→0.005, 장애물 최대 Gray5/White5/Target1, Goal hold9.0·Hand contact1.45, push_fast1.0과 연속 Goal hold3초 성공 종료를 적용한다. 관측·Action·제어·물성과 네 운동 페널티는 v1_0에서 계승한다. 세부 경계·해석·검증은 [개발 로그](logs/2026-10-23_clutter_fusion_v1_4.md)를 따른다.
+
+Workspace 루트에서 `./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_4 --num_envs 2048 --headless --resume --load_run <v1_0-run-절대경로> --checkpoint <model_ITER.pt>`를 사용한다. Resume 시 절대 iteration을 유지한다. Play는 `scripts/play.py --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_4 --num_envs 1 --checkpoint <checkpoint-절대경로.pt>`다. CPU47개 검사를 통과했으며 GPU driver 접근 불가로 실제 checkpoint/PPO 실행은 미검증이다.
+
+## Fusion v1_0 체크포인트 계측 — 2026-10-23
+
+`collect_fusion_reward_inputs.py --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_0 --checkpoint <model.pt> --num_envs 16 --steps 3000 --headless`로 환경당60초를 수집한다. 기존 등록 ID와 Cfg/runner를 유지하고 `RewardTelemetryEnv`가 v1_0 runtime을 상속하여 reset 전 종료 표본을 기록한다. [model_10000/model_16400 실행·분석 기록](logs/2026-10-23_fusion_v1_0_checkpoint_comparison.md).

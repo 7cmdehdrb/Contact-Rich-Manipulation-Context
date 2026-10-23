@@ -1,5 +1,19 @@
 # 개발·실험 진행 로그
 
+- [2026-10-23 Fusion v1_4 직접 계승 환경](2026-10-23_clutter_fusion_v1_4.md): v1_0 기반 250 간격·후반 페널티·11개 물체·3초 성공 종료와 CPU 검증.
+
+- [2026-10-23 Fusion v1_0 체크포인트 이미지 모음](2026-10-23_fusion_v1_0_checkpoint_figures.md): model_10000·model_16400 환경별 측정 그래프.
+
+- [2026-10-23 Fusion v1_0 체크포인트 비교](2026-10-23_fusion_v1_0_checkpoint_comparison.md): model_10000/model_16400, 각각16환경·60초, 타겟 제외 접촉력과 EEF·가속도·RAW F/T 환경별 통계 및 이미지.
+
+- [2026-10-23 Fusion v1_3_1 환경별 측정 통계](2026-10-23_fusion_v1_3_1_measurement_statistics.md): threshold 적용 후 EEF 속력·물체 힘/가속도·RAW F/T 중앙값/평균/최대와 그래프.
+
+- [2026-10-23 Fusion v1_3_1 페널티 입력 계측](2026-10-23_fusion_v1_3_1_reward_inputs.md): model_14500, 후속 요청으로16환경·162.14초에서 중단, EEF 속력·물체별 힘/가속도·RAW/보정 F/T와 reset257건.
+
+- [2026-10-23 Fusion v1_0 마지막 5% 보상 구성](2026-10-23_fusion_v1_0_last5pct_rewards.md): iteration 15612~16433, 822개 기록의 17개 보상 평균·전체/군내 비중.
+
+- [2026-10-23 Fusion v1_0 종료 원인 출력](2026-10-23_fusion_v1_0_termination_prints.md): timeout 포함 활성 종료 항목·환경 ID·동시 원인 출력과 CPU 검증.
+
 - [2026-10-22 Fusion v1_3_1 Goal·접촉 fade 커리큘럼](2026-10-22_clutter_fusion_v1_3_1.md)
 
 - [2026-10-22 Fusion v1_3 선형 커리큘럼](2026-10-22_clutter_fusion_v1_3.md)
