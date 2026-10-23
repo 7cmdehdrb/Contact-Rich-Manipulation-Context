@@ -56,3 +56,21 @@ CHECK
 ```
 
 결과: Markdown math 7개 통과, 링크 311개 검사·오류 0, diff 공백 검사 통과. 외부 웹 URL 2개는 fetch하지 않았다. 브라우저의 GitHub 수식·Mermaid 렌더링은 미검증이며 문서 검사기 통과와 구분한다.
+
+## Holding v0 후속 변경 — 장애물 변위·population
+
+사용자 요청으로 동일 Holding v0 등록 ID의 `object.params.displacement_ratio`를 2.5→5.0으로 변경했다. 전체 object weight−30, 변위 제곱합 상한0.04 및 기울기 식은 유지한다. 변위 부분 최대 비용은−3→−6/초, 장애물 하나10cm 변위 비용은−0.75→−1.5/초다.
+
+EnvCfg 최대 Gray/White를 각각5로, population 최종값을각5로 override했다. 시작1/1, White3000·Gray4500 시작과3000 간격은 유지하여 White12000/Gray13500에서각5개에 도달한다. 최대 타겟 포함11개를 생성하고 다음 reset부터 활성 mask를 적용한다. 직접 부모 v1_0 설정은 최대3/3·변위계수2.5를 유지하는지 실제 config에서 검사했다. 상속은 바뀌지 않으며 v1_4는 부모가 아니다.
+
+실행한 검증:
+
+```bash
+env -u PYTHONPATH PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1   /home/min/miniconda3/envs/env_isaaclab/bin/python -B -m pytest -q -p no:cacheprovider   src/inspire_sweep_baseline/tests/test_fusion_holding_v0.py
+
+env -u PYTHONPATH PYTHONDONTWRITEBYTECODE=1   /home/min/miniconda3/envs/env_isaaclab/bin/python -B   outputs/fusion_holding_v0_validation/population_smoke.py   > outputs/fusion_holding_v0_validation/population_smoke.log 2>&1
+```
+
+결과: CPU6 passed(2.04s). GPU2환경·seed42에서 0/2999/3000/4499/4500/6000/7500/9000/10500/11999/12000/13499/13500/16000/0의15단계를 reset 후각8step,총120step 실행했다. 11개 물체 용량·Gray/White별 활성 mask·변위 계수5.0·부모 설정 보존·finite reward·커리큘럼 복원을 검사하여 exit0 및 `HOLDING SMOKE PASSED`를 확인했다. 결과는 `outputs/fusion_holding_v0_validation/population_result.json`에 보존했다. 장기 학습과 다수 seed의 배치 성공률은 미검증이다.
+
+Holding 상세 설명의 population 표·관측 활성 물체 수·비용 상한, 활성 환경·계층 안내 및 패키지 README를 갱신했다. 기존 위쪽 구현 기록의3/3·최대7개는 최초 구현 당시 값이며 현재 계약은 이 후속 변경과 상세 문서를 따른다.

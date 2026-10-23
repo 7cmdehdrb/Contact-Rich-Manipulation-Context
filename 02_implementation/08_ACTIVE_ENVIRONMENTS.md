@@ -995,6 +995,6 @@ Workspace 루트에서 `./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scr
 
 ## Fusion Holding v0 — 2026-10-23
 
-`Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v0`: `FusionHoldingV0EnvCfg`는 v1_0 EnvCfg를 직접 상속하며 기존 v1_0 runtime을 사용한다. 독립 Reward/Termination/Curriculum CFG와 v1_0 파생 PPO 설정을 주입한다. 목표 progress tolerance0, 거리·속도 정착 보상,1000까지 충격 페널티weight0 및 이후 강화, 고정0.5cm·0.01m/s·3초 성공을 추가한다. 속도3일정은 논의 기준 v1_4 그대로, 그 외 장면·물체 수·실패 종료·관측·Action은 v1_0이다. [실행·검증·전체 계약](logs/2026-10-23_fusion_holding_v0.md).
+`Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v0`: `FusionHoldingV0EnvCfg`는 v1_0 EnvCfg를 직접 상속하며 기존 v1_0 runtime을 사용한다. 독립 Reward/Termination/Curriculum CFG와 v1_0 파생 PPO 설정을 주입한다. 목표 progress tolerance0, 거리·속도 정착 보상,1000까지 충격 페널티weight0 및 이후 강화, 고정0.5cm·0.01m/s·3초 성공을 추가한다. 속도3일정은 논의 기준 v1_4 그대로, 실패 종료·관측·Action은 v1_0이다. 후속 변경으로 object 변위 계수5.0·최대Gray5/White5를 적용하며 White12000/Gray13500에서각5개에 도달한다. [실행·검증·전체 계약](logs/2026-10-23_fusion_holding_v0.md).
 
 Holding의 전체 Scene·관측·Action·보상식·성공 판정·커리큘럼·실행은 [상세 환경 설명](environments/CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V0_ENVIRONMENT.md)을 따른다. EnvCfg의 직접 부모는 v1_0이며 runtime도 v1_0을 재사용한다. v1_4는 부모가 아닌 형제 분기다. [전체 상속도](environments/ENVIRONMENT_EVOLUTION.md)에 이 관계를 표시했다.
