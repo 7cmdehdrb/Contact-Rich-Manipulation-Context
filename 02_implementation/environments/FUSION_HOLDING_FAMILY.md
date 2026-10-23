@@ -51,7 +51,7 @@ OSC-Random 계열은 선택한 OSC 환경의 제어와 과업을 기반으로 �
 
 물체의 종류를 늘리는 것뿐 아니라 충돌 형상, 관성, 초기 자세·배치와 비겹침 조건, 초기 관측의 타당성도 함께 확인한다. 특히 원통을 전제로 만든 가시성 판정이 비원통 물체에도 적합한지 검토해야 한다. 이 계열에서 필요한 물체·장면·관측 처리는 버전별로 명시하고, 부모 OSC 제어를 함께 바꾸어야 한다면 두 변경을 구분해 기록한다.
 
-현재 `OSC-ObjectRandom-v1`은 OSC-v2를 직접 상속하며 NVIDIA YCB 물체의 종류·크기와 reset 시 위치·yaw·물성을 랜덤화한다. Gray 7개·White 7개의 장애물을 사용하고 16슬롯 관측에 넣는다. 타겟은 기존 원통을 유지한다. 따라서 **현재는 주변 장애물의 다양화가 구현된 단계이며, 타겟까지 실제 물체로 다양화한 환경은 아니다.**
+현재 `OSC-ObjectRandom-v1`은 OSC-v2를 직접 상속하며 NVIDIA YCB 물체의 종류·크기와 reset 시 위치·yaw·물성을 랜덤화한다. Gray1/White1에서 부모와 같은 교대 일정으로 Gray8/White8까지 증가시키며 16슬롯 관측을 모두 사용한다. 타겟은 기존 원통을 유지한다. 따라서 **현재는 주변 장애물의 다양화가 구현된 단계이며, 타겟까지 실제 물체로 다양화한 환경은 아니다.**
 
 현재 가시성 필터는 장애물을 반경 6 cm의 원형으로 근사한다. 비원통 물체의 실제 윤곽·방향·높이를 반영하는 가림 판정은 후속 개선 대상이다. 관측된 장애물을 왼쪽부터 채우고 인접한 유효 슬롯 사이에서 확률적으로 스왑하는 절차는 유지한다.
 
@@ -70,6 +70,7 @@ flowchart TD
     H1 --> O1["Holding OSC v1"]
     H1 --> H2["Holding v2: 공통 목표 반경"]
     H2 --> O2["Holding OSC v2"]
+    H2 --> JRT["Holding ObjectRandom Test v0: Joint Position"]
     O2 --> R1["OSC ObjectRandom v1"]
 ```
 
@@ -85,6 +86,8 @@ flowchart TD
 | Holding-OSC-ObjectRandom-v1 | Holding-OSC-v2 | 16슬롯 장애물 관측의 물체 다양화 분기 |
 
 현재 등록 ID는 위 환경명 앞에 `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-`를 붙인 형태다. 예를 들어 OSC-v2의 전체 ID는 `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v2`다.
+
+Holding-ObjectRandom-Test-v0은 Holding-v2를 직접 상속한 별도 테스트 분기다. OSC-ObjectRandom-v1의 물체 구성을 재사용하면서 Joint Position 제어로 학습 가능성을 먼저 확인하려는 목적이며, OSC 재현 완료를 의미하지 않는다. [테스트 환경 계약](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OBJECT_RANDOM_TEST_V0_ENVIRONMENT.md).
 
 ## 6. 앞으로 버전을 추가하는 방법
 

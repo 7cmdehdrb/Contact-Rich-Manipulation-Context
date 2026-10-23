@@ -1,5 +1,9 @@
 # 개발·실험 진행 로그
 
+- [2026-10-23 Holding ObjectRandom Test v0](2026-10-23_holding_object_random_test_v0.md): Joint Position 제어·랜덤 물체 테스트 환경 추가.
+
+- [2026-10-23 ObjectRandom-v1 개수 일정](2026-10-23_object_random_v1_population.md): 부모의 교대 증가 일정 복원, 초기1/1→최대8/8,16슬롯 사용.
+
 - [2026-10-23 Fusion Holding v2](2026-10-23_fusion_holding_v2.md): 공통 목표 반경·목표 내 접촉 보상·OSC-v2와ObjectRandom-v1 상속 변경.
 
 - [2026-10-23 Holding OSC v2](2026-10-23_fusion_holding_osc_v2.md): Holding v1 직접 상속, UR10 Reach RPY·effort 제한 제어와 로컬 EEF 기준점.

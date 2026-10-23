@@ -1,5 +1,7 @@
 # 환경 문서 안내
 
+- [Holding ObjectRandom Test v0](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OBJECT_RANDOM_TEST_V0_ENVIRONMENT.md): Holding-v2 직접 상속, Joint Position 제어로 ObjectRandom-v1 물체 구성의 학습 가능성 검증.
+
 [구현 문서 안내](../README.md) · [등록·실행 안내](../08_ACTIVE_ENVIRONMENTS.md)
 
 **[환경 계층과 변경 의도](ENVIRONMENT_EVOLUTION.md)부터 읽는다.** Baseline → Omni → Renewal과 Contact Sweep → Clutter → Fusion의 관계를 흐름도와 변경표로 확인하고, 전체 등록 ID 표에서 개별 환경 문서로 이동할 수 있다. 실제 Python 상속과 기능을 가져와 독립 구성한 관계는 구분해서 표시했다.
@@ -37,6 +39,6 @@ Holding 이후의 세 계열과 버전 증가 기준은 [Fusion Holding 환경 �
 
 - [Fusion Holding v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V1_ENVIRONMENT.md): Holding v0 직접 상속, 장애물16슬롯64D→32D→16D encoder.
 - [Fusion Holding OSC v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V1_ENVIRONMENT.md): Holding v1 직접 상속, OSC v0과 같은 Robot Base 기준·stiffness100.
-- [Holding OSC ObjectRandom v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V1_ENVIRONMENT.md): OSC v2 직접 상속, 기존14개 장애물 랜덤화·16슬롯 관측.
+- [Holding OSC ObjectRandom v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V1_ENVIRONMENT.md): OSC v2 직접 상속, 장애물1/1→8/8 교대 증가·16슬롯 관측.
 
 - [Fusion Holding v2](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V2_ENVIRONMENT.md): 공통 목표 반경·목표 내 접촉 간주·계수4, OSC-v2와ObjectRandom-v1 부모 변경.

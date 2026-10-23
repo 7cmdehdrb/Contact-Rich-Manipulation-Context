@@ -47,7 +47,7 @@
 
 OSC-v2는 EnvCfg와 PPO 모두 Holding-v2를 직접 상속한다. UR10 Reach 기반 RPY 입력, 위치/회전 stiffness80/25, scale0.03/0.15, effort 제한, 관성 분리·중력 보상false, Arm PD0은 유지한다.
 
-ObjectRandom-v1은 EnvCfg와 PPO 모두 OSC-v2를 직접 상속한다. 전용 `ObjectRandomV1CurriculumCfg`는 Holding-v2 커리큘럼에서 개수 일정만 비활성화한다. Gray7/White7 고정, NVIDIA 자산·reset·물성·16슬롯은 유지하며 새 목표 반경·보상·성공과 OSC-v2 제어를 전달한다. 기존 OSC-v1 기반 ObjectRandom 체크포인트는 입력 차원이 같아도 제어 의미가 달라 같은 동작을 보장하지 않는다.
+ObjectRandom-v1은 EnvCfg와 PPO 모두 OSC-v2를 직접 상속한다. 전용 `ObjectRandomV1CurriculumCfg`는 Holding-v2 커리큘럼에서 개수 최종값만 Gray8/White8로 확장한다. 초기1/1에서 White3,000·Gray4,500부터 교대로 증가하며, NVIDIA 자산·reset·물성·16슬롯은 유지하며 새 목표 반경·보상·성공과 OSC-v2 제어를 전달한다. 기존 OSC-v1 기반 ObjectRandom 체크포인트는 입력 차원이 같아도 제어 의미가 달라 같은 동작을 보장하지 않는다.
 
 ## 실행
 
