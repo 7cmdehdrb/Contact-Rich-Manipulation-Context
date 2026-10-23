@@ -2,7 +2,7 @@
 
 [구현 문서 안내](../README.md) · [등록·실행 안내](../08_ACTIVE_ENVIRONMENTS.md) · [문서 작성·검증 기록](../logs/2026-10-22_environment_catalog.md)
 
-**기준일: 2026-10-22.** [패키지 등록 코드](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py)에 등록된 **35개 환경 전체**를 대상으로 한다. 변경 흐름을 먼저 보고 아래 표의 상대 링크를 통해 각 환경의 기본 구성·관측·전체 보상·종료·커리큘럼을 확인할 수 있다. 기존 독립 문서 7개를 유지하고, 독립 문서가 없던 22개는 과거 실험을 찾아볼 수 있는 짧은 설명으로 추가했다.
+**기준일: 2026-10-23.** [패키지 등록 코드](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py)에 등록된 환경의 문서화 목록을 정리한다. 변경 흐름을 먼저 보고 아래 표의 상대 링크를 통해 각 환경의 기본 구성·관측·전체 보상·종료·커리큘럼을 확인할 수 있다. 기존 독립 문서 7개를 유지하고, 독립 문서가 없던 22개는 과거 실험을 찾아볼 수 있는 짧은 설명으로 추가했다.
 
 여기서 환경의 계층은 **등록된 EnvCfg의 직접 상속**이다. Runtime, Scene, Reward 같은 구성요소의 상속은 다를 수 있다. 실선은 실제 EnvCfg 상속, 점선은 동작의 재구성이나 기능 결합을 뜻한다. 버전 번호는 시간순 단일 계보를 뜻하지 않는다. 문서화 대상인 과거 실험도 코드에는 등록되어 있으며, 문서 추가가 새 학습·성능 검증이나 환경 삭제를 뜻하지 않는다.
 
@@ -125,6 +125,7 @@ flowchart TD
     F2["Fusion v2"]
     F3["Fusion v3"]
     F10["Fusion v1_0"]
+    F10 --> F14["Fusion v1_4: 250 간격·11개 물체·3초 성공 종료"]
     F10 --> F11["Fusion v1_1: 무료 기준 감소"]
     F11 --> F111["Fusion v1_1_1: 큰 힘 허용치 고정"]
     F11 --> F112["Fusion v1_1_2: 가속도 허용치 고정"]
@@ -157,6 +158,7 @@ flowchart TD
 | [Fusion v2](CONTACT_SWEEP_CLUTTER_FUSION_V2_ENVIRONMENT.md) | Fusion v0 | 정렬 보상이 반대 방향 밀기를 방해했다는 관찰에 대응한다. `eef_orientation`만 제거한다. |
 | [Fusion v3](CONTACT_SWEEP_CLUTTER_FUSION_V3_ENVIRONMENT.md) | Fusion v2 | 초기 밀기에서 후반 정밀 조작으로 더 빠르고 강하게 전환한다. 속도·접촉·wrench·목표 방향 커리큘럼을 바꾼다. 현재 코드에서는 `push_fast`도 1.0→0.8 m/s로 명시한다. |
 | [Fusion v1_0](CONTACT_SWEEP_CLUTTER_FUSION_V1_0_ENVIRONMENT.md) | Fusion v3 | 손등까지 포함한 접촉 유지, 비타겟 충격, 물체를 발사하는 행동을 다룬다. Reward·Termination·Curriculum을 독립 선언하고 손 전체 접촉·비타겟 힘·wrench 크기 변화·물체 가속도 비용, 목표 허용 범위·장애물 개수 일정을 구성한다. |
+| [Fusion v1_4](CONTACT_SWEEP_CLUTTER_FUSION_V1_4_ENVIRONMENT.md) | **Fusion v1_0** | 학습된 v1_0을 이어 허용 기준을 보정한다. 250 iteration 간격 커리큘럼, 최대 Gray 5/White 5, Goal hold·Hand contact 보상 강화, push_fast 1.0 m/s와 연속 Goal hold 3초 성공 종료를 적용한다. v1_3 계열과 별도 분기다. |
 
 의도 근거: [Contact 독립화](../logs/2026-10-20_contact_sweep_reference.md), [Clutter 추가](../logs/2026-10-20_contact_sweep_clutter.md), [Clutter v1](../logs/2026-10-20_contact_sweep_clutter_v1.md), [Curriculum v1](../logs/2026-10-20_clutter_v1_curriculum.md), [Clutter v2](../logs/2026-10-20_contact_sweep_clutter_v2.md), [F/T 수집](../logs/2026-10-21_clutter_ft_collection.md), [Notion 학습 기록](https://app.notion.com/p/3f7bd3c55e1b80e5a161c6e0dd175773)의 Clutter/Fusion 변경 이유, [Fusion 비교](CONTACT_SWEEP_CLUTTER_FUSION_VERSIONS.md)와 [v1_0 후속 변경](../logs/2026-10-22_clutter_fusion_v1_0_population_recovery.md).
 
@@ -199,6 +201,7 @@ flowchart TD
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3` | [Fusion v1_3](CONTACT_SWEEP_CLUTTER_FUSION_V1_3_ENVIRONMENT.md) | 신규 |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3_1` | [Fusion v1_3_1](CONTACT_SWEEP_CLUTTER_FUSION_V1_3_1_ENVIRONMENT.md) | 신규 |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_2` | [Fusion v1_2](CONTACT_SWEEP_CLUTTER_FUSION_V1_2_ENVIRONMENT.md) | 신규 |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_4` | [Fusion v1_4](CONTACT_SWEEP_CLUTTER_FUSION_V1_4_ENVIRONMENT.md) | 2026-10-23 추가 |
 
 ## 6. 기록을 읽을 때의 기준
 

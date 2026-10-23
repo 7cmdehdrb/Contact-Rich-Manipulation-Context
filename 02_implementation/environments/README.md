@@ -6,7 +6,7 @@
 
 | 찾는 내용 | 문서 |
 | --- | --- |
-| 전체 계층·부모에서 바꾼 이유·35개 독립 문서 링크 | [환경 계층과 변경 의도](ENVIRONMENT_EVOLUTION.md) |
+| 전체 계층·부모에서 바꾼 이유·독립 문서 링크 | [환경 계층과 변경 의도](ENVIRONMENT_EVOLUTION.md) |
 | Contact Sweep과 Clutter v0의 비교 | [Contact Sweep 환경 비교](CONTACT_SWEEP_ENVIRONMENTS.md) |
 | Fusion v0 → v2 → v3 → v1_0 상세 변경 비교 | [Fusion 버전 비교](CONTACT_SWEEP_CLUTTER_FUSION_VERSIONS.md) |
 | 초기 Omni와 Dex의 접근·목표 수식 비교 | [보상 수식 비교](REACH_AND_GOAL_REWARD_FORMULAS.md) |
@@ -24,3 +24,5 @@
 - [Fusion v1_3](CONTACT_SWEEP_CLUTTER_FUSION_V1_3_ENVIRONMENT.md): 힘·wrench·가속도 무료 기준의 point 기반 선형 커리큘럼.
 
 - [Fusion v1_3_1](CONTACT_SWEEP_CLUTTER_FUSION_V1_3_1_ENVIRONMENT.md): Goal 반경과 접촉 fade width의 선형 커리큘럼.
+
+- [Fusion v1_4](CONTACT_SWEEP_CLUTTER_FUSION_V1_4_ENVIRONMENT.md): v1_0 직접 상속, 250 간격 커리큘럼·최대 11개 물체·3초 목표 유지 성공 종료.

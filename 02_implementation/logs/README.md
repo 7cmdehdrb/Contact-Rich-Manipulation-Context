@@ -1,5 +1,13 @@
 # 개발·실험 진행 로그
 
+- [2026-10-23 Fusion Holding v0](2026-10-23_fusion_holding_v0.md): v1_0 직접 파생, 정착 보상·충격 warmup·독립 성공 판정.
+
+- [2026-10-23 Fusion v1_0 학습 진행별 물리 측정값](2026-10-23_fusion_v1_0_training_trend.md): checkpoint1000~15000, 각각16환경·30초, 환경별 평균·중앙값·최대값의16환경 평균 및 추이 그래프.
+
+- [2026-10-23 Fusion v1_4 환경 문서화](2026-10-23_clutter_fusion_v1_4_documentation.md): 설명·직접 상속 계층·문서 검사.
+
+- [2026-10-23 Fusion 3카메라 동기화 녹화](2026-10-23_fusion_three_view_recording.md)
+
 - [2026-10-23 Fusion v1_4 직접 계승 환경](2026-10-23_clutter_fusion_v1_4.md): v1_0 기반 250 간격·후반 페널티·11개 물체·3초 성공 종료와 CPU 검증.
 
 - [2026-10-23 Fusion v1_0 체크포인트 이미지 모음](2026-10-23_fusion_v1_0_checkpoint_figures.md): model_10000·model_16400 환경별 측정 그래프.

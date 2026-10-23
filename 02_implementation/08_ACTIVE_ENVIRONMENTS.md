@@ -984,10 +984,14 @@ Workspace 루트에서 `./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scr
 
 `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_4`: `ContactSweepClutterFusionV1_4EnvCfg`/`ContactSweepClutterFusionV1_4PPORunnerCfg`는 v1_0을 직접 상속한다. Runtime은 `ContactSweepClutterFusionV1_0Env`, runner는 `CurriculumOnPolicyRunner`, experiment는 `inspire_contact_sweep_clutter_fusion_v1_4`다. v1_0_x 및 v1_1–v1_3 계열과 독립된 분기다.
 
-Arm·EEF·Pushing은 기존 감소율을 250 간격으로 적용하고 최종값은 각각 0.7/0.2/0.02다. 후반 가속도·Wrench 계단 및 ramp, Goal 반경0→0.01→0.005, 장애물 최대 Gray5/White5/Target1, Goal hold9.0·Hand contact1.45, push_fast1.0과 연속 Goal hold3초 성공 종료를 적용한다. 관측·Action·제어·물성과 네 운동 페널티는 v1_0에서 계승한다. 세부 경계·해석·검증은 [개발 로그](logs/2026-10-23_clutter_fusion_v1_4.md)를 따른다.
+Arm·EEF·Pushing은 기존 감소율을 250 간격으로 적용하고 최종값은 각각 0.7/0.2/0.02다. 후반 가속도·Wrench 계단 및 ramp, Goal 반경0→0.01→0.005, 장애물 최대 Gray5/White5/Target1, Goal hold9.0·Hand contact1.45, push_fast1.0과 연속 Goal hold3초 성공 종료를 적용한다. 관측·Action·제어·물성과 네 운동 페널티는 v1_0에서 계승한다. 세부 경계·해석은 [환경 설명](environments/CONTACT_SWEEP_CLUTTER_FUSION_V1_4_ENVIRONMENT.md), 구현·검증은 [개발 로그](logs/2026-10-23_clutter_fusion_v1_4.md)를 따른다.
 
 Workspace 루트에서 `./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_4 --num_envs 2048 --headless --resume --load_run <v1_0-run-절대경로> --checkpoint <model_ITER.pt>`를 사용한다. Resume 시 절대 iteration을 유지한다. Play는 `scripts/play.py --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_4 --num_envs 1 --checkpoint <checkpoint-절대경로.pt>`다. CPU47개 검사를 통과했으며 GPU driver 접근 불가로 실제 checkpoint/PPO 실행은 미검증이다.
 
 ## Fusion v1_0 체크포인트 계측 — 2026-10-23
 
 `collect_fusion_reward_inputs.py --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_0 --checkpoint <model.pt> --num_envs 16 --steps 3000 --headless`로 환경당60초를 수집한다. 기존 등록 ID와 Cfg/runner를 유지하고 `RewardTelemetryEnv`가 v1_0 runtime을 상속하여 reset 전 종료 표본을 기록한다. [model_10000/model_16400 실행·분석 기록](logs/2026-10-23_fusion_v1_0_checkpoint_comparison.md).
+
+## Fusion Holding v0 — 2026-10-23
+
+`Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v0`: `FusionHoldingV0EnvCfg`는 v1_0 EnvCfg를 직접 상속하며 기존 v1_0 runtime을 사용한다. 독립 Reward/Termination/Curriculum CFG와 v1_0 파생 PPO 설정을 주입한다. 목표 progress tolerance0, 거리·속도 정착 보상,1000까지 충격 페널티weight0 및 이후 강화, 고정0.5cm·0.01m/s·3초 성공을 추가한다. 속도3일정은 논의 기준 v1_4 그대로, 그 외 장면·물체 수·실패 종료·관측·Action은 v1_0이다. [실행·검증·전체 계약](logs/2026-10-23_fusion_holding_v0.md).
