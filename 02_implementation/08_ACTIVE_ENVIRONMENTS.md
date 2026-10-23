@@ -1029,16 +1029,18 @@ flowchart TD
     O0 --> R0["OSC ObjectRandom v0: 14슬롯"]
     H0 --> H1["Holding v1: 16슬롯"]
     H1 --> O1["Holding OSC v1: Base 축·stiffness100"]
-    O1 --> R1["OSC ObjectRandom v1: 16슬롯"]
+    H1 --> H2["Holding v2: 공통 목표 반경"]
+    H2 --> O2["Holding OSC v2: RPY·effort 제한"]
+    O2 --> R1["OSC ObjectRandom v1: 16슬롯"]
 ```
 
 | 새 환경 ID | EnvCfg 직접 부모 | 관측·Scene·제어 차이 |
 | --- | --- | --- |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v1` | `FusionHoldingV0EnvCfg` | 장애물16×4=64D, encoder64→32→16D. 기존 최대Gray5/White5·개수 curriculum과 Joint Position 제어 유지 |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v1` | `FusionHoldingV1EnvCfg` | Holding v1 관측, OSC v0과 동일한 Robot Base 기준·stiffness100 Arm 제어 |
-| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v1` | `FusionHoldingOSCV1EnvCfg` | ObjectRandom v0의 자산·배치·물성·고정Gray7/White7 재사용, 관측16슬롯 중 남는2슬롯은0 |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v1` | `FusionHoldingOSCV2EnvCfg` | ObjectRandom v0의 자산·배치·물성·고정Gray7/White7 재사용, 관측16슬롯 중 남는2슬롯은0 |
 
-Actor/Critic 원시 입력은119D/122D, 장애물 압축 후 MLP 입력은71D/74D다. 초기 장애물의 `[present,x,y,z]`·가림·노이즈·정렬과 policy55D·Critic 전용 현재 타겟XYZ3D는 상속한다. 관측 용량 확대는 실제 물체 수 확대가 아니다. 보상·종료·커리큘럼 및 로컬 raw Action/실제 관절속도 제곱합의 네 고정 계수는 유지한다. v0의40D/56D encoder checkpoint는 v1과 직접 호환되지 않는다.
+Actor/Critic 원시 입력은119D/122D, 장애물 압축 후 MLP 입력은71D/74D다. 초기 장애물의 `[present,x,y,z]`·가림·노이즈·정렬과 policy55D·Critic 전용 현재 타겟XYZ3D는 상속한다. 관측 용량 확대는 실제 물체 수 확대가 아니다. Holding-v1/OSC-v1의 보상·종료·커리큘럼은 유지한다. ObjectRandom-v1은 후속 변경으로 Holding-v2의 공통 목표 반경·접촉 보상과 OSC-v2 제어를 상속한다. 로컬 raw Action/실제 관절속도 제곱합의 네 고정 계수는 모두 유지한다. v0의40D/56D encoder checkpoint는 v1과 직접 호환되지 않는다.
 
 Workspace 루트에서 다음 명령을 사용한다. `--num_envs`는 실행 예시이며 대규모 성능 검증값이 아니다.
 
@@ -1057,13 +1059,30 @@ Play는 같은 launcher에서 `src/inspire_sweep_baseline/scripts/play.py --task
 
 ## Fusion Holding OSC v2 — 2026-10-23
 
-`Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v2`의 `FusionHoldingOSCV2EnvCfg`는 **Holding v1을 직접 상속**한다. runtime은 `ContactSweepClutterFusionV1_0Env`, PPO는 `FusionHoldingOSCV2PPORunnerCfg`, experiment는 `inspire_contact_sweep_clutter_fusion_holding_osc_v2`다.
+`Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v2`의 `FusionHoldingOSCV2EnvCfg`는 **Holding v2를 직접 상속**한다. runtime은 `ContactSweepClutterFusionV1_0Env`, PPO는 `FusionHoldingOSCV2PPORunnerCfg`, experiment는 `inspire_contact_sweep_clutter_fusion_holding_osc_v2`다.
 
 UR10 Reach의 Action 구현을 활성 패키지 내부로 이식하여 RPY→axis-angle 변환, nonfinite 토크 행의0 처리와 실제 관절 effort limit×1.0 제한을 유지한다. Arm6관절만 선택하며 제어점은 부모 `scene.ee_frame.target_frames[0]`의 body·position/rotation offset이다. 명령 축은 Robot Base다. pose_rel·fixed impedance, 위치 stiffness80/회전25, damping ratio1, 위치 scale0.03m/회전 RPY scale0.15rad, 전체6축 motion 제어, wrench 제어0, 관성 분리·부분 관성 분리·중력 보상 false, nullspace none을 적용한다. Arm implicit PD gain은0이다.
 
-Hand·64→32→16 장애물 인코더·관측·보상·종료·Scene 중력·reset·curriculum은 Holding v1을 유지한다. Reach 예제의 Scene 중력 비활성화는 이식하지 않는다. 기존 OSC v0/v1의 설정은 유지한다. [구현·실행 검증](logs/2026-10-23_fusion_holding_osc_v2.md).
+Hand·64→32→16 장애물 인코더·관측·보상·종료·Scene 중력·reset·curriculum은 Holding v2를 유지한다. Reach 예제의 Scene 중력 비활성화는 이식하지 않는다. 기존 OSC v0/v1의 설정은 유지한다. [구현·실행 검증](logs/2026-10-23_fusion_holding_osc_v2.md).
 
 ```bash
 ./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
   --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v2 --num_envs 2048 --headless
 ```
+
+## Fusion Holding v2 — 2026-10-23
+
+`Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v2`의 `FusionHoldingV2EnvCfg`는 Holding-v1을 직접 상속한다. Runtime은 `ContactSweepClutterFusionV1_0Env`, PPO는 `FusionHoldingV2PPORunnerCfg`, runner는 `CurriculumOnPolicyRunner`, experiment는 `inspire_contact_sweep_clutter_fusion_holding_v2`다.
+
+성공·목표 보상·접촉 간주 반경을2cm(5,000까지)→1cm(10,000)→0.5cm(20,000)로 통일하고 iteration마다 선형 감소시킨다. goal_hold 계수는4, 손 접촉 보상은0.01N 이상 또는 공통 목표 반경 내일 때1.45/초다. 새 함수에는 fade가 없으며, 성공에는 기존0.01m/s·연속3초 조건을 유지한다. OSC-v2→Holding-v2, ObjectRandom-v1→OSC-v2로 직접 부모와 PPO를 변경했다. ObjectRandom의 자체 커리큘럼에도 이 일정을 전달한다.
+
+```bash
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
+  --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v2 --num_envs 2048 --headless
+
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/play.py \
+  --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v2 \
+  --num_envs 1 --checkpoint "<Holding-v2-checkpoint.pt>" --real-time
+```
+
+[전체 계약·상속·실행](environments/CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V2_ENVIRONMENT.md) · [검증 기록](logs/2026-10-23_fusion_holding_v2.md). 기존 OSC-v2 GPU 기록은 Holding-v1을 부모로 삼았던 당시 결과이며 이번 변경의 GPU 검증과 구분한다.

@@ -1,5 +1,7 @@
 # 개발·실험 진행 로그
 
+- [2026-10-23 Fusion Holding v2](2026-10-23_fusion_holding_v2.md): 공통 목표 반경·목표 내 접촉 보상·OSC-v2와ObjectRandom-v1 상속 변경.
+
 - [2026-10-23 Holding OSC v2](2026-10-23_fusion_holding_osc_v2.md): Holding v1 직접 상속, UR10 Reach RPY·effort 제한 제어와 로컬 EEF 기준점.
 
 - [2026-10-23 Fusion Holding v1 계열](2026-10-23_fusion_holding_v1.md): 장애물16슬롯·64→32→16D, OSC v0/v1 Robot Base 기준·stiffness100, ObjectRandom v1 직접 상속과 기존 v0 보존.

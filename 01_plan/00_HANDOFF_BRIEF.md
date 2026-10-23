@@ -1,5 +1,7 @@
 # Blind Sweeping — 단일 파일 인계 요약
 
+**2026-10-23 Holding v2 후속:** 사용자 요청으로 성공·목표 보상·접촉 간주의 반경을2→1→0.5cm로 통일하고 goal_hold 계수를4로 변경했다. 현재 상속은 Holding-v1→Holding-v2→OSC-v2→ObjectRandom-v1이다. [계약](../02_implementation/environments/CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V2_ENVIRONMENT.md)과 [검증 기록](../02_implementation/logs/2026-10-23_fusion_holding_v2.md)을 따른다.
+
 2026-10-23 Holding 이후 환경 개발은 [Holding·OSC·OSC-Random 계열 운영 원칙](../02_implementation/environments/FUSION_HOLDING_FAMILY.md)을 따른다. 목표 유지·성공 종료, OSC에서 결과 재현, 물체 다양화의 세 목적을 구분하고 각 버전의 기준 부모를 명시한다.
 
 **2026-10-22 Fusion v1.0 후속 수정:** 같은 task에 Gray1/White1→3/3 개수 curriculum, Goal hold tolerance와 동기화한 접촉 alpha, 비활성 물체 mask를 적용했다. 가속·감속에는 같은 기존 지수 비용을 사용한다. 재사용 가능한 `train_resilient.py`는 조기 중단 시 최신 checkpoint−500에서 커리큘럼을 복원한 뒤 재개한다. [현재 계약·실행·실제 검증](../02_implementation/logs/2026-10-22_clutter_fusion_v1_0_population_recovery.md)을 따른다.

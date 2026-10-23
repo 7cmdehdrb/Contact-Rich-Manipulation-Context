@@ -37,4 +37,6 @@ Holding 이후의 세 계열과 버전 증가 기준은 [Fusion Holding 환경 �
 
 - [Fusion Holding v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V1_ENVIRONMENT.md): Holding v0 직접 상속, 장애물16슬롯64D→32D→16D encoder.
 - [Fusion Holding OSC v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V1_ENVIRONMENT.md): Holding v1 직접 상속, OSC v0과 같은 Robot Base 기준·stiffness100.
-- [Holding OSC ObjectRandom v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V1_ENVIRONMENT.md): OSC v1 직접 상속, 기존14개 장애물 랜덤화·16슬롯 관측.
+- [Holding OSC ObjectRandom v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V1_ENVIRONMENT.md): OSC v2 직접 상속, 기존14개 장애물 랜덤화·16슬롯 관측.
+
+- [Fusion Holding v2](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V2_ENVIRONMENT.md): 공통 목표 반경·목표 내 접촉 간주·계수4, OSC-v2와ObjectRandom-v1 부모 변경.

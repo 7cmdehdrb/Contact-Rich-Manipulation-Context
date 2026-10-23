@@ -130,7 +130,9 @@ flowchart TD
     FHO --> FHOR["Holding OSC ObjectRandom v0: NVIDIA 물체"]
     FH --> FH1["Fusion Holding v1: 장애물16슬롯"]
     FH1 --> FHO1["Holding OSC v1: Base 축·stiffness100"]
-    FHO1 --> FHOR1["OSC ObjectRandom v1: 물체 랜덤화·16슬롯"]
+    FH1 --> FH2["Holding v2: 공통 목표 반경·접촉 간주"]
+    FH2 --> FHO2["Holding OSC v2: Reach 제어"]
+    FHO2 --> FHOR1["OSC ObjectRandom v1: 물체 랜덤화·16슬롯"]
     F10 --> F14["Fusion v1_4: 250 간격·11개 물체·3초 성공 종료"]
     F10 --> F11["Fusion v1_1: 무료 기준 감소"]
     F11 --> F111["Fusion v1_1_1: 큰 힘 허용치 고정"]
@@ -169,8 +171,10 @@ flowchart TD
 | [Fusion Holding OSC v0](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V0_ENVIRONMENT.md) | **Fusion Holding v0** | Arm을 Robot Base 기준 상대 pose·stiffness100 OSC로 교체하고 관절 PD를0으로 설정한다. 2026-10-23 후속 요청으로 EEF 축·stiffness200에서 변경. 나머지 Holding 계약 유지. |
 | [Holding OSC ObjectRandom v0](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V0_ENVIRONMENT.md) | **Fusion Holding OSC v0** | 기존 실린더 타겟과 NVIDIA YCB 장애물14개, 물체별 관성·평평한 충돌 프록시·OBB 비겹침. 장애물14슬롯56D. 부모의 Base 축·stiffness100을 상속한다. |
 | [Fusion Holding v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V1_ENVIRONMENT.md) | **Fusion Holding v0** | 장애물 관측만16슬롯64D와 encoder64→32→16D로 확장한다. 기존 최대Gray5/White5·개수 curriculum 유지. |
+| [Fusion Holding v2](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V2_ENVIRONMENT.md) | **Fusion Holding v1** | 공통 반경2→1→0.5cm, goal_hold 계수4, 목표 내 접촉 간주. |
+| [Holding OSC v2](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V2_ENVIRONMENT.md) | **Fusion Holding v2** | Reach RPY·effort 제한 제어, 위치/회전 stiffness80/25. |
 | [Fusion Holding OSC v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V1_ENVIRONMENT.md) | **Fusion Holding v1** | OSC v0과 같은 Base 축·stiffness100 제어를 재사용하며16슬롯을 상속한다. |
-| [Holding OSC ObjectRandom v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V1_ENVIRONMENT.md) | **Fusion Holding OSC v1** | ObjectRandom v0의 자산·배치·물성·고정Gray7/White7을 재사용하며16슬롯 중2슬롯을0으로 채운다. |
+| [Holding OSC ObjectRandom v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V1_ENVIRONMENT.md) | **Fusion Holding OSC v2** | ObjectRandom v0의 자산·배치·물성·고정Gray7/White7을 재사용하며16슬롯 중2슬롯을0으로 채운다. |
 
 의도 근거: [Contact 독립화](../logs/2026-10-20_contact_sweep_reference.md), [Clutter 추가](../logs/2026-10-20_contact_sweep_clutter.md), [Clutter v1](../logs/2026-10-20_contact_sweep_clutter_v1.md), [Curriculum v1](../logs/2026-10-20_clutter_v1_curriculum.md), [Clutter v2](../logs/2026-10-20_contact_sweep_clutter_v2.md), [F/T 수집](../logs/2026-10-21_clutter_ft_collection.md), [Notion 학습 기록](https://app.notion.com/p/3f7bd3c55e1b80e5a161c6e0dd175773)의 Clutter/Fusion 변경 이유, [Fusion 비교](CONTACT_SWEEP_CLUTTER_FUSION_VERSIONS.md)와 [v1_0 후속 변경](../logs/2026-10-22_clutter_fusion_v1_0_population_recovery.md).
 
@@ -217,6 +221,8 @@ flowchart TD
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v0` | [Fusion Holding v0](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V0_ENVIRONMENT.md) | 2026-10-23 추가 |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v0` | [Holding OSC v0](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V0_ENVIRONMENT.md) | 2026-10-23 추가 |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v0` | [Holding OSC ObjectRandom v0](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V0_ENVIRONMENT.md) | 2026-10-23 추가 |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v2` | [Holding v2](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V2_ENVIRONMENT.md) | 2026-10-23 추가 |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v2` | [Holding v2·OSC 계승](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V2_ENVIRONMENT.md) | 2026-10-23 부모 변경 |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v1` | [Holding v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V1_ENVIRONMENT.md) | 2026-10-23 추가 |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v1` | [Holding OSC v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V1_ENVIRONMENT.md) | 2026-10-23 추가 |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v1` | [Holding OSC ObjectRandom v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V1_ENVIRONMENT.md) | 2026-10-23 추가 |

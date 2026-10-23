@@ -20,9 +20,11 @@
 
 Holding은 물체를 목표 근처로 밀어 보내는 것에서 더 나아가, 목표에 도달한 물체가 다시 이탈하지 않고 안정적으로 머물도록 만드는 기준 계열이다. 목표 위치 오차, 잔류 속도, 접촉 유지, 목표 체류 시간과 성공 종료의 관계를 다룬다.
 
-앞으로 Holding-v2, v3, …는 이 목표를 개선하기 위한 보상·성공 조건·커리큘럼 등의 변경을 담는다. 구체적인 변경 항목과 수치는 각 버전에서 별도로 정한다. 보상이 커졌다는 사실과 실제 목표 유지·성공률이 개선됐다는 결과는 구분한다.
+Holding-v2와 이후 버전은 이 목표를 개선하기 위한 보상·성공 조건·커리큘럼 등의 변경을 담는다. 구체적인 변경 항목과 수치는 각 버전에서 별도로 정한다. 보상이 커졌다는 사실과 실제 목표 유지·성공률이 개선됐다는 결과는 구분한다.
 
 현재 Holding-v0에는 거리·속도에 따른 정착 보상과 독립적인 성공 종료가 구현되어 있다. 성공은 위치 허용 오차 0.5 cm, 속도 허용치 0.01 m/s 조건을 3초 동안 유지하고 실패 조건에 해당하지 않을 때 판정한다. Holding-v1은 이 과업 설정을 계승하고 장애물 관측 용량을 16슬롯, 인코더를 64→32→16D로 확장했다. **v1의 실제 변경은 관측 용량 확장이며, 목표 유지 성능이 개선됐다는 실험 결과를 의미하지 않는다.**
+
+Holding-v2는 공통 목표 반경2→1→0.5cm, goal_hold 계수4, 목표 내 무접촉 보상을 추가했다. [Holding v2 계약](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V2_ENVIRONMENT.md).
 
 세부 계약: [Holding v0](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V0_ENVIRONMENT.md) · [Holding v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V1_ENVIRONMENT.md).
 
@@ -36,12 +38,12 @@ OSC 계열은 선택한 Holding 환경을 기준으로 Arm 제어를 바꾼다. 
 
 여기서 ‘결과 재현’은 동일한 과업 성능을 얻는다는 의미다. Joint Position과 OSC는 Action 의미가 다르므로 기존 정책의 출력을 그대로 넣거나 같은 checkpoint를 사용하는 것만으로 재현됐다고 판단하지 않는다.
 
-현재 OSC-v1과 OSC-v2는 모두 **Holding-v1을 직접 상속하는 서로 다른 제어 실험**이다. OSC-v2가 OSC-v1을 상속하는 구조는 아니다.
+현재 OSC-v1은 **Holding-v1**, OSC-v2는 **Holding-v2를 직접 상속**한다. 사용자 후속 요청으로 OSC-v2의 목표 과업도 변경되어 두 OSC 버전을 순수 제어 차이만으로 비교할 수 없다. OSC-v2가 OSC-v1을 상속하는 구조는 아니다.
 
 - OSC-v1: Robot Base 기준 상대 pose, stiffness 100, 관성 분리·중력 보상 사용.
 - OSC-v2: UR10 Reach의 제어를 우리 EEF에 맞춰 이식. 위치/회전 stiffness 80/25, scale 0.03/0.15, RPY 회전 입력과 effort 제한, 관성 분리·중력 보상 미사용.
 
-[OSC v1 설명](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V1_ENVIRONMENT.md) · [OSC v2 설정과 검증](../logs/2026-10-23_fusion_holding_osc_v2.md). OSC-v2는 짧은 GPU 실행에서 토크 포화와 선반 충돌 종료가 관찰되어 Holding 결과 재현이 완료된 상태는 아니다.
+[OSC v1 설명](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V1_ENVIRONMENT.md) · [OSC v2 설정과 검증](../logs/2026-10-23_fusion_holding_osc_v2.md). Holding-v1을 부모로 사용했던 당시 OSC-v2는 짧은 GPU 실행에서 토크 포화와 선반 충돌 종료가 관찰되어 Holding 결과 재현이 완료된 상태는 아니다.
 
 ## 4. OSC-Random — 다양한 물체와 실제 물체 형상으로 확장
 
@@ -49,7 +51,7 @@ OSC-Random 계열은 선택한 OSC 환경의 제어와 과업을 기반으로 �
 
 물체의 종류를 늘리는 것뿐 아니라 충돌 형상, 관성, 초기 자세·배치와 비겹침 조건, 초기 관측의 타당성도 함께 확인한다. 특히 원통을 전제로 만든 가시성 판정이 비원통 물체에도 적합한지 검토해야 한다. 이 계열에서 필요한 물체·장면·관측 처리는 버전별로 명시하고, 부모 OSC 제어를 함께 바꾸어야 한다면 두 변경을 구분해 기록한다.
 
-현재 `OSC-ObjectRandom-v1`은 OSC-v1을 직접 상속하며 NVIDIA YCB 물체의 종류·크기와 reset 시 위치·yaw·물성을 랜덤화한다. Gray 7개·White 7개의 장애물을 사용하고 16슬롯 관측에 넣는다. 타겟은 기존 원통을 유지한다. 따라서 **현재는 주변 장애물의 다양화가 구현된 단계이며, 타겟까지 실제 물체로 다양화한 환경은 아니다.**
+현재 `OSC-ObjectRandom-v1`은 OSC-v2를 직접 상속하며 NVIDIA YCB 물체의 종류·크기와 reset 시 위치·yaw·물성을 랜덤화한다. Gray 7개·White 7개의 장애물을 사용하고 16슬롯 관측에 넣는다. 타겟은 기존 원통을 유지한다. 따라서 **현재는 주변 장애물의 다양화가 구현된 단계이며, 타겟까지 실제 물체로 다양화한 환경은 아니다.**
 
 현재 가시성 필터는 장애물을 반경 6 cm의 원형으로 근사한다. 비원통 물체의 실제 윤곽·방향·높이를 반영하는 가림 판정은 후속 개선 대상이다. 관측된 장애물을 왼쪽부터 채우고 인접한 유효 슬롯 사이에서 확률적으로 스왑하는 절차는 유지한다.
 
@@ -66,19 +68,21 @@ flowchart TD
     H0 --> O0["Holding OSC v0"]
     O0 --> R0["OSC ObjectRandom v0"]
     H1 --> O1["Holding OSC v1"]
-    H1 --> O2["Holding OSC v2"]
-    O1 --> R1["OSC ObjectRandom v1"]
+    H1 --> H2["Holding v2: 공통 목표 반경"]
+    H2 --> O2["Holding OSC v2"]
+    O2 --> R1["OSC ObjectRandom v1"]
 ```
 
 | 현재 환경 | 직접 부모 | 이번 계열 구분에서의 의미 |
 | --- | --- | --- |
 | Holding-v0 | Fusion-v1_0 | 목표 정착·유지·성공 종료 기준 |
 | Holding-v1 | Holding-v0 | 기존 과업 유지, 장애물 입력 용량 확장 |
+| Holding-v2 | Holding-v1 | 공통 목표 반경 커리큘럼, 목표 내 접촉 간주, 정착 계수4 |
 | Holding-OSC-v0 | Holding-v0 | 40D 장애물 입력의 OSC 분기 |
 | Holding-OSC-v1 | Holding-v1 | 64D 장애물 입력의 OSC 제어 실험 |
-| Holding-OSC-v2 | Holding-v1 | UR10 Reach 설정을 적용한 별도 OSC 제어 실험 |
+| Holding-OSC-v2 | Holding-v2 | UR10 Reach 설정을 적용한 별도 OSC 제어 실험 |
 | Holding-OSC-ObjectRandom-v0 | Holding-OSC-v0 | 14슬롯 장애물 관측의 물체 다양화 분기 |
-| Holding-OSC-ObjectRandom-v1 | Holding-OSC-v1 | 16슬롯 장애물 관측의 물체 다양화 분기 |
+| Holding-OSC-ObjectRandom-v1 | Holding-OSC-v2 | 16슬롯 장애물 관측의 물체 다양화 분기 |
 
 현재 등록 ID는 위 환경명 앞에 `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-`를 붙인 형태다. 예를 들어 OSC-v2의 전체 ID는 `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v2`다.
 
