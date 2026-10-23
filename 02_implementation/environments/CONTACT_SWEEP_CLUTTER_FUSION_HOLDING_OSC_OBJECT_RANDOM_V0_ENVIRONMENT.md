@@ -2,7 +2,9 @@
 
 [환경 목록](README.md) · [상속 계층](ENVIRONMENT_EVOLUTION.md) · [부모 Holding OSC](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V0_ENVIRONMENT.md) · [검증 로그](../logs/2026-10-23_holding_osc_object_random_v0.md)
 
-등록 ID: `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v0`. `FusionHoldingOSCObjectRandomV0EnvCfg`는 Holding OSC v0을 직접 상속한다. EEF 로컬 OSC·Hand·보상·종료는 부모를 유지한다. Scene·물체 spawner·물체별 관성을 확장하며 개수 커리큘럼은 테스트를 위해 비활성화했다. runtime은 기존 v1_0이며 PPO는 Holding OSC를 상속하고 experiment 이름과 장애물 관측 슬롯 수를 지정한다.
+등록 ID: `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v0`. `FusionHoldingOSCObjectRandomV0EnvCfg`는 Holding OSC v0을 직접 상속한다. Robot Base 기준·stiffness100 OSC와 Hand·보상·종료는 부모를 유지한다. 2026-10-23 후속 요청에 따라 부모의 EEF→Base 좌표계·stiffness200→100 변경도 상속한다. Scene·물체 spawner·물체별 관성을 확장하며 개수 커리큘럼은 테스트를 위해 비활성화했다. runtime은 기존 v1_0이며 PPO는 Holding OSC를 상속하고 experiment 이름과 장애물 관측 슬롯 수를 지정한다.
+
+14슬롯56D인 이 v0을 보존하면서 [ObjectRandom v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V1_ENVIRONMENT.md)을 추가했다. 새 v1은 Holding OSC v1을 직접 상속하고 관측을16슬롯64D로 늘리며 실제 물체 수는 동일하다. 현재 제어 변경의 검증과 이전 기록의 구분은 [최신 개발 로그](../logs/2026-10-23_fusion_holding_v1.md)를 따른다.
 
 ## 물체 자산
 

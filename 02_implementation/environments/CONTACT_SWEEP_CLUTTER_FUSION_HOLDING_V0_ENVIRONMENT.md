@@ -4,6 +4,8 @@
 
 Arm 제어 비교용 직접 파생 환경: [Holding OSC v0](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V0_ENVIRONMENT.md).
 
+장애물 관측을16슬롯64D로 확장하는 직접 파생 환경은 [Holding v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V1_ENVIRONMENT.md)이다. 이 문서의 Holding v0은 기존10슬롯40D를 유지한다.
+
 **대상:** `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v0`  
 **기준일:** 2026-10-23  
 **기준 코드:** Workspace commit `870750df2520a5e486240fa498677dfcd0494532`의 Holding 및 상속 경로와 2026-10-23 population·변위 계수 후속 변경. 이 문서는 현재 구현 계약을 설명한다. 수식 예시는 실측 학습 성과가 아니다.

@@ -29,6 +29,10 @@
 
 - [Fusion Holding v0](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V0_ENVIRONMENT.md): v1_0 직접 상속. Scene·관측·제어, 17개 보상, 정착·독립 성공, 충격 warmup과 14개 커리큘럼의 상세 계약.
 
-- [Fusion Holding OSC v0](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V0_ENVIRONMENT.md): Holding v0의 Arm만 Renewal OSC v0 구성으로 교체.
+- [Fusion Holding OSC v0](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V0_ENVIRONMENT.md): Holding v0의 Arm을 Robot Base 기준·stiffness100 OSC로 교체.
 
 - [Holding OSC ObjectRandom v0](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V0_ENVIRONMENT.md): NVIDIA 식품 용기·상자, 균일 크기·yaw 랜덤화와 보수적 비겹침 배치.
+
+- [Fusion Holding v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V1_ENVIRONMENT.md): Holding v0 직접 상속, 장애물16슬롯64D→32D→16D encoder.
+- [Fusion Holding OSC v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V1_ENVIRONMENT.md): Holding v1 직접 상속, OSC v0과 같은 Robot Base 기준·stiffness100.
+- [Holding OSC ObjectRandom v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V1_ENVIRONMENT.md): OSC v1 직접 상속, 기존14개 장애물 랜덤화·16슬롯 관측.

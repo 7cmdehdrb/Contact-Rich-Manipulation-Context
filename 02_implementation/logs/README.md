@@ -1,5 +1,9 @@
 # 개발·실험 진행 로그
 
+- [2026-10-23 Holding OSC v2](2026-10-23_fusion_holding_osc_v2.md): Holding v1 직접 상속, UR10 Reach RPY·effort 제한 제어와 로컬 EEF 기준점.
+
+- [2026-10-23 Fusion Holding v1 계열](2026-10-23_fusion_holding_v1.md): 장애물16슬롯·64→32→16D, OSC v0/v1 Robot Base 기준·stiffness100, ObjectRandom v1 직접 상속과 기존 v0 보존.
+
 - [2026-10-23 Fusion Holding v0](2026-10-23_fusion_holding_v0.md): v1_0 직접 파생, 정착 보상·충격 warmup·독립 성공 판정.
 
 - [2026-10-23 Fusion v1_0 학습 진행별 물리 측정값](2026-10-23_fusion_v1_0_training_trend.md): checkpoint1000~15000, 각각16환경·30초, 환경별 평균·중앙값·최대값의16환경 평균 및 추이 그래프.

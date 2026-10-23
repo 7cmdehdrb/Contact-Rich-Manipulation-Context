@@ -40,6 +40,11 @@
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_0` | `ContactSweepClutterFusionV1_0EnvCfg` | `ContactSweepClutterFusionV1_0PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_v1_0` |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v0` | `FusionHoldingV0EnvCfg` | `FusionHoldingV0PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_v0` |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v0` | `FusionHoldingOSCV0EnvCfg` | `FusionHoldingOSCV0PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_osc_v0` |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v0` | `FusionHoldingOSCObjectRandomV0EnvCfg` | `FusionHoldingOSCObjectRandomV0PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v0` |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v1` | `FusionHoldingV1EnvCfg` | `FusionHoldingV1PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_v1` |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v1` | `FusionHoldingOSCV1EnvCfg` | `FusionHoldingOSCV1PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_osc_v1` |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v2` | `FusionHoldingOSCV2EnvCfg` | `FusionHoldingOSCV2PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_osc_v2` |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v1` | `FusionHoldingOSCObjectRandomV1EnvCfg` | `FusionHoldingOSCObjectRandomV1PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v1` |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v2` | `ContactSweepClutterFusionV2EnvCfg` | `ContactSweepClutterFusionV2PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_v2` |
 | `Isaac-Inspire-Sweep-Baseline-v0` | `InspireSweepEnvCfg` | `InspireSweepPPORunnerCfg` | `logs/rsl_rl/inspire_sweep_baseline` |
 | `Isaac-Inspire-Sweep-Realistic-Physics-v0` | `InspireSweepRealisticPhysicsEnvCfg` | `InspireSweepRealisticPhysicsPPORunnerCfg` | `logs/rsl_rl/inspire_sweep_realistic_physics` |
@@ -1002,9 +1007,9 @@ Holding의 전체 Scene·관측·Action·보상식·성공 판정·커리큘럼�
 
 ## Fusion Holding OSC v0 — 2026-10-23
 
-Holding v0 직접 상속으로 Arm Action을 Renewal OSC v0과 같은 pose_rel·fixed impedance·stiffness200·damping ratio1·관성 분리·중력 보상 OSC로 교체한다. Arm 관절 PD gain은0이며 Hand·보상·종료·관측·커리큘럼은 Holding 그대로다. Runtime은 v1_0을 재사용한다. [상세 환경·실행](environments/CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V0_ENVIRONMENT.md) · [검증 기록](logs/2026-10-23_fusion_holding_osc_v0.md).
+Holding v0 직접 상속으로 Arm Action을 pose_rel·fixed impedance·stiffness100·damping ratio1·관성 분리·중력 보상 OSC로 교체한다. Arm 관절 PD gain은0이며 Hand·보상·종료·관측·커리큘럼은 Holding 그대로다. Runtime은 v1_0을 재사용한다. [상세 환경·실행](environments/CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V0_ENVIRONMENT.md) · [최신 제어 변경·검증 기록](logs/2026-10-23_fusion_holding_v1.md).
 
-Holding OSC v0 후속: `EEFRelativeOSCActionCfg`로 각 정책 step의 현재 EEF pose를 task frame으로 고정하여 이동·회전 명령을 EEF 로컬 축으로 해석한다. 참조 Renewal OSC의 base 축과 구분하며 나머지 제어 수치·Holding 계약은 유지한다.
+2026-10-23 후속 요청으로 Holding OSC v0의 이동·회전 명령을 EEF 로컬 축에서 Robot Base 축으로 변경하고 stiffness를200에서100으로 낮췄다. `OperationalSpaceControllerActionCfg`로 현재 EEF pose에 base 기준 상대 목표를 만든다. ObjectRandom v0에도 상속되며 기존 EEF 기준 checkpoint와 명령 의미가 달라진다.
 
 ## Holding OSC ObjectRandom v0 — 2026-10-23
 
@@ -1013,3 +1018,52 @@ Holding OSC v0 후속: `EEFRelativeOSCActionCfg`로 각 정책 step의 현재 EE
 ObjectRandom v0 후속 변경: 물체를 기존 대비1.5배 균일 확대, 실제 OBB 간2mm 여유·선반 경계 검사를 추가했다. population curriculum은 해당 파생에서만 임시 비활성화하고 iteration0부터Gray7/White7/Target1을 사용한다. 장애물 관측은14슬롯56D·encoder56→32→16으로 확장하며 부모10슬롯은 유지한다. 자산 상방−Y를+Z로 변환하여 거꾸로 스폰되던 문제를 수정했다. reset은 미리 생성한 물체의 pose·속도 갱신이다.
 
 ObjectRandom 초기 흔들림 후속: 스캔 메시의 불규칙한 밑면 대신 시각 크기에 맞춘 평평한 상자·32각 원통 충돌 프록시를 사용한다. 질량·마찰·배치와 타겟 실린더는 유지하며 자세·속도를 강제로 고정하지 않는다. [검증 기록](logs/2026-10-23_holding_osc_object_random_v0.md).
+
+## Fusion Holding v1 계열 — 2026-10-23
+
+기존 Holding·OSC·ObjectRandom v0 등록을 보존하고 다음 세 환경을 추가했다. Runtime은 모두 `ContactSweepClutterFusionV1_0Env`, runner는 `CurriculumOnPolicyRunner`다. 새 PPO Cfg는 각각의 v1 experiment 이름을 사용한다.
+
+```mermaid
+flowchart TD
+    H0["Holding v0"] --> O0["Holding OSC v0: Base 축·stiffness100"]
+    O0 --> R0["OSC ObjectRandom v0: 14슬롯"]
+    H0 --> H1["Holding v1: 16슬롯"]
+    H1 --> O1["Holding OSC v1: Base 축·stiffness100"]
+    O1 --> R1["OSC ObjectRandom v1: 16슬롯"]
+```
+
+| 새 환경 ID | EnvCfg 직접 부모 | 관측·Scene·제어 차이 |
+| --- | --- | --- |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v1` | `FusionHoldingV0EnvCfg` | 장애물16×4=64D, encoder64→32→16D. 기존 최대Gray5/White5·개수 curriculum과 Joint Position 제어 유지 |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v1` | `FusionHoldingV1EnvCfg` | Holding v1 관측, OSC v0과 동일한 Robot Base 기준·stiffness100 Arm 제어 |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v1` | `FusionHoldingOSCV1EnvCfg` | ObjectRandom v0의 자산·배치·물성·고정Gray7/White7 재사용, 관측16슬롯 중 남는2슬롯은0 |
+
+Actor/Critic 원시 입력은119D/122D, 장애물 압축 후 MLP 입력은71D/74D다. 초기 장애물의 `[present,x,y,z]`·가림·노이즈·정렬과 policy55D·Critic 전용 현재 타겟XYZ3D는 상속한다. 관측 용량 확대는 실제 물체 수 확대가 아니다. 보상·종료·커리큘럼 및 로컬 raw Action/실제 관절속도 제곱합의 네 고정 계수는 유지한다. v0의40D/56D encoder checkpoint는 v1과 직접 호환되지 않는다.
+
+Workspace 루트에서 다음 명령을 사용한다. `--num_envs`는 실행 예시이며 대규모 성능 검증값이 아니다.
+
+```bash
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
+  --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v1 --num_envs 2048 --headless
+
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
+  --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v1 --num_envs 2048 --headless
+
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
+  --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v1 --num_envs 256 --headless
+```
+
+Play는 같은 launcher에서 `src/inspire_sweep_baseline/scripts/play.py --task <위의-task-ID> --num_envs 1 --checkpoint <해당-v1-checkpoint.pt> --real-time`으로 실행한다. [Holding v1 상세](environments/CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V1_ENVIRONMENT.md) · [OSC v1 상세](environments/CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V1_ENVIRONMENT.md) · [ObjectRandom v1 상세](environments/CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V1_ENVIRONMENT.md) · [실제 검증·미검증 범위](logs/2026-10-23_fusion_holding_v1.md).
+
+## Fusion Holding OSC v2 — 2026-10-23
+
+`Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v2`의 `FusionHoldingOSCV2EnvCfg`는 **Holding v1을 직접 상속**한다. runtime은 `ContactSweepClutterFusionV1_0Env`, PPO는 `FusionHoldingOSCV2PPORunnerCfg`, experiment는 `inspire_contact_sweep_clutter_fusion_holding_osc_v2`다.
+
+UR10 Reach의 Action 구현을 활성 패키지 내부로 이식하여 RPY→axis-angle 변환, nonfinite 토크 행의0 처리와 실제 관절 effort limit×1.0 제한을 유지한다. Arm6관절만 선택하며 제어점은 부모 `scene.ee_frame.target_frames[0]`의 body·position/rotation offset이다. 명령 축은 Robot Base다. pose_rel·fixed impedance, 위치 stiffness80/회전25, damping ratio1, 위치 scale0.03m/회전 RPY scale0.15rad, 전체6축 motion 제어, wrench 제어0, 관성 분리·부분 관성 분리·중력 보상 false, nullspace none을 적용한다. Arm implicit PD gain은0이다.
+
+Hand·64→32→16 장애물 인코더·관측·보상·종료·Scene 중력·reset·curriculum은 Holding v1을 유지한다. Reach 예제의 Scene 중력 비활성화는 이식하지 않는다. 기존 OSC v0/v1의 설정은 유지한다. [구현·실행 검증](logs/2026-10-23_fusion_holding_osc_v2.md).
+
+```bash
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
+  --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v2 --num_envs 2048 --headless
+```
