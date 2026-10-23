@@ -1,5 +1,7 @@
 # 활성 패키지와 환경 구현 현황
 
+2026-10-24 Windows 실행: `inspire_sweep_baseline/scripts/play.py`와 `train.py`는 Isaac Sim 5.1에서 D3D12를 기본 선택한다. Vulkan RTX 초기화 크래시를 우회하며 명시적 `--kit_args` backend 선택은 보존한다. task 등록·상속·학습 계약은 그대로다. [진단·검증 기록](logs/2026-10-24_windows_vulkan_startup.md).
+
 등록된 Inspire Sweep 환경의 전체 변화 흐름과 개별 문서는 [환경 계층·변경 의도](environments/ENVIRONMENT_EVOLUTION.md)에서 찾는다. 2026-10-22 코드 대조로 확인한 과거 문서와의 수치 차이도 그 문서에 정리했다. 2026-10-23 구조 이관 전 실제 등록·설정 스냅샷에서는45개 task를 확인했다.
 
 2026-10-23 파일 배치: EnvCfg는 `envs/`, PPO Cfg·모델·runner는 `agent/`, SceneCfg는 `assets/scenes/`, 실제 환경 클래스는 `runtime/`에서 관리한다. MDP는 역할별 Cfg와 `*_functions`를 분리하고 같은 계열의 버전을 같은 파일에 모은다. [환경 파일 구조 지침](../00_guidelines/12_ENVIRONMENT_FILE_STRUCTURE.md)과 [이관 검증 상태·복구 기준](logs/2026-10-23_environment_structure_migration.md)을 따른다. 이관은 task ID·환경 계약을 바꾸지 않는 구조 변경이다.
