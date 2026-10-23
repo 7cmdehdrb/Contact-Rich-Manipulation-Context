@@ -127,6 +127,7 @@ flowchart TD
     F10["Fusion v1_0"]
     F10 --> FH["Fusion Holding v0: 정착 보상·충격 warmup·독립 성공"]
     FH --> FHO["Fusion Holding OSC v0: Arm OSC"]
+    FHO --> FHOR["Holding OSC ObjectRandom v0: NVIDIA 물체"]
     F10 --> F14["Fusion v1_4: 250 간격·11개 물체·3초 성공 종료"]
     F10 --> F11["Fusion v1_1: 무료 기준 감소"]
     F11 --> F111["Fusion v1_1_1: 큰 힘 허용치 고정"]
@@ -216,3 +217,7 @@ flowchart TD
 기존 Omni v3 설명 이후 공통 Reaching 함수에는 최단 기록에서 멀어진 상태의 매-step 비용과 초기 접근거리 0일 때의 분모 fallback이 추가되었다. 현재 동작은 [같은 함수를 쓰는 Omni v4 요약](SWEEP_OMNI_V4_ENVIRONMENT.md)과 [공통 구현](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/goal_rewards.py)을 따른다. 기존 독립 문서는 재작성하지 않았다.
 
 Notion의 관찰은 변경 동기를 설명하는 사용자 기록으로 사용했으며, 이번 작업에서 영상이나 학습 성능을 재검증하지 않았다. 페이지 응답에 `truncated=true`와 읽을 수 없는 외부 객체 1개가 표시되어 전체 블록을 읽었다고 보지 않는다. 표에 사용한 변경 설명은 반환된 본문과 로컬 코드·개발 로그로 대조했다. 등록 목록·문서 링크·Markdown 검사와 미검증 범위는 [개발 로그](../logs/2026-10-22_environment_catalog.md)에 남긴다.
+
+## Holding OSC ObjectRandom v0 추가
+
+`Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v0`는 Holding OSC v0을 직접 상속한다. NVIDIA YCB 자산·균일 크기 랜덤화·물체별 관성을 추가한다. 후속 변경으로1.5배 확대·실제OBB 비겹침 검사·실린더 타겟 유지·정립 자세 교정·최대15개(1+7+7) 고정 테스트·장애물14슬롯 관측를 적용했다. [상세 환경](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V0_ENVIRONMENT.md).

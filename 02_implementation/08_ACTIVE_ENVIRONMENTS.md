@@ -1005,3 +1005,11 @@ Holding의 전체 Scene·관측·Action·보상식·성공 판정·커리큘럼�
 Holding v0 직접 상속으로 Arm Action을 Renewal OSC v0과 같은 pose_rel·fixed impedance·stiffness200·damping ratio1·관성 분리·중력 보상 OSC로 교체한다. Arm 관절 PD gain은0이며 Hand·보상·종료·관측·커리큘럼은 Holding 그대로다. Runtime은 v1_0을 재사용한다. [상세 환경·실행](environments/CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V0_ENVIRONMENT.md) · [검증 기록](logs/2026-10-23_fusion_holding_osc_v0.md).
 
 Holding OSC v0 후속: `EEFRelativeOSCActionCfg`로 각 정책 step의 현재 EEF pose를 task frame으로 고정하여 이동·회전 명령을 EEF 로컬 축으로 해석한다. 참조 Renewal OSC의 base 축과 구분하며 나머지 제어 수치·Holding 계약은 유지한다.
+
+## Holding OSC ObjectRandom v0 — 2026-10-23
+
+`Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v0`: `FusionHoldingOSCObjectRandomV0EnvCfg` → Holding OSC v0 직접 상속. runtime v1_0 재사용, PPO experiment `inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v0`. NVIDIA YCB4종×균일크기3단계, 생성 시 종류·크기 선택과 reset 시yaw·위치·물성 랜덤화. 장애물은 원형 외접반경6cm 내로 제한하고 실제 OBB 비겹침을 검사하며 형상별 관성을 보존한다. 타겟은 기존4cm 반경 실린더다. [상세 환경·실행](environments/CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V0_ENVIRONMENT.md) · [검증](logs/2026-10-23_holding_osc_object_random_v0.md).
+
+ObjectRandom v0 후속 변경: 물체를 기존 대비1.5배 균일 확대, 실제 OBB 간2mm 여유·선반 경계 검사를 추가했다. population curriculum은 해당 파생에서만 임시 비활성화하고 iteration0부터Gray7/White7/Target1을 사용한다. 장애물 관측은14슬롯56D·encoder56→32→16으로 확장하며 부모10슬롯은 유지한다. 자산 상방−Y를+Z로 변환하여 거꾸로 스폰되던 문제를 수정했다. reset은 미리 생성한 물체의 pose·속도 갱신이다.
+
+ObjectRandom 초기 흔들림 후속: 스캔 메시의 불규칙한 밑면 대신 시각 크기에 맞춘 평평한 상자·32각 원통 충돌 프록시를 사용한다. 질량·마찰·배치와 타겟 실린더는 유지하며 자세·속도를 강제로 고정하지 않는다. [검증 기록](logs/2026-10-23_holding_osc_object_random_v0.md).

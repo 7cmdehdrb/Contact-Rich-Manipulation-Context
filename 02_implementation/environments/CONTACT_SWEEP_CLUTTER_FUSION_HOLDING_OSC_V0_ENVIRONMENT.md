@@ -66,3 +66,5 @@ Linux, Workspace 루트:
 - [환경 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_holding_osc_v0/env_cfg.py), [PPO 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_holding_osc_v0/ppo_cfg.py).
 - [참조 Renewal OSC](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/omni_renewal_osc_env_cfg.py).
 - [검증 명령·결과와 미검증 범위](../logs/2026-10-23_fusion_holding_osc_v0.md).
+
+직접 파생 환경: [Holding OSC ObjectRandom v0](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V0_ENVIRONMENT.md).
