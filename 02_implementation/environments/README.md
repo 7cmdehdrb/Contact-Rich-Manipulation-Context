@@ -28,3 +28,5 @@
 - [Fusion v1_4](CONTACT_SWEEP_CLUTTER_FUSION_V1_4_ENVIRONMENT.md): v1_0 직접 상속, 250 간격 커리큘럼·최대 11개 물체·3초 목표 유지 성공 종료.
 
 - [Fusion Holding v0](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V0_ENVIRONMENT.md): v1_0 직접 상속. Scene·관측·제어, 17개 보상, 정착·독립 성공, 충격 warmup과 14개 커리큘럼의 상세 계약.
+
+- [Fusion Holding OSC v0](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V0_ENVIRONMENT.md): Holding v0의 Arm만 Renewal OSC v0 구성으로 교체.

@@ -2,6 +2,8 @@
 
 [환경 문서 안내](README.md) · [환경 계층과 변경 의도](ENVIRONMENT_EVOLUTION.md) · [활성 환경](../08_ACTIVE_ENVIRONMENTS.md) · [구현·검증 기록](../logs/2026-10-23_fusion_holding_v0.md)
 
+Arm 제어 비교용 직접 파생 환경: [Holding OSC v0](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V0_ENVIRONMENT.md).
+
 **대상:** `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v0`  
 **기준일:** 2026-10-23  
 **기준 코드:** Workspace commit `870750df2520a5e486240fa498677dfcd0494532`의 Holding 및 상속 경로와 2026-10-23 population·변위 계수 후속 변경. 이 문서는 현재 구현 계약을 설명한다. 수식 예시는 실측 학습 성과가 아니다.
@@ -32,7 +34,7 @@ flowchart TD
     F14 -. "세 속도 일정의 값만 동일하게 재현" .-> H
 ```
 
-실선은 Python EnvCfg 상속이고 점선은 설정값의 대응 관계다. Holding은 v1_4를 import하거나 상속하지 않는다. Hand contact 1.45, Goal hold 9, push_fast 1.0을 v1_4에서 가져오지 않는다. 최대 11개 물체는 Holding v0의 후속 사용자 요청으로 독립 적용했다.
+실선은 Python EnvCfg 상속이고 점선은 설정값의 대응 관계다. Holding은 v1_4를 import하거나 상속하지 않는다. Goal hold 9를 v1_4에서 가져오지 않는다. Hand contact 1.45와 push_fast 1.0은 Holding v0 후속 사용자 요청으로 독립 적용했다. 최대 11개 물체는 Holding v0의 후속 사용자 요청으로 독립 적용했다.
 
 | 구성요소 | Holding의 처리 | 유지·변경 내용 |
 | --- | --- | --- |
@@ -40,7 +42,7 @@ flowchart TD
 | Scene / Events / Commands | 상속 + 용량 override | 최대 11개 물체(Gray 5/White 5), 배치·물성·초기 관측·목표 생성 로직 유지 |
 | Observations / Actions | 상속 | 차원·순서·GT 경계·Joint Position 제어 유지 |
 | RewardsCfg | v1_0 RewardsCfg 상속 | goal_distance, goal_hold, 충격 세 항 및 object 변위 계수 변경 |
-| TerminationsCfg | v1_0 TerminationsCfg 상속 | 기존 실패·timeout에 독립 `success` 추가 |
+| TerminationsCfg | v1_0 TerminationsCfg 상속 | push_fast를 1.0m/s로 변경하고 기존 실패·timeout에 독립 `success` 추가 |
 | CurriculumCfg | v1_0 CurriculumCfg 상속 | 인구 증가 시점·주기 유지 및 최종 5/5로 확대, 방향 일정 유지, 속도·충격·정착 일정 구성 |
 | PPOCfg | v1_0 PPOCfg 상속 | experiment 이름만 분리 |
 | Runtime | v1_0 클래스 그대로 등록 | 새 step/reset override 없음 |
@@ -237,7 +239,7 @@ Hand의 열린 목표각은 모두 0 rad다. 닫힌 목표각은 엄지 대립 1
 | `reaching` | +30 | EEF–타겟 3D 접근 거리의 최단 기록 개선 |
 | `goal_distance` | +100 | 타겟–목표 XY 거리의 최단 기록 개선, 허용 반경 0 |
 | `goal_hold` | +2 | 목표 거리와 타겟 속력에 따른 정착 점수 |
-| `hand_contact` | +0.29 | 손 전체 법선 합력 ≥0.01 N, 거리 fade 없음 |
+| `hand_contact` | +1.45 | 손 전체 법선 합력 ≥0.01 N, 거리 fade 없음 |
 | `arm_action_rate` | −0.03 | Arm raw Action 변화량 제곱합 |
 | `hand_action_rate` | −0.03 | Hand raw Action 변화량 제곱합 |
 | `arm_joint_velocity` | −0.03 | 실제 Arm 6관절 속도 제곱합 |
@@ -312,7 +314,7 @@ d ≥ 3r이거나 아래 정상 상태 검사를 통과하지 못하면 점수�
 
 ### 4.5 접촉 보상과 장애물 힘 비용
 
-`hand_contact`는 손 전체 body의 world 법선 접촉력 벡터를 더한 뒤 norm이 0.01N 이상이면 +0.29/초다. 목표·장애물뿐 아니라 선반·바닥 접촉도 포함한다. 센서 표본이 fresh하고 finite여야 한다. 17개 tactile bit의 합을 보상하지 않는다. `goal_contact_fade_width=0`이므로 목표 부근에서도 접촉 보상은 유지된다.
+`hand_contact`는 손 전체 body의 world 법선 접촉력 벡터를 더한 뒤 norm이 0.01N 이상이면 +1.45/초다. 목표·장애물뿐 아니라 선반·바닥 접촉도 포함한다. 센서 표본이 fresh하고 finite여야 한다. 17개 tactile bit의 합을 보상하지 않는다. `goal_contact_fade_width=0`이므로 목표 부근에서도 접촉 보상은 유지된다.
 
 `obstacle_contact`는 물체별 Hand 필터 접촉력을 읽고 반력을 뒤집어 손에 작용하는 힘으로 만든다. **타겟과 비활성 물체를 제외한 뒤 world 벡터를 모두 더하고 norm을 한 번 계산한다.** 이를 N 단위 무료 기준과 비교한다. 장애물별 norm의 합이나 최대값이 아니며 반대 방향 힘은 상쇄될 수 있다. 물체–선반 접촉력이나 접선 마찰력까지 포함한 완전한 합력이 아니다.
 
@@ -393,7 +395,7 @@ Arm/Hand 네 운동 비용은 각각 raw Action 변화량·실제 관절 속도�
 | --- | --- | --- |
 | time_out | 최대 10초, 500 control step | timeout/truncated |
 | object_drop | 활성 물체 밑면 높이 <1.04m(환경 원점 기준) 또는 선반 대비 기울기 ≥0.9rad | 실패 |
-| push_fast | 타겟 3D 속력 >0.8m/s | 실패 |
+| push_fast | 타겟 3D 속력 >1.0m/s | 실패 |
 | shelf_collision | 선반 선속도·각속도 6D norm >0.1 또는 손목 높이 <선반 root Z+1.05+0.03m | 실패 |
 | hand_velocity | Arm 6관절 중 절대 속도 >5rad/s | 실패; 이름은 기존 키 유지 |
 | shelf_displacement | 선반 초기 위치 대비 3D 이동 >0.05m | 실패 |
@@ -507,14 +509,16 @@ Workspace 루트에서 신규 학습:
 
 ```bash
 cd /home/min/7cmdehdrb/grad
-./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train_resilient.py \
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
   --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v0 \
   --num_envs 2048 --headless --max_iterations 90000
 ```
 
-자동 복구 로그는 `logs/resilient/<task>/<UTC시각_uuid>/attempt_*`다. `--max_iterations`는 전체 절대 목표이며 복구마다 추가할 횟수가 아니다. 기존 실행기의 checkpoint·optimizer 복원 후 reset 경로를 재사용한다. `--resume-checkpoint /absolute/path/model_ITER.pt`를 주면 그 iteration의 커리큘럼으로 시작하므로 **1000보다 큰 checkpoint를 복원해도 warmup이 다시 시작되지 않는다.** 새 warmup을 원한다면 신규 학습과 resume를 혼동하지 않아야 한다.
+현재 학습 실행기는 `train.py`다. `train_resilient.py`는 반복 중단 때문에 사용을 중단했으며 삭제하지 않고 보존한다. 기존 자동 복구 명령은 현재 권고가 아니다. [학습 실행 정책](../../00_guidelines/09_DEVELOPMENT_GUIDE.md#학습-실행-정책)을 따른다.
 
-일반 학습은 같은 task로 `scripts/train.py`를 사용하며 기본 experiment 경로는 `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_v0`다. 재생:
+기본 experiment 경로는 `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_v0`다. 신규 학습은 warmup부터 시작한다. checkpoint 재개는 저장된 절대 iteration의 커리큘럼을 복원하므로 1000보다 큰 checkpoint에서 warmup이 다시 시작되는 것은 아니다.
+
+재생:
 
 ```bash
 ./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/play.py \

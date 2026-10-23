@@ -4,6 +4,14 @@
 
 기준일: 2026-10-14. 이 문서는 사용자가 요청한 최소 개발 지침을 정리한다. 모든 개발 원칙이나 최종 연구 설계를 이번 정리에서 확정하는 문서는 아니다.
 
+## 학습 실행 정책
+
+2026-10-23 사용자 결정: 학습 실행과 신규 명령 안내에는 `src/inspire_sweep_baseline/scripts/train.py`를 사용한다. Windows와 Linux 모두 동일한 정책이다. `train_resilient.py`를 실행하거나 기본·대안 명령으로 권장하지 않는다.
+
+초기에는 원인 불명의 학습 중단 시 과거 checkpoint로 되돌려 재학습하면 복구될 것으로 예상했지만, 실제 사용에서 복구 후에도 중단이 반복되었다는 사용자 보고에 따라 자동 복구 학습 사용을 중단했다. 오류 원인을 진단·확정한 것은 아니다. 실패 시 자동 재시작을 대체 도입하지 말고 오류를 확인한다.
+
+`train_resilient.py`와 관련 복구 코드는 추후 재사용 가능성을 위해 삭제하지 않고 보존한다. 사용자가 명시적으로 재사용을 요청하기 전에는 사용하지 않는다. 기존 문서의 자동 복구 명령·실험 기록은 과거 이력이며 현재 실행 권고로 해석하지 않는다.
+
 ## Manager-based RL과 객체 지향 설계
 
 Isaac Lab의 Manager-based Reinforcement Learning 구조와 OOP 원칙을 지킨다. 환경 설정은 Scene, Observation, Action, Event, Reward, Termination, Curriculum 및 학습 설정의 책임을 나누고, MDP 함수와 Action term은 해당 책임 안에서 동작하도록 구성한다. 환경 전체를 하나의 거대한 클래스에 덧붙이는 방식으로 변형을 쌓지 않는다.

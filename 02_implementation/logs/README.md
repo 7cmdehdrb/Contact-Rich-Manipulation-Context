@@ -160,3 +160,5 @@ Pull/rebase 중 문서 이관 충돌의 처리 내역은 [충돌 해결 기록](
 - [2026-10-21 TEMP 학습 로그 정리](2026-10-21_temp_training_log_cleanup.md): 명시적 요청에 따른 세 차례 정리 기록·환경별 이동과 500 iteration 미만 삭제·rsl_rl 보존 검증.
 
 - [2026-10-22 TEMP 학습 로그 정리](2026-10-22_temp_training_log_cleanup.md): 17개 run 중 9개 이동·500회 미만 8개 삭제, 파일 보존 및 rsl_rl 불변 확인.
+
+- [2026-10-23 Holding OSC v0](2026-10-23_fusion_holding_osc_v0.md): Holding 직접 상속·Arm OSC 교체와 설정 동등성·GPU 검증.

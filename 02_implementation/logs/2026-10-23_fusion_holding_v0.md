@@ -74,3 +74,17 @@ env -u PYTHONPATH PYTHONDONTWRITEBYTECODE=1   /home/min/miniconda3/envs/env_isaa
 결과: CPU6 passed(2.04s). GPU2환경·seed42에서 0/2999/3000/4499/4500/6000/7500/9000/10500/11999/12000/13499/13500/16000/0의15단계를 reset 후각8step,총120step 실행했다. 11개 물체 용량·Gray/White별 활성 mask·변위 계수5.0·부모 설정 보존·finite reward·커리큘럼 복원을 검사하여 exit0 및 `HOLDING SMOKE PASSED`를 확인했다. 결과는 `outputs/fusion_holding_v0_validation/population_result.json`에 보존했다. 장기 학습과 다수 seed의 배치 성공률은 미검증이다.
 
 Holding 상세 설명의 population 표·관측 활성 물체 수·비용 상한, 활성 환경·계층 안내 및 패키지 README를 갱신했다. 기존 위쪽 구현 기록의3/3·최대7개는 최초 구현 당시 값이며 현재 계약은 이 후속 변경과 상세 문서를 따른다.
+
+## 학습 실행 정책 변경
+
+2026-10-23 사용자 요청에 따라 자동 복구 후에도 중단이 반복되는 `train_resilient.py` 사용을 중단하고 `train.py`를 실행·안내 기준으로 명시했다. Workspace/문서 AGENTS, 개발 지침, 결정 목록, 패키지 README와 Holding 상세 실행 명령을 갱신했다. 위의 자동 복구 관련 내용은 당시 기록이다. 코드 삭제·변경·학습 실행은 하지 않았다. 원인은 사용자 보고만으로 확정하지 않았다.
+
+검증: 변경 Markdown 7개에 `check_markdown_math.py`와 `check_document_links.py --root .`를 실행하여 수식 검사 통과·내부 링크165개 오류0을 확인했다. 두 저장소의 `git diff --check`도 통과했다. 문서 변경만 수행하여 시뮬레이터·학습 테스트는 실행하지 않았다.
+
+## Holding v0 후속 변경 — 접촉 보상·과속 종료
+
+사용자 요청으로 Hand contact weight를0.29→1.45(5배), 타겟 과속 종료를0.8→1.0m/s로 변경했다. 접촉 fade0과 다른 조건은 유지한다. TerminationsCfg override 외에 EnvCfg의 부모 post-init 완료 후에도1.0을 적용하여 v3 초기화의0.8 덮어쓰기를 방지한다. 부모 v1_0은0.29·0.8을 유지한다.
+
+검증 명령: `env -u PYTHONPATH PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 /home/min/miniconda3/envs/env_isaaclab/bin/python -B -m pytest -q -p no:cacheprovider src/inspire_sweep_baseline/tests/test_fusion_holding_v0.py` — 6 passed(2.12s).
+
+GPU 명령: `env -u PYTHONPATH PYTHONDONTWRITEBYTECODE=1 /home/min/miniconda3/envs/env_isaaclab/bin/python -B outputs/fusion_holding_v0_validation/contact_speed_smoke.py > outputs/fusion_holding_v0_validation/contact_speed_smoke.log 2>&1` — 2환경·seed42, iteration0/13500 각각8step. 실제 RewardManager weight1.45·TerminationManager 기준1.0·부모 설정 보존·유한 보상을 확인하여 exit0 및 HOLDING SMOKE PASSED. 장기 학습 성능은 미검증이다. 상세 환경·상속 안내·패키지 README를 동기화했다.

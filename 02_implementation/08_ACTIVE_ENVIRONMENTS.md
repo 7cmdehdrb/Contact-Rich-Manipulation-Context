@@ -39,6 +39,7 @@
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v3` | `ContactSweepClutterFusionV3EnvCfg` | `ContactSweepClutterFusionV3PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_v3` |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_0` | `ContactSweepClutterFusionV1_0EnvCfg` | `ContactSweepClutterFusionV1_0PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_v1_0` |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v0` | `FusionHoldingV0EnvCfg` | `FusionHoldingV0PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_v0` |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v0` | `FusionHoldingOSCV0EnvCfg` | `FusionHoldingOSCV0PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_osc_v0` |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v2` | `ContactSweepClutterFusionV2EnvCfg` | `ContactSweepClutterFusionV2PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_v2` |
 | `Isaac-Inspire-Sweep-Baseline-v0` | `InspireSweepEnvCfg` | `InspireSweepPPORunnerCfg` | `logs/rsl_rl/inspire_sweep_baseline` |
 | `Isaac-Inspire-Sweep-Realistic-Physics-v0` | `InspireSweepRealisticPhysicsEnvCfg` | `InspireSweepRealisticPhysicsPPORunnerCfg` | `logs/rsl_rl/inspire_sweep_realistic_physics` |
@@ -995,6 +996,12 @@ Workspace 루트에서 `./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scr
 
 ## Fusion Holding v0 — 2026-10-23
 
-`Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v0`: `FusionHoldingV0EnvCfg`는 v1_0 EnvCfg를 직접 상속하며 기존 v1_0 runtime을 사용한다. 독립 Reward/Termination/Curriculum CFG와 v1_0 파생 PPO 설정을 주입한다. 목표 progress tolerance0, 거리·속도 정착 보상,1000까지 충격 페널티weight0 및 이후 강화, 고정0.5cm·0.01m/s·3초 성공을 추가한다. 속도3일정은 논의 기준 v1_4 그대로, 실패 종료·관측·Action은 v1_0이다. 후속 변경으로 object 변위 계수5.0·최대Gray5/White5를 적용하며 White12000/Gray13500에서각5개에 도달한다. [실행·검증·전체 계약](logs/2026-10-23_fusion_holding_v0.md).
+`Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v0`: `FusionHoldingV0EnvCfg`는 v1_0 EnvCfg를 직접 상속하며 기존 v1_0 runtime을 사용한다. 독립 Reward/Termination/Curriculum CFG와 v1_0 파생 PPO 설정을 주입한다. 목표 progress tolerance0, 거리·속도 정착 보상,1000까지 충격 페널티weight0 및 이후 강화, 고정0.5cm·0.01m/s·3초 성공을 추가한다. 속도3일정은 논의 기준 v1_4 그대로, 관측·Action은 v1_0이다. 후속 요청으로 Hand contact weight1.45·push_fast1.0m/s를 적용했다. 후속 변경으로 object 변위 계수5.0·최대Gray5/White5를 적용하며 White12000/Gray13500에서각5개에 도달한다. [실행·검증·전체 계약](logs/2026-10-23_fusion_holding_v0.md).
 
 Holding의 전체 Scene·관측·Action·보상식·성공 판정·커리큘럼·실행은 [상세 환경 설명](environments/CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V0_ENVIRONMENT.md)을 따른다. EnvCfg의 직접 부모는 v1_0이며 runtime도 v1_0을 재사용한다. v1_4는 부모가 아닌 형제 분기다. [전체 상속도](environments/ENVIRONMENT_EVOLUTION.md)에 이 관계를 표시했다.
+
+## Fusion Holding OSC v0 — 2026-10-23
+
+Holding v0 직접 상속으로 Arm Action을 Renewal OSC v0과 같은 pose_rel·fixed impedance·stiffness200·damping ratio1·관성 분리·중력 보상 OSC로 교체한다. Arm 관절 PD gain은0이며 Hand·보상·종료·관측·커리큘럼은 Holding 그대로다. Runtime은 v1_0을 재사용한다. [상세 환경·실행](environments/CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V0_ENVIRONMENT.md) · [검증 기록](logs/2026-10-23_fusion_holding_osc_v0.md).
+
+Holding OSC v0 후속: `EEFRelativeOSCActionCfg`로 각 정책 step의 현재 EEF pose를 task frame으로 고정하여 이동·회전 명령을 EEF 로컬 축으로 해석한다. 참조 Renewal OSC의 base 축과 구분하며 나머지 제어 수치·Holding 계약은 유지한다.
