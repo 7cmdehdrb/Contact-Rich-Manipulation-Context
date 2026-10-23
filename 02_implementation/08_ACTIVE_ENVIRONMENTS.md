@@ -1,5 +1,7 @@
 # 활성 패키지와 환경 구현 현황
 
+2026-10-24 Fusion 수치 안정성 수정: Fusion 및 Holding/OSC/ObjectRandom 파생의 이전 action 관측8D를 `bounded_last_action`의 `[-1,1]` 복사본으로 변경했다. Action 실행·raw 운동 페널티는 유지한다. 차원과 checkpoint 키는 호환되지만 범위 밖 action의 관측 의미는 달라졌다. 공통 `CurriculumOnPolicyRunner`는 PPO에 수치 검사·진단 dump·양수 std 투영·resume LR 동기화를 적용한다. [TEMP 전체 감사·원인 재현·검증 범위](logs/2026-10-24_temp_training_stability.md).
+
 2026-10-24 Windows 실행: `inspire_sweep_baseline/scripts/play.py`와 `train.py`는 Isaac Sim 5.1에서 D3D12를 기본 선택한다. Vulkan RTX 초기화 크래시를 우회하며 명시적 `--kit_args` backend 선택은 보존한다. task 등록·상속·학습 계약은 그대로다. [진단·검증 기록](logs/2026-10-24_windows_vulkan_startup.md).
 
 등록된 Inspire Sweep 환경의 전체 변화 흐름과 개별 문서는 [환경 계층·변경 의도](environments/ENVIRONMENT_EVOLUTION.md)에서 찾는다. 2026-10-22 코드 대조로 확인한 과거 문서와의 수치 차이도 그 문서에 정리했다. 2026-10-23 구조 이관 전 실제 등록·설정 스냅샷에서는45개 task를 확인했다.

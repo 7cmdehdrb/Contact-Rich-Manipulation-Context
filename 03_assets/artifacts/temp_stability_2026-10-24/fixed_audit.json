@@ -1,0 +1,950 @@
+[
+  {
+    "run": "outputs\\temp_training_audit\\2026-10-24_02-28-21",
+    "agent_config": {
+      "seed": "42",
+      "device": "cuda:0",
+      "num_steps_per_env": "36",
+      "max_iterations": "20",
+      "empirical_normalization": {},
+      "obs_groups": {
+        "actor": [
+          "policy",
+          "obstacles"
+        ],
+        "critic": [
+          "policy",
+          "privileged",
+          "obstacles"
+        ]
+      },
+      "clip_actions": "null",
+      "check_for_nan": "true",
+      "save_interval": "50",
+      "experiment_name": "C:/python/Contact-Rich-Manipulation/outputs/temp_training_audit",
+      "run_name": "",
+      "logger": "tensorboard",
+      "neptune_project": "isaaclab",
+      "wandb_project": "isaaclab",
+      "resume": "true",
+      "load_run": "checkpoint_source",
+      "load_checkpoint": "model_2100.pt",
+      "class_name": "CurriculumOnPolicyRunner",
+      "actor": {
+        "class_name": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_models:ContactSweepClutterFusionModel",
+        "hidden_dims": [
+          "256",
+          "128",
+          "64"
+        ],
+        "activation": "elu",
+        "obs_normalization": "false",
+        "distribution_cfg": {
+          "class_name": "GaussianDistribution",
+          "init_std": "1.0",
+          "std_type": "scalar"
+        },
+        "obstacle_group": "obstacles",
+        "encoder_hidden_dims": [
+          "32"
+        ],
+        "obstacle_observation_slots": "16",
+        "embedding_dim": "16",
+        "encoder_activation": "relu"
+      },
+      "critic": {
+        "class_name": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_models:ContactSweepClutterFusionModel",
+        "hidden_dims": [
+          "256",
+          "128",
+          "64"
+        ],
+        "activation": "elu",
+        "obs_normalization": "false",
+        "distribution_cfg": "null",
+        "obstacle_group": "obstacles",
+        "encoder_hidden_dims": [
+          "32"
+        ],
+        "obstacle_observation_slots": "16",
+        "embedding_dim": "16",
+        "encoder_activation": "relu"
+      },
+      "algorithm": {
+        "class_name": "PPO",
+        "num_learning_epochs": "8",
+        "num_mini_batches": "4",
+        "learning_rate": "0.001",
+        "schedule": "adaptive",
+        "gamma": "0.98",
+        "lam": "0.95",
+        "entropy_coef": "0.005",
+        "desired_kl": "0.02",
+        "max_grad_norm": "1.0",
+        "optimizer": "adam",
+        "value_loss_coef": "1.0",
+        "use_clipped_value_loss": "true",
+        "clip_param": "0.2",
+        "normalize_advantage_per_mini_batch": "false",
+        "share_cnn_encoders": "false",
+        "rnd_cfg": "null",
+        "symmetry_cfg": "null"
+      },
+      "policy": {}
+    },
+    "metrics": {
+      "Episode_Reward/reaching": {
+        "count": 20,
+        "first": [
+          2100,
+          0.5103698968887329
+        ],
+        "last": [
+          2119,
+          0.7718952894210815
+        ],
+        "peak_absolute": [
+          2117,
+          0.7721224427223206
+        ],
+        "nonfinite": []
+      },
+      "Episode_Reward/goal_distance": {
+        "count": 20,
+        "first": [
+          2100,
+          0.0841735377907753
+        ],
+        "last": [
+          2119,
+          0.5576393008232117
+        ],
+        "peak_absolute": [
+          2113,
+          0.5838504433631897
+        ],
+        "nonfinite": []
+      },
+      "Episode_Reward/goal_hold": {
+        "count": 20,
+        "first": [
+          2100,
+          0.0
+        ],
+        "last": [
+          2119,
+          0.20897941291332245
+        ],
+        "peak_absolute": [
+          2111,
+          0.21032415330410004
+        ],
+        "nonfinite": []
+      },
+      "Episode_Reward/hand_contact": {
+        "count": 20,
+        "first": [
+          2100,
+          0.010044191963970661
+        ],
+        "last": [
+          2119,
+          1.1772215366363525
+        ],
+        "peak_absolute": [
+          2114,
+          1.188194751739502
+        ],
+        "nonfinite": []
+      },
+      "Episode_Reward/arm_action_rate": {
+        "count": 20,
+        "first": [
+          2100,
+          -0.02121002785861492
+        ],
+        "last": [
+          2119,
+          -0.21842482686042786
+        ],
+        "peak_absolute": [
+          2119,
+          -0.21842482686042786
+        ],
+        "nonfinite": []
+      },
+      "Episode_Reward/hand_action_rate": {
+        "count": 20,
+        "first": [
+          2100,
+          -0.008270898833870888
+        ],
+        "last": [
+          2119,
+          -0.14212436974048615
+        ],
+        "peak_absolute": [
+          2119,
+          -0.14212436974048615
+        ],
+        "nonfinite": []
+      },
+      "Episode_Reward/arm_joint_velocity": {
+        "count": 20,
+        "first": [
+          2100,
+          -0.008219518698751926
+        ],
+        "last": [
+          2119,
+          -0.026922445744276047
+        ],
+        "peak_absolute": [
+          2111,
+          -0.0312133077532053
+        ],
+        "nonfinite": []
+      },
+      "Episode_Reward/hand_joint_velocity": {
+        "count": 20,
+        "first": [
+          2100,
+          -0.00362819479778409
+        ],
+        "last": [
+          2119,
+          -0.023993108421564102
+        ],
+        "peak_absolute": [
+          2115,
+          -0.0240627434104681
+        ],
+        "nonfinite": []
+      },
+      "Episode_Reward/object": {
+        "count": 20,
+        "first": [
+          2100,
+          -0.005003033205866814
+        ],
+        "last": [
+          2119,
+          -0.30264127254486084
+        ],
+        "peak_absolute": [
+          2112,
+          -0.42610064148902893
+        ],
+        "nonfinite": []
+      },
+      "Episode_Reward/shelf_collision": {
+        "count": 20,
+        "first": [
+          2100,
+          -0.001313532586209476
+        ],
+        "last": [
+          2119,
+          -0.1160764992237091
+        ],
+        "peak_absolute": [
+          2119,
+          -0.1160764992237091
+        ],
+        "nonfinite": []
+      },
+      "Episode_Reward/pushing_speed": {
+        "count": 20,
+        "first": [
+          2100,
+          -0.04709254577755928
+        ],
+        "last": [
+          2119,
+          -0.06124092638492584
+        ],
+        "peak_absolute": [
+          2101,
+          -0.07452376931905746
+        ],
+        "nonfinite": []
+      },
+      "Episode_Reward/arm_speed_excess": {
+        "count": 20,
+        "first": [
+          2100,
+          -0.1903885155916214
+        ],
+        "last": [
+          2119,
+          -0.7321292161941528
+        ],
+        "peak_absolute": [
+          2111,
+          -1.2404316663742065
+        ],
+        "nonfinite": []
+      },
+      "Episode_Reward/shelf_failure": {
+        "count": 20,
+        "first": [
+          2100,
+          -0.012933201156556606
+        ],
+        "last": [
+          2119,
+          -0.0053571430034935474
+        ],
+        "peak_absolute": [
+          2105,
+          -0.04640211910009384
+        ],
+        "nonfinite": []
+      },
+      "Episode_Reward/eef_linear_speed": {
+        "count": 20,
+        "first": [
+          2100,
+          0.0
+        ],
+        "last": [
+          2119,
+          -0.0006450590444728732
+        ],
+        "peak_absolute": [
+          2119,
+          -0.0006450590444728732
+        ],
+        "nonfinite": []
+      },
+      "Episode_Reward/obstacle_contact": {
+        "count": 20,
+        "first": [
+          2100,
+          -5.555553798330948e-05
+        ],
+        "last": [
+          2119,
+          -2.182539174100384e-05
+        ],
+        "peak_absolute": [
+          2110,
+          -9.490738739259541e-05
+        ],
+        "nonfinite": []
+      },
+      "Episode_Reward/object_acceleration": {
+        "count": 20,
+        "first": [
+          2100,
+          -0.00026494087069295347
+        ],
+        "last": [
+          2119,
+          -0.00010009820107370615
+        ],
+        "peak_absolute": [
+          2100,
+          -0.00026494087069295347
+        ],
+        "nonfinite": []
+      },
+      "Episode_Reward/wrench_change": {
+        "count": 20,
+        "first": [
+          2100,
+          -4.881405857304344e-07
+        ],
+        "last": [
+          2119,
+          -8.06698665201111e-07
+        ],
+        "peak_absolute": [
+          2106,
+          -5.415838586486643e-06
+        ],
+        "nonfinite": []
+      },
+      "Curriculum/obstacle_population/gray_obstacles": {
+        "count": 20,
+        "first": [
+          2100,
+          1.0
+        ],
+        "last": [
+          2119,
+          1.0
+        ],
+        "peak_absolute": [
+          2100,
+          1.0
+        ],
+        "nonfinite": []
+      },
+      "Curriculum/obstacle_population/white_obstacles": {
+        "count": 20,
+        "first": [
+          2100,
+          1.0
+        ],
+        "last": [
+          2119,
+          1.0
+        ],
+        "peak_absolute": [
+          2100,
+          1.0
+        ],
+        "nonfinite": []
+      },
+      "Curriculum/pushing_free_speed": {
+        "count": 20,
+        "first": [
+          2100,
+          0.019999999552965164
+        ],
+        "last": [
+          2119,
+          0.019999999552965164
+        ],
+        "peak_absolute": [
+          2100,
+          0.019999999552965164
+        ],
+        "nonfinite": []
+      },
+      "Curriculum/arm_free_speed": {
+        "count": 20,
+        "first": [
+          2100,
+          0.8300000429153442
+        ],
+        "last": [
+          2119,
+          0.8300000429153442
+        ],
+        "peak_absolute": [
+          2100,
+          0.8300000429153442
+        ],
+        "nonfinite": []
+      },
+      "Curriculum/eef_free_speed": {
+        "count": 20,
+        "first": [
+          2100,
+          1.3300001621246338
+        ],
+        "last": [
+          2119,
+          1.3300001621246338
+        ],
+        "peak_absolute": [
+          2100,
+          1.3300001621246338
+        ],
+        "nonfinite": []
+      },
+      "Curriculum/goal_deadzone": {
+        "count": 20,
+        "first": [
+          2100,
+          30.0
+        ],
+        "last": [
+          2119,
+          30.0
+        ],
+        "peak_absolute": [
+          2100,
+          30.0
+        ],
+        "nonfinite": []
+      },
+      "Curriculum/wrench_free_force_change": {
+        "count": 20,
+        "first": [
+          2100,
+          50.0
+        ],
+        "last": [
+          2119,
+          50.0
+        ],
+        "peak_absolute": [
+          2100,
+          50.0
+        ],
+        "nonfinite": []
+      },
+      "Curriculum/wrench_free_moment_change": {
+        "count": 20,
+        "first": [
+          2100,
+          5.0
+        ],
+        "last": [
+          2119,
+          5.0
+        ],
+        "peak_absolute": [
+          2100,
+          5.0
+        ],
+        "nonfinite": []
+      },
+      "Curriculum/object_free_acceleration": {
+        "count": 20,
+        "first": [
+          2100,
+          50.0
+        ],
+        "last": [
+          2119,
+          50.0
+        ],
+        "peak_absolute": [
+          2100,
+          50.0
+        ],
+        "nonfinite": []
+      },
+      "Curriculum/obstacle_free_force": {
+        "count": 20,
+        "first": [
+          2100,
+          80.0
+        ],
+        "last": [
+          2119,
+          80.0
+        ],
+        "peak_absolute": [
+          2100,
+          80.0
+        ],
+        "nonfinite": []
+      },
+      "Curriculum/acceleration_weight": {
+        "count": 20,
+        "first": [
+          2100,
+          -0.004999999888241291
+        ],
+        "last": [
+          2119,
+          -0.004999999888241291
+        ],
+        "peak_absolute": [
+          2100,
+          -0.004999999888241291
+        ],
+        "nonfinite": []
+      },
+      "Curriculum/wrench_weight": {
+        "count": 20,
+        "first": [
+          2100,
+          -0.014999998733401299
+        ],
+        "last": [
+          2119,
+          -0.014999998733401299
+        ],
+        "peak_absolute": [
+          2100,
+          -0.014999998733401299
+        ],
+        "nonfinite": []
+      },
+      "Curriculum/obstacle_weight": {
+        "count": 20,
+        "first": [
+          2100,
+          -0.009999999776482582
+        ],
+        "last": [
+          2119,
+          -0.009999999776482582
+        ],
+        "peak_absolute": [
+          2100,
+          -0.009999999776482582
+        ],
+        "nonfinite": []
+      },
+      "Curriculum/goal_speed_scale": {
+        "count": 20,
+        "first": [
+          2100,
+          0.05000000074505806
+        ],
+        "last": [
+          2119,
+          0.05000000074505806
+        ],
+        "peak_absolute": [
+          2100,
+          0.05000000074505806
+        ],
+        "nonfinite": []
+      },
+      "Curriculum/goal_position_tolerance": {
+        "count": 20,
+        "first": [
+          2100,
+          0.019999999552965164
+        ],
+        "last": [
+          2119,
+          0.019999999552965164
+        ],
+        "peak_absolute": [
+          2100,
+          0.019999999552965164
+        ],
+        "nonfinite": []
+      },
+      "Episode_Termination/time_out": {
+        "count": 20,
+        "first": [
+          2100,
+          0.0385335274040699
+        ],
+        "last": [
+          2119,
+          0.8457438349723816
+        ],
+        "peak_absolute": [
+          2119,
+          0.8457438349723816
+        ],
+        "nonfinite": []
+      },
+      "Episode_Termination/object_drop": {
+        "count": 20,
+        "first": [
+          2100,
+          0.00025770399952307343
+        ],
+        "last": [
+          2119,
+          0.015543620102107525
+        ],
+        "peak_absolute": [
+          2114,
+          0.0272081159055233
+        ],
+        "nonfinite": []
+      },
+      "Episode_Termination/push_fast": {
+        "count": 20,
+        "first": [
+          2100,
+          0.00543891079723835
+        ],
+        "last": [
+          2119,
+          0.01900227926671505
+        ],
+        "peak_absolute": [
+          2113,
+          0.0422227643430233
+        ],
+        "nonfinite": []
+      },
+      "Episode_Termination/shelf_collision": {
+        "count": 20,
+        "first": [
+          2100,
+          0.0009901259327307343
+        ],
+        "last": [
+          2119,
+          0.0672878697514534
+        ],
+        "peak_absolute": [
+          2114,
+          0.0821940079331398
+        ],
+        "nonfinite": []
+      },
+      "Episode_Termination/hand_velocity": {
+        "count": 20,
+        "first": [
+          2100,
+          0.0
+        ],
+        "last": [
+          2119,
+          0.00028483071946538985
+        ],
+        "peak_absolute": [
+          2106,
+          0.00048828125
+        ],
+        "nonfinite": []
+      },
+      "Episode_Termination/shelf_displacement": {
+        "count": 20,
+        "first": [
+          2100,
+          0.0
+        ],
+        "last": [
+          2119,
+          0.0
+        ],
+        "peak_absolute": [
+          2100,
+          0.0
+        ],
+        "nonfinite": []
+      },
+      "Episode_Termination/success": {
+        "count": 20,
+        "first": [
+          2100,
+          0.0
+        ],
+        "last": [
+          2119,
+          0.0533989816904068
+        ],
+        "peak_absolute": [
+          2119,
+          0.0533989816904068
+        ],
+        "nonfinite": []
+      },
+      "Loss/value": {
+        "count": 20,
+        "first": [
+          2100,
+          5.3016743659973145
+        ],
+        "last": [
+          2119,
+          0.4765397310256958
+        ],
+        "peak_absolute": [
+          2100,
+          5.3016743659973145
+        ],
+        "nonfinite": []
+      },
+      "Loss/surrogate": {
+        "count": 20,
+        "first": [
+          2100,
+          -0.003069345373660326
+        ],
+        "last": [
+          2119,
+          -0.006708689033985138
+        ],
+        "peak_absolute": [
+          2102,
+          -0.01021775882691145
+        ],
+        "nonfinite": []
+      },
+      "Loss/entropy": {
+        "count": 20,
+        "first": [
+          2100,
+          7.4398322105407715
+        ],
+        "last": [
+          2119,
+          7.905619144439697
+        ],
+        "peak_absolute": [
+          2119,
+          7.905619144439697
+        ],
+        "nonfinite": []
+      },
+      "Loss/learning_rate": {
+        "count": 20,
+        "first": [
+          2100,
+          0.0008649755618534982
+        ],
+        "last": [
+          2119,
+          9.999999747378752e-06
+        ],
+        "peak_absolute": [
+          2100,
+          0.0008649755618534982
+        ],
+        "nonfinite": []
+      },
+      "Policy/mean_std": {
+        "count": 20,
+        "first": [
+          2100,
+          0.6586310267448425
+        ],
+        "last": [
+          2119,
+          0.6948032379150391
+        ],
+        "peak_absolute": [
+          2119,
+          0.6948032379150391
+        ],
+        "nonfinite": []
+      },
+      "Perf/total_fps": {
+        "count": 20,
+        "first": [
+          2100,
+          7373.0
+        ],
+        "last": [
+          2119,
+          8596.0
+        ],
+        "peak_absolute": [
+          2103,
+          8972.0
+        ],
+        "nonfinite": []
+      },
+      "Perf/collection_time": {
+        "count": 20,
+        "first": [
+          2100,
+          8.254653930664062
+        ],
+        "last": [
+          2119,
+          6.919469356536865
+        ],
+        "peak_absolute": [
+          2100,
+          8.254653930664062
+        ],
+        "nonfinite": []
+      },
+      "Perf/learning_time": {
+        "count": 20,
+        "first": [
+          2100,
+          1.7448129653930664
+        ],
+        "last": [
+          2119,
+          1.6565704345703125
+        ],
+        "peak_absolute": [
+          2100,
+          1.7448129653930664
+        ],
+        "nonfinite": []
+      },
+      "Train/mean_reward": {
+        "count": 20,
+        "first": [
+          2100,
+          3.6650516986846924
+        ],
+        "last": [
+          2119,
+          12.41346263885498
+        ],
+        "peak_absolute": [
+          2117,
+          12.788345336914062
+        ],
+        "nonfinite": []
+      },
+      "Train/mean_episode_length": {
+        "count": 20,
+        "first": [
+          2100,
+          28.3799991607666
+        ],
+        "last": [
+          2119,
+          470.94000244140625
+        ],
+        "peak_absolute": [
+          2114,
+          487.57000732421875
+        ],
+        "nonfinite": []
+      },
+      "Train/mean_reward/time": {
+        "count": 20,
+        "first": [
+          9,
+          3.6650516986846924
+        ],
+        "last": [
+          173,
+          12.41346263885498
+        ],
+        "peak_absolute": [
+          156,
+          12.788345336914062
+        ],
+        "nonfinite": []
+      },
+      "Train/mean_episode_length/time": {
+        "count": 20,
+        "first": [
+          9,
+          28.3799991607666
+        ],
+        "last": [
+          173,
+          470.94000244140625
+        ],
+        "peak_absolute": [
+          129,
+          487.57000732421875
+        ],
+        "nonfinite": []
+      }
+    },
+    "checkpoints": [
+      {
+        "file": "model_2100.pt",
+        "iteration": 2100,
+        "noise": {
+          "distribution.std_param": [
+            0.5924666523933411,
+            0.432949960231781,
+            0.29609057307243347,
+            0.5542600154876709,
+            0.6285058856010437,
+            0.7608792185783386,
+            1.01962149143219,
+            0.9842743873596191
+          ]
+        },
+        "nonfinite_tensors": []
+      },
+      {
+        "file": "model_2119.pt",
+        "iteration": 2119,
+        "noise": {
+          "distribution.std_param": [
+            0.6331337094306946,
+            0.46451839804649353,
+            0.31699228286743164,
+            0.5850410461425781,
+            0.666908860206604,
+            0.8124088644981384,
+            1.051868200302124,
+            1.0275548696517944
+          ]
+        },
+        "nonfinite_tensors": []
+      }
+    ]
+  }
+]

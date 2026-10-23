@@ -1,5 +1,7 @@
 # Fusion Holding v2
 
+2026-10-24 수치 안정성 변경: 상속하는 이전 action8D 관측은 raw action을 `[-1,1]`로 제한한 복사본이다. 보상용 raw action·실제 Action term 입력은 유지한다. 기존 checkpoint는 구조상 로드 가능하지만 범위 밖 관측의 의미가 달라지므로 원래 동작과 동등하다고 간주하지 않는다. [피드백 발산 재현·공통 PPO 방어·검증](../logs/2026-10-24_temp_training_stability.md).
+
 [환경 안내](README.md) · [계열과 상속](FUSION_HOLDING_FAMILY.md) · [부모 Holding v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V1_ENVIRONMENT.md) · [개발·검증](../logs/2026-10-23_fusion_holding_v2.md)
 
 기준일: 2026-10-23. 사용자 요청과 공통 반경 확인에 따라 목표 유지 보상·성공·접촉 간주 범위를 통일했다. 구현 계약이며 학습 성능 향상은 미검증이다.

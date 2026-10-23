@@ -1,5 +1,11 @@
 # 개발·실험 진행 로그
 
+- [2026-10-24 TEMP 전체 학습 감사·action 피드백 발산 수정](2026-10-24_temp_training_stability.md):4개 run·50개 checkpoint 감사, 실제 실패 입력 포착과 모델 replay, 이전 action 관측 제한·PPO 수치 검사.
+
+- [2026-10-24 Holding OSC v2 resume 발산 재조사](2026-10-24_holding_osc_resume_crash_audit.md): 정정된 TEMP run에서 value loss1.94e21 및 원본 run의NaN 확인, checkpoint5개 유한성 검사.
+
+- [2026-10-24 Holding v0 PPO 표준편차 오류 조사](2026-10-24_holding_v0_std_crash_audit.md): 두 run·24개 checkpoint 감사, scalar std와 음수/NaN 오류 구분의 한계.
+
 - [2026-10-24 Windows Vulkan 초기화 크래시](2026-10-24_windows_vulkan_startup.md): Sweep 미사용 최소 재현, RTX SceneDB 접근 위반 및 train/play의 D3D12 기본 선택.
 
 - [2026-10-23 환경 파일 구조 통합](2026-10-23_environment_structure_migration.md): 역할별 배치·복구 commit,45개 설정 동등성·초기 GPU/PPO·대표 train.py 검증. ObjectRandom 후기 배치 실패는 이관 전 원본에서도 재현.
