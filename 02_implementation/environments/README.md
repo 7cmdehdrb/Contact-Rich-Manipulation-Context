@@ -2,7 +2,7 @@
 
 [구현 문서 안내](../README.md) · [등록·실행 안내](../08_ACTIVE_ENVIRONMENTS.md)
 
-**[환경 계층과 변경 의도](ENVIRONMENT_EVOLUTION.md)부터 읽는다.** Baseline → Omni → Renewal과 Contact Sweep → Clutter → Fusion의 관계를 흐름도와 변경표로 확인하고, 전체 35개 등록 ID 표에서 개별 환경 문서로 이동할 수 있다. 실제 Python 상속과 기능을 가져와 독립 구성한 관계는 구분해서 표시했다.
+**[환경 계층과 변경 의도](ENVIRONMENT_EVOLUTION.md)부터 읽는다.** Baseline → Omni → Renewal과 Contact Sweep → Clutter → Fusion의 관계를 흐름도와 변경표로 확인하고, 전체 등록 ID 표에서 개별 환경 문서로 이동할 수 있다. 실제 Python 상속과 기능을 가져와 독립 구성한 관계는 구분해서 표시했다.
 
 | 찾는 내용 | 문서 |
 | --- | --- |
@@ -26,3 +26,5 @@
 - [Fusion v1_3_1](CONTACT_SWEEP_CLUTTER_FUSION_V1_3_1_ENVIRONMENT.md): Goal 반경과 접촉 fade width의 선형 커리큘럼.
 
 - [Fusion v1_4](CONTACT_SWEEP_CLUTTER_FUSION_V1_4_ENVIRONMENT.md): v1_0 직접 상속, 250 간격 커리큘럼·최대 11개 물체·3초 목표 유지 성공 종료.
+
+- [Fusion Holding v0](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V0_ENVIRONMENT.md): v1_0 직접 상속. Scene·관측·제어, 17개 보상, 정착·독립 성공, 충격 warmup과 14개 커리큘럼의 상세 계약.

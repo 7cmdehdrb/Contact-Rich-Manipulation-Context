@@ -28,3 +28,31 @@ env -u PYTHONPATH PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
 GPU 명령: `env -u PYTHONPATH PYTHONDONTWRITEBYTECODE=1 /home/min/miniconda3/envs/env_isaaclab/bin/python -B outputs/fusion_holding_v0_validation/smoke.py`. 2환경에서 iteration0/1000/1250/3000/6000/10000/12000/16000/0을 적용하고 각8스텝,총72제어스텝을 실제 실행하여 finite 보상·가중치·정착 설정 복원을 검사한다. 테스트는 학습이나 학습된 정책의 성능 검증이 아니다. 장시간 학습·비발사 행동·목표 성공률 개선은 미검증이다.
 
 최종 정상 높이 범위 1.04~1.07m 적용 후 재검증: CPU 18 passed (2.59s), GPU exit 0 및 `HOLDING SMOKE PASSED`. 실행 증거는 Workspace의 `outputs/fusion_holding_v0_validation/smoke.py`, `smoke.log`, `result.json`에 보존했다. 변경 Markdown 4개 수식 검사와 두 저장소의 `git diff --check`를 통과했다.
+
+## 상세 환경 문서 추가
+
+2026-10-23 후속 요청으로 [Holding 상세 환경 설명](../environments/CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V0_ENVIRONMENT.md)을 추가했다. Workspace 기준 commit은 `870750df2520a5e486240fa498677dfcd0494532`이며 이 작업은 문서만 변경했다. 공통 Scene·Observation·Action과 Holding의 17개 보상·7개 종료·14개 curriculum을 구분하고, 초기 목표 거리 하한·정착 척도·성공 기준·warmup 경계를 실제 코드와 대조했다. 환경 계층 Mermaid·등록 표, 활성 환경 등록·상속 설명, 부모 문서와 두 단계 색인을 함께 연결했다. 기존 2026-10-14 HTML UML은 초기 네 환경만 다루는 자료이므로 본 작업의 전체 계층 갱신은 `ENVIRONMENT_EVOLUTION.md`에서 수행했다. 새 학습·GPU 실행은 수행하지 않았다.
+
+문서 검증은 Workspace 루트에서 아래와 같이 실행했다. 대상은 이번에 추가·수정한 Markdown 7개뿐이다.
+
+```bash
+python - <<'CHECK'
+from pathlib import Path
+import subprocess
+root = Path('example/Contact-Rich-Manipulation-Context')
+files = [root / p for p in [
+    '02_implementation/environments/CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V0_ENVIRONMENT.md',
+    '02_implementation/environments/ENVIRONMENT_EVOLUTION.md',
+    '02_implementation/environments/README.md',
+    '02_implementation/environments/CONTACT_SWEEP_CLUTTER_FUSION_V1_0_ENVIRONMENT.md',
+    '02_implementation/README.md',
+    '02_implementation/08_ACTIVE_ENVIRONMENTS.md',
+    '02_implementation/logs/2026-10-23_fusion_holding_v0.md',
+]]
+subprocess.run(['python', str(root / '00_guidelines/scripts/check_markdown_math.py'), *map(str, files)], check=True)
+subprocess.run(['python', str(root / '00_guidelines/scripts/check_document_links.py'), '--root', '.', *map(str, files)], check=True)
+subprocess.run(['git', '-C', str(root), 'diff', '--check'], check=True)
+CHECK
+```
+
+결과: Markdown math 7개 통과, 링크 311개 검사·오류 0, diff 공백 검사 통과. 외부 웹 URL 2개는 fetch하지 않았다. 브라우저의 GitHub 수식·Mermaid 렌더링은 미검증이며 문서 검사기 통과와 구분한다.

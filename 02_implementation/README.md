@@ -12,6 +12,7 @@
 | [활성 환경 안내](08_ACTIVE_ENVIRONMENTS.md) | 활성 패키지·환경 상속·observation/action/controller/reward/termination/reset와 실행 명령 |
 | [전체 35개 환경 계층·변경 의도·독립 문서](environments/ENVIRONMENT_EVOLUTION.md) | 실제 상속과 설계 계승을 구분한 흐름도, 단계별 변경 이유, 등록 ID별 상대 링크 |
 | [Fusion v0 → v2 → v3 → v1_0 변경 비교](environments/CONTACT_SWEEP_CLUTTER_FUSION_VERSIONS.md) | 단계별 보상·커리큘럼·장애물·wrench 변화와 상속·실행 |
+| [Fusion Holding v0 상세 설명](environments/CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V0_ENVIRONMENT.md) | v1_0 직접 상속·거리/속도 정착 보상·충격 warmup·7개 종료·14개 커리큘럼과 실행 |
 | [Contact Sweep Clutter Fusion v1_0 환경 설명](environments/CONTACT_SWEEP_CLUTTER_FUSION_V1_0_ENVIRONMENT.md) | v1_0 자체의 Scene·관측·Action·17개 보상·6개 종료·9개 curriculum·학습 복구 |
 | [Contact Sweep Clutter Fusion 환경 설명](environments/CONTACT_SWEEP_CLUTTER_FUSION_ENVIRONMENT.md) | Scene 의도·Actor/Critic 관측과 노이즈/Frame·Action 범위·15개 보상 수치·종료·커리큘럼의 독립 설명 |
 | [Contact Sweep Clutter v1 MDP](environments/CONTACT_SWEEP_CLUTTER_V1_MDP.md) | v1 자체의 관측·8D Action·14개 보상·상태 전이·종료를 설명하는 독립 문서 |

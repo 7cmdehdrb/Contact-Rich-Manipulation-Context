@@ -2,6 +2,8 @@
 
 [구현 문서 안내](../README.md) · [활성 환경](../08_ACTIVE_ENVIRONMENTS.md)
 
+후속 직접 파생 환경: [Fusion Holding v0 상세 설명](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V0_ENVIRONMENT.md). Holding의 정착 보상·충격 warmup·성공 종료는 별도 계약이며 이 부모 환경에 소급 적용되지 않는다.
+
 **대상:** `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_0`  
 **기준일:** 2026-10-22  
 **문서 범위:** 현재 설정에 따른 환경의 목적, 입력과 출력, 보상, 종료, 학습 난이도 변화. 보상 수치는 별도 표시가 없는 한 수식으로 계산한 예시이며 학습 성과의 실측값이 아니다.
