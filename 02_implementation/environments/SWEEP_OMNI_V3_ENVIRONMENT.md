@@ -4,7 +4,7 @@
 
 기준일: **2026-10-15**. 대상은 Gym ID `Isaac-Inspire-Sweep-Omni-v3`, 설정 클래스 `InspireSweepOmniV3EnvCfg`, 실행 클래스 `InspireSweepEnv`다. 이 문서는 현재 작업트리의 기본 설정을 기준으로 관측·리워드·터미네이션·이벤트를 독립적으로 설명한다. 코드 정독과 CPU 검증에 근거하며 새 학습·재생·실물 검증 결과를 뜻하지 않는다.
 
-코드 기준은 workspace commit `21bbae5f0fcaeaf3eb4014dd92f026b6cae9158c`와 확인 당시 미커밋 변경이다. 특히 `omni_env_cfg.py`의 Arm 속도 종료 기준을 **1.5 rad/s로 바꾼 기존 변경**을 포함한다. CLI override와 과거 checkpoint에 저장된 config는 이 기본 설정과 별도로 확인한다.
+코드 기준은 workspace commit `21bbae5f0fcaeaf3eb4014dd92f026b6cae9158c`와 확인 당시 미커밋 변경이다. 특히 `envs/sweep_omni_envs.py`의 Arm 속도 종료 기준을 **1.5 rad/s로 바꾼 기존 변경**을 포함한다. CLI override와 과거 checkpoint에 저장된 config는 이 기본 설정과 별도로 확인한다.
 
 ## 1. 관측 입력
 
@@ -190,16 +190,16 @@ Command 자체는 위치 3D와 초기 quaternion 4D를 반환하지만, 관측�
 | 확인 대상 | 실제 소스 |
 | --- | --- |
 | Gym 등록 | [__init__.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py) |
-| 최종 환경 설정 | [omni_env_cfg.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/omni_env_cfg.py) |
-| 관측·기본 장면·종료·이벤트 선언 | [env_cfg.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/env_cfg.py) |
-| 관측 계산과 센서 변환 | [observations.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observations.py), [sensors.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/sensors.py) |
-| 진행 보상 | [mdp/goal_rewards.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/goal_rewards.py) |
-| Action·관절속도·기울기 비용 | [goal_rewards.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/goal_rewards.py) |
-| 선반 비용 | [rewards.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/rewards.py) |
-| 종료 판정 | [terminations.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/terminations.py), [goal_terminations.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/goal_terminations.py) |
-| 물체·목표 reset | [goal_events.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/goal_events.py), [commands.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/commands.py) |
-| 물성 이벤트 | [realistic_physics_env_cfg.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/realistic_physics_env_cfg.py), [realistic_physics.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/realistic_physics.py) |
-| 센서 유효 상태·Action 이력 reset | [env.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/env.py) |
-| Actor/Critic 관측 그룹 | [rsl_rl_ppo_cfg.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/agents/rsl_rl_ppo_cfg.py) |
+| 최종 환경 설정 | [omni_env_cfg.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_envs.py) |
+| 관측·기본 장면·종료·이벤트 선언 | [env_cfg.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_envs.py) |
+| 관측 계산과 센서 변환 | [observations.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observation_functions/sweep.py), [sensors.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/sensors.py) |
+| 진행 보상 | [mdp/goal_rewards.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/goal_rewards.py) |
+| Action·관절속도·기울기 비용 | [goal_rewards.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/goal_rewards.py) |
+| 선반 비용 | [rewards.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/sweep.py) |
+| 종료 판정 | [terminations.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/termination_functions/sweep.py), [goal_terminations.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/termination_functions/goal_terminations.py) |
+| 물체·목표 reset | [goal_events.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/event_functions/goal_events.py), [commands.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/command_functions/sweep_goal.py) |
+| 물성 이벤트 | [물성 Event Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/events/sweep.py), [물성 적용 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/event_functions/realistic_physics.py), [물성 분포·계산](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/realistic_physics.py) |
+| 센서 유효 상태·Action 이력 reset | [env.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/runtime/sweep.py) |
+| Actor/Critic 관측 그룹 | [rsl_rl_ppo_cfg.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/agent/sweep_ppo_cfg.py) |
 
 코드 링크는 통합 workspace 기준이다. 문서 저장소만 clone하면 외부 소스 링크는 연결되지 않는다. 관측·리워드·종료·이벤트 관련 CPU 검사와 문서 검사의 실제 명령·결과는 [작성·검증 로그](../logs/2026-10-15_environment_contract_notes.md)에 기록했다. 시뮬레이터에서의 실제 센서 출력·접촉·정책 성능과 저장 checkpoint의 적용 설정은 이번 문서 작성에서 검증하지 않았다.

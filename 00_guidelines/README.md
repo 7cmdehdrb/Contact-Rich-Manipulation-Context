@@ -10,6 +10,7 @@
 | 문서 분류·작성·읽기·이동·참조 검증 | [문서 구조 규칙](DOCUMENT_STRUCTURE.md) |
 | Markdown과 수식 작성·검사 | [문서 형식 규칙](rules/document-formatting.md) |
 | 활성 코드 변경·환경 계약·재현 가능한 로그 | [개발 지침](09_DEVELOPMENT_GUIDE.md) |
+| Inspire Sweep 환경의 역할별 파일 배치·버전 통합·이관 검증·복구 | [환경 파일 구조](12_ENVIRONMENT_FILE_STRUCTURE.md) |
 | 문서 submodule과 코드 workspace의 역할·외부 링크 | [Workspace 안내](10_WORKSPACE_GUIDE.md) |
 | 실험 조건·결과·실패·인계 기록 | [연구 로그 템플릿](templates/RESEARCH_LOG.md) |
 

@@ -29,7 +29,7 @@
 | PPO | `ContactSweepClutterPPORunnerCfg(ContactSweepPPORunnerCfg)` |
 | 로그 폴더 | `logs/rsl_rl/inspire_contact_sweep_clutter` |
 
-코드는 [`contact_sweep_clutter/`](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter)에 모았다. 기존 Contact Sweep·Renewal v3·공유 MDP 함수·실행 스크립트는 수정하지 않았다. 최상위 package 등록에 새 task를 추가했다.
+코드는 [`contact_sweep_clutter/`](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_envs.py)에 모았다. 기존 Contact Sweep·Renewal v3·공유 MDP 함수·실행 스크립트는 수정하지 않았다. 최상위 package 등록에 새 task를 추가했다.
 
 ## 장면·reset·물성
 

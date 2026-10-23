@@ -12,14 +12,14 @@
 
 | 항목 | 확인한 현재 동작 | 필요한 변경 |
 | --- | --- | --- |
-| 영역별 개수 | [population.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_v1_0/population.py)의 GRAY/WHITE 일정과 EnvCfg의 최대 슬롯 수가 분리되어 있다. 기본 요청은 각 1→3개다. | 고정 개수/커리큘럼의 단일 설정 경로와 요청·실제 개수 분리 |
-| 뒤쪽 GRAY | [population layout](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_v1_0/layout.py)은 `rear_obstacles=min(1, gray_obstacles)`를 사용한다. | 뒤쪽 배정 개수도 명시적 파라미터로 노출 |
-| 배치 생성 | [ClutterLayoutGenerator](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter/layout.py)는 타겟·목표를 고정한 채 장애물을 순차 배치한다. 정해진 재시도 후 한 행이라도 미완성이면 `GenerationError`를 낸다. | 환경별 최선의 유효 부분 배치 보관, 부족한 영역을 건너뛰는 탐색, 실제 개수 반환 |
+| 영역별 개수 | [population.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/contact_sweep_clutter_fusion_population.py)의 GRAY/WHITE 일정과 EnvCfg의 최대 슬롯 수가 분리되어 있다. 기본 요청은 각 1→3개다. | 고정 개수/커리큘럼의 단일 설정 경로와 요청·실제 개수 분리 |
+| 뒤쪽 GRAY | [population layout](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/contact_sweep_clutter_fusion_layout.py)은 `rear_obstacles=min(1, gray_obstacles)`를 사용한다. | 뒤쪽 배정 개수도 명시적 파라미터로 노출 |
+| 배치 생성 | [ClutterLayoutGenerator](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/scenes/contact_sweep_clutter_layout.py)는 타겟·목표를 고정한 채 장애물을 순차 배치한다. 정해진 재시도 후 한 행이라도 미완성이면 `GenerationError`를 낸다. | 환경별 최선의 유효 부분 배치 보관, 부족한 영역을 건너뛰는 탐색, 실제 개수 반환 |
 | 기하 제약 | [참고 생성기](../../../../src/scene_randomization/generator.py)의 RED/GRAY/rear, 최소 거리, 셀 점유, 이웃 수, 접근 경로를 사용한다. | 불변 제약과 분포 규칙을 명시하고 모든 반환 경로에서 재검사 |
-| Event | [events_cfg.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_v1_0/events_cfg.py)에 이미 `object_spawn`, `mode="reset"`이 있다. | 기존 Event를 확장 가능한 배치 서비스의 어댑터로 구성 |
-| 활성 물체 | [events.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_v1_0/events.py)는 배치 전 공통 요청 개수로 mask를 만든다. | 배치 결과를 받은 뒤 환경마다 다른 mask 생성 |
+| Event | [events_cfg.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/events/contact_sweep_clutter_fusion.py)에 이미 `object_spawn`, `mode="reset"`이 있다. | 기존 Event를 확장 가능한 배치 서비스의 어댑터로 구성 |
+| 활성 물체 | [events.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/event_functions/contact_sweep_clutter_fusion.py)는 배치 전 공통 요청 개수로 mask를 만든다. | 배치 결과를 받은 뒤 환경마다 다른 mask 생성 |
 | 최대 개수 | 기본 7개는 타겟 1+장애물 6개다. `validate_capacity`와 생성기는 장애물 10개를 제한한다. | 타겟 포함 20개에는 최소 장애물 19슬롯 및 관련 경로 확장 필요 |
-| 관측·모델 | 초기 장애물은 10×4=40D이며 [Fusion 모델](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion/models.py)과 export에도 40이 고정되어 있다. | Event만 고쳐서는 20개 운용 불가. 슬롯·관측·encoder·export를 함께 확장 |
+| 관측·모델 | 초기 장애물은 10×4=40D이며 [Fusion 모델](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/agent/contact_sweep_clutter_fusion_models.py)과 export에도 40이 고정되어 있다. | Event만 고쳐서는 20개 운용 불가. 슬롯·관측·encoder·export를 함께 확장 |
 
 기존 환경의 기준선 재현성을 위해 v1_0을 기반으로 별도 파생 설정에 새 스폰 규칙을 연결하는 방식을 제안한다. 기존 task를 일괄 변경하지 않는다. 새 task ID·패키지 이름은 구현 시 중복을 확인하여 정하고, 그때 [활성 환경 안내](../../02_implementation/08_ACTIVE_ENVIRONMENTS.md)에 부모·등록·실행 명령을 추가한다. 참고 `scene_randomization`은 읽기 전용으로 유지하고 새 배치 제어와 결과 자료형은 활성 패키지에 둔다.
 

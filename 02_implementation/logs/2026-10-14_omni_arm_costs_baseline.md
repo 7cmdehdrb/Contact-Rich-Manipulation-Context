@@ -15,7 +15,7 @@ Workspace 기준 commit은 `e54ae15bca563cd602b85dbf61f9c594a59a438f`다. 이전
 | Arm action 변화 | −0.03 × mean(Δaction_arm²) | −0.03 × sum(Δaction_arm²) | 6배 |
 | Arm 관절 속도 | −0.01 × mean(qdot_arm²) | −0.03 × sum(qdot_arm²) | 18배 |
 
-[goal_rewards.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/goal_rewards.py)의 두 함수에 `reduction="mean"` 기본 인자를 추가하고 `sum`도 지원한다. [omni_env_cfg.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/omni_env_cfg.py)는 Arm 두 항만 `sum`을 지정하며 속도 weight를 −0.03으로 변경한다. 정규화 기준은 1.0이다. Hand 두 항의 평균 방식·가중치는 유지한다. Baseline 코드도 유지한다.
+[goal_rewards.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/goal_rewards.py)의 두 함수에 `reduction="mean"` 기본 인자를 추가하고 `sum`도 지원한다. [omni_env_cfg.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_envs.py)는 Arm 두 항만 `sum`을 지정하며 속도 weight를 −0.03으로 변경한다. 정규화 기준은 1.0이다. Hand 두 항의 평균 방식·가중치는 유지한다. Baseline 코드도 유지한다.
 
 Baseline action 비용은 8개 전체 합이므로 이번 변경은 그 중 Arm 6개의 기여와 일치한다. Hand 비용까지 Baseline 방식으로 바꾼 것은 아니다. RewardManager의 `step_dt` 곱셈도 유지한다. 관측 41D, Action 8D, 스폰·목표·물성·PPO·나머지 보상은 변경하지 않았다.
 

@@ -87,8 +87,8 @@ Actor와 Critic은 모두 아래 순서의 `policy` **41D**다. 목표는 episod
 
 ## 근거와 연결
 
-- [Omni v2 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/omni_env_cfg.py), [진행·비용 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/goal_rewards.py)
-- [종료 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/goal_terminations.py), [v2 도입·후속 변경 이력](../logs/2026-10-15_omni_v2_rewards.md)
+- [Omni v2 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_envs.py), [진행·비용 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/goal_rewards.py)
+- [종료 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/termination_functions/goal_terminations.py), [v2 도입·후속 변경 이력](../logs/2026-10-15_omni_v2_rewards.md)
 - [운동 비용 계약 이력](../logs/2026-10-15_omni_penalty_contract.md), [공통 상한 이력](../logs/2026-10-18_omni_squared_cost_caps.md)
 - 다음 분기: [Omni v3](SWEEP_OMNI_V3_ENVIRONMENT.md), [Dex Omni v0](DEX_OMNI_V0_ENVIRONMENT.md)
 

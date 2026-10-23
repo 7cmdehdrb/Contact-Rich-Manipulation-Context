@@ -50,10 +50,10 @@ Pushing speed는 기존 bounded 지수 함수와 cap=100을 상속하고 free_sp
 
 구현 소스:
 
-- [환경 Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/dex_tactile_omni_renewal_v3_env_cfg.py)
-- [물성 이벤트](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/realistic_physics.py)
+- [환경 Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py)
+- [물성 이벤트](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/realistic_physics.py)
 - [Gym 등록](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py)
-- [PPO Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/agents/tactile_omni_renewal_ppo_cfg.py)
+- [PPO Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/agent/sweep_omni_renewal_ppo_cfg.py)
 
 ## 실행한 검증
 

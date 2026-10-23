@@ -11,7 +11,7 @@ Workspace 기준 commit은 `e54ae15bca563cd602b85dbf61f9c594a59a438f`다. 기존
 - Gym ID: `Isaac-Inspire-Sweep-Omni-v1`.
 - Runtime: `InspireSweepEnv → ManagerBasedRLEnv`.
 - Cfg: `InspireSweepOmniV1EnvCfg → InspireSweepOmniEnvCfg → InspireSweepEnvCfg → ManagerBasedRLEnvCfg`.
-- [omni_env_cfg.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/omni_env_cfg.py)의 v1 `__post_init__`에서 부모 초기화를 수행하고 `terminations.hand_velocity.params["threshold"] = 2.0`을 적용한다.
+- [omni_env_cfg.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_envs.py)의 v1 `__post_init__`에서 부모 초기화를 수행하고 `terminations.hand_velocity.params["threshold"] = 2.0`을 적용한다.
 - [등록 코드](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py)는 Baseline과 같은 `InspireSweepPPORunnerCfg`를 사용한다. 학습 시 CLI로 `inspire_sweep_omni_v1` 폴더를 지정한다.
 - v0 기준은 1.0 rad/s를 유지한다. 이름이 `hand_velocity`인 term은 Arm 6개를 검사하며 경계값 2.0 rad/s는 허용하고 초과할 때 종료한다.
 - Actor/Critic 41D(현재 물체 GT 포함), Arm Joint Position 6D + Hand 2D, 50 Hz/10초, 중앙 스폰 반경 2 cm/전방향 목표 최대 15 cm, 물성·보상·나머지 종료 조건을 상속한다. 속도 보상의 정규화 기준 1.0 rad/s와 물리 actuator 속도 제한은 변경하지 않았다.

@@ -193,9 +193,9 @@ Dex 접근에서는 별도로 3차원 거리가 0.60 m에서 0.40 m로 줄었다
 
 ## 7. 구현 근거와 검증 범위
 
-- [goal_rewards.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/goal_rewards.py): `_target_state`, `ReachProgress.reset`, `HeightGatedPlanarReachProgress`, `PlanarGoalProgress`.
-- [dex_rewards.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/dex_rewards.py): `DexReachProgress`, `DexPlanarGoalProgress`.
-- [Omni Renewal 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/omni_renewal_env_cfg.py), [Dex Renewal 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/dex_omni_renewal_env_cfg.py): 적용 가중치·파라미터.
+- [goal_rewards.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/goal_rewards.py): `_target_state`, `ReachProgress.reset`, `HeightGatedPlanarReachProgress`, `PlanarGoalProgress`.
+- [dex_rewards.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/dex_rewards.py): `DexReachProgress`, `DexPlanarGoalProgress`.
+- [Omni Renewal 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py), [Dex Renewal 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py): 적용 가중치·파라미터.
 - [RewardManager](../../../../IsaacLab/source/isaaclab/isaaclab/managers/reward_manager.py): `compute(dt)`의 가중치·시간 간격 곱셈과 스텝 통계.
 - [goal 보상 테스트](../../../../src/inspire_sweep_baseline/tests/test_goal_rewards.py), [Dex 보상 테스트](../../../../src/inspire_sweep_baseline/tests/test_dex_rewards.py): 기록 갱신, 반복 지급 방지, 부분 reset, 높이 조건, 반복 이탈과 서로 다른 시간 간격의 CPU 검증.
 

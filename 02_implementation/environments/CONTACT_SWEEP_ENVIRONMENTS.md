@@ -48,7 +48,7 @@ flowchart LR
 | Action·Command | 독립 Cfg | 부모 설정 상속 |
 | Runtime | 센서 freshness와 reset Action 이력 관리 | 초기 장애물 관측 버퍼·명시적 seed reset 추가 |
 
-코드 진입점은 [contact_sweep](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep)와 [contact_sweep_clutter](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter)다. Gym 등록은 [package init](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py)에서 관리한다.
+코드 진입점은 [contact_sweep](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_envs.py)와 [contact_sweep_clutter](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_envs.py)다. Gym 등록은 [package init](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py)에서 관리한다.
 
 ## 3. 공통 장면과 물성
 
@@ -67,7 +67,7 @@ flowchart LR
 
 질량·마찰은 episode reset마다 랜덤화한다. 마찰은 유한한 재질 bucket에서 샘플링하며 정지·동적 마찰에 고정 비율을 강제하지 않는다. Clutter 장애물은 주황색이며 타겟과 동일한 형상·물성 설정을 갖는다. **같은 환경 안에서는 매 reset의 타겟 질량·관성·마찰 샘플을 모든 장애물에 그대로 적용**한다. 서로 다른 환경의 샘플은 다를 수 있다.
 
-[원기둥 자산](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/mass_cylinder.py) · [기준 물성 랜덤화](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/realistic_physics.py) · [Clutter 물성 적용](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter/physics.py).
+[원기둥 자산](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/mass_cylinder.py) · [기준 물성 랜덤화](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/event_functions/realistic_physics.py) · [Clutter 물성 적용](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/event_functions/contact_sweep_clutter_physics.py).
 
 ## 4. 목표 생성과 reset
 
@@ -99,7 +99,7 @@ Clutter는 참고 생성기의 넓은 타겟 스폰 영역이나 360°·5–20 c
 
 RED 확장은 물체 자체를 키우는 것이 아니라 **장애물을 놓지 않는 영역을 키우는 것**이다. 원본 생성기 cm 좌표 `(x,y)`는 선반 로컬 m 좌표 `(0.20-y/100, x/100)`로 변환한다. 원본 −Y 전면 방향은 실제 로봇 쪽인 선반 +X 방향에 해당한다. 기하 접근 경로는 로봇 전체 IK나 실제 Hand 전체의 충돌 없는 접근을 보장하지 않는다.
 
-[현재 배치 설정과 알고리즘](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter/layout.py) · [reset 연결](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter/events.py).
+[현재 배치 설정과 알고리즘](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/scenes/contact_sweep_clutter_layout.py) · [reset 연결](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/event_functions/contact_sweep_clutter.py).
 
 ## 5. 관측과 임베딩
 
@@ -145,7 +145,7 @@ flowchart LR
 
 Actor와 Critic은 각각 별도 인코더를 가진다. rollout에는 원시 관측 `policy57 + obstacles40`을 저장하고 PPO 미니배치에서 임베딩을 다시 계산하므로 인코더도 함께 학습된다. **97D는 원시 관측·export 입력 크기, 73D는 임베딩 결합 후 정책·가치망 입력 크기**다. Checkpoint와 JIT/ONNX export에 인코더가 포함된다. Export 입력 순서는 `[policy57, obstacles40]`다.
 
-[기준 관측](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep/observations_cfg.py) · [인코더 모델](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter/models.py).
+[기준 관측](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observations/contact_sweep.py) · [인코더 모델](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/agent/contact_sweep_clutter_models.py).
 
 ## 6. 행동과 물리적 제한
 
@@ -202,7 +202,7 @@ Goal weight 94는 과거 로그의 reaching·goal_distance 평균으로부터 re
 
 `Episode_Reward/<term>`은 해당 term의 episode 누적 기여를 최대 episode 길이 10초로 나눈 값이다. 예를 들어 scalar 1.3은 같은 집계에서 누적 기여 약 13에 대응한다. `Train/mean_reward`는 episode reward를 별도 버퍼로 평균하므로 모든 term scalar의 합에 10을 곱한 값과 집계 시점·표본 가중이 정확히 일치하지 않을 수 있다. 순간 리워드·누적 리워드·TensorBoard scalar를 같은 단위로 비교하지 않는다.
 
-[보상 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep/rewards_cfg.py) · [진행 보상](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/dex_rewards.py) · [공통 비용](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/goal_rewards.py).
+[보상 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/rewards/contact_sweep.py) · [진행 보상](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/dex_rewards.py) · [공통 비용](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/goal_rewards.py).
 
 ## 8. 종료 조건
 
@@ -217,7 +217,7 @@ Goal weight 94는 과거 로그의 reaching·goal_distance 평균으로부터 re
 
 `shelf_collision`은 접촉력 0.1 N 판정이 아니다. 현재 구현은 선반 root velocity의 선속도·각속도 성분이 포함된 벡터 norm과 wrist 높이를 사용하며, finger 높이 종료 검사는 꺼져 있다. 별도 `object_outside_shelf` 종료는 비활성이다. 목표 도달 성공 종료와 성공 보너스·goal-hold 보상은 없으며, 목표에 도달해도 기존 실패 또는 timeout까지 진행한다.
 
-[종료 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep/terminations_cfg.py) · [Clutter tilt/drop](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter/mdp.py).
+[종료 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/terminations/contact_sweep.py) · [Clutter tilt/drop](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/termination_functions/contact_sweep_clutter.py).
 
 ## 9. PPO 구성과 실행
 

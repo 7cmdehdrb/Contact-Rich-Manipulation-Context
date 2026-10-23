@@ -10,7 +10,7 @@
 
 지수 속도 비용을 `Isaac-Inspire-Sweep-Omni-Renewal-OSC-v0`와 `Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0`에 직접 적용하고 이를 상속하는 모든 환경에 전달한다. 기존 제곱 비용 함수는 유지한다.
 
-공통 `ExponentialSpeedRewardsCfg(OmniRenewalRewardsCfg)`를 [Renewal 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/omni_renewal_env_cfg.py)에 추가했다. 두 보상 항만 교체하며 나머지 rewards는 기존 부모를 상속한다.
+공통 `ExponentialSpeedRewardsCfg(OmniRenewalRewardsCfg)`를 [Renewal 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py)에 추가했다. 두 보상 항만 교체하며 나머지 rewards는 기존 부모를 상속한다.
 
 | 항 | 함수 | 입력과 임계값 | weight |
 | --- | --- | --- | --- |
@@ -19,8 +19,8 @@
 
 양의 비용은 `expm1(2 * max(x - t, 0)) / 2`다. 임계값 이하에서 0, 초과하면 지수 증가하며 가중치로 음수가 된다. reference_speed 정규화와 상한이 없고 RewardManager의 step_dt 곱셈을 유지한다.
 
-- [OSC 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/omni_renewal_osc_env_cfg.py)의 rewards를 공통 Cfg로 지정했다. 기존 OSC EEF·relative/fixed·stiffness 200·damping ratio 1·scale·Arm actuator 설정은 유지한다.
-- [Dex Renewal 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/dex_omni_renewal_env_cfg.py)의 `DexOmniRenewalRewardsCfg`가 공통 Cfg를 상속하게 했다. Dex reaching과 goal_distance는 유지한다.
+- [OSC 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py)의 rewards를 공통 Cfg로 지정했다. 기존 OSC EEF·relative/fixed·stiffness 200·damping ratio 1·scale·Arm actuator 설정은 유지한다.
+- [Dex Renewal 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py)의 `DexOmniRenewalRewardsCfg`가 공통 Cfg를 상속하게 했다. Dex reaching과 goal_distance는 유지한다.
 - Dex Tactile v0는 Dex Renewal의 rewards를 그대로 상속하므로 지수 비용을 적용받는다. Dex Tactile v1도 동일하다.
 - 앞선 촉각 v1 등록과 동작을 보존했다. v1 rewards의 중복된 두 항 선언은 제거하고 공통 Cfg 또는 Dex rewards 상속으로 재사용한다. 일반 촉각 v1은 여전히 공통 지수 비용을 사용한다.
 - 일반 Sweep Renewal v0와 일반 Tactile v0는 기존 제곱 비용을 유지한다. 두 지정 부모의 종료·reset·물성·센서·관측·나머지 보상은 이번 정정으로 변경하지 않았다. 속도 종료는 물체 >0.8m/s, Arm 관절 절대 속도 >5.0rad/s다.

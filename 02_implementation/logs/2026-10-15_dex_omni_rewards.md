@@ -24,7 +24,7 @@
 | Cfg | `InspireDexOmniEnvCfg → InspireSweepOmniV2EnvCfg → InspireSweepOmniV1EnvCfg → InspireSweepOmniEnvCfg → InspireSweepEnvCfg → ManagerBasedRLEnvCfg` |
 | Reward Cfg | `DexOmniRewardsCfg → OmniV2RewardsCfg → OmniRewardsCfg` |
 | Runner | `inspire_sweep_baseline.agents.rsl_rl_ppo_cfg:InspireSweepPPORunnerCfg`, Baseline과 동일 |
-| 변경 코드 | [환경 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/dex_omni_env_cfg.py), [보상 term](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/dex_rewards.py), [등록](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py) |
+| 변경 코드 | [환경 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_envs.py), [보상 term](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/dex_rewards.py), [등록](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py) |
 
 새 Cfg는 두 shaping term만 교체한다. `DexReachProgress`는 기존 `ReachProgress`의 reset/FK 갱신을, `DexPlanarGoalProgress`는 `PlanarGoalProgress`의 reset 위치 snapshot을 상속한다. 실행 환경 클래스에 상태나 제어 분기를 추가하지 않았다.
 

@@ -46,4 +46,4 @@ Ubuntu workspace 루트에서 실행한다. 환경 수256은 예시이며 처리
   --num_envs 1 --checkpoint "<Joint-ObjectRandom-Test-checkpoint.pt>" --real-time
 ```
 
-[환경 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_holding_object_random_test_v0/env_cfg.py) · [PPO 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_holding_object_random_test_v0/ppo_cfg.py). 실제 학습 성과와 GPU 검증 범위는 [개발 로그](../logs/2026-10-23_holding_object_random_test_v0.md)에서 구분한다.
+[환경 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_fusion_holding_osc_object_random_envs.py) · [PPO 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/agent/contact_sweep_clutter_fusion_holding_osc_object_random_ppo_cfg.py). 실제 학습 성과와 GPU 검증 범위는 [개발 로그](../logs/2026-10-23_holding_object_random_test_v0.md)에서 구분한다.

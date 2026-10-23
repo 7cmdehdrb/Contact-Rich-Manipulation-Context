@@ -64,7 +64,7 @@ Actor는 `policy57 + obstacles40`의 원시 97D를 받아 임베딩 결합 후 7
 
 일반 항의 실제 step 기여는 `weight × 반환값 × 0.02초`다. `reaching`·`goal_distance`는 함수 내부에서 dt를 상쇄하므로 `weight × 새 최선 거리 개선량(m)`으로 기여한다. 후퇴 후 이전 기록으로 복귀하는 행동에는 진행 보상이 반복되지 않는다.
 
-네 Arm/Hand 운동 비용은 로컬 `mdp/goal_rewards.py`의 raw 변화량·실제 속도 제곱합을 사용하고 각 출력만 100으로 제한한다. 평균·정규화 또는 Hand 제어 clamp 이후 값을 쓰지 않는다.
+네 Arm/Hand 운동 비용은 로컬 `mdp/reward_functions/goal_rewards.py`의 raw 변화량·실제 속도 제곱합을 사용하고 각 출력만 100으로 제한한다. 평균·정규화 또는 Hand 제어 clamp 이후 값을 쓰지 않는다.
 
 `goal_hold`는 목표 월드 XY 1 cm 안에서 +0.9/초, 두 접촉 항은 현재 촉각의 존재·개수에 대한 보상이다. `shelf_failure`는 선반 실패 전이에서 실제 −3 한 번을 지급한다.
 
@@ -96,7 +96,7 @@ Actor는 `policy57 + obstacles40`의 원시 97D를 받아 임베딩 결합 후 7
 
 ## 근거와 확인 범위
 
-[Env Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_v2/env_cfg.py) · [관측](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_v2/observations_cfg.py) · [보정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_v2/wrench.py) · [보상 Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_v2/rewards_cfg.py) · [변화 비용](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_v2/mdp.py) · [개발 이력](../logs/2026-10-20_contact_sweep_clutter_v2.md)
+[Env Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_envs.py) · [관측](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observations/contact_sweep_clutter.py) · [보정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/compensated_wrench.py) · [보상 Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/rewards/contact_sweep_clutter.py) · [변화 비용](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/contact_sweep_clutter.py) · [개발 이력](../logs/2026-10-20_contact_sweep_clutter_v2.md)
 
 보정 신호를 기존 정책 밖에서 수집하는 별도 분기는 [FT Test](CONTACT_SWEEP_CLUTTER_FT_TEST_ENVIRONMENT.md), 보정·커리큘럼의 독립 통합은 [Fusion v0](CONTACT_SWEEP_CLUTTER_FUSION_ENVIRONMENT.md)다.
 

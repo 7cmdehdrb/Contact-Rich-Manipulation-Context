@@ -4,7 +4,7 @@
 
 2026-10-19 사용자 요청: `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1`에서 Arm actuator의 물리 속도 제한을 낮춘다. 기준 workspace commit은 `fb195f7739a12cdc22f4e2f70962d6bfe7dd5e53`, 문서 저장소는 `b97791af609a30219a6c169596324160daa7999b`다. 기존 공통 종료 print·문서 변경과 사용자 체크포인트 디렉터리는 보존했다. commit·push는 수행하지 않았다.
 
-[설정 클래스](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/dex_tactile_omni_renewal_v1_env_cfg.py)의 `InspireDexTactileSweepOmniRenewalV1EnvCfg.__post_init__`에서 `ARM_JOINT_NAMES`로 `scene.robot.actuators["arm"].velocity_limit_sim`을 매핑한다.
+[설정 클래스](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py)의 `InspireDexTactileSweepOmniRenewalV1EnvCfg.__post_init__`에서 `ARM_JOINT_NAMES`로 `scene.robot.actuators["arm"].velocity_limit_sim`을 매핑한다.
 
 | 관절 | 기존 | 변경 |
 | --- | --- | --- |

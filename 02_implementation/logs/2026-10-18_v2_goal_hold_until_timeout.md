@@ -15,7 +15,7 @@
 
 ## 보상과 상태의 수명
 
-[새 reward term](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/goal_hold_rewards.py)의 `StableGoalAchievement`가 기존 `StableGoalSuccess`의 자격 판정·연속 타이머를 재사용한다. reward manager가 이 term을 먼저 계산하고 `goal_hold`는 같은 인스턴스의 시간을 읽는다. termination manager의 가짜 성공 항을 계산하거나 False를 반환하도록 둔 구조가 아니다.
+[새 reward term](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/goal_hold_rewards.py)의 `StableGoalAchievement`가 기존 `StableGoalSuccess`의 자격 판정·연속 타이머를 재사용한다. reward manager가 이 term을 먼저 계산하고 `goal_hold`는 같은 인스턴스의 시간을 읽는다. termination manager의 가짜 성공 항을 계산하거나 False를 반환하도록 둔 구조가 아니다.
 
 자격 조건은 기존과 같다: 목표 XY 오차 <1 cm, 물체 XY 속도 <0.02 m/s, 선반 법선 기준 기울기 ≤10°, 바닥 지지 오차 ≤1 cm, 물체 반경을 고려한 선반 내부 지지, 활성 실패 없음. 0.5초 연속 만족 시 최초 달성이다.
 

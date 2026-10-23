@@ -65,4 +65,4 @@ Workspace 루트에서:
   --num_envs 2048 --headless --max_iterations 90000
 ```
 
-실행 코드는 공용 `ContactSweepClutterFusionV1_0Env`, 설정은 `ContactSweepClutterFusionV1_3_1EnvCfg`, PPO는 `ContactSweepClutterFusionV1_3_1PPORunnerCfg`다. 보상·커리큘럼 CFG는 독립 선언이다. [소스](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_v1_3_1/env_cfg.py)를 기준으로 한다. IsaacLab·Sim 실행과 실제 학습은 이번 작업에서 수행하지 않았다.
+실행 코드는 공용 `ContactSweepClutterFusionV1_0Env`, 설정은 `ContactSweepClutterFusionV1_3_1EnvCfg`, PPO는 `ContactSweepClutterFusionV1_3_1PPORunnerCfg`다. 보상·커리큘럼 CFG는 독립 선언이다. [소스](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_fusion_envs.py)를 기준으로 한다. IsaacLab·Sim 실행과 실제 학습은 이번 작업에서 수행하지 않았다.

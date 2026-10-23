@@ -8,7 +8,7 @@
 
 사용자는 `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1` 재생 직후 종료되는 현상의 원인을 확인할 수 있도록 모든 종료 이벤트의 print를 요청했다. 이번 변경은 원인 추적용 출력이며, 종료 원인의 확정이나 조건 수정은 수행하지 않았다.
 
-[InspireSweepEnv](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/env.py)의 `_reset_idx`에서 기존 termination manager의 active term과 해당 환경의 판정 결과를 읽어 print한 뒤 원래 reset을 실행한다. 사용자의 후속 지시에 따라 v1 전용 처리는 만들지 않고 공통 환경에 직접 print를 추가했다. 개별 판정 함수를 다시 평가하지 않으며 상태가 지워지기 전에 모든 True 항목을 출력한다.
+[InspireSweepEnv](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/runtime/sweep.py)의 `_reset_idx`에서 기존 termination manager의 active term과 해당 환경의 판정 결과를 읽어 print한 뒤 원래 reset을 실행한다. 사용자의 후속 지시에 따라 v1 전용 처리는 만들지 않고 공통 환경에 직접 print를 추가했다. 개별 판정 함수를 다시 평가하지 않으며 상태가 지워지기 전에 모든 True 항목을 출력한다.
 
 v1의 항목은 `time_out`, `object_drop`, `push_fast`, `shelf_collision`, `hand_velocity`, `shelf_displacement`다. 비활성 항목은 제외하며 다른 환경에서는 그 환경의 활성 항목 전부를 순회한다. 동시 발생 시 각각 한 줄씩 출력하고 원래 episode step과 env ID를 유지한다. v2·OSC 등 모든 파생 환경에도 적용된다. observation·action·reward·termination 조건·PPO·task 등록·checkpoint 호환성은 바꾸지 않는다.
 

@@ -63,7 +63,7 @@ Actor는 `policy57 + obstacles40`의 원시 97D를 받아 임베딩 결합 후 7
 
 일반 항의 실제 step 기여는 `weight × 반환값 × 0.02초`다. `reaching`·`goal_distance`는 함수 내부에서 dt를 상쇄하므로 `weight × 새 최선 거리 개선량(m)`으로 기여한다. 후퇴 후 이전 기록으로 복귀하는 행동에는 진행 보상이 반복되지 않는다.
 
-네 Arm/Hand 운동 비용은 로컬 `mdp/goal_rewards.py`의 raw 변화량·실제 속도 제곱합을 사용하고 각 출력만 100으로 제한한다. 평균·정규화 또는 Hand 제어 clamp 이후 값을 쓰지 않는다.
+네 Arm/Hand 운동 비용은 로컬 `mdp/reward_functions/goal_rewards.py`의 raw 변화량·실제 속도 제곱합을 사용하고 각 출력만 100으로 제한한다. 평균·정규화 또는 Hand 제어 clamp 이후 값을 쓰지 않는다.
 
 `goal_hold`는 월드 XY 1 cm 안에 있는 동안 +0.9/초이며 속도·기울기·체류시간 조건은 없다. `contact_any`·`contact_count`는 같은 현재 촉각 17bit를 공유하고 타겟/장애물을 구분하지 않는다. `obstacle_displacement`는 노이즈 없는 초기 실제 위치를 기준으로 하며 최대 −0.2/초다. `shelf_failure`는 해당 실패 전이에서 한 번 −3이다.
 
@@ -97,6 +97,6 @@ FT Test에는 `wrench_change`를 추가하지 않는다. 보정 신호 측정 �
 
 ## 근거와 확인 범위
 
-[Env Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_ft_test/env_cfg.py) · [상속 보상](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_v1/rewards_cfg.py) · [커리큘럼](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_v1_curriculum/curriculum_cfg.py) · [일정 계산](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_v1_curriculum/mdp.py) · [Telemetry](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_ft_test/telemetry.py) · [개발 이력](../logs/2026-10-21_clutter_ft_collection.md)
+[Env Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_envs.py) · [상속 보상](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/rewards/contact_sweep_clutter.py) · [커리큘럼](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/curricula/contact_sweep_clutter.py) · [일정 계산](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/curriculum_functions/contact_sweep_clutter.py) · [Telemetry](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/runtime/contact_sweep_clutter_telemetry.py) · [개발 이력](../logs/2026-10-21_clutter_ft_collection.md)
 
 현재 설명은 등록, 설정 상속, MDP 계산의 정적 대조 결과다. 과거 로그의 실행 검증은 해당 기록의 조건에만 해당하며 이번 문서 작성의 새 실행 결과로 해석하지 않는다.

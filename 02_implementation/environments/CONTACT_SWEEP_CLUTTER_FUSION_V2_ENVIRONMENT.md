@@ -94,7 +94,7 @@
 
 ## 근거와 확인 범위
 
-[Env Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_v2/env_cfg.py) · [공통 관측](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion/observations_cfg.py) · [공통 보상](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion/rewards_cfg.py) · [F/T 비용](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion/safety_rewards.py) · [커리큘럼](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion/curriculum_cfg.py) · [개발 이력](../logs/2026-10-21_clutter_fusion_v3.md)
+[Env Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_fusion_envs.py) · [공통 관측](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observations/contact_sweep_clutter_fusion.py) · [공통 보상](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/rewards/contact_sweep_clutter_fusion.py) · [F/T 비용](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/contact_sweep_clutter_fusion.py) · [커리큘럼](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/curricula/contact_sweep_clutter_fusion.py) · [개발 이력](../logs/2026-10-21_clutter_fusion_v3.md)
 
 설계 의도는 지정 [Notion 환경 기록](https://app.notion.com/p/3f7bd3c55e1b80e5a161c6e0dd175773)과 [Fusion 버전 비교](CONTACT_SWEEP_CLUTTER_FUSION_VERSIONS.md)를 참고했다. 기존 문서의 일정·종료 수치가 다르면 위에 명시한 현재 코드 기준을 따른다.
 

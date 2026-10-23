@@ -13,8 +13,8 @@ Workspace HEAD는 `a2fcb0b`, 문서 submodule HEAD는 `f5655d0`이다. 시작 �
 ## 구현과 계측 계약
 
 - 수집기: [`collect_fusion_telemetry.py`](../../../../src/inspire_sweep_baseline/scripts/collect_fusion_telemetry.py). v3의 등록된 `ContactSweepClutterFusionV3EnvCfg`와 `ContactSweepClutterFusionV3PPORunnerCfg`, 기존 `CurriculumOnPolicyRunner`를 사용한다. 학습과 동일하게 checkpoint iteration 7200을 복원하고 재생 중 고정한다.
-- 실행 클래스: [`ContactSweepClutterFusionTelemetryEnv`](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion/telemetry_env.py) → `ContactSweepClutterFusionEnv` → Isaac Lab `ManagerBasedRLEnv`. 신규 Gym ID는 추가하지 않는다. 상속된 물리·Scene·Action·관측·보상·커리큘럼·종료 구성을 사용한다.
-- 데이터 책임: [`PlaybackTelemetry`와 `PlaybackCSVWriter`](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion/telemetry.py). 전자는 상태 취득·episode 경계, 후자는 환경별 열의 CSV 스트리밍 저장을 맡는다. 부모 step loop를 복제하지 않는다.
+- 실행 클래스: [`ContactSweepClutterFusionTelemetryEnv`](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/runtime/contact_sweep_clutter_fusion_telemetry.py) → `ContactSweepClutterFusionEnv` → Isaac Lab `ManagerBasedRLEnv`. 신규 Gym ID는 추가하지 않는다. 상속된 물리·Scene·Action·관측·보상·커리큘럼·종료 구성을 사용한다.
+- 데이터 책임: [`PlaybackTelemetry`와 `PlaybackCSVWriter`](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/runtime/contact_sweep_clutter_fusion_telemetry.py). 전자는 상태 취득·episode 경계, 후자는 환경별 열의 CSV 스트리밍 저장을 맡는다. 부모 step loop를 복제하지 않는다.
 - F/T: 정책과 기존 변화율 비용이 사용하는 `PureWristWrench`의 실제 cached `pure_world`·`pure_eef`. Hand 중력·관성 하중 보정 후 반력이며 힘 N, 모멘트 N·m다. 두 파일 모두 모멘트 원점은 EEF, 부호는 parent-on-child이며 `world`·`eef`는 표현 축이다. 보정 추정은 실물 측정 정확도 검증이 아니다.
 - 선속도: `object_collection.data.object_lin_vel_w`. Isaac Lab의 `object_com_lin_vel_w` alias로, 월드 축 COM 선속도 m/s다. Target=`mass_cylinder`, 장애물은 `obstacle_0`·`obstacle_1`·`obstacle_2`이며 각 환경에 4개다. GT 속도를 Actor 입력에 추가하지 않는다.
 - 주기: physics 0.01초, control 0.02초. 제어 step의 마지막 물리 substep을 계측하며 모든 physics substep의 100 Hz 기록과 구분한다. `time`은 벽시계가 아닌 누적 시뮬레이션 초이고 첫 행은 0.02초다. 16환경이 같은 시간 행에 들어간다.

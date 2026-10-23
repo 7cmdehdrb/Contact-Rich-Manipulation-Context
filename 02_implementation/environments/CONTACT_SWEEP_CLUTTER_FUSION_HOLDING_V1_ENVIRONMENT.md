@@ -43,6 +43,6 @@ Windows PowerShell에서는 launcher를 `.\IsaacLab\isaaclab.bat -p .\src\inspir
 
 ## 구현 근거와 검증 범위
 
-[환경 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_holding_v1/env_cfg.py) · [PPO 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_holding_v1/ppo_cfg.py).
+[환경 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_fusion_holding_envs.py) · [PPO 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/agent/contact_sweep_clutter_fusion_holding_ppo_cfg.py).
 
 실제 실행 명령·결과·미검증 범위는 [개발 로그](../logs/2026-10-23_fusion_holding_v1.md)에 기록한다. 용량 확대 자체가 학습 수렴·장애물 회피·실물 성능 개선을 입증하지 않는다.

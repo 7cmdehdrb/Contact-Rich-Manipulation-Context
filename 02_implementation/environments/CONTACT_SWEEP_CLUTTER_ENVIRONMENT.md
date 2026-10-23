@@ -56,7 +56,7 @@ Actor·Critic 모두 원시 `policy57 + obstacles40` = **97D**, 임베딩 결합
 
 일반 항의 실제 step 기여는 `weight × 반환값 × 0.02초`다. `reaching`·`goal_distance`는 함수 내부에서 dt를 상쇄하므로 `weight × 새 최선 거리 개선량(m)`으로 기여한다. 후퇴 후 이전 기록으로 복귀하는 행동에는 진행 보상이 반복되지 않는다.
 
-네 Arm/Hand 운동 비용은 로컬 `mdp/goal_rewards.py`의 raw 변화량·실제 속도 제곱합을 사용하고 각 출력만 100으로 제한한다. 평균·정규화 또는 Hand 제어 clamp 이후 값을 쓰지 않는다.
+네 Arm/Hand 운동 비용은 로컬 `mdp/reward_functions/goal_rewards.py`의 raw 변화량·실제 속도 제곱합을 사용하고 각 출력만 100으로 제한한다. 평균·정규화 또는 Hand 제어 clamp 이후 값을 쓰지 않는다.
 
 `object_tilt`는 개별 기울기 비용을 **합산**하여 [0,4]가 된다. `pushing_speed`는 여전히 타겟만 평가한다. 장애물 이동 거리 비용과 goal-hold·접촉 보상은 이 버전에 없다.
 
@@ -82,7 +82,7 @@ Actor·Critic 모두 원시 `policy57 + obstacles40` = **97D**, 임베딩 결합
 
 ## 근거와 확인 범위
 
-[Env Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter/env_cfg.py) · [배치](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter/layout.py) · [관측](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter/observations_cfg.py) · [보상](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter/rewards_cfg.py) · [다중 물체 MDP](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter/mdp.py) · [개발 이력](../logs/2026-10-20_contact_sweep_clutter.md)
+[Env Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_envs.py) · [배치](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/scenes/contact_sweep_clutter_layout.py) · [관측](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observations/contact_sweep_clutter.py) · [보상](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/rewards/contact_sweep_clutter.py) · [다중 물체 MDP](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/contact_sweep_clutter.py) · [개발 이력](../logs/2026-10-20_contact_sweep_clutter.md)
 
 물성·encoder·실행의 상세는 기존 [Contact/Clutter 비교](CONTACT_SWEEP_ENVIRONMENTS.md), 후속 Blind Actor·접촉 보상은 [Clutter v1](CONTACT_SWEEP_CLUTTER_V1_MDP.md)을 참조한다.
 

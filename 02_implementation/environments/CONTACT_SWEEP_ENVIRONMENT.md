@@ -54,7 +54,7 @@ Actor와 Critic은 같은 **57D**를 받는다. 타겟·목표 위치와 EEF pos
 
 일반 항의 실제 step 기여는 `weight × 반환값 × 0.02초`다. `reaching`·`goal_distance`는 함수 내부에서 dt를 상쇄하므로 `weight × 새 최선 거리 개선량(m)`으로 기여한다. 후퇴 후 이전 기록으로 복귀하는 행동에는 진행 보상이 반복되지 않는다.
 
-네 Arm/Hand 운동 비용은 로컬 `mdp/goal_rewards.py`의 raw 변화량·실제 속도 제곱합을 사용하고 각 출력만 100으로 제한한다. 평균·정규화 또는 Hand 제어 clamp 이후 값을 쓰지 않는다.
+네 Arm/Hand 운동 비용은 로컬 `mdp/reward_functions/goal_rewards.py`의 raw 변화량·실제 속도 제곱합을 사용하고 각 출력만 100으로 제한한다. 평균·정규화 또는 Hand 제어 clamp 이후 값을 쓰지 않는다.
 
 Goal weight 94는 과거 진행 보상 로그에서 접근:목표 기여를 약 3:4로 맞춘 값이다. 그 비중은 새 정책에서 보장되지 않는다. goal-hold·성공 보너스·촉각 접촉 보상은 없다.
 
@@ -80,7 +80,7 @@ Goal weight 94는 과거 진행 보상 로그에서 접근:목표 기여를 약 
 
 ## 근거와 확인 범위
 
-[등록](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py) · [Env Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep/env_cfg.py) · [관측](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep/observations_cfg.py) · [보상](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep/rewards_cfg.py) · [종료](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep/terminations_cfg.py) · [개발 이력](../logs/2026-10-20_contact_sweep_reference.md)
+[등록](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py) · [Env Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_envs.py) · [관측](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observations/contact_sweep.py) · [보상](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/rewards/contact_sweep.py) · [종료](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/terminations/contact_sweep.py) · [개발 이력](../logs/2026-10-20_contact_sweep_reference.md)
 
 더 긴 물성·실행 설명은 기존 [Contact/Clutter 비교](CONTACT_SWEEP_ENVIRONMENTS.md)를 참조한다. 후속 환경은 [Clutter v0](CONTACT_SWEEP_CLUTTER_ENVIRONMENT.md)다.
 

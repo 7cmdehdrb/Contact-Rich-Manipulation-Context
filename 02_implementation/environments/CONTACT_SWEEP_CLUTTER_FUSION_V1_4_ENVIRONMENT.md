@@ -6,9 +6,9 @@
 
 ## 상속과 구성
 
-[EnvCfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_v1_4/env_cfg.py)의 `ContactSweepClutterFusionV1_4EnvCfg`는 [v1_0](CONTACT_SWEEP_CLUTTER_FUSION_V1_0_ENVIRONMENT.md)을 직접 상속한다. Reward·Termination·Curriculum CFG도 각각 v1_0의 해당 CFG를 상속하고 변경 항만 교체한다. v1_1–v1_3 계열의 선형 보간·접촉 fade 설정을 계승하지 않는다.
+[EnvCfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_fusion_envs.py)의 `ContactSweepClutterFusionV1_4EnvCfg`는 [v1_0](CONTACT_SWEEP_CLUTTER_FUSION_V1_0_ENVIRONMENT.md)을 직접 상속한다. Reward·Termination·Curriculum CFG도 각각 v1_0의 해당 CFG를 상속하고 변경 항만 교체한다. v1_1–v1_3 계열의 선형 보간·접촉 fade 설정을 계승하지 않는다.
 
-Runtime은 공용 `ContactSweepClutterFusionV1_0Env`, runner는 `CurriculumOnPolicyRunner`다. [PPO 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_v1_4/ppo_cfg.py)은 `ContactSweepClutterFusionV1_0PPORunnerCfg`를 직접 상속하며 experiment 이름만 `inspire_contact_sweep_clutter_fusion_v1_4`로 분리한다.
+Runtime은 공용 `ContactSweepClutterFusionV1_0Env`, runner는 `CurriculumOnPolicyRunner`다. [PPO 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/agent/contact_sweep_clutter_fusion_ppo_cfg.py)은 `ContactSweepClutterFusionV1_0PPORunnerCfg`를 직접 상속하며 experiment 이름만 `inspire_contact_sweep_clutter_fusion_v1_4`로 분리한다.
 
 | 계약 | 최종 구성 |
 | --- | --- |
@@ -20,17 +20,17 @@ Runtime은 공용 `ContactSweepClutterFusionV1_0Env`, runner는 `CurriculumOnPol
 
 ## v1_0에서 바뀐 보상과 종료
 
-[보상 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_v1_4/rewards_cfg.py)은 Goal hold 가중치를 0.9→9.0, Hand contact를 0.29→1.45로 높인다. Goal 반경이 0이면 전용 `scheduled_goal_hold_xy`가 0을 반환하여 목표 체류 보상과 성공 판정을 비활성화한다. 양수이면 기존 월드 XY 거리 판정을 사용한다.
+[보상 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/rewards/contact_sweep_clutter_fusion.py)은 Goal hold 가중치를 0.9→9.0, Hand contact를 0.29→1.45로 높인다. Goal 반경이 0이면 전용 `scheduled_goal_hold_xy`가 0을 반환하여 목표 체류 보상과 성공 판정을 비활성화한다. 양수이면 기존 월드 XY 거리 판정을 사용한다.
 
 나머지 보상은 v1_0에서 상속한다. Reaching 30, Goal distance 100, Object −30, Shelf collision −0.5, Pushing speed −5, Arm speed excess −1, Shelf failure −3, EEF linear speed −1, Obstacle contact −1, Object acceleration −1, Wrench change −0.1을 유지한다. EEF orientation은 비활성이다. Hand contact fade width는 0, 장애물 접촉 free force는 2000 N이다. Wrench 비용의 입력은 힘·모멘트 **크기의 변화량**이며 절대 wrench 크기나 변화율로 바뀌지 않는다.
 
-운동 페널티는 로컬 `mdp/goal_rewards.py`의 raw Action 변화량·실제 관절 속도 제곱합을 사용한다. Arm Action/Velocity −0.03/−0.03, Hand Action/Velocity −0.03/−0.01을 유지하며 각 비용 출력 상한은 100이다. 평균·정규화·보상 입력 Hand clamp를 추가하지 않는다.
+운동 페널티는 로컬 `mdp/reward_functions/goal_rewards.py`의 raw Action 변화량·실제 관절 속도 제곱합을 사용한다. Arm Action/Velocity −0.03/−0.03, Hand Action/Velocity −0.03/−0.01을 유지하며 각 비용 출력 상한은 100이다. 평균·정규화·보상 입력 Hand clamp를 추가하지 않는다.
 
-[종료 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_v1_4/terminations_cfg.py)의 `push_fast`는 0.8→1.0 m/s다. 부모 `__post_init__` 적용 후 v1_4에서 다시 1.0을 지정한다. [GoalHoldSuccess](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_v1_4/mdp.py)는 실행 시점의 Goal hold 반경을 읽어 연속 150 제어 step을 검사한다. 목표 이탈·실패·해당 환경 reset 시 카운터를 초기화한다. `object_drop`, `push_fast`, `shelf_collision`, `hand_velocity`, `shelf_displacement`가 같은 step에 발생하면 성공을 억제한다. 성공은 timeout이 아닌 일반 termination이며 별도 속도·자세 성공 조건은 없다. 이는 GT 기반 학습 종료이며 실물 Blind 종료 검증과 구분한다.
+[종료 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/terminations/contact_sweep_clutter_fusion.py)의 `push_fast`는 0.8→1.0 m/s다. 부모 `__post_init__` 적용 후 v1_4에서 다시 1.0을 지정한다. [GoalHoldSuccess](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/termination_functions/contact_sweep_clutter_fusion.py)는 실행 시점의 Goal hold 반경을 읽어 연속 150 제어 step을 검사한다. 목표 이탈·실패·해당 환경 reset 시 카운터를 초기화한다. `object_drop`, `push_fast`, `shelf_collision`, `hand_velocity`, `shelf_displacement`가 같은 step에 발생하면 성공을 억제한다. 성공은 timeout이 아닌 일반 termination이며 별도 속도·자세 성공 조건은 없다. 이는 GT 기반 학습 종료이며 실물 Blind 종료 검증과 구분한다.
 
 ## 커리큘럼
 
-[CurriculumCfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_v1_4/curriculum_cfg.py)의 일정은 절대 learning iteration 기준이다. [staged_reward_threshold](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_v1_4/curriculum.py)는 ramp를 250 iteration 간격으로 표본화하고 사이 값은 유지한다. 250 격자에 맞지 않는 종료점도 지정 iteration에서 정확히 적용한다.
+[CurriculumCfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/curricula/contact_sweep_clutter_fusion.py)의 일정은 절대 learning iteration 기준이다. [staged_reward_threshold](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/curriculum_functions/contact_sweep_clutter_fusion_quantized_ramps.py)는 ramp를 250 iteration 간격으로 표본화하고 사이 값은 유지한다. 250 격자에 맞지 않는 종료점도 지정 iteration에서 정확히 적용한다.
 
 | 항목 | 일정 |
 | --- | --- |

@@ -10,7 +10,7 @@
 
 사용자는 기존 텍타일 환경을 상속해 안정된 목표 도달의 큰 일회성 보상과 목표 위치에 연속해서 머물수록 증가하는 보상을 추가하도록 요청했다. 새 속도·지나간 위치 오차 비용은 추가하지 않는다. 이전 대화에서 배제한 액션 clipping도 도입하지 않았다.
 
-새 task는 `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v2`, runtime은 공통 `InspireSweepEnv`, Cfg는 `InspireDexTactileSweepOmniRenewalV2EnvCfg(InspireDexTactileSweepOmniRenewalEnvCfg)`다. v0를 직접 상속하며 v1의 비용 상한·손목 높이·방향 제한을 적용하지 않는다. 파일은 [v2 Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/dex_tactile_omni_renewal_v2_env_cfg.py)다. Runner는 `InspireDexTactileSweepOmniRenewalV2PPORunnerCfg`로 기존 Dex Tactile runner를 상속하며 experiment 이름만 `inspire_dex_tactile_sweep_omni_renewal_v2`로 분리한다.
+새 task는 `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v2`, runtime은 공통 `InspireSweepEnv`, Cfg는 `InspireDexTactileSweepOmniRenewalV2EnvCfg(InspireDexTactileSweepOmniRenewalEnvCfg)`다. v0를 직접 상속하며 v1의 비용 상한·손목 높이·방향 제한을 적용하지 않는다. 파일은 [v2 Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py)다. Runner는 `InspireDexTactileSweepOmniRenewalV2PPORunnerCfg`로 기존 Dex Tactile runner를 상속하며 experiment 이름만 `inspire_dex_tactile_sweep_omni_renewal_v2`로 분리한다.
 
 상속으로 유지되는 계약은 현재 물체 GT를 포함한 Actor/Critic 동일 57D 관측, 촉각 17채널·0.01 N, 손목 F/T, Arm Joint Position 6D+Hand 2D, 기존 action scale, 0.02초 제어 주기, 장면·물성·전방향 목표·reset·10초 timeout과 기존 보상/실패 종료다. 네 필수 raw Action·실제 관절 속도 제곱합 비용의 callable·그룹·계수를 유지한다. 새 속도 입력을 actor에 추가하지 않으며 최종 Blind actor나 실물 성공 판정을 구현한 것은 아니다.
 

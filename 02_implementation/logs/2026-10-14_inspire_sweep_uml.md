@@ -15,7 +15,7 @@
 
 ## 확인한 코드 관계
 
-Task 등록은 [`__init__.py`](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py), 환경 생성과 runner 연결은 [`scripts/train.py`](../../../../src/inspire_sweep_baseline/scripts/train.py)를 읽었다. 실행 클래스 [`InspireSweepEnv`](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/env.py)는 `ManagerBasedRLEnv`를 상속하며 네 task가 이를 공유한다.
+Task 등록은 [`__init__.py`](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py), 환경 생성과 runner 연결은 [`scripts/train.py`](../../../../src/inspire_sweep_baseline/scripts/train.py)를 읽었다. 실행 클래스 [`InspireSweepEnv`](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/runtime/sweep.py)는 `ManagerBasedRLEnv`를 상속하며 네 task가 이를 공유한다.
 
 Cfg 상속은 다음과 같다.
 

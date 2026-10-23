@@ -89,7 +89,7 @@ XY 이탈 종료 제거 후에도 물체 낙하·기울기와 선반 충돌 종�
 
 ## 근거와 연결
 
-- [Omni v4 설정·상속](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/omni_env_cfg.py), [Reaching·속도 비용](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/goal_rewards.py)
+- [Omni v4 설정·상속](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_envs.py), [Reaching·속도 비용](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/goal_rewards.py)
 - [v4 속도 비용 도입](../logs/2026-10-15_omni_v4_speed_penalty.md), [Arm 추가 비용](../logs/2026-10-15_omni_v4_arm_speed_excess.md), [저장 run 기준값 반영](../logs/2026-10-15_omni_v4_saved_parameters.md)
 - [공통 제곱 비용 상한](../logs/2026-10-18_omni_squared_cost_caps.md), [부모 v3 상세 문서](SWEEP_OMNI_V3_ENVIRONMENT.md)
 

@@ -20,7 +20,7 @@ RED는 장애물 중심의 배치 금지 영역이다. 기존 경로·전면 확
 
 Task는 **`Isaac-Inspire-Contact-Sweep-Clutter-v0`**다. 상속 관계는 `ContactSweepClutterEnvCfg(ContactSweepEnvCfg)` 및 `ContactSweepClutterEnv(ContactSweepEnv)` 그대로다. 관측 40D→MLP 16D→기존 57D와 결합하는 73D 모델과 Action 8D를 유지한다. 기존 보상 계수·물성·물리적 관절 제한·타겟과 목표 분포·초기 관측 노이즈는 유지한다. 전체 물체 tilt 합과 any-drop은 실제 4개 물체에 적용한다.
 
-[`layout.py`](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter/layout.py)의 `DEFAULT_LAYOUT_CONFIG`에 값을 모으고 Scene과 reset이 그 장애물 수를 참조하도록 수정했다. 촉각 필터는 타겟 포함 4개다. 원본 `src/scene_randomization`의 기본값 6개·RED 여유 0.3 cm는 수정하지 않았다.
+[`layout.py`](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/scenes/contact_sweep_clutter_layout.py)의 `DEFAULT_LAYOUT_CONFIG`에 값을 모으고 Scene과 reset이 그 장애물 수를 참조하도록 수정했다. 촉각 필터는 타겟 포함 4개다. 원본 `src/scene_randomization`의 기본값 6개·RED 여유 0.3 cm는 수정하지 않았다.
 
 작업 기준 workspace HEAD는 `457c3674c1993daaec8b8062f64f5d368bc7dcd6`, 문서 HEAD는 `e8aba3abbb6a321fdbae0ddc137d1ffee3ff59a4`다. 앞선 Clutter 구현의 미커밋 변경 위에서 수정했으며 사용자 작업과 독립 기준 환경·Renewal v3는 보존했다. commit·원격 반영은 수행하지 않았다.
 

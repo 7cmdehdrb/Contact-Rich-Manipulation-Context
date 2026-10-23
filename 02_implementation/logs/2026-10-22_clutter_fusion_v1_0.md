@@ -20,7 +20,7 @@ Workspace `main`의 기준 HEAD는 `a2fcb0b77a234a14db8b6fc9c91cfef4c4229092`, �
 | Experiment | `inspire_contact_sweep_clutter_fusion_v1_0` |
 | 새 독립 Manager CFG | `ContactSweepClutterFusionV1_0RewardsCfg`, `TerminationsCfg`, `CurriculumCfg`: 다른 task CFG를 상속하지 않음 |
 | Scene | Fusion SceneCfg를 상속하고 손 전체·물체별 필터 ContactSensor 추가 |
-| 소스 | [`contact_sweep_clutter_fusion_v1_0/`](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_v1_0) |
+| 소스 | [`contact_sweep_clutter_fusion_v1_0/`](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_fusion_envs.py) |
 
 관측은 policy55D + 초기 obstacles40D, critic 전용 현재 타겟3D, obstacle encoder16D를 유지한다. 기존 17D tactile 관측과 보정 F/T 관측 함수·노이즈는 변경하지 않는다. 새 접촉 ID와 물체 가속도는 보상 계산에만 사용하며 Actor 입력을 늘리지 않는다. Arm6 + Hand2 Action, Joint Position 제어, 50 Hz 제어·100 Hz 물리, 10초 timeout, 물성·초기 배치도 유지한다. 초기 목표 제외각만 reset 전부터 30°로 지정한다.
 

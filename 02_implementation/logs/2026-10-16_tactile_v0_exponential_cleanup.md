@@ -8,7 +8,7 @@
 
 사용자는 남은 일반 Tactile v0의 제곱 비용도 exp로 변경하고 중복된 두 Tactile v1 환경을 삭제하도록 요청했다.
 
-[촉각 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/tactile_omni_renewal_env_cfg.py)의 `InspireTactileSweepOmniRenewalEnvCfg`에 `rewards: ExponentialSpeedRewardsCfg`를 지정했다. Dex 촉각 v0는 이미 Dex 부모에서 같은 설정을 상속한다. 현재 네 환경은 모두 같은 지수 속도 비용을 사용한다.
+[촉각 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py)의 `InspireTactileSweepOmniRenewalEnvCfg`에 `rewards: ExponentialSpeedRewardsCfg`를 지정했다. Dex 촉각 v0는 이미 Dex 부모에서 같은 설정을 상속한다. 현재 네 환경은 모두 같은 지수 속도 비용을 사용한다.
 
 | Gym ID | exp 비용 적용 경로 |
 | --- | --- |

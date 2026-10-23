@@ -56,4 +56,4 @@ Workspace 루트, Linux:
 
 Windows PowerShell에서는 `.\IsaacLab\isaaclab.bat -p .\src\inspire_sweep_baseline\scripts\train.py`와 같은 task/인수를 사용한다. 256환경은 실행 예시이며 해당 규모 처리량을 검증한 수치가 아니다.
 
-[환경 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_holding_osc_object_random_v1/env_cfg.py) · [PPO 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_holding_osc_object_random_v1/ppo_cfg.py) · [실제 검증·미검증 범위](../logs/2026-10-23_fusion_holding_v1.md). 기존 v0의 물체 안정화 시험은 당시 조건의 결과이며 새 v1 장기 학습·실물 성능을 입증하지 않는다.
+[환경 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_fusion_holding_osc_object_random_envs.py) · [PPO 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/agent/contact_sweep_clutter_fusion_holding_osc_object_random_ppo_cfg.py) · [실제 검증·미검증 범위](../logs/2026-10-23_fusion_holding_v1.md). 기존 v0의 물체 안정화 시험은 당시 조건의 결과이며 새 v1 장기 학습·실물 성능을 입증하지 않는다.

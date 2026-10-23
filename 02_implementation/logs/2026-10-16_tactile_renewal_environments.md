@@ -13,7 +13,7 @@
 | `Isaac-Inspire-Tactile-Sweep-Omni-Renewal-v0` | `InspireTactileSweepOmniRenewalEnvCfg(InspireSweepOmniRenewalEnvCfg)` | `InspireTactileSweepOmniRenewalPPORunnerCfg` |
 | `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v0` | `InspireDexTactileSweepOmniRenewalEnvCfg(InspireDexSweepOmniRenewalEnvCfg)` | `InspireDexTactileSweepOmniRenewalPPORunnerCfg` |
 
-실행 클래스는 양쪽 모두 `InspireSweepEnv(ManagerBasedRLEnv)`다. [새 Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/tactile_omni_renewal_env_cfg.py)는 기존 `TactileSweepSceneCfg`와 `ProjectedTactileContactBits`를 재사용하고 임계값만 0.01 N으로 설정한다. 부모 Renewal·Dex Renewal·OSC Cfg와 기존 Baseline Tactile, 원본 로봇 USD는 수정하지 않았다. 새 Cfg가 각 부모의 최신 보상·종료·물성 적용을 그대로 상속한다. EEF 및 목표 디버그 표시도 부모 설정을 유지한다.
+실행 클래스는 양쪽 모두 `InspireSweepEnv(ManagerBasedRLEnv)`다. [새 Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py)는 기존 `TactileSweepSceneCfg`와 `ProjectedTactileContactBits`를 재사용하고 임계값만 0.01 N으로 설정한다. 부모 Renewal·Dex Renewal·OSC Cfg와 기존 Baseline Tactile, 원본 로봇 USD는 수정하지 않았다. 새 Cfg가 각 부모의 최신 보상·종료·물성 적용을 그대로 상속한다. EEF 및 목표 디버그 표시도 부모 설정을 유지한다.
 
 ## 센서와 관측 계약
 

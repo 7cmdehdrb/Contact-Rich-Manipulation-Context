@@ -1,12 +1,16 @@
 # 활성 패키지와 환경 구현 현황
 
-등록된 Inspire Sweep 29개 환경의 전체 변화 흐름과 개별 문서는 [환경 계층·변경 의도](environments/ENVIRONMENT_EVOLUTION.md)에서 찾는다. 2026-10-22 코드 대조로 확인한 과거 문서와의 수치 차이도 그 문서에 정리했다.
+등록된 Inspire Sweep 환경의 전체 변화 흐름과 개별 문서는 [환경 계층·변경 의도](environments/ENVIRONMENT_EVOLUTION.md)에서 찾는다. 2026-10-22 코드 대조로 확인한 과거 문서와의 수치 차이도 그 문서에 정리했다. 2026-10-23 구조 이관 전 실제 등록·설정 스냅샷에서는45개 task를 확인했다.
+
+2026-10-23 파일 배치: EnvCfg는 `envs/`, PPO Cfg·모델·runner는 `agent/`, SceneCfg는 `assets/scenes/`, 실제 환경 클래스는 `runtime/`에서 관리한다. MDP는 역할별 Cfg와 `*_functions`를 분리하고 같은 계열의 버전을 같은 파일에 모은다. [환경 파일 구조 지침](../00_guidelines/12_ENVIRONMENT_FILE_STRUCTURE.md)과 [이관 검증 상태·복구 기준](logs/2026-10-23_environment_structure_migration.md)을 따른다. 이관은 task ID·환경 계약을 바꾸지 않는 구조 변경이다.
+
+2026-10-23 재검증:45개 환경의 초기 단계 GPU reset/step·PPO 저장/복원은 통과했다. 다만 Holding OSC ObjectRandom v1과 Holding ObjectRandom Test v0는 seed42·4 environments·iteration22500의16개 장애물 reset에서 배치200회 실패가 발생하며, 이관 전 원본에서도 동일하게 재현했다. [조건·오류·검증 한계](logs/2026-10-23_environment_structure_migration.md#기존-오류-objectrandom의16개-장애물-reset)를 확인한다. 배치 규칙은 변경하지 않았다.
 
 [문서 안내](../01_plan/README.md) · [Workspace 구성](../00_guidelines/10_WORKSPACE_GUIDE.md) · [개발 지침](../00_guidelines/09_DEVELOPMENT_GUIDE.md) · [과거 코드·장비 기록](07_CODE_AND_HARDWARE_STATUS.md)
 
 기준일: **2026-10-15**. 이 문서는 현재 Workspace의 활성 코드를 읽어 확인한 구성, 상속 관계와 실행 방법을 기록한다. 과거 구현 보고나 발표 설계와 실제 코드가 다르면 이 문서의 코드 근거를 함께 확인한다. 코드가 존재한다는 사실, CPU 테스트 통과, 학습 성능, 실물 검증은 각각 별개의 확인 수준이다.
 
-2026-10-18 공통 갱신: Omni 계열의 `goal_rewards.action_rate_l2`·`joint_vel_l2`는 raw 제곱합을 계산한 뒤 기본 `max_cost=100.0`으로 **함수 출력**을 제한한다. v2·OSC v2를 포함한 해당 함수를 참조하는 모든 파생 환경에 적용된다. 반환은 [0, 100], 기존 음의 가중치·dt는 이후 적용되며 입력·그룹·가중치는 유지한다. `mdp/rewards.py`의 별도 Baseline 동명 함수는 이번 변경 범위가 아니다. [검증 로그](logs/2026-10-18_omni_squared_cost_caps.md).
+2026-10-18 공통 갱신: Omni 계열의 `goal_rewards.action_rate_l2`·`joint_vel_l2`는 raw 제곱합을 계산한 뒤 기본 `max_cost=100.0`으로 **함수 출력**을 제한한다. v2·OSC v2를 포함한 해당 함수를 참조하는 모든 파생 환경에 적용된다. 반환은 [0, 100], 기존 음의 가중치·dt는 이후 적용되며 입력·그룹·가중치는 유지한다. `mdp/reward_functions/sweep.py`의 별도 Baseline 동명 함수는 이번 변경 범위가 아니다. [검증 로그](logs/2026-10-18_omni_squared_cost_caps.md).
 
 [학습 실행 UML](../03_assets/inspire-sweep-training.html)은 환경 생성부터 Isaac Lab step과 PPO 업데이트까지를, [환경 상속 UML](../03_assets/inspire-sweep-inheritance.html)은 네 Cfg의 상속과 공유 물성·MDP term 연결을 보여준다. HTML 파일은 브라우저에서 열며, 표와 코드 링크에서 정확한 설정·함수 이름을 확인할 수 있다.
 
@@ -23,7 +27,7 @@
 
 ## 2. RL 환경 등록과 상속 구조
 
-등록 근거는 [`inspire_sweep_baseline/__init__.py`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py)다. 기존 task의 실행 클래스는 [`InspireSweepEnv`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/env.py)이며 `ManagerBasedRLEnv`를 상속한다. 2026-10-20 추가한 독립 기준 Contact Sweep은 별도의 `ContactSweepEnv`와 Manager별 Cfg를 사용한다. 환경별 차이는 등록된 Cfg와 PPO 설정에서 결정한다.
+등록 근거는 [`inspire_sweep_baseline/__init__.py`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py)다. 기존 task의 실행 클래스는 [`InspireSweepEnv`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/runtime/sweep.py)이며 `ManagerBasedRLEnv`를 상속한다. 2026-10-20 추가한 독립 기준 Contact Sweep은 별도의 `ContactSweepEnv`와 Manager별 Cfg를 사용한다. 환경별 차이는 등록된 Cfg와 PPO 설정에서 결정한다.
 
 2026-10-19 후속 요청으로 아래 종료 진단 블록은 전체 주석 처리했다. 현재 v1·v2·OSC를 포함한 모든 환경에서 종료 진단 print가 비활성화되어 있다.
 
@@ -94,15 +98,17 @@ PPO 상속은 `RslRlOnPolicyRunnerCfg → InspireSweepPPORunnerCfg → InspireSw
 
 | 구성 | 책임 | 주요 구현 |
 | --- | --- | --- |
-| Scene | 로봇·선반·실린더, EEF·가상 finger/wrist frame, 손바닥 ContactSensor 구성 | [`env_cfg.py`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/env_cfg.py), `assets/` |
-| Action Manager | Arm 6개 관절 위치 명령, Hand 굽힘·엄지 opposition 2개 입력의 관절 매핑 | `ActionsCfg`, [`mdp/actions.py`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/actions.py) |
-| Observation Manager | 관측 순서·노이즈, 초기 물체 위치 캐시, critic의 privileged 관측 | `ObservationsCfg`, [`mdp/asymmetric_observations.py`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/asymmetric_observations.py) |
-| Command Manager | 리셋된 물체 상태를 저장하고 에피소드 동안 고정된 목표 위치·자세 유지 | [`mdp/commands.py`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/commands.py) |
-| Event Manager | 기본 Scene 리셋, 물체·목표 샘플링, startup 물성 버퍼 준비와 에피소드 물성 변경 | `mdp/events.py`, `mdp/goal_events.py`, `mdp/realistic_physics.py` |
-| Reward Manager | 보상 term에 가중치와 제어 주기 적용, 상태를 갖는 접근·목표 진척 계산 | `mdp/rewards.py`, `mdp/goal_rewards.py`, `mdp/dex_rewards.py` |
-| Termination Manager | 시간 제한, 실패, Omni의 안정된 목표 도달 및 유지 시간 검사 | `mdp/terminations.py`, `mdp/goal_terminations.py` |
-| 환경 실행 클래스 | Manager가 사용할 target·sensor 상태 준비, 리셋된 센서값 무효화, Hand action 이력을 OPEN으로 초기화 | `InspireSweepEnv` |
-| PPO runner·스크립트 | task 등록과 Cfg 로딩, CLI override, rollout·체크포인트·영상 기록 | `agents/`, [`scripts/train.py`](../../../src/inspire_sweep_baseline/scripts/train.py), [`scripts/play.py`](../../../src/inspire_sweep_baseline/scripts/play.py) |
+| Scene | 로봇·선반·실린더, EEF·가상 finger/wrist frame, 손바닥 ContactSensor 구성 | [`assets/scenes/sweep.py`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/scenes/sweep.py), `assets/` |
+| Action Manager | Arm 6개 관절 위치 명령, Hand 굽힘·엄지 opposition 2개 입력의 관절 매핑 | `mdp/actions/sweep.py`, [`mdp/action_functions/hand_openness.py`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/action_functions/hand_openness.py) |
+| Observation Manager | 관측 순서·노이즈, 초기 물체 위치 캐시, critic의 privileged 관측 | `mdp/observations/sweep.py`, [`mdp/observation_functions/asymmetric_observations.py`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observation_functions/asymmetric_observations.py) |
+| Command Manager | 리셋된 물체 상태를 저장하고 에피소드 동안 고정된 목표 위치·자세 유지 | `mdp/commands/sweep.py`, [`mdp/command_functions/sweep_goal.py`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/command_functions/sweep_goal.py) |
+| Event Manager | 기본 Scene 리셋, 물체·목표 샘플링, startup 물성 버퍼 준비와 에피소드 물성 변경 | `mdp/events/`, `mdp/event_functions/sweep.py`, `goal_events.py`, `realistic_physics.py` |
+| Reward Manager | 보상 term에 가중치와 제어 주기 적용, 상태를 갖는 접근·목표 진척 계산 | `mdp/rewards/`, `mdp/reward_functions/sweep.py`, `goal_rewards.py`, `dex_rewards.py` |
+| Termination Manager | 시간 제한, 실패, Omni의 안정된 목표 도달 및 유지 시간 검사 | `mdp/terminations/`, `mdp/termination_functions/sweep.py`, `goal_terminations.py` |
+| Curriculum Manager | 학습 iteration에 따른 기존 보상·목표·물체 개수 일정 | `mdp/curricula/`, `mdp/curriculum_functions/` |
+| EnvCfg | 기존 부모 설정을 상속하고 Scene·Manager를 조합 | `envs/` |
+| 환경 실행 클래스 | Manager가 사용할 target·sensor 상태 준비, 리셋된 센서값 무효화, Hand action 이력을 OPEN으로 초기화 | `runtime/sweep.py`의 `InspireSweepEnv`, Contact 계열의 `runtime/` 구현 |
+| PPO runner·스크립트 | task 등록과 Cfg 로딩, CLI override, rollout·체크포인트·영상 기록 | `agent/`, [`scripts/train.py`](../../../src/inspire_sweep_baseline/scripts/train.py), [`scripts/play.py`](../../../src/inspire_sweep_baseline/scripts/play.py) |
 
 물리 주기는 0.01초, decimation은 2, 정책 제어 주기는 0.02초(50 Hz), 최대 에피소드는 10초다. 파생 환경 모두 Baseline의 이 설정을 사용한다.
 
@@ -131,13 +137,13 @@ Baseline·Realistic Physics·Omni의 actor는 실행 중 물체 GT 위치를 받
 
 ### 2.3 파생 환경의 중요한 동작
 
-Realistic Physics의 물체 질량은 평균 0.365 kg, 표준편차 0.0675 kg의 Gaussian을 0.230–0.500 kg로 제한한다. 선반·물체·Hand의 정적/동적 마찰은 역할별 유한 재질 풀에서 리셋마다 샘플링한다. 질량과 마찰 정답을 actor 관측에 추가하지 않는다. Arm 및 Axia80 하우징의 마찰과 기존 restitution은 유지한다. 근거는 [`realistic_physics_env_cfg.py`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/realistic_physics_env_cfg.py)와 [`mdp/realistic_physics.py`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/realistic_physics.py)다.
+Realistic Physics의 물체 질량은 평균 0.365 kg, 표준편차 0.0675 kg의 Gaussian을 0.230–0.500 kg로 제한한다. 선반·물체·Hand의 정적/동적 마찰은 역할별 유한 재질 풀에서 리셋마다 샘플링한다. 질량과 마찰 정답을 actor 관측에 추가하지 않는다. Arm 및 Axia80 하우징의 마찰과 기존 restitution은 유지한다. 근거는 [`envs/sweep_envs.py`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_envs.py)와 [`mdp/common/realistic_physics.py`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/realistic_physics.py)다.
 
 Omni 계열은 선반 중앙의 반지름 2 cm 원판에서 물체를 스폰하고 임의 수평 방향으로 최대 15 cm 목표를 정한다. 가장자리 여유가 부족하면 목표 이동 거리를 줄인다. Omni v0/v1은 목표 오차 1 cm 미만, 평면 속도 2 cm/s 미만, 기울기 10° 이하, 기하학적으로 추정한 상판 지지 및 실패 없음이 0.3초 연속 유지되면 성공으로 종료한다. v2와 Dex Omni는 `terminations.success=None`으로 이 성공 종료를 사용하지 않는다. Homing을 요구하지 않는다. v0/v1의 보상·실패 임계값과 각 항의 단위는 [Omni 환경 상세](environments/OMNI_ENVIRONMENT.md)에, 그 설계 제안은 [보상 초안](../01_plan/environments/OMNI_REWARD_PLAN.md)에 보존한다.
 
-Omni v2의 접근·목표 보상은 각각 초기 유효 거리로 정규화한 최소 기록 개선량에 +30/+40을 곱한다. 접근은 현재 물체 바닥 원점과 EEF의 XYZ 거리에서 10 cm를, 목표는 물체–목표 XY 거리에서 1 cm를 뺀 양의 부분을 사용한다. 시간·성공·실패 보상은 `None`이며, 실패·시간 제한 종료는 v1과 같다. 근거는 [`omni_env_cfg.py`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/omni_env_cfg.py)다.
+Omni v2의 접근·목표 보상은 각각 초기 유효 거리로 정규화한 최소 기록 개선량에 +30/+40을 곱한다. 접근은 현재 물체 바닥 원점과 EEF의 XYZ 거리에서 10 cm를, 목표는 물체–목표 XY 거리에서 1 cm를 뺀 양의 부분을 사용한다. 시간·성공·실패 보상은 `None`이며, 실패·시간 제한 종료는 v1과 같다. 근거는 [`envs/sweep_omni_envs.py`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_envs.py)다.
 
-Dex Omni의 [`dex_omni_env_cfg.py`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/dex_omni_env_cfg.py)는 같은 거리 정의에 `DexReachProgress`(+30 reward/m)와 `DexPlanarGoalProgress`(+300 reward/m)를 적용한다. 각 step에서 `max(직전 최소 거리 − 현재 거리, 0)`을 지급하고 기록을 갱신하며, 초기 거리로 정규화하지 않는다. 함수 내부의 `/step_dt`는 RewardManager의 시간 곱셈을 상쇄한다. 따라서 대기·후퇴·기존 최소 거리 복귀에는 추가 보상이 없고, 새로 1 cm를 줄이면 접근 +0.3 또는 목표 이동 +3을 받는다. 기록은 환경별 리셋 시 초기화한다.
+Dex Omni의 [`envs/sweep_omni_envs.py`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_envs.py)는 같은 거리 정의에 `DexReachProgress`(+30 reward/m)와 `DexPlanarGoalProgress`(+300 reward/m)를 적용한다. 각 step에서 `max(직전 최소 거리 − 현재 거리, 0)`을 지급하고 기록을 갱신하며, 초기 거리로 정규화하지 않는다. 함수 내부의 `/step_dt`는 RewardManager의 시간 곱셈을 상쇄한다. 따라서 대기·후퇴·기존 최소 거리 복귀에는 추가 보상이 없고, 새로 1 cm를 줄이면 접근 +0.3 또는 목표 이동 +3을 받는다. 기록은 환경별 리셋 시 초기화한다.
 
 DexTouch IV-B 식 (1)과 식 (2)의 목표 거리 항(PDF 4쪽, 인쇄 페이지 10775)에서 과거 최고 상태 갱신에만 보상하는 원칙을 가져왔다. 논문의 손가락별 거리 합은 기존 고정 EEF의 접근 거리로 대체하고, grasp·lift·rotation 태스크와 L1 관절 속도 비용은 도입하지 않는다. **30/300은 논문 계수가 아닌 Sweeping 실험 기본값**이다. 원문 대응·검증·미실행 항목은 [Dex Omni 개발 로그](logs/2026-10-15_dex_omni_rewards.md)를 따른다.
 
@@ -307,7 +313,7 @@ USD 검사에는 `pxr`를 제공하는 Python이 필요하다. 기본 탐색 경
 
 두 환경의 상세 계약은 [Contact Sweep와 Clutter 통합 설명](environments/CONTACT_SWEEP_ENVIRONMENTS.md)을 따른다.
 
-사용자가 Renewal v3를 새 기준점으로 정리하도록 요청했다. 새 [contact_sweep/](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep) 디렉터리에 Observation, Action, Command, Event, Reward, Termination, Scene, Env, PPO 클래스를 직접 선언한다. 기존 환경 Cfg·runtime·PPO를 상속하지 않으며 기존 v3는 유지한다. 자산·관절 mapping·MDP 함수는 공통 유틸리티로 재사용한다.
+사용자가 Renewal v3를 새 기준점으로 정리하도록 요청했다. 새 [contact_sweep/](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_envs.py) 디렉터리에 Observation, Action, Command, Event, Reward, Termination, Scene, Env, PPO 클래스를 직접 선언한다. 기존 환경 Cfg·runtime·PPO를 상속하지 않으며 기존 v3는 유지한다. 자산·관절 mapping·MDP 함수는 공통 유틸리티로 재사용한다.
 
 ```mermaid
 flowchart LR
@@ -370,7 +376,7 @@ Actor/Critic 모두 기존 policy 57D와 장애물 초기 위치 40D를 받는�
 
 2026-10-20 후속 수정: `shelf_collision` 실패의 마지막 step에 `shelf_failure` 비용 **−3을 한 번** 추가한다. 현재 실패 판정값을 사용해 reset 전에 보상에 반영하고, 시간 배율을 상쇄하여 실제 차감액을 −3으로 유지한다. Timeout이나 다른 실패만으로는 부과하지 않는다. 이 보상은 v1을 상속하는 v2에도 적용된다. [변경·검증 기록](logs/2026-10-20_clutter_v1_shelf_failure.md).
 
-사용자 요청으로 `Isaac-Inspire-Contact-Sweep-Clutter-v0`를 직접 상속한 `Isaac-Inspire-Contact-Sweep-Clutter-v1`를 추가했다. Runtime은 `contact_sweep_clutter_v1.env:ContactSweepClutterV1Env`, 환경 설정은 `contact_sweep_clutter_v1.env_cfg:ContactSweepClutterV1EnvCfg`, runner는 `contact_sweep_clutter_v1.ppo_cfg:ContactSweepClutterV1PPORunnerCfg`다. 모두 `inspire_sweep_baseline` 패키지 아래이며 부모 Env·Cfg·관측·보상·runner를 상속한다. [구현 소스](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_v1).
+사용자 요청으로 `Isaac-Inspire-Contact-Sweep-Clutter-v0`를 직접 상속한 `Isaac-Inspire-Contact-Sweep-Clutter-v1`를 추가했다. Runtime은 `contact_sweep_clutter_v1.env:ContactSweepClutterV1Env`, 환경 설정은 `contact_sweep_clutter_v1.env_cfg:ContactSweepClutterV1EnvCfg`, runner는 `contact_sweep_clutter_v1.ppo_cfg:ContactSweepClutterV1PPORunnerCfg`다. 모두 `inspire_sweep_baseline` 패키지 아래이며 부모 Env·Cfg·관측·보상·runner를 상속한다. [구현 소스](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_envs.py).
 
 Actor의 타겟 위치 3D는 reset 당시 robot-root frame 좌표로 고정하고 reset당 ±1 cm 관측 오차를 한 번만 적용한다. Critic은 별도 `privileged` 그룹으로 현재 타겟 robot-root 위치 3D를 매 step 받는다. `initial_privileged_ppo_cfg.py`의 Actor/Critic 분리 방식을 참조하며, 실시간 타겟 위치는 Actor 입력으로 연결하지 않는다.
 
@@ -457,7 +463,7 @@ python src/inspire_sweep_baseline/scripts/analyze_clutter_rewards.py \
   --checkpoint "<clutter-v2-checkpoint.pt>" --real-time
 ```
 
-입력 차원은 v1과 같지만 F/T의 의미가 바뀌므로 v2 학습 checkpoint를 사용한다. [환경 설정](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_v2/env_cfg.py) · [하중 보정](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_v2/wrench.py) · [계산식·실제 검증·미검증 범위](logs/2026-10-20_contact_sweep_clutter_v2.md).
+입력 차원은 v1과 같지만 F/T의 의미가 바뀌므로 v2 학습 checkpoint를 사용한다. [환경 설정](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_envs.py) · [하중 보정](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/compensated_wrench.py) · [계산식·실제 검증·미검증 범위](logs/2026-10-20_contact_sweep_clutter_v2.md).
 
 ## Dex Tactile Renewal v3 — 2026-10-20
 
@@ -484,7 +490,7 @@ python src/inspire_sweep_baseline/scripts/analyze_clutter_rewards.py \
   --num_envs 1 --checkpoint "<v3-checkpoint.pt>" --real-time
 ```
 
-[설정 소스](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/dex_tactile_omni_renewal_v3_env_cfg.py) · [실제 검증·미검증 범위](logs/2026-10-20_renewal_v3_reward_mass.md).
+[설정 소스](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py) · [실제 검증·미검증 범위](logs/2026-10-20_renewal_v3_reward_mass.md).
 
 ## 6. 다음 변경에서 남길 개발 기록
 
@@ -667,7 +673,7 @@ Workspace 루트에서 실행한다. `--sweep-direction`은 생략한다. 기본
 
 위 명령은 실행 안내이며 이번 추가 작업에서 새 학습·재생을 수행하지 않았다.
 
-코드: [Renewal 설정](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/omni_renewal_env_cfg.py), [Dex Renewal 설정](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/dex_omni_renewal_env_cfg.py). [구현·검증 로그](logs/2026-10-15_omni_renewal_environments.md).
+코드: [Renewal 설정](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py), [Dex Renewal 설정](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py). [구현·검증 로그](logs/2026-10-15_omni_renewal_environments.md).
 
 ## 2026-10-15 reaching 이탈 페널티 정정
 
@@ -733,7 +739,7 @@ Renewal 부모의 `commands.target_goal_pos.debug_vis=True`를 모든 파생 환
   --num_envs 2048 --run_name dex_tactile_renewal_v0 --headless
 ```
 
-PPO는 부모 설정을 상속하고 위 등록 표의 기본 실험 폴더만 분리한다. 실제 GPU 검증은 각 8개 환경·1 iteration이며 양쪽 모두 완료했다. 장시간 학습·2048개 환경 성능은 미검증이다. [코드](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/tactile_omni_renewal_env_cfg.py) · [개발·검증 기록](logs/2026-10-16_tactile_renewal_environments.md).
+PPO는 부모 설정을 상속하고 위 등록 표의 기본 실험 폴더만 분리한다. 실제 GPU 검증은 각 8개 환경·1 iteration이며 양쪽 모두 완료했다. 장시간 학습·2048개 환경 성능은 미검증이다. [코드](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py) · [개발·검증 기록](logs/2026-10-16_tactile_renewal_environments.md).
 
 ### Renewal 네 환경의 지수 속도 비용 및 v1 정리 (2026-10-16)
 
@@ -741,7 +747,7 @@ Sweep Renewal v0, Dex Renewal v0, Tactile Renewal v0, Dex Tactile Renewal v0 모
 
 일반 촉각 v0와 OSC는 Renewal 부모에서, Dex 촉각 v0는 Dex 부모에서 rewards를 상속한다. 당시 두 Tactile v1은 중복이므로 Gym ID·Cfg·전용 PPO를 삭제했다. 이후 아래의 독립적인 변경 조건을 갖춘 Dex Tactile v1을 새로 등록했다. 위의 촉각 v0 명령으로 학습한다. 각 환경의 하위 클래스도 지수 비용을 상속하며, 센서·관측·제어·종료·나머지 보상은 그대로다. 기존 제곱 함수는 보존하며 일반 Sweep Renewal v0도 지수 속도 비용으로 통일했다.
 
-[촉각 Cfg](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/tactile_omni_renewal_env_cfg.py) · [정리·검증 로그](logs/2026-10-16_tactile_v0_exponential_cleanup.md). 앞선 v1 추가와 부모 적용 정정은 개발 로그에 당시 기록으로 보존한다. 장시간 학습과 실물 성능은 미검증이다.
+[촉각 Cfg](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py) · [정리·검증 로그](logs/2026-10-16_tactile_v0_exponential_cleanup.md). 앞선 v1 추가와 부모 적용 정정은 개발 로그에 당시 기록으로 보존한다. 장시간 학습과 실물 성능은 미검증이다.
 
 [Renewal 계열 속도 초과 비용의 exp 통일·검증 기록](logs/2026-10-16_renewal_only_exponential.md). `joint_vel_l2` 등 별도 운동 제곱합 페널티는 기존 규칙대로 유지한다.
 
@@ -786,7 +792,7 @@ Workspace 루트에서 실행한다.
   --num_envs 1 --checkpoint "<v1-checkpoint.pt>" --real-time
 ```
 
-[v1 설정](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/dex_tactile_omni_renewal_v1_env_cfg.py) · [실행·검증 로그](logs/2026-10-16_dex_tactile_renewal_v1.md). 전체 CPU 검증은 299 passed·17 subtests passed다. GPU 8개 환경·1 iteration 학습을 완료했으며 장시간 학습·실물 성능은 미검증이다. 정확한 명령과 산출물은 로그에 기록한다.
+[v1 설정](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py) · [실행·검증 로그](logs/2026-10-16_dex_tactile_renewal_v1.md). 전체 CPU 검증은 299 passed·17 subtests passed다. GPU 8개 환경·1 iteration 학습을 완료했으며 장시간 학습·실물 성능은 미검증이다. 정확한 명령과 산출물은 로그에 기록한다.
 
 ## Dex Tactile Renewal v2: 목표 유지·성공 보상 (2026-10-18)
 
@@ -814,7 +820,7 @@ v1 위에 양의 보상 두 항을 추가하고 성공 종료는 비활성화했
   --num_envs 1 --checkpoint "<v2-checkpoint.pt>" --real-time
 ```
 
-[v2 설정](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/dex_tactile_omni_renewal_v2_env_cfg.py) · [개발·검증과 미검증 범위](logs/2026-10-18_dex_tactile_renewal_v2_goal_hold.md).
+[v2 설정](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py) · [개발·검증과 미검증 범위](logs/2026-10-18_dex_tactile_renewal_v2_goal_hold.md).
 
 성공 종료를 제거하고 timeout까지 유지하도록 한 후속 변경·검증은 [timeout 유지 수정 로그](logs/2026-10-18_v2_goal_hold_until_timeout.md)를 따른다. OSC v2도 아래 상속 관계를 통해 같은 동작을 적용한다.
 
@@ -824,7 +830,7 @@ v1 위에 양의 보상 두 항을 추가하고 성공 종료는 비활성화했
 
 `InspireDexTactileSweepOmniRenewalV2OSCEnvCfg(InspireDexTactileSweepOmniRenewalV2EnvCfg)`가 v2의 모든 보상·성공/실패·timeout·물성·스폰·Hand·촉각·F/T·관측 순서와 57D/8D 크기를 상속하고 Arm 제어만 교체한다. Runtime은 공통 `InspireSweepEnv`다. Runner는 `InspireDexTactileSweepOmniRenewalV2OSCPPORunnerCfg`가 v2 PPO를 상속하며 experiment 이름만 바꾼다.
 
-참고 구현은 `omni_renewal_osc_env_cfg.py`다. OSC는 `target_types=["pose_rel"]`, fixed impedance, stiffness **100.0**, damping ratio 1.0, 중력 보상·관성 decoupling을 사용한다. 기존 EEF와 같은 `axia80_link`와 body-local pose offset을 사용하고 명령은 robot root frame의 현재 EEF에 대한 상대 위치·axis-angle 회전이다. 정책 주기 0.02초, 물리 주기 0.01초를 유지한다. Arm의 implicit joint PD stiffness/damping만 기존 OSC처럼 0으로 바꾸며 effort·velocity limit은 상속한다.
+참고 구현은 `envs/sweep_omni_renewal_envs.py`다. OSC는 `target_types=["pose_rel"]`, fixed impedance, stiffness **100.0**, damping ratio 1.0, 중력 보상·관성 decoupling을 사용한다. 기존 EEF와 같은 `axia80_link`와 body-local pose offset을 사용하고 명령은 robot root frame의 현재 EEF에 대한 상대 위치·axis-angle 회전이다. 정책 주기 0.02초, 물리 주기 0.01초를 유지한다. Arm의 implicit joint PD stiffness/damping만 기존 OSC처럼 0으로 바꾸며 effort·velocity limit은 상속한다.
 
 `BoundedOperationalSpaceControllerAction`은 upstream OSC의 전처리 뒤, controller `set_command` 전에 물리 단위의 두 벡터를 제한한다. `position_scale=0.005`, `orientation_scale=0.025`를 적용한 다음 translation norm을 **0.005 m**, rotation-vector norm을 **0.025 rad**로 각각 제한한다. norm이 상한 이하면 선형 입력을 유지하고 초과하면 방향을 보존해 축소한다. raw policy action·이전 action 관측·필수 raw 제곱합 비용 입력은 제한 전 값으로 유지한다. Hand에는 이 제한을 적용하지 않는다. upstream OSC는 `clip` 필드가 있어도 실제 pose 전처리에 적용하지 않으므로 이 전용 action term이 필요하다.
 
@@ -842,7 +848,7 @@ v1 위에 양의 보상 두 항을 추가하고 성공 종료는 비활성화했
   --num_envs 1 --checkpoint "<osc-v2-checkpoint.pt>" --real-time
 ```
 
-[OSC v2 설정](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/dex_tactile_omni_renewal_v2_osc_env_cfg.py) · [제한 action 구현](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/osc_actions.py).
+[OSC v2 설정](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py) · [제한 action 구현](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/action_functions/bounded_osc.py).
 
 ## Clutter FT 테스트 — 2026-10-21
 
@@ -928,7 +934,7 @@ CSV는 `outputs/clutter_ft/<UTC timestamp>/wrench.csv`에 생성한다. 50 Hz �
 
 [환경 자체의 구성·관측·행동·보상·종료·커리큘럼 설명](environments/CONTACT_SWEEP_CLUTTER_FUSION_ENVIRONMENT.md)을 별도 문서로 제공한다.
 
-`Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v0`는 기존 Curriculum v1 및 v2 Cfg 상속을 끊은 독립 환경이다. 소스는 [`contact_sweep_clutter_fusion`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion)이며 `env:ContactSweepClutterFusionEnv`→`ManagerBasedRLEnv`, `env_cfg:ContactSweepClutterFusionEnvCfg`→`ManagerBasedRLEnvCfg`, Scene→`InteractiveSceneCfg`, PPO→`RslRlOnPolicyRunnerCfg`다. 나머지 Manager Cfg도 새로 선언하고 기존 MDP·센서 함수·장면 생성기·`CurriculumOnPolicyRunner`를 재사용한다.
+`Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v0`는 기존 Curriculum v1 및 v2 Cfg 상속을 끊은 독립 환경이다. 소스는 [`contact_sweep_clutter_fusion`](../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_fusion_envs.py)이며 `env:ContactSweepClutterFusionEnv`→`ManagerBasedRLEnv`, `env_cfg:ContactSweepClutterFusionEnvCfg`→`ManagerBasedRLEnvCfg`, Scene→`InteractiveSceneCfg`, PPO→`RslRlOnPolicyRunnerCfg`다. 나머지 Manager Cfg도 새로 선언하고 기존 MDP·센서 함수·장면 생성기·`CurriculumOnPolicyRunner`를 재사용한다.
 
 policy 55D·초기 장애물 40D·Critic 전용 현재 타겟 3D를 사용한다. v2의 Hand 하중 보정 F/T를 사용하고 target width를 제거했다. 초기 타겟→goal 변위를 기존 root 축의 distance/theta로 바꾸되 실제 목표를 유지한다. 장애물은 reset 시 전면 가시 폭 35% 이상일 때 관측하며 물체별 1% flip을 적용한다. Actor 71D·Critic 74D는 장애물 16D encoder를 포함한 신경망 입력이고 raw Actor는 95D다.
 

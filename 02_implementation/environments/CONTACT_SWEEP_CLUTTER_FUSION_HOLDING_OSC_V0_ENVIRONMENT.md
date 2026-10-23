@@ -64,8 +64,8 @@ Base 기준·stiffness100은 Holding OSC v0, 이를 상속하는 ObjectRandom v0
 
 ## 구현 근거
 
-- [환경 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_holding_osc_v0/env_cfg.py), [PPO 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_holding_osc_v0/ppo_cfg.py).
-- [참조 Renewal OSC](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/omni_renewal_osc_env_cfg.py).
+- [환경 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_fusion_holding_osc_envs.py), [PPO 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/agent/contact_sweep_clutter_fusion_holding_osc_ppo_cfg.py).
+- [참조 Renewal OSC](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py).
 - [최초 구현 기록](../logs/2026-10-23_fusion_holding_osc_v0.md), [현재 Base 기준 제어·검증](../logs/2026-10-23_fusion_holding_v1.md).
 
 직접 파생 환경: [Holding OSC ObjectRandom v0](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V0_ENVIRONMENT.md).

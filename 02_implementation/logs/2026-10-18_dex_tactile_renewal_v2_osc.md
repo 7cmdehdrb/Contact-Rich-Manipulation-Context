@@ -14,7 +14,7 @@
 - Runtime: 공통 `InspireSweepEnv`.
 - Cfg: `InspireDexTactileSweepOmniRenewalV2OSCEnvCfg(InspireDexTactileSweepOmniRenewalV2EnvCfg)`.
 - PPO: `InspireDexTactileSweepOmniRenewalV2OSCPPORunnerCfg`가 v2 runner를 상속하고 experiment 이름만 `inspire_dex_tactile_sweep_omni_renewal_v2_osc`로 바꾼다.
-- 코드: [OSC Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/dex_tactile_omni_renewal_v2_osc_env_cfg.py), [제한 action](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/osc_actions.py).
+- 코드: [OSC Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py), [제한 action](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/action_functions/bounded_osc.py).
 
 부모의 57D Actor/Critic 관측(현재 물체 GT 포함), 8D 행동 크기·Hand 동작, 촉각 17개·0.01 N 및 F/T, 물성·스폰·전방향 목표·reset, v2 보상 12항(+100 성공·증가하는 체류 보상 포함)·종료 7항을 유지한다. 네 필수 raw Action·실제 관절 속도 제곱합 비용과 계수도 그대로다. Arm 행동 6D의 의미만 Joint Position offset에서 Cartesian 상대 pose로 바뀐다. 기존 `hand_velocity`의 Arm 종료 기준 5.0 rad/s도 유지한다.
 

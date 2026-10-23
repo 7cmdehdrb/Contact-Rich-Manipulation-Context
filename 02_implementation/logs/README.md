@@ -1,5 +1,7 @@
 # 개발·실험 진행 로그
 
+- [2026-10-23 환경 파일 구조 통합](2026-10-23_environment_structure_migration.md): 역할별 배치·복구 commit,45개 설정 동등성·초기 GPU/PPO·대표 train.py 검증. ObjectRandom 후기 배치 실패는 이관 전 원본에서도 재현.
+
 - [2026-10-23 Holding ObjectRandom Test v0](2026-10-23_holding_object_random_test_v0.md): Joint Position 제어·랜덤 물체 테스트 환경 추가.
 
 - [2026-10-23 ObjectRandom-v1 개수 일정](2026-10-23_object_random_v1_population.md): 부모의 교대 증가 일정 복원, 초기1/1→최대8/8,16슬롯 사용.

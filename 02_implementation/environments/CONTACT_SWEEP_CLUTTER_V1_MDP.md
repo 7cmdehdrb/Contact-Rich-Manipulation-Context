@@ -350,10 +350,10 @@ TensorBoard의 `Episode_Reward/<항목>`은 **가중된 에피소드 보상 합�
 
 | 내용 | 실제 코드 |
 | --- | --- |
-| 환경 설정·초기 위치 snapshot | [환경 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_v1/env_cfg.py), [reset 처리](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_v1/env.py) |
-| 초기 위치·Critic 관측·라우팅 | [관측 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_v1/observations_cfg.py), [PPO 입력 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_v1/ppo_cfg.py) |
-| 목표 유지·Contact·장애물 이동 | [보상 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_v1/rewards_cfg.py), [보상·촉각 판독 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_v1/mdp.py) |
-| 접근·목표 개선량과 속도 비용 | [거리 개선 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/dex_rewards.py), [운동·속도 비용 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/goal_rewards.py) |
-| 관측값·Hand Action 변환 | [관측 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observations.py), [Hand Action 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/actions.py) |
+| 환경 설정·초기 위치 snapshot | [환경 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_envs.py), [reset 처리](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/runtime/contact_sweep_clutter.py) |
+| 초기 위치·Critic 관측·라우팅 | [관측 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observations/contact_sweep_clutter.py), [PPO 입력 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/agent/contact_sweep_clutter_ppo_cfg.py) |
+| 목표 유지·Contact·장애물 이동 | [보상 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/rewards/contact_sweep_clutter.py), [보상 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/contact_sweep_clutter.py), [촉각 판독 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observation_functions/contact_sweep_clutter.py) |
+| 접근·목표 개선량과 속도 비용 | [거리 개선 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/dex_rewards.py), [운동·속도 비용 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/goal_rewards.py) |
+| 관측값·Hand Action 변환 | [관측 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observation_functions/sweep.py), [Hand Action 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/action_functions/hand_openness.py) |
 
 관측 분리, 부분 reset, 보상 함수 경계, 실제 접촉에서의 양의 보상, 짧은 GPU PPO 업데이트는 검사했다. 목표 유지 성공률과 장기 학습 후의 보상 비중은 이 문서에서 성능 결과로 주장하지 않는다.

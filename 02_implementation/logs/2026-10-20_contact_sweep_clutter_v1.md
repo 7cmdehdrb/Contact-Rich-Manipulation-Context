@@ -20,13 +20,13 @@
 | Critic 모델 | `PrivilegedObstacleEncoderModel` → `ObstacleEncoderModel` |
 | 로그 | `logs/rsl_rl/inspire_contact_sweep_clutter_v1` |
 
-주요 코드는 [v1 패키지](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_v1)와 [보상 비교 스크립트](../../../../src/inspire_sweep_baseline/scripts/analyze_clutter_rewards.py)다. v0 등록·설정과 기존 checkpoint는 별도의 기준선이다.
+주요 코드는 [v1 패키지](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_envs.py)와 [보상 비교 스크립트](../../../../src/inspire_sweep_baseline/scripts/analyze_clutter_rewards.py)다. v0 등록·설정과 기존 checkpoint는 별도의 기준선이다.
 
 ## 관측·reset 계약
 
 Actor의 기존 `policy.target_obs_state` 3D를 `InitialObjectPositionInRoot`로 교체한다. Command가 타겟 배치 뒤 저장한 `target_init_state_w`의 link 원점을 robot-root frame으로 변환해 episode 동안 고정한다. 초기 측정 오차는 각 좌표에 reset당 한 번 샘플링한 Uniform ±0.01 m이며 per-step 새 noise는 0이다. ObservationManager가 CommandManager보다 먼저 reset되는 순서를 고려해 최초 관측 때 새 snapshot을 읽는다.
 
-Critic 전용 `privileged.target_position`은 현재 타겟 link 원점의 robot-root 좌표 3D다. 관측 오차를 추가하지 않고 매 step 실제 위치를 읽는다. [Initial Privileged PPO](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/agents/initial_privileged_ppo_cfg.py)의 Actor/Critic 라우팅 원칙을 참조했으며 추가 정보는 위치 3D다.
+Critic 전용 `privileged.target_position`은 현재 타겟 link 원점의 robot-root 좌표 3D다. 관측 오차를 추가하지 않고 매 step 실제 위치를 읽는다. [Initial Privileged PPO](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/agent/sweep_ppo_cfg.py)의 Actor/Critic 라우팅 원칙을 참조했으며 추가 정보는 위치 3D다.
 
 | 모델 | rollout의 원시 입력 | 네트워크 입력 |
 | --- | --- | --- |

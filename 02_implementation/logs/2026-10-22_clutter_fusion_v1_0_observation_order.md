@@ -17,7 +17,7 @@
 
 물리적인 물체 컬렉션 순서·target ID·active mask·접촉 필터·보상/종료 대상을 변경하지 않았다. 관측 슬롯 순서와 물체 ID를 분리한다. 숨겨진 물체의 실제 좌표를 정렬에 사용하지 않는다.
 
-구현은 [`events.py`](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_v1_0/events.py)의 `pack_obstacle_observations`이며 visibility 처리 직후 적용한다. 기본 교환 확률은 [`events_cfg.py`](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_v1_0/events_cfg.py)의 `observation_swap_probability=0.1`이다. Hydra에서는 `env.events.object_spawn.params.observation_swap_probability=0`으로 교환만 끄고 정렬·압축은 유지할 수 있다.
+구현은 [`events.py`](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/event_functions/contact_sweep_clutter_fusion.py)의 `pack_obstacle_observations`이며 visibility 처리 직후 적용한다. 기본 교환 확률은 [`events_cfg.py`](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/events/contact_sweep_clutter_fusion.py)의 `observation_swap_probability=0.1`이다. Hydra에서는 `env.events.object_spawn.params.observation_swap_probability=0`으로 교환만 끄고 정렬·압축은 유지할 수 있다.
 
 ## 검증
 

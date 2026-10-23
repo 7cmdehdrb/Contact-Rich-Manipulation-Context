@@ -230,9 +230,9 @@ flowchart TD
 
 ## 6. 기록을 읽을 때의 기준
 
-현재 설정값은 상속·`__post_init__`를 포함한 코드의 최종 적용값으로 확인했다. 과거 설명과 다른 값도 코드 수정 없이 기록했다. Omni v1의 Arm 속도 종료는 현재 1.5 rad/s다. Fusion v0/v2의 `push_fast`는 [기본 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion/terminations_cfg.py)에서 **1.0 m/s**, v3는 [명시적 override](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_v3/env_cfg.py)로 **0.8 m/s**다. 기존 Fusion 비교·개발 로그의 “모두 0.8”은 이 코드 스냅샷과 다르다.
+현재 설정값은 상속·`__post_init__`를 포함한 코드의 최종 적용값으로 확인했다. 과거 설명과 다른 값도 코드 수정 없이 기록했다. Omni v1의 Arm 속도 종료는 현재 1.5 rad/s다. Fusion v0/v2의 `push_fast`는 [기본 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/terminations/contact_sweep_clutter_fusion.py)에서 **1.0 m/s**, v3는 [명시적 override](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_fusion_envs.py)로 **0.8 m/s**다. 기존 Fusion 비교·개발 로그의 “모두 0.8”은 이 코드 스냅샷과 다르다.
 
-기존 Omni v3 설명 이후 공통 Reaching 함수에는 최단 기록에서 멀어진 상태의 매-step 비용과 초기 접근거리 0일 때의 분모 fallback이 추가되었다. 현재 동작은 [같은 함수를 쓰는 Omni v4 요약](SWEEP_OMNI_V4_ENVIRONMENT.md)과 [공통 구현](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/goal_rewards.py)을 따른다. 기존 독립 문서는 재작성하지 않았다.
+기존 Omni v3 설명 이후 공통 Reaching 함수에는 최단 기록에서 멀어진 상태의 매-step 비용과 초기 접근거리 0일 때의 분모 fallback이 추가되었다. 현재 동작은 [같은 함수를 쓰는 Omni v4 요약](SWEEP_OMNI_V4_ENVIRONMENT.md)과 [공통 구현](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/goal_rewards.py)을 따른다. 기존 독립 문서는 재작성하지 않았다.
 
 Notion의 관찰은 변경 동기를 설명하는 사용자 기록으로 사용했으며, 이번 작업에서 영상이나 학습 성능을 재검증하지 않았다. 페이지 응답에 `truncated=true`와 읽을 수 없는 외부 객체 1개가 표시되어 전체 블록을 읽었다고 보지 않는다. 표에 사용한 변경 설명은 반환된 본문과 로컬 코드·개발 로그로 대조했다. 등록 목록·문서 링크·Markdown 검사와 미검증 범위는 [개발 로그](../logs/2026-10-22_environment_catalog.md)에 남긴다.
 

@@ -84,8 +84,8 @@ Actor와 Critic 모두 아래 순서의 **41D**를 사용한다. 현재 물체 �
 
 ## 근거와 연결
 
-- [환경·Manager 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/env_cfg.py), [등록](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py)
-- [관측](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observations.py), [보상](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/rewards.py), [종료](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/terminations.py)
+- [환경·Manager 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_envs.py), [등록](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py)
+- [관측](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observation_functions/sweep.py), [보상](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/sweep.py), [종료](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/termination_functions/sweep.py)
 - [원통 자산](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/mass_cylinder.py), [10월 14일 환경 구조 기록](../logs/2026-10-14_inspire_sweep_uml.md)
 - 다음 분기: [Realistic Physics](SWEEP_REALISTIC_PHYSICS_ENVIRONMENT.md), [Omni v0](OMNI_ENVIRONMENT.md), [Baseline Tactile](TACTILE_ENVIRONMENT.md)
 

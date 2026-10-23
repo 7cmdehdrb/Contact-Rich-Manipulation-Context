@@ -202,11 +202,11 @@ v1_0과 함께 `train_resilient.py`를 추가했다. 이는 새로운 환경 ID�
 
 | 위치 | 역할 |
 | --- | --- |
-| `contact_sweep_clutter_fusion/env_cfg.py`, `curriculum_cfg.py` | v0의 독립 Env Cfg와 기본 5개 일정 |
-| `contact_sweep_clutter_fusion_v2/env_cfg.py` | v0 상속, `eef_orientation=None` |
-| `contact_sweep_clutter_fusion_v3/env_cfg.py` | v2 상속, v3 curriculum 지정, push_fast=0.8 유지 |
-| `contact_sweep_clutter_fusion_v3/curriculum_cfg.py`, `curriculum.py` | v3의 11개 일정과 지연 시작 함수 |
-| `contact_sweep_clutter_fusion_v1_0/` | v1_0 Env/Scene/Event·독립 Reward/Termination/Curriculum·활성 물체 runtime |
+| `envs/contact_sweep_clutter_fusion_envs.py`, `curriculum_cfg.py` | v0의 독립 Env Cfg와 기본 5개 일정 |
+| `envs/contact_sweep_clutter_fusion_envs.py` | v0 상속, `eef_orientation=None` |
+| `envs/contact_sweep_clutter_fusion_envs.py` | v2 상속, v3 curriculum 지정, push_fast=0.8 유지 |
+| `mdp/curricula/contact_sweep_clutter_fusion.py`, `curriculum.py` | v3의 11개 일정과 지연 시작 함수 |
+| `envs/contact_sweep_clutter_fusion_envs.py` | v1_0 Env/Scene/Event·독립 Reward/Termination/Curriculum·활성 물체 runtime |
 | 각 버전의 `ppo_cfg.py` | v0 → v2 → v3 → v1_0 PPO 상속, experiment 이름 분리 |
 | `scripts/train_resilient.py`, `training_recovery.py` | 절대 목표 iteration·checkpoint 선택·커리큘럼 복원을 포함한 재사용 실행기 |
 

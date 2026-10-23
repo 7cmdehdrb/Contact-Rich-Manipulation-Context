@@ -6,11 +6,11 @@
 
 ## 상속과 보존 범위
 
-`InspireSweepTactileEnvCfg → InspireSweepEnvCfg → ManagerBasedRLEnvCfg`. Runtime은 기존 `InspireSweepEnv → ManagerBasedRLEnv`다. [tactile_env_cfg.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/tactile_env_cfg.py)의 Scene·Observation subclass만 다르다. PPO는 `InspireSweepTactilePPORunnerCfg → InspireSweepPPORunnerCfg`로 수치를 그대로 상속하고 로그 폴더 이름만 바꾼다.
+`InspireSweepTactileEnvCfg → InspireSweepEnvCfg → ManagerBasedRLEnvCfg`. Runtime은 기존 `InspireSweepEnv → ManagerBasedRLEnv`다. [tactile_env_cfg.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_envs.py)의 Scene·Observation subclass만 다르다. PPO는 `InspireSweepTactilePPORunnerCfg → InspireSweepPPORunnerCfg`로 수치를 그대로 상속하고 로그 폴더 이름만 바꾼다.
 
 로봇·선반·실린더의 형상, mesh·rigid body·collider 수, 원본 USD·URDF, mass/inertia, articulation·joint·actuator, friction/contact offset, reset·스폰·좌우 18 cm 목표, 보상·종료 조건은 Baseline과 같다. Arm Joint Position 6D + Hand 2D, 50 Hz 제어, 10초 제한과 현재 물체 위치 관측도 유지한다. 기존 Baseline은 41D이며 새 환경은 57D다. 이 57D는 발표의 Cartesian/OSC 설계와 별개이고 최종 Blind 관측 계약으로 해석하지 않는다.
 
-원본 `env_cfg.py`, `assets/robot.py`, USD layer와 mesh 파일은 수정하지 않았다. 추가 데이터인 `assets/data/tactile_regions.json`은 관측 영역을 설명하는 metadata이며 physics geometry로 사용하지 않는다.
+원본 `envs/sweep_envs.py`, `assets/robot.py`, USD layer와 mesh 파일은 수정하지 않았다. 추가 데이터인 `assets/data/tactile_regions.json`은 관측 영역을 설명하는 metadata이며 physics geometry로 사용하지 않는다.
 
 ## 센서 영역과 출력 순서
 
@@ -33,7 +33,7 @@
 
 새 환경의 `hand_tactile` ContactSensor는 정확히 17개 패드 body를 선택해 개별 `net_forces_w`를 읽는다. 이 힘은 서로 다른 패드 사이에서 합치지 않는다. 가려진 영역의 판정을 보완하기 위해 부모 body 12개에 관측용 단일-body ContactSensor view를 각각 만든다. **2026-10-15 수정 후 필터는 `{ENV_REGEX_NS}/mass_cylinder` 하나만 사용한다.** 사용자 실행에서 선반 필터가 `GPU contact filter ... is not supported` 경고를 발생시켜 선반·바닥의 미지원 상세 접촉 필터를 제거했다. 경고 로그를 숨기거나 pad 센서를 끈 변경이 아니다. [수정·검증 로그](../logs/2026-10-15_tactile_gpu_filter_fix.md)를 참고한다.
 
-[ProjectedTactileContactBits](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/tactile_observations.py)는 각 부모의 **원시 개별 접촉점**을 읽는다. 평균 접촉점이나 부모 전체의 힘을 모든 센서에 복제하지 않는다. 접촉점을 현재 센서 body 좌표로 변환하고, 다음 조건을 충족한 원래 패드 영역에만 배정한다.
+[ProjectedTactileContactBits](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observation_functions/tactile_observations.py)는 각 부모의 **원시 개별 접촉점**을 읽는다. 평균 접촉점이나 부모 전체의 힘을 모든 센서에 복제하지 않는다. 접촉점을 현재 센서 body 좌표로 변환하고, 다음 조건을 충족한 원래 패드 영역에만 배정한다.
 
 - 원본 pad collision mesh를 sensor-local XY에 투영한 convex polygon 안에 있을 것. 경계 여유는 0.5 mm다.
 - 원래 pad의 outward 면부터 부모 collider의 바깥면까지의 유한 +Z 범위 안에 있을 것. 깊이 범위도 원본 geometry에서 계산한다.

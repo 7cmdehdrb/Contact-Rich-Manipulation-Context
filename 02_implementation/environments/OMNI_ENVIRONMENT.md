@@ -118,7 +118,7 @@ Frame offset 회전은 공통으로 `(0.5, −0.5, −0.5, −0.5)`다. `ee_fram
 
 버퍼 용량은 병렬 접촉 계산의 저장 공간을 설정한다. 보상 임계값이나 물체의 물리 질량·마찰을 의미하지 않는다.
 
-구현: [env_cfg.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/env_cfg.py), [robot.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/robot.py), [mass_cylinder.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/mass_cylinder.py).
+구현: [env_cfg.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_envs.py), [robot.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/robot.py), [mass_cylinder.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/mass_cylinder.py).
 
 ## 2. Action 구성
 
@@ -173,7 +173,7 @@ q_target[j] = q_closed[j] + openness[j] × (q_open[j] − q_closed[j])
 
 리셋 시 Arm Action 이력은 0, Hand의 두 입력과 이력은 `[1, 1]`이 된다. 따라서 Hand Action 0은 초기의 편 자세가 아니라 굽히는 명령에 대응한다. 추가 Action 필터는 없다.
 
-구현: [actions.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/actions.py), [env.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/env.py).
+구현: [actions.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/action_functions/hand_openness.py), [env.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/runtime/sweep.py).
 
 ## 3. Event 구성
 
@@ -252,7 +252,7 @@ Friction Combine Mode는 `average`이므로 두 접촉면 계수의 평균이 �
 
 초기 재질 바인딩은 PhysX 시작과 환경 복제 전에 스포너가 수행한다. 이후 에피소드 랜덤화는 Tensor API로 처리한다. 질량·마찰은 정책 관측에 추가하지 않는다.
 
-구현: [goal_events.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/goal_events.py), [commands.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/commands.py), [realistic_physics_env_cfg.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/realistic_physics_env_cfg.py), [realistic_physics.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/realistic_physics.py).
+구현: [goal_events.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/event_functions/goal_events.py), [commands.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/command_functions/sweep_goal.py), [물성 Event Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/events/sweep.py), [물성 적용 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/event_functions/realistic_physics.py), [물성 분포·계산](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/realistic_physics.py).
 
 ## 4. Observation 구성
 
@@ -292,7 +292,7 @@ Actor와 Critic은 동일한 `policy` 41D 관측을 사용한다. `enable_corrup
 
 Wrench에는 손의 무게와 동역학 반력이 포함된다. 중력 보상, tare, 추가 필터를 적용하지 않는다. 리셋 직후 아직 갱신되지 않은 촉각·Wrench 샘플은 해당 환경에서 0으로 마스킹한다. 두 센서 관측을 보상이나 성공 게이트의 직접 입력으로 사용하지 않는다.
 
-구현: [observations.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observations.py), [sensors.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/sensors.py), [env.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/env.py).
+구현: [observations.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observation_functions/sweep.py), [sensors.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/sensors.py), [env.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/runtime/sweep.py).
 
 ## 5. Reward 구성
 
@@ -354,7 +354,7 @@ reaching_progress[t] = (b[t−1] − b[t]) / max(d_reach[0], epsilon)
 
 ### 5.4 Arm과 Hand Action Rate
 
-2026-10-15부터 Omni 베이스와 모든 파생(Dex Omni 포함)은 로컬 `mdp/goal_rewards.py`의 `action_rate_l2`를 사용한다.
+2026-10-15부터 Omni 베이스와 모든 파생(Dex Omni 포함)은 로컬 `mdp/reward_functions/goal_rewards.py`의 `action_rate_l2`를 사용한다.
 
 ```text
 arm_cost = sum((raw_action_current[:6] − raw_action_previous[:6])²)
@@ -421,7 +421,7 @@ object_outside_shelf, shelf_displacement
 
 기존의 지속적인 양의 Reaching, EEF 방향 정렬, Y축 속도, Homing 및 비대상 물체 보상은 새 Reward 구성에 포함하지 않는다.
 
-구현: [omni_env_cfg.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/omni_env_cfg.py), [goal_rewards.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/goal_rewards.py), [rewards.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/rewards.py).
+구현: [omni_env_cfg.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_envs.py), [goal_rewards.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/goal_rewards.py), [rewards.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/sweep.py).
 
 ## 6. Termination 구성
 
@@ -488,20 +488,20 @@ abs(z − object_radius × sin(theta) − surface_height) <= support_tolerance
 
 성공은 물체의 최종 상태에 대한 조건이다. 손 자세나 초기 Arm 관절 위치로의 복귀를 요구하지 않는다. 순수 timeout에는 −80 실패 이벤트가 없지만, timeout과 실패가 같은 Step에 발생하면 해당 실패에 대한 −80을 지급한다. Timeout은 성공의 `failure_terms`에도 포함하지 않으므로 제한 시간 마지막 Step에 성공 유지 조건을 완성하면 성공 보상이 발생할 수 있다.
 
-구현: [goal_terminations.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/goal_terminations.py), [terminations.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/terminations.py).
+구현: [goal_terminations.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/termination_functions/goal_terminations.py), [terminations.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/termination_functions/sweep.py).
 
 ## 설정 변경 위치와 실행
 
 | 변경할 내용 | 위치 |
 | --- | --- |
-| 스폰 반경·목표 거리·가장자리 여유 | `omni_env_cfg.py`의 `OmniEventsCfg.object_spawn.params` |
-| 보상 가중치·정규화·접근 반경 | `omni_env_cfg.py`의 `OmniRewardsCfg` |
-| 전도·영역 이탈·선반 변위·성공 유지 조건 | `omni_env_cfg.py`의 `OmniTerminationsCfg` |
-| 상속한 물체 속도·Arm 속도·선반 기존 종료 | `env_cfg.py`의 `TerminationsCfg`. Omni만 조정하려면 파생 Cfg에서 해당 term을 override |
-| 질량·마찰 분포 | `mdp/realistic_physics.py`의 상수. Realistic Physics 환경도 같은 함수를 사용 |
+| 스폰 반경·목표 거리·가장자리 여유 | `envs/sweep_omni_envs.py`의 `OmniEventsCfg.object_spawn.params` |
+| 보상 가중치·정규화·접근 반경 | `envs/sweep_omni_envs.py`의 `OmniRewardsCfg` |
+| 전도·영역 이탈·선반 변위·성공 유지 조건 | `envs/sweep_omni_envs.py`의 `OmniTerminationsCfg` |
+| 상속한 물체 속도·Arm 속도·선반 기존 종료 | `envs/sweep_envs.py`의 `TerminationsCfg`. Omni만 조정하려면 파생 Cfg에서 해당 term을 override |
+| 질량·마찰 분포 | `mdp/common/realistic_physics.py`의 상수. Realistic Physics 환경도 같은 함수를 사용 |
 | 로봇 초기 관절·구동기·Hand open/closed 매핑 | `assets/robot.py` |
-| 관측 구성·노이즈·Action scale·제어 주기 | `env_cfg.py`. Baseline에서 상속하는 설정 |
-| 선반 페널티 내부 상수 | `mdp/rewards.py`의 `ShelfCollisionPenalty` |
+| 관측 구성·노이즈·Action scale·제어 주기 | `envs/sweep_envs.py`. Baseline에서 상속하는 설정 |
+| 선반 페널티 내부 상수 | `mdp/reward_functions/sweep.py`의 `ShelfCollisionPenalty` |
 
 동일한 반지름·상판 크기·높이가 Event와 Termination에 함께 사용된다. 형상을 바꿀 때는 Scene 형상과 이 값들을 함께 맞춰야 한다. `free_angle`과 전도·성공 각도처럼 연결된 기준도 각 용도를 구분해 조정한다.
 

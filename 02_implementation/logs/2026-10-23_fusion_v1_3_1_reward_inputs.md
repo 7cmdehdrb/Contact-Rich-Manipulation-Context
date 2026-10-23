@@ -10,7 +10,7 @@
 
 ## 실행 클래스와 측정 계약
 
-[`RewardTelemetryEnv`](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_v1_0/reward_telemetry.py)는 `ContactSweepClutterFusionV1_0Env`를 상속한다. 등록된 v1_3_1 EnvCfg/PPOCfg와 `CurriculumOnPolicyRunner`로 checkpoint를 복원하며 별도 Gym task ID는 등록하지 않는다. iteration 14500의 커리큘럼을 적용한 뒤 reset하고 첫 측정 episode를 시작한다. 재생 중 iteration은 고정한다. 부모 물리 step loop를 복제하거나 추가 observation·stateful reward를 평가하지 않는다.
+[`RewardTelemetryEnv`](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/runtime/contact_sweep_clutter_fusion_telemetry.py)는 `ContactSweepClutterFusionV1_0Env`를 상속한다. 등록된 v1_3_1 EnvCfg/PPOCfg와 `CurriculumOnPolicyRunner`로 checkpoint를 복원하며 별도 Gym task ID는 등록하지 않는다. iteration 14500의 커리큘럼을 적용한 뒤 reset하고 첫 측정 episode를 시작한다. 재생 중 iteration은 고정한다. 부모 물리 step loop를 복제하거나 추가 observation·stateful reward를 평가하지 않는다.
 
 `RewardPlaybackTelemetry`는 물리값·경계 취득을, `RewardCSVWriter`는 환경별 CSV와 reset 이벤트 저장을 담당한다. 종료 환경은 `_reset_idx()`의 부모 reset 전에 취득하고 비종료 환경은 부모 step 후에 취득한다. 측정 중에는 freshness·중복·누락·유한값 검사를 수행하며, F/T는 stateful 페널티가 보존한 실제 입력과 정확히 일치하는지도 확인한다.
 

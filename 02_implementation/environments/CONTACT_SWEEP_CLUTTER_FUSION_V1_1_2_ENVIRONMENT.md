@@ -58,6 +58,6 @@ Workspace 루트에서:
   --num_envs 2048 --headless --max_iterations 90000
 ```
 
-실행 코드는 공용 `ContactSweepClutterFusionV1_0Env`, 설정은 `ContactSweepClutterFusionV1_1_2EnvCfg`, PPO는 `ContactSweepClutterFusionV1_1_2PPORunnerCfg`다. 보상·커리큘럼 CFG는 독립 선언이다. [소스](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_v1_1_2/env_cfg.py)를 기준으로 한다. IsaacLab·Sim 실행과 실제 학습은 이번 작업에서 수행하지 않았다.
+실행 코드는 공용 `ContactSweepClutterFusionV1_0Env`, 설정은 `ContactSweepClutterFusionV1_1_2EnvCfg`, PPO는 `ContactSweepClutterFusionV1_1_2PPORunnerCfg`다. 보상·커리큘럼 CFG는 독립 선언이다. [소스](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_fusion_envs.py)를 기준으로 한다. IsaacLab·Sim 실행과 실제 학습은 이번 작업에서 수행하지 않았다.
 
 가속도 계산은 기존 PhysX COM 선가속도 norm을 유지한다. 속도 차분 방식으로 바꾼 환경이 아니다. 비용 자체는 제거하지 않아 NaN/Inf 또는 매우 큰 초과 가속도는 여전히 상한 비용을 받는다. 보상17·커리큘럼8·종료6항이며, 가속도 외의 비용과 종료 조건이 남으므로 이 비교만으로 모든 원인을 확정할 수는 없다.

@@ -86,9 +86,9 @@ Baseline의 **전체 8항**을 유지한다. 최종 step 보상은 각 함수 �
 
 ## 근거와 연결
 
-- [파생 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/realistic_physics_env_cfg.py), [부모 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/env_cfg.py)
-- [질량·마찰 표본과 적용](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/realistic_physics.py), [Spawn 재질 연결](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/realistic_spawners.py)
-- [보상 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/rewards.py), [종료 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/terminations.py), [환경 구조 기록](../logs/2026-10-14_inspire_sweep_uml.md)
+- [파생 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_envs.py), [부모 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_envs.py)
+- [질량·마찰 표본과 적용](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/realistic_physics.py), [Spawn 재질 연결](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/realistic_spawners.py)
+- [보상 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/sweep.py), [종료 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/termination_functions/sweep.py), [환경 구조 기록](../logs/2026-10-14_inspire_sweep_uml.md)
 - 다음 분기: [Initial Privileged](SWEEP_INITIAL_PRIVILEGED_ENVIRONMENT.md)
 
 물성 변화에 대한 실제 학습 성능·실물 적합성은 이번 문서 작업에서 확인하지 않았다.

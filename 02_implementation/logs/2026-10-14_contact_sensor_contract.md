@@ -6,8 +6,8 @@
 
 ## 확인한 계약
 
-- [env_cfg.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/env_cfg.py)의 `palm_tactile`은 `{ENV_REGEX_NS}/Robot/inspire_palm_force_sensor` 한 rigid body만 선택한다. `update_period=0.0`, `history_length=1`, `force_threshold=0.05`다.
-- `ObservationsCfg.PolicyCfg.tactile`은 [palm_contact_bit](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observations.py)를 호출한다. 해당 함수는 body_names가 정확히 `("inspire_palm_force_sensor",)`인지 검사하며 여러 body가 들어오면 예외를 발생시킨다.
+- [env_cfg.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_envs.py)의 `palm_tactile`은 `{ENV_REGEX_NS}/Robot/inspire_palm_force_sensor` 한 rigid body만 선택한다. `update_period=0.0`, `history_length=1`, `force_threshold=0.05`다.
+- `ObservationsCfg.PolicyCfg.tactile`은 [palm_contact_bit](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observation_functions/sweep.py)를 호출한다. 해당 함수는 body_names가 정확히 `("inspire_palm_force_sensor",)`인지 검사하며 여러 body가 들어오면 예외를 발생시킨다.
 - 반환값은 `net_forces_w`의 벡터 norm이 0.05 N 이상인지 나타내는 float32 0/1, shape `(num_envs, 1)`이다. Reset 직후 stale sensor 행은 0으로 마스킹한다. 임계값 미만의 약한 접촉은 0이다. 사용 데이터는 합산된 법선 접촉력으로 기하학적 교차 여부 자체와 구분한다.
 - Baseline, Realistic Physics, Initial-Privileged, Omni v0/v1 모두 이 Scene 센서와 tactile 관측을 상속한다. Actor의 tactile은 모두 1D다. Initial-Privileged는 물체 초기 위치·critic 관측을 변경하며 tactile 구성은 변경하지 않는다.
 - [robot.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/robot.py)의 `PALM_SENSOR_BODY_NAMES`에는 17개가 있다: palm 1, thumb 4, index/middle/ring/little 각 3. 명칭과 달리 17개 전부가 palm 단일 부위에 있지는 않다. 이 목록은 물성·접촉 body 목록에도 사용되지만 17D 관측을 만드는 코드가 아니다.

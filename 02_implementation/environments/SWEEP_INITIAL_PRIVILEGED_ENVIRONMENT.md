@@ -83,8 +83,8 @@ F/T는 Hand 중력·관성 보정 없는 반력이며 tactile과 함께 reset �
 
 ## 근거와 연결
 
-- [파생 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/initial_privileged_env_cfg.py), [초기 위치 저장·Critic 상태](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/asymmetric_observations.py)
-- [Actor/Critic 입력 연결](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/agents/initial_privileged_ppo_cfg.py), [부모 물성](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/realistic_physics_env_cfg.py)
-- [보상](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/rewards.py), [종료](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/terminations.py), [환경 구조 기록](../logs/2026-10-14_inspire_sweep_uml.md)
+- [파생 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_envs.py), [초기 위치 저장·Critic 상태](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observation_functions/asymmetric_observations.py)
+- [Actor/Critic 입력 연결](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/agent/sweep_ppo_cfg.py), [부모 물성](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_envs.py)
+- [보상](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/sweep.py), [종료](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/termination_functions/sweep.py), [환경 구조 기록](../logs/2026-10-14_inspire_sweep_uml.md)
 
 관측 분리와 상속을 코드로 확인했다. 이번 문서 작업에서 정책 성능, simulator 통합 동작, 센서·실물 이전은 평가하지 않았다.

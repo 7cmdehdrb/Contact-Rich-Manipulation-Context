@@ -10,8 +10,8 @@
 
 | Gym ID | 설정·상속 | 소스 |
 | --- | --- | --- |
-| `Isaac-Inspire-Sweep-Omni-Renewal-v0` | `InspireSweepOmniRenewalEnvCfg(InspireSweepEnvCfg)` | [omni_renewal_env_cfg.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/omni_renewal_env_cfg.py) |
-| `Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0` | `InspireDexSweepOmniRenewalEnvCfg(InspireSweepOmniRenewalEnvCfg)` | [dex_omni_renewal_env_cfg.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/dex_omni_renewal_env_cfg.py) |
+| `Isaac-Inspire-Sweep-Omni-Renewal-v0` | `InspireSweepOmniRenewalEnvCfg(InspireSweepEnvCfg)` | [omni_renewal_env_cfg.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py) |
+| `Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0` | `InspireDexSweepOmniRenewalEnvCfg(InspireSweepOmniRenewalEnvCfg)` | [dex_omni_renewal_env_cfg.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py) |
 
 Renewal에 이벤트·보상·종료 Cfg를 새로 명시했다. 모든 계산은 기존 로컬 MDP 함수를 재사용하며, V1–V4의 환경/보상 클래스 상속 체인을 이어 붙이지 않는다. 기하 상수와 `RealisticPhysicsEventsCfg`·물성 적용 함수를 재사용한다. 기존 V4 클래스와 기존 Dex 클래스는 변경하지 않았다.
 

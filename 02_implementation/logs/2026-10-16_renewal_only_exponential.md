@@ -8,7 +8,7 @@
 
 사용자는 `OmniRenewalRewardsCfg`의 기본 속도 초과 비용을 exp로 변경하고 파생 환경의 적용을 검토하도록 요청했다. 적용 범위는 **Renewal 계열만**이다. 중복된 `ExponentialSpeedRewardsCfg`는 삭제한다.
 
-[OmniRenewalRewardsCfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/omni_renewal_env_cfg.py)에 두 항을 직접 정의했다.
+[OmniRenewalRewardsCfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/rewards/sweep_omni_renewal.py)에 두 항을 직접 정의했다.
 
 | 항 | 함수 | 임계값 | weight |
 | --- | --- | --- | --- |

@@ -26,7 +26,7 @@ TensorBoard `EventAccumulator`로 scalar 전체를 읽었다. 각 항목은 4,13
 
 `time_out`은 첫 iteration만 약 0.00004069이고 이후 0이다. 이 예외는 Arm 속도 종료가 항상 1인 사실을 바꾸지 않는다. `Episode_Reward/failure=-8`은 RewardManager가 에피소드 합계를 최대 에피소드 시간 10초로 나눈 값이므로 실제 실패 이벤트는 −80이다.
 
-`hand_velocity`는 이름과 달리 [arm_velocity](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/terminations.py)의 결과다. 저장된 `params/env.yaml`도 Arm 6개 관절 이름을 명시하며, 절대 관절 속도가 하나라도 **1 rad/s 초과**이면 종료한다. YAML의 미해결 `joint_ids: slice(None)`만 보고 모든 손가락을 검사한다고 판단하면 안 된다. Isaac Lab의 `SceneEntityCfg.resolve`가 명시된 관절 이름을 실행 시 인덱스로 해석한다.
+`hand_velocity`는 이름과 달리 [arm_velocity](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/termination_functions/sweep.py)의 결과다. 저장된 `params/env.yaml`도 Arm 6개 관절 이름을 명시하며, 절대 관절 속도가 하나라도 **1 rad/s 초과**이면 종료한다. YAML의 미해결 `joint_ids: slice(None)`만 보고 모든 손가락을 검사한다고 판단하면 안 된다. Isaac Lab의 `SceneEntityCfg.resolve`가 명시된 관절 이름을 실행 시 인덱스로 해석한다.
 
 ## 제어 경로와 확인 한계
 

@@ -6,7 +6,7 @@
 
 ## 사용자 요청과 적용 범위
 
-사용자는 `action_rate_l2`와 `joint_vel_l2`의 함수 반환 범위를 초기 −100~100으로 지정하되, 부호가 한쪽으로 제한되는 구조라면 필요한 쪽의 경계만 설정하도록 요청했다. 현재 Omni 계열의 두 함수는 음의 reward가 아니라 **비음수인 제곱합 비용**을 반환한다. 따라서 [goal_rewards.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/goal_rewards.py)의 두 함수에 `max_cost=100.0`을 추가하고 최종 제곱합에 `clamp_max(max_cost)`를 적용했다. 기본 범위는 [0,100]이다.
+사용자는 `action_rate_l2`와 `joint_vel_l2`의 함수 반환 범위를 초기 −100~100으로 지정하되, 부호가 한쪽으로 제한되는 구조라면 필요한 쪽의 경계만 설정하도록 요청했다. 현재 Omni 계열의 두 함수는 음의 reward가 아니라 **비음수인 제곱합 비용**을 반환한다. 따라서 [goal_rewards.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/goal_rewards.py)의 두 함수에 `max_cost=100.0`을 추가하고 최종 제곱합에 `clamp_max(max_cost)`를 적용했다. 기본 범위는 [0,100]이다.
 
 | 함수 | 계산 및 제한 |
 | --- | --- |

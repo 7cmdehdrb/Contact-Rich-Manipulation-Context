@@ -43,7 +43,7 @@ Scene에는 최대 capacity만큼 cylinder와 센서를 미리 만든다. 기본
 
 ### 개수를 조정하는 위치
 
-[`env_cfg.py`](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_v1_0/env_cfg.py)의 `max_gray_obstacles`, `max_white_obstacles`로 Scene capacity를 조정한다. 합계는 기존 관측의 최대10개 이하다. [`curriculum_cfg.py`](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_v1_0/curriculum_cfg.py)의 `obstacle_population.params`에서 initial/final 개수, Gray/White 시작 iteration, interval을 조정한다. 실제 개수는 capacity 이하로 제한된다. Hydra에서 EnvCfg capacity를 덮어쓴 경우에도 runtime이 물리 초기화 전에 Scene을 다시 구성한다.
+[`env_cfg.py`](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_fusion_envs.py)의 `max_gray_obstacles`, `max_white_obstacles`로 Scene capacity를 조정한다. 합계는 기존 관측의 최대10개 이하다. [`curriculum_cfg.py`](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/curricula/contact_sweep_clutter_fusion.py)의 `obstacle_population.params`에서 initial/final 개수, Gray/White 시작 iteration, interval을 조정한다. 실제 개수는 capacity 이하로 제한된다. Hydra에서 EnvCfg capacity를 덮어쓴 경우에도 runtime이 물리 초기화 전에 Scene을 다시 구성한다.
 
 예시로 최대 White2개만 허용하려면 학습 명령 뒤에 `env.max_white_obstacles=2`를 붙인다. 시작부터 Gray2/White1을 사용하려면 `env.curriculum.obstacle_population.params.initial_gray=2`를 지정하고 Gray capacity/final도2 이상으로 유지한다. 숫자를 줄였다가 다시 늘려 인스턴스를 생성해도 이전 센서가 중복으로 남지 않는다.
 

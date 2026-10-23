@@ -17,11 +17,11 @@
 | `Isaac-Inspire-Tactile-Sweep-Omni-Renewal-v1` | `InspireTactileSweepOmniRenewalV1EnvCfg(InspireTactileSweepOmniRenewalEnvCfg)` | `InspireTactileSweepOmniRenewalV1PPORunnerCfg` |
 | `Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1` | `InspireDexTactileSweepOmniRenewalV1EnvCfg(InspireDexTactileSweepOmniRenewalEnvCfg)` | `InspireDexTactileSweepOmniRenewalV1PPORunnerCfg` |
 
-양쪽 실행 클래스는 `InspireSweepEnv(ManagerBasedRLEnv)`다. 당시 `tactile_omni_renewal_v1_env_cfg.py`(후속 정리에서 삭제)의 두 rewards Cfg는 각각 `OmniRenewalRewardsCfg`, `DexOmniRenewalRewardsCfg`를 상속하여 두 항만 교체한다. 환경 Cfg는 각각 v0를 직접 상속한다. [PPO 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/agents/tactile_omni_renewal_ppo_cfg.py)은 각 v0 runner를 상속하고 실험 이름에 `_v1`을 추가한다. 기본 로그 폴더는 `logs/rsl_rl/inspire_tactile_sweep_omni_renewal_v1`, `logs/rsl_rl/inspire_dex_tactile_sweep_omni_renewal_v1`다.
+양쪽 실행 클래스는 `InspireSweepEnv(ManagerBasedRLEnv)`다. 당시 `tactile_omni_renewal_v1_env_cfg.py`(후속 정리에서 삭제)의 두 rewards Cfg는 각각 `OmniRenewalRewardsCfg`, `DexOmniRenewalRewardsCfg`를 상속하여 두 항만 교체한다. 환경 Cfg는 각각 v0를 직접 상속한다. [PPO 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/agent/sweep_omni_renewal_ppo_cfg.py)은 각 v0 runner를 상속하고 실험 이름에 `_v1`을 추가한다. 기본 로그 폴더는 `logs/rsl_rl/inspire_tactile_sweep_omni_renewal_v1`, `logs/rsl_rl/inspire_dex_tactile_sweep_omni_renewal_v1`다.
 
 ## 수식 계약
 
-[goal_rewards.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/goal_rewards.py)에 `exponential_pushing_speed_cost`, `exponential_joint_speed_cost`를 추가했다. 기존 `pushing_speed_cost`, `joint_speed_cost`의 본문과 v0 환경 설정은 변경하지 않았다.
+[goal_rewards.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/goal_rewards.py)에 `exponential_pushing_speed_cost`, `exponential_joint_speed_cost`를 추가했다. 기존 `pushing_speed_cost`, `joint_speed_cost`의 본문과 v0 환경 설정은 변경하지 않았다.
 
 두 새 함수는 양의 비용 `expm1(2 * max(x - t, 0)) / 2`를 반환한다. 두 RewardTerm의 weight는 **-1.0**이며 가중치 적용 후 식은 다음과 같다.
 

@@ -10,7 +10,7 @@ Workspace HEAD `2cca359d747edad0782a93119af1992842cb4979`, 문서 submodule HEAD
 
 ## 구성과 독립성
 
-새 task는 **`Isaac-Inspire-Contact-Sweep-v0`**, 실험 폴더는 `logs/rsl_rl/inspire_contact_sweep`다. 코드 위치는 [contact_sweep/](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep)다.
+새 task는 **`Isaac-Inspire-Contact-Sweep-v0`**, 실험 폴더는 `logs/rsl_rl/inspire_contact_sweep`다. 코드 위치는 [contact_sweep/](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_envs.py)다.
 
 | 파일 | 클래스/책임 | 기반 |
 | --- | --- | --- |

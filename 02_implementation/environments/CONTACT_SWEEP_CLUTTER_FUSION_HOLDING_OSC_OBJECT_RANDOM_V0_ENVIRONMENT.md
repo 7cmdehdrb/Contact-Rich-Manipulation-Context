@@ -56,7 +56,7 @@ Linux는 `./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py 
 
 ## 코드
 
-[환경·물성](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_holding_osc_object_random_v0/env_cfg.py), [자산 spawner](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_holding_osc_object_random_v0/spawn.py), [크기 계산](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_holding_osc_object_random_v0/geometry.py).
+[환경 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_fusion_holding_osc_object_random_envs.py), [물성 이벤트](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/event_functions/contact_sweep_clutter_fusion_holding_osc_object_random.py), [자산 spawner](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/contact_sweep_clutter_fusion_holding_osc_object_random_spawners.py), [크기 계산](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/contact_sweep_clutter_fusion_holding_osc_object_random_geometry.py).
 
 [공식 NVIDIA 예제](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/replicator_tutorials/tutorial_replicator_isaac_snippets.html)의 YCB 자산 경로를 확인하고 실제 서버에서4개 USD를 열어 바운딩 박스를 검사했다. 장기 학습·실물 성능·대규모 다중 seed 안정성은 미검증이다.
 

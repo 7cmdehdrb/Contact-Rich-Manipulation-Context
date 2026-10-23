@@ -14,6 +14,8 @@
 
 ## Manager-based RL과 객체 지향 설계
 
+2026-10-23부터 `inspire_sweep_baseline`의 파일 배치는 [환경 파일 구조 지침](12_ENVIRONMENT_FILE_STRUCTURE.md)을 따른다. 같은 계열의 버전을 역할별 한 파일에 모으고, `mdp`의 Cfg와 계산 함수를 분리한다. EnvCfg는 `envs/`, 실제 환경 실행 클래스는 `runtime/`, PPO 설정·모델·runner는 `agent/`, SceneCfg는 `assets/scenes/`, 여러 MDP가 공유하는 계산·상태는 `mdp/common/`에 둔다. 분류되지 않는 파일은 사용자에게 확인한다. 구조 이관 시 기존 task ID·학습 계약을 보존하고 기준 commit·실제 설정 동등성·검증 범위를 기록한다.
+
 Isaac Lab의 Manager-based Reinforcement Learning 구조와 OOP 원칙을 지킨다. 환경 설정은 Scene, Observation, Action, Event, Reward, Termination, Curriculum 및 학습 설정의 책임을 나누고, MDP 함수와 Action term은 해당 책임 안에서 동작하도록 구성한다. 환경 전체를 하나의 거대한 클래스에 덧붙이는 방식으로 변형을 쌓지 않는다.
 
 공통 동작은 기반 설정과 재사용 가능한 구성요소에 두고, 파생 환경은 바꾸려는 조건을 명시한다. 상속으로 환경을 만들 때는 부모의 관측·보상·종료·reset이 최종 설정에 어떻게 남는지 확인한다. 부모와의 차이는 클래스 이름만으로 설명하지 않고 최종 활성 term과 실제 동작을 기록한다. 구성요소 조합이 더 명확한 경우에는 조합을 사용한다.
@@ -31,7 +33,7 @@ Omni 베이스와 모든 파생 환경(v0/v1/v2/v3 및 Dex Omni, 향후 파생 �
 | Arm Joint Velocity | `goal_rewards.joint_vel_l2`, 이름으로 선택한 Arm 6개 실제 관절 속도 제곱합 | −0.03 |
 | Hand Joint Velocity | `goal_rewards.joint_vel_l2`, 이름으로 선택한 Hand 12개 실제 관절 속도 제곱합 | −0.01 |
 
-참고 Inspire 환경의 raw 제곱합 계산을 따르되 활성 패키지의 `mdp/goal_rewards.py`에 정의한 함수를 사용한다. `example/Sweep-Policy`의 함수를 import하지 않는다. Arm/Hand 항을 합치거나 mean, 기준값 정규화, 보상 내부 Hand 입력 clamp를 적용하지 않는다. Action 자체의 처리에서 수행하는 Hand clamp와 보상 계산은 구분한다. 함수에서 dt로 나누거나 곱하지 않고 RewardManager가 weight와 step_dt를 한 번 적용한다.
+참고 Inspire 환경의 raw 제곱합 계산을 따르되 활성 패키지의 `mdp/reward_functions/goal_rewards.py`에 정의한 함수를 사용한다. 이 경로는2026-10-23 구조 이관 전 `mdp/goal_rewards.py`와 같은 로컬 계산의 새 위치다. `example/Sweep-Policy`의 함수를 import하지 않는다. Arm/Hand 항을 합치거나 mean, 기준값 정규화, 보상 내부 Hand 입력 clamp를 적용하지 않는다. Action 자체의 처리에서 수행하는 Hand clamp와 보상 계산은 구분한다. 함수에서 dt로 나누거나 곱하지 않고 RewardManager가 weight와 step_dt를 한 번 적용한다.
 
 이전 정규화 함수는 과거 설정의 참조를 위해 남아 있지만 Omni 설정에서 사용하지 않는다. 구조·계수 변경은 사용자 명시 지시가 있을 때만 수행한다. 다른 보상의 상대 크기를 이유로 이 페널티를 임의로 낮추지 않는다. 모든 파생 환경에 대한 callable·계수·그룹 분리 검증을 유지한다. [적용·검증 로그](../02_implementation/logs/2026-10-15_omni_penalty_contract.md).
 

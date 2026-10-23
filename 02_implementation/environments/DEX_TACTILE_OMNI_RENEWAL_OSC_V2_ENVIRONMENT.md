@@ -101,10 +101,10 @@ Dex 접근은 현재 물체 밑면 원점까지의 **3D 거리**를 사용하며
 
 ## 근거와 확인 범위
 
-- [현재 환경 Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/dex_tactile_omni_renewal_v2_osc_env_cfg.py) · [등록](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py) · [공통 Renewal Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/omni_renewal_env_cfg.py)
-- [관측 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observations.py) · [보상 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/goal_rewards.py) · [종료 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/goal_terminations.py)
-- [Dex 보상 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/dex_rewards.py)
-- [최초 달성 latch·유지 timer](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/goal_hold_rewards.py)
+- [현재 환경 Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py) · [등록](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py) · [공통 Renewal Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py)
+- [관측 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observation_functions/sweep.py) · [보상 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/goal_rewards.py) · [종료 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/termination_functions/goal_terminations.py)
+- [Dex 보상 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/dex_rewards.py)
+- [최초 달성 latch·유지 timer](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/goal_hold_rewards.py)
 - 변경 의도·당시 실행 기록: [2026-10-18_dex_tactile_renewal_v2_osc](../logs/2026-10-18_dex_tactile_renewal_v2_osc.md) · [2026-10-18_v2_inherits_v1](../logs/2026-10-18_v2_inherits_v1.md)
 
 이번 문서화에서는 새 train/play·성공률 평가·실물 실험을 실행하지 않았다. 과거 로그의 검증 결과는 해당 날짜·설정에 한정하며, 위 계약은 2026-10-22 작업트리 기준이다. 코드 링크는 통합 workspace checkout을 전제로 한다.

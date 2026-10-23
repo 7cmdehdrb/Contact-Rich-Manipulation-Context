@@ -87,8 +87,8 @@ Omni v0의 **전체 11항**을 유지한다. RewardManager가 `weight × Δt`를
 
 ## 근거와 연결
 
-- [Omni v0/v1 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/omni_env_cfg.py), [현재 보상 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/goal_rewards.py)
-- [목표·실패 판정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/goal_terminations.py), [목표 reset](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/goal_events.py)
+- [Omni v0/v1 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_envs.py), [현재 보상 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/goal_rewards.py)
+- [목표·실패 판정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/termination_functions/goal_terminations.py), [목표 reset](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/event_functions/goal_events.py)
 - [최초 v1 생성 이력](../logs/2026-10-14_omni_v1_arm_velocity.md), [공통 제곱 비용 상한 이력](../logs/2026-10-18_omni_squared_cost_caps.md)
 - 다음 분기: [Omni v2](SWEEP_OMNI_V2_ENVIRONMENT.md)
 

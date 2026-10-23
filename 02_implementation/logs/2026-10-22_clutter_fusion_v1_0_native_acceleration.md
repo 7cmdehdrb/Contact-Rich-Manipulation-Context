@@ -21,7 +21,7 @@ cost = sum(cost_per_object for eligible active objects)
 
 로컬 framework의 [`RigidObjectCollectionData`](../../../../IsaacLab/source/isaaclab/isaaclab/assets/rigid_object_collection/rigid_object_collection_data.py)는 `object_com_lin_acc_w`를 제공한다. 형태는 `[num_envs, num_objects, 3]`, 단위는 m/s²이며 월드 좌표계의 질량중심 선가속도다. `object_com_acc_w`가 `root_physx_view.get_accelerations()`를 조회하고 linear XYZ를 노출한다. 별도 센서를 추가할 필요가 없다.
 
-[`reward_functions.py`](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_v1_0/reward_functions.py)의 가속도 입력을 해당 API로 교체하고 `_previous_velocity`와 `/step_dt` 차분을 제거했다. 벡터 norm을 사용하여 가속·감속·방향 변화 모두 양의 크기로 평가한다. `_previous_valid`는 속도 이력이 아니라 reset/새 활성화의 첫 샘플 제외용 boolean으로만 유지한다. 부분 reset·동일 step 캐시·비활성 물체 제외도 유지한다.
+[`reward_functions.py`](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/contact_sweep_clutter_fusion.py)의 가속도 입력을 해당 API로 교체하고 `_previous_velocity`와 `/step_dt` 차분을 제거했다. 벡터 norm을 사용하여 가속·감속·방향 변화 모두 양의 크기로 평가한다. `_previous_valid`는 속도 이력이 아니라 reset/새 활성화의 첫 샘플 제외용 boolean으로만 유지한다. 부분 reset·동일 step 캐시·비활성 물체 제외도 유지한다.
 
 샘플링 의미는 바뀐다. 이전 값은 제어 주기의 속도 차분으로 얻은 평균 가속도였고, 현재 값은 마지막 물리 step의 PhysX 가속도다. 제어 주기 내 모든 substep의 최대값이나 평균을 누적하지 않는다. 학습된 정책의 보상 분포나 장시간 안정성이 동일하다는 주장은 하지 않는다.
 

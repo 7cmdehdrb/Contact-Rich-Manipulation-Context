@@ -68,4 +68,4 @@ Workspace 루트의 Isaac Lab 환경에서 실행한다. 환경 수는 예시이
   --num_envs 1 --checkpoint "<Holding-v2-checkpoint.pt>" --real-time
 ```
 
-[환경 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_holding_v2/env_cfg.py) · [목표·접촉·성공 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/contact_sweep_clutter_fusion_holding_v2/mdp.py) · [실제 검증과 미검증 범위](../logs/2026-10-23_fusion_holding_v2.md).
+[환경 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_fusion_holding_envs.py) · [목표·접촉 보상 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/contact_sweep_clutter_fusion_holding_scheduled.py) · [성공 판정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/termination_functions/contact_sweep_clutter_fusion_holding.py) · [공통 목표 반경](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/contact_sweep_clutter_fusion_holding.py) · [실제 검증과 미검증 범위](../logs/2026-10-23_fusion_holding_v2.md).
