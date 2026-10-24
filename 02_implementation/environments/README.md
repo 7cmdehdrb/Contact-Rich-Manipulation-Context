@@ -1,5 +1,7 @@
 # 환경 문서 안내
 
+- [Holding v3 · OSC v3 · ObjectRandom v2](FUSION_HOLDING_V3_FAMILY.md): 누적3초 goal hold, 같은OSC 제어, 개수1000간격과 Gray 내측15% 커리큘럼.
+
 - [Holding ObjectRandom Test v0](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OBJECT_RANDOM_TEST_V0_ENVIRONMENT.md): Holding-v2 직접 상속, Joint Position 제어로 ObjectRandom-v1 물체 구성의 학습 가능성 검증.
 
 [구현 문서 안내](../README.md) · [등록·실행 안내](../08_ACTIVE_ENVIRONMENTS.md)

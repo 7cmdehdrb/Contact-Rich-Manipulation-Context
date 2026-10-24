@@ -1,5 +1,9 @@
 # 활성 패키지와 환경 구현 현황
 
+2026-10-24 ObjectRandom-v2 후속: 7/7 반복 reset 검사의 첫 배치에서 비겹침 배치 실패를 확인하여 **활성 개수 상한을 Gray6/White6**으로 낮췄다. White11000·Gray12000에서 상한에 도달하며1000간격 교대 일정·Gray 패딩은 유지한다. 물리8/8·관측16슬롯 용량은 보존한다. [반복 검증과 한계](logs/2026-10-24_object_random_v2_population_cap.md).
+
+2026-10-24 신규 상속 체인은 **Holding-v2 → Holding-v3 → Holding-OSC-v3 → Holding-OSC-ObjectRandom-v2**다. Holding-v3는 goal hold 지급 시간을 에피소드 누적3초로 제한한다. OSC-v3는 현재OSC-v2 제어를 재사용하며 ObjectRandom-v2는3000부터1000 iteration마다 개수를 교대 추가하고6000~12000에 Gray 내측 경계를 최대15% 확장한다. [전체 계약·학습 명령](environments/FUSION_HOLDING_V3_FAMILY.md) · [실행한 검증](logs/2026-10-24_fusion_holding_v3.md).
+
 2026-10-24 Fusion 수치 안정성 수정: Fusion 및 Holding/OSC/ObjectRandom 파생의 이전 action 관측8D를 `bounded_last_action`의 `[-1,1]` 복사본으로 변경했다. Action 실행·raw 운동 페널티는 유지한다. 차원과 checkpoint 키는 호환되지만 범위 밖 action의 관측 의미는 달라졌다. 공통 `CurriculumOnPolicyRunner`는 PPO에 수치 검사·진단 dump·양수 std 투영·resume LR 동기화를 적용한다. [TEMP 전체 감사·원인 재현·검증 범위](logs/2026-10-24_temp_training_stability.md).
 
 2026-10-24 Windows 실행: `inspire_sweep_baseline/scripts/play.py`와 `train.py`는 Isaac Sim 5.1에서 D3D12를 기본 선택한다. Vulkan RTX 초기화 크래시를 우회하며 명시적 `--kit_args` backend 선택은 보존한다. task 등록·상속·학습 계약은 그대로다. [진단·검증 기록](logs/2026-10-24_windows_vulkan_startup.md).
@@ -50,6 +54,9 @@
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v0` | `FusionHoldingOSCV0EnvCfg` | `FusionHoldingOSCV0PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_osc_v0` |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v0` | `FusionHoldingOSCObjectRandomV0EnvCfg` | `FusionHoldingOSCObjectRandomV0PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v0` |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v1` | `FusionHoldingV1EnvCfg` | `FusionHoldingV1PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_v1` |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v3` | `FusionHoldingV3EnvCfg` | `FusionHoldingV3PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_v3` |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v3` | `FusionHoldingOSCV3EnvCfg` | `FusionHoldingOSCV3PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_osc_v3` |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v2` | `FusionHoldingOSCObjectRandomV2EnvCfg` | `FusionHoldingOSCObjectRandomV2PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v2` |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v1` | `FusionHoldingOSCV1EnvCfg` | `FusionHoldingOSCV1PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_osc_v1` |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v2` | `FusionHoldingOSCV2EnvCfg` | `FusionHoldingOSCV2PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_osc_v2` |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v1` | `FusionHoldingOSCObjectRandomV1EnvCfg` | `FusionHoldingOSCObjectRandomV1PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v1` |

@@ -1,5 +1,9 @@
 # 앞으로 집중할 것과 진행할 작업
 
+2026-10-24 ObjectRandom-v2 상한은7/7 실패 후6/6으로 변경했다. 반복 reset의 [결과와 한계](../02_implementation/logs/2026-10-24_object_random_v2_population_cap.md)를 바탕으로 개수 축소와 배치 알고리즘의 안정성을 구분해 평가한다. 실패 시 타겟 재추출·자동 개수 축소를 추가한 것은 아니다.
+
+2026-10-24 Holding v3 후속: [새 계열 계약](../02_implementation/environments/FUSION_HOLDING_V3_FAMILY.md)에 따라 누적3초 지급 상한이 성공 회피 행동을 줄이는지 비교한다. OSC-v3는 같은 제어로Holding-v3 과업 결과를, ObjectRandom-v2는 개수 증가와 Gray 침범 단계별 접촉·성공·배치 실패를 평가한다. 구현 검증과 장기 학습 성과는 구분한다. [실행한 검사와 한계](../02_implementation/logs/2026-10-24_fusion_holding_v3.md).
+
 2026-10-23 Holding 이후 환경 개발은 [Holding·OSC·OSC-Random 계열 운영 원칙](../02_implementation/environments/FUSION_HOLDING_FAMILY.md)을 따른다. 목표 유지·성공 종료, OSC에서 결과 재현, 물체 다양화의 세 목적을 구분하고 각 버전의 기준 부모를 명시한다.
 
 2026-10-21 F/T 후속: [원본·보정 동시 수집](../02_implementation/logs/2026-10-21_clutter_ft_collection.md)의 유효 rate 분포를 분석하여 사용자 확인을 받은 계수를 [Clutter Fusion](../02_implementation/logs/2026-10-21_clutter_fusion.md)에 적용했다. 독립 CFG·가림·극좌표 관측·보상 및 목표 커리큘럼의 CPU/GPU 연결과 짧은 PPO update를 검증했다. 다음은 새 입력으로 장기 학습하여 접촉 초기 허용·큰 F/T 변화 억제·손바닥 방향·목표 유지·장애물 변위의 실제 비중을 평가하는 것이다. 장기 성능·실물 검증은 미실행이다.

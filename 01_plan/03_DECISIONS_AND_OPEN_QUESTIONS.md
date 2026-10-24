@@ -1,5 +1,9 @@
 # 결정·변경·미정 목록
 
+2026-10-24 사용자 후속 지정: ObjectRandom-v2의7/7 반복 배치가 통과하면7/7, 실패하면6/6으로 제한한다. 실제7/7·seed0의 첫 reset 배치에서200회 실패하여 현재 커리큘럼 상한은6/6이다. 관측과 물리 슬롯 용량은 보존한다. [검증과 한계](../02_implementation/logs/2026-10-24_object_random_v2_population_cap.md).
+
+2026-10-24 사용자 요청: Holding-v3 → OSC-v3 → ObjectRandom-v2를 직접 상속 체인으로 추가한다. goal hold 지급 시간을 에피소드 누적3초로 제한하고OSC-v2 제어를 재사용한다. ObjectRandom 개수는3000부터1000간격 교대 증가, Gray 내측 확장은6000~12000·250간격·최대15%다. 15%는 기존Red 제외 반경10.3cm를 기준으로 최대1.545cm 안쪽을 허용하는 구현 해석이다. [계약](../02_implementation/environments/FUSION_HOLDING_V3_FAMILY.md) · [검증](../02_implementation/logs/2026-10-24_fusion_holding_v3.md). 학습 행동 개선은 미검증이다.
+
 > **2026-10-23 사용자 지정 — Holding 계열 운영:** Holding은 목표 유지·성공 종료 개선, OSC는 제어 설정 변경을 통한 Holding 결과 재현, OSC-Random은 물체 다양화·실제 물체 형상 확장을 담당한다. 각 계열의 버전은 독립적으로 증가하고 기준 부모를 명시한다. 현재 Random 등록명은 OSC-ObjectRandom이다. [계열 설명과 현재 상속 관계](../02_implementation/environments/FUSION_HOLDING_FAMILY.md). 이는 개발 방향의 확정이며 성능 검증 완료를 뜻하지 않는다.
 > **2026-10-23 사용자 요청 — 스폰 규칙 고도화 계획:** 영역별 스폰 개수를 쉽게 조정하고, 밀도가 높아져도 RED Zone 금지와 물체 간 최소 거리를 유지한다. 가능한 한 기존 배치 알고리즘을 따르며 물리적으로 수용할 수 없으면 개수 감소를 허용한다. 이번 범위는 [reset Event 개발 계획](environments/CLUTTER_SPAWN_EVENT_PLAN.md) 작성이며 코드 구현은 하지 않는다. 유한 탐색의 실패는 물리적 불가능 증명과 구분한다. 탐색 예산 소진 시 유효 부분 배치를 반환하는 운용 방식은 계획상의 제안이며 전역 최대 개수 보장이 아니다.
 

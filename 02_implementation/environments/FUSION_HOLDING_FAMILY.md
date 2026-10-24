@@ -1,5 +1,7 @@
 # Fusion Holding 환경 계열과 개발 방향
 
+2026-10-24 추가: 최신 체인은 Holding-v2 → **Holding-v3 → OSC-v3 → ObjectRandom-v2**다. 누적3초 goal hold와 Gray 내측 확장·개수 일정의 [구체 계약](FUSION_HOLDING_V3_FAMILY.md)과 [검증](../logs/2026-10-24_fusion_holding_v3.md)을 따른다.
+
 [환경 문서 안내](README.md) · [활성 환경과 실행](../08_ACTIVE_ENVIRONMENTS.md) · [환경 전체 상속도](ENVIRONMENT_EVOLUTION.md)
 
 기준일: 2026-10-23. Fusion Holding과 파생 환경은 **목표 유지와 성공 종료 → OSC에서 같은 과업 성능 재현 → 다양한 실제 물체 형상으로 확장**하는 세 계열로 관리한다. 각 계열은 자신이 해결하는 문제를 기준으로 v1, v2, …를 증가시킨다.
@@ -41,7 +43,7 @@ OSC 계열은 선택한 Holding 환경을 기준으로 Arm 제어를 바꾼다. 
 현재 OSC-v1은 **Holding-v1**, OSC-v2는 **Holding-v2를 직접 상속**한다. 사용자 후속 요청으로 OSC-v2의 목표 과업도 변경되어 두 OSC 버전을 순수 제어 차이만으로 비교할 수 없다. OSC-v2가 OSC-v1을 상속하는 구조는 아니다.
 
 - OSC-v1: Robot Base 기준 상대 pose, stiffness 100, 관성 분리·중력 보상 사용.
-- OSC-v2: UR10 Reach의 제어를 우리 EEF에 맞춰 이식. 위치/회전 stiffness 80/25, scale 0.03/0.15, RPY 회전 입력과 effort 제한, 관성 분리·중력 보상 미사용.
+- OSC-v2 및 OSC-v3: 현재 코드의 위치/회전 stiffness100/50, scale0.03/0.15, RPY 입력과 effort 제한, 관성 분리·중력 보상 사용. 과거 문서의80/25·미사용 수치와 현재 코드는 다르다. 이번 v3 추가에서 제어 수치는 바꾸지 않았다.
 
 [OSC v1 설명](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V1_ENVIRONMENT.md) · [OSC v2 설정과 검증](../logs/2026-10-23_fusion_holding_osc_v2.md). Holding-v1을 부모로 사용했던 당시 OSC-v2는 짧은 GPU 실행에서 토크 포화와 선반 충돌 종료가 관찰되어 Holding 결과 재현이 완료된 상태는 아니다.
 
@@ -70,6 +72,9 @@ flowchart TD
     H1 --> O1["Holding OSC v1"]
     H1 --> H2["Holding v2: 공통 목표 반경"]
     H2 --> O2["Holding OSC v2"]
+    H2 --> H3["Holding v3: 누적3초 지급"]
+    H3 --> O3["Holding OSC v3: 같은OSC"]
+    O3 --> R2["OSC ObjectRandom v2: Gray 확장"]
     H2 --> JRT["Holding ObjectRandom Test v0: Joint Position"]
     O2 --> R1["OSC ObjectRandom v1"]
 ```
@@ -84,6 +89,9 @@ flowchart TD
 | Holding-OSC-v2 | Holding-v2 | UR10 Reach 설정을 적용한 별도 OSC 제어 실험 |
 | Holding-OSC-ObjectRandom-v0 | Holding-OSC-v0 | 14슬롯 장애물 관측의 물체 다양화 분기 |
 | Holding-OSC-ObjectRandom-v1 | Holding-OSC-v2 | 16슬롯 장애물 관측의 물체 다양화 분기 |
+| Holding-v3 | Holding-v2 | 에피소드 누적3초 goal hold 지급 상한 |
+| Holding-OSC-v3 | Holding-v3 | 현재OSC-v2 제어로 새Holding 과업 비교 |
+| Holding-OSC-ObjectRandom-v2 | Holding-OSC-v3 | 최대6/6까지1000간격 개수 증가, Gray 내측15% 확장 |
 
 현재 등록 ID는 위 환경명 앞에 `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-`를 붙인 형태다. 예를 들어 OSC-v2의 전체 ID는 `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v2`다.
 

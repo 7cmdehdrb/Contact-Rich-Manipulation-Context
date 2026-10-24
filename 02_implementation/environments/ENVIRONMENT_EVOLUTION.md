@@ -132,6 +132,9 @@ flowchart TD
     FH1 --> FHO1["Holding OSC v1: Base 축·stiffness100"]
     FH1 --> FH2["Holding v2: 공통 목표 반경·접촉 간주"]
     FH2 --> FHO2["Holding OSC v2: Reach 제어"]
+    FH2 --> FH3["Holding v3: 누적3초 지급"]
+    FH3 --> FHO3["Holding OSC v3"]
+    FHO3 --> FHOR2["ObjectRandom v2: Gray 확장"]
     FH2 --> FHJRT["Holding ObjectRandom Test v0: Joint Position·랜덤 물체"]
     FHO2 --> FHOR1["OSC ObjectRandom v1: 물체 랜덤화·16슬롯"]
     F10 --> F14["Fusion v1_4: 250 간격·11개 물체·3초 성공 종료"]
@@ -223,6 +226,9 @@ flowchart TD
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v0` | [Holding OSC v0](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V0_ENVIRONMENT.md) | 2026-10-23 추가 |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v0` | [Holding OSC ObjectRandom v0](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V0_ENVIRONMENT.md) | 2026-10-23 추가 |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v2` | [Holding v2](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V2_ENVIRONMENT.md) | 2026-10-23 추가 |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v3` | [Holding v3](FUSION_HOLDING_V3_FAMILY.md) | 2026-10-24 추가 |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v3` | [Holding OSC v3](FUSION_HOLDING_V3_FAMILY.md) | 2026-10-24 추가 |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v2` | [Holding OSC ObjectRandom v2](FUSION_HOLDING_V3_FAMILY.md) | 2026-10-24 추가 |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v2` | [Holding v2·OSC 계승](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V2_ENVIRONMENT.md) | 2026-10-23 부모 변경 |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v1` | [Holding v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V1_ENVIRONMENT.md) | 2026-10-23 추가 |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v1` | [Holding OSC v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V1_ENVIRONMENT.md) | 2026-10-23 추가 |

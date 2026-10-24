@@ -1,5 +1,11 @@
 # 개발·실험 진행 로그
 
+- [2026-10-24 ObjectRandom-v2 상한 선택](2026-10-24_object_random_v2_population_cap.md): 7/7 반복 reset 불통과에 따라 최대6/6으로 변경, 반복 검사와 한계 기록.
+
+- [2026-10-24 Holding v3 · OSC v3 · ObjectRandom v2](2026-10-24_fusion_holding_v3.md): goal hold 누적3초, 같은OSC, 개수1000간격과 Gray 내측15% 커리큘럼·검증.
+
+- [2026-10-24 Three-view 녹화 대상 설정](2026-10-24_three_view_recording_config.md): 환경·checkpoint·시간 기본값, Windows D3D12,720p와 녹화용 PhysX 버퍼 제한, 세MP4·10초 검증.
+
 - [2026-10-24 TEMP 전체 학습 감사·action 피드백 발산 수정](2026-10-24_temp_training_stability.md):4개 run·50개 checkpoint 감사, 실제 실패 입력 포착과 모델 replay, 이전 action 관측 제한·PPO 수치 검사.
 
 - [2026-10-24 Holding OSC v2 resume 발산 재조사](2026-10-24_holding_osc_resume_crash_audit.md): 정정된 TEMP run에서 value loss1.94e21 및 원본 run의NaN 확인, checkpoint5개 유한성 검사.

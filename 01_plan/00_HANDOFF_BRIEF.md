@@ -1,5 +1,9 @@
 # Blind Sweeping — 단일 파일 인계 요약
 
+**2026-10-24 ObjectRandom-v2 개수 상한 후속:** 7/7 반복 검사의 첫 reset 배치에서 배치200회 실패가 발생했다. 사용자 지정에 따라 활성 상한을6/6으로 낮췄으며 White11000·Gray12000에서 도달한다. 물리8/8·관측16슬롯은 유지한다. [반복 검사·설정·한계](../02_implementation/logs/2026-10-24_object_random_v2_population_cap.md).
+
+**2026-10-24 Holding v3 계열 추가:** Holding-v2 → Holding-v3 → OSC-v3 → ObjectRandom-v2를 구현했다. goal hold는 에피소드 누적3초까지만 지급하며OSC 제어는 현재v2 설정과 같다. ObjectRandom은3000부터1000간격 개수 증가,6000~12000의250간격 Gray 내측15% 확장을 적용한다. [계약·실행](../02_implementation/environments/FUSION_HOLDING_V3_FAMILY.md) · [검증·한계](../02_implementation/logs/2026-10-24_fusion_holding_v3.md). 장기 학습 성능은 미검증이다.
+
 **2026-10-23 Holding v2 후속:** 사용자 요청으로 성공·목표 보상·접촉 간주의 반경을2→1→0.5cm로 통일하고 goal_hold 계수를4로 변경했다. 현재 상속은 Holding-v1→Holding-v2→OSC-v2→ObjectRandom-v1이다. [계약](../02_implementation/environments/CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V2_ENVIRONMENT.md)과 [검증 기록](../02_implementation/logs/2026-10-23_fusion_holding_v2.md)을 따른다.
 
 2026-10-23 Holding 이후 환경 개발은 [Holding·OSC·OSC-Random 계열 운영 원칙](../02_implementation/environments/FUSION_HOLDING_FAMILY.md)을 따른다. 목표 유지·성공 종료, OSC에서 결과 재현, 물체 다양화의 세 목적을 구분하고 각 버전의 기준 부모를 명시한다.
