@@ -1,110 +1,150 @@
-# Fusion Holding 환경 계열과 개발 방향
+# Fusion Holding 환경 계열
 
-2026-10-24 추가: 최신 체인은 Holding-v2 → **Holding-v3 → OSC-v3 → ObjectRandom-v2**다. 누적3초 goal hold와 Gray 내측 확장·개수 일정의 [구체 계약](FUSION_HOLDING_V3_FAMILY.md)과 [검증](../logs/2026-10-24_fusion_holding_v3.md)을 따른다.
+기준일: 2026-10-25. [환경 계층](ENVIRONMENT_EVOLUTION.md) · [최신 v4 공통 계약](FUSION_HOLDING_V4_FAMILY.md) · [활성 환경](../08_ACTIVE_ENVIRONMENTS.md)
 
-[환경 문서 안내](README.md) · [활성 환경과 실행](../08_ACTIVE_ENVIRONMENTS.md) · [환경 전체 상속도](ENVIRONMENT_EVOLUTION.md)
+Holding은 목표 정착·유지 과업, Holding-OSC는 같은 과업의 Arm 제어 비교, Holding-OSC-ObjectRandom은 OSC에 물체·배치 랜덤화를 결합하는 계열이다. 최신 경로는 **Holding-v4 → Holding-OSC-v4 → Holding-OSC-ObjectRandom-v3**다. v4는 success 종료와 지급 시간 상한을 없애고 목표 중심에서 오래 유지하도록 보상한다. Timeout 100%는 학습 목표이며 달성 결과가 아니다.
 
-기준일: 2026-10-23. Fusion Holding과 파생 환경은 **목표 유지와 성공 종료 → OSC에서 같은 과업 성능 재현 → 다양한 실제 물체 형상으로 확장**하는 세 계열로 관리한다. 각 계열은 자신이 해결하는 문제를 기준으로 v1, v2, …를 증가시킨다.
+## 직접 상속과 버전별 역할
 
-여기서 `OSC-Random`은 물체 다양화 계열을 가리킨다. 현재 코드의 등록명은 `Holding-OSC-ObjectRandom`이며, 아래에서는 두 이름을 대응해서 사용한다. 이 문서 작성으로 기존 환경 ID를 변경하지 않는다.
-
-## 1. 세 계열의 역할
-
-| 계열 | 해결하려는 문제 | 버전을 올리는 기준 | 비교 기준 |
-| --- | --- | --- | --- |
-| Fusion Holding | 물체를 목표 위치에 도달시킨 뒤 안정적으로 유지하고 성공적으로 종료할 수 있는가? | 목표 유지·정착·성공 종료를 개선한 환경을 추가한다. | 이전 Holding 버전의 목표 도달·유지·성공/실패 결과 |
-| Fusion Holding OSC | 제어를 OSC로 바꾸어도 Holding의 과업 결과를 재현할 수 있는가? | OSC 설정과 제어 구현을 바꾼 환경을 추가한다. | 선택한 Holding 부모 환경의 과업 성능 |
-| Fusion Holding OSC-Random | 물체를 다양화하고 실제 물체 형상으로 바꾸어도 같은 과업을 수행할 수 있는가? | 물체 다양화·현실적인 물체 표현과 그에 필요한 장면 구성을 개선한 환경을 추가한다. | 선택한 OSC 부모 환경의 과업 성능 |
-
-세 계열의 버전 번호는 각각의 개선 순서를 뜻한다. 숫자가 같다고 동일한 개발 단계나 동일한 부모를 뜻하지 않으며, 숫자가 크다고 성능이 더 좋다는 의미도 아니다.
-
-## 2. Holding — 목표 유지와 성공 종료
-
-Holding은 물체를 목표 근처로 밀어 보내는 것에서 더 나아가, 목표에 도달한 물체가 다시 이탈하지 않고 안정적으로 머물도록 만드는 기준 계열이다. 목표 위치 오차, 잔류 속도, 접촉 유지, 목표 체류 시간과 성공 종료의 관계를 다룬다.
-
-Holding-v2와 이후 버전은 이 목표를 개선하기 위한 보상·성공 조건·커리큘럼 등의 변경을 담는다. 구체적인 변경 항목과 수치는 각 버전에서 별도로 정한다. 보상이 커졌다는 사실과 실제 목표 유지·성공률이 개선됐다는 결과는 구분한다.
-
-현재 Holding-v0에는 거리·속도에 따른 정착 보상과 독립적인 성공 종료가 구현되어 있다. 성공은 위치 허용 오차 0.5 cm, 속도 허용치 0.01 m/s 조건을 3초 동안 유지하고 실패 조건에 해당하지 않을 때 판정한다. Holding-v1은 이 과업 설정을 계승하고 장애물 관측 용량을 16슬롯, 인코더를 64→32→16D로 확장했다. **v1의 실제 변경은 관측 용량 확장이며, 목표 유지 성능이 개선됐다는 실험 결과를 의미하지 않는다.**
-
-Holding-v2는 공통 목표 반경2→1→0.5cm, goal_hold 계수4, 목표 내 무접촉 보상을 추가했다. [Holding v2 계약](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V2_ENVIRONMENT.md).
-
-세부 계약: [Holding v0](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V0_ENVIRONMENT.md) · [Holding v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V1_ENVIRONMENT.md).
-
-## 3. OSC — 제어 변경 후 Holding 결과 재현
-
-OSC 계열은 선택한 Holding 환경을 기준으로 Arm 제어를 바꾼다. 목표는 OSC를 사용하면서도 Holding에서 얻은 목표 도달·정착·유지·성공 종료 결과를 재현하는 것이다.
-
-버전별 변경의 중심은 OSC의 stiffness·damping, 명령 scale, 좌표계·회전 표현, 관성 분리·중력 보상, effort 제한 등이다. OSC effort 제어와 충돌하지 않도록 Arm의 기존 관절 PD gain을 조정하는 것도 제어 변경에 포함한다. 제어 기준점은 우리 로봇의 EEF Frame을 따른다.
-
-비교하는 Holding의 관측·보상·성공 조건·실패 조건·물체 분포·Hand 제어는 유지한다. 그래야 차이가 생겼을 때 OSC 변경의 영향을 판단할 수 있다. 별도의 과업 변경이 필요하면 그 변경을 명시적으로 구분한다.
-
-여기서 ‘결과 재현’은 동일한 과업 성능을 얻는다는 의미다. Joint Position과 OSC는 Action 의미가 다르므로 기존 정책의 출력을 그대로 넣거나 같은 checkpoint를 사용하는 것만으로 재현됐다고 판단하지 않는다.
-
-현재 OSC-v1은 **Holding-v1**, OSC-v2는 **Holding-v2를 직접 상속**한다. 사용자 후속 요청으로 OSC-v2의 목표 과업도 변경되어 두 OSC 버전을 순수 제어 차이만으로 비교할 수 없다. OSC-v2가 OSC-v1을 상속하는 구조는 아니다.
-
-- OSC-v1: Robot Base 기준 상대 pose, stiffness 100, 관성 분리·중력 보상 사용.
-- OSC-v2 및 OSC-v3: 현재 코드의 위치/회전 stiffness100/50, scale0.03/0.15, RPY 입력과 effort 제한, 관성 분리·중력 보상 사용. 과거 문서의80/25·미사용 수치와 현재 코드는 다르다. 이번 v3 추가에서 제어 수치는 바꾸지 않았다.
-
-[OSC v1 설명](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V1_ENVIRONMENT.md) · [OSC v2 설정과 검증](../logs/2026-10-23_fusion_holding_osc_v2.md). Holding-v1을 부모로 사용했던 당시 OSC-v2는 짧은 GPU 실행에서 토크 포화와 선반 충돌 종료가 관찰되어 Holding 결과 재현이 완료된 상태는 아니다.
-
-## 4. OSC-Random — 다양한 물체와 실제 물체 형상으로 확장
-
-OSC-Random 계열은 선택한 OSC 환경의 제어와 과업을 기반으로 물체 조건을 확장한다. 단순 원통에서 다양한 형상·크기·질량·마찰의 물체로 바꾸었을 때도 목표 도달·유지·성공 종료가 유지되는지를 다룬다.
-
-물체의 종류를 늘리는 것뿐 아니라 충돌 형상, 관성, 초기 자세·배치와 비겹침 조건, 초기 관측의 타당성도 함께 확인한다. 특히 원통을 전제로 만든 가시성 판정이 비원통 물체에도 적합한지 검토해야 한다. 이 계열에서 필요한 물체·장면·관측 처리는 버전별로 명시하고, 부모 OSC 제어를 함께 바꾸어야 한다면 두 변경을 구분해 기록한다.
-
-현재 `OSC-ObjectRandom-v1`은 OSC-v2를 직접 상속하며 NVIDIA YCB 물체의 종류·크기와 reset 시 위치·yaw·물성을 랜덤화한다. Gray1/White1에서 부모와 같은 교대 일정으로 Gray8/White8까지 증가시키며 16슬롯 관측을 모두 사용한다. 타겟은 기존 원통을 유지한다. 따라서 **현재는 주변 장애물의 다양화가 구현된 단계이며, 타겟까지 실제 물체로 다양화한 환경은 아니다.**
-
-현재 가시성 필터는 장애물을 반경 6 cm의 원형으로 근사한다. 비원통 물체의 실제 윤곽·방향·높이를 반영하는 가림 판정은 후속 개선 대상이다. 관측된 장애물을 왼쪽부터 채우고 인접한 유효 슬롯 사이에서 확률적으로 스왑하는 절차는 유지한다.
-
-실제 물체의 시뮬레이션 모델을 사용하는 것과 실물 로봇에서 검증하는 것은 별도 단계다. [ObjectRandom v1 상세 계약](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V1_ENVIRONMENT.md).
-
-## 5. 현재 구현된 상속 관계
-
-아래 화살표는 실제 EnvCfg의 직접 상속 관계다. 개발 진행 순서나 성능 순위를 나타내지 않는다.
+아래 이름에는 공통 접두부 `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-`를 붙인다. 번호가 같은 환경이 자동으로 부모가 되는 것은 아니다.
 
 ```mermaid
 flowchart TD
     F["Fusion v1_0"] --> H0["Holding v0"]
     H0 --> H1["Holding v1"]
-    H0 --> O0["Holding OSC v0"]
-    O0 --> R0["OSC ObjectRandom v0"]
-    H1 --> O1["Holding OSC v1"]
-    H1 --> H2["Holding v2: 공통 목표 반경"]
-    H2 --> O2["Holding OSC v2"]
-    H2 --> H3["Holding v3: 누적3초 지급"]
-    H3 --> O3["Holding OSC v3: 같은OSC"]
-    O3 --> R2["OSC ObjectRandom v2: Gray 확장"]
-    H2 --> JRT["Holding ObjectRandom Test v0: Joint Position"]
-    O2 --> R1["OSC ObjectRandom v1"]
+    H1 --> H2["Holding v2"]
+    H2 --> H3["Holding v3"]
+    H3 --> H4["Holding v4"]
+    H0 --> O0["OSC v0"]
+    H1 --> O1["OSC v1"]
+    H2 --> O2["OSC v2"]
+    H3 --> O3["OSC v3"]
+    H4 --> O4["OSC v4"]
+    O0 --> R0["ObjectRandom v0"]
+    O2 --> R1["ObjectRandom v1"]
+    O3 --> R2["ObjectRandom v2"]
+    O4 --> R3["ObjectRandom v3"]
+    H2 --> T["Holding ObjectRandom Test v0"]
 ```
 
-| 현재 환경 | 직접 부모 | 이번 계열 구분에서의 의미 |
+| 환경 | 직접 부모 | 핵심 변경 |
 | --- | --- | --- |
-| Holding-v0 | Fusion-v1_0 | 목표 정착·유지·성공 종료 기준 |
-| Holding-v1 | Holding-v0 | 기존 과업 유지, 장애물 입력 용량 확장 |
-| Holding-v2 | Holding-v1 | 공통 목표 반경 커리큘럼, 목표 내 접촉 간주, 정착 계수4 |
-| Holding-OSC-v0 | Holding-v0 | 40D 장애물 입력의 OSC 분기 |
-| Holding-OSC-v1 | Holding-v1 | 64D 장애물 입력의 OSC 제어 실험 |
-| Holding-OSC-v2 | Holding-v2 | UR10 Reach 설정을 적용한 별도 OSC 제어 실험 |
-| Holding-OSC-ObjectRandom-v0 | Holding-OSC-v0 | 14슬롯 장애물 관측의 물체 다양화 분기 |
-| Holding-OSC-ObjectRandom-v1 | Holding-OSC-v2 | 16슬롯 장애물 관측의 물체 다양화 분기 |
-| Holding-v3 | Holding-v2 | 에피소드 누적3초 goal hold 지급 상한 |
-| Holding-OSC-v3 | Holding-v3 | 현재OSC-v2 제어로 새Holding 과업 비교 |
-| Holding-OSC-ObjectRandom-v2 | Holding-OSC-v3 | 최대6/6까지1000간격 개수 증가, Gray 내측15% 확장 |
+| Holding-v0 | Fusion-v1_0 | 거리·속도 정착 보상, 독립 성공 종료, 충격 warmup |
+| Holding-v1 | Holding-v0 | 장애물 관측 16슬롯·64D, encoder 64→32→16 |
+| Holding-v2 | Holding-v1 | 공통 목표 반경 r, goal hold 계수 4, 목표 내 접촉 간주 |
+| Holding-v3 | Holding-v2 | goal hold 누적 지급 시간 3초 제한 |
+| Holding-v4 | Holding-v3 | success·시간 상한 제거, d≤2r 지급, d<r 중심 강화, ReachingOrGoal |
+| Holding-OSC-v0 / v1 | Holding-v0 / v1 각각 | Robot Base 상대 pose, stiffness 100 |
+| Holding-OSC-v2 / v3 / v4 | Holding-v2 / v3 / v4 각각 | 공통 Reach OSC 제어 적용 |
+| Holding-OSC-ObjectRandom-v0 | Holding-OSC-v0 | NVIDIA 장애물, 고정 Gray7/White7, 관측 14슬롯 |
+| Holding-OSC-ObjectRandom-v1 | Holding-OSC-v2 | 물리·관측 16슬롯, 활성 1/1→8/8 |
+| Holding-OSC-ObjectRandom-v2 | Holding-OSC-v3 | 활성 최대 6/6, 1000 iteration 교대 증가, Gray 내측 15% |
+| Holding-OSC-ObjectRandom-v3 | Holding-OSC-v4 | v2의 랜덤화 규칙을 새 Holding 과업에 결합 |
+| Holding-ObjectRandom-Test-v0 | Holding-v2 | ObjectRandom-v1 구성을 Joint Position으로 비교 |
 
-현재 등록 ID는 위 환경명 앞에 `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-`를 붙인 형태다. 예를 들어 OSC-v2의 전체 ID는 `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v2`다.
+## Holding 보상과 종료의 버전 차이
 
-Holding-ObjectRandom-Test-v0은 Holding-v2를 직접 상속한 별도 테스트 분기다. OSC-ObjectRandom-v1의 물체 구성을 재사용하면서 Joint Position 제어로 학습 가능성을 먼저 확인하려는 목적이며, OSC 재현 완료를 의미하지 않는다. [테스트 환경 계약](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OBJECT_RANDOM_TEST_V0_ENVIRONMENT.md).
+d는 현재 타겟과 goal의 XY 거리, v는 타겟 XYZ 선속력이다. 아래는 유효한 타겟일 때의 goal hold만 비교한다. 모든 버전에서 RewardManager가 weight와 step_dt를 적용한다.
 
-## 6. 앞으로 버전을 추가하는 방법
+```math
+q(d,v,a)=2^{-((d/a)^2+(v/s)^2)}
+```
 
-각 계열은 자신이 해결하는 문제를 기준으로 독립적으로 버전을 올린다. 새 버전에는 **기준 부모, 바뀐 조건, 비교 결과**를 함께 남긴다.
+| Holding 버전 | 지급 범위·raw rate | weight | 지급 시간 상한 | success 종료 |
+| --- | --- | --- | --- | --- |
+| v0 / v1 | d<3a에서 q(d,v,a) | 2 | 없음 | 고정 0.005m·속력≤0.01m/s·연속 3초 |
+| v2 | d≤r에서 q(d,v,r) | 4 | 없음 | live r·속력≤0.01m/s·연속 3초 |
+| v3 | v2와 같은 rate | 4 | 에피소드 누적 3초 | v2와 같음, 지급 카운터와 독립 |
+| v4 | d≤2r에서 q, d<r이면 추가로 1+(1-d/r)²를 곱함 | 4 | 없음 | 제거 |
 
-1. Holding의 새 버전에서는 목표 유지와 성공 종료에 어떤 개선을 시도했는지 설명한다.
-2. OSC의 새 버전에서는 어느 Holding 결과를 재현하려는지와 바꾼 제어 설정을 기록한다.
-3. OSC-Random의 새 버전에서는 어느 OSC 설정을 기반으로 어떤 물체 조건을 확장했는지 기록한다.
+범위 밖 또는 타겟 무효이면 0이다. v0/v1의 거리 scale a는 iteration 0/1000/6000/10000/12000/16000에서 각각 0.01/0.02/0.02/0.01/0.01/0.005m이며 250 간격 보간이다. v2 이후 r은 5000까지 0.02m, 10000에 0.01m, 20000에 0.005m로 매 iteration 선형 보간한다. **v4의 2r은 지급 경계이며 감쇠식의 분모는 여전히 r**이다.
 
-예를 들어 OSC-v3의 부모는 이름만으로 정해지지 않는다. Holding-v1을 계속 비교할 수도 있고, 이후 Holding-v2를 기준으로 삼을 수도 있다. 마찬가지로 OSC-Random-v2의 부모가 자동으로 OSC-v2가 되는 것은 아니다. 각 버전을 만들 때 기준 부모를 명시한다. 이는 버전 관리 원칙이며 해당 후속 환경이 이미 구현됐다는 뜻은 아니다.
+중심·정지에서 v2 최대는 raw 1, 초당 4, 0.02초 step당 0.08이다. v4는 raw 2, 초당 8, step당 0.16이다. 동일 유지 시간의 최대 rate는 2배다. v3의 누적 상한 12와 달리 v2에는 지급 예산 상한 12가 없다. v2에서 중심·정지를 연속 유지하면 3초 success가 발생한다. v4는 10초 전체를 이상적으로 중심·정지로 유지할 때 goal hold 합계 80이며, 실제 초기 배치·도달 시간·실패는 별도다.
 
-비교 결과는 목표 위치 오차·잔류 속도·연속 유지 시간·성공 종료와 실패 원인을 중심으로 기록한다. OSC에서는 토크 포화·진동·충돌을, Random에서는 물체 종류·크기·물성별 결과를 함께 확인한다. 같은 목표·성공 조건과 비교 가능한 초기 조건을 사용하며, 환경 생성과 짧은 실행의 통과만으로 상위 단계의 결과를 재현했다고 판단하지 않는다.
+## 제어·랜덤화의 비교 기준
+
+OSC-v0/v1은 기본 OSC, Robot Base 축, pose_rel, 모든 축 stiffness 100, scale 1/1이다. OSC-v2/v3/v4는 공통 `configure_reach_osc`를 사용하며 위치/회전 stiffness 100/50, damping ratio 1, 위치/회전 scale 0.03/0.15, RPY 입력, effort_limit_scale 1이다. 관성 분리와 중력 보상은 true, Arm 관절 PD는 0이다. 과거 80/25·false 기록은 현재 적용값이 아니다.
+
+ObjectRandom-v3는 v2의 scene·events·ObjectRandomV2CurriculumCfg를 그대로 사용한다. 아래 통합된 v3 세대 설명의 ObjectRandom-v2 배치·개수 표는 v3에도 적용한다. 목표 실린더는 유지하며 NVIDIA YCB 랜덤화는 장애물에 적용한다.
+
+## v3 세대 상세 계약 통합
+
+기존 FUSION_HOLDING_V3_FAMILY.md의 등록·시간 예산·OSC·랜덤화·검증 설명을 이 절로 통합했다. 이 절의 Holding-v3/OSC-v3에는 성공 종료와 3초 지급 상한이 남아 있다. 최신 v4 과업에는 적용하지 않는다.
+
+### 등록과 상속
+
+아래 환경명의 공통 접두사는 `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-`이다. Runtime은 모두 `inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env`, runner는 `CurriculumOnPolicyRunner`다.
+
+| 환경명 | EnvCfg / 직접 부모 | PPO Cfg / experiment |
+| --- | --- | --- |
+| `Holding-v3` | `FusionHoldingV3EnvCfg` / `FusionHoldingV2EnvCfg` | `FusionHoldingV3PPORunnerCfg` / `inspire_contact_sweep_clutter_fusion_holding_v3` |
+| `Holding-OSC-v3` | `FusionHoldingOSCV3EnvCfg` / `FusionHoldingV3EnvCfg` | `FusionHoldingOSCV3PPORunnerCfg` / `inspire_contact_sweep_clutter_fusion_holding_osc_v3` |
+| `Holding-OSC-ObjectRandom-v2` | `FusionHoldingOSCObjectRandomV2EnvCfg` / `FusionHoldingOSCV3EnvCfg` | `FusionHoldingOSCObjectRandomV2PPORunnerCfg` / `inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v2` |
+
+EnvCfg는 각 계열의 `envs/contact_sweep_clutter_fusion_holding*_envs.py`, PPO Cfg는 `agent/contact_sweep_clutter_fusion_holding*_ppo_cfg.py`에 있다. 같은 파일의 이전 버전 등록을 보존한다. 직접 상속은 Holding-v2 → Holding-v3 → OSC-v3 → ObjectRandom-v2다.
+
+### Holding-v3: 에피소드별 지급 시간 상한
+
+[Holding-v2](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V2_ENVIRONMENT.md)의 거리·속도 기반 `goal_settling`을 `CappedGoalSettling` Manager term으로 감싼다. 유효한 선반 위 상태, 공통 XY 목표 반경 안에서 양의 goal hold가 지급되는 제어 step마다 에피소드별 정수 카운트를 증가시킨다. 낮은 보상률이어도 같은 1 step을 소비한다. 보상 크기를 합산해 예산을 소모하는 방식이 아니다.
+
+- 최대 지급 시간은 `max_hold_time=3.0`초다. 목표에서 벗어난 시간에는 카운트를 멈추며, 재진입해도 이전 카운트를 이어 간다.
+- 시간 예산 소진 후에는 goal hold만 0이다. 부분 reset은 해당 환경의 카운트만, 전체 episode reset은 전체 카운트를 초기화한다.
+- 기본 `step_dt=0.02`초에서는 최대 150 step을 지급한다. dt로 3초가 나누어떨어지지 않으면 마지막 지급 step의 비율만 줄여 실제 적분 시간이 3초를 넘지 않게 한다.
+- 기존 거리·속도 shaping과 계수 4를 유지한다. RewardManager가 weight·dt를 한 번 적용한다. 정중앙·정지 상태에서 goal hold 총액은 최대 12다.
+- 성공은 기존처럼 공통 반경·XYZ 속도 0.01 m/s 이하·실패 없음 조건을 연속 3초 유지하면 종료한다. 성공 timer와 지급 카운트는 독립적이다. 종료 판정 후 보상 계산 순서에서도 150번째 지급을 받는다.
+
+공통 반경 2→1→0.5 cm 일정, goal distance, 목표 안 손 접촉 간주, 기타 보상·실패·timeout은 v2를 따른다. 손 접촉 간주에는 이번 시간 상한을 적용하지 않는다.
+
+### OSC-v3: 현재 OSC-v2 제어 재사용
+
+Holding-v3를 직접 상속하고 Arm만 OSC로 교체한다. `configure_reach_osc`에 기존 OSC-v2 설정 본문을 옮겨 두 버전이 함께 사용한다. 현재 코드 기준 위치/회전 stiffness는 100/50, damping ratio는 1, 상대 pose의 위치/회전 scale은 0.03/0.15다. RPY 입력, EEF offset, robot-base frame, effort 제한을 유지하며 관성 분리·중력 보상은 true다. Arm 관절 PD stiffness/damping은 0이다. 과거 문서의 80/25·false 표기는 현재 코드와 다르며, 이번 변경으로 제어 수치를 바꾸지 않았다.
+
+### ObjectRandom-v2: 개수와 Gray 영역
+
+ObjectRandom-v1의 원통 타겟, NVIDIA YCB 장애물 4종×크기 3단계, 1.5배 확대, yaw·질량·마찰 reset, OBB 비겹침·선반 검사와 초기 가림 관측을 재사용한다. **활성 개수 상한은 Gray6/White6**이다. 기존 물리 슬롯은8/8, 관측은16슬롯으로 유지하며 남는 슬롯을 비활성화한다. 7/7 반복 reset 검사의 첫 배치에서 실패하여 사용자 지정 분기에 따라6/6으로 낮췄다. [상한 선택·반복 검증 기록](../logs/2026-10-24_object_random_v2_population_cap.md). `ObjectRandomV2CurriculumCfg`가 다음 두 일정을 적용한다.
+
+| iteration | Gray / White | Gray의 Red 방향 확장률 |
+| --- | --- | --- |
+| 0~2999 | 1 / 1 | 0% |
+| 3000 | 1 / 2 | 0% |
+| 4000 | 2 / 2 | 0% |
+| 5000 | 2 / 3 | 0% |
+| 6000 | 3 / 3 | 0%, 확장 시작점 |
+| 6250 | 3 / 3 | 0.625% |
+| 9000 | 4 / 5 | 7.5% |
+| 11000 | 5 / 6 | 12.5% |
+| 12000 이후 | 6 / 6, 이후 고정 | 15%, 이후 고정 |
+
+White는 3000부터 2000마다, Gray는 4000부터 2000마다 한 개씩 추가하므로 전체적으로 1000마다 교대 증가한다. Gray 확장률은 6000~12000 사이에서 250 iteration마다 0.625%p씩 증가한다. 6000에서는 0, 첫 양의 값은 6250이다. 두 일정 모두 절대 learning iteration으로 계산해 resume·되감기에도 같은 값을 적용한다. 진행 중인 에피소드의 물체 위치·개수는 유지하고 다음 reset에 반영한다.
+
+15%의 구현 해석은 **기존 Red 제외 반경 10.3 cm의 15%를 안쪽으로 허용**하는 것이다. 최대 패딩은 1.545 cm, Gray 중심의 새 제외 반경은 8.755 cm다. 원래 sweep 경로와 robot 쪽으로 연장된 wrist shadow에 대한 거리 함수를 그대로 사용하고, Gray와 rear Gray 후보의 내측 경계만 바꾼다. Red 면적을 15% 줄이는 의미는 아니다.
+
+초기 구현의 실제2환경·seed42 검사에서는 초기 reset/step과 iteration6000·9000·12000·0의 reset을 통과했다. 당시 최대8/8에 도달한16000에서는200회 안에 비겹침 배치를 찾지 못했다. 이후7/7도 실패하여 현재 상한은6/6이다. **6/6·최대 패딩15%는 asset seed5개·100회 배치 reset·총400장면에서 실패0건**을 확인했다. 모든 장면에 대한 성공 보장은 아니며 [후속 반복 검증과 한계](../logs/2026-10-24_object_random_v2_population_cap.md)를 확인한다.
+
+White 후보는 기존 Red·Gray 분류를 유지한다. Gray 외곽 반경 14 cm, rear 영역·최소 한 개 quota, 물체 간 간격·밀도·접근 경로 certificate·실제 OBB 비겹침과 선반 경계도 유지한다. 따라서 새로 허용한 영역 전체에 물체가 반드시 놓이는 것은 아니다. 로컬 `GrayPaddingLayoutGenerator`가 구역 판정을 확장하며 `src/scene_randomization`의 원본은 읽기 전용이다. 배치 실패 시 타겟·목표를 재추출하거나 개수를 줄이지 않는다.
+
+### 공통 입력·페널티·실행
+
+Actor는 policy 55D와 초기 장애물 64D, Critic은 현재 타겟 XYZ 3D를 추가해 raw 119D/122D다. 독립 64→32→16 장애물 encoder를 거치면 71D/74D다. Actor에 실행 중 타겟 GT를 추가하지 않는다. 행동은 Arm6D+Hand2D이며 Holding-v3는 Joint Position, 나머지는 위 OSC다. 정책 주기·자산 출처·좌표계·물성은 [Holding-v1 계약](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V1_ENVIRONMENT.md)과 [ObjectRandom-v1 계약](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V1_ENVIRONMENT.md)을 따른다.
+
+네 운동 페널티는 로컬 `goal_rewards.action_rate_l2`·`joint_vel_l2`, Arm/Hand raw 제곱합과 실제 관절 속도, 가중치 −0.03/−0.03/−0.03/−0.01을 유지한다. 입력 정규화나 Hand 보상 clamp를 추가하지 않는다.
+
+Workspace 루트에서 Isaac Lab Python, 선반 USD 접근 및 NVIDIA 물체 자산이 필요하다. 기본 Nucleus 선반 주소는 VPN 접근 조건을 확인한다. Windows 실행 예시는 다음과 같다. 환경 수는 처리량 검증값이 아니다.
+
+```powershell
+.\IsaacLab\isaaclab.bat -p src/inspire_sweep_baseline/scripts/train.py --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v3 --num_envs 2048 --headless
+.\IsaacLab\isaaclab.bat -p src/inspire_sweep_baseline/scripts/train.py --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v3 --num_envs 2048 --headless
+.\IsaacLab\isaaclab.bat -p src/inspire_sweep_baseline/scripts/train.py --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v2 --num_envs 256 --headless
+.\IsaacLab\isaaclab.bat -p src/inspire_sweep_baseline/scripts/play.py --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v2 --num_envs 1 --checkpoint "<checkpoint.pt>"
+```
+
+[보상 구현](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/contact_sweep_clutter_fusion_holding_scheduled.py) · [Gray 배치 구현](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/contact_sweep_clutter_fusion_holding_osc_object_random_placement.py) · [커리큘럼 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/curricula/contact_sweep_clutter_fusion_holding_osc_object_random.py) · [실제 검증과 한계](../logs/2026-10-24_fusion_holding_v3.md).
+
+## 최신 문서와 이후 버전 관리
+
+- [Holding-v4](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V4_ENVIRONMENT.md): Joint Position 기준 과업.
+- [Holding-OSC-v4](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V4_ENVIRONMENT.md): 제어기 비교.
+- [Holding-OSC-ObjectRandom-v3](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V3_ENVIRONMENT.md): 랜덤화 결합.
+- [v4 공통 보상·r·종료·커리큘럼](FUSION_HOLDING_V4_FAMILY.md).
+
+새 버전은 직접 부모와 변경한 과업·제어·랜덤화 조건을 명시한다. 같은 계열의 CFG는 기존 역할별 파일에 모으고 등록·PPO experiment·환경 목록을 함께 갱신한다. 비교 결과에는 목표 오차, 잔류 속도, 유지 시간, timeout/실패 비율을 기록한다. OSC에서는 토크 포화·진동·충돌, Random에서는 형상·크기·물성별 결과를 함께 확인한다. 짧은 실행 통과를 장기 학습 성능으로 해석하지 않는다.

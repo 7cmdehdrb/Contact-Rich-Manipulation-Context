@@ -1,5 +1,11 @@
 # 개발·실험 진행 로그
 
+- [2026-10-25 Holding 계열 문서 최신화](2026-10-25_holding_documentation_refresh.md): v3 통합·최신 세 환경·r 기반 보상·정적 검증.
+
+- [2026-10-25 Holding v4 · OSC v4 · ObjectRandom v3](2026-10-25_fusion_holding_v4.md): success 제거·중심 holding 강화·goal 연동 reaching, 이전 제어·랜덤화 보존과 검증.
+
+- [2026-10-25 ObjectRandom-v2 success 임시 출력](2026-10-25_object_random_v2_success_debug.md): 현재/필요 거리·속도, 유효성·실패·연속 유지 시간·판정 출력과 CPU 검증.
+
 - [2026-10-24 ObjectRandom-v2 상한 선택](2026-10-24_object_random_v2_population_cap.md): 7/7 반복 reset 불통과에 따라 최대6/6으로 변경, 반복 검사와 한계 기록.
 
 - [2026-10-24 Holding v3 · OSC v3 · ObjectRandom v2](2026-10-24_fusion_holding_v3.md): goal hold 누적3초, 같은OSC, 개수1000간격과 Gray 내측15% 커리큘럼·검증.

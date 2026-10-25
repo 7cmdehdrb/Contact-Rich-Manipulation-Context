@@ -1,6 +1,8 @@
 # 환경 문서 안내
 
-- [Holding v3 · OSC v3 · ObjectRandom v2](FUSION_HOLDING_V3_FAMILY.md): 누적3초 goal hold, 같은OSC 제어, 개수1000간격과 Gray 내측15% 커리큘럼.
+- [Holding v4 · OSC v4 · ObjectRandom v3](FUSION_HOLDING_V4_FAMILY.md): success 종료 제거, 무제한 중심 holding 강화, goal 연동 reaching 반경 완화.
+
+- [Holding 계열 통합 문서: v0~v4 및 v3 세대 상세](FUSION_HOLDING_FAMILY.md): 누적3초 goal hold, 같은OSC 제어, 개수1000간격과 Gray 내측15% 커리큘럼.
 
 - [Holding ObjectRandom Test v0](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OBJECT_RANDOM_TEST_V0_ENVIRONMENT.md): Holding-v2 직접 상속, Joint Position 제어로 ObjectRandom-v1 물체 구성의 학습 가능성 검증.
 
@@ -44,3 +46,9 @@ Holding 이후의 세 계열과 버전 증가 기준은 [Fusion Holding 환경 �
 - [Holding OSC ObjectRandom v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V1_ENVIRONMENT.md): OSC v2 직접 상속, 장애물1/1→8/8 교대 증가·16슬롯 관측.
 
 - [Fusion Holding v2](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V2_ENVIRONMENT.md): 공통 목표 반경·목표 내 접촉 간주·계수4, OSC-v2와ObjectRandom-v1 부모 변경.
+
+- [Holding-v4 개별 환경](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V4_ENVIRONMENT.md): Joint Position 기준 과업.
+
+- [Holding-OSC-v4 개별 환경](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V4_ENVIRONMENT.md): 같은 과업에서 Arm OSC 제어 비교.
+
+- [Holding-OSC-ObjectRandom-v3 개별 환경](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V3_ENVIRONMENT.md): OSC와 물체·환경 랜덤화 결합.

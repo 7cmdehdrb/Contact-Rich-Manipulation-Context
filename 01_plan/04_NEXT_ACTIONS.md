@@ -1,5 +1,7 @@
 # 앞으로 집중할 것과 진행할 작업
 
+2026-10-25 Holding v4 계열 후속: [Holding-v4 → OSC-v4 → ObjectRandom-v3](../02_implementation/environments/FUSION_HOLDING_V4_FAMILY.md)에서 목표 중심 거리·체류 시간·goal 이탈 빈도·실패/timeout 비율을 비교한다. success 종료와 누적3초 상한을 제거한 새 보상으로 timeout100%를 지향하되 실제 달성은 장기 학습으로 검증한다. goal 진입 시 reaching 인정 반경1.0m와 일회성 남은 기록 지급도 평가한다.
+
 2026-10-24 ObjectRandom-v2 상한은7/7 실패 후6/6으로 변경했다. 반복 reset의 [결과와 한계](../02_implementation/logs/2026-10-24_object_random_v2_population_cap.md)를 바탕으로 개수 축소와 배치 알고리즘의 안정성을 구분해 평가한다. 실패 시 타겟 재추출·자동 개수 축소를 추가한 것은 아니다.
 
 2026-10-24 Holding v3 후속: [새 계열 계약](../02_implementation/environments/FUSION_HOLDING_V3_FAMILY.md)에 따라 누적3초 지급 상한이 성공 회피 행동을 줄이는지 비교한다. OSC-v3는 같은 제어로Holding-v3 과업 결과를, ObjectRandom-v2는 개수 증가와 Gray 침범 단계별 접촉·성공·배치 실패를 평가한다. 구현 검증과 장기 학습 성과는 구분한다. [실행한 검사와 한계](../02_implementation/logs/2026-10-24_fusion_holding_v3.md).

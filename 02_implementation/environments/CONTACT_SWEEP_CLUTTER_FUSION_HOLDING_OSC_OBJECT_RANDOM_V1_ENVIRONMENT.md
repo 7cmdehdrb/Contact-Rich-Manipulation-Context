@@ -10,7 +10,7 @@
 | --- | --- |
 | 장애물 관측 | 16슬롯×4=64D, 실제 장애물2→16개, 비활성 슬롯은0 |
 | encoder와 입력 | Actor/Critic 각각64→32→16D, raw119D/122D, 압축 후71D/74D |
-| Arm / Hand | Robot Base 기준 상대 pose OSC6D·RPY 입력·위치/회전 stiffness80/25·scale0.03/0.15 / 기존 Hand2D |
+| Arm / Hand | Robot Base 기준 상대 pose OSC6D·RPY 입력·위치/회전 stiffness100/50·scale0.03/0.15 / 기존 Hand2D |
 | 물체 수 | 초기 타겟1+Gray1+White1, 최대 타겟1+Gray8+White8=17개 |
 | 타겟 | 반경4cm·높이10cm 기존 실린더 |
 | 장애물 | NVIDIA YCB4종×균일크기3단계, 환경 생성 시 종류·크기 무작위 선택 |
@@ -22,7 +22,7 @@
 
 Holding의 보상·성공·실패·timeout·나머지 curriculum과 네 운동 페널티 계수는 부모 OSC v2를 따른다. 공통 목표 반경·목표 유지 계수4·목표 내 접촉 간주는 Holding-v2에서 전달되며, ObjectRandom 전용 커리큘럼은 부모 개수 일정의 최종값만 Gray8/White8로 확장한다. Runtime은 `ContactSweepClutterFusionV1_0Env`, PPO는 `FusionHoldingOSCObjectRandomV1PPORunnerCfg`, runner는 `CurriculumOnPolicyRunner`, experiment 이름은 `inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v1`이다.
 
-2026-10-23 후속 변경으로 부모를OSC-v1에서OSC-v2로 변경했다. 관성 분리·중력 보상false, effort 제한과 Arm PD0을 상속한다. 기존 checkpoint는 입력 차원이 같아도 제어 의미가 달라 같은 동작을 보장하지 않는다. 이전 검증 기록은 변경 전 결과다. [이번 변경·검증](../logs/2026-10-23_fusion_holding_v2.md).
+2026-10-23 후속 변경으로 부모를OSC-v1에서OSC-v2로 변경했다. 관성 분리·중력 보상true, effort 제한과 Arm PD0을 상속한다. 기존 checkpoint는 입력 차원이 같아도 제어 의미가 달라 같은 동작을 보장하지 않는다. 이전 검증 기록은 변경 전 결과다. [이번 변경·검증](../logs/2026-10-23_fusion_holding_v2.md).
 
 ## 장애물 개수 커리큘럼 — 2026-10-23 후속 변경
 
@@ -57,3 +57,5 @@ Workspace 루트, Linux:
 Windows PowerShell에서는 `.\IsaacLab\isaaclab.bat -p .\src\inspire_sweep_baseline\scripts\train.py`와 같은 task/인수를 사용한다. 256환경은 실행 예시이며 해당 규모 처리량을 검증한 수치가 아니다.
 
 [환경 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_fusion_holding_osc_object_random_envs.py) · [PPO 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/agent/contact_sweep_clutter_fusion_holding_osc_object_random_ppo_cfg.py) · [실제 검증·미검증 범위](../logs/2026-10-23_fusion_holding_v1.md). 기존 v0의 물체 안정화 시험은 당시 조건의 결과이며 새 v1 장기 학습·실물 성능을 입증하지 않는다.
+
+2026-10-25 코드 대조: 공통 Reach OSC의 현재 stiffness는 위치/회전 100/50이고 관성 분리·중력 보상은 true다. 과거 검증 기록의 당시 값과 구분한다. 최신 과업·버전 차이는 [Holding 통합 문서](FUSION_HOLDING_FAMILY.md)와 [v4 계약](FUSION_HOLDING_V4_FAMILY.md)을 따른다.

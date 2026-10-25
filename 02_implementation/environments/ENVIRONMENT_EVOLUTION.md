@@ -2,7 +2,7 @@
 
 [구현 문서 안내](../README.md) · [등록·실행 안내](../08_ACTIVE_ENVIRONMENTS.md) · [문서 작성·검증 기록](../logs/2026-10-22_environment_catalog.md)
 
-**기준일: 2026-10-23.** [패키지 등록 코드](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py)에 등록된 환경의 문서화 목록을 정리한다. 변경 흐름을 먼저 보고 아래 표의 상대 링크를 통해 각 환경의 기본 구성·관측·전체 보상·종료·커리큘럼을 확인할 수 있다. 기존 독립 문서 7개를 유지하고, 독립 문서가 없던 22개는 과거 실험을 찾아볼 수 있는 짧은 설명으로 추가했다.
+**기준일: 2026-10-25.** [패키지 등록 코드](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py)에 등록된 환경의 문서화 목록을 정리한다. 변경 흐름을 먼저 보고 아래 표의 상대 링크를 통해 각 환경의 기본 구성·관측·전체 보상·종료·커리큘럼을 확인할 수 있다. Holding-v4 → Holding-OSC-v4 → Holding-OSC-ObjectRandom-v3까지 포함한다. [Holding 계열 통합 문서](FUSION_HOLDING_FAMILY.md)에서 v0~v4 보상·종료 차이와 이전 v3 세대 상세 계약을 확인한다.
 
 여기서 환경의 계층은 **등록된 EnvCfg의 직접 상속**이다. Runtime, Scene, Reward 같은 구성요소의 상속은 다를 수 있다. 실선은 실제 EnvCfg 상속, 점선은 동작의 재구성이나 기능 결합을 뜻한다. 버전 번호는 시간순 단일 계보를 뜻하지 않는다. 문서화 대상인 과거 실험도 코드에는 등록되어 있으며, 문서 추가가 새 학습·성능 검증이나 환경 삭제를 뜻하지 않는다.
 
@@ -133,6 +133,9 @@ flowchart TD
     FH1 --> FH2["Holding v2: 공통 목표 반경·접촉 간주"]
     FH2 --> FHO2["Holding OSC v2: Reach 제어"]
     FH2 --> FH3["Holding v3: 누적3초 지급"]
+    FH3 --> FH4["Holding v4: success 제거·2r 지급·중심 강화"]
+    FH4 --> FHO4["Holding OSC v4: 같은 Reach OSC"]
+    FHO4 --> FHOR3["ObjectRandom v3: v2 랜덤화 유지"]
     FH3 --> FHO3["Holding OSC v3"]
     FHO3 --> FHOR2["ObjectRandom v2: Gray 확장"]
     FH2 --> FHJRT["Holding ObjectRandom Test v0: Joint Position·랜덤 물체"]
@@ -176,11 +179,24 @@ flowchart TD
 | [Holding OSC ObjectRandom v0](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V0_ENVIRONMENT.md) | **Fusion Holding OSC v0** | 기존 실린더 타겟과 NVIDIA YCB 장애물14개, 물체별 관성·평평한 충돌 프록시·OBB 비겹침. 장애물14슬롯56D. 부모의 Base 축·stiffness100을 상속한다. |
 | [Fusion Holding v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V1_ENVIRONMENT.md) | **Fusion Holding v0** | 장애물 관측만16슬롯64D와 encoder64→32→16D로 확장한다. 기존 최대Gray5/White5·개수 curriculum 유지. |
 | [Fusion Holding v2](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V2_ENVIRONMENT.md) | **Fusion Holding v1** | 공통 반경2→1→0.5cm, goal_hold 계수4, 목표 내 접촉 간주. |
-| [Holding OSC v2](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V2_ENVIRONMENT.md) | **Fusion Holding v2** | Reach RPY·effort 제한 제어, 위치/회전 stiffness80/25. |
+| [Holding OSC v2](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V2_ENVIRONMENT.md) | **Fusion Holding v2** | Reach RPY·effort 제한 제어, 위치/회전 stiffness100/50, 관성 분리·중력 보상 true. |
 | [Fusion Holding OSC v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V1_ENVIRONMENT.md) | **Fusion Holding v1** | OSC v0과 같은 Base 축·stiffness100 제어를 재사용하며16슬롯을 상속한다. |
 | [Holding OSC ObjectRandom v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V1_ENVIRONMENT.md) | **Fusion Holding OSC v2** | ObjectRandom v0의 자산·배치·물성을 재사용하며 부모 개수 일정을Gray1/White1→Gray8/White8로 확장한다. 관측16슬롯을 최종 단계에서 모두 사용한다. |
 
 의도 근거: [Contact 독립화](../logs/2026-10-20_contact_sweep_reference.md), [Clutter 추가](../logs/2026-10-20_contact_sweep_clutter.md), [Clutter v1](../logs/2026-10-20_contact_sweep_clutter_v1.md), [Curriculum v1](../logs/2026-10-20_clutter_v1_curriculum.md), [Clutter v2](../logs/2026-10-20_contact_sweep_clutter_v2.md), [F/T 수집](../logs/2026-10-21_clutter_ft_collection.md), [Notion 학습 기록](https://app.notion.com/p/3f7bd3c55e1b80e5a161c6e0dd175773)의 Clutter/Fusion 변경 이유, [Fusion 비교](CONTACT_SWEEP_CLUTTER_FUSION_VERSIONS.md)와 [v1_0 후속 변경](../logs/2026-10-22_clutter_fusion_v1_0_population_recovery.md).
+
+최신 Holding 변경의 의도와 적용은 다음과 같다.
+
+| 환경 | 직접 부모 | 변경 의도와 실제 차이 |
+| --- | --- | --- |
+| Holding-v3 | Holding-v2 | 누적 3초 지급 제한. 목표 내 연속 3초 success와 별개 |
+| Holding-OSC-v3 | Holding-v3 | 공통 Reach OSC 제어 적용 |
+| Holding-OSC-ObjectRandom-v2 | Holding-OSC-v3 | 최대 활성 6/6, Gray 내측 확장 15% |
+| Holding-v4 | Holding-v3 | success·지급 예산 제거, d≤2r에서 보상, 중심 최대 2배, goal 연동 Reaching |
+| Holding-OSC-v4 | Holding-v4 | 기존 OSC 제어로 새 Holding 과업 비교 |
+| Holding-OSC-ObjectRandom-v3 | Holding-OSC-v4 | ObjectRandom-v2의 물체·환경 랜덤화 유지 |
+
+[최신 공통 계약](FUSION_HOLDING_V4_FAMILY.md) · [문서 개정·정적 검증](../logs/2026-10-25_holding_documentation_refresh.md). 과거 계층 정리의 검증 기록과 이번 최신 Holding 코드 대조를 구분한다.
 
 ## 5. 전체 등록 ID → 독립 문서
 
@@ -226,13 +242,18 @@ flowchart TD
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v0` | [Holding OSC v0](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V0_ENVIRONMENT.md) | 2026-10-23 추가 |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v0` | [Holding OSC ObjectRandom v0](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V0_ENVIRONMENT.md) | 2026-10-23 추가 |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v2` | [Holding v2](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V2_ENVIRONMENT.md) | 2026-10-23 추가 |
-| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v3` | [Holding v3](FUSION_HOLDING_V3_FAMILY.md) | 2026-10-24 추가 |
-| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v3` | [Holding OSC v3](FUSION_HOLDING_V3_FAMILY.md) | 2026-10-24 추가 |
-| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v2` | [Holding OSC ObjectRandom v2](FUSION_HOLDING_V3_FAMILY.md) | 2026-10-24 추가 |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v3` | [Holding v3](FUSION_HOLDING_FAMILY.md) | 2026-10-24 추가 |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v3` | [Holding OSC v3](FUSION_HOLDING_FAMILY.md) | 2026-10-24 추가 |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v2` | [Holding OSC ObjectRandom v2](FUSION_HOLDING_FAMILY.md) | 2026-10-24 추가 |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v2` | [Holding v2·OSC 계승](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V2_ENVIRONMENT.md) | 2026-10-23 부모 변경 |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v1` | [Holding v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V1_ENVIRONMENT.md) | 2026-10-23 추가 |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v1` | [Holding OSC v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V1_ENVIRONMENT.md) | 2026-10-23 추가 |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v1` | [Holding OSC ObjectRandom v1](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V1_ENVIRONMENT.md) | 2026-10-23 추가 |
+
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v4` | [Holding-v4](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V4_ENVIRONMENT.md) | 2026-10-25 추가 |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v4` | [Holding-OSC-v4](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V4_ENVIRONMENT.md) | 2026-10-25 추가 |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v3` | [Holding-OSC-ObjectRandom-v3](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V3_ENVIRONMENT.md) | 2026-10-25 추가 |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-ObjectRandom-Test-v0` | [Joint Position 랜덤화 테스트](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OBJECT_RANDOM_TEST_V0_ENVIRONMENT.md) | Holding-v2 직접 상속 |
 
 ## 6. 기록을 읽을 때의 기준
 

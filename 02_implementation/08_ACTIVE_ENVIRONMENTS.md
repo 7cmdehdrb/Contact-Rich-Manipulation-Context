@@ -1,8 +1,16 @@
 # 활성 패키지와 환경 구현 현황
 
+2026-10-25 문서 정리: [Holding 계열 통합](environments/FUSION_HOLDING_FAMILY.md), [최신 공통 보상](environments/FUSION_HOLDING_V4_FAMILY.md). 개별 실행·제어·장면: [Holding-v4](environments/CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V4_ENVIRONMENT.md), [Holding-OSC-v4](environments/CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V4_ENVIRONMENT.md), [Holding-OSC-ObjectRandom-v3](environments/CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V3_ENVIRONMENT.md).
+
+2026-10-25 v4 후속: 새 세 환경의 Goal Hold 지급 범위를 **유효한 물체이고 d<=2r**로 넓혔다. 중심 강화는 d<r에서만 적용하고 Contact·Reaching의 goal 트리거는 d<=r로 유지한다. [현재 보상식](environments/FUSION_HOLDING_V4_FAMILY.md) · [검증 로그](logs/2026-10-25_fusion_holding_v4.md).
+
+2026-10-25 신규 계열: **Holding-v4 → Holding-OSC-v4 → Holding-OSC-ObjectRandom-v3**. success 종료와 holding 지급 시간 상한을 제거하고 중심 정지 보상을 2배로 강화했다. goal 반경 안에서는 reaching 인정 반경을0.10→1.0m로 완화한다. 실패·timeout, 기존OSC 제어·ObjectRandom 랜덤화는 유지한다. [등록·보상·실행](environments/FUSION_HOLDING_V4_FAMILY.md) · [검증](logs/2026-10-25_fusion_holding_v4.md).
+
+2026-10-25 ObjectRandom-v2 임시 진단 출력은 후속 요청으로 출력 블록과 활성화 줄을 모두 주석 처리했다. [당시 출력·검증 기록](logs/2026-10-25_object_random_v2_success_debug.md).
+
 2026-10-24 ObjectRandom-v2 후속: 7/7 반복 reset 검사의 첫 배치에서 비겹침 배치 실패를 확인하여 **활성 개수 상한을 Gray6/White6**으로 낮췄다. White11000·Gray12000에서 상한에 도달하며1000간격 교대 일정·Gray 패딩은 유지한다. 물리8/8·관측16슬롯 용량은 보존한다. [반복 검증과 한계](logs/2026-10-24_object_random_v2_population_cap.md).
 
-2026-10-24 신규 상속 체인은 **Holding-v2 → Holding-v3 → Holding-OSC-v3 → Holding-OSC-ObjectRandom-v2**다. Holding-v3는 goal hold 지급 시간을 에피소드 누적3초로 제한한다. OSC-v3는 현재OSC-v2 제어를 재사용하며 ObjectRandom-v2는3000부터1000 iteration마다 개수를 교대 추가하고6000~12000에 Gray 내측 경계를 최대15% 확장한다. [전체 계약·학습 명령](environments/FUSION_HOLDING_V3_FAMILY.md) · [실행한 검증](logs/2026-10-24_fusion_holding_v3.md).
+2026-10-24 신규 상속 체인은 **Holding-v2 → Holding-v3 → Holding-OSC-v3 → Holding-OSC-ObjectRandom-v2**다. Holding-v3는 goal hold 지급 시간을 에피소드 누적3초로 제한한다. OSC-v3는 현재OSC-v2 제어를 재사용하며 ObjectRandom-v2는3000부터1000 iteration마다 개수를 교대 추가하고6000~12000에 Gray 내측 경계를 최대15% 확장한다. [전체 계약·학습 명령](environments/FUSION_HOLDING_FAMILY.md) · [실행한 검증](logs/2026-10-24_fusion_holding_v3.md).
 
 2026-10-24 Fusion 수치 안정성 수정: Fusion 및 Holding/OSC/ObjectRandom 파생의 이전 action 관측8D를 `bounded_last_action`의 `[-1,1]` 복사본으로 변경했다. Action 실행·raw 운동 페널티는 유지한다. 차원과 checkpoint 키는 호환되지만 범위 밖 action의 관측 의미는 달라졌다. 공통 `CurriculumOnPolicyRunner`는 PPO에 수치 검사·진단 dump·양수 std 투영·resume LR 동기화를 적용한다. [TEMP 전체 감사·원인 재현·검증 범위](logs/2026-10-24_temp_training_stability.md).
 
@@ -57,6 +65,9 @@
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v3` | `FusionHoldingV3EnvCfg` | `FusionHoldingV3PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_v3` |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v3` | `FusionHoldingOSCV3EnvCfg` | `FusionHoldingOSCV3PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_osc_v3` |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v2` | `FusionHoldingOSCObjectRandomV2EnvCfg` | `FusionHoldingOSCObjectRandomV2PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v2` |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v4` | `FusionHoldingV4EnvCfg` | `FusionHoldingV4PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_v4` |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v4` | `FusionHoldingOSCV4EnvCfg` | `FusionHoldingOSCV4PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_osc_v4` |
+| `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v3` | `FusionHoldingOSCObjectRandomV3EnvCfg` | `FusionHoldingOSCObjectRandomV3PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v3` |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v1` | `FusionHoldingOSCV1EnvCfg` | `FusionHoldingOSCV1PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_osc_v1` |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v2` | `FusionHoldingOSCV2EnvCfg` | `FusionHoldingOSCV2PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_osc_v2` |
 | `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v1` | `FusionHoldingOSCObjectRandomV1EnvCfg` | `FusionHoldingOSCObjectRandomV1PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v1` |

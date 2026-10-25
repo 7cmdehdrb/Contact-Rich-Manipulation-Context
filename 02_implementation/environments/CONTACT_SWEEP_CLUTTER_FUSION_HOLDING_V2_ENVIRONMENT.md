@@ -47,7 +47,7 @@
 
 ## 파생 환경 변경
 
-OSC-v2는 EnvCfg와 PPO 모두 Holding-v2를 직접 상속한다. UR10 Reach 기반 RPY 입력, 위치/회전 stiffness80/25, scale0.03/0.15, effort 제한, 관성 분리·중력 보상false, Arm PD0은 유지한다.
+OSC-v2는 EnvCfg와 PPO 모두 Holding-v2를 직접 상속한다. UR10 Reach 기반 RPY 입력, 위치/회전 stiffness100/50, scale0.03/0.15, effort 제한, 관성 분리·중력 보상true, Arm PD0은 유지한다.
 
 ObjectRandom-v1은 EnvCfg와 PPO 모두 OSC-v2를 직접 상속한다. 전용 `ObjectRandomV1CurriculumCfg`는 Holding-v2 커리큘럼에서 개수 최종값만 Gray8/White8로 확장한다. 초기1/1에서 White3,000·Gray4,500부터 교대로 증가하며, NVIDIA 자산·reset·물성·16슬롯은 유지하며 새 목표 반경·보상·성공과 OSC-v2 제어를 전달한다. 기존 OSC-v1 기반 ObjectRandom 체크포인트는 입력 차원이 같아도 제어 의미가 달라 같은 동작을 보장하지 않는다.
 
@@ -71,3 +71,5 @@ Workspace 루트의 Isaac Lab 환경에서 실행한다. 환경 수는 예시이
 ```
 
 [환경 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_fusion_holding_envs.py) · [목표·접촉 보상 함수](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/contact_sweep_clutter_fusion_holding_scheduled.py) · [성공 판정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/termination_functions/contact_sweep_clutter_fusion_holding.py) · [공통 목표 반경](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/contact_sweep_clutter_fusion_holding.py) · [실제 검증과 미검증 범위](../logs/2026-10-23_fusion_holding_v2.md).
+
+2026-10-25 코드 대조: 공통 Reach OSC의 현재 stiffness는 위치/회전 100/50이고 관성 분리·중력 보상은 true다. 과거 검증 기록의 당시 값과 구분한다. 최신 과업·버전 차이는 [Holding 통합 문서](FUSION_HOLDING_FAMILY.md)와 [v4 계약](FUSION_HOLDING_V4_FAMILY.md)을 따른다.

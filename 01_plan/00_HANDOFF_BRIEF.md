@@ -1,5 +1,7 @@
 # Blind Sweeping — 단일 파일 인계 요약
 
+**2026-10-25 Holding v4 계열:** 사용자 요청으로 Holding-v4 → OSC-v4 → ObjectRandom-v3를 추가했다. success 종료·holding 지급 상한을 제거하고 중심 정지 보상을2배로 강화했으며 goal 안에서는 reaching 인정 반경을0.10→1.0m로 완화한다. 실패·timeout과 기존OSC·랜덤화는 유지한다. Timeout100%는 학습 목표로 아직 달성 여부를 검증하지 않았다. [계약·실행](../02_implementation/environments/FUSION_HOLDING_V4_FAMILY.md) · [검증](../02_implementation/logs/2026-10-25_fusion_holding_v4.md).
+
 **2026-10-24 ObjectRandom-v2 개수 상한 후속:** 7/7 반복 검사의 첫 reset 배치에서 배치200회 실패가 발생했다. 사용자 지정에 따라 활성 상한을6/6으로 낮췄으며 White11000·Gray12000에서 도달한다. 물리8/8·관측16슬롯은 유지한다. [반복 검사·설정·한계](../02_implementation/logs/2026-10-24_object_random_v2_population_cap.md).
 
 **2026-10-24 Holding v3 계열 추가:** Holding-v2 → Holding-v3 → OSC-v3 → ObjectRandom-v2를 구현했다. goal hold는 에피소드 누적3초까지만 지급하며OSC 제어는 현재v2 설정과 같다. ObjectRandom은3000부터1000간격 개수 증가,6000~12000의250간격 Gray 내측15% 확장을 적용한다. [계약·실행](../02_implementation/environments/FUSION_HOLDING_V3_FAMILY.md) · [검증·한계](../02_implementation/logs/2026-10-24_fusion_holding_v3.md). 장기 학습 성능은 미검증이다.
