@@ -29,4 +29,8 @@ Workspace 루트에서 Isaac Lab Python과 선반 USD 접근이 필요하다. Ra
 .\IsaacLab\isaaclab.bat -p src/inspire_sweep_baseline/scripts/play.py --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v3 --num_envs 1 --checkpoint "<checkpoint.pt>" --real-time
 ```
 
+
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/play.py --task Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v3 --num_envs 1 --checkpoint "/home/min/7cmdehdrb/grad/logs/TEMP/2026-10-25_16-55-56/model_11900.pt" --real-time
+
+
 최초 v4 구현은 실제 Isaac Sim에서 2환경·seed 42·10step과 강제 timeout을 검사했다. 이후 d≤2r 확장은 CPU 회귀 검사로 확인했으며 해당 변경 이후 시뮬레이터를 다시 실행하지 않았다. 장기 학습·처리량·실기 성능은 미검증이다. [개발·검증 기록](../logs/2026-10-25_fusion_holding_v4.md).

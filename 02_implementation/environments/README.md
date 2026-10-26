@@ -1,5 +1,11 @@
 # 환경 문서 안내
 
+- [Final v1 상세 명세](FINAL_V1_ENVIRONMENT.md): v1의 관측·노이즈, Scene·랜덤화, Action, 전체 보상식, 13개 커리큘럼, 종료 조건을 독립적으로 설명.
+
+- [Final v1·v2](FINAL_V1_V2_ENVIRONMENTS.md): Final 상속, Hand 관측·보상 병합·시간 만료 성공, 물체 다양화·크기·개수 fallback과 넓은 초기 위치.
+
+- [Final v0](FINAL_V0_ENVIRONMENT.md): ObjectRandom-v3 동작을 보존하고 Env·Scene·Manager·PPO·runtime을 독립 구성.
+
 - [Holding v4 · OSC v4 · ObjectRandom v3](FUSION_HOLDING_V4_FAMILY.md): success 종료 제거, 무제한 중심 holding 강화, goal 연동 reaching 반경 완화.
 
 - [Holding 계열 통합 문서: v0~v4 및 v3 세대 상세](FUSION_HOLDING_FAMILY.md): 누적3초 goal hold, 같은OSC 제어, 개수1000간격과 Gray 내측15% 커리큘럼.

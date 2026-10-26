@@ -1,5 +1,7 @@
 # 활성 패키지와 환경 구현 현황
 
+2026-10-26 추가: **`Isaac-Inspire-Final-v0`**는 ObjectRandom-v3의 설정을 독립 선언한다. `FinalEnvCfg`·`FinalEnv`는 각각 Isaac Lab의 `ManagerBasedRLEnvCfg`·`ManagerBasedRLEnv`를 직접 상속하며 Scene·Manager·PPO도 기존 task CFG를 상속하지 않는다. 계산 함수·term·모델·runner는 재사용한다. [구성·등록·train/play](environments/FINAL_V0_ENVIRONMENT.md) · [검증·제한](logs/2026-10-26_final_v0.md).
+
 2026-10-25 문서 정리: [Holding 계열 통합](environments/FUSION_HOLDING_FAMILY.md), [최신 공통 보상](environments/FUSION_HOLDING_V4_FAMILY.md). 개별 실행·제어·장면: [Holding-v4](environments/CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_V4_ENVIRONMENT.md), [Holding-OSC-v4](environments/CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V4_ENVIRONMENT.md), [Holding-OSC-ObjectRandom-v3](environments/CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V3_ENVIRONMENT.md).
 
 2026-10-25 v4 후속: 새 세 환경의 Goal Hold 지급 범위를 **유효한 물체이고 d<=2r**로 넓혔다. 중심 강화는 d<r에서만 적용하고 Contact·Reaching의 goal 트리거는 d<=r로 유지한다. [현재 보상식](environments/FUSION_HOLDING_V4_FAMILY.md) · [검증 로그](logs/2026-10-25_fusion_holding_v4.md).
@@ -51,6 +53,9 @@
 
 | Gym task ID | 환경 Cfg | PPO Cfg | 기본 로그 폴더 |
 | --- | --- | --- | --- |
+| `Isaac-Inspire-Final-v1` | `FinalV1EnvCfg` | `FinalV1PPORunnerCfg` | `logs/rsl_rl/inspire_final_v1` |
+| `Isaac-Inspire-Final-v2` | `FinalV2EnvCfg` | `FinalV2PPORunnerCfg` | `logs/rsl_rl/inspire_final_v2` |
+| `Isaac-Inspire-Final-v0` | `FinalEnvCfg` | `FinalPPORunnerCfg` | `logs/rsl_rl/inspire_final_v0` |
 | `Isaac-Inspire-Contact-Sweep-v0` | `ContactSweepEnvCfg` | `ContactSweepPPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep` |
 | `Isaac-Inspire-Contact-Sweep-Clutter-v0` | `ContactSweepClutterEnvCfg` | `ContactSweepClutterPPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter` |
 | `Isaac-Inspire-Contact-Sweep-Clutter-v1` | `ContactSweepClutterV1EnvCfg` | `ContactSweepClutterV1PPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep_clutter_v1` |
@@ -1128,3 +1133,14 @@ OSC-ObjectRandom-v1과 동일한 Scene/Event/Curriculum 클래스로 물체 자�
 ```
 
 Play는 `scripts/play.py`와 동일 task ID, 이 환경에서 학습한 checkpoint를 사용한다. [전체 계약·train/play](environments/CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OBJECT_RANDOM_TEST_V0_ENVIRONMENT.md) · [검증 기록](logs/2026-10-23_holding_object_random_test_v0.md).
+
+
+## Final v1·v2 — 2026-10-26
+
+센서 관측은 촉각 셀별 1% bit flip, F/T 축별 평균 0 가우시안(힘 σ=0.05N, 모멘트 σ=0.005N·m)을 적용한다. v1·v2·Test에 상속되며 보상용 원본 센서값은 유지한다.
+
+Action 피드백 관측은 Arm·Hand 전체 8D에 `tanh(raw_action)`을 적용하며 v1·v2·Test에 적용한다. 차원·순서와 raw Action 페널티는 유지한다.
+
+`FinalEnvCfg → FinalV1EnvCfg → FinalV2EnvCfg`이며 등록은 `Isaac-Inspire-Final-v1/v2`다. runtime은 `FinalV1Env`가 기존 FinalEnv를 상속한다. v1·v2는 실제 Hand openness2D를 더한 policy57D, 장애물20슬롯80D와 전용 `FinalV1Model`을 사용한다. 보상 병합의 계수·개별 상한,10초 만료의 success/time_out 분류, 크기±10%·머그/병·타겟 다양화, play 전용3D box, Gray10/White10 용량과 과밀 시 교대 감소를 적용한다. v2만 중앙80%와 형상·접근 안전영역의 교집합에서 타겟을 추출한다. 기존 Final v0와 다른 환경의 설정·함수는 보존한다.
+
+[v1 단독 상세 명세](environments/FINAL_V1_ENVIRONMENT.md) · [전체 계약·커리큘럼·train/play 명령](environments/FINAL_V1_V2_ENVIRONMENTS.md) · [실행한 검사·GPU rollout 제한](logs/2026-10-26_final_v1_v2.md). 물체 종류·크기는 생성 시 선택하며 위치·물성은 reset 때 추출한다. v0 checkpoint는 관측과encoder 차원 변경 때문에 직접 호환되지 않는다.

@@ -1,5 +1,7 @@
 # 결정·변경·미정 목록
 
+**2026-10-26 사용자 요청 — Final v1·v2:** Final v0를 보존하고 v1→v2로 확장한다. 기존 운동 페널티 네 항의 분리 지침에 대한 명시 예외로, v1·v2에서만 Arm/Hand 합계를 동일 계수·개별 상한으로 병합한다. 성공은 조기 종료 없이10초 만료 때 live goal 반경으로 분류한다. 물체 형상·크기·초기 위치 다양화와 과밀 시 White/Gray 교대 감소를 적용한다. [구현 계약](../02_implementation/environments/FINAL_V1_V2_ENVIRONMENTS.md) · [검증·한계](../02_implementation/logs/2026-10-26_final_v1_v2.md).
+
 > **2026-10-25 사용자 요청 — Holding v4 계열:** 목표 반경 밖에서 success가 발생하지 않는 재생 출력을 확인한 후 Holding-v4 → OSC-v4 → ObjectRandom-v3를 추가한다. success 종료·goal hold 지급 상한을 제거하고 d=0,v=0의 holding 보상을2배로 강화하며 d>=r의 순간 보상은 보존한다. goal 안에서는 reaching 인정 반경을 크게 늘려 추가 접근 유인을 줄인다. 구현은 중심 multiplier `1+(1-d/r)^2`, goal 인정 반경1.0m를 사용하며 기존OSC 제어·랜덤화·실패 종료는 유지한다. Timeout100%는 학습 목표이고 장기 결과는 미검증이다. [계약·실행](../02_implementation/environments/FUSION_HOLDING_V4_FAMILY.md) · [검증](../02_implementation/logs/2026-10-25_fusion_holding_v4.md).
 
 2026-10-24 사용자 후속 지정: ObjectRandom-v2의7/7 반복 배치가 통과하면7/7, 실패하면6/6으로 제한한다. 실제7/7·seed0의 첫 reset 배치에서200회 실패하여 현재 커리큘럼 상한은6/6이다. 관측과 물리 슬롯 용량은 보존한다. [검증과 한계](../02_implementation/logs/2026-10-24_object_random_v2_population_cap.md).

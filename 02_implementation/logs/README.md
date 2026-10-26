@@ -1,5 +1,13 @@
 # 개발·실험 진행 로그
 
+- [2026-10-26 Final v1·v2](2026-10-26_final_v1_v2.md): 이전 환경 보존,57D 정책·20슬롯, 배치 fallback·USD 자산·CPU/PPO 검증과 GPU 물리 실행 제한.
+
+- [2026-10-26 ObjectRandom-v3 마지막500 iteration 보상 비중](2026-10-26_reward_share_last500.md): step11500~11999, 양의 보상·페널티와 전체 절댓값 기여.
+
+- [2026-10-26 Python 캐시 정리](2026-10-26_python_cache_cleanup.md): Inspire 패키지 내부 캐시 47개 디렉터리·339개 파일 삭제, 나머지 파일 보존 검사.
+
+- [2026-10-26 Final v0 독립 구성](2026-10-26_final_v0.md): 기존 task 상속 제거, 설정·lifecycle 동등성 검사와 GPU 검증 제한.
+
 - [2026-10-25 Holding 계열 문서 최신화](2026-10-25_holding_documentation_refresh.md): v3 통합·최신 세 환경·r 기반 보상·정적 검증.
 
 - [2026-10-25 Holding v4 · OSC v4 · ObjectRandom v3](2026-10-25_fusion_holding_v4.md): success 제거·중심 holding 강화·goal 연동 reaching, 이전 제어·랜덤화 보존과 검증.
