@@ -443,18 +443,47 @@ Gray padding은 미터가 아니라 형상에 맞춘 Red 반경의 비율이다.
 
 ### 6.2. 10초 만료의 성공·시간 초과 분류
 
-`expired`는 `episode_length_buf ≥ 500`, `d`는 타겟–목표 world XY 거리, `r`은 그 시점의 live 목표 반경이다.
+`expired`는 `episode_length_buf ≥ 500`, `d`는 타겟–목표 world XY 거리, `r=0.01m`은 고정 목표 반경이다.
 
 ```math
-\mathrm{success}=\mathrm{expired}\ \land\ (d\le r),\qquad
-\mathrm{time\_out}=\mathrm{expired}\ \land\ \neg(d\le r).
+\mathrm{success}=\mathrm{expired}\ \land\ (d<r),\qquad
+\mathrm{time\_out}=\mathrm{expired}\ \land\ \neg(d<r).
 ```
 
-두 항은 상호 배타적이며, 합치면 정확히 10초 시간 한계다. 10초 전에 목표 반경에 들어와도 이 이유로 종료하지 않는다. 정확히 경계 `d=r`인 경우는 성공이다. 비교할 거리가 NaN이면 `d≤r`가 거짓이므로 `time_out`으로 분류한다.
+두 항은 상호 배타적이며, 합치면 정확히 10초 시간 한계다. 10초 전에 목표 반경에 들어와도 이 이유로 종료하지 않는다. **정확히 경계 `d=r`인 경우는 `time_out`**이다. 비교할 거리가 NaN이면 `d<r`가 거짓이므로 `time_out`으로 분류한다.
 
 성공 분류는 **시간 만료와 거리만** 검사한다. 속도 조건, 연속 유지시간, 추가 접촉 조건, 4.2절의 보상 유효성 `V`를 추가하지 않는다. 따라서 `goal_hold`의 지급 여부와 `success` 여부가 완전히 같은 판정은 아니다.
 
 `success`와 `time_out`은 둘 다 `time_out=True`로 등록하여 시간 한계에 의한 **truncation**으로 처리하고 value bootstrapping을 유지한다. 실패 종료 항은 **termination**이다. 만료 스텝에 실패 조건까지 충족하면 실패 항과 `success` 또는 `time_out`이 함께 참일 수 있다. 그러므로 `success` 로그를 “어떤 실패도 없었던 성공” 지표로 해석해서는 안 된다. 성공 종료에 별도의 추가 일회성 성공 보상은 없다.
+
+## 7. 학습 Metric 정보
+
+`FinalGoalAccuracyEnv`는 각 제어 스텝의 물리 업데이트 뒤, 자동 reset 전에 Metric을 수집한다. 구현상 `success` 종료 term이 매 제어 스텝 평가될 때 수집 함수를 호출하므로, 성공 여부와 관계없이 실패·시간 만료 에피소드의 마지막 상태도 포함한다. 이 값은 별도의 정책 관측 채널이나 보상 항이 아니다.
+
+| TensorBoard `Metrics/` 키 | 원본 계산 | 에피소드 집계·단위 |
+| --- | --- | --- |
+| `target_goal_distance_xy_mean` | 현재 타겟 원점과 command 목표의 world XY 거리 | 유한한 제어 스텝의 평균, m |
+| `eef_linear_speed_mean` | `axia80_link` 원점의 world 선속도에 각속도 × EEF offset을 더한 EEF 지점의 3D 속력 | 유한한 제어 스텝의 평균, m/s |
+| `target_linear_speed_mean` | 현재 타겟의 world 3D 선속도 norm | 유한한 제어 스텝의 평균, m/s |
+| `target_linear_acceleration_mean` | PhysX가 제공하는 현재 타겟 COM의 world 3D 선가속도 norm | 유한한 제어 스텝의 평균, m/s² |
+| `max_force` | 보정된 손목 F/T 관측의 EEF 축 힘 XYZ norm | 에피소드 내 최대, N |
+| `max_moment` | 같은 관측의 EEF 축 모멘트 XYZ norm | 에피소드 내 최대, N·m |
+| `obstacle_actual_gray`, `obstacle_actual_white` | fallback 뒤 실제 배치된 Gray·White 개수 | reset 대상 환경의 평균, 개 |
+
+`*_mean`은 각 환경의 에피소드 안에서 유한 샘플의 시간 평균을 먼저 구하고, 같은 reset 호출에서 종료된 환경끼리 평균한 스칼라다. `max_force`·`max_moment`도 각 환경별 최대를 구한 뒤 reset 대상끼리 평균한다. 유한 샘플이 하나도 없는 항은 그 reset에서 키를 생략한다. F/T는 `policy.wrist_wrench`와 같은 보정 관측 함수를 직접 읽지만, ObservationManager가 Actor·Critic 입력에 추가하는 가우시안 노이즈를 넣기 **전** 값이다. 물리 센서의 원시 전체 하중이나 선반 접촉력으로 해석하지 않는다.
+
+`obstacle_actual_*`은 부모 runtime이 기록하던 `Curriculum/obstacle_actual_*`에서 `Metrics/`로 옮긴 키다. reset 이후 새로 배치된 환경의 실제 개수를 나타내므로, 직전 에피소드의 시간 평균과 시점이 다르다. 요청 개수와 실제 개수의 차이는 과밀 배치 fallback의 빈도를 해석하는 데 사용한다. TensorBoard 스칼라는 에피소드 종료가 발생해 `extras['log']`가 채워질 때 기록되므로 학습 iteration마다 반드시 새 값이 생긴다는 보장은 없다.
+
+## 8. 실행과 검증 범위
+
+Workspace 루트에서 새 task ID로 학습한다. `train.py`가 사용하는 기본 PPO는 `num_steps_per_env=36`, `max_iterations=90000`, `save_interval=50`이며 Actor·Critic 모델과 나머지 PPO 하이퍼파라미터는 v1과 같다. 새 experiment 폴더는 `logs/rsl_rl/inspire_final_goal_accuracy_v0`다.
+
+```bash
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
+  --task Isaac-Inspire-Final-GoalAccuacy-v0 --num_envs 256 --headless
+```
+
+`play.py`에서는 같은 task ID와 이 환경의 checkpoint를 지정한다. v1 checkpoint는 관측·모델 차원이 같지만 보상 목적과 커리큘럼이 다르므로 이어 학습한 결과와 신규 학습 결과를 구분해야 한다. 학습 로그 정리는 이 문서의 실행 절차에 포함되지 않는다.
 
 ## 코드 근거와 검증 범위
 
@@ -464,7 +493,7 @@ Gray padding은 미터가 아니라 형상에 맞춘 Red 반경의 비율이다.
 - [관측 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observations/final.py), [Hand 관측 계산](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observation_functions/final.py)
 - [Scene](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/scenes/final.py), [물체 생성](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/final_spawners.py), [배치 기하](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/final_geometry.py), [Event 계산](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/event_functions/final.py)
 - [Action 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/actions/final.py), [로봇·관절 기준](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/robot.py)
-- [Reward 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/rewards/final.py), [합성 비용](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/final.py), [목표 보상 계산](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/contact_sweep_clutter_fusion_holding_scheduled.py)
+- [Reward 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/rewards/final.py), [엄격한 목표 보상·합성 비용](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/final.py), [공유 목표 측정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/contact_sweep_clutter_fusion_holding.py)
 - [Curriculum 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/curricula/final.py), [Termination 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/terminations/final.py), [만료 분류 계산](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/termination_functions/final.py)
 
-설정·수식·CPU 계산·기하 배치·일부 실제 USD 자산 생성은 검사했다. GPU 물리 reset/step, 새로운 형상의 실제 접촉 안정성, play 화면 외관, 학습 수렴은 아직 검증하지 못했다. 이 문서는 구현된 동작의 명세이며 과업 성능의 실험 결과를 주장하지 않는다. 실행 명령과 검사 결과는 [개발·검증 기록](../logs/2026-10-26_final_v1_v2.md)에 구분해 두었다.
+이번 환경의 CPU 계약 검사는 43개가 통과했다. GPU 물리 reset/step, 실제 TensorBoard 이벤트 생성, 1cm 성공률, play 화면 외관, 학습 수렴은 아직 검증하지 못했다. 이 문서는 구현된 동작의 명세이며 과업 성능의 실험 결과를 주장하지 않는다. 실행한 검사와 미실행 범위는 [개발·검증 기록](../logs/2026-10-27_final_goal_accuracy.md)에 구분해 두었다.

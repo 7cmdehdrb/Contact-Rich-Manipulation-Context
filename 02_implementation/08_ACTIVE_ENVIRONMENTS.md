@@ -1140,7 +1140,7 @@ Play는 `scripts/play.py`와 동일 task ID, 이 환경에서 학습한 checkpoi
 
 ## Final v1·v1-1·v2 — 2026-10-27
 
-`FinalGoalAccuracyEnvCfg`는 Final v1을 직접 상속한다. `Isaac-Inspire-Final-GoalAccuacy-v0`는 1cm 고정 목표 반경, 엄격한 `d < r` 체류·성공·목표 내 접촉 인정, 2000~8500 iteration의 장애물 1/1→8/8 일정, `Metrics/` 에피소드 지표를 추가한다. 자세한 계수·지표 단위·실행 명령은 [환경 계약](environments/FINAL_V1_V2_ENVIRONMENTS.md#final-goalaccuacy-v0--1cm-정확도), 검사 범위는 [개발 로그](logs/2026-10-27_final_goal_accuracy.md)에 기록했다.
+`FinalGoalAccuracyEnvCfg`는 Final v1을 직접 상속한다. `Isaac-Inspire-Final-GoalAccuacy-v0`는 1cm 고정 목표 반경, 엄격한 `d < r` 체류·성공·목표 내 접촉 인정, 2000~8500 iteration의 장애물 1/1→8/8 일정, `Metrics/` 에피소드 지표를 추가한다. 관측부터 학습 Metric까지의 전체 계약은 [독립 상세 명세](environments/FINAL_GOAL_ACCUACY_V0_ENVIRONMENT.md), 계수·실행 요약은 [계열 문서](environments/FINAL_V1_V2_ENVIRONMENTS.md#final-goalaccuacy-v0--1cm-정확도), 검사 범위는 [개발 로그](logs/2026-10-27_final_goal_accuracy.md)에 기록했다.
 
 센서 관측은 촉각 셀별 1% bit flip, F/T 축별 평균 0 가우시안(힘 σ=0.05N, 모멘트 σ=0.005N·m)을 적용한다. v1·v2·Test에 상속되며 보상용 원본 센서값은 유지한다.
 

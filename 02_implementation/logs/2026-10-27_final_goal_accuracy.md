@@ -37,3 +37,9 @@ Workspace 루트에서 다음 명령을 사용한다. 새 experiment 이름으�
 ./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
   --task Isaac-Inspire-Final-GoalAccuacy-v0 --num_envs 256 --headless
 ```
+
+## 후속 독립 상세 문서
+
+같은 날 [Final GoalAccuacy v0 독립 명세](../environments/FINAL_GOAL_ACCUACY_V0_ENVIRONMENT.md)를 추가했다. v1 문서와 같은 수준으로 관측 순서·차원·노이즈, Scene·배치 fallback·물성, 8D Action과 OSC, 전체 보상식과 1cm 경계, 활성 커리큘럼10개, 종료 분류, TensorBoard Metric의 계산·집계·단위를 기록했다. 환경 문서 목록·활성 환경·계열 요약·패키지 README에서 이 문서로 연결했다. 기존 학습 코드는 이 문서 작업에서 변경하지 않았다.
+
+문서 submodule에서 `python 00_guidelines/scripts/check_document_links.py`는 내부 오류0개, `python 00_guidelines/scripts/check_markdown_math.py`는 새 독립 문서·환경 안내·계열 문서·문서 목록·이 개발 로그의 5개 파일에 대해 통과했다. 루트와 문서 submodule의 `git diff --check`도 통과했다. `check_document_links.py --check-external`은 기존 역사 로그가 참조하는 누락 산출물41건으로 실패했으며 새 문서의 경로는 해당 목록에 없다. 문서 작업 후 GPU 실행·학습은 새로 수행하지 않았다.

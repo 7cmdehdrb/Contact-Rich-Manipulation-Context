@@ -159,6 +159,8 @@ conda activate env_isaaclab
 
 ## Final GoalAccuacy v0 — 1cm 정확도
 
+[독립 상세 명세: 관측·Scene·Action·Reward·Curriculum·Termination·Metric](FINAL_GOAL_ACCUACY_V0_ENVIRONMENT.md)
+
 `Isaac-Inspire-Final-GoalAccuacy-v0`는 `FinalV1EnvCfg` → `FinalGoalAccuracyEnvCfg`, `FinalV1Env` → `FinalGoalAccuracyEnv`, `FinalV1PPORunnerCfg` → `FinalGoalAccuracyPPORunnerCfg`로 구성한다. 요청한 `GoalAccuacy` 표기를 Gym ID에 그대로 사용한다. 모델·관측·Action·Scene·그 밖의 커리큘럼은 v1에서 상속한다. 학습 출력은 `logs/rsl_rl/inspire_final_goal_accuracy_v0`다.
 
 | 항목 | 설정 |
