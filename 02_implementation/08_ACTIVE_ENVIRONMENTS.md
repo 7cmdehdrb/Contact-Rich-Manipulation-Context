@@ -54,6 +54,9 @@
 | Gym task ID | 환경 Cfg | PPO Cfg | 기본 로그 폴더 |
 | --- | --- | --- | --- |
 | `Isaac-Inspire-Final-v1` | `FinalV1EnvCfg` | `FinalV1PPORunnerCfg` | `logs/rsl_rl/inspire_final_v1` |
+| `Isaac-Inspire-Final-GoalAccuacy-v0` | `FinalGoalAccuracyEnvCfg` | `FinalGoalAccuracyPPORunnerCfg` | `logs/rsl_rl/inspire_final_goal_accuracy_v0` |
+| `Isaac-Inspire-Final-Test-v1` | `FinalV1TestEnvCfg` | `FinalV1TestPPORunnerCfg` | `logs/rsl_rl/inspire_final_v1_test` |
+| `Isaac-Inspire-Final-v1-1` | `FinalV1_1EnvCfg` | `FinalV1_1PPORunnerCfg` | `logs/rsl_rl/inspire_final_v1_1` |
 | `Isaac-Inspire-Final-v2` | `FinalV2EnvCfg` | `FinalV2PPORunnerCfg` | `logs/rsl_rl/inspire_final_v2` |
 | `Isaac-Inspire-Final-v0` | `FinalEnvCfg` | `FinalPPORunnerCfg` | `logs/rsl_rl/inspire_final_v0` |
 | `Isaac-Inspire-Contact-Sweep-v0` | `ContactSweepEnvCfg` | `ContactSweepPPORunnerCfg` | `logs/rsl_rl/inspire_contact_sweep` |
@@ -1135,12 +1138,18 @@ OSC-ObjectRandom-v1과 동일한 Scene/Event/Curriculum 클래스로 물체 자�
 Play는 `scripts/play.py`와 동일 task ID, 이 환경에서 학습한 checkpoint를 사용한다. [전체 계약·train/play](environments/CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OBJECT_RANDOM_TEST_V0_ENVIRONMENT.md) · [검증 기록](logs/2026-10-23_holding_object_random_test_v0.md).
 
 
-## Final v1·v2 — 2026-10-26
+## Final v1·v1-1·v2 — 2026-10-27
+
+`FinalGoalAccuracyEnvCfg`는 Final v1을 직접 상속한다. `Isaac-Inspire-Final-GoalAccuacy-v0`는 1cm 고정 목표 반경, 엄격한 `d < r` 체류·성공·목표 내 접촉 인정, 2000~8500 iteration의 장애물 1/1→8/8 일정, `Metrics/` 에피소드 지표를 추가한다. 자세한 계수·지표 단위·실행 명령은 [환경 계약](environments/FINAL_V1_V2_ENVIRONMENTS.md#final-goalaccuacy-v0--1cm-정확도), 검사 범위는 [개발 로그](logs/2026-10-27_final_goal_accuracy.md)에 기록했다.
 
 센서 관측은 촉각 셀별 1% bit flip, F/T 축별 평균 0 가우시안(힘 σ=0.05N, 모멘트 σ=0.005N·m)을 적용한다. v1·v2·Test에 상속되며 보상용 원본 센서값은 유지한다.
 
 Action 피드백 관측은 Arm·Hand 전체 8D에 `tanh(raw_action)`을 적용하며 v1·v2·Test에 적용한다. 차원·순서와 raw Action 페널티는 유지한다.
 
 `FinalEnvCfg → FinalV1EnvCfg → FinalV2EnvCfg`이며 등록은 `Isaac-Inspire-Final-v1/v2`다. runtime은 `FinalV1Env`가 기존 FinalEnv를 상속한다. v1·v2는 실제 Hand openness2D를 더한 policy57D, 장애물20슬롯80D와 전용 `FinalV1Model`을 사용한다. 보상 병합의 계수·개별 상한,10초 만료의 success/time_out 분류, 크기±10%·머그/병·타겟 다양화, play 전용3D box, Gray10/White10 용량과 과밀 시 교대 감소를 적용한다. v2만 중앙80%와 형상·접근 안전영역의 교집합에서 타겟을 추출한다. 기존 Final v0와 다른 환경의 설정·함수는 보존한다.
+
+`FinalV1_1EnvCfg`는 v1을 직접 상속한다. `Isaac-Inspire-Final-v1-1`의 유일한 환경 설정 차이는 Goal Distance를 거리 $d$에 대한 매 step 지수형 보상 $1.5\exp(-d/0.05)$로 교체한 것이다. RewardManager가 여기에 `step_dt`를 곱한다. 나머지 v1 관측·Action·Scene/reset·다른 보상·종료·커리큘럼과 runtime은 상속한다. PPO는 v1 설정을 상속하면서 experiment 이름만 `inspire_final_v1_1`로 분리한다. [수식·실행](environments/FINAL_V1_V2_ENVIRONMENTS.md#final-v1-1--goal-distance-지수형-근접-보상) · [로그 분석·검증](logs/2026-10-27_final_v1_1_goal_proximity.md).
+
+`FinalV1TestEnvCfg`도 v1을 직접 상속한다. `Isaac-Inspire-Final-Test-v1`은 병합 `object_penalty`를 기울기·활성 장애물 변위·물체 가속도의 세 로그 term으로 바꾸되 합계와 가속도 커리큘럼을 유지한다. 정책 입력·모델·runtime은 v1과 같고 PPO experiment 이름만 `inspire_final_v1_test`다. 기존 v1 checkpoint 경로를 지정한 재개 명령과 항별 계수는 [환경 계약](environments/FINAL_V1_V2_ENVIRONMENTS.md#final-v1-test--object_penalty-세-항-분리), 실제 검증은 [개발 로그](logs/2026-10-27_final_v1_test_object_penalty.md)에 기록한다.
 
 [v1 단독 상세 명세](environments/FINAL_V1_ENVIRONMENT.md) · [전체 계약·커리큘럼·train/play 명령](environments/FINAL_V1_V2_ENVIRONMENTS.md) · [실행한 검사·GPU rollout 제한](logs/2026-10-26_final_v1_v2.md). 물체 종류·크기는 생성 시 선택하며 위치·물성은 reset 때 추출한다. v0 checkpoint는 관측과encoder 차원 변경 때문에 직접 호환되지 않는다.

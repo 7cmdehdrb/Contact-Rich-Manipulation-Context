@@ -1,5 +1,13 @@
 # 개발·실험 진행 로그
 
+- [2026-10-27 Final GoalAccuacy v0](2026-10-27_final_goal_accuracy.md): 1cm 고정 반경·엄격한 인정 조건·장애물 일정·TensorBoard 지표, 검증 범위.
+
+- [2026-10-27 Final v1-Test object_penalty 분리](2026-10-27_final_v1_test_object_penalty.md): 세 RewardManager term, v1 checkpoint 재개 경로, CPU 수식 검사·GPU reset/step·checkpoint 로드.
+
+- [2026-10-27 Final v1 3000·9500 보상 재생 진단](2026-10-27_final_v1_reward_play_diagnostics.md): checkpoint 확인, 보상 내부 분해용 play 분석기, CPU 물리 실행 제한과 GPU 재현 명령.
+
+- [2026-10-27 Final v1-1 Goal Distance](2026-10-27_final_v1_1_goal_proximity.md): v1 상속·지수형 XY 근접 보상, 지정 TEMP 로그 근거, 실행 검사와 학습 미검증 범위.
+
 - [2026-10-26 Final v1·v2](2026-10-26_final_v1_v2.md): 이전 환경 보존,57D 정책·20슬롯, 배치 fallback·USD 자산·CPU/PPO 검증과 GPU 물리 실행 제한.
 
 - [2026-10-26 ObjectRandom-v3 마지막500 iteration 보상 비중](2026-10-26_reward_share_last500.md): step11500~11999, 양의 보상·페널티와 전체 절댓값 기여.

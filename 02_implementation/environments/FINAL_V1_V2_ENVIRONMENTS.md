@@ -108,3 +108,86 @@ v2의 중앙80%는 선반 평면 X±0.16m, Y±0.40m이다. 이를 실제 타겟 
 | `object_free_speed`, `goal_deadzone`, `goal_speed_scale`, `wrench_weight`, `obstacle_free_force`, `obstacle_weight` | 이름·대상 term 연결을 제외하고 부모 일정 유지 |
 
 모든 일정은 절대 learning iteration을 읽는다. checkpoint 재개·rewind 때 해당 값으로 복원한다. 시작 iteration의 값은 초기값이며 이후 지정 간격부터 감소한다. Gray padding0.15는 현재 타겟 형상에 맞춘 Red 반경의15%다.
+
+## Final v1-1 — Goal Distance 지수형 근접 보상
+
+2026-10-27 추가한 `Isaac-Inspire-Final-v1-1`은 `FinalV1EnvCfg`를 직접 상속한다. `FinalV1_1RewardsCfg`가 `goal_distance` 한 항만 변경하고, 나머지 v1 설정과 `FinalV1Env` runtime을 유지한다. `FinalV1_1PPORunnerCfg`는 v1 PPO를 상속하고 experiment 이름만 `inspire_final_v1_1`로 변경한다. v2는 기존 v1을 상속하므로 이 수식이 적용되지 않는다.
+
+월드 XY의 현재 타겟 중심과 command 목표 사이 거리 $d$를 미터로 계산한다. 보상 함수는 $\exp(-d/0.05)$이며 RewardManager의 weight 1.5와 `step_dt`가 곱해진다. 기울기 계수 $a=20\mathrm{m}^{-1}$에 해당하며, 기존 v1의 새 최단 거리 개선량에 weight 100을 적용하는 일회성 진행 보상과 달리 매 step 현재 거리에서 지급한다. 그래서 목표에 멈춰 있는 동안에도 근접 보상이 계속 발생한다. 목표 반경 안의 `goal_hold`와 중첩되는 의도적인 변경이며, 속도·성공 조건은 그대로다.
+
+| 거리 $d$ | 새 보상률 | 10초 내내 같은 거리를 유지했을 때 누적값 |
+| --- | ---: | ---: |
+| 0cm | 1.500/초 | 15.00 |
+| 1cm | 1.228/초 | 12.28 |
+| 2cm | 1.005/초 | 10.05 |
+| 15cm | 0.075/초 | 0.75 |
+
+시작·목표 거리가15cm인 episode에서 v1이 거리를 전부 개선하면 최대15를 받을 수 있다. v1-1은 10초 동안 정확한 목표에 있을 때의 최대 누적값을15로 맞췄다. 두 보상은 지급 시점이 달라 **평균 episode 보상 동일성을 보장하지 않는다**. 지정 로그에는 step별 거리 분포가 없어서 실제 평균 일치는 새 학습으로 확인해야 한다. 1cm에서 0cm로 접근하면 10초 기준 약2.72의 추가 보상을 받을 수 있고, 2cm에서 1cm로 접근하면 약2.23을 더 받는다. 이 근거리 기울기가 1cm 미만 정착을 유도하는 설계 의도다.
+
+Workspace 루트에서 학습한다.
+
+```bash
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
+  --task Isaac-Inspire-Final-v1-1 --num_envs 256 --headless
+```
+
+[구현·로그 근거·검증 범위](../logs/2026-10-27_final_v1_1_goal_proximity.md)를 확인한다. 기존 v1 checkpoint는 관측·모델 차원이 같지만 보상 목적이 바뀌므로 재개 결과는 새 학습과 구분해 기록한다.
+
+## Final v1-Test — object_penalty 세 항 분리
+
+`Isaac-Inspire-Final-Test-v1`은 `FinalV1EnvCfg`를 직접 상속하고 `FinalV1Env` runtime을 그대로 사용한다. `FinalV1TestRewardsCfg`는 기존 `object_penalty`만 비활성화하고 아래 세 term을 활성화한다. 관측57D·장애물20슬롯80D, Action, Scene/reset, 종료 및 다른 보상은 v1과 같다. `FinalV1TestCurriculumCfg`는 v1의 가속도 두 일정을 새 가속도 term에 연결하며, 다른 일정은 그대로 상속한다.
+
+| 학습 로그의 RewardManager term | 계산 대상 | Manager weight |
+| --- | --- | ---: |
+| `object_tilt_penalty` | 활성 타깃과 장애물의 각도별 제곱 기울기 비용 합 | −30 |
+| `object_displacement_penalty` | 활성 장애물의 초기 위치 대비 3D 변위 제곱 합, 합산 후0.04 상한 | −150 |
+| `object_acceleration_penalty` | 활성 타깃과 장애물의 3D 가속도 지수 비용 합, 물체별100 상한 | 3000 iter에서0, 이후 v1과 같은 일정 |
+
+각 항에는 RewardManager의 `step_dt`가 한 번 적용된다. 기울기 계산의 5° 무료 각도와0.9 rad 포화, 변위 비율5, 가속도 무료 기준50→20m/s²와 weight0→−0.05는 v1 값 그대로다. 따라서 세 항의 합은 원래 `object_penalty`와 같은 비용이며, 비활성 물체 mask·가속도 첫 유효 샘플 무효화도 유지한다. 출력은 `Episode_Reward/object_tilt_penalty`, `Episode_Reward/object_displacement_penalty`, `Episode_Reward/object_acceleration_penalty`로 각각 기록된다. 이 스칼라는 episode 누적값을 최대 episode 길이10초로 나눈 값이다.
+
+PPO는 v1의 Actor/Critic 구조와 설정을 상속하고 experiment 이름만 `inspire_final_v1_test`로 분리한다. Workspace 루트에서 다음 명령은 기존 v1의9500 checkpoint를 **읽기 전용으로 로드**해 추가500 iteration을 학습하는 예시다. `--checkpoint`에 실제 파일 경로를 주면 `train.py`가 그 파일을 직접 사용하며 신규 결과는 `logs/rsl_rl/inspire_final_v1_test`에 생성된다.
+
+```bash
+conda activate env_isaaclab
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
+  --task Isaac-Inspire-Final-Test-v1 --num_envs 256 --headless \
+  --resume --checkpoint logs/TEMP/2026-10-26_17-11-27/model_9500.pt \
+  --max_iterations 500
+```
+
+세 term의 절댓값과 합을 같은 iteration 구간에서 비교하면 새 학습 중 주된 비용을 식별할 수 있다. 재개 후 정책 행동도 변하므로, 이 기록만으로 **기존 v1 run의 과거 `object_penalty` 내부 비중**을 소급 확정하지 않는다. [구현·검증 기록](../logs/2026-10-27_final_v1_test_object_penalty.md)을 확인한다.
+
+## Final GoalAccuacy v0 — 1cm 정확도
+
+`Isaac-Inspire-Final-GoalAccuacy-v0`는 `FinalV1EnvCfg` → `FinalGoalAccuracyEnvCfg`, `FinalV1Env` → `FinalGoalAccuracyEnv`, `FinalV1PPORunnerCfg` → `FinalGoalAccuracyPPORunnerCfg`로 구성한다. 요청한 `GoalAccuacy` 표기를 Gym ID에 그대로 사용한다. 모델·관측·Action·Scene·그 밖의 커리큘럼은 v1에서 상속한다. 학습 출력은 `logs/rsl_rl/inspire_final_goal_accuracy_v0`다.
+
+| 항목 | 설정 |
+| --- | --- |
+| `goal_speed_scale`, `goal_position_tolerance`, `object_free_speed` | 세 curriculum 삭제; 각각 `0.05m/s`, `0.01m`, `0.1m/s`로 고정 |
+| `obstacle_population` | 1/1에서 시작해 White 2000, Gray 2500에 첫 증가; 이후 색별 1000 iteration마다 증가, White 8000·Gray 8500에 8/8 완성 |
+| `goal_hold` | 유효한 타겟의 XY 거리 `d < 0.01m`에서만 중심 가중 정착 보상; 1~2cm의 보상 제거. weight 4→8 |
+| `target_speed_penalty` | 기존 `object_speed_penalty`의 이름 변경; 무료 속도 `0.1m/s` 고정, weight −5→−10 |
+| `hand_reaching` | Hand–타겟 기본·목표 내 인정 반경 모두 `0.01m`; weight 30 유지 |
+| `hand_contact` | 실제 Hand 접촉력 보상은 유지; 목표 위치로 접촉을 간주하는 분기는 `d < 0.01m` |
+| `success` | 10초 만료 시 타겟의 `d < 0.01m`; 나머지 만료는 `time_out`. 조기 성공 종료 없음 |
+
+좁아진 인정 영역에서 보상 크기가 사라지는 영향을 줄이기 위해 `goal_hold` 최대 중심 지급률을 두 배로 높였다. 무료 타겟 속도를 후반 v1의 0.02m/s보다 크게 고정하므로 속도 비용 weight도 두 배로 높였다. 이 계수는 새 학습으로 검증할 초기 설계이며, 동일한 페널티 분포나 정확도 향상을 입증하지 않는다. 나머지 비용과 PPO 계수는 v1과 같다.
+
+`FinalGoalAccuracyEnv`는 각 control step에서 다음 값을 모으고 에피소드 reset 때 TensorBoard의 `Metrics/`로 기록한다. 이름 끝 `_mean`은 각 에피소드의 시간 평균을 낸 뒤 종료된 환경끼리 평균한 값이다. `max_force`·`max_moment`는 각 에피소드의 관측 6축 F/T 크기 최대값을 낸 뒤 평균한다. F/T는 노이즈 추가 전의 보정 관측 함수 출력이다. 유효하지 않은 비유한 샘플은 평균에서 제외한다. `obstacle_actual_gray/white`는 fallback 이후 실제 배치 개수이며 기존 `Curriculum/`에서 `Metrics/`로 옮긴다.
+
+| TensorBoard 키 | 단위 |
+| --- | --- |
+| `Metrics/target_goal_distance_xy_mean` | m |
+| `Metrics/eef_linear_speed_mean`, `Metrics/target_linear_speed_mean` | m/s |
+| `Metrics/target_linear_acceleration_mean` | m/s² |
+| `Metrics/obstacle_actual_gray`, `Metrics/obstacle_actual_white` | 개 |
+| `Metrics/max_force`, `Metrics/max_moment` | N, N·m |
+
+Workspace 루트에서 `train.py`로 학습한다.
+
+```bash
+./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
+  --task Isaac-Inspire-Final-GoalAccuacy-v0 --num_envs 256 --headless
+```
+
+[구현·검증 로그](../logs/2026-10-27_final_goal_accuracy.md)를 확인한다.
