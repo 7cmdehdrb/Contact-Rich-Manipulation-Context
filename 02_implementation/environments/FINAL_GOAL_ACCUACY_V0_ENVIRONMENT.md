@@ -4,7 +4,7 @@
 
 기준일: 2026-10-27. 이 문서는 `Isaac-Inspire-Final-GoalAccuacy-v0`의 실제 적용 설정과 계산 함수를 기준으로 관측, Scene, Action, Reward, Curriculum, Termination, 학습 Metric을 설명한다. 모든 수치는 실행 시 설정 변경이 없는 기본값이다. Gym ID의 `GoalAccuacy` 철자는 요청한 이름을 그대로 따른다. `FinalV1EnvCfg`를 직접 상속하지만, 현재 환경의 동작을 이 문서만으로 파악할 수 있도록 상속된 설정도 함께 적었다.
 
-과업은 선반 위의 타겟을 지정한 평면 목표 위치로 **1cm 미만**까지 밀고, 장애물과 선반을 안정적으로 유지하는 것이다. 정책은 에피소드 시작 시의 타겟·장애물 위치와 목표를 받고, 실행 중에는 관절 상태, EEF 자세, 촉각, 손목 wrench로 행동한다. 목표에 도달해도 계속 행동하며, 10초 만료 시의 위치로 성공 여부를 분류한다. 목표 인정 반경은 학습 처음부터 0.01m로 고정한다.
+과업은 선반 위의 타겟을 지정한 평면 목표 위치로 **1cm 이내**까지 밀고, 장애물과 선반을 안정적으로 유지하는 것이다. 정책은 에피소드 시작 시의 타겟·장애물 위치와 목표를 받고, 실행 중에는 관절 상태, EEF 자세, 촉각, 손목 wrench로 행동한다. 목표에 도달해도 계속 행동하며, 10초 만료 시의 위치로 성공 여부를 분류한다. 목표 인정 반경은 학습 처음부터 0.01m로 고정한다.
 
 | 항목 | 설정 |
 | --- | --- |
@@ -235,12 +235,12 @@ R_t=\Delta t\sum_k\rho_{k,t},\qquad \rho_{k,t}=w_k f_k(t),\qquad \Delta t=0.02.
 | --- | --- | --- |
 | `hand_reaching` | +30 | 손–타겟 접근 거리의 새 기록 |
 | `goal_distance` | +100 | 타겟–목표 평면 접근 거리의 새 기록 |
-| `goal_hold` | +8 | `d < 0.01m`에서 목표 중심·저속 유지 보상 |
+| `goal_hold` | +8 | `d ≤ 0.01m`에서 목표 중심·저속 유지 보상 |
 | `hand_contact` | +1.45 | 손 접촉 또는 유효한 목표 반경 내부 점유 |
 | `action_rate_penalty` | −1 | 내부 Arm/Hand 계수 각각 0.03 |
 | `joint_velocity_penalty` | −1 | 내부 Arm 0.03, Hand 0.01 |
 | `object_penalty` | −1 | 기울기·장애물 변위·물체 가속도의 합성 비용 |
-| `target_speed_penalty` | −10 | 타겟 선속도 0.1m/s 초과 비용 |
+| `target_speed_penalty` | −5 | 타겟 선속도의 커리큘럼 무료 기준 초과 비용 |
 | `shelf_penalty` | −1 | 선반 충돌 조건의 일회성 비용과 근접·움직임 비용 |
 | `obstacle_contact_penalty` | 0 → −0.1 | 장애물–Hand 접촉력 초과 비용 |
 | `wrench_change_penalty` | 0 → −0.1 | 보상된 wrench 크기 변화 비용 |
@@ -263,11 +263,11 @@ E(x;b)=\min\left(\frac{\exp(2\max(x-b,0))-1}{2},\ 100\right).
 - 선반 좌표에서 타겟 원점의 `|x|≤0.16`, `|y|≤0.46`, `1.04≤z≤1.07`이다.
 - 타겟 up축과 선반 up축의 내적이 `cos(0.9)` 이상이다.
 
-`hand_contact`의 목표 간주와 `goal_hold`는 모두 `V`와 **`d<r`**을 사용한다. `hand_reaching`의 함수에도 이 점유 판정이 남아 있지만 기본·목표 내 near radius가 모두 0.01m이므로 판정 결과에 따라 인정 반경이 달라지지는 않는다. 이 유효성 검사에 실제 선반 접촉력 검사는 포함하지 않는다. 시간 만료 성공 조건은 6절에서 별도로 정의한다.
+`hand_contact`의 목표 간주, `goal_hold`, `hand_reaching`의 인정 반경 전환은 모두 `V`와 **`d≤r`**을 사용한다. 이 유효성 검사에 실제 선반 접촉력 검사는 포함하지 않는다. 시간 만료 성공 조건은 6절에서 별도로 정의한다.
 
 ### 4.3. `hand_reaching`과 `goal_distance`
 
-`hand_reaching`은 현재 EEF와 타겟의 3D 거리에서 near radius를 뺀 양의 gap을 추적한다. 기본과 목표 내 near radius는 모두 **0.01m**다. 즉 타겟이 목표에 들어왔다고 Hand–타겟 인정 거리를 1m로 넓히지 않는다. reset 때의 gap을 초기 최저 기록으로 두고, 그보다 더 가까워진 양에 대해서만 **1m당 +30**을 지급한다.
+`hand_reaching`은 현재 EEF와 타겟의 3D 거리에서 near radius를 뺀 양의 gap을 추적한다. Final-v1과 같이 평소 near radius는 **0.10m**, 유효한 타겟의 `d≤r` 점유 중에는 **1.0m**다. `r`만 커리큘럼 없이 0.01m로 고정한다. EEF–타겟 거리가 1m 이내라면 목표 점유 중 gap은 0이므로 더 가까워져도 접근 보상이 늘지 않는다. reset 때의 gap을 초기 최저 기록으로 두고, 그보다 더 가까워진 양에 대해서만 **1m당 +30**을 지급한다.
 
 ```math
 g_t=\max(\|p_{\mathrm{eef},t}-p_{T,t}\|-n_t,0),\qquad
@@ -275,7 +275,7 @@ b_t=\min(b_{t-1},g_t),\qquad
 R_{\mathrm{reach},t}=30(b_{t-1}-b_t).
 ```
 
-뒤로 갔다가 같은 지점으로 돌아오는 행동은 다시 보상하지 않는다. 두 near radius가 같으므로 목표 안팎을 오가는 것만으로 gap이 줄어 보상을 받지 않는다. 타겟이 손 쪽으로 움직이는 경우도 상대 거리를 줄인다.
+뒤로 갔다가 같은 지점으로 돌아오는 행동은 다시 보상하지 않는다. 목표 첫 진입에서 인정 반경이 커지면 남은 접근 진전을 한 번 지급할 수 있지만, 최저 gap 기록을 유지하므로 목표 안팎을 반복해서 오가도 재지급하지 않는다. 타겟이 손 쪽으로 움직이는 경우도 상대 거리를 줄인다.
 
 `goal_distance`는 reset 시 타겟–목표 거리 `D0` 대비 접근한 거리의 최고 기록을 추적한다. tolerance는 0m이며 `r` 커리큘럼과 독립적이다.
 
@@ -292,14 +292,14 @@ R_{\mathrm{distance},t}=100(B_t-B_{t-1}),\qquad B_0=0.
 
 ```math
 \rho_{\mathrm{hold}}=
-8\,\mathbf{1}_{\{V\ \mathrm{and}\ d<r\}}
+8\,\mathbf{1}_{\{V\ \mathrm{and}\ d\le r\}}
 2^{-((d/r)^2+(v/s)^2)}
 \left(1+\max(1-d/r,0)^2\right).
 ```
 
-중심에 정지해 있으면 초당 +16, 즉 한 스텝 +0.32다. 정지 상태에서 `d`가 `r`에 내부에서 가까워지면 지급률은 초당 +4에 접근하지만, **정확히 `d=r`부터는 0**이다. `r<d<2r`에도 지급하지 않는다. 중심에 가까울수록, 선속도가 작을수록 높다. 누적 지급 시간 제한이나 연속 유지시간 ramp가 없어 에피소드가 끝날 때까지 받을 수 있다. weight 4→8은 엄격해진 지급 범위에 대한 초기 계수 조정이며 학습 성능 향상이 입증된 값은 아니다.
+중심에 정지해 있으면 초당 +16, 즉 한 스텝 +0.32다. 정지 상태에서 **정확히 `d=r`이면 초당 +4**이고, `d>r`에서는 0이다. `r<d<2r`에도 지급하지 않는다. 중심에 가까울수록, 선속도가 작을수록 높다. 누적 지급 시간 제한이나 연속 유지시간 ramp가 없어 에피소드가 끝날 때까지 받을 수 있다. weight 4→8은 지급 범위가 `2r`에서 `r`로 줄어든 데 대한 초기 계수 조정이며 학습 성능 향상이 입증된 값은 아니다.
 
-`hand_contact`는 전체 Hand의 현재 유효한 합력 크기가 0.01N 이상이거나, 타겟이 `V`를 만족하며 **`d<r`**이면 초당 +1.45, 즉 한 스텝 +0.029다. 두 조건을 동시에 만족해도 한 번만 지급한다. 목표 간주에는 별도의 저속 조건이 없고, 이 간주가 실제 촉각 bit를 켜지는 않는다. 실제 접촉력 조건은 목표 거리와 무관하다.
+`hand_contact`는 Final-v1과 같은 함수·계수를 사용한다. 전체 Hand의 현재 유효한 합력 크기가 0.01N 이상이거나, 타겟이 `V`를 만족하며 **`d≤r`**이면 초당 +1.45, 즉 한 스텝 +0.029다. 두 조건을 동시에 만족해도 한 번만 지급한다. 목표 간주에는 별도의 저속 조건이 없고, 이 간주가 실제 촉각 bit를 켜지는 않는다. 실제 접촉력 조건은 목표 거리와 무관하다.
 
 전체 Hand 합력은 링크·pad의 **normal contact force 벡터를 먼저 합한 뒤** 크기를 취한다. 접선 마찰력은 이 센서 합력에 포함하지 않으며, 선반·바닥과의 Hand 접촉도 포함한다. 물체별 힘 크기를 각각 더한 값과 다르므로 반대 방향 힘이 상쇄될 수 있다.
 
@@ -334,7 +334,7 @@ D=\min\left(\sum_{j\in O}\|p_j-p_{j,0}\|^2,0.04\right),
 
 타겟은 기울기와 가속도 비용에는 포함하지만 변위 비용에서는 제외한다. `α`는 PhysX가 제공하는 물체 COM의 현재 3D 선가속도이며, 제어 스텝 사이 속도 차분으로 대체하지 않는다. 가속도는 물체마다 100 상한을 적용한 뒤 더한다. reset·가속도 비용 최초 활성화 후 유효한 첫 이력이 준비되기 전에는 가속도 비용을 지급하지 않는다. `w_a`는 0에서 −0.05, `a_free`는 50에서 20m/s²로 바뀐다.
 
-`target_speed_penalty`의 weighted rate는 `−10 E(v;0.1)`이다. 대상은 타겟 하나의 3D 선속도 크기이고 각속도가 아니다. 무료 속도는 학습 전 기간 **0.1m/s**로 고정한다. 기존 `object_speed_penalty` 이름은 이 환경에서 비활성화했다. 기존 v1 후반의 0.02m/s보다 넓은 무료 속도에 대해 weight −5→−10으로 조정했지만, 두 비용 곡선이 동등하다는 뜻은 아니다. 이 보상 threshold와 1.0m/s인 속도 종료 threshold는 별개다.
+`target_speed_penalty`의 weighted rate는 `−5 E(v;v_free)`이다. 대상은 타겟 하나의 3D 선속도 크기이고 각속도가 아니다. `v_free`는 Final-v1과 같은 커리큘럼으로 0.1→0.02m/s로 감소한다. 함수·weight·파라미터·일정은 Final-v1과 같고, Manager term 이름만 `object_speed_penalty`에서 바꿨다. 이 보상 threshold와 1.0m/s인 속도 종료 threshold는 별개다.
 
 ### 4.7. `shelf_penalty`
 
@@ -379,21 +379,21 @@ C_w=\frac{\exp(3z)-1}{\exp(3)-1}.
 
 활성 일정은 절대 `learning_iteration`을 읽는다. 에피소드 번호나 제어 스텝 수가 아니다. 기본 PPO rollout은 환경당 iteration마다 36 제어 스텝이다. checkpoint 재개·iteration 변경 시 해당 절대 iteration에 맞는 값을 다시 적용한다. Reward threshold의 두 점 사이에서는 지정한 interval 간격으로 보간값을 갱신하며, interval 1은 매 iteration 갱신이다. 첫 점 이전과 마지막 점 이후에는 끝값을 유지한다.
 
-다음 세 항은 **커리큘럼 term 자체가 비활성**이다. 보상 설정의 초기값이 전체 학습 동안 유지된다.
+다음 두 항은 **커리큘럼 term 자체가 비활성**이다. 보상 설정의 초기값이 전체 학습 동안 유지된다.
 
 | 제거한 일정 | 고정 대상·값 | 기존 v1과의 차이 |
 | --- | --- | --- |
 | `goal_speed_scale` | `goal_hold.speed_scale=0.05m/s` | 후반 0.02m/s로 좁히지 않음 |
 | `goal_position_tolerance` | `goal_hold.position_tolerance=0.01m` | 초반 0.02m를 사용하지 않음 |
-| `object_free_speed` | `target_speed_penalty.free_speed=0.1m/s` | 후반 0.02m/s로 좁히지 않음 |
 
-이 고정 `r`은 goal hold, 목표 내 접촉 간주와 만료 성공의 공통 기준이다. `goal_distance` 자체의 tolerance는 0m로 유지한다. `target_speed_penalty` 이름 변경 후 이를 갱신하는 기존 `object_free_speed` 일정이 남지 않도록 제거했다.
+이 고정 `r`은 goal hold, Reaching 인정 반경 전환, 목표 내 접촉 간주와 만료 성공의 공통 기준이다. `goal_distance` 자체의 tolerance는 0m로 유지한다. `object_free_speed` 일정은 Final-v1과 같은 점·간격을 사용하며 갱신 대상 term만 `target_speed_penalty`로 바꿨다.
 
-### 5.2. 활성 10개 일정
+### 5.2. 활성 11개 일정
 
 | 이름 | 대상·단위 | 일정 | interval |
 | --- | --- | --- | --- |
 | `obstacle_population` | 요청 Gray/White 수 | 초기 1/1; White 2000, Gray 2500부터 번갈아 증가; 최종 8/8 | 전체 500마다 1개, 각 색 1000마다 |
+| `object_free_speed` | `target_speed_penalty.free_speed`, m/s | `(0:0.1), (499:0.1), (500:0.09), (1900:0.02)` | 250 |
 | `obstacle_gray_zone_padding` | Gray 내측 완화 비율 | `(4000:0) → (10000:0.15)` | 1000 |
 | `object_free_acceleration` | 무료 가속도, m/s² | `(3000:50) → (10000:20)` | 1 |
 | `object_acceleration_weight` | `object_penalty` 내부 가속도 weight | `(3000:0) → (10000:−0.05)` | 1 |
@@ -422,7 +422,7 @@ Gray padding은 미터가 아니라 형상에 맞춘 Red 반경의 비율이다.
 
 ### 5.3. 보상·종료와의 연결
 
-`r=0.01m`는 학습 iteration에 따라 바뀌지 않는다. `goal_hold`의 거리 감쇠 scale·지급 cutoff, `hand_contact`의 목표 간주, `success`·`time_out`의 만료 분류는 이 반경을 공유하되, 보상은 타겟 유효성 `V`를 추가로 검사하고 만료 분류는 XY 거리만 검사한다. 세 판정의 경계는 모두 `d<r`다. `hand_reaching`의 Hand–타겟 near radius는 별도의 0.01m이며 목표 점유 여부와 무관하게 같다.
+`r=0.01m`는 학습 iteration에 따라 바뀌지 않는다. `goal_hold`의 거리 감쇠 scale·지급 cutoff, `hand_reaching`의 인정 반경 전환, `hand_contact`의 목표 간주, `success`·`time_out`의 만료 분류는 이 반경을 공유하되, 보상은 타겟 유효성 `V`를 추가로 검사하고 만료 분류는 XY 거리만 검사한다. 모든 목표 점유 판정의 경계는 `d≤r`다. `hand_reaching`의 EEF–타겟 3D 인정 반경은 별도로 평소 0.10m, 유효한 목표 점유 중 1.0m다.
 
 `object_acceleration_weight`는 RewardManager의 −1 weight가 아니라 `object_penalty` 내부 가속도 계수를 갱신한다. 다른 고정 weight는 위 표의 일정으로 바뀌지 않는다.
 
@@ -446,11 +446,11 @@ Gray padding은 미터가 아니라 형상에 맞춘 Red 반경의 비율이다.
 `expired`는 `episode_length_buf ≥ 500`, `d`는 타겟–목표 world XY 거리, `r=0.01m`은 고정 목표 반경이다.
 
 ```math
-\mathrm{success}=\mathrm{expired}\ \land\ (d<r),\qquad
-\mathrm{time\_out}=\mathrm{expired}\ \land\ \neg(d<r).
+\mathrm{success}=\mathrm{expired}\ \land\ (d\le r),\qquad
+\mathrm{time\_out}=\mathrm{expired}\ \land\ \neg(d\le r).
 ```
 
-두 항은 상호 배타적이며, 합치면 정확히 10초 시간 한계다. 10초 전에 목표 반경에 들어와도 이 이유로 종료하지 않는다. **정확히 경계 `d=r`인 경우는 `time_out`**이다. 비교할 거리가 NaN이면 `d<r`가 거짓이므로 `time_out`으로 분류한다.
+두 항은 상호 배타적이며, 합치면 정확히 10초 시간 한계다. 10초 전에 목표 반경에 들어와도 이 이유로 종료하지 않는다. **정확히 경계 `d=r`인 경우는 `success`**다. 비교할 거리가 NaN이면 `d≤r`가 거짓이므로 `time_out`으로 분류한다.
 
 성공 분류는 **시간 만료와 거리만** 검사한다. 속도 조건, 연속 유지시간, 추가 접촉 조건, 4.2절의 보상 유효성 `V`를 추가하지 않는다. 따라서 `goal_hold`의 지급 여부와 `success` 여부가 완전히 같은 판정은 아니다.
 
@@ -493,7 +493,7 @@ Workspace 루트에서 새 task ID로 학습한다. `train.py`가 사용하는 �
 - [관측 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observations/final.py), [Hand 관측 계산](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observation_functions/final.py)
 - [Scene](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/scenes/final.py), [물체 생성](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/final_spawners.py), [배치 기하](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/final_geometry.py), [Event 계산](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/event_functions/final.py)
 - [Action 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/actions/final.py), [로봇·관절 기준](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/robot.py)
-- [Reward 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/rewards/final.py), [엄격한 목표 보상·합성 비용](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/final.py), [공유 목표 측정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/contact_sweep_clutter_fusion_holding.py)
+- [Reward 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/rewards/final.py), [목표 보상·합성 비용](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/final.py), [공유 목표 측정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/contact_sweep_clutter_fusion_holding.py)
 - [Curriculum 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/curricula/final.py), [Termination 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/terminations/final.py), [만료 분류 계산](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/termination_functions/final.py)
 
-이번 환경의 CPU 계약 검사는 43개가 통과했다. GPU 물리 reset/step, 실제 TensorBoard 이벤트 생성, 1cm 성공률, play 화면 외관, 학습 수렴은 아직 검증하지 못했다. 이 문서는 구현된 동작의 명세이며 과업 성능의 실험 결과를 주장하지 않는다. 실행한 검사와 미실행 범위는 [개발·검증 기록](../logs/2026-10-27_final_goal_accuracy.md)에 구분해 두었다.
+초기 환경 CPU 계약 검사는 43개, 이번 경계·상속 변경을 포함한 관련 CPU 검사는 56개가 통과했다. GPU 물리 reset/step, 실제 TensorBoard 이벤트 생성, 1cm 성공률, play 화면 외관, 학습 수렴은 아직 검증하지 못했다. 이 문서는 구현된 동작의 명세이며 과업 성능의 실험 결과를 주장하지 않는다. 실행한 검사와 미실행 범위는 [개발·검증 기록](../logs/2026-10-27_final_goal_accuracy.md)에 구분해 두었다.

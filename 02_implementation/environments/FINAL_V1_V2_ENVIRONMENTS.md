@@ -165,15 +165,15 @@ conda activate env_isaaclab
 
 | 항목 | 설정 |
 | --- | --- |
-| `goal_speed_scale`, `goal_position_tolerance`, `object_free_speed` | 세 curriculum 삭제; 각각 `0.05m/s`, `0.01m`, `0.1m/s`로 고정 |
+| `goal_speed_scale`, `goal_position_tolerance` | 두 curriculum 삭제; 각각 `0.05m/s`, `0.01m`로 고정 |
 | `obstacle_population` | 1/1에서 시작해 White 2000, Gray 2500에 첫 증가; 이후 색별 1000 iteration마다 증가, White 8000·Gray 8500에 8/8 완성 |
-| `goal_hold` | 유효한 타겟의 XY 거리 `d < 0.01m`에서만 중심 가중 정착 보상; 1~2cm의 보상 제거. weight 4→8 |
-| `target_speed_penalty` | 기존 `object_speed_penalty`의 이름 변경; 무료 속도 `0.1m/s` 고정, weight −5→−10 |
-| `hand_reaching` | Hand–타겟 기본·목표 내 인정 반경 모두 `0.01m`; weight 30 유지 |
-| `hand_contact` | 실제 Hand 접촉력 보상은 유지; 목표 위치로 접촉을 간주하는 분기는 `d < 0.01m` |
-| `success` | 10초 만료 시 타겟의 `d < 0.01m`; 나머지 만료는 `time_out`. 조기 성공 종료 없음 |
+| `goal_hold` | 유효한 타겟의 XY 거리 `d ≤ 0.01m`에서만 중심 가중 정착 보상; 1~2cm의 보상 제거. weight 4→8 |
+| `target_speed_penalty` | 기존 `object_speed_penalty`의 이름만 변경; weight −5와 무료 속도 0.1→0.02m/s 커리큘럼 유지 |
+| `hand_reaching` | Final-v1과 동일한 EEF–타겟 3D 인정 반경: 평소 0.10m, 유효한 `d ≤ 0.01m`에서 1.0m; weight 30 유지 |
+| `hand_contact` | Final-v1과 같은 함수·계수: 실제 Hand 접촉 또는 유효한 `d ≤ 0.01m` 점유 인정 |
+| `success` | 10초 만료 시 타겟의 `d ≤ 0.01m`; 나머지 만료는 `time_out`. 조기 성공 종료 없음 |
 
-좁아진 인정 영역에서 보상 크기가 사라지는 영향을 줄이기 위해 `goal_hold` 최대 중심 지급률을 두 배로 높였다. 무료 타겟 속도를 후반 v1의 0.02m/s보다 크게 고정하므로 속도 비용 weight도 두 배로 높였다. 이 계수는 새 학습으로 검증할 초기 설계이며, 동일한 페널티 분포나 정확도 향상을 입증하지 않는다. 나머지 비용과 PPO 계수는 v1과 같다.
+좁아진 목표 체류 영역에서 보상 크기가 사라지는 영향을 줄이기 위해 `goal_hold` 최대 중심 지급률을 두 배로 높였다. 타겟 속도 비용은 Final-v1의 함수·수치·일정을 그대로 사용한다. 이 계수는 새 학습으로 검증할 초기 설계이며 정확도 향상을 입증하지 않는다. 나머지 비용과 PPO 계수는 v1과 같다.
 
 `FinalGoalAccuracyEnv`는 각 control step에서 다음 값을 모으고 에피소드 reset 때 TensorBoard의 `Metrics/`로 기록한다. 이름 끝 `_mean`은 각 에피소드의 시간 평균을 낸 뒤 종료된 환경끼리 평균한 값이다. `max_force`·`max_moment`는 각 에피소드의 관측 6축 F/T 크기 최대값을 낸 뒤 평균한다. F/T는 노이즈 추가 전의 보정 관측 함수 출력이다. 유효하지 않은 비유한 샘플은 평균에서 제외한다. `obstacle_actual_gray/white`는 fallback 이후 실제 배치 개수이며 기존 `Curriculum/`에서 `Metrics/`로 옮긴다.
 
