@@ -1,6 +1,7 @@
 # 환경 문서 안내
 
 - [Final GoalAccuacy v0 상세 명세](FINAL_GOAL_ACCUACY_V0_ENVIRONMENT.md): 1cm 고정 목표, 전체 관측·Scene·Action·보상식·10개 활성 커리큘럼·종료·학습 Metric의 독립 설명.
+- [Final GoalAccuacy v1 환경·Final v1 대조](FINAL_GOAL_ACCUACY_V1_ENVIRONMENT.md): v0 상속, 1cm 고정, 외곽 goal_hold·goal_speed_scale 복원, 기존 object_free_speed 유지.
 
 - [Final v1 상세 명세](FINAL_V1_ENVIRONMENT.md): v1의 관측·노이즈, Scene·랜덤화, Action, 전체 보상식, 13개 커리큘럼, 종료 조건을 독립적으로 설명.
 

@@ -13,6 +13,7 @@
 | `v1-1` | `FinalV1EnvCfg` 파생 | 지수형 goal distance 보상. [변형 비교](environments/FINAL_V1_V2_ENVIRONMENTS.md) |
 | `Test-v1` | `FinalV1EnvCfg` 파생 | object penalty 분리 계측. [변형 비교](environments/FINAL_V1_V2_ENVIRONMENTS.md) |
 | `GoalAccuacy-v0` | `FinalV1EnvCfg` 파생 | [1cm 정확도 환경](environments/FINAL_GOAL_ACCUACY_V0_ENVIRONMENT.md) |
+| `GoalAccuacy-v1` | `FinalGoalAccuracyEnvCfg` 파생 | [1cm 고정 + 외곽 보상·goal speed 일정 복원, Final v1 대조](environments/FINAL_GOAL_ACCUACY_V1_ENVIRONMENT.md) |
 | `v2` | `FinalV1EnvCfg` 파생 | 타겟 배치 영역 변경. [변형 비교](environments/FINAL_V1_V2_ENVIRONMENTS.md) |
 | `Test-v2` | Final v2 파생 | 최종 장애물 개수로 시작. [변형 비교](environments/FINAL_V1_V2_ENVIRONMENTS.md) |
 
