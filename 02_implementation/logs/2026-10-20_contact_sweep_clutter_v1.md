@@ -2,7 +2,7 @@
 
 > 2026-10-21 로그 정리 후 참조 run의 현재 위치는 `logs/backup/Isaac-Inspire-Contact-Sweep-Clutter-v0/2026-10-20_14-04-31`다. 아래 당시 경로·실행 명령은 수행 이력으로 보존한다. [정리 기록](2026-10-21_temp_training_log_cleanup.md).
 
-[로그 목록](README.md) · [활성 환경](../08_ACTIVE_ENVIRONMENTS.md#contact-sweep-clutter-v1--2026-10-20) · [부모 v0 구현](2026-10-20_contact_sweep_clutter.md) · [패키지 계약](../../../../src/inspire_sweep_baseline/README.md#contact-sweep-clutter-v1--초기-타겟-관측과-보상-균형)
+[로그 목록](README.md) · [활성 환경](../../03_assets/archives/2026-10-27_agent_context/example/Contact-Rich-Manipulation-Context/02_implementation/08_ACTIVE_ENVIRONMENTS.md.txt) · [부모 v0 구현](2026-10-20_contact_sweep_clutter.md) · [패키지 계약](../../../../src/inspire_sweep_baseline/README.md#contact-sweep-clutter-v1--초기-타겟-관측과-보상-균형)
 
 기준일: 2026-10-20. 사용자 요청에 따라 Clutter v0를 상속하는 v1을 구현했다. 초기 타겟 관측, Critic 전용 현재 타겟 위치, 목표 유지·접촉·장애물 이동 비용을 추가하고 기존 학습 로그로 초기 계수를 정했다. 아래 가정별 보상 비중은 v1 장기 학습 성능과 구분한다.
 

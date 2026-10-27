@@ -1,6 +1,6 @@
 # Contact Sweep Clutter Fusion v1_4
 
-[환경 안내](README.md) · [환경 계층](ENVIRONMENT_EVOLUTION.md) · [활성 환경](../08_ACTIVE_ENVIRONMENTS.md#contact-sweep-clutter-fusion-v1_4--2026-10-23) · [구현·검증 기록](../logs/2026-10-23_clutter_fusion_v1_4.md)
+[환경 안내](README.md) · [환경 계층](ENVIRONMENT_EVOLUTION.md) · [활성 환경](../../03_assets/archives/2026-10-27_agent_context/example/Contact-Rich-Manipulation-Context/02_implementation/08_ACTIVE_ENVIRONMENTS.md.txt) · [구현·검증 기록](../logs/2026-10-23_clutter_fusion_v1_4.md)
 
 **기준일: 2026-10-23.** Task ID는 `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_4`다. 학습된 v1_0을 이어 보상과 페널티 허용 기준을 보정하는 환경이다. 아래는 현재 코드의 계약이며 성공률이나 학습 성능 향상이 검증되었다는 뜻은 아니다.
 

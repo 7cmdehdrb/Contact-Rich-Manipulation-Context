@@ -1,6 +1,6 @@
 # Inspire Hand 촉각 벡터 검증 패키지
 
-[개발 로그 목록](README.md) · [활성 환경과 명령](../08_ACTIVE_ENVIRONMENTS.md#inspire-hand-촉각-standalone-검증) · [패키지 안내](../../../../src/inspire_tactile_validation/README.md)
+[개발 로그 목록](README.md) · [활성 환경과 명령](../../03_assets/archives/2026-10-27_agent_context/example/Contact-Rich-Manipulation-Context/02_implementation/08_ACTIVE_ENVIRONMENTS.md.txt) · [패키지 안내](../../../../src/inspire_tactile_validation/README.md)
 
 기준 workspace commit `80a1b96e872ff78afe71a10b5a07a06a10df2190`. 작업 시작 당시 패키지 README와 문서 submodule에 있던 사용자 변경을 보존했다. 사용자 요청으로 활성 범위에 새 `src/inspire_tactile_validation` 패키지를 추가했다. 기존 RL 환경·센서·자산 파일은 수정하지 않았다.
 

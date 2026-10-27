@@ -1,6 +1,6 @@
 # Fusion v3 iteration 6000~마지막 보상 구성 분석
 
-[개발·실험 로그](README.md) · [활성 Fusion v3](../08_ACTIVE_ENVIRONMENTS.md#contact-sweep-clutter-fusion-v3--2026-10-21)
+[개발·실험 로그](README.md) · [활성 Fusion v3](../../03_assets/archives/2026-10-27_agent_context/example/Contact-Rich-Manipulation-Context/02_implementation/08_ACTIVE_ENVIRONMENTS.md.txt)
 
 기준일: 2026-10-22. 사용자가 지정한 `logs/rsl_rl/inspire_contact_sweep_clutter_fusion_v3/2026-10-21_21-55-18`의 실제 TensorBoard 이벤트를 읽어 보상별 평균과 비중을 계산했다. Data 분석 스킬의 원본·집계 단위·분모·재현성 기준을 적용했다. 새 학습·재생이나 보상 계수 변경은 수행하지 않았다.
 

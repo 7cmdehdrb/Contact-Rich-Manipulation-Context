@@ -1,6 +1,6 @@
 # Clutter v0 — RED 확대와 장애물 수 감소
 
-[로그 목록](README.md) · [최초 구현](2026-10-20_contact_sweep_clutter.md) · [활성 환경](../08_ACTIVE_ENVIRONMENTS.md#contact-sweep-clutter-v0--2026-10-20)
+[로그 목록](README.md) · [최초 구현](2026-10-20_contact_sweep_clutter.md) · [활성 환경](../../03_assets/archives/2026-10-27_agent_context/example/Contact-Rich-Manipulation-Context/02_implementation/08_ACTIVE_ENVIRONMENTS.md.txt)
 
 ## 요청·확인·적용값
 

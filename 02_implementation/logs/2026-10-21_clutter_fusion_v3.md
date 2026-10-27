@@ -1,6 +1,6 @@
 # Fusion v0 → v2 → v3 상속 재구성
 
-[활성 환경](../08_ACTIVE_ENVIRONMENTS.md#contact-sweep-clutter-fusion-v3--2026-10-21) · [로그 목록](README.md) · [실행·수치 안내](../../../../src/inspire_sweep_baseline/README.md#contact-sweep-clutter-fusion-v3--수치-일정-변경) · [최초 v1 기록](2026-10-21_clutter_fusion_v1.md)
+[활성 환경](../../03_assets/archives/2026-10-27_agent_context/example/Contact-Rich-Manipulation-Context/02_implementation/08_ACTIVE_ENVIRONMENTS.md.txt) · [로그 목록](README.md) · [실행·수치 안내](../../../../src/inspire_sweep_baseline/README.md#contact-sweep-clutter-fusion-v3--수치-일정-변경) · [최초 v1 기록](2026-10-21_clutter_fusion_v1.md)
 
 기준일: 2026-10-21. 사용자 요청에 따라 기존 `v0 → v1`, `v0 → v2`를 **`v0 → v2 → v3`**으로 재구성했다. v2는 v0에서 EEF orientation 보상만 제거한다. 최신 사용자 지시에 따라 push_fast는 v0·v2·v3 모두 0.8로 고정한다. v3은 커리큘럼만 변경한다. [현재 버전 비교 문서](../environments/CONTACT_SWEEP_CLUTTER_FUSION_VERSIONS.md)를 따른다.
 

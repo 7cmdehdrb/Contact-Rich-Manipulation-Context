@@ -1,6 +1,6 @@
 # Fusion v1_4 — v1_0 직접 계승 보상 보정 환경
 
-[개발 로그](README.md) · [활성 환경](../08_ACTIVE_ENVIRONMENTS.md#contact-sweep-clutter-fusion-v1_4--2026-10-23) · [패키지 안내](../../../../src/inspire_sweep_baseline/README.md#contact-sweep-clutter-fusion-v1_4)
+[개발 로그](README.md) · [활성 환경](../../03_assets/archives/2026-10-27_agent_context/example/Contact-Rich-Manipulation-Context/02_implementation/08_ACTIVE_ENVIRONMENTS.md.txt) · [패키지 안내](../../../../src/inspire_sweep_baseline/README.md#contact-sweep-clutter-fusion-v1_4)
 
 ## 요청·기준과 구현
 

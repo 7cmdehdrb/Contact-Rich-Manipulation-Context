@@ -1,6 +1,6 @@
 # 학습 로그 폴더 정리 지침
 
-[Workspace 안내](10_WORKSPACE_GUIDE.md) · [개발 지침](09_DEVELOPMENT_GUIDE.md) · [최초 적용 기록](../02_implementation/logs/2026-10-21_temp_training_log_cleanup.md)
+[Workspace 안내](10_WORKSPACE_GUIDE.md) · [개발 지침](09_DEVELOPMENT_GUIDE.md)
 
 ## 실행 조건과 범위
 

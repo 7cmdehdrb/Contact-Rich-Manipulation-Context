@@ -2,7 +2,7 @@
 
 이 문서는 최초 v1 구현의 역사 기록이다. 현재는 [Fusion v3](2026-10-21_clutter_fusion_v3.md)으로 이름과 부모를 변경했으며 상속은 v0 → v2 → v3이다. 아래 당시 수치·명령은 현재 실행 안내와 구분한다.
 
-[활성 환경](../08_ACTIVE_ENVIRONMENTS.md#contact-sweep-clutter-fusion-v3--2026-10-21) · [개발 로그 목록](README.md) · [패키지 계약·실행](../../../../src/inspire_sweep_baseline/README.md#contact-sweep-clutter-fusion-v3--수치-일정-변경)
+[활성 환경](../../03_assets/archives/2026-10-27_agent_context/example/Contact-Rich-Manipulation-Context/02_implementation/08_ACTIVE_ENVIRONMENTS.md.txt) · [개발 로그 목록](README.md) · [패키지 계약·실행](../../../../src/inspire_sweep_baseline/README.md#contact-sweep-clutter-fusion-v3--수치-일정-변경)
 
 기준일: 2026-10-21. 사용자 요청에 따라 Fusion v0를 상속한 수치 변형을 구현했다. 학습·정책 성능·실물 검증과 구분한다.
 

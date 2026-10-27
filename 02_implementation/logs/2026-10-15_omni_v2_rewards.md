@@ -26,7 +26,7 @@
 5. `time`, `success`, `failure` 보상을 `None`으로 제거한다. 10초 제한·성공 hold·실패 종료와 3 rad/s Arm 속도 임계값은 유지한다. 실제 성공 판정과 종료 보상은 별개다.
 6. Gym ID `Isaac-Inspire-Sweep-Omni-v2`를 등록하고 `InspireSweepOmniV2EnvCfg`가 v1을 상속한다. Scene, reset, 41D 관측, 8D action, 물성, controller, timing과 PPO는 유지한다. 로그 분리를 위해 `--experiment_name inspire_sweep_omni_v2`를 사용한다.
 
-수치 +20/+40과 운동 비용 변경은 사용자 요구를 구체화하기 위해 에이전트가 선택한 실험 기본값이다. 성능이 검증된 최적값이나 교수의 확정 사양을 의미하지 않는다. Reaching이 전역 최적 정책을 보장한다는 주장도 하지 않는다. 정확한 식은 [환경 안내](../08_ACTIVE_ENVIRONMENTS.md#v2-보상-계약)에 있다.
+수치 +20/+40과 운동 비용 변경은 사용자 요구를 구체화하기 위해 에이전트가 선택한 실험 기본값이다. 성능이 검증된 최적값이나 교수의 확정 사양을 의미하지 않는다. Reaching이 전역 최적 정책을 보장한다는 주장도 하지 않는다. 정확한 식은 [환경 안내](../../03_assets/archives/2026-10-27_agent_context/example/Contact-Rich-Manipulation-Context/02_implementation/08_ACTIVE_ENVIRONMENTS.md.txt)에 있다.
 
 현재 물체 GT는 reward에서 사용하며 actor·critic은 v1과 같은 live-object 41D 관측이다. 최종 Blind 정책 성능을 주장하지 않는다. Reaching은 물체가 EEF 쪽으로 움직인 상대 접근도 보상할 수 있다. 목표 진전 항 단독으로 접촉·직립을 검증하지 않으며, 기존 물리 비용·종료 조건을 함께 사용한다. Reaching budget 소진 후 유지 접촉만으로 추가 접근 보상을 지급하지 않는다.
 

@@ -1,6 +1,6 @@
 # Fusion v3의 16환경 F/T·물체 선속도 CSV 수집
 
-[개발 로그](README.md) · [활성 환경](../08_ACTIVE_ENVIRONMENTS.md#contact-sweep-clutter-fusion-v3--2026-10-21) · [실행·CSV 계약](../../../../src/inspire_sweep_baseline/README.md#fusion-v3-ft물체-선속도-csv-수집)
+[개발 로그](README.md) · [활성 환경](../../03_assets/archives/2026-10-27_agent_context/example/Contact-Rich-Manipulation-Context/02_implementation/08_ACTIVE_ENVIRONMENTS.md.txt) · [실행·CSV 계약](../../../../src/inspire_sweep_baseline/README.md#fusion-v3-ft물체-선속도-csv-수집)
 
 기준일: 2026-10-22. 지정 checkpoint의 16환경 재생과 전체 CSV 검증 완료. F/T 변화량과 물체 속도 페널티를 검토할 원시 CSV를 수집했다. 계수 선택·보상 변경·새 학습은 이번 작업 범위가 아니다.
 

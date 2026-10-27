@@ -1,6 +1,6 @@
 # Clutter v1 Curriculum — Learning iteration 기반 네 보상 일정
 
-[개발 로그](README.md) · [활성 환경](../08_ACTIVE_ENVIRONMENTS.md#contact-sweep-clutter-curriculum-v1--2026-10-20) · [패키지 안내](../../../../src/inspire_sweep_baseline/README.md#contact-sweep-clutter-curriculum-v1--learning-iteration-기반-보상)
+[개발 로그](README.md) · [활성 환경](../../03_assets/archives/2026-10-27_agent_context/example/Contact-Rich-Manipulation-Context/02_implementation/08_ACTIVE_ENVIRONMENTS.md.txt) · [패키지 안내](../../../../src/inspire_sweep_baseline/README.md#contact-sweep-clutter-curriculum-v1--learning-iteration-기반-보상)
 
 ## 요청·기준과 상속
 
@@ -8,7 +8,7 @@
 
 작업 시작 workspace commit은 `f1a9c709739c0b87ff8f403b2a3d5093cb707895`, IsaacLab은 `929f0fe1e9c1699efebf31b2ad0ab723a7d6e7e9`, 문서 저장소는 `e133c097bbfea954165e346f008921ff9ebf80eb`다. 시작 시 상위 저장소의 문서 submodule 참조와 v1 `rewards_cfg.py`에 기존 변경이 있었다. 이를 보존하며 commit·push는 수행하지 않았다.
 
-Gym ID는 `Isaac-Inspire-Contact-Sweep-Clutter-Curriculum-v1`, 로그 폴더는 `logs/rsl_rl/inspire_contact_sweep_clutter_v1_curriculum`이다. `contact_sweep_clutter_v1_curriculum`의 Env·EnvCfg·RewardsCfg·PPORunnerCfg는 각각 현 v1을 직접 상속한다. 상세 클래스·등록·실행은 [활성 환경](../08_ACTIVE_ENVIRONMENTS.md#contact-sweep-clutter-curriculum-v1--2026-10-20)에 기록한다.
+Gym ID는 `Isaac-Inspire-Contact-Sweep-Clutter-Curriculum-v1`, 로그 폴더는 `logs/rsl_rl/inspire_contact_sweep_clutter_v1_curriculum`이다. `contact_sweep_clutter_v1_curriculum`의 Env·EnvCfg·RewardsCfg·PPORunnerCfg는 각각 현 v1을 직접 상속한다. 상세 클래스·등록·실행은 [활성 환경](../../03_assets/archives/2026-10-27_agent_context/example/Contact-Rich-Manipulation-Context/02_implementation/08_ACTIVE_ENVIRONMENTS.md.txt)에 기록한다.
 
 Actor/Critic 관측, 제어, 물리·reset·종료는 v1과 같다. 네 대상 외의 보상도 상속한다. Hand 가중치는 −0.03/−0.01이며 운동 비용은 기존 로컬 raw 제곱합·출력 상한·RewardManager의 dt 적용을 유지한다.
 

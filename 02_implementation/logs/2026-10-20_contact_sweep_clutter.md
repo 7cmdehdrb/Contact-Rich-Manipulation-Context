@@ -2,7 +2,7 @@
 
 > 이 문서는 최초 장애물 6개 구성의 구현·검증 기록이다. 같은 날 후속 요청으로 v0의 장애물은 3개, RED 제외 반경은 10.3 cm로 변경했다. 현재 설정은 [후속 로그](2026-10-20_clutter_red_expansion.md)를 따른다.
 
-[로그 목록](README.md) · [활성 환경](../08_ACTIVE_ENVIRONMENTS.md#contact-sweep-clutter-v0--2026-10-20) · [부모 환경](2026-10-20_contact_sweep_reference.md)
+[로그 목록](README.md) · [활성 환경](../../03_assets/archives/2026-10-27_agent_context/example/Contact-Rich-Manipulation-Context/02_implementation/08_ACTIVE_ENVIRONMENTS.md.txt) · [부모 환경](2026-10-20_contact_sweep_reference.md)
 
 ## 요청과 확인한 선택
 

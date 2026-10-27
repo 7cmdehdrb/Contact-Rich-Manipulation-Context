@@ -1,6 +1,6 @@
 # Clutter Fusion v2 — EEF 자세 보상 제거
 
-[활성 환경](../08_ACTIVE_ENVIRONMENTS.md#contact-sweep-clutter-fusion-v2--2026-10-21) · [로그 목록](README.md) · [패키지 실행 안내](../../../../src/inspire_sweep_baseline/README.md#contact-sweep-clutter-fusion-v2--eef-자세-보상-제거)
+[활성 환경](../../03_assets/archives/2026-10-27_agent_context/example/Contact-Rich-Manipulation-Context/02_implementation/08_ACTIVE_ENVIRONMENTS.md.txt) · [로그 목록](README.md) · [패키지 실행 안내](../../../../src/inspire_sweep_baseline/README.md#contact-sweep-clutter-fusion-v2--eef-자세-보상-제거)
 
 기준일: 2026-10-21. 최초 요청으로 Fusion v1을 상속하여 EEF orientation 보상을 제거했다. 같은 날 후속 사용자 지시에 따라 **현재 부모는 Fusion v0**로 변경했다. 최신 사용자 지시에 따라 push_fast는 v0·v2·v3 모두 0.8로 고정한다. 아래 환경 계약은 현재 기준이며 최초 검사 결과는 별도로 구분한다.
 

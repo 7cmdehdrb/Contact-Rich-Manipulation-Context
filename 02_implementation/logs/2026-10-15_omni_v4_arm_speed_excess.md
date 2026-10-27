@@ -1,6 +1,6 @@
 # V4 최대 Arm 속도 추가 페널티
 
-[로그 안내](README.md) · [활성 환경](../08_ACTIVE_ENVIRONMENTS.md#추가-arm-속도-페널티-arm_speed_excess) · [기존 V4 설정 적용](2026-10-15_omni_v4_saved_parameters.md)
+[로그 안내](README.md) · [활성 환경](../../03_assets/archives/2026-10-27_agent_context/example/Contact-Rich-Manipulation-Context/02_implementation/08_ACTIVE_ENVIRONMENTS.md.txt) · [기존 V4 설정 적용](2026-10-15_omni_v4_saved_parameters.md)
 
 기록일: 2026-10-15. 사용자가 V4의 기존 페널티를 유지하면서 `hand_velocity` 종료와 같은 관절 선택·절대속도 판정에 기초한 연속 비용을 요청했다. 1.0 rad/s부터 증가하고 2.0에서 weighted −0.03이 되도록 추가했다.
 

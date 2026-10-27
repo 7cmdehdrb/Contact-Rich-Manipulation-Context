@@ -1,6 +1,6 @@
 # Renewal OSC 환경 추가
 
-[개발 로그 목록](README.md) · [환경 계약과 실행](../08_ACTIVE_ENVIRONMENTS.md#renewal-osc-환경)
+[개발 로그 목록](README.md) · [환경 계약과 실행](../../03_assets/archives/2026-10-27_agent_context/example/Contact-Rich-Manipulation-Context/02_implementation/08_ACTIVE_ENVIRONMENTS.md.txt)
 
 기준 workspace commit `b2ece799a8717f44b95bb58a32cccea206a75519`. 문서 submodule의 기존 변경은 보존했다. 사용자 요청은 Renewal 상속, EEF 기준 relative/fixed OSC, stiffness 200, damping ratio 1이다.
 

@@ -1,6 +1,6 @@
 # Fusion v1_0 종료 원인 출력 — 2026-10-23
 
-[활성 환경](../08_ACTIVE_ENVIRONMENTS.md#contact-sweep-clutter-fusion-v10--2026-10-22) · [로그 목록](README.md)
+[활성 환경](../../03_assets/archives/2026-10-27_agent_context/example/Contact-Rich-Manipulation-Context/02_implementation/08_ACTIVE_ENVIRONMENTS.md.txt) · [로그 목록](README.md)
 
 ## 요청과 변경
 

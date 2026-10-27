@@ -1,6 +1,6 @@
 # V4에 정상 V3 run의 공통 파라미터 적용
 
-[로그 안내](README.md) · [원인 비교 기록](2026-10-15_omni_v4_early_termination.md) · [활성 환경](../08_ACTIVE_ENVIRONMENTS.md#omni-v4-종료-기준-완화와-pushing-속도-비용)
+[로그 안내](README.md) · [원인 비교 기록](2026-10-15_omni_v4_early_termination.md) · [활성 환경](../../03_assets/archives/2026-10-27_agent_context/example/Contact-Rich-Manipulation-Context/02_implementation/08_ACTIVE_ENVIRONMENTS.md.txt)
 
 기록일: 2026-10-15. 사용자가 제공한 `2026-10-15_16-53-58_height_gated_xy_reach` run에서 적용할 수 있는 파라미터를 `InspireSweepOmniV4EnvCfg`에 코드 수준으로 반영했다. Workspace 기준 commit `4e860134b6def3ec569892e1ce353142b82d1608` 및 기존 미커밋 V4 구현·사용자 변경을 기준으로 작업했다. 제공 run·checkpoint와 기존 작업트리는 보존했다.
 

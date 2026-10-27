@@ -1,6 +1,6 @@
 # Omni Renewal·Dex Sweep Omni Renewal 환경 추가
 
-[로그 안내](README.md) · [활성 환경·명령](../08_ACTIVE_ENVIRONMENTS.md#omni-renewal-환경)
+[로그 안내](README.md) · [활성 환경·명령](../../03_assets/archives/2026-10-27_agent_context/example/Contact-Rich-Manipulation-Context/02_implementation/08_ACTIVE_ENVIRONMENTS.md.txt)
 
 기록일: 2026-10-15. 사용자가 현재 V4와 같은 기능을 기존 함수로 새 클래스에 구성하고, 이 환경을 상속해 `reaching`·`goal_distance`만 Dex 방식으로 교체한 환경을 요청했다.
 

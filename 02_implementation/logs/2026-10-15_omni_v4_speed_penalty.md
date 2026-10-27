@@ -1,6 +1,6 @@
 # Omni v4 — 속도 비용과 종료 조건
 
-[로그 안내](README.md) · [활성 환경](../08_ACTIVE_ENVIRONMENTS.md#omni-v4-종료-기준-완화와-pushing-속도-비용)
+[로그 안내](README.md) · [활성 환경](../../03_assets/archives/2026-10-27_agent_context/example/Contact-Rich-Manipulation-Context/02_implementation/08_ACTIVE_ENVIRONMENTS.md.txt)
 
 기록일: 2026-10-15. 사용자 요청으로 V3를 상속하는 V4를 추가했다. Workspace branch `main`, 기준 commit `4e860134b6def3ec569892e1ce353142b82d1608`, 문서 submodule 기준 commit `501a0936124c98921201c89ba1cd69cf706e6ce7`다. 이번 V4 작업 시작 시 두 저장소의 작업트리는 깨끗했다. 기존 문서와 V1 Arm 속도 1.5 rad/s는 보존하고 V4에서만 override했다.
 

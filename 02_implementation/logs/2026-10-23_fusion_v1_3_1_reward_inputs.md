@@ -1,6 +1,6 @@
 # Fusion v1_3_1 페널티 입력 계측 — 2026-10-23
 
-[개발 로그](README.md) · [활성 환경](../08_ACTIVE_ENVIRONMENTS.md#contact-sweep-clutter-fusion-v1_3_1--2026-10-22)
+[개발 로그](README.md) · [활성 환경](../../03_assets/archives/2026-10-27_agent_context/example/Contact-Rich-Manipulation-Context/02_implementation/08_ACTIVE_ENVIRONMENTS.md.txt)
 
 ## 요청과 대상
 

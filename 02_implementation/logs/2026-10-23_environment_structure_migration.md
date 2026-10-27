@@ -22,7 +22,7 @@ Cfg는 `mdp/actions`, `observations`, `commands`, `events`, `rewards`, `curricul
 | 기존 미추적 파일 | `docs/plan/PLAN5.md` 보존 |
 | 학습 로그 | 정리·이동·삭제하지 않음. `logs/rsl_rl` 보존 |
 
-복구는 위 commit의 별도 worktree에서 확인한다. 현재 작업트리의 변경을 `reset`·`clean`으로 제거하지 않는다. 실제 복구 명령 예시와 submodule·미추적 파일의 경계는 [복구 안내](../../00_guidelines/12_ENVIRONMENT_FILE_STRUCTURE.md#6-이관-전-기준과-복구)에 기록했다. 이 작업에서 commit·push·복구 실행을 완료했다는 뜻은 아니다.
+복구는 위 commit의 별도 worktree에서 확인한다. 현재 작업트리의 변경을 `reset`·`clean`으로 제거하지 않는다. 실제 복구 명령 예시와 submodule·미추적 파일의 경계는 [복구 안내](../../03_assets/archives/2026-10-27_agent_context/example/Contact-Rich-Manipulation-Context/00_guidelines/12_ENVIRONMENT_FILE_STRUCTURE.md.txt)에 기록했다. 이 작업에서 commit·push·복구 실행을 완료했다는 뜻은 아니다.
 
 ## 이관 전 CPU 검증
 

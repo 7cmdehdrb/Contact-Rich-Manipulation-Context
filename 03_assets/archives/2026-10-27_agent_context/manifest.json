@@ -1,0 +1,261 @@
+[
+  {
+    "source": "AGENTS.md",
+    "backup": "AGENTS.md.txt",
+    "sha256": "d0eea524c0367aff651686349cb64ee213fd0f6c0308395ca2fb2b36c372912f",
+    "bytes": 4651,
+    "lines": 23
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/AGENTS.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/AGENTS.md.txt",
+    "sha256": "d497e2373aa1fd1c2734e81f769c3a63f920a0ec8859e038eb53b027109308d6",
+    "bytes": 1709,
+    "lines": 15
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/README.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/README.md.txt",
+    "sha256": "3197f7e5776670b3a52c5cefc38439e5f108a128ed7887aa6398a92e97433072",
+    "bytes": 12030,
+    "lines": 112
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/00_guidelines/AGENT_RULES.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/00_guidelines/AGENT_RULES.md.txt",
+    "sha256": "d1529a5f650c80af5addd3c8d8cf47b8bee6f216c01058f806dedfa7fe973fa8",
+    "bytes": 14733,
+    "lines": 108
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/00_guidelines/DOCUMENT_STRUCTURE.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/00_guidelines/DOCUMENT_STRUCTURE.md.txt",
+    "sha256": "5778cb0093e8fa0c9b82a6d7face2d6f0191f30decdc21af86d1b71cfdfed731",
+    "bytes": 11402,
+    "lines": 118
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/00_guidelines/09_DEVELOPMENT_GUIDE.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/00_guidelines/09_DEVELOPMENT_GUIDE.md.txt",
+    "sha256": "b7c05d6ba4f69567c720cbc71c47fae46922486326bc5ffb5e55261408647181",
+    "bytes": 16561,
+    "lines": 114
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/00_guidelines/10_WORKSPACE_GUIDE.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/00_guidelines/10_WORKSPACE_GUIDE.md.txt",
+    "sha256": "edfc826dacf8a632926575f30b1980281a489a6349c7f3d5a0d36cd9390f780d",
+    "bytes": 10956,
+    "lines": 114
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/00_guidelines/11_TRAINING_LOG_CLEANUP.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/00_guidelines/11_TRAINING_LOG_CLEANUP.md.txt",
+    "sha256": "d0fabd2a75010ec198284a07b67b7525a378ef78b2ae23dc01062e5243dd68aa",
+    "bytes": 3675,
+    "lines": 35
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/00_guidelines/12_ENVIRONMENT_FILE_STRUCTURE.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/00_guidelines/12_ENVIRONMENT_FILE_STRUCTURE.md.txt",
+    "sha256": "92e5fcb6f1c511f82b4b9e75bbd5af96f8a3a8d673c5507b5a80db55a495a833",
+    "bytes": 11392,
+    "lines": 112
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/00_guidelines/README.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/00_guidelines/README.md.txt",
+    "sha256": "effc6751619a59f96b7505072a7403f3ac8b813023c2a293d4b53bbbe8ecf2fb",
+    "bytes": 2286,
+    "lines": 29
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/00_guidelines/rules/document-formatting.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/00_guidelines/rules/document-formatting.md.txt",
+    "sha256": "b011849e59c88adaba1f82a196c05d83911b1dcb0959df63429e4ab97f08a832",
+    "bytes": 7636,
+    "lines": 164
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/01_plan/00_HANDOFF_BRIEF.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/01_plan/00_HANDOFF_BRIEF.md.txt",
+    "sha256": "934f31e4439ce31326ecdaeaca1ef686f565682c86d564178ec70a40906857d0",
+    "bytes": 24962,
+    "lines": 151
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/02_implementation/08_ACTIVE_ENVIRONMENTS.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/02_implementation/08_ACTIVE_ENVIRONMENTS.md.txt",
+    "sha256": "8a61459c963642cac3efa7f1855b099464204b5796d8d5a52bff5b3a7ab79434",
+    "bytes": 134355,
+    "lines": 1155
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/README.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/README.md.txt",
+    "sha256": "f50614986bbbac09905e574beb37e2786fc0f397312347e5bc78761dfff4da18",
+    "bytes": 21323,
+    "lines": 219
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-23_fusion_v1_0_termination_prints.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-23_fusion_v1_0_termination_prints.md.txt",
+    "sha256": "8b89edc05a8e46d66e88e58b102bd5b62e1c3a4b3360cbfef662a5d628502d36",
+    "bytes": 6049,
+    "lines": 59
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-20_clutter_red_expansion.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-20_clutter_red_expansion.md.txt",
+    "sha256": "3e1d7f9dcdad350e3b8b288aafde7ac3011da836626f648221957b5806e08ed8",
+    "bytes": 5048,
+    "lines": 66
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-20_clutter_v1_curriculum.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-20_clutter_v1_curriculum.md.txt",
+    "sha256": "34e60cd76c42d9b5765e405ef112d29238000ef98e53fa16841f197b70c4a4a5",
+    "bytes": 7941,
+    "lines": 84
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-23_fusion_v1_3_1_reward_inputs.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-23_fusion_v1_3_1_reward_inputs.md.txt",
+    "sha256": "ebac201efc11360625c30e4fb9d36ac14f9b19eab8fd86069f00346911805331",
+    "bytes": 10102,
+    "lines": 96
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-21_clutter_fusion_v2.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-21_clutter_fusion_v2.md.txt",
+    "sha256": "0fdd1b1a6a556e51e8205947007d93f7d5a14bc48ba7c74862ff416f2da235ab",
+    "bytes": 6667,
+    "lines": 71
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-15_omni_v4_arm_speed_excess.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-15_omni_v4_arm_speed_excess.md.txt",
+    "sha256": "963f704eb57839ca0b91d81ae4e8a080a076701f640bdb9abb4ea39090e8596e",
+    "bytes": 4203,
+    "lines": 58
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-15_renewal_osc.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-15_renewal_osc.md.txt",
+    "sha256": "327f963bae3c5fa436e5fcb94296c0e3fef25883cfe9b6289ccb4b1bc55b189a",
+    "bytes": 2053,
+    "lines": 17
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-23_environment_structure_migration.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-23_environment_structure_migration.md.txt",
+    "sha256": "b95bca94a9c9706070b8fa26d64b393499a3e0c3a503abda63f4182a4588a620",
+    "bytes": 28684,
+    "lines": 239
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-15_omni_v2_rewards.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-15_omni_v2_rewards.md.txt",
+    "sha256": "229b2f1ed20a7c45b8522e1977e854380b416ba33ff424743676d069aaf98423",
+    "bytes": 10737,
+    "lines": 103
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-23_fusion_v1_0_last5pct_rewards.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-23_fusion_v1_0_last5pct_rewards.md.txt",
+    "sha256": "29dbdd597f76bbf31c65b061e28a95fb60d0964cca8a6591b7fba40ad789ee1e",
+    "bytes": 5154,
+    "lines": 62
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-15_omni_v4_saved_parameters.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-15_omni_v4_saved_parameters.md.txt",
+    "sha256": "d52521cb176a622741b0c2f42428c179759efcec36cd08da66422028d3e12f62",
+    "bytes": 4696,
+    "lines": 63
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-21_clutter_ft_collection.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-21_clutter_ft_collection.md.txt",
+    "sha256": "822d3b851d212be27ef82dda995e7a5514c60505c5ae841a3d990ed9ca100cb8",
+    "bytes": 15954,
+    "lines": 118
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-21_clutter_fusion_v3.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-21_clutter_fusion_v3.md.txt",
+    "sha256": "afea09e75c050e4e9e8fc233609de40a8fd51e0466cbd4b2bde0853c8870a060",
+    "bytes": 9237,
+    "lines": 90
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-15_omni_v4_speed_penalty.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-15_omni_v4_speed_penalty.md.txt",
+    "sha256": "fff4c4e8ea71b7ab14a5ea16e001dc340e936a1a994153db22f7276df512c8dc",
+    "bytes": 4584,
+    "lines": 67
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-23_clutter_fusion_v1_4.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-23_clutter_fusion_v1_4.md.txt",
+    "sha256": "b69aa92545c122292ec8b5757fd900e60818fa1d52016a864dd85addb1265dc7",
+    "bytes": 8421,
+    "lines": 81
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-22_fusion_telemetry.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-22_fusion_telemetry.md.txt",
+    "sha256": "cdcc20349f3145d64d0aad12dd5d654c883e44c4c9163c215b3c6cfbc9d22670",
+    "bytes": 10804,
+    "lines": 95
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-16_tactile_validation.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-16_tactile_validation.md.txt",
+    "sha256": "229bab47db505d46d478cb50072d412d5091d91c3d4e66959b8629ca7f57c294",
+    "bytes": 6098,
+    "lines": 55
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-21_clutter_fusion_v1.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-21_clutter_fusion_v1.md.txt",
+    "sha256": "9ff96532a8a09313854e3186f5f5ccbee26cf9163ac5f6fc7c3ebe37454a8cb5",
+    "bytes": 8526,
+    "lines": 102
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-15_omni_renewal_environments.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-15_omni_renewal_environments.md.txt",
+    "sha256": "b558e04bb1e2effe2e314e09da59c0773cd0df078ef9686332134fcd6d556bdf",
+    "bytes": 5393,
+    "lines": 64
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-20_contact_sweep_clutter.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-20_contact_sweep_clutter.md.txt",
+    "sha256": "02c0dfc847dacba8f7c470171547da28d10b4a3d45f4ae7f623d5047a462ce08",
+    "bytes": 12599,
+    "lines": 135
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-20_contact_sweep_clutter_v1.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-20_contact_sweep_clutter_v1.md.txt",
+    "sha256": "f58a75a50365efd575d466f53386bc26556611ca8ff96b6910904da961ec5783",
+    "bytes": 18849,
+    "lines": 208
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-22_fusion_v3_reward_balance.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/02_implementation/logs/2026-10-22_fusion_v3_reward_balance.md.txt",
+    "sha256": "61a46b6a18a0fbf1a3af89759836022a161efa8993b22a6cfac7b41f92d9902b",
+    "bytes": 6226,
+    "lines": 55
+  },
+  {
+    "source": "example/Contact-Rich-Manipulation-Context/02_implementation/environments/CONTACT_SWEEP_CLUTTER_FUSION_V1_4_ENVIRONMENT.md",
+    "backup": "example/Contact-Rich-Manipulation-Context/02_implementation/environments/CONTACT_SWEEP_CLUTTER_FUSION_V1_4_ENVIRONMENT.md.txt",
+    "sha256": "1af6b5207cfc3e93071e82ca2ee600d0955b3ebbebae6fa2423441dfd15e2ecb",
+    "bytes": 7754,
+    "lines": 66
+  }
+]

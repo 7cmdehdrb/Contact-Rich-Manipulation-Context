@@ -1,15 +1,11 @@
-# Agent Operating Instructions
+# 문서 저장소 작업 지침
 
-기준일: 2026-10-14. 이 저장소는 석사생 1의 초기 시각 이후 힘·촉각 기반 Blind Sweeping 연구를 인계하는 문서 저장소다.
+현재 활성 기반은 `src/inspire_sweep_baseline`, 최신 중점 환경은 **Holding → Final**이다. `src/axia80_feasibility`는 사용하지 않는다. 이 저장소는 코드 설명·지침·변경 의도를 기록하는 문서 submodule이다.
 
-작업 전에 다음을 순서대로 읽는다.
+- 모든 작업: [에이전트 운영 규칙](00_guidelines/AGENT_RULES.md)을 읽는다.
+- 환경 작업: [현재 인계](01_plan/00_HANDOFF_BRIEF.md), [개발 지침](00_guidelines/09_DEVELOPMENT_GUIDE.md), [Holding·Final 안내](02_implementation/08_ACTIVE_ENVIRONMENTS.md) 중 아직 읽지 않은 해당 문서를 확인한다. 이어서 요청된 환경의 상세 문서와 실제 코드만 읽는다.
+- 문서 작성·수정: [문서 구조](00_guidelines/DOCUMENT_STRUCTURE.md)와 [형식 규칙](00_guidelines/rules/document-formatting.md)을 따른다.
+- 경로·저장소 작업: [Workspace 안내](00_guidelines/10_WORKSPACE_GUIDE.md)를 읽는다.
+- 과거 연구·이전 환경 조사: 명시적으로 필요한 경우에만 [정리 전 백업](02_implementation/history/2026-10-27_agent_context/README.md) 및 해당 역사 자료를 읽는다.
 
-1. [프로젝트 작업 지침](00_guidelines/AGENT_RULES.md): 연구 범위, 근거와 상태의 구분, 코드·논문·결과 기록 원칙.
-2. [문서 구조와 생산 규칙](00_guidelines/DOCUMENT_STRUCTURE.md): 네 폴더의 책임, 작업별 읽기 경로, 작성·이동·검증 절차.
-3. [인계 요약](01_plan/00_HANDOFF_BRIEF.md), [결정·미정 목록](01_plan/03_DECISIONS_AND_OPEN_QUESTIONS.md), [다음 작업](01_plan/04_NEXT_ACTIONS.md).
-
-Markdown을 작성하거나 수정할 때는 [문서 형식 규칙](00_guidelines/rules/document-formatting.md)을 함께 읽는다. 코드 작업은 [코드·장비 상태](02_implementation/07_CODE_AND_HARDWARE_STATUS.md), [활성 환경](02_implementation/08_ACTIVE_ENVIRONMENTS.md), [개발 지침](00_guidelines/09_DEVELOPMENT_GUIDE.md)과 실제 활성 코드를 읽는다. 문서 이동·workspace 작업은 [Workspace 안내](00_guidelines/10_WORKSPACE_GUIDE.md)를 읽는다.
-
-루트의 네 콘텐츠 폴더는 `00_guidelines/`, `01_plan/`, `02_implementation/`, `03_assets/`다. 루트 `README.md`는 전체 탐색 입구이며, 이 파일은 에이전트 자동 발견을 위한 진입점이다. 구체적인 규칙은 위 문서에서 관리한다.
-
-학습 실행·명령 안내 시 [개발 지침의 학습 실행 정책](00_guidelines/09_DEVELOPMENT_GUIDE.md#학습-실행-정책)을 따른다. 현재 실행기는 `train.py`이며 자동 복구 실행기는 사용 중단·코드 보존 상태다.
+기존 버전 직접 수정과 새 파생 환경 생성을 구분하고 부모를 보존한다. 매 수정의 의도·전체 대조·검증을 개발 로그에 남긴다. 학습은 `train.py`를 사용하며 학습 로그 정리는 별도 명시적 요청에만 수행한다.

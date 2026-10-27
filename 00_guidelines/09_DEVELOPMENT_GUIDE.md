@@ -1,16 +1,12 @@
 # 개발 원칙과 기록 방법
 
-[문서 안내](../01_plan/README.md) · [Workspace 구성](10_WORKSPACE_GUIDE.md) · [활성 환경](../02_implementation/08_ACTIVE_ENVIRONMENTS.md) · [작업 지침](AGENT_RULES.md)
+[현재 인계](../01_plan/00_HANDOFF_BRIEF.md) · [Workspace 구성](10_WORKSPACE_GUIDE.md) · [활성 환경](../02_implementation/08_ACTIVE_ENVIRONMENTS.md) · [작업 지침](AGENT_RULES.md)
 
-기준일: 2026-10-14. 이 문서는 사용자가 요청한 최소 개발 지침을 정리한다. 모든 개발 원칙이나 최종 연구 설계를 이번 정리에서 확정하는 문서는 아니다.
+2026-10-27 기준. 활성 기반은 `src/inspire_sweep_baseline`, 최신 중점은 Holding → Final이다. `src/axia80_feasibility`는 현재 사용하지 않는다.
 
 ## 학습 실행 정책
 
-2026-10-23 사용자 결정: 학습 실행과 신규 명령 안내에는 `src/inspire_sweep_baseline/scripts/train.py`를 사용한다. Windows와 Linux 모두 동일한 정책이다. `train_resilient.py`를 실행하거나 기본·대안 명령으로 권장하지 않는다.
-
-초기에는 원인 불명의 학습 중단 시 과거 checkpoint로 되돌려 재학습하면 복구될 것으로 예상했지만, 실제 사용에서 복구 후에도 중단이 반복되었다는 사용자 보고에 따라 자동 복구 학습 사용을 중단했다. 오류 원인을 진단·확정한 것은 아니다. 실패 시 자동 재시작을 대체 도입하지 말고 오류를 확인한다.
-
-`train_resilient.py`와 관련 복구 코드는 추후 재사용 가능성을 위해 삭제하지 않고 보존한다. 사용자가 명시적으로 재사용을 요청하기 전에는 사용하지 않는다. 기존 문서의 자동 복구 명령·실험 기록은 과거 이력이며 현재 실행 권고로 해석하지 않는다.
+2026-10-23 사용자 결정: 학습 실행과 신규 명령 안내에는 `src/inspire_sweep_baseline/scripts/train.py`를 사용한다. Windows와 Linux 모두 동일한 정책이다. 
 
 ## Manager-based RL과 객체 지향 설계
 
@@ -37,27 +33,10 @@ Isaac Lab의 Manager-based Reinforcement Learning 구조와 OOP 원칙을 지킨
 환경 추가·수정의 **완료 전에는 전체 계약을 반드시 대조**한다. 직접 수정이면 대상 환경의 수정 전·후를, 새 파생 환경이면 부모·새 환경과 부모의 작업 전·후를 비교한다. 다음 순서를 따른다.
 
 1. 변경 전 비교 기준 환경의 Gym 등록·EnvCfg·runtime·PPO, Scene·Command·Event·reset·Observation·Action, 모든 Reward·Termination·Curriculum term의 이름·callable·params·weight·일정과 로그 키를 확인한다. 공유 함수의 호출자와 해당 환경을 상속하는 다른 환경도 확인한다.
-2. 사용자 요청을 변경 표로 옮긴다. `d < r`/`d <= r`, 고정·가변 반경, XY·3D 거리, term 이름만 변경하는지 함수도 변경하는지를 각각 명시한다. 계획 문서의 수식과 후속 지시가 충돌하면 최신 명시 지시를 적용하고 충돌을 기록한다.
+2. 사용자 요청을 변경 표로 옮긴다. 고정·가변 반경, XY·3D 거리, term 이름만 변경하는지 함수도 변경하는지를 각각 명시한다. 계획 문서의 수식과 후속 지시가 충돌하면 최신 명시 지시를 적용하고 충돌을 기록한다.
 3. 구현 후 같은 항목을 수정 전·후 또는 부모·새 환경 사이에 다시 대조한다. 커리큘럼의 활성 여부·대상 term·점·갱신 간격, 상속·비활성화·이름 변경을 포함한 **모든 차이**를 요청 표와 일대일로 대응시킨다. 새 파생 환경을 만들었으면 부모의 작업 전·후 차이가 없는지도 별도로 확인한다. 요청하지 않은 차이는 수정하고 재대조한다.
 4. `r` 바로 아래·정확히 `r`·바로 위의 경계, 커리큘럼 시작·전환·최종 iteration, 이름을 바꾼 term의 갱신 대상과 기존 환경의 동작 보존을 검사한다. 정적 설정 검사와 Isaac Sim 물리·학습 검증의 범위를 구분한다.
 5. 최종 차이 표, 실제 검사 명령·결과와 미검증 범위를 개발 로그에 남기고 환경 설명·활성 환경 안내를 갱신한다. 최종 대조가 끝나기 전에는 요청한 변화만 구현됐다고 보고하지 않는다.
-
-## Omni 운동 페널티 필수 규칙 — 2026-10-15 사용자 지시
-
-Omni 베이스와 모든 파생 환경(v0/v1/v2/v3 및 Dex Omni, 향후 파생 포함)은 아래 네 항을 반드시 사용한다. 공통 `OmniRewardsCfg`에서 상속하며 임의로 제거·대체하지 않는다.
-
-| 항 | 로컬 함수와 대상 | 가중치 |
-| --- | --- | --- |
-| Arm Action Rate | `goal_rewards.action_rate_l2`, raw Arm 6D 변화량 제곱합 | −0.03 |
-| Hand Action Rate | `goal_rewards.action_rate_l2`, raw Hand 2D 변화량 제곱합 | −0.03 |
-| Arm Joint Velocity | `goal_rewards.joint_vel_l2`, 이름으로 선택한 Arm 6개 실제 관절 속도 제곱합 | −0.03 |
-| Hand Joint Velocity | `goal_rewards.joint_vel_l2`, 이름으로 선택한 Hand 12개 실제 관절 속도 제곱합 | −0.01 |
-
-참고 Inspire 환경의 raw 제곱합 계산을 따르되 활성 패키지의 `mdp/reward_functions/goal_rewards.py`에 정의한 함수를 사용한다. 이 경로는2026-10-23 구조 이관 전 `mdp/goal_rewards.py`와 같은 로컬 계산의 새 위치다. `example/Sweep-Policy`의 함수를 import하지 않는다. Arm/Hand 항을 합치거나 mean, 기준값 정규화, 보상 내부 Hand 입력 clamp를 적용하지 않는다. Action 자체의 처리에서 수행하는 Hand clamp와 보상 계산은 구분한다. 함수에서 dt로 나누거나 곱하지 않고 RewardManager가 weight와 step_dt를 한 번 적용한다.
-
-이전 정규화 함수는 과거 설정의 참조를 위해 남아 있지만 Omni 설정에서 사용하지 않는다. 구조·계수 변경은 사용자 명시 지시가 있을 때만 수행한다. 다른 보상의 상대 크기를 이유로 이 페널티를 임의로 낮추지 않는다. 모든 파생 환경에 대한 callable·계수·그룹 분리 검증을 유지한다. [적용·검증 로그](../02_implementation/logs/2026-10-15_omni_penalty_contract.md).
-
-2026-10-18 사용자 명시 지시에 따라 두 로컬 함수는 제곱합 **출력**에 `max_cost=100.0` 상한을 적용한다. 비용은 비음수이므로 기본 반환 범위는 [0, 100]이고 음의 하한은 필요하지 않다. raw 입력의 제곱합·그룹 분리·가중치·dt 처리 규칙은 그대로 유지한다. 이는 Hand 입력 clamp나 정규화가 아니다. [출력 상한 변경·검증](../02_implementation/logs/2026-10-18_omni_squared_cost_caps.md).
 
 ## 환경마다 남길 계약
 
@@ -80,7 +59,7 @@ Omni 베이스와 모든 파생 환경(v0/v1/v2/v3 및 Dex Omni, 향후 파생 �
 
 수정할 때마다 **무엇을 왜 바꿨는지** 기록한다. 로그의 주 독자는 이후 작업을 이어받는 에이전트·개발자다. 사용자에게 읽기나 승인을 요구하기 위한 문서로 만들지 않는다. 각 변경에는 요청 근거, 직접 수정·새 환경 생성 구분, 수정 대상과 의도, 변경 전·후, 영향받는 환경, 최종 전체 대조 결과, 실제 검증과 미검증 범위를 남긴다. 같은 작업의 후속 수정은 기존 로그에 순서대로 추가하고, 이전 의도와 현재 결정을 구분하여 추적할 수 있게 한다.
 
-개발 로그는 이 저장소의 `02_implementation/logs/YYYY-MM-DD_<topic>.md`에 남긴다. 실험 조건과 정량 결과를 길게 다루는 기록은 `02_implementation/experiments/`에 저장하고 개발 로그에서 연결한다. 기존 `1009.md`, `1010.md`, `1012_*.md`는 당시 날짜의 기록으로 보존하며, 새 기록은 연도를 포함한 이름을 사용한다.
+개발 로그는 이 저장소의 `02_implementation/logs/YYYY-MM-DD_<topic>.md`에 남긴다. 실험 조건과 정량 결과를 길게 다루는 기록은 `02_implementation/experiments/`에 저장하고 개발 로그에서 연결한다. 새 기록은 연도를 포함한 이름을 사용하고 과거 기록은 보존한다.
 
 [연구 로그 템플릿](templates/RESEARCH_LOG.md)의 실험·실패·인계 항목을 활용한다. 특히 다음 정보가 있어야 다른 사람이 이어서 실행할 수 있다.
 
@@ -103,7 +82,7 @@ Omni 베이스와 모든 파생 환경(v0/v1/v2/v3 및 Dex Omni, 향후 파생 �
 | 위 두 프로젝트와 관계없는 일반 지식 | workspace 루트의 `docs/` |
 | 함수·API·asset 등 코드를 바로 이해하는 설명 | 해당 패키지 README 또는 코드에 붙은 문서 |
 
-전체 프로젝트 설명을 여러 위치에 복제하기보다, 한 문서를 기준으로 두고 관련 위치에서 링크한다. 환경 계약을 바꾸면 패키지 설명·활성 환경 안내·개발 로그를 같이 확인한다. 연구 방향을 바꾸면 [결정 목록](../01_plan/03_DECISIONS_AND_OPEN_QUESTIONS.md), [인계 요약](../01_plan/00_HANDOFF_BRIEF.md), [다음 작업](../01_plan/04_NEXT_ACTIONS.md)을 갱신한다. 파일을 옮기면 문서 색인과 역방향 링크도 갱신한다.
+전체 프로젝트 설명을 여러 위치에 복제하기보다, 한 문서를 기준으로 두고 관련 위치에서 링크한다. 환경 계약을 바꾸면 패키지 설명·활성 환경 안내·개발 로그를 같이 확인한다. 현재 작업 범위가 바뀌면 [인계 요약](../01_plan/00_HANDOFF_BRIEF.md)을 갱신한다. 연구 이력 문서는 해당 연구 변경을 요청받은 경우에만 확인한다. 파일을 옮기면 문서 색인과 역방향 링크도 갱신한다.
 
 ## 변경 검증
 

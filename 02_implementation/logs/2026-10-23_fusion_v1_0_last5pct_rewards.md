@@ -1,6 +1,6 @@
 # Fusion v1_0 학습 후반 5% 보상 구성
 
-[로그 목록](README.md) · [활성 환경](../08_ACTIVE_ENVIRONMENTS.md#contact-sweep-clutter-fusion-v10--2026-10-22)
+[로그 목록](README.md) · [활성 환경](../../03_assets/archives/2026-10-27_agent_context/example/Contact-Rich-Manipulation-Context/02_implementation/08_ACTIVE_ENVIRONMENTS.md.txt)
 
 기준일: 2026-10-23. 사용자 지정 run의 TensorBoard 원본을 읽기 전용으로 분석했다. 현재 소스의 계수로 보상을 다시 계산하거나 학습 로그를 수정하지 않았다.
 
