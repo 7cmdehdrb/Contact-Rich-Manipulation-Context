@@ -12,6 +12,7 @@
 | --- | --- | --- |
 | 연구를 처음 이해하거나 다른 에이전트에게 인계 | [연구 요약](00_HANDOFF_BRIEF.md) | [프로젝트 개요](01_PROJECT_OVERVIEW.md) |
 | Workspace 구조·패키지 역할·문서 위치 | [Workspace와 문서 지도](../00_guidelines/10_WORKSPACE_GUIDE.md) | [개발 지침](../00_guidelines/09_DEVELOPMENT_GUIDE.md) |
+| Goal Accuracy v0_1 파생 사양 | [기존 이름 교정·v0_1 사양](environments/2026-10-28_FINAL_GOAL_ACCURACY_V0_1_REWARD_SPEC.md) | 구현 반영; 지수형 Goal Distance 적분·그래프 및 인수 조건 |
 | 현재 활성 환경의 상속·관측·제어·명령 | [활성 환경 안내](../02_implementation/08_ACTIVE_ENVIRONMENTS.md) | [코드·장비 현황](../02_implementation/07_CODE_AND_HARDWARE_STATUS.md) |
 | Omni 환경의 실제 구성과 보상 변경 계획 | [Omni 환경](../02_implementation/environments/OMNI_ENVIRONMENT.md) | [Omni 보상 계획](environments/OMNI_REWARD_PLAN.md): 적용 코드와 계획 구분 |
 | 고밀도 스폰 규칙과 reset Event 개발 | [스폰 Event 계획](environments/CLUTTER_SPAWN_EVENT_PLAN.md) | 영역별 개수·RED/최소 거리·부분 배치·고정 슬롯 확장, 미구현 |

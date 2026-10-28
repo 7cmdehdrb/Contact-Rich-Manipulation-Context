@@ -1,6 +1,6 @@
-# Final GoalAccuacy v1 환경
+# Final GoalAccuracy v1 환경
 
-[활성 환경](../08_ACTIVE_ENVIRONMENTS.md) · [부모 Accuracy v0 명세](FINAL_GOAL_ACCUACY_V0_ENVIRONMENT.md) · [개발·검증 기록](../logs/2026-10-27_final_goal_accuracy_v1.md)
+[활성 환경](../08_ACTIVE_ENVIRONMENTS.md) · [부모 Accuracy v0 명세](FINAL_GOAL_ACCURACY_V0_ENVIRONMENT.md) · [개발·검증 기록](../logs/2026-10-27_final_goal_accuracy_v1.md)
 
 2026-10-27. Accuracy v0를 직접 상속하여 Final v1의 목표 외곽 보상과 체류 속도 커리큘럼을 복원한다. 사용자가 단위를 확인했으며 목표 인정 반경은 **0.01 m = 1 cm**다. 기존 v0와 Final v1은 수정하지 않았다. 현재 코드 계약이며 학습 성능 비교 결과가 아니다.
 
@@ -8,7 +8,7 @@
 
 | 항목 | 값 |
 | --- | --- |
-| Gym ID | `Isaac-Inspire-Final-GoalAccuacy-v1` |
+| Gym ID | `Isaac-Inspire-Final-GoalAccuracy-v1` |
 | EnvCfg | `FinalGoalAccuracyV1EnvCfg(FinalGoalAccuracyEnvCfg)` |
 | Runtime | 기존 `FinalGoalAccuracyEnv(FinalV1Env)` 재사용 |
 | Reward | `FinalGoalAccuracyV1RewardsCfg(FinalGoalAccuracyRewardsCfg)` |
@@ -16,7 +16,7 @@
 | PPO | `FinalGoalAccuracyV1PPORunnerCfg(FinalGoalAccuracyPPORunnerCfg)` |
 | Experiment | `inspire_final_goal_accuracy_v1` |
 
-등록 ID는 기존 계열과 동일하게 `GoalAccuacy` 철자를 사용한다. 코드: [등록](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py), [EnvCfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/final_envs.py), [Reward](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/rewards/final.py), [Curriculum](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/curricula/final.py), [PPO](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/agent/final_ppo_cfg.py).
+등록 ID는 기존 계열과 동일하게 `GoalAccuracy` 철자를 사용한다. 코드: [등록](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py), [EnvCfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/final_envs.py), [Reward](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/rewards/final.py), [Curriculum](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/curricula/final.py), [PPO](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/agent/final_ppo_cfg.py).
 
 ## Accuracy v0 대비 요청 반영
 
@@ -63,7 +63,7 @@ R=8\Delta t\,\mathbf{1}_{V\land d\le2r}
 | PPO·모델 | Final v1 | experiment 이름 외 동일 |
 | Metric | 실제 개수 `Curriculum/obstacle_actual_*` | v0의 `Metrics/obstacle_actual_*` 및 거리·EEF 속도·타겟 속도·가속도 평균, force/moment 최대 계측 유지 |
 
-계측 통계와 reset 시점은 [부모 명세](FINAL_GOAL_ACCUACY_V0_ENVIRONMENT.md)의 7절과 같다. 부모와 같은 로그 키 이동이며 실험 로그를 분석한 결과가 아니다. `goal_distance`도 여전히 `DexPlanarGoalProgress`, weight 100이다.
+계측 통계와 reset 시점은 [부모 명세](FINAL_GOAL_ACCURACY_V0_ENVIRONMENT.md)의 7절과 같다. 부모와 같은 로그 키 이동이며 실험 로그를 분석한 결과가 아니다. `goal_distance`도 여전히 `DexPlanarGoalProgress`, weight 100이다.
 
 Final v1과의 차이가 목표 반경 하나만 남은 환경은 아니다. 요청 밖의 **goal_hold weight 8, 빠른 장애물 증가, 이름 변경과 계측**을 유지했다. 또한 wrench 페널티는 누적 양의 보상 5% 예산을 공유하므로 목표 보상·목표 연동 보상의 변화가 실제 페널티 제한에 간접 영향을 줄 수 있다. iteration 10000 이후 목표 반경과 속도 척도가 같아져도 weight 차이는 남는다.
 
@@ -73,7 +73,7 @@ Isaac Lab 환경이 설치된 workspace 루트에서 실행한다.
 
 ```bash
 ./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
-  --task Isaac-Inspire-Final-GoalAccuacy-v1 --num_envs 256 --headless
+  --task Isaac-Inspire-Final-GoalAccuracy-v1 --num_envs 256 --headless
 ```
 
 기본 출력 경로는 `logs/rsl_rl/inspire_final_goal_accuracy_v1`이다. 이 작업에서 학습은 실행하지 않았다.

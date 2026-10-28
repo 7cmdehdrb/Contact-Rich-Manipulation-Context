@@ -157,11 +157,11 @@ conda activate env_isaaclab
 
 세 term의 절댓값과 합을 같은 iteration 구간에서 비교하면 새 학습 중 주된 비용을 식별할 수 있다. 재개 후 정책 행동도 변하므로, 이 기록만으로 **기존 v1 run의 과거 `object_penalty` 내부 비중**을 소급 확정하지 않는다. [구현·검증 기록](../logs/2026-10-27_final_v1_test_object_penalty.md)을 확인한다.
 
-## Final GoalAccuacy v0 — 1cm 정확도
+## Final GoalAccuracy v0 — 1cm 정확도
 
-[독립 상세 명세: 관측·Scene·Action·Reward·Curriculum·Termination·Metric](FINAL_GOAL_ACCUACY_V0_ENVIRONMENT.md)
+[독립 상세 명세: 관측·Scene·Action·Reward·Curriculum·Termination·Metric](FINAL_GOAL_ACCURACY_V0_ENVIRONMENT.md)
 
-`Isaac-Inspire-Final-GoalAccuacy-v0`는 `FinalV1EnvCfg` → `FinalGoalAccuracyEnvCfg`, `FinalV1Env` → `FinalGoalAccuracyEnv`, `FinalV1PPORunnerCfg` → `FinalGoalAccuracyPPORunnerCfg`로 구성한다. 요청한 `GoalAccuacy` 표기를 Gym ID에 그대로 사용한다. 모델·관측·Action·Scene·그 밖의 커리큘럼은 v1에서 상속한다. 학습 출력은 `logs/rsl_rl/inspire_final_goal_accuracy_v0`다.
+`Isaac-Inspire-Final-GoalAccuracy-v0`는 `FinalV1EnvCfg` → `FinalGoalAccuracyEnvCfg`, `FinalV1Env` → `FinalGoalAccuracyEnv`, `FinalV1PPORunnerCfg` → `FinalGoalAccuracyPPORunnerCfg`로 구성한다. 2026-10-28 Gym ID의 기존 오타를 `GoalAccuracy`로 교정했으며 동작은 유지한다. 모델·관측·Action·Scene·그 밖의 커리큘럼은 v1에서 상속한다. 학습 출력은 `logs/rsl_rl/inspire_final_goal_accuracy_v0`다.
 
 | 항목 | 설정 |
 | --- | --- |
@@ -189,7 +189,7 @@ Workspace 루트에서 `train.py`로 학습한다.
 
 ```bash
 ./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
-  --task Isaac-Inspire-Final-GoalAccuacy-v0 --num_envs 256 --headless
+  --task Isaac-Inspire-Final-GoalAccuracy-v0 --num_envs 256 --headless
 ```
 
 [구현·검증 로그](../logs/2026-10-27_final_goal_accuracy.md)를 확인한다.

@@ -1,6 +1,6 @@
 # Accuracy v1: 외곽 goal_hold와 속도 커리큘럼 복원
 
-[환경 계약·최종 대조](../environments/FINAL_GOAL_ACCUACY_V1_ENVIRONMENT.md) · [활성 환경](../08_ACTIVE_ENVIRONMENTS.md)
+[환경 계약·최종 대조](../environments/FINAL_GOAL_ACCURACY_V1_ENVIRONMENT.md) · [활성 환경](../08_ACTIVE_ENVIRONMENTS.md)
 
 ## 요청·기준
 
@@ -49,13 +49,13 @@ GPU 물리·실제 전체 import/reset/step·학습 수렴·정확도 향상·Te
 python 00_guidelines/scripts/check_markdown_math.py \
   01_plan/00_HANDOFF_BRIEF.md 02_implementation/08_ACTIVE_ENVIRONMENTS.md \
   02_implementation/environments/README.md \
-  02_implementation/environments/FINAL_GOAL_ACCUACY_V1_ENVIRONMENT.md \
+  02_implementation/environments/FINAL_GOAL_ACCURACY_V1_ENVIRONMENT.md \
   02_implementation/logs/2026-10-27_final_goal_accuracy_v1.md \
   ../../src/inspire_sweep_baseline/README.md
 python 00_guidelines/scripts/check_document_links.py --check-external \
   01_plan/00_HANDOFF_BRIEF.md 02_implementation/08_ACTIVE_ENVIRONMENTS.md \
   02_implementation/environments/README.md \
-  02_implementation/environments/FINAL_GOAL_ACCUACY_V1_ENVIRONMENT.md \
+  02_implementation/environments/FINAL_GOAL_ACCURACY_V1_ENVIRONMENT.md \
   02_implementation/logs/2026-10-27_final_goal_accuracy_v1.md \
   ../../src/inspire_sweep_baseline/README.md
 git diff --check

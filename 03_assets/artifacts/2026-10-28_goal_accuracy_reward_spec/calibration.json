@@ -1,0 +1,20 @@
+{
+  "a_per_m": 20.0,
+  "weight_per_s": 3.7,
+  "scenarios": {
+    "0.02": {
+      "old_total": 13.0,
+      "new_integral": 13.122571621792408,
+      "trapezoid_dt_0_001": 13.122571787612612,
+      "post_step_sum_dt_0_02": 13.14559766971449,
+      "log_normalized_by_10": 1.312257162179241
+    },
+    "0": {
+      "old_total": 15.0,
+      "new_integral": 18.868424305922193,
+      "trapezoid_dt_0_001": 18.868424598904507,
+      "post_step_sum_dt_0_02": 18.90369937653954,
+      "log_normalized_by_10": 1.8868424305922193
+    }
+  }
+}

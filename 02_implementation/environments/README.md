@@ -1,7 +1,7 @@
 # 환경 문서 안내
 
-- [Final GoalAccuacy v0 상세 명세](FINAL_GOAL_ACCUACY_V0_ENVIRONMENT.md): 1cm 고정 목표, 전체 관측·Scene·Action·보상식·10개 활성 커리큘럼·종료·학습 Metric의 독립 설명.
-- [Final GoalAccuacy v1 환경·Final v1 대조](FINAL_GOAL_ACCUACY_V1_ENVIRONMENT.md): v0 상속, 1cm 고정, 외곽 goal_hold·goal_speed_scale 복원, 기존 object_free_speed 유지.
+- [Final GoalAccuracy v0 상세 명세](FINAL_GOAL_ACCURACY_V0_ENVIRONMENT.md): 1cm 고정 목표, 전체 관측·Scene·Action·보상식·10개 활성 커리큘럼·종료·학습 Metric의 독립 설명.
+- [Final GoalAccuracy v1 환경·Final v1 대조](FINAL_GOAL_ACCURACY_V1_ENVIRONMENT.md): v0 상속, 1cm 고정, 외곽 goal_hold·goal_speed_scale 복원, 기존 object_free_speed 유지.
 
 - [Final v1 상세 명세](FINAL_V1_ENVIRONMENT.md): v1의 관측·노이즈, Scene·랜덤화, Action, 전체 보상식, 13개 커리큘럼, 종료 조건을 독립적으로 설명.
 
@@ -61,3 +61,5 @@ Holding 이후의 세 계열과 버전 증가 기준은 [Fusion Holding 환경 �
 - [Holding-OSC-v4 개별 환경](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_V4_ENVIRONMENT.md): 같은 과업에서 Arm OSC 제어 비교.
 
 - [Holding-OSC-ObjectRandom-v3 개별 환경](CONTACT_SWEEP_CLUTTER_FUSION_HOLDING_OSC_OBJECT_RANDOM_V3_ENVIRONMENT.md): OSC와 물체·환경 랜덤화 결합.
+
+- [Final GoalAccuracy v0_1 구현](FINAL_GOAL_ACCURACY_V0_1_ENVIRONMENT.md): v0 상속, 2cm 목표·타겟 Contact·20cm Reaching·외곽 Hold·지수형 거리·직육면체, 명확한 Manager 이름.

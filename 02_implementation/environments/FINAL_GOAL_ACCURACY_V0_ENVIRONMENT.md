@@ -1,14 +1,14 @@
-# Final GoalAccuacy v0 환경 상세 명세
+# Final GoalAccuracy v0 환경 상세 명세
 
 [환경 문서 목록](README.md) · [등록·실행 안내](../08_ACTIVE_ENVIRONMENTS.md) · [개발·검증 기록](../logs/2026-10-27_final_goal_accuracy.md)
 
-기준일: 2026-10-27. 이 문서는 `Isaac-Inspire-Final-GoalAccuacy-v0`의 실제 적용 설정과 계산 함수를 기준으로 관측, Scene, Action, Reward, Curriculum, Termination, 학습 Metric을 설명한다. 모든 수치는 실행 시 설정 변경이 없는 기본값이다. Gym ID의 `GoalAccuacy` 철자는 요청한 이름을 그대로 따른다. `FinalV1EnvCfg`를 직접 상속하지만, 현재 환경의 동작을 이 문서만으로 파악할 수 있도록 상속된 설정도 함께 적었다.
+기준일: 2026-10-27. 이 문서는 `Isaac-Inspire-Final-GoalAccuracy-v0`의 실제 적용 설정과 계산 함수를 기준으로 관측, Scene, Action, Reward, Curriculum, Termination, 학습 Metric을 설명한다. 모든 수치는 실행 시 설정 변경이 없는 기본값이다. Gym ID는 2026-10-28에 기존 오타 `GoalAccuacy`에서 `GoalAccuracy`로 교정했다. 이름 외 v0 동작은 보존한다. `FinalV1EnvCfg`를 직접 상속하지만, 현재 환경의 동작을 이 문서만으로 파악할 수 있도록 상속된 설정도 함께 적었다.
 
 과업은 선반 위의 타겟을 지정한 평면 목표 위치로 **1cm 이내**까지 밀고, 장애물과 선반을 안정적으로 유지하는 것이다. 정책은 에피소드 시작 시의 타겟·장애물 위치와 목표를 받고, 실행 중에는 관절 상태, EEF 자세, 촉각, 손목 wrench로 행동한다. 목표에 도달해도 계속 행동하며, 10초 만료 시의 위치로 성공 여부를 분류한다. 목표 인정 반경은 학습 처음부터 0.01m로 고정한다.
 
 | 항목 | 설정 |
 | --- | --- |
-| Gym ID / 설정 클래스 | `Isaac-Inspire-Final-GoalAccuacy-v0` / `FinalGoalAccuracyEnvCfg` |
+| Gym ID / 설정 클래스 | `Isaac-Inspire-Final-GoalAccuracy-v0` / `FinalGoalAccuracyEnvCfg` |
 | 직접 부모 / 실행 클래스 | `FinalV1EnvCfg` / `FinalGoalAccuracyEnv` (`FinalV1Env` 상속) |
 | PPO 설정 / experiment | `FinalGoalAccuracyPPORunnerCfg` / `inspire_final_goal_accuracy_v0` |
 | 기본 병렬 환경 수 / 간격 | 4096개 / 2.5m |
@@ -480,7 +480,7 @@ Workspace 루트에서 새 task ID로 학습한다. `train.py`가 사용하는 �
 
 ```bash
 ./IsaacLab/isaaclab.sh -p src/inspire_sweep_baseline/scripts/train.py \
-  --task Isaac-Inspire-Final-GoalAccuacy-v0 --num_envs 256 --headless
+  --task Isaac-Inspire-Final-GoalAccuracy-v0 --num_envs 256 --headless
 ```
 
 `play.py`에서는 같은 task ID와 이 환경의 checkpoint를 지정한다. v1 checkpoint는 관측·모델 차원이 같지만 보상 목적과 커리큘럼이 다르므로 이어 학습한 결과와 신규 학습 결과를 구분해야 한다. 학습 로그 정리는 이 문서의 실행 절차에 포함되지 않는다.

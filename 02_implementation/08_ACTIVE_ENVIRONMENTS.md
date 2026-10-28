@@ -4,7 +4,7 @@
 
 ## Final — 최신 중점
 
-등록 위치는 패키지 `__init__.py`, EnvCfg는 `envs/final_envs.py`다. 아래 ID의 공통 접두사는 `Isaac-Inspire-Final-`이다. 등록 ID의 `GoalAccuacy` 철자를 그대로 사용한다.
+등록 위치는 패키지 `__init__.py`, EnvCfg는 `envs/final_envs.py`다. 아래 ID의 공통 접두사는 `Isaac-Inspire-Final-`이다. 기존 오타 `GoalAccuacy`는 2026-10-28에 `GoalAccuracy`로 교정했다. 기존 v0/v1 동작은 유지한다.
 
 | ID 접미사 | 설정 상속 | 용도·설명 |
 | --- | --- | --- |
@@ -12,8 +12,9 @@
 | `v1` | `FinalV1EnvCfg` → `FinalEnvCfg` | [Final v1 상세](environments/FINAL_V1_ENVIRONMENT.md) |
 | `v1-1` | `FinalV1EnvCfg` 파생 | 지수형 goal distance 보상. [변형 비교](environments/FINAL_V1_V2_ENVIRONMENTS.md) |
 | `Test-v1` | `FinalV1EnvCfg` 파생 | object penalty 분리 계측. [변형 비교](environments/FINAL_V1_V2_ENVIRONMENTS.md) |
-| `GoalAccuacy-v0` | `FinalV1EnvCfg` 파생 | [1cm 정확도 환경](environments/FINAL_GOAL_ACCUACY_V0_ENVIRONMENT.md) |
-| `GoalAccuacy-v1` | `FinalGoalAccuracyEnvCfg` 파생 | [1cm 고정 + 외곽 보상·goal speed 일정 복원, Final v1 대조](environments/FINAL_GOAL_ACCUACY_V1_ENVIRONMENT.md) |
+| `GoalAccuracy-v0` | `FinalV1EnvCfg` 파생 | [1cm 정확도 환경](environments/FINAL_GOAL_ACCURACY_V0_ENVIRONMENT.md) |
+| `GoalAccuracy-v0_1` | `FinalGoalAccuracyEnvCfg` 파생 | [2cm 목표·타겟 접촉·연속 Hold·지수 거리·직육면체](environments/FINAL_GOAL_ACCURACY_V0_1_ENVIRONMENT.md) |
+| `GoalAccuracy-v1` | `FinalGoalAccuracyEnvCfg` 파생 | [1cm 고정 + 외곽 보상·goal speed 일정 복원, Final v1 대조](environments/FINAL_GOAL_ACCURACY_V1_ENVIRONMENT.md) |
 | `v2` | `FinalV1EnvCfg` 파생 | 타겟 배치 영역 변경. [변형 비교](environments/FINAL_V1_V2_ENVIRONMENTS.md) |
 | `Test-v2` | Final v2 파생 | 최종 장애물 개수로 시작. [변형 비교](environments/FINAL_V1_V2_ENVIRONMENTS.md) |
 
@@ -37,8 +38,8 @@ Holding v0의 외부 기반 클래스는 코드의 실제 MRO로 확인한다. �
 workspace 루트에서 Isaac Lab 의존성이 설치된 Python을 사용한다. 아래는 명령 예시이며 실행 성능 검증 결과가 아니다. 옵션과 설치 절차는 workspace 루트 `README.md`를 따른다.
 
 ```bash
-python src/inspire_sweep_baseline/scripts/train.py --task Isaac-Inspire-Final-GoalAccuacy-v0 --num_envs 2048 --headless
-python src/inspire_sweep_baseline/scripts/play.py --task Isaac-Inspire-Final-GoalAccuacy-v0 --num_envs 16 --checkpoint /absolute/path/to/model.pt
+python src/inspire_sweep_baseline/scripts/train.py --task Isaac-Inspire-Final-GoalAccuracy-v0 --num_envs 2048 --headless
+python src/inspire_sweep_baseline/scripts/play.py --task Isaac-Inspire-Final-GoalAccuracy-v0 --num_envs 16 --checkpoint /absolute/path/to/model.pt
 ```
 
 학습에는 `train.py`를 사용한다. `train_resilient.py`는 사용 중단 상태로 보존한다. checkpoint의 환경·관측·정책 구성과 현재 task의 호환성을 확인한다.
