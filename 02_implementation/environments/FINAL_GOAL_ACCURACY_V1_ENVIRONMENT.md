@@ -55,7 +55,7 @@ R=8\Delta t\,\mathbf{1}_{V\land d\le2r}
 | 타겟 속도 페널티 이름 | `object_speed_penalty` | `target_speed_penalty`; 함수·weight·params 동일 |
 | `object_free_speed` | `object_speed_penalty.free_speed` 갱신 | `target_speed_penalty.free_speed` 갱신; 함수·points·interval 동일 |
 | 장애물 개수 일정 | Gray 3000, White 2000 시작, 간격 2000 | **Gray 2500, White 2000 시작, 간격 1000**, Accuracy v0 유지 |
-| 장애물 초기·최종 요청 / 용량 | 1+1 → 8+8 / 10+10 | 동일; 실제 배치는 공통 fallback 결과 사용 |
+| 장애물 초기·최종 요청 / 용량 | 1+1 → 8+8 / 10+10 | **1+1 → 4+5 / 10+10**; 2026-10-30 공통 Accuracy 상한 변경, 5000 이후 고정; 실제 배치는 공통 fallback 결과 사용 |
 | 나머지 Reward·Curriculum | Final v1 설정 | 동일; 속도 항 이름 변경에 따른 활성 순서는 v0 상속 |
 | 실패 종료·timeout 의미 | 실패 4항, 성공/미성공 모두 truncation, 목표 조기 종료 없음 | 동일; 성공 반경만 위 차이 |
 | Scene·Command·Event·reset 배치 | Final v1 | 동일 구성; 개수 일정에 따른 배치 밀도 차이 있음 |

@@ -1,0 +1,63 @@
+{
+  "Isaac-Inspire-Final-v1": [],
+  "Isaac-Inspire-Final-GoalAccuracy-v0": [
+    [
+      ".env.curriculum.obstacle_population.params.final_gray",
+      8,
+      4
+    ],
+    [
+      ".env.curriculum.obstacle_population.params.final_white",
+      8,
+      5
+    ]
+  ],
+  "Isaac-Inspire-Final-GoalAccuracy-v1": [
+    [
+      ".env.curriculum.obstacle_population.params.final_gray",
+      8,
+      4
+    ],
+    [
+      ".env.curriculum.obstacle_population.params.final_white",
+      8,
+      5
+    ]
+  ],
+  "Isaac-Inspire-Final-GoalAccuracy-v0_1": [
+    [
+      ".env.curriculum.obstacle_population.params.final_gray",
+      8,
+      4
+    ],
+    [
+      ".env.curriculum.obstacle_population.params.final_white",
+      8,
+      5
+    ]
+  ],
+  "Isaac-Inspire-Final-GoalAccuracy-v0_2": [
+    [
+      ".env.curriculum.obstacle_population.params.final_gray",
+      8,
+      4
+    ],
+    [
+      ".env.curriculum.obstacle_population.params.final_white",
+      8,
+      5
+    ]
+  ],
+  "Isaac-Inspire-Final-GoalAccuracy-v0_3": [
+    [
+      ".env.curriculum.obstacle_population.params.final_gray",
+      8,
+      4
+    ],
+    [
+      ".env.curriculum.obstacle_population.params.final_white",
+      8,
+      5
+    ]
+  ]
+}

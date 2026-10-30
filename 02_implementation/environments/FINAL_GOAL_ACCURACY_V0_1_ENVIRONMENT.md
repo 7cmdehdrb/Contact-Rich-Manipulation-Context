@@ -40,6 +40,8 @@
 
 ## 커리큘럼과 종료
 
+2026-10-30 후속 변경: 공통 Accuracy 부모의 장애물 최종 요청 수를 **Gray 4·White 5**로 낮췄다. 5000까지 기존 증가 일정을 유지하고 이후 증가하지 않는다. v0_1 및 이를 상속하는 v0_2·v0_3도 동일하다. 물체 용량·관측 슬롯·배치 fallback·다른 일정은 유지한다. [변경·검증 기록](../logs/2026-10-30_goal_accuracy_population_cap.md).
+
 활성 커리큘럼은 순서대로 `obstacle_population`, `obstacle_gray_zone_padding`, `target_free_speed`, `object_free_acceleration`, `object_acceleration_weight`, `target_goal_direction_deadzone`, `wrist_wrench_free_force_change`, `wrist_wrench_free_moment_change`, `wrist_wrench_change_weight`, `obstacle_contact_free_force`, `obstacle_contact_weight`다. 점·갱신 간격·iteration·파라미터 값은 부모와 같다. `target_goal_speed_scale`과 `target_goal_position_tolerance`는 비활성이다. 이름 변경 대응과 각 대상은 개발 사양 8.3절을 따른다.
 
 종료는 순서대로 `object_fall_or_tilt`, `target_speed`, `shelf_failure`, `arm_joint_velocity`, `target_goal_success_at_timeout`, `target_goal_miss_at_timeout`이다. 마지막 두 항은 10초 만료의 d≤0.02 여부를 분할하며 둘 다 `time_out=True`다. 조기 성공 종료·속도·연속 유지시간 조건을 추가하지 않았다. metric 수집과 실패/만료 동시 발생 가능성은 기존과 같다.

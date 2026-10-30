@@ -6,6 +6,8 @@
 
 ## 등록과 구성
 
+2026-10-30 후속 변경: Accuracy 공통 부모에서 장애물 최종 요청 수를 **Gray 4·White 5**로 제한했다. v0_3도 5000 iteration 이후 이 개수를 유지한다. 원래 v0_3 개발 명세 이후의 별도 사용자 지시이며 보상 계약은 그대로다. [변경·검증 기록](../logs/2026-10-30_goal_accuracy_population_cap.md).
+
 | 항목 | 실제 값 |
 | --- | --- |
 | EnvCfg | `FinalGoalAccuracyV0_3EnvCfg` → `FinalGoalAccuracyV0_2EnvCfg` |

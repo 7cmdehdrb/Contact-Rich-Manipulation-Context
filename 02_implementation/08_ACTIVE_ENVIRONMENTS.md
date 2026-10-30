@@ -21,6 +21,8 @@
 
 Holding → Final은 개발 흐름을 뜻한다. Final v0는 Holding EnvCfg를 직접 상속하지 않는다. Final 내부 버전의 직접 부모와 최종 활성 설정을 구분하여 확인한다.
 
+2026-10-30: **GoalAccuracy v0·v1·v0_1·v0_2·v0_3 공통**으로 장애물 요청 수는 5000 iteration의 Gray 4·White 5가 상한이다. 이후 증가하지 않는다. Final v1 등 Accuracy 밖 환경은 기존 일정을 유지한다. [변경·검증 기록](logs/2026-10-30_goal_accuracy_population_cap.md).
+
 ## Holding — 기반 계열
 
 아래 ID의 공통 접두사는 `Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-`이다.
