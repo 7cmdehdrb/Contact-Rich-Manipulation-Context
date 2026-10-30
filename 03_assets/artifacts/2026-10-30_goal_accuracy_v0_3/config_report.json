@@ -1,0 +1,58 @@
+{
+  "task": "Isaac-Inspire-Final-GoalAccuracy-v0_3",
+  "config_delta": "only four specified rewards; all ordered fields compared",
+  "ppo_delta": "experiment_name only",
+  "parent_isolation": [
+    "v0",
+    "v0_1",
+    "v0_2",
+    "v1"
+  ],
+  "scene_rebuild_capacities": [
+    [
+      10,
+      10
+    ],
+    [
+      0,
+      0
+    ],
+    [
+      3,
+      4
+    ]
+  ],
+  "changed_rewards": {
+    "target_contact": {
+      "func": "inspire_sweep_baseline.mdp.reward_functions.final:target_contact_or_goal",
+      "params": {
+        "threshold_n": 0.01
+      },
+      "weight": 0.3625
+    },
+    "target_goal_distance": {
+      "func": "inspire_sweep_baseline.mdp.reward_functions.dex_rewards:DexPlanarGoalProgress",
+      "params": {
+        "position_tolerance": 0.0
+      },
+      "weight": 100.0
+    },
+    "target_goal_hold": {
+      "func": "inspire_sweep_baseline.mdp.reward_functions.final:goal_accuracy_outer_settling",
+      "params": {
+        "position_tolerance": 0.03,
+        "outer_radius": 0.06,
+        "speed_scale": 0.05
+      },
+      "weight": 8.0
+    },
+    "target_goal_timeout_bonus": {
+      "func": "inspire_sweep_baseline.mdp.reward_functions.goal_rewards:success_event",
+      "params": {
+        "termination_name": "target_goal_success_at_timeout"
+      },
+      "weight": 100.0
+    }
+  },
+  "smoke_requested": false
+}
