@@ -4,6 +4,8 @@
 
 ## Final — 최신 중점
 
+배치 규칙: [OBB 텐서 배치 모듈](environments/BBOX_SCENE_LAYOUT.md)은 2026-10-31 후속 요청으로 **GoalAccuracy v0_2_1에만 연결**했다. 회귀·기하 106개 및 실제 GPU reset 검증은 [연결 기록](logs/2026-10-31_final_v0_2_1_obb_reset.md)을 따른다.
+
 등록 위치는 패키지 `__init__.py`, EnvCfg는 `envs/final_envs.py`다. 아래 ID의 공통 접두사는 `Isaac-Inspire-Final-`이다. 기존 오타 `GoalAccuacy`는 2026-10-28에 `GoalAccuracy`로 교정했다. 기존 v0/v1 동작은 유지한다.
 
 | ID 접미사 | 설정 상속 | 용도·설명 |
