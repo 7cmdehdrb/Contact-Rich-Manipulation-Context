@@ -1,8 +1,12 @@
-# Holding · Final 환경 안내
+# Revision · Holding · Final 환경 안내
 
-활성 기반 패키지는 `src/inspire_sweep_baseline`이며 **Holding → Final 계열이 가장 중요한 최신 환경**이다. `src/axia80_feasibility`는 현재 사용하지 않는다. 이 문서는 작업 대상을 찾는 색인이다. 수식·수치·실험 이력은 요청한 환경의 설명과 실제 코드만 확인한다.
+활성 기반 패키지는 `src/inspire_sweep_baseline`이다. **2026-11-01 새 개발 대상은 독립 Revision-v0**이며, 기존 Holding → Final 환경은 비교·기존 학습 재현용으로 보존한다. `src/axia80_feasibility`는 현재 사용하지 않는다. 이 문서는 작업 대상을 찾는 색인이다. 수식·수치·실험 이력은 요청한 환경의 설명과 실제 코드만 확인한다.
 
-## Final — 최신 중점
+## Revision — 독립 신규 환경
+
+`Isaac-Inspire-Revision-v0`는 `envs/revision_envs.py:RevisionEnvCfg`와 `runtime/revision.py:RevisionEnv`를 사용한다. 둘 다 Isaac Lab 기반 클래스를 직접 상속하며 기존 환경 CFG를 부모로 사용하지 않는다. v0_2를 기능 기준으로 중앙 크기 랜덤화·10개 물리 물체·OBB 배치·Actor/Critic 관측 분리·성공 3cm/Hold 8cm·접촉 높이 조건을 적용한다. [환경 명세](environments/REVISION_V0_ENVIRONMENT.md) · [구현 및 검증 상태](logs/2026-11-01_revision_v0_implementation.md).
+
+## Final — 기존 비교 환경
 
 물체 전시: [Shelf Object Gallery](../../../src/shelf_object_gallery/README.md)는 Final과 동일한 선반 위에 절차적 4종과 YCB 상자·캔 4종을 기준 크기 n×m 격자로 보여주는 별도 Isaac Lab 패키지다. 기본 2×4에서 총 8종을 하나씩 표시하며 로봇·학습은 없다. [구현·검증 기록](logs/2026-11-01_shelf_object_gallery.md).
 

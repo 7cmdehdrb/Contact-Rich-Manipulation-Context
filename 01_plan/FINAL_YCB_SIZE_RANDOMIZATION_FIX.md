@@ -1,6 +1,8 @@
 # Final 물체 구성·관측·보상 수정 예정
 
-2026-11-01 사용자 최종 8개 항목을 대조하여 정리했다. **상태: 수정 예정, 코드 미반영.** 전체 업데이트는 **`Isaac-Inspire-Final-GoalAccuracy-v0_2` 기준**이며 **v0_2_1을 구현 참고 대상으로 사용하지 않는다.** 기존 v0_2_2 기준 계획은 대체한다. v0_2_1에서 사용자가 보고한 문제는 재발 방지 검증 사례로만 기록한다.
+2026-11-01 후속 지시: 이 요구사항은 **새 독립 `Isaac-Inspire-Revision-v0` 환경**으로 구현한다. 기능 대조 기준은 v0_2이며, Final·Holding의 기존 환경/CFG 상속을 끊고 새 Revision CFG와 runtime을 구성한다. 기존 함수 재사용은 허용한다. 기존 Final 환경을 직접 변경하지 않는다. 아래 체크리스트는 요구사항 원문으로 보존하며, 구현·검증 상태는 [Revision 명세](../02_implementation/environments/REVISION_V0_ENVIRONMENT.md)와 [개발 로그](../02_implementation/logs/2026-11-01_revision_v0_implementation.md)를 따른다.
+
+2026-11-01 사용자 최종 8개 항목을 대조하여 정리했다. **상태: Revision 구현 및 CPU·64/2048 env 물리·짧은 PPO 학습 검증 완료.** 접촉 자세 실험의 상세 결과와 미검증 범위는 위 구현 명세·개발 로그를 따른다. 전체 업데이트는 **`Isaac-Inspire-Final-GoalAccuracy-v0_2` 기준**이며 **v0_2_1을 구현 참고 대상으로 사용하지 않는다.** 기존 v0_2_2 기준 계획은 대체한다. v0_2_1에서 사용자가 보고한 문제는 재발 방지 검증 사례로만 기록한다.
 
 ## 최종 의도와 이전 문서의 정정
 
