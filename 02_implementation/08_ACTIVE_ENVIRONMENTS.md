@@ -4,7 +4,19 @@
 
 ## Final — 최신 중점
 
-배치 규칙: [OBB 텐서 배치 모듈](environments/BBOX_SCENE_LAYOUT.md)은 2026-10-31 후속 요청으로 **GoalAccuracy v0_2_1에만 연결**했다. 회귀·기하 106개 및 실제 GPU reset 검증은 [연결 기록](logs/2026-10-31_final_v0_2_1_obb_reset.md)을 따른다.
+물체 전시: [Shelf Object Gallery](../../../src/shelf_object_gallery/README.md)는 Final과 동일한 선반 위에 절차적 4종과 YCB 상자·캔 4종을 기준 크기 n×m 격자로 보여주는 별도 Isaac Lab 패키지다. 기본 2×4에서 총 8종을 하나씩 표시하며 로봇·학습은 없다. [구현·검증 기록](logs/2026-11-01_shelf_object_gallery.md).
+
+설명 문서 모음: [논문 작성용 환경 근거 자료](../04_article/environment_reference/README.md). [선반 작업 영역과 물체 형상](../04_article/environment_reference/FINAL_SHELF_AND_OBJECT_GEOMETRY.md)은 작업면 경계, 기본 치수·scale, 충돌 형상과 물체 역할 선택을 설명한다.
+
+학습 구조: [Final 계열의 Actor·Critic·관측 MLP와 PPO 손실](../04_article/environment_reference/FINAL_TRAINING_NETWORKS.md)은 최신 GoalAccuracy v0_2_2를 포함한 네트워크 구조, 관측 차원, GAE, 손실별 역전파 경로를 설명한다.
+
+장면 생성: [최종 환경의 Scene Generation and Randomization](../04_article/environment_reference/FINAL_SCENE_GENERATION_AND_RANDOMIZATION.md)은 GoalAccuracy v0_2_2의 타겟·목표 추출, RED/Gray/White OBB 배치 알고리즘, 실패 처리, 형상·크기·물성 무작위화 시점을 설명한다.
+
+상태와 관측: [최종 환경의 State and Privileged Information](../04_article/environment_reference/FINAL_STATE_AND_PRIVILEGED_INFORMATION.md)은 전체 환경 상태, Actor 137D·Critic 140D 관측, 초기 장면 캐시·센서 노이즈, Critic 전용 현재 타겟 XYZ와 부분 관측의 의미를 설명한다.
+
+F/T 센서: [최종 환경의 센서 형상과 Wrench 계측](../04_article/environment_reference/FINAL_FT_SENSOR_AND_WRENCH.md)은 실린더 치수, 측정 고정 관절, EEF 기준점 변환, 손의 중력·관성 보상과 관측 노이즈를 설명한다.
+
+배치 규칙: [OBB 텐서 배치 모듈](environments/BBOX_SCENE_LAYOUT.md)은 **GoalAccuracy v0_2_1 및 그 파생 v0_2_2**에서 사용한다. v0_2_1의 회귀·기하 106개 및 GPU reset 검증은 [연결 기록](logs/2026-10-31_final_v0_2_1_obb_reset.md)을 따른다. v0_2_2의 물리 객체 축소·역할 공유·재질 재사용과 별도 검증은 [구현 기록](logs/2026-10-31_final_v0_2_2_compact_scene.md)을 따른다.
 
 등록 위치는 패키지 `__init__.py`, EnvCfg는 `envs/final_envs.py`다. 아래 ID의 공통 접두사는 `Isaac-Inspire-Final-`이다. 기존 오타 `GoalAccuacy`는 2026-10-28에 `GoalAccuracy`로 교정했다. 기존 v0/v1 동작은 유지한다.
 
@@ -17,6 +29,7 @@
 | `GoalAccuracy-v0` | `FinalV1EnvCfg` 파생 | [1cm 정확도 환경](environments/FINAL_GOAL_ACCURACY_V0_ENVIRONMENT.md) |
 | `GoalAccuracy-v0_1` | `FinalGoalAccuracyEnvCfg` 파생 | [2cm 목표·타겟 접촉·연속 Hold·지수 거리·직육면체](environments/FINAL_GOAL_ACCURACY_V0_1_ENVIRONMENT.md) |
 | `GoalAccuracy-v0_2_1` | `FinalGoalAccuracyV0_2EnvCfg` 파생 | [실제 타겟 접촉만·timeout +75·매 reset 타겟 종류 재추첨](environments/FINAL_GOAL_ACCURACY_V0_2_1_ENVIRONMENT.md) |
+| `GoalAccuracy-v0_2_2` | `FinalGoalAccuracyV0_2_1EnvCfg` 파생 | [물리 객체 12개·역할 공유·prototype/재질 재사용, 보유 형상 내 타겟 재선택](environments/FINAL_GOAL_ACCURACY_V0_2_2_ENVIRONMENT.md) |
 | `GoalAccuracy-v0_3` | `FinalGoalAccuracyV0_2EnvCfg` 파생 | [3cm 목표·접촉 weight 1/4·최단 거리 갱신·timeout +100](environments/FINAL_GOAL_ACCURACY_V0_3_ENVIRONMENT.md); 부모 v0_2는 v0_1에 timeout +30 추가 |
 | `GoalAccuracy-v1` | `FinalGoalAccuracyEnvCfg` 파생 | [1cm 고정 + 외곽 보상·goal speed 일정 복원, Final v1 대조](environments/FINAL_GOAL_ACCURACY_V1_ENVIRONMENT.md) |
 | `v2` | `FinalV1EnvCfg` 파생 | 타겟 배치 영역 변경. [변형 비교](environments/FINAL_V1_V2_ENVIRONMENTS.md) |

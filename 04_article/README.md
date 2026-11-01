@@ -2,6 +2,8 @@
 
 ## 현재 기준과 진행 상태
 
+- 환경 설명 자료: [최종 환경 문서 모음](environment_reference/README.md). 사용자 요청으로 학습 네트워크·장면 생성·상태와 관측·F/T 센서 설명을 이 폴더 아래로 모으고 선반·물체 형상 설명을 추가했다. 논문 최종 원고와 구현 근거 자료는 구별한다.
+
 - Research Motivation 최신 원문: [1차 완성본 — 수정 예정](RESEARCH_MOTIVATION_V1.md)
 - 후속 편집 전 필독: [수정 이력 및 작성 의도](RESEARCH_MOTIVATION_REVISION_CONTEXT.md). 정책 선제시 → 이유 설명 → 정책 재종합의 수미상관을 유지한다. 시뮬레이션·DR 추가 이후의 마무리 구조는 미해결 상태다.
 
