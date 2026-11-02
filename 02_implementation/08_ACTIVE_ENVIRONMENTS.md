@@ -1,8 +1,10 @@
 # Revision · Holding · Final 환경 안내
 
-활성 기반 패키지는 `src/inspire_sweep_baseline`이다. **2026-11-01 새 개발 대상은 독립 Revision-v0**이며, 기존 Holding → Final 환경은 비교·기존 학습 재현용으로 보존한다. `src/axia80_feasibility`는 현재 사용하지 않는다. 이 문서는 작업 대상을 찾는 색인이다. 수식·수치·실험 이력은 요청한 환경의 설명과 실제 코드만 확인한다.
+활성 기반 패키지는 `src/inspire_sweep_baseline`이다. **2026-11-02 개발 대상은 Revision-v0를 상속한 Revision-v1 / Test-v1**이며, 기존 Holding → Final 환경은 비교·기존 학습 재현용으로 보존한다. `src/axia80_feasibility`는 현재 사용하지 않는다. 이 문서는 작업 대상을 찾는 색인이다. 수식·수치·실험 이력은 요청한 환경의 설명과 실제 코드만 확인한다.
 
-## Revision — 독립 신규 환경
+## Revision — 독립 기반과 파생 환경
+
+`Isaac-Inspire-Revision-v1`은 `RevisionV1EnvCfg(RevisionEnvCfg)`, `Isaac-Inspire-Revision-Test-v1`은 `RevisionV1TestEnvCfg(RevisionV1EnvCfg)`다. Test의 유일한 과업 설정 차이는 타겟 형상 cylinder 고정이며 크기·장애물 랜덤화는 유지한다. [v1 구현 계약](environments/REVISION_V1_ENVIRONMENT.md) · [개발·리뷰·검증](logs/2026-11-02_revision_v1_implementation.md).
 
 `Isaac-Inspire-Revision-v0`는 `envs/revision_envs.py:RevisionEnvCfg`와 `runtime/revision.py:RevisionEnv`를 사용한다. 둘 다 Isaac Lab 기반 클래스를 직접 상속하며 기존 환경 CFG를 부모로 사용하지 않는다. v0_2를 기능 기준으로 중앙 크기 랜덤화·10개 물리 물체·OBB 배치·Actor/Critic 관측 분리·성공 3cm/Hold 8cm·접촉 높이 조건을 적용한다. [환경 명세](environments/REVISION_V0_ENVIRONMENT.md) · [구현 및 검증 상태](logs/2026-11-01_revision_v0_implementation.md).
 

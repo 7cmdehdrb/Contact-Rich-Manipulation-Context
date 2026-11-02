@@ -1,0 +1,21 @@
+{
+  "scope": "analytical plots only; no environment execution",
+  "hold_bounds": [
+    0.0,
+    16.0
+  ],
+  "object_split_random_cases": 10000,
+  "object_split_max_abs_error": 5.684341886080802e-14,
+  "count_boundary_checks": 8,
+  "hold_inner_boundary_limit": 1.0000000000000007,
+  "source_sha256": {
+    "mdp/rewards/revision.py": "75f92d84eae275f882d7b6fc99772a4bcc60e27bc585365c04c94fc218bfe399",
+    "mdp/reward_functions/revision.py": "1b43e83c636211c8360a620bde5185ebd8b5647e19d78a6187a01b215d09aa18",
+    "mdp/reward_functions/final.py": "e82dcc4f7ebd7858f5f41eb275e53621bb71dc7e68144184f76d9b6acb028d70",
+    "mdp/reward_functions/contact_sweep_clutter_fusion.py": "fbc390d55606948a17599d708d5d9c8ddf81f687ba9069252cf9498fbe71e373",
+    "mdp/curricula/revision.py": "d9164ac363e0b5254b9f71f23822f15b6ba3062d90975bf5cff56c66160ba0b9",
+    "mdp/common/revision_layout.py": "896ea98feb4510c30edc1b4c71c649029aace93382085be6bfd04bda52bb157c",
+    "envs/revision_envs.py": "0450d6b967a7091e1dbb207886c9d1fdcd0a3c81fb3d605a65d9e5facdc41daf",
+    "assets/revision_spawners.py": "6232370c2f2b5d5b629e14d8baffa3fa10ab7d5d8e77b33506b4571176fbdedd"
+  }
+}
