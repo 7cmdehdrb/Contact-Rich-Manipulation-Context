@@ -114,4 +114,41 @@ env -u PYTHONPATH /home/min/miniconda3/envs/env_isaaclab/bin/python src/inspire_
 
 ## 문서·작업트리 최종 점검
 
+아래 기존 점검은 2026-11-02 구현 작업 기준이다.
+
 구현 계약, 활성 환경 색인, 패키지 README, 현재 handoff를 갱신했다. 변경5개 Markdown 수식 검사와 root/docs의 `git diff --check`는 통과했다. 문서 저장소의 변경4개 문서 링크 검사는 통과했다. README까지 포함한 전체 파일 링크 검사에는 기존 `FINAL_GOAL_ACCURACY_V0_2_ENVIRONMENT.md` 누락 링크1건이 남아 있다(기준 commit README1395행, 현재1397행에도 존재). 이번에 추가한 링크는 정상이며 요청 밖의 역사 문서 경로는 수정하지 않았다. 사용자 `docs/plan/PLAN8.md`, 이전 분석·명세·그림, 기존 로그는 보존했다. commit은 생성하지 않았다.
+
+## 2026-11-03 Test-v1 EEF 높이 임시 출력
+
+- 요청: 사용자가 play에서 실제 높이를 확인한 뒤 바로 주석 처리할 수 있도록 reward 또는 termination에서 항상 출력. 기존 Test-v1 직접 수정이며 새 환경은 추가하지 않는다.
+- 기준: workspace `e27edb5`, 문서 저장소 `5e6fb3f`. 시작 시 코드 변경 없음. 문서의 기존 handoff·활성 안내·v1 상세 수정과 standalone 문서 로그는 보존했다.
+- 변경 전: 접촉 reward에서 EEF world z와 초기 작업면+120mm를 비교하며 출력 없음.
+- 변경 후: `RevisionV1TestEnvCfg`에 `debug_print_eef_height: bool = True` 추가. 공유 reward `target_contact_below_height`에서 플래그가 참일 때 `(eef_z - initial_shelf_z - 1.05) * 1000`을 계산하여 env별 mm를 소수 첫째 자리까지 매 호출 출력한다. 접촉 여부와 무관하게 출력하며 flush한다. 설정 한 줄 주석 처리로 비활성화된다.
+- 영향: Test-v1의 play 및 train에서 매 reward 호출 출력과 GPU→CPU 동기화 비용 발생. 부모 v0/v1은 플래그 기본값 False로 출력하지 않는다. 실제 shelf 움직임에 따라 기준을 바꾸지 않는다.
+- 최종 대조: 변경은 Test 플래그와 reward의 출력 분기뿐이다. 등록·상속·Scene·Command·Event/reset·Observation·Action·reward 수치/판정·Termination·Curriculum·runtime·PPO는 유지하며 높이 제한도 추가하지 않았다. `logs/rsl_rl` 등 학습 로그는 수정하지 않았다.
+- 검증: `env_isaaclab/bin/python`으로 변경 파일 AST 문법 검사 및 실제 reward 함수 AST 추출 실행. 초기 shelf z가 0/2m인 두 env에서 75.0/150.0mm 출력, 플래그 부재 시 무출력, 활성/비활성 보상 결과 `[1., 0.]` 동일 확인. 지속 테스트 파일은 추가하지 않았다.
+- 미검증: Isaac Sim play/GPU rollout은 실행하지 않았다. 사용자가 기존 play 명령으로 실제 궤적과 출력값을 확인한다. 이 출력 자체는 누르기 원인이나 높이 제한 효과를 입증하지 않는다.
+
+## 2026-11-03 Test-v1 임시 높이 시각화
+
+- 요청·의도: 사용자가 적절한 EEF 높이 기준을 정할 수 있도록 작업면 위60/70/80/90mm에 반투명 얇은 면 추가. 곧 삭제할 순수 시각화이며 Test-v1 직접 수정이다.
+- 기준: 같은 workspace `e27edb5`에서 앞선 높이 출력 변경과 기존 문서 사용자 변경을 유지했다.
+- 변경 전후: `assets/scenes/revision.py`의 Test Scene에 helper 호출 한 줄 추가. 같은 파일의 임시 helper는 선반 초기 위치와 공통 작업면/크기 상수를 이용해4개 `AssetBaseCfg`를 구성한다. 면 중심 높이는60/70/80/90mm, 색은 파랑/초록/주황/자홍, 크기0.4×1.0m, 두께0.5mm, opacity0.12다. 기본 env0 world z는1.11/1.12/1.13/1.14m이며 각 환경 원점은 Scene이 적용한다.
+- 물리와 수명: collision/rigid/mass props는 모두 None이고 contact sensor 활성화도 False다. 물체 collection에 넣지 않아 후보·관측·접촉 필터에 포함되지 않는다. 초기 선반 작업면 기준으로 고정하며 reset 또는 물체 이동에 따라 변하지 않는다. Test Scene의 `_add_temporary_eef_height_guides(self)` 한 줄을 주석 처리해 끄고, 최종 제거 시 helper도 삭제한다.
+- 최종 대조: 이번 코드 diff는 Test Scene의 호출과 helper뿐이다. 부모 Scene, 타겟 cylinder 설정, 물리 물체10개, 등록·상속·Manager·reward·termination·제어·커리큘럼·PPO와 앞선 EEF 출력은 유지한다. 학습 로그를 수정하지 않았다.
+- 검증: Python AST 문법 검사와 helper AST를 stub 생성자로 실행해4개 면의 위치·치수·opacity·물리 속성 None을 확인했다. 로컬 Isaac Lab `PreviewSurfaceCfg.opacity` 지원 및 shape spawner의 None일 때 collider/rigid/mass 미생성 분기를 확인했다. 코드 diff 공백 검사 통과. 문서3개 수식·링크와 문서 diff 공백 검사를 수행한다.
+- 미검증: 실제 Isaac Sim 초기화·렌더링·GPU rollout은 실행하지 않았다. 실제 화면에서 투명도와 여러 면의 겹침 가독성은 사용자 play로 확인할 대상이다.
+
+### 높이 면 spawn 경로 오류 수정
+
+사용자 play에서 `Unable to find source prim path: '/World/envs/env_.*/TempEEFHeightGuides'` 오류가 발생했다. 기존 stub 검사는 실제 Isaac Lab regex spawn의 부모 존재 조건을 검사하지 못했다. `sim/utils/prims.py`의 실제 `clone` decorator를 AST로 추출하고 기존 env 부모만 있는 경로 resolver를 제공한 `/tmp/revision_height_spawn_check.py`로 수정 전 동일 RuntimeError를 재현했다. 이 검사는 USD stage 대신 단일 env 경로 resolver를 쓰며 렌더링 검사는 아니다.
+
+중간 부모를 요구하는 `{ENV_REGEX_NS}/TempEEFHeightGuides/Height_{height_mm}mm`를 기존 환경 부모 바로 아래의 `{ENV_REGEX_NS}/TempEEFHeight_{height_mm}mm`로 변경했다. 같은 검사 명령 `python /tmp/revision_height_spawn_check.py`가 수정 후4개 경로 모두 통과했다. Scene AST 문법·workspace diff 공백 검사도 통과했다. 변경은 prim 경로와 설명 주석뿐이며 높이·색·투명도·물리 속성·Manager·이전 EEF 출력은 유지한다.
+
+`nvidia-smi`가 NVIDIA driver 통신 실패를 반환하여 실제 Isaac Sim 초기화·렌더링·GPU rollout은 이번에도 검증하지 못했다. 경로 처리 재현 통과와 실제 화면 검증을 구분한다. 학습 로그와 사용자 변경은 보존했다.
+
+### 시각화 높이90/95/100mm·불투명도90%로 교체
+
+사용자 후속 요청으로 기존60/70/80/90mm 네 면 구성을90/95/100mm 세 면으로 교체했다. 색은 아래부터 파랑/초록/주황이며 opacity를0.12에서0.90으로 변경했다. 새 play 실행 시 이전 높이 면은 생성하지 않는다. 기존0.5mm 두께·0.4×1.0m 크기·초기 작업면 기준·충돌 없는 시각 자산·임시 helper 제거 방식을 유지한다. 수정은 helper의 높이/색 목록·opacity·개수 주석뿐이며 reward/종료/제어/학습 로그는 유지한다.
+
+검증: 변경 Scene AST 문법과 높이 목록·opacity 정적 확인, 코드·문서 diff 공백, 변경 문서3개 수식·링크 검사를 통과했다. 실제 Isaac Sim 렌더링은 실행하지 않았다. 기존 실행 중인 프로세스에는 자동 반영하지 않으며 play 재실행으로 확인한다.
