@@ -31,11 +31,11 @@ Actor는 타겟·장애물의 초기 위치, 현재 로봇 상태와 접촉 센�
 
 별도 비교 환경 `Isaac-Inspire-Revision-Test-v1`은 v1을 직접 상속하여 타겟 형상만 cylinder로 고정한다. 이하 내용은 다양한 타겟 형상을 사용하는 **일반 v1**의 계약이다.
 
-2026-11-03 임시 출력: Test-v1의 `debug_print_eef_height = True` 설정으로 `target_contact_below_height` reward 호출마다 모든 env의 EEF 높이(mm)를 출력한다. 기준은 접촉 보상과 동일한 초기 선반 작업면이며, 해당 설정 한 줄을 주석 처리하면 출력이 꺼진다. 보상 값과 제어는 유지한다. [작업 기록](../logs/2026-11-02_revision_v1_implementation.md#2026-11-03-test-v1-eef-높이-임시-출력).
+2026-11-03 계측 종료: Test-v1의 EEF 높이 출력 설정과 reward의 print 블록을 모두 주석 처리했다. 보상 값과 제어는 유지한다. [처리·검증 기록](../logs/2026-11-02_revision_v1_implementation.md#2026-11-03-임시-높이-계측-주석-처리).
 
 ## 2. 좌표계·로봇·센서
 
-Test-v1 임시 시각화(2026-11-03 후속 수정): 초기 작업면 위90/95/100mm에 파랑/초록/주황 면을 표시한다. 크기0.4×1.0m, 두께0.5mm, opacity0.90이며 면 중심이 각 기준 높이다. `AssetBaseCfg` 시각 자산으로 collider·rigid body·mass·contact sensor를 추가하지 않는다. `assets/scenes/revision.py`의 `_add_temporary_eef_height_guides(self)` 호출을 주석 처리하면 모두 사라진다. 최종 정리 시 해당 호출과 helper를 삭제한다. 일반 v1은 추가하지 않는다.
+Test-v1의90/95/100mm 임시 시각화 면은 비활성이다. Scene의 호출과 `_add_temporary_eef_height_guides` 함수 전체를 주석 처리했으므로 면을 생성하지 않는다. 기존 높이·색·두께·opacity 설정은 주석 안에 보존했다. v2·Test-v2·Test-v2-GT도 이 임시 시각화를 사용하지 않는다.
 
 ### 2.1 좌표와 기준점
 

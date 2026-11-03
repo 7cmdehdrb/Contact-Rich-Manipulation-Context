@@ -152,3 +152,25 @@ env -u PYTHONPATH /home/min/miniconda3/envs/env_isaaclab/bin/python src/inspire_
 사용자 후속 요청으로 기존60/70/80/90mm 네 면 구성을90/95/100mm 세 면으로 교체했다. 색은 아래부터 파랑/초록/주황이며 opacity를0.12에서0.90으로 변경했다. 새 play 실행 시 이전 높이 면은 생성하지 않는다. 기존0.5mm 두께·0.4×1.0m 크기·초기 작업면 기준·충돌 없는 시각 자산·임시 helper 제거 방식을 유지한다. 수정은 helper의 높이/색 목록·opacity·개수 주석뿐이며 reward/종료/제어/학습 로그는 유지한다.
 
 검증: 변경 Scene AST 문법과 높이 목록·opacity 정적 확인, 코드·문서 diff 공백, 변경 문서3개 수식·링크 검사를 통과했다. 실제 Isaac Sim 렌더링은 실행하지 않았다. 기존 실행 중인 프로세스에는 자동 반영하지 않으며 play 재실행으로 확인한다.
+
+
+## 2026-11-03 임시 높이 계측 주석 처리
+
+사용자가 Test-v1의 임시 print·높이 표시를 전부 주석 처리하고 v2 상속 여부를 점검하도록 요청했다. 활성 기준은 작업트리의 v1·v2·Test-v2-GT이며 기존 학습 로그와 다른 사용자 변경을 보존했다.
+
+- `envs/revision_envs.py`: Test-v1의 `debug_print_eef_height: bool = True` 선언을 주석 처리했다.
+- `mdp/reward_functions/revision.py`: 공통 접촉 함수의 임시 조건 분기·mm 변환·문자열 생성·print 전체를 주석 처리했다. 기존 접촉 force·높이 조건·반환값은 동일하다.
+- `assets/scenes/revision.py`: Test-v1의 임시 면 생성 호출과 helper 정의 전체를 주석 처리했다. 높이90/95/100mm·색·opacity는 주석 안에 보존한다. cylinder 타겟 override는 유지한다.
+
+변경 전3개 파일을 `/tmp/revision_debug_disable_before.json`에 저장했다. 실제 AST를 비교하여 이번 차이가 임시 설정·출력 분기·시각화 호출·helper 비활성화뿐임을 확인했다. 패키지 전체 Python AST에 활성 임시 print 문구·면 prim 경로·임시 helper 참조가 없음을 검사했다.
+
+상속은 `RevisionV2EnvCfg → RevisionV1EnvCfg`이며 임시 설정이 있던 `RevisionV1TestEnvCfg`를 상속하지 않는다. `RevisionV2TestSceneCfg → RevisionSceneCfg`도 임시 시각화가 있던 `RevisionV1TestSceneCfg`를 상속하지 않는다. Test-v2는 v2, Test-v2-GT는 Test-v2를 상속한다. 따라서 v2 계열에는 원래도 임시 기능이 활성화되지 않았으며, 이번에는 공통 reward 함수 안의 비활성 출력 분기까지 주석 처리했다. 보상용95mm 조건은 그대로 유지한다.
+
+```bash
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 /home/min/miniconda3/envs/env_isaaclab/bin/python -m pytest \
+  src/inspire_sweep_baseline/tests/test_revision_cfg.py \
+  src/inspire_sweep_baseline/tests/test_revision_v1.py \
+  src/inspire_sweep_baseline/tests/test_revision_v2.py -q
+```
+
+결과: **20 passed (1.67s)**. 로그는 `/tmp/revision_debug_disable_pytest.log`다. 새 테스트 파일은 추가하지 않았다. 문법·AST·상속·보상 회귀를 확인했으며 GPU/GUI play는 재실행하지 않았다. 이미 실행 중인 프로세스에는 소스 변경이 자동 적용되지 않으므로 재실행부터 반영된다. 학습 로그는 변경하지 않았다.
