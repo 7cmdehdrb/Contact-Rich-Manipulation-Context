@@ -1,5 +1,7 @@
 # Revision-v2 / Revision-Test-v2 환경
 
+2026-11-04: `Revision-Test-v2`에 임시 종료 원인 print를 추가했다. `runtime/revision.py`의 `_reset_idx` TEMP 블록에서 환경 ID·step·발동 term 전체를 출력하며, Test-v2-GT·부모 환경은 제외한다. 종료 판정은 유지한다. 후속으로 `shelf_failure`·`object_fall_or_tilt` 함수의 TEMP 블록에서 매 제어 step 현재 값·임계값·개별 판정을 출력한다. 기존 play 프로세스를 재시작하면 적용된다.
+
 2026-11-03 구현. [변경 명세](../../01_plan/environments/2026-11-03_REVISION_V2_SPEC.md) · [개발·검증 기록](../logs/2026-11-03_revision_v2_implementation.md) · [부모 v1 전체 계약](REVISION_V1_ENVIRONMENT.md)
 
 ## 등록과 상속

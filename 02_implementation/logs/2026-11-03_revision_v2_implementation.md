@@ -151,3 +151,63 @@ print(cfg.goal_reward_height_limit, cfg.contact_height_limit)
 기본95mm에서 세 항의 strict gate, Smoothstep 반경·weight10·속도 감쇠 제거·물리 유효성 보존, 최초 진입25×Gaussian·높이 독립·기회 소진·cache/reset, timeout75, 가속도 free15가 명세와 일치한다. Test 타겟 cylinder, 직접 상속, 나머지 보상·커리큘럼·PPO 보존도 확인했다. 추가 신규 결함은 발견하지 못했다.
 
 앞서 기록한 동일 CPU 명령을 재실행하여 **86 passed (13.11s)**를 확인했다(`/tmp/revision_v2_review_pytest.log`). GPU 검증은 추가 실행 없이 기존64/2048 env·접촉 fixture·두 PPO run의 JSON 산출물을 재검토했다. 기본 설정만 검증하는 기존 검사에서는 위 CLI override 누락이 검출되지 않는다. 장기 정책 성능은 이번 리뷰의 검증 범위가 아니다.
+
+
+## 2026-11-04 Test-v2 임시 종료 원인 출력
+
+사용자는 `Isaac-Inspire-Revision-Test-v2` play 중 어떤 종료 조건이 발동하는지 확인하기 위해, 곧 주석 처리할 print를 요청했다. 기준 workspace commit은 `ba1aa88`이며 기존 문서 submodule의 수정·미추적 파일은 보존했다.
+
+`runtime/revision.py:RevisionEnv._reset_idx` 시작 부분에 TEMP 블록을 추가했다. 변경 전에는 종료 원인 콘솔 출력이 없었고, 변경 후에는 `RevisionV2TestEnvCfg` 정확한 타입 이름에만 적용하여 reset 직전 TerminationManager의 활성 term 결과를 읽고 env ID·episode step·발동한 모든 term 이름을 flush 출력한다. 초기 reset에서 발동 조건이 없으면 출력하지 않는다. Test-v2-GT 및 부모 버전에는 출력하지 않는다. TEMP 시작부터 END 주석 사이를 주석 처리하여 제거할 수 있다.
+
+최종 대조: runtime의 출력 블록만 추가했다. 등록·상속·PPO·Scene·Command·Event·관측·행동·보상·종료 callable/params·커리큘럼·기존 reset 및 metrics는 그대로다. 종료 조건을 다시 계산하지 않고 저장된 결과만 조회한다. Test-v2 학습에도 같은 출력이 적용되므로 다중 환경에서는 출력량과 CPU/GPU 동기화 비용이 늘 수 있다. `logs/rsl_rl` 및 checkpoint는 수정하지 않았다.
+
+검증: Python compile 구문 검사 및 `git diff --check` 통과. 로컬 Isaac Lab에서 `termination_manager.compute()` 이후 `_reset_idx`가 호출되고 `active_terms`/`get_term` API가 존재함을 소스로 확인했다. 실제 Isaac Sim play·GPU 실행 및 checkpoint 재생은 실행하지 않았으며 출력 발생 장면은 미검증이다.
+
+재현은 사용자의 기존 명령으로 프로세스를 다시 시작한다.
+
+```bash
+python src/inspire_sweep_baseline/scripts/play.py --task Isaac-Inspire-Revision-Test-v2 --checkpoint /home/min/7cmdehdrb/grad/logs/TEMP/2026-11-03_19-32-13/model_17200.pt --num_envs 1
+```
+
+
+### 2026-11-04 후속: 매 step 실패 상태·조건 출력
+
+사용자가 play에서 주된 종료 원인으로 `shelf_failure`와 `object_fall_or_tilt`를 확인하여 매 step의 현재 상태와 판정 조건을 요청했다. 두 term의 실제 함수인 `mdp/termination_functions/final.py:shelf_termination`과 `revision.py:any_active_object_fall_or_tilt`에 정확히 `RevisionV2TestEnvCfg`일 때만 실행되는 TEMP 블록을 추가했다. 이전 종료 시점 요약 출력은 유지한다.
+
+변경 전에는 종료 시 term 이름만 출력했다. 변경 후에는 매 제어 step(기본 0.02s), termination 계산 중 reset 전에 다음 값을 출력한다.
+
+- 선반: 선형·각속도 전체 6D norm > threshold(기본0.1), 손목 world Z에서 선반 root Z+1.05m를 뺀 clearance < 0.03m, default root position+env origin 대비 이동 거리 > 0.05m. 각 실제 인자와 비교 결과·최종 OR 결과를 출력한다. `check_fingers=False`도 표시하며 True일 경우 두 손가락 clearance와 0.01m 판정을 출력한다. 6D norm은 순수 선속력이 아니므로 m/s라고 표시하지 않는다.
+- 물체: 활성 slot ID·target 여부, 현재 선반 좌표계 bbox 최저점 < 1.04m(1.05−bottom_clearance), 최저점 비유한 여부, 선반 법선 기준 tilt >= 0.9rad, 개별 실패·전체 실패 결과. 비활성 물체는 실제 종료 대상이 아니므로 출력에서 제외한다.
+
+각 출력에 env ID·episode step이 포함되며 종료 step도 reset 전에 출력한다. 기본 physics substep 0.01s마다가 아니라 termination을 평가하는 제어 step마다 출력한다. TEMP 블록을 주석 처리하면 해당 출력이 비활성화된다. 대량 콘솔 출력과 GPU 동기화로 play 속도가 느려질 수 있다.
+
+최종 대조: 기존 종료 식·임계값·반환값·환경 설정·보상·커리큘럼·등록·상속·PPO·reset은 보존했다. Test-v2-GT 및 다른 환경은 추가 계산·출력을 수행하지 않는다. 작업트리의 선행 출력과 기존 문서 변경을 보존했고 학습 로그는 수정하지 않았다.
+
+검증: 두 Python 파일 compile 통과. TEMP 블록을 제외한 AST가 HEAD의 원본과 동일함을 확인했다. `git diff --check` 통과. 실제 Isaac Sim play/GPU 출력·재생은 실행하지 않았으므로 물리 실행은 미검증이다. 기존 사용자 명령으로 play를 재시작하여 확인한다.
+
+
+### 2026-11-04 직접 play 재현·종료 원인 진단
+
+사용자의 요청에 따라 `env_isaaclab` conda에서 아래 명령을 직접 실행했다. 기존 임시 계측을 사용했으며 이 진단에서는 소스·종료 임계값을 추가 변경하지 않았다. 진단 스킬의 수정·회귀 단계는 요청 범위가 원인 파악이므로 수행하지 않았다. 초기 샌드박스 실행은 CUDA 장치 접근 및 Isaac Sim 캐시 쓰기 제한으로 실패했고, 권한 확장 실행은 CUDA:0·GUI·seed42로 실제 checkpoint load 및 rollout에 성공했다. headless 옵션이나 다른 seed는 추가하지 않았다.
+
+```bash
+conda run --no-capture-output -n env_isaaclab python src/inspire_sweep_baseline/scripts/play.py --task Isaac-Inspire-Revision-Test-v2 --checkpoint /home/min/7cmdehdrb/grad/logs/TEMP/2026-11-03_19-32-13/model_17200.pt --num_envs 1 > outputs/revision_termination_diagnosis/play_gpu.log 2>&1
+```
+
+Workspace 상대 경로 `outputs/revision_termination_diagnosis/play_gpu.log`에 stdout/stderr 원본을 저장했고, `summary.json`에 종료 line 번호·각 에피소드 마지막 두 step·조건별 수치·집계를 저장했다. 최초 실패 실행 로그는 같은 폴더의 `play.log`다. 에피소드12개 종료 후 다음 에피소드159step까지 수집하고 SIGINT로 실행을 중단했으므로 종료 코드는1이며 마지막 `CondaError: KeyboardInterrupt`는 의도한 중단이다. 중간 에피소드는 집계에서 제외한다.
+
+| 관측 종료 | 횟수 | 직접 판정 원인 |
+| --- | --- | --- |
+| shelf_failure | 9/12 | 모두 wrist clearance < 0.03m |
+| object_fall_or_tilt | 2/12 | 비타겟 장애물 tilt1건, bbox bottom 하한1건 |
+| target_goal_miss_at_timeout | 1/12 | 500step/10초 도달 시 목표 미달 |
+
+선반 종료는 모두18~20step(0.36~0.40초)에 발생했다. 종료 시 wrist clearance는21.470~29.764mm로30mm 하한을 넘었고, 선반6D 속도 norm은0.000232~0.076642로0.1 이하, 이동량은0.003~0.197mm로50mm 이하였다. 따라서 이번9건은 선반 흔들림·이동으로 종료한 것이 아니라 손목 frame 높이 보호 조건이 발동한 것이다. 첫 사례는 step18의40.824mm에서 step19의26.150mm로 내려갔다(원본 log line696/706/707). 이 wrist frame은 `assets/scenes/revision.py`의 `inspire_base_link` 로컬 offset(0,0,-0.17) 지점이며 EEF 높이와는 다른 측정점이다. 현재 shelf predicate는 XY 위치 검사나 실제 접촉력 조건 없이 해당 world Z와 shelf root Z+1.05m만 비교한다.
+
+물체 종료 첫 사례(episode9, step56,1.12초)는 object1(target=False)의 선반 법선 기준 기울기가0.866040→1.076806rad(약61.70도)로0.9rad(약51.57도)를 넘었다. 바닥 높이는1.048450m로1.04m 이상이며 낙하 조건은 False였다. 원본 line8721/8733/8743이다.
+
+두 번째 사례(episode11, step15,0.30초)는 object2(target=False)의 선반 좌표 bbox 최저점이1.042768→1.035490m로1.04m 미만이 됐다. tilt는0.235484→0.560678rad(약32.13도)로0.9rad 미만이었다. 선반 상판 기준 bbox 최저점이14.510mm 아래에 놓인 상태다. 원본 line9132/9144/9153이다. 두 사례 모두 타겟 object0의 실패 조건은 False였다.
+
+해석 한계: bbox는 8개 경계점의 최저점이며 실제 collider 최저점·물체 중심 높이와 동일하지 않다. 따라서 두 번째 사례는 코드상 bottom 조건 발동을 입증하지만 실제 물체가 선반 밖으로 추락했는지, bbox와 collision 형상의 차이인지, 접촉/관통인지까지 이 로그만으로 확정할 수 없다. 정책이 손목을 낮추거나 장애물을 기울이게 된 학습 원인, 접촉한 로봇 부위, 장기 실패율은 조사하지 않았다. 단일 seed의12개 에피소드 관측 빈도를 전체 정책 성능으로 일반화하지 않는다.
+
+검증: 원본 로그를 파싱하여 종료12건·선반9건 모두 wrist만 True·물체2건 해당 객체별 실패를 확인하고 마지막 두 step을 JSON으로 보존했다. 기존 `play.py`는 checkpoint 옆 `exported/policy.pt`와 `policy.onnx`를 자동 생성/갱신하는 경로를 포함한다. `logs/rsl_rl` 정리나 수정은 수행하지 않았다. 사용자 요청의 기존 임시 계측은 유지했다.

@@ -1,5 +1,15 @@
 # 현재 개발 인계
 
+2026-11-04 문서 통합: [Wrench-v0 전체 명세와 v1 변경점](../02_implementation/environments/WRENCH_V0_V1_ENVIRONMENT.md). 현재 코드 기준 랜덤화·관측·액션·15개 보상·커리큘럼·종료·PPO 및 sensor wrench 제어와 정규화 action-rate를 한 문서에 정리했다. 문서 작업이며 환경 코드 변경 없음.
+
+2026-11-04 후속: Wrench-v1의 robot_action_rate_penalty는 Arm Desired Wrench를 정책 목표 범위로 정규화한 [-1,1] 변화량을 사용한다. Hand raw 계산과 계수는 유지하며 CPU44개 통과. v0는 보존했다.
+
+2026-11-04: **`Inspire-Wrench-v1` 추가, v0 보존**. v0 직접 상속, OSC만 sensor-center6축 closed-loop wrench로 변경했다. `wrench_abs`, motion0/wrench1, P gain0.2, 목표 ±100N/±5Nm, 보정 후 명령 제한 ±120N/±6Nm, gravity True. 기본 Isaac OSC의 force3D-only 제한 때문에 full6D F/T feedback/J-transpose 경로를 로컬 구현했다. 기존 Scene·관측/보상 EEF frame·PPO 수치는 유지한다. CPU80개 통과, GPU 접촉 추종/학습·gain 안정성은 미검증. [환경·참고 구현·파라미터](../02_implementation/environments/WRENCH_V1_ENVIRONMENT.md) · [개발 기록](../02_implementation/logs/2026-11-04_wrench_v1_osc.md).
+
+2026-11-04: **`Inspire-Wrench-v0` 독립 환경 추가**. Test-v2를 의미론적 기준으로 삼되 EnvCfg/runtime/Scene/Manager/PPO 설정 상속은 끊었다. EEF120mm·3cm/0.005m/s 연속3초 success termination/+75, RED20mm 확장·후방 Gray20mm 후퇴, startup 배치 bank·물성 고정, Dead Zone10k 첫−5°/이후3k 간격이다. CPU82개 통과·CUDA4개 skip. GPU 드라이버 불가로 실제 초기화/rollout/PPO와 collection1~2초는 미검증. [환경 계약](../02_implementation/environments/WRENCH_V0_ENVIRONMENT.md) · [구현·검증 로그](../02_implementation/logs/2026-11-04_wrench_v0_implementation.md).
+
+2026-11-04: `Revision-Test-v2`에 임시 종료 원인 print를 추가했다. `runtime/revision.py`의 `_reset_idx` TEMP 블록에서 환경 ID·step·발동 term 전체를 출력하며, Test-v2-GT·부모 환경은 제외한다. 종료 판정은 유지한다. 후속으로 `shelf_failure`·`object_fall_or_tilt` 함수의 TEMP 블록에서 매 제어 step 현재 값·임계값·개별 판정을 출력한다. 기존 play 프로세스를 재시작하면 적용된다.
+
 - 2026-11-03 **Test-v1 임시 계측 비활성화**: EEF 높이 print 설정·분기,90/95/100mm 시각화 생성 호출·helper 전체를 주석 처리했다. v2·Test-v2·Test-v2-GT에는 활성 출력·면 생성 코드가 없다. 보상 계산은 보존했으며 CPU회귀20개 통과. [기록](../02_implementation/logs/2026-11-02_revision_v1_implementation.md#2026-11-03-임시-높이-계측-주석-처리).
 
 - 2026-11-03 **Test-v2-GT 추가**: `Isaac-Inspire-Revision-Test-v2-GT`, Test-v2 직접 상속. Actor에 기존 Critic의 noise-free root-frame 타겟 XYZ3D를 추가한다. Actor 초기 장애물·초기 타겟 정보와 Critic·보상·PPO는 유지한다. Actor 원시124D·MLP76D, GT 전용 새 학습용이다. CPU33개, GPU64 env32step·부분reset·JIT, PPO2iterations·checkpoint·GT 입력 가중치 갱신을 확인했다. [구현 계약](../02_implementation/environments/REVISION_V2_ENVIRONMENT.md#test-v2-gt-실시간-타겟-위치-대조-실험) · [검증 상태](../02_implementation/logs/2026-11-03_revision_v2_gt_implementation.md).

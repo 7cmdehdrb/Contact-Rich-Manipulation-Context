@@ -1,0 +1,4588 @@
+{
+  "registry": {
+    "Isaac-Inspire-Revision-v0": {
+      "id": "Isaac-Inspire-Revision-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.revision:RevisionEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.revision_envs:RevisionEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.revision_ppo_cfg:RevisionPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Revision-v1": {
+      "id": "Isaac-Inspire-Revision-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.revision:RevisionEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.revision_envs:RevisionV1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.revision_ppo_cfg:RevisionV1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Revision-Test-v1": {
+      "id": "Isaac-Inspire-Revision-Test-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.revision:RevisionEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.revision_envs:RevisionV1TestEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.revision_ppo_cfg:RevisionV1TestPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Revision-v2": {
+      "id": "Isaac-Inspire-Revision-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.revision:RevisionEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.revision_envs:RevisionV2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.revision_ppo_cfg:RevisionV2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Revision-Test-v2": {
+      "id": "Isaac-Inspire-Revision-Test-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.revision:RevisionEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.revision_envs:RevisionV2TestEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.revision_ppo_cfg:RevisionV2TestPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Revision-Test-v2-GT": {
+      "id": "Isaac-Inspire-Revision-Test-v2-GT",
+      "entry_point": "inspire_sweep_baseline.runtime.revision:RevisionEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.revision_envs:RevisionV2TestGTEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.revision_ppo_cfg:RevisionV2TestGTPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1_1": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1_1",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV1_1_1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV1_1_1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1_2": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1_2",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV1_1_2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV1_1_2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_4": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_4",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV1_4EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV1_4PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV1_3EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV1_3PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3_1": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3_1",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV1_3_1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV1_3_1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV1_1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV1_1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_2": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_2",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV1_2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV1_2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_0": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_0",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV1_0EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV1_0PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v2": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v3": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v3",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV3EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV3PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v0": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-FT-Test-v0": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-FT-Test-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter:ContactSweepClutterFTTestEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_envs:ContactSweepClutterFTTestEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_ppo_cfg:ContactSweepClutterV1CurriculumPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Curriculum-v1": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Curriculum-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter:ContactSweepClutterV1CurriculumEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_envs:ContactSweepClutterV1CurriculumEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_ppo_cfg:ContactSweepClutterV1CurriculumPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-v2": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter:ContactSweepClutterV2Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_envs:ContactSweepClutterV2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_ppo_cfg:ContactSweepClutterV2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-v1": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter:ContactSweepClutterV1Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_envs:ContactSweepClutterV1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_ppo_cfg:ContactSweepClutterV1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-v0": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter:ContactSweepClutterEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_envs:ContactSweepClutterEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_ppo_cfg:ContactSweepClutterPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-v0": {
+      "id": "Isaac-Inspire-Contact-Sweep-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep:ContactSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_envs:ContactSweepEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_ppo_cfg:ContactSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Baseline-v0": {
+      "id": "Isaac-Inspire-Sweep-Baseline-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_envs:InspireSweepEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Realistic-Physics-v0": {
+      "id": "Isaac-Inspire-Sweep-Realistic-Physics-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_envs:InspireSweepRealisticPhysicsEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepRealisticPhysicsPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Realistic-Physics-Initial-Privileged-v0": {
+      "id": "Isaac-Inspire-Sweep-Realistic-Physics-Initial-Privileged-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_envs:InspireSweepRealisticInitialPrivilegedEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepRealisticInitialPrivilegedPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Omni-v0": {
+      "id": "Isaac-Inspire-Sweep-Omni-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_envs:InspireSweepOmniEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Omni-v1": {
+      "id": "Isaac-Inspire-Sweep-Omni-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_envs:InspireSweepOmniV1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Omni-v2": {
+      "id": "Isaac-Inspire-Sweep-Omni-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_envs:InspireSweepOmniV2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Dex-Omni-v0": {
+      "id": "Isaac-Inspire-Dex-Omni-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_envs:InspireDexOmniEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Omni-v3": {
+      "id": "Isaac-Inspire-Sweep-Omni-v3",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_envs:InspireSweepOmniV3EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Omni-v4": {
+      "id": "Isaac-Inspire-Sweep-Omni-v4",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_envs:InspireSweepOmniV4EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Omni-Renewal-v0": {
+      "id": "Isaac-Inspire-Sweep-Omni-Renewal-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_renewal_envs:InspireSweepOmniRenewalEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Omni-Renewal-OSC-v0": {
+      "id": "Isaac-Inspire-Sweep-Omni-Renewal-OSC-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_renewal_envs:InspireSweepOmniRenewalOSCEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0": {
+      "id": "Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_renewal_envs:InspireDexSweepOmniRenewalEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Baseline-Tactile-v0": {
+      "id": "Isaac-Inspire-Sweep-Baseline-Tactile-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_envs:InspireSweepTactileEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepTactilePPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Tactile-Sweep-Omni-Renewal-v0": {
+      "id": "Isaac-Inspire-Tactile-Sweep-Omni-Renewal-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_renewal_envs:InspireTactileSweepOmniRenewalEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_omni_renewal_ppo_cfg:InspireTactileSweepOmniRenewalPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v0": {
+      "id": "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_renewal_envs:InspireDexTactileSweepOmniRenewalEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_omni_renewal_ppo_cfg:InspireDexTactileSweepOmniRenewalPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1": {
+      "id": "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_renewal_envs:InspireDexTactileSweepOmniRenewalV1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_omni_renewal_ppo_cfg:InspireDexTactileSweepOmniRenewalV1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v2": {
+      "id": "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_renewal_envs:InspireDexTactileSweepOmniRenewalV2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_omni_renewal_ppo_cfg:InspireDexTactileSweepOmniRenewalV2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v3": {
+      "id": "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v3",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_renewal_envs:InspireDexTactileSweepOmniRenewalV3EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_omni_renewal_ppo_cfg:InspireDexTactileSweepOmniRenewalV3PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-OSC-v2": {
+      "id": "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-OSC-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_renewal_envs:InspireDexTactileSweepOmniRenewalV2OSCEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_omni_renewal_ppo_cfg:InspireDexTactileSweepOmniRenewalV2OSCPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v0": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_envs:FusionHoldingV0EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_ppo_cfg:FusionHoldingV0PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v0": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_envs:FusionHoldingOSCV0EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_ppo_cfg:FusionHoldingOSCV0PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v0": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_object_random_envs:FusionHoldingOSCObjectRandomV0EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_object_random_ppo_cfg:FusionHoldingOSCObjectRandomV0PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v1": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_envs:FusionHoldingV1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_ppo_cfg:FusionHoldingV1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v1": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_envs:FusionHoldingOSCV1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_ppo_cfg:FusionHoldingOSCV1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v1": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_object_random_envs:FusionHoldingOSCObjectRandomV1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_object_random_ppo_cfg:FusionHoldingOSCObjectRandomV1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v2": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_envs:FusionHoldingOSCV2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_ppo_cfg:FusionHoldingOSCV2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v2": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_envs:FusionHoldingV2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_ppo_cfg:FusionHoldingV2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-ObjectRandom-Test-v0": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-ObjectRandom-Test-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_object_random_envs:FusionHoldingObjectRandomTestV0EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_object_random_ppo_cfg:FusionHoldingObjectRandomTestV0PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v3": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v3",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_envs:FusionHoldingV3EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_ppo_cfg:FusionHoldingV3PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v3": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v3",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_envs:FusionHoldingOSCV3EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_ppo_cfg:FusionHoldingOSCV3PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v2": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_object_random_envs:FusionHoldingOSCObjectRandomV2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_object_random_ppo_cfg:FusionHoldingOSCObjectRandomV2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v4": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v4",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_envs:FusionHoldingV4EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_ppo_cfg:FusionHoldingV4PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v4": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v4",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_envs:FusionHoldingOSCV4EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_ppo_cfg:FusionHoldingOSCV4PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-v0": {
+      "id": "Isaac-Inspire-Final-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-v1": {
+      "id": "Isaac-Inspire-Final-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalV1Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalV1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalV1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-v2": {
+      "id": "Isaac-Inspire-Final-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalV1Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalV2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalV2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-v1-1": {
+      "id": "Isaac-Inspire-Final-v1-1",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalV1Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalV1_1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalV1_1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-Test-v1": {
+      "id": "Isaac-Inspire-Final-Test-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalV1Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalV1TestEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalV1TestPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-GoalAccuracy-v0": {
+      "id": "Isaac-Inspire-Final-GoalAccuracy-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalGoalAccuracyEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalGoalAccuracyEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalGoalAccuracyPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-GoalAccuracy-v1": {
+      "id": "Isaac-Inspire-Final-GoalAccuracy-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalGoalAccuracyEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalGoalAccuracyV1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalGoalAccuracyV1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-Test-v2": {
+      "id": "Isaac-Inspire-Final-Test-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalV1Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalV2TestEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalV2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v3": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v3",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_object_random_envs:FusionHoldingOSCObjectRandomV3EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_object_random_ppo_cfg:FusionHoldingOSCObjectRandomV3PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-GoalAccuracy-v0_1": {
+      "id": "Isaac-Inspire-Final-GoalAccuracy-v0_1",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalGoalAccuracyEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalGoalAccuracyV0_1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalGoalAccuracyV0_1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-GoalAccuracy-v0_2": {
+      "id": "Isaac-Inspire-Final-GoalAccuracy-v0_2",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalGoalAccuracyEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalGoalAccuracyV0_2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalGoalAccuracyV0_2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-GoalAccuracy-v0_3": {
+      "id": "Isaac-Inspire-Final-GoalAccuracy-v0_3",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalGoalAccuracyEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalGoalAccuracyV0_3EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalGoalAccuracyV0_3PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-GoalAccuracy-v0_2_1": {
+      "id": "Isaac-Inspire-Final-GoalAccuracy-v0_2_1",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalGoalAccuracyV0_2_1Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalGoalAccuracyV0_2_1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalGoalAccuracyV0_2_1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-GoalAccuracy-v0_2_2": {
+      "id": "Isaac-Inspire-Final-GoalAccuracy-v0_2_2",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalGoalAccuracyV0_2_2Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalGoalAccuracyV0_2_2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalGoalAccuracyV0_2_2PPORunnerCfg"
+      }
+    }
+  },
+  "runs": [
+    {
+      "path": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Contact-Sweep-v0/2026-10-20_14-05-34",
+      "env": "Isaac-Inspire-Contact-Sweep-v0",
+      "exp": "inspire_contact_sweep",
+      "candidates": [
+        "Isaac-Inspire-Contact-Sweep-v0"
+      ],
+      "max_model": 10800,
+      "loss_step": 10814,
+      "loss_records": 43260,
+      "samples": [
+        [
+          1792472752.754097,
+          0,
+          [
+            [
+              "Loss/value",
+              221.2372589111328
+            ]
+          ]
+        ],
+        [
+          1792472752.7541127,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              0.0705547109246254
+            ]
+          ]
+        ],
+        [
+          1792472752.7541227,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.351877212524414
+            ]
+          ]
+        ],
+        [
+          1792472752.754132,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1792472754.3712547,
+          1,
+          [
+            [
+              "Loss/value",
+              208.8311767578125
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "f5bdb17520de055c0663e2d5a3e5b6d9875f1c28a29b11a4a3070b050718c1f1"
+    },
+    {
+      "path": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Dex-Omni-v0/2026-10-15_15-14-04_dex_best_distance",
+      "env": "Isaac-Inspire-Dex-Omni-v0",
+      "exp": "inspire_dex_omni",
+      "candidates": [],
+      "max_model": 2450,
+      "loss_step": 2465,
+      "loss_records": 9864,
+      "samples": [
+        [
+          1792044863.938777,
+          0,
+          [
+            [
+              "Loss/value",
+              0.11145853996276855
+            ]
+          ]
+        ],
+        [
+          1792044863.9387915,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.03386079892516136
+            ]
+          ]
+        ],
+        [
+          1792044863.9388006,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.3363037109375
+            ]
+          ]
+        ],
+        [
+          1792044863.938809,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1792044868.6995864,
+          1,
+          [
+            [
+              "Loss/value",
+              0.0987359955906868
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "9284816aee4566cb7d2acb5d468476ae6058a68d3b591d0acb92a2f933fbd47f"
+    },
+    {
+      "path": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Dex-Omni-v0/2026-10-15_16-53-45_dex_best_distance",
+      "env": "Isaac-Inspire-Dex-Omni-v0",
+      "exp": "inspire_dex_omni",
+      "candidates": [],
+      "max_model": 6950,
+      "loss_step": 6951,
+      "loss_records": 27808,
+      "samples": [
+        [
+          1792050843.2068472,
+          0,
+          [
+            [
+              "Loss/value",
+              0.4945925772190094
+            ]
+          ]
+        ],
+        [
+          1792050843.2068639,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              0.16658608615398407
+            ]
+          ]
+        ],
+        [
+          1792050843.2068741,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.336719512939453
+            ]
+          ]
+        ],
+        [
+          1792050843.2068834,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1792050846.4745011,
+          1,
+          [
+            [
+              "Loss/value",
+              0.5704043507575989
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "d7521d33b8065cc20c6fdd01f6f89040a1cb9bd1b673c6ad47c242fe9870a607"
+    },
+    {
+      "path": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-OSC-v2/2026-10-18_23-23-59",
+      "env": "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-OSC-v2",
+      "exp": "inspire_dex_tactile_sweep_omni_renewal_v2_osc",
+      "candidates": [
+        "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-OSC-v2"
+      ],
+      "max_model": 650,
+      "loss_step": 695,
+      "loss_records": 2784,
+      "samples": [
+        [
+          1792333458.3666828,
+          0,
+          [
+            [
+              "Loss/value",
+              10843.2236328125
+            ]
+          ]
+        ],
+        [
+          1792333458.3666987,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              0.010034888051450253
+            ]
+          ]
+        ],
+        [
+          1792333458.3667085,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.386491775512695
+            ]
+          ]
+        ],
+        [
+          1792333458.3667173,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              0.009999999776482582
+            ]
+          ]
+        ],
+        [
+          1792333460.4016302,
+          1,
+          [
+            [
+              "Loss/value",
+              10216.4853515625
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "c189b83fa7aca7f44223f044a671d3633d6998c866c65018b50aaf56259f24b8"
+    },
+    {
+      "path": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1/2026-10-16_20-35-21",
+      "env": "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1",
+      "exp": "inspire_dex_tactile_sweep_omni_renewal_v1",
+      "candidates": [
+        "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1"
+      ],
+      "max_model": 48400,
+      "loss_step": 48425,
+      "loss_records": 193704,
+      "samples": [
+        [
+          1792150540.9827216,
+          0,
+          [
+            [
+              "Loss/value",
+              12.197759628295898
+            ]
+          ]
+        ],
+        [
+          1792150540.9827352,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              0.06525778025388718
+            ]
+          ]
+        ],
+        [
+          1792150540.9827447,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.374762535095215
+            ]
+          ]
+        ],
+        [
+          1792150540.982753,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1792150544.6409466,
+          1,
+          [
+            [
+              "Loss/value",
+              5.265885829925537
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "69356a09af06a575123ac4df4dbb8cc2fc43dbcac89b90674607fafefa09a227"
+    },
+    {
+      "path": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1/2026-10-18_23-47-33",
+      "env": "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1",
+      "exp": "inspire_dex_tactile_sweep_omni_renewal_v1",
+      "candidates": [
+        "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1"
+      ],
+      "max_model": 12300,
+      "loss_step": 12303,
+      "loss_records": 49216,
+      "samples": [
+        [
+          1792334873.2285748,
+          0,
+          [
+            [
+              "Loss/value",
+              12.195906639099121
+            ]
+          ]
+        ],
+        [
+          1792334873.228589,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              0.06523453444242477
+            ]
+          ]
+        ],
+        [
+          1792334873.2285993,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.37477970123291
+            ]
+          ]
+        ],
+        [
+          1792334873.2286084,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1792334877.024233,
+          1,
+          [
+            [
+              "Loss/value",
+              5.261974334716797
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "6e23783ad1d64364333ba25f1b2039afa0a4be166214273b764ae12e0474d163"
+    },
+    {
+      "path": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1/2026-10-19_12-15-47",
+      "env": "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1",
+      "exp": "inspire_dex_tactile_sweep_omni_renewal_v1",
+      "candidates": [
+        "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1"
+      ],
+      "max_model": 41000,
+      "loss_step": 41027,
+      "loss_records": 164112,
+      "samples": [
+        [
+          1792379765.21558,
+          0,
+          [
+            [
+              "Loss/value",
+              221.29664611816406
+            ]
+          ]
+        ],
+        [
+          1792379765.2155945,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              0.07279259711503983
+            ]
+          ]
+        ],
+        [
+          1792379765.2156038,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.351455688476562
+            ]
+          ]
+        ],
+        [
+          1792379765.215612,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1792379766.7982848,
+          1,
+          [
+            [
+              "Loss/value",
+              209.49850463867188
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "507810f0df0d07ae5897db0dd870fc125c44363ffa7cce3bca7b9af6de8b8aad"
+    },
+    {
+      "path": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Sweep-Baseline-v0/2026-10-13_17-00-33_baseline_mass_z9cm_1rad",
+      "env": "Isaac-Inspire-Sweep-Baseline-v0",
+      "exp": "inspire_sweep_baseline",
+      "candidates": [
+        "Isaac-Inspire-Sweep-Baseline-v0",
+        "Isaac-Inspire-Sweep-Omni-v0",
+        "Isaac-Inspire-Sweep-Omni-v1",
+        "Isaac-Inspire-Sweep-Omni-v2",
+        "Isaac-Inspire-Dex-Omni-v0",
+        "Isaac-Inspire-Sweep-Omni-v3",
+        "Isaac-Inspire-Sweep-Omni-v4",
+        "Isaac-Inspire-Sweep-Omni-Renewal-v0",
+        "Isaac-Inspire-Sweep-Omni-Renewal-OSC-v0",
+        "Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0"
+      ],
+      "max_model": 46550,
+      "loss_step": 46573,
+      "loss_records": 186296,
+      "samples": [
+        [
+          1791878449.2079008,
+          0,
+          [
+            [
+              "Loss/value",
+              0.0025306171737611294
+            ]
+          ]
+        ],
+        [
+          1791878449.2079132,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.07935094833374023
+            ]
+          ]
+        ],
+        [
+          1791878449.2079232,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.079168319702148
+            ]
+          ]
+        ],
+        [
+          1791878449.207932,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              0.0010000000474974513
+            ]
+          ]
+        ],
+        [
+          1791878450.4880912,
+          1,
+          [
+            [
+              "Loss/value",
+              0.0002093985676765442
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "138b62c08a592231edc52e084d6ef1d24ac700a4923737c7c87f284f21bd2631"
+    },
+    {
+      "path": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Sweep-Omni-v0/2026-10-14_16-16-28_centered_spawn_goal15cm",
+      "env": "Isaac-Inspire-Sweep-Omni-v0",
+      "exp": "inspire_sweep_omni",
+      "candidates": [],
+      "max_model": 4500,
+      "loss_step": 4539,
+      "loss_records": 18160,
+      "samples": [
+        [
+          1791962208.292219,
+          0,
+          [
+            [
+              "Loss/value",
+              6366.97314453125
+            ]
+          ]
+        ],
+        [
+          1791962208.292234,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.01103096641600132
+            ]
+          ]
+        ],
+        [
+          1791962208.292246,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.336819648742676
+            ]
+          ]
+        ],
+        [
+          1791962208.292256,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1791962213.3904505,
+          1,
+          [
+            [
+              "Loss/value",
+              6281.02197265625
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "1cb6bad86a3f61aeb8f8dcfdcf5d9b16bb54f7c3cc74df4127f861cf5551b13b"
+    },
+    {
+      "path": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Sweep-Omni-v0/2026-10-14_22-34-42_centered_spawn_goal15cm_arm2rad",
+      "env": "Isaac-Inspire-Sweep-Omni-v0",
+      "exp": "inspire_sweep_omni_v0",
+      "candidates": [],
+      "max_model": 3550,
+      "loss_step": 3555,
+      "loss_records": 14224,
+      "samples": [
+        [
+          1791984898.8550332,
+          0,
+          [
+            [
+              "Loss/value",
+              3422.578125
+            ]
+          ]
+        ],
+        [
+          1791984898.8550467,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              0.20757481455802917
+            ]
+          ]
+        ],
+        [
+          1791984898.8550563,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.36637020111084
+            ]
+          ]
+        ],
+        [
+          1791984898.855065,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1791984900.6584554,
+          1,
+          [
+            [
+              "Loss/value",
+              423.6052551269531
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "bcc57c879460dc893baa130162a28e200c78f8103ed4bbf05bb79307e70f5349"
+    },
+    {
+      "path": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Sweep-Omni-v1/2026-10-15_11-37-21_centered_spawn_goal15cm_arm2rad",
+      "env": "Isaac-Inspire-Sweep-Omni-v1",
+      "exp": "inspire_sweep_omni_v1",
+      "candidates": [],
+      "max_model": 5900,
+      "loss_step": 5949,
+      "loss_records": 23800,
+      "samples": [
+        [
+          1792031860.8215532,
+          0,
+          [
+            [
+              "Loss/value",
+              6248.9365234375
+            ]
+          ]
+        ],
+        [
+          1792031860.8215685,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              0.00601702556014061
+            ]
+          ]
+        ],
+        [
+          1792031860.8215785,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.330916404724121
+            ]
+          ]
+        ],
+        [
+          1792031860.8215876,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1792031865.4524426,
+          1,
+          [
+            [
+              "Loss/value",
+              6148.86474609375
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "937ff805cb7b2f4c285f24f3612dcec449e29b1d4afcf129aa264fb30286f904"
+    },
+    {
+      "path": "logs/TEMP/B1/logs/backup/Unregistered/2026-08-13_21-41-17",
+      "env": "Unregistered",
+      "exp": "UR5e_shelf_sweep_random",
+      "candidates": [],
+      "max_model": 89999,
+      "loss_step": -1,
+      "loss_records": 0,
+      "samples": [],
+      "errors": [],
+      "config_hash": "37fa73d743df30e6479f37e551379b1428aaadf6895d3c122c4abe790cf66955"
+    },
+    {
+      "path": "logs/TEMP/B1/logs/backup/Unregistered/2026-08-25_01-19-13",
+      "env": "Unregistered",
+      "exp": "UR5e_shelf_sweep_random",
+      "candidates": [],
+      "max_model": 25600,
+      "loss_step": 25645,
+      "loss_records": 102584,
+      "samples": [
+        [
+          1787588369.647803,
+          0,
+          [
+            [
+              "Loss/value",
+              0.002566171810030937
+            ]
+          ]
+        ],
+        [
+          1787588369.647821,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.0588928684592247
+            ]
+          ]
+        ],
+        [
+          1787588369.647831,
+          0,
+          [
+            [
+              "Loss/entropy",
+              9.731579780578613
+            ]
+          ]
+        ],
+        [
+          1787588369.6478395,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              0.005062500014901161
+            ]
+          ]
+        ],
+        [
+          1787588371.7065928,
+          1,
+          [
+            [
+              "Loss/value",
+              0.0002514665247872472
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "7de5629ab557213d7e367e6f144cc0f77e7638bae9bb01a5e4dec992a886ed3f"
+    },
+    {
+      "path": "logs/TEMP/B1/logs/backup/Unregistered/2026-10-06_13-18-48",
+      "env": "Unregistered",
+      "exp": "hand_manipulation_push_v1",
+      "candidates": [],
+      "max_model": 21450,
+      "loss_step": 21483,
+      "loss_records": 85936,
+      "samples": [
+        [
+          1791260348.841617,
+          0,
+          [
+            [
+              "Loss/value",
+              0.039158742874860764
+            ]
+          ]
+        ],
+        [
+          1791260348.8416314,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.004489072598516941
+            ]
+          ]
+        ],
+        [
+          1791260348.8416455,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.428241729736328
+            ]
+          ]
+        ],
+        [
+          1791260348.8416548,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              0.009999999776482582
+            ]
+          ]
+        ],
+        [
+          1791260353.1840522,
+          1,
+          [
+            [
+              "Loss/value",
+              0.03609563037753105
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "327fb970c8087a325ad8788c9314f0f6cb17c3d36ac3f3b56f485cc604f2af4e"
+    },
+    {
+      "path": "logs/TEMP/B1/logs/resilient/Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_0/2026-10-22_06-35-02_bc8551cf/attempt_000",
+      "env": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_0",
+      "exp": "inspire_contact_sweep_clutter_fusion_v1_0",
+      "candidates": [
+        "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_0"
+      ],
+      "max_model": 2900,
+      "loss_step": 2929,
+      "loss_records": 11720,
+      "samples": [
+        [
+          1792650939.8092587,
+          0,
+          [
+            [
+              "Loss/value",
+              204.0164337158203
+            ]
+          ]
+        ],
+        [
+          1792650939.809275,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.00011855317279696465
+            ]
+          ]
+        ],
+        [
+          1792650939.8092854,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.34692096710205
+            ]
+          ]
+        ],
+        [
+          1792650939.8092937,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1792650942.6005998,
+          1,
+          [
+            [
+              "Loss/value",
+              206.4027099609375
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "aa11196292831a8cb85f69e7fdfeb4c72570d3a34d98b7bae2f1045a3b621aaa"
+    },
+    {
+      "path": "logs/TEMP/B1/logs/resilient/Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1/2026-10-22_08-57-45_21191bc6/attempt_000",
+      "env": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1",
+      "exp": "inspire_contact_sweep_clutter_fusion_v1_1",
+      "candidates": [
+        "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1"
+      ],
+      "max_model": 1850,
+      "loss_step": 1878,
+      "loss_records": 7516,
+      "samples": [
+        [
+          1792659503.5365753,
+          0,
+          [
+            [
+              "Loss/value",
+              199.45875549316406
+            ]
+          ]
+        ],
+        [
+          1792659503.5365896,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.0003092052647843957
+            ]
+          ]
+        ],
+        [
+          1792659503.5365999,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.346729278564453
+            ]
+          ]
+        ],
+        [
+          1792659503.5366082,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1792659506.3087642,
+          1,
+          [
+            [
+              "Loss/value",
+              202.00315856933594
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "b7f81b3983275b34c76434b8da035ff4296890f609e8bdb137d66e2db19c8b00"
+    },
+    {
+      "path": "logs/TEMP/B1/logs/resilient/Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3/2026-10-22_10-17-25_512d0a65/attempt_000",
+      "env": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3",
+      "exp": "inspire_contact_sweep_clutter_fusion_v1_3",
+      "candidates": [
+        "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3"
+      ],
+      "max_model": 11500,
+      "loss_step": 11525,
+      "loss_records": 46104,
+      "samples": [
+        [
+          1792664283.2621691,
+          0,
+          [
+            [
+              "Loss/value",
+              199.45867919921875
+            ]
+          ]
+        ],
+        [
+          1792664283.2621825,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.0003104073111899197
+            ]
+          ]
+        ],
+        [
+          1792664283.262192,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.34679126739502
+            ]
+          ]
+        ],
+        [
+          1792664283.2622006,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1792664285.9772427,
+          1,
+          [
+            [
+              "Loss/value",
+              201.97056579589844
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "252f386e8e3f91297b1088f1385fd949140a1ffe51f9a8e13cf8915727f1b850"
+    },
+    {
+      "path": "logs/TEMP/B1/logs/resilient/Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3/2026-10-22_10-17-25_512d0a65/attempt_001",
+      "env": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3",
+      "exp": "inspire_contact_sweep_clutter_fusion_v1_3",
+      "candidates": [
+        "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3"
+      ],
+      "max_model": 11350,
+      "loss_step": 11358,
+      "loss_records": 1436,
+      "samples": [
+        [
+          1792700366.6577587,
+          11000,
+          [
+            [
+              "Loss/value",
+              1.0322209596633911
+            ]
+          ]
+        ],
+        [
+          1792700366.6577728,
+          11000,
+          [
+            [
+              "Loss/surrogate",
+              4.8176552809309214e-05
+            ]
+          ]
+        ],
+        [
+          1792700366.6577833,
+          11000,
+          [
+            [
+              "Loss/entropy",
+              -3.503830909729004
+            ]
+          ]
+        ],
+        [
+          1792700366.657792,
+          11000,
+          [
+            [
+              "Loss/learning_rate",
+              5.852766480529681e-05
+            ]
+          ]
+        ],
+        [
+          1792700369.8250268,
+          11001,
+          [
+            [
+              "Loss/value",
+              0.20055951178073883
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "0af8332dbab09d5e5960687cfc0292d84b0c0afef57a5d0a411ae67a1c5629c6"
+    },
+    {
+      "path": "logs/TEMP/B1/logs/resilient/Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3/2026-10-22_10-17-25_512d0a65/attempt_002",
+      "env": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3",
+      "exp": "inspire_contact_sweep_clutter_fusion_v1_3",
+      "candidates": [
+        "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3"
+      ],
+      "max_model": 11050,
+      "loss_step": 11093,
+      "loss_records": 976,
+      "samples": [
+        [
+          1792701448.7557042,
+          10850,
+          [
+            [
+              "Loss/value",
+              1.0176200866699219
+            ]
+          ]
+        ],
+        [
+          1792701448.7557194,
+          10850,
+          [
+            [
+              "Loss/surrogate",
+              0.006640112493187189
+            ]
+          ]
+        ],
+        [
+          1792701448.7557294,
+          10850,
+          [
+            [
+              "Loss/entropy",
+              -4.167891502380371
+            ]
+          ]
+        ],
+        [
+          1792701448.7557392,
+          10850,
+          [
+            [
+              "Loss/learning_rate",
+              0.0004444444493856281
+            ]
+          ]
+        ],
+        [
+          1792701451.9420831,
+          10851,
+          [
+            [
+              "Loss/value",
+              0.19981828331947327
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "b462da92ea7656c0aedfc2d9470006ae1f2ca1edc3fd990504963da8bd71b7b6"
+    },
+    {
+      "path": "logs/TEMP/B1/logs/resilient/Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3/2026-10-22_10-17-25_512d0a65/attempt_003",
+      "env": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3",
+      "exp": "inspire_contact_sweep_clutter_fusion_v1_3",
+      "candidates": [
+        "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3"
+      ],
+      "max_model": 10700,
+      "loss_step": 10748,
+      "loss_records": 796,
+      "samples": [
+        [
+          1792702203.6040816,
+          10550,
+          [
+            [
+              "Loss/value",
+              118888117305344.0
+            ]
+          ]
+        ],
+        [
+          1792702203.6040976,
+          10550,
+          [
+            [
+              "Loss/surrogate",
+              0.0007366067729890347
+            ]
+          ]
+        ],
+        [
+          1792702203.604107,
+          10550,
+          [
+            [
+              "Loss/entropy",
+              -0.4272406995296478
+            ]
+          ]
+        ],
+        [
+          1792702203.604116,
+          10550,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1792702206.8875763,
+          10551,
+          [
+            [
+              "Loss/value",
+              8.434487749127354e+21
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "dead7c3a94d7095f79a1d96376e4a642ab84a29a6abd139b10999a7ab53a92b6"
+    },
+    {
+      "path": "logs/TEMP/B1/logs/resilient/Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3/2026-10-22_10-17-25_512d0a65/attempt_004",
+      "env": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3",
+      "exp": "inspire_contact_sweep_clutter_fusion_v1_3",
+      "candidates": [
+        "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3"
+      ],
+      "max_model": 11600,
+      "loss_step": 11607,
+      "loss_records": 5632,
+      "samples": [
+        [
+          1792702803.6654837,
+          10200,
+          [
+            [
+              "Loss/value",
+              1.0580768585205078
+            ]
+          ]
+        ],
+        [
+          1792702803.665497,
+          10200,
+          [
+            [
+              "Loss/surrogate",
+              0.004342077765613794
+            ]
+          ]
+        ],
+        [
+          1792702803.665507,
+          10200,
+          [
+            [
+              "Loss/entropy",
+              -4.456340789794922
+            ]
+          ]
+        ],
+        [
+          1792702803.6655154,
+          10200,
+          [
+            [
+              "Loss/learning_rate",
+              0.0004444444493856281
+            ]
+          ]
+        ],
+        [
+          1792702806.9312398,
+          10201,
+          [
+            [
+              "Loss/value",
+              0.2403687983751297
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "6f575974ecb1af641912888476ba3e3d8e9517c7ef9107f9e71d52ada34c2279"
+    },
+    {
+      "path": "logs/TEMP/B1/logs/resilient/Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3/2026-10-22_10-17-25_512d0a65/attempt_005",
+      "env": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3",
+      "exp": "inspire_contact_sweep_clutter_fusion_v1_3",
+      "candidates": [
+        "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3"
+      ],
+      "max_model": 11100,
+      "loss_step": 11125,
+      "loss_records": 104,
+      "samples": [
+        [
+          1792706981.079536,
+          11100,
+          [
+            [
+              "Loss/value",
+              2.5475916862487793
+            ]
+          ]
+        ],
+        [
+          1792706981.0795536,
+          11100,
+          [
+            [
+              "Loss/surrogate",
+              0.006894230842590332
+            ]
+          ]
+        ],
+        [
+          1792706981.0795648,
+          11100,
+          [
+            [
+              "Loss/entropy",
+              -4.58113956451416
+            ]
+          ]
+        ],
+        [
+          1792706981.0795739,
+          11100,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1792706984.4548056,
+          11101,
+          [
+            [
+              "Loss/value",
+              0.21234044432640076
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "73cb2d375226661b57187a418c2bd6ac977a4711f65a26afa23e658c7ac07608"
+    },
+    {
+      "path": "logs/TEMP/B1/logs/resilient/Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3/2026-10-22_10-17-25_512d0a65/attempt_006",
+      "env": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3",
+      "exp": "inspire_contact_sweep_clutter_fusion_v1_3",
+      "candidates": [
+        "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3"
+      ],
+      "max_model": 15100,
+      "loss_step": 15101,
+      "loss_records": 18008,
+      "samples": [
+        [
+          1792707100.3228097,
+          10600,
+          [
+            [
+              "Loss/value",
+              0.8504546880722046
+            ]
+          ]
+        ],
+        [
+          1792707100.3228252,
+          10600,
+          [
+            [
+              "Loss/surrogate",
+              0.0008645094931125641
+            ]
+          ]
+        ],
+        [
+          1792707100.322836,
+          10600,
+          [
+            [
+              "Loss/entropy",
+              -4.579501152038574
+            ]
+          ]
+        ],
+        [
+          1792707100.322845,
+          10600,
+          [
+            [
+              "Loss/learning_rate",
+              0.0004444444493856281
+            ]
+          ]
+        ],
+        [
+          1792707103.6241038,
+          10601,
+          [
+            [
+              "Loss/value",
+              0.17975541949272156
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "607a046d3388f54188ee30ca9fd580442fcb071141a2c668f9fe13993854e238"
+    },
+    {
+      "path": "logs/TEMP/B1/logs/resilient/Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3/2026-10-22_10-17-25_512d0a65/attempt_007",
+      "env": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3",
+      "exp": "inspire_contact_sweep_clutter_fusion_v1_3",
+      "candidates": [
+        "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3"
+      ],
+      "max_model": 15100,
+      "loss_step": 15139,
+      "loss_records": 2160,
+      "samples": [
+        [
+          1792720487.9988003,
+          14600,
+          [
+            [
+              "Loss/value",
+              0.6400784254074097
+            ]
+          ]
+        ],
+        [
+          1792720487.998817,
+          14600,
+          [
+            [
+              "Loss/surrogate",
+              0.008661325089633465
+            ]
+          ]
+        ],
+        [
+          1792720487.998827,
+          14600,
+          [
+            [
+              "Loss/entropy",
+              -5.191287994384766
+            ]
+          ]
+        ],
+        [
+          1792720487.9988358,
+          14600,
+          [
+            [
+              "Loss/learning_rate",
+              0.0006666666595265269
+            ]
+          ]
+        ],
+        [
+          1792720491.2955344,
+          14601,
+          [
+            [
+              "Loss/value",
+              0.249789759516716
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "a4f55640d54fcb935dcc6591a99110a29c18c797624b996705650ff7881c69f3"
+    },
+    {
+      "path": "logs/TEMP/B1/logs/resilient/Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3/2026-10-22_10-17-25_512d0a65/attempt_008",
+      "env": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3",
+      "exp": "inspire_contact_sweep_clutter_fusion_v1_3",
+      "candidates": [
+        "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3"
+      ],
+      "max_model": 14700,
+      "loss_step": 14714,
+      "loss_records": 460,
+      "samples": [
+        [
+          1792722129.7469776,
+          14600,
+          [
+            [
+              "Loss/value",
+              0.6308398842811584
+            ]
+          ]
+        ],
+        [
+          1792722129.7469919,
+          14600,
+          [
+            [
+              "Loss/surrogate",
+              0.0053661358542740345
+            ]
+          ]
+        ],
+        [
+          1792722129.7470021,
+          14600,
+          [
+            [
+              "Loss/entropy",
+              -5.204531192779541
+            ]
+          ]
+        ],
+        [
+          1792722129.7470107,
+          14600,
+          [
+            [
+              "Loss/learning_rate",
+              0.0004444444493856281
+            ]
+          ]
+        ],
+        [
+          1792722132.9624515,
+          14601,
+          [
+            [
+              "Loss/value",
+              0.23100495338439941
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "1d96711add90836c56b1ff018b8406621d7a8570bf6dafbae227957564fb6d6e"
+    },
+    {
+      "path": "logs/TEMP/B1/logs/resilient/Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3/2026-10-22_10-17-25_512d0a65/attempt_009",
+      "env": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3",
+      "exp": "inspire_contact_sweep_clutter_fusion_v1_3",
+      "candidates": [
+        "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3"
+      ],
+      "max_model": 16950,
+      "loss_step": 16953,
+      "loss_records": 11016,
+      "samples": [
+        [
+          1792722507.4210858,
+          14200,
+          [
+            [
+              "Loss/value",
+              0.5782448053359985
+            ]
+          ]
+        ],
+        [
+          1792722507.4211009,
+          14200,
+          [
+            [
+              "Loss/surrogate",
+              0.006369082257151604
+            ]
+          ]
+        ],
+        [
+          1792722507.4211097,
+          14200,
+          [
+            [
+              "Loss/entropy",
+              -5.533238410949707
+            ]
+          ]
+        ],
+        [
+          1792722507.4211178,
+          14200,
+          [
+            [
+              "Loss/learning_rate",
+              0.0002962962898891419
+            ]
+          ]
+        ],
+        [
+          1792722510.711464,
+          14201,
+          [
+            [
+              "Loss/value",
+              0.23534496128559113
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "3d411a4c346316fe429423b84070ef3e8223974ac93964a3c0656d66bd5e4bf3"
+    },
+    {
+      "path": "logs/TEMP/Server/logs/backup/Isaac-Inspire-Contact-Sweep-v0/2026-10-20_13-30-06",
+      "env": "Isaac-Inspire-Contact-Sweep-v0",
+      "exp": "inspire_contact_sweep",
+      "candidates": [
+        "Isaac-Inspire-Contact-Sweep-v0"
+      ],
+      "max_model": 600,
+      "loss_step": 621,
+      "loss_records": 2488,
+      "samples": [
+        [
+          1792470622.41045,
+          0,
+          [
+            [
+              "Loss/value",
+              221.32334899902344
+            ]
+          ]
+        ],
+        [
+          1792470622.4104621,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              0.06934411078691483
+            ]
+          ]
+        ],
+        [
+          1792470622.4104695,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.351580619812012
+            ]
+          ]
+        ],
+        [
+          1792470622.4104762,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1792470623.8015685,
+          1,
+          [
+            [
+              "Loss/value",
+              209.08706665039062
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "578a70be5c186c6f7770b9b45ee4f6ec41628f5cffe6e8cb04ea64b9181753a2"
+    },
+    {
+      "path": "logs/TEMP/Server/logs/backup/Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0/2026-10-15_21-12-26_dex_renewal_v0",
+      "env": "Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0",
+      "exp": "inspire_dex_sweep_omni_renewal",
+      "candidates": [],
+      "max_model": 1600,
+      "loss_step": 1629,
+      "loss_records": 6520,
+      "samples": [
+        [
+          1792066361.528518,
+          0,
+          [
+            [
+              "Loss/value",
+              0.46770644187927246
+            ]
+          ]
+        ],
+        [
+          1792066361.5285282,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              0.08865023404359818
+            ]
+          ]
+        ],
+        [
+          1792066361.5285344,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.340616226196289
+            ]
+          ]
+        ],
+        [
+          1792066361.5285404,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1792066364.159578,
+          1,
+          [
+            [
+              "Loss/value",
+              0.5567923188209534
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "f5648fb41902814d26ef116db1e3e2ab0c80e0d86b2ea18d277d2f9bd917f1f1"
+    },
+    {
+      "path": "logs/TEMP/Server/logs/backup/Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0/2026-10-15_22-04-26_dex_renewal_v0",
+      "env": "Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0",
+      "exp": "inspire_dex_sweep_omni_renewal",
+      "candidates": [],
+      "max_model": 33750,
+      "loss_step": 33750,
+      "loss_records": 135004,
+      "samples": [
+        [
+          1792069481.1387482,
+          0,
+          [
+            [
+              "Loss/value",
+              0.4510408937931061
+            ]
+          ]
+        ],
+        [
+          1792069481.138759,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              0.0896768644452095
+            ]
+          ]
+        ],
+        [
+          1792069481.1387656,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.340652465820312
+            ]
+          ]
+        ],
+        [
+          1792069481.1387715,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1792069483.6887066,
+          1,
+          [
+            [
+              "Loss/value",
+              0.5395397543907166
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "cae4b28475d3122fc50afb736847c50dd7df207204b3fd7b60e7b8fbd60840a4"
+    },
+    {
+      "path": "logs/TEMP/Server/logs/backup/Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0/2026-10-16_12-41-16_dex_renewal_v0",
+      "env": "Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0",
+      "exp": "inspire_dex_sweep_omni_renewal_shelf",
+      "candidates": [],
+      "max_model": 6050,
+      "loss_step": 6074,
+      "loss_records": 24300,
+      "samples": [
+        [
+          1792122091.6690857,
+          0,
+          [
+            [
+              "Loss/value",
+              0.4665937125682831
+            ]
+          ]
+        ],
+        [
+          1792122091.669096,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              0.09326313436031342
+            ]
+          ]
+        ],
+        [
+          1792122091.6691017,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.344886779785156
+            ]
+          ]
+        ],
+        [
+          1792122091.6691077,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1792122094.5362341,
+          1,
+          [
+            [
+              "Loss/value",
+              0.5747115015983582
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "226738b0595b43298961651ef6d28d5b41f4d06c6e06230c1c4b0bd7f515f615"
+    },
+    {
+      "path": "logs/TEMP/Server/logs/backup/Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0/2026-10-16_15-26-16",
+      "env": "Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0",
+      "exp": "inspire_dex_sweep_omni_renewal",
+      "candidates": [],
+      "max_model": 5950,
+      "loss_step": 5956,
+      "loss_records": 23828,
+      "samples": [
+        [
+          1792131992.0331779,
+          0,
+          [
+            [
+              "Loss/value",
+              1.5309428094898896e+28
+            ]
+          ]
+        ],
+        [
+          1792131992.0331852,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.00011506516602821648
+            ]
+          ]
+        ],
+        [
+          1792131992.0331912,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.365426063537598
+            ]
+          ]
+        ],
+        [
+          1792131992.0331974,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1792131995.0272624,
+          1,
+          [
+            [
+              "Loss/value",
+              1.669644354619666e+32
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "776a1f05783a776e9ccfc18ee733f2711c6296737c9bb017f47acae803a0dffe"
+    },
+    {
+      "path": "logs/TEMP/Server/logs/backup/Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0/2026-10-16_19-13-47",
+      "env": "Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0",
+      "exp": "inspire_dex_sweep_omni_renewal",
+      "candidates": [],
+      "max_model": 95199,
+      "loss_step": 95199,
+      "loss_records": 360000,
+      "samples": [
+        [
+          1792145641.754742,
+          5200,
+          [
+            [
+              "Loss/value",
+              10.220195770263672
+            ]
+          ]
+        ],
+        [
+          1792145641.754753,
+          5200,
+          [
+            [
+              "Loss/surrogate",
+              0.016602426767349243
+            ]
+          ]
+        ],
+        [
+          1792145641.7547598,
+          5200,
+          [
+            [
+              "Loss/entropy",
+              -2.012801170349121
+            ]
+          ]
+        ],
+        [
+          1792145641.7547657,
+          5200,
+          [
+            [
+              "Loss/learning_rate",
+              8.77914935699664e-05
+            ]
+          ]
+        ],
+        [
+          1792145643.4923165,
+          5201,
+          [
+            [
+              "Loss/value",
+              4.355327129364014
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "ed34e71d28eef7c579506c60fd53799d09b3b60f5c185f70839cf8b5d2cd602e"
+    },
+    {
+      "path": "logs/TEMP/Server/logs/backup/Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1/2026-10-19_12-15-47",
+      "env": "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1",
+      "exp": "inspire_dex_tactile_sweep_omni_renewal_v1",
+      "candidates": [
+        "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1"
+      ],
+      "max_model": 39000,
+      "loss_step": 39036,
+      "loss_records": 156148,
+      "samples": [
+        [
+          1792379765.21558,
+          0,
+          [
+            [
+              "Loss/value",
+              221.29664611816406
+            ]
+          ]
+        ],
+        [
+          1792379765.2155945,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              0.07279259711503983
+            ]
+          ]
+        ],
+        [
+          1792379765.2156038,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.351455688476562
+            ]
+          ]
+        ],
+        [
+          1792379765.215612,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1792379766.7982848,
+          1,
+          [
+            [
+              "Loss/value",
+              209.49850463867188
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "507810f0df0d07ae5897db0dd870fc125c44363ffa7cce3bca7b9af6de8b8aad"
+    },
+    {
+      "path": "logs/TEMP/Server/logs/backup/Isaac-Inspire-Sweep-Omni-v2/2026-10-15_13-50-41_live_reach200_sweep400",
+      "env": "Isaac-Inspire-Sweep-Omni-v2",
+      "exp": "inspire_sweep_omni_v2",
+      "candidates": [],
+      "max_model": 2100,
+      "loss_step": 2146,
+      "loss_records": 8588,
+      "samples": [
+        [
+          1792039857.7134888,
+          0,
+          [
+            [
+              "Loss/value",
+              1.299127459526062
+            ]
+          ]
+        ],
+        [
+          1792039857.7135007,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.09419844299554825
+            ]
+          ]
+        ],
+        [
+          1792039857.7135077,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.340082168579102
+            ]
+          ]
+        ],
+        [
+          1792039857.7135146,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1792039861.2303154,
+          1,
+          [
+            [
+              "Loss/value",
+              1.7523915767669678
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "3f24e59828917dce312cafd75b37f5e6bdae2fc6481ea09b131fddfc58ae1fb4"
+    },
+    {
+      "path": "logs/TEMP/Server/logs/backup/Unregistered/2026-08-10_22-01-08",
+      "env": "Unregistered",
+      "exp": "UR5e_single_object_shelf_sweep_random",
+      "candidates": [],
+      "max_model": 1550,
+      "loss_step": 1560,
+      "loss_records": 6244,
+      "samples": [
+        [
+          1786366917.814627,
+          0,
+          [
+            [
+              "Loss/value",
+              0.002584958914667368
+            ]
+          ]
+        ],
+        [
+          1786366917.814635,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.08815445005893707
+            ]
+          ]
+        ],
+        [
+          1786366917.8146412,
+          0,
+          [
+            [
+              "Loss/entropy",
+              9.576605796813965
+            ]
+          ]
+        ],
+        [
+          1786366917.814647,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              1.522438833490014e-05
+            ]
+          ]
+        ],
+        [
+          1786366918.8230007,
+          1,
+          [
+            [
+              "Loss/value",
+              0.0002816208580043167
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "fbd0b1a2243dfcd88ca9e1af2cab66bf3c04ec4c547efa2bed0bca4bdb9325e9"
+    },
+    {
+      "path": "logs/TEMP/Server/logs/backup/Unregistered/2026-08-10_22-32-40",
+      "env": "Unregistered",
+      "exp": "UR5e_single_object_shelf_sweep_diff_ik_abs_v2",
+      "candidates": [],
+      "max_model": 45200,
+      "loss_step": 45242,
+      "loss_records": 180972,
+      "samples": [
+        [
+          1786368807.850235,
+          0,
+          [
+            [
+              "Loss/value",
+              0.0029443122912198305
+            ]
+          ]
+        ],
+        [
+          1786368807.8502448,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.13315780460834503
+            ]
+          ]
+        ],
+        [
+          1786368807.8502517,
+          0,
+          [
+            [
+              "Loss/entropy",
+              9.911614418029785
+            ]
+          ]
+        ],
+        [
+          1786368807.8502576,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1786368808.8772585,
+          1,
+          [
+            [
+              "Loss/value",
+              0.0008948866743594408
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "58785b51ed48b9735383adaa0dc60ddbfe80d7a83a9f3c6a65bc7b2580f8c044"
+    },
+    {
+      "path": "logs/TEMP/Server/logs/backup/Unregistered/2026-08-11_11-21-29",
+      "env": "Unregistered",
+      "exp": "UR5e_single_object_shelf_sweep_diff_ik_abs_v2",
+      "candidates": [],
+      "max_model": 5300,
+      "loss_step": 5305,
+      "loss_records": 21224,
+      "samples": [
+        [
+          1786414935.335674,
+          0,
+          [
+            [
+              "Loss/value",
+              0.002939163474366069
+            ]
+          ]
+        ],
+        [
+          1786414935.3356848,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.13202296197414398
+            ]
+          ]
+        ],
+        [
+          1786414935.3356912,
+          0,
+          [
+            [
+              "Loss/entropy",
+              9.911726951599121
+            ]
+          ]
+        ],
+        [
+          1786414935.3356972,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1786414936.3627613,
+          1,
+          [
+            [
+              "Loss/value",
+              0.0008908928721211851
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "6321d5bee5583766ee908cade395e6f64369007512031f24c832d07ab1dd22f9"
+    },
+    {
+      "path": "logs/TEMP/Server/logs/backup/Unregistered/2026-08-11_21-01-27",
+      "env": "Unregistered",
+      "exp": "UR5e_shelf_sweep_random",
+      "candidates": [],
+      "max_model": 43400,
+      "loss_step": 43413,
+      "loss_records": 173656,
+      "samples": [
+        [
+          1786449700.875187,
+          0,
+          [
+            [
+              "Loss/value",
+              0.0034271287731826305
+            ]
+          ]
+        ],
+        [
+          1786449700.8751972,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.05755144730210304
+            ]
+          ]
+        ],
+        [
+          1786449700.8752036,
+          0,
+          [
+            [
+              "Loss/entropy",
+              9.730975151062012
+            ]
+          ]
+        ],
+        [
+          1786449700.8752093,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              0.005062500014901161
+            ]
+          ]
+        ],
+        [
+          1786449702.4547827,
+          1,
+          [
+            [
+              "Loss/value",
+              0.00026321146287955344
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "26aa4a9e2b07ead25ca766617cd1f73d803aeec6b5a667dcaa61d2ac2101d7dc"
+    },
+    {
+      "path": "logs/TEMP/Server/logs/backup/Unregistered/2026-08-12_20-20-09",
+      "env": "Unregistered",
+      "exp": "UR5e_shelf_sweep_random",
+      "candidates": [],
+      "max_model": 89999,
+      "loss_step": 89999,
+      "loss_records": 360000,
+      "samples": [
+        [
+          1786533623.834456,
+          0,
+          [
+            [
+              "Loss/value",
+              0.0014370764838531613
+            ]
+          ]
+        ],
+        [
+          1786533623.8344672,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.05116846784949303
+            ]
+          ]
+        ],
+        [
+          1786533623.8344736,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.233951568603516
+            ]
+          ]
+        ],
+        [
+          1786533623.83448,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              0.0010000000474974513
+            ]
+          ]
+        ],
+        [
+          1786533625.6762805,
+          1,
+          [
+            [
+              "Loss/value",
+              0.0003657973720692098
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "57a6f4b60652569704ea777997819ae9d8e13d351ca5a5baae265e351f72f32b"
+    },
+    {
+      "path": "logs/TEMP/Server/logs/backup/Unregistered/2026-08-14_22-50-21",
+      "env": "Unregistered",
+      "exp": "UR5e_shelf_sweep_random",
+      "candidates": [],
+      "max_model": 4450,
+      "loss_step": 4448,
+      "loss_records": 17796,
+      "samples": [
+        [
+          1786715442.239663,
+          0,
+          [
+            [
+              "Loss/value",
+              0.0029259161092340946
+            ]
+          ]
+        ],
+        [
+          1786715442.2396734,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.0485447458922863
+            ]
+          ]
+        ],
+        [
+          1786715442.23968,
+          0,
+          [
+            [
+              "Loss/entropy",
+              9.792308807373047
+            ]
+          ]
+        ],
+        [
+          1786715442.2396863,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              0.0022499999031424522
+            ]
+          ]
+        ],
+        [
+          1786715444.5324798,
+          1,
+          [
+            [
+              "Loss/value",
+              0.00029943708796054125
+            ]
+          ]
+        ]
+      ],
+      "errors": [
+        "truncated header"
+      ],
+      "config_hash": "e1b5531941c75eb3e3b6def8be710c2ecefe2480ba19a05778b4e6da0bf41278"
+    },
+    {
+      "path": "logs/TEMP/Server/logs/backup/Unregistered/2026-08-17_14-30-47",
+      "env": "Unregistered",
+      "exp": "UR5e_shelf_sweep_random",
+      "candidates": [],
+      "max_model": 89999,
+      "loss_step": 89999,
+      "loss_records": 360000,
+      "samples": [
+        [
+          1786944668.1600761,
+          0,
+          [
+            [
+              "Loss/value",
+              0.0017450271407142282
+            ]
+          ]
+        ],
+        [
+          1786944668.1600873,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.08228163421154022
+            ]
+          ]
+        ],
+        [
+          1786944668.1600943,
+          0,
+          [
+            [
+              "Loss/entropy",
+              9.640772819519043
+            ]
+          ]
+        ],
+        [
+          1786944668.1601014,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              5.852766480529681e-05
+            ]
+          ]
+        ],
+        [
+          1786944670.454576,
+          1,
+          [
+            [
+              "Loss/value",
+              0.0002930629998445511
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "a4871c38541448f38d078dab3ff7be59c930ac37da23b153d880332712abc3de"
+    },
+    {
+      "path": "logs/TEMP/Server/logs/backup/Unregistered/2026-08-21_18-18-18",
+      "env": "Unregistered",
+      "exp": "UR5e_shelf_sweep_random",
+      "candidates": [],
+      "max_model": 89999,
+      "loss_step": 89999,
+      "loss_records": 360000,
+      "samples": [
+        [
+          1787303913.365353,
+          0,
+          [
+            [
+              "Loss/value",
+              0.002423735335469246
+            ]
+          ]
+        ],
+        [
+          1787303913.3653631,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.09036323428153992
+            ]
+          ]
+        ],
+        [
+          1787303913.365369,
+          0,
+          [
+            [
+              "Loss/entropy",
+              9.607635498046875
+            ]
+          ]
+        ],
+        [
+          1787303913.365375,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              2.60122942563612e-05
+            ]
+          ]
+        ],
+        [
+          1787303914.9391007,
+          1,
+          [
+            [
+              "Loss/value",
+              0.0002768266713246703
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "899fc5536ffc6ea4441466601107f33961f005abc0838dd3bafcd2ce9c1ebf8c"
+    },
+    {
+      "path": "logs/TEMP/Server/logs/backup/Unregistered/2026-08-25_00-58-46",
+      "env": "Unregistered",
+      "exp": "UR5e_shelf_sweep_random",
+      "candidates": [],
+      "max_model": 13300,
+      "loss_step": 13299,
+      "loss_records": 53200,
+      "samples": [
+        [
+          1787587160.9607825,
+          0,
+          [
+            [
+              "Loss/value",
+              0.002814378822222352
+            ]
+          ]
+        ],
+        [
+          1787587160.960793,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.06059272214770317
+            ]
+          ]
+        ],
+        [
+          1787587160.960799,
+          0,
+          [
+            [
+              "Loss/entropy",
+              9.689529418945312
+            ]
+          ]
+        ],
+        [
+          1787587160.9608052,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              0.0001316872367169708
+            ]
+          ]
+        ],
+        [
+          1787587164.98624,
+          1,
+          [
+            [
+              "Loss/value",
+              0.00020960292022209615
+            ]
+          ]
+        ]
+      ],
+      "errors": [
+        "truncated event"
+      ],
+      "config_hash": "4bbdd8abf2321240d5bdb779c6204b175b9bac04245e2268ddc1311b88c01ba8"
+    },
+    {
+      "path": "logs/TEMP/Server/logs/backup/Unregistered/2026-08-25_22-44-28",
+      "env": "Unregistered",
+      "exp": "UR5e_shelf_sweep_random",
+      "candidates": [],
+      "max_model": 46500,
+      "loss_step": 46538,
+      "loss_records": 186156,
+      "samples": [
+        [
+          1787665490.2945051,
+          0,
+          [
+            [
+              "Loss/value",
+              0.0032609461341053247
+            ]
+          ]
+        ],
+        [
+          1787665490.2945147,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.05878671258687973
+            ]
+          ]
+        ],
+        [
+          1787665490.2945218,
+          0,
+          [
+            [
+              "Loss/entropy",
+              9.699893951416016
+            ]
+          ]
+        ],
+        [
+          1787665490.294529,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              0.00019753086962737143
+            ]
+          ]
+        ],
+        [
+          1787665492.5652704,
+          1,
+          [
+            [
+              "Loss/value",
+              0.0002541407593525946
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "e1895ef45f944f8e2e6aac79b29287eafa4d2f68ab56ebb8173c295bb73e851f"
+    },
+    {
+      "path": "logs/TEMP/Server/logs/backup/Unregistered/2026-08-26_23-25-47",
+      "env": "Unregistered",
+      "exp": "UR5e_shelf_sweep_random",
+      "candidates": [],
+      "max_model": 16000,
+      "loss_step": 16025,
+      "loss_records": 64104,
+      "samples": [
+        [
+          1787754382.1576056,
+          0,
+          [
+            [
+              "Loss/value",
+              0.002814378822222352
+            ]
+          ]
+        ],
+        [
+          1787754382.1576164,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.06059272214770317
+            ]
+          ]
+        ],
+        [
+          1787754382.1576245,
+          0,
+          [
+            [
+              "Loss/entropy",
+              9.689529418945312
+            ]
+          ]
+        ],
+        [
+          1787754382.1576316,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              0.0001316872367169708
+            ]
+          ]
+        ],
+        [
+          1787754386.307318,
+          1,
+          [
+            [
+              "Loss/value",
+              0.00020960292022209615
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "db0c88c9b544f2e51828073a25fb017fa0033e6fce6291b3a839670dd8f81498"
+    },
+    {
+      "path": "logs/TEMP/Server/logs/backup/Unregistered/2026-08-27_11-14-32",
+      "env": "Unregistered",
+      "exp": "UR5e_shelf_sweep_random",
+      "candidates": [],
+      "max_model": 66850,
+      "loss_step": 66869,
+      "loss_records": 267480,
+      "samples": [
+        [
+          1787796893.5497372,
+          0,
+          [
+            [
+              "Loss/value",
+              0.0032609461341053247
+            ]
+          ]
+        ],
+        [
+          1787796893.549748,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.05878671258687973
+            ]
+          ]
+        ],
+        [
+          1787796893.5497544,
+          0,
+          [
+            [
+              "Loss/entropy",
+              9.699893951416016
+            ]
+          ]
+        ],
+        [
+          1787796893.54976,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              0.00019753086962737143
+            ]
+          ]
+        ],
+        [
+          1787796895.8554375,
+          1,
+          [
+            [
+              "Loss/value",
+              0.0002541407593525946
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "bbb8c0306ca7cb1457d418c76c5a8ea2cb6dd238124145bb74173c32c08e5cc0"
+    },
+    {
+      "path": "logs/TEMP/Server/logs/backup/Unregistered/2026-08-28_22-56-51",
+      "env": "Unregistered",
+      "exp": "UR5e_shelf_sweep_random",
+      "candidates": [],
+      "max_model": 89999,
+      "loss_step": 89999,
+      "loss_records": 360000,
+      "samples": [
+        [
+          1787925425.3985977,
+          0,
+          [
+            [
+              "Loss/value",
+              0.000949094770476222
+            ]
+          ]
+        ],
+        [
+          1787925425.398608,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.07493188232183456
+            ]
+          ]
+        ],
+        [
+          1787925425.398614,
+          0,
+          [
+            [
+              "Loss/entropy",
+              18.117013931274414
+            ]
+          ]
+        ],
+        [
+          1787925425.3986197,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              0.0006666666595265269
+            ]
+          ]
+        ],
+        [
+          1787925427.1327484,
+          1,
+          [
+            [
+              "Loss/value",
+              0.00021982492762617767
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "3bbd8392955ca43398c1bc24cb26175d85aff31aab0688aa28d8d75dfd4fe0fa"
+    },
+    {
+      "path": "logs/TEMP/Server/logs/backup/Unregistered/2026-09-01_22-39-00",
+      "env": "Unregistered",
+      "exp": "UR5e_shelf_sweep_random",
+      "candidates": [],
+      "max_model": 89999,
+      "loss_step": 89999,
+      "loss_records": 360000,
+      "samples": [
+        [
+          1788269954.3876514,
+          0,
+          [
+            [
+              "Loss/value",
+              0.002852724166586995
+            ]
+          ]
+        ],
+        [
+          1788269954.3876615,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.0801037847995758
+            ]
+          ]
+        ],
+        [
+          1788269954.3876677,
+          0,
+          [
+            [
+              "Loss/entropy",
+              9.620065689086914
+            ]
+          ]
+        ],
+        [
+          1788269954.3876736,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              3.9018443203531206e-05
+            ]
+          ]
+        ],
+        [
+          1788269956.1352043,
+          1,
+          [
+            [
+              "Loss/value",
+              0.00028927717357873917
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "8738fcfe0ec0d45923a448ca1f19ff4c8ed32866d69901bb2cd4cbfc153d8080"
+    },
+    {
+      "path": "logs/TEMP/Server/logs/backup/Unregistered/2026-09-04_21-33-15",
+      "env": "Unregistered",
+      "exp": "UR5e_shelf_sweep_random",
+      "candidates": [],
+      "max_model": 89999,
+      "loss_step": 89999,
+      "loss_records": 360000,
+      "samples": [
+        [
+          1788525210.271115,
+          0,
+          [
+            [
+              "Loss/value",
+              0.002852724166586995
+            ]
+          ]
+        ],
+        [
+          1788525210.271123,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.0801037847995758
+            ]
+          ]
+        ],
+        [
+          1788525210.2711291,
+          0,
+          [
+            [
+              "Loss/entropy",
+              9.620065689086914
+            ]
+          ]
+        ],
+        [
+          1788525210.2711346,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              3.9018443203531206e-05
+            ]
+          ]
+        ],
+        [
+          1788525212.0477471,
+          1,
+          [
+            [
+              "Loss/value",
+              0.00028927717357873917
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "fddd0253eb272370b6b99e0ffc2ac1552f8825c8496209f045b1c9c703ee626a"
+    },
+    {
+      "path": "logs/TEMP/Server/logs/backup/Unregistered/2026-09-07_21-58-38",
+      "env": "Unregistered",
+      "exp": "UR5e_shelf_sweep_random",
+      "candidates": [],
+      "max_model": 84450,
+      "loss_step": 84475,
+      "loss_records": 337904,
+      "samples": [
+        [
+          1788785980.0752027,
+          0,
+          [
+            [
+              "Loss/value",
+              0.0019106195541098714
+            ]
+          ]
+        ],
+        [
+          1788785980.0752127,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.025311123579740524
+            ]
+          ]
+        ],
+        [
+          1788785980.075219,
+          0,
+          [
+            [
+              "Loss/entropy",
+              9.825716972351074
+            ]
+          ]
+        ],
+        [
+          1788785980.0752246,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              0.001500000013038516
+            ]
+          ]
+        ],
+        [
+          1788786028.2091577,
+          1,
+          [
+            [
+              "Loss/value",
+              0.00030052749207243323
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "f556a7271198e691341a0832868236126f256b9d4b32e96267a17bba7d59b4dc"
+    }
+  ],
+  "comparisons": [
+    {
+      "name": "2026-10-14_22-34-42_centered_spawn_goal15cm_arm2rad",
+      "paths": [
+        "logs/TEMP/B1/logs/backup/Isaac-Inspire-Sweep-Omni-v0/2026-10-14_22-34-42_centered_spawn_goal15cm_arm2rad",
+        "logs/backup/Isaac-Inspire-Sweep-Omni-v0/2026-10-14_22-34-42_centered_spawn_goal15cm_arm2rad"
+      ],
+      "pairs": [
+        {
+          "a": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Sweep-Omni-v0/2026-10-14_22-34-42_centered_spawn_goal15cm_arm2rad",
+          "b": "logs/backup/Isaac-Inspire-Sweep-Omni-v0/2026-10-14_22-34-42_centered_spawn_goal15cm_arm2rad",
+          "common": 76,
+          "different": [],
+          "prefix": [],
+          "only_a": [],
+          "only_b": [
+            "exported/policy.onnx",
+            "exported/policy.pt"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2026-10-14_16-16-28_centered_spawn_goal15cm",
+      "paths": [
+        "logs/TEMP/B1/logs/backup/Isaac-Inspire-Sweep-Omni-v0/2026-10-14_16-16-28_centered_spawn_goal15cm",
+        "logs/backup/Isaac-Inspire-Sweep-Omni-v0/2026-10-14_16-16-28_centered_spawn_goal15cm"
+      ],
+      "pairs": [
+        {
+          "a": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Sweep-Omni-v0/2026-10-14_16-16-28_centered_spawn_goal15cm",
+          "b": "logs/backup/Isaac-Inspire-Sweep-Omni-v0/2026-10-14_16-16-28_centered_spawn_goal15cm",
+          "common": 87,
+          "different": [],
+          "prefix": [
+            "events.out.tfevents.1791962202.irol-System-Product-Name.988299.0"
+          ],
+          "only_a": [
+            "model_4150.pt",
+            "model_4200.pt",
+            "model_4250.pt",
+            "model_4300.pt",
+            "model_4350.pt",
+            "model_4400.pt",
+            "model_4450.pt",
+            "model_4500.pt"
+          ],
+          "only_b": [
+            "exported/policy.onnx",
+            "exported/policy.pt"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2026-10-19_12-15-47",
+      "paths": [
+        "logs/TEMP/B1/logs/backup/Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1/2026-10-19_12-15-47",
+        "logs/TEMP/Server/logs/backup/Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1/2026-10-19_12-15-47"
+      ],
+      "pairs": [
+        {
+          "a": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1/2026-10-19_12-15-47",
+          "b": "logs/TEMP/Server/logs/backup/Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1/2026-10-19_12-15-47",
+          "common": 785,
+          "different": [],
+          "prefix": [
+            "events.out.tfevents.1792379762.irol-System-Product-Name.1341784.0"
+          ],
+          "only_a": [
+            "model_39050.pt",
+            "model_39100.pt",
+            "model_39150.pt",
+            "model_39200.pt",
+            "model_39250.pt",
+            "model_39300.pt",
+            "model_39350.pt",
+            "model_39400.pt",
+            "model_39450.pt",
+            "model_39500.pt",
+            "model_39550.pt",
+            "model_39600.pt",
+            "model_39650.pt",
+            "model_39700.pt",
+            "model_39750.pt",
+            "model_39800.pt",
+            "model_39850.pt",
+            "model_39900.pt",
+            "model_39950.pt",
+            "model_40000.pt",
+            "model_40050.pt",
+            "model_40100.pt",
+            "model_40150.pt",
+            "model_40200.pt",
+            "model_40250.pt",
+            "model_40300.pt",
+            "model_40350.pt",
+            "model_40400.pt",
+            "model_40450.pt",
+            "model_40500.pt",
+            "model_40550.pt",
+            "model_40600.pt",
+            "model_40650.pt",
+            "model_40700.pt",
+            "model_40750.pt",
+            "model_40800.pt",
+            "model_40850.pt",
+            "model_40900.pt",
+            "model_40950.pt",
+            "model_41000.pt"
+          ],
+          "only_b": [
+            "exported/policy.onnx",
+            "exported/policy.pt"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2026-10-18_23-47-33",
+      "paths": [
+        "logs/TEMP/B1/logs/backup/Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1/2026-10-18_23-47-33",
+        "logs/backup/Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1/2026-10-18_23-47-33"
+      ],
+      "pairs": [
+        {
+          "a": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1/2026-10-18_23-47-33",
+          "b": "logs/backup/Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1/2026-10-18_23-47-33",
+          "common": 237,
+          "different": [],
+          "prefix": [
+            "events.out.tfevents.1792334868.irol-System-Product-Name.1286432.0"
+          ],
+          "only_a": [
+            "model_11650.pt",
+            "model_11700.pt",
+            "model_11750.pt",
+            "model_11800.pt",
+            "model_11850.pt",
+            "model_11900.pt",
+            "model_11950.pt",
+            "model_12000.pt",
+            "model_12050.pt",
+            "model_12100.pt",
+            "model_12150.pt",
+            "model_12200.pt",
+            "model_12250.pt",
+            "model_12300.pt"
+          ],
+          "only_b": [
+            "exported/policy.onnx",
+            "exported/policy.pt"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2026-10-13_17-00-33_baseline_mass_z9cm_1rad",
+      "paths": [
+        "logs/TEMP/B1/logs/backup/Isaac-Inspire-Sweep-Baseline-v0/2026-10-13_17-00-33_baseline_mass_z9cm_1rad",
+        "logs/backup/Isaac-Inspire-Sweep-Baseline-v0/2026-10-13_17-00-33_baseline_mass_z9cm_1rad"
+      ],
+      "pairs": [
+        {
+          "a": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Sweep-Baseline-v0/2026-10-13_17-00-33_baseline_mass_z9cm_1rad",
+          "b": "logs/backup/Isaac-Inspire-Sweep-Baseline-v0/2026-10-13_17-00-33_baseline_mass_z9cm_1rad",
+          "common": 789,
+          "different": [],
+          "prefix": [
+            "events.out.tfevents.1791878447.irol-System-Product-Name.936247.0"
+          ],
+          "only_a": [
+            "model_39250.pt",
+            "model_39300.pt",
+            "model_39350.pt",
+            "model_39400.pt",
+            "model_39450.pt",
+            "model_39500.pt",
+            "model_39550.pt",
+            "model_39600.pt",
+            "model_39650.pt",
+            "model_39700.pt",
+            "model_39750.pt",
+            "model_39800.pt",
+            "model_39850.pt",
+            "model_39900.pt",
+            "model_39950.pt",
+            "model_40000.pt",
+            "model_40050.pt",
+            "model_40100.pt",
+            "model_40150.pt",
+            "model_40200.pt",
+            "model_40250.pt",
+            "model_40300.pt",
+            "model_40350.pt",
+            "model_40400.pt",
+            "model_40450.pt",
+            "model_40500.pt",
+            "model_40550.pt",
+            "model_40600.pt",
+            "model_40650.pt",
+            "model_40700.pt",
+            "model_40750.pt",
+            "model_40800.pt",
+            "model_40850.pt",
+            "model_40900.pt",
+            "model_40950.pt",
+            "model_41000.pt",
+            "model_41050.pt",
+            "model_41100.pt",
+            "model_41150.pt",
+            "model_41200.pt",
+            "model_41250.pt",
+            "model_41300.pt",
+            "model_41350.pt",
+            "model_41400.pt",
+            "model_41450.pt",
+            "model_41500.pt",
+            "model_41550.pt",
+            "model_41600.pt",
+            "model_41650.pt",
+            "model_41700.pt",
+            "model_41750.pt",
+            "model_41800.pt",
+            "model_41850.pt",
+            "model_41900.pt",
+            "model_41950.pt",
+            "model_42000.pt",
+            "model_42050.pt",
+            "model_42100.pt",
+            "model_42150.pt",
+            "model_42200.pt",
+            "model_42250.pt",
+            "model_42300.pt",
+            "model_42350.pt",
+            "model_42400.pt",
+            "model_42450.pt",
+            "model_42500.pt",
+            "model_42550.pt",
+            "model_42600.pt",
+            "model_42650.pt",
+            "model_42700.pt",
+            "model_42750.pt",
+            "model_42800.pt",
+            "model_42850.pt",
+            "model_42900.pt",
+            "model_42950.pt",
+            "model_43000.pt",
+            "model_43050.pt",
+            "model_43100.pt",
+            "model_43150.pt",
+            "model_43200.pt",
+            "model_43250.pt",
+            "model_43300.pt",
+            "model_43350.pt",
+            "model_43400.pt",
+            "model_43450.pt",
+            "model_43500.pt",
+            "model_43550.pt",
+            "model_43600.pt",
+            "model_43650.pt",
+            "model_43700.pt",
+            "model_43750.pt",
+            "model_43800.pt",
+            "model_43850.pt",
+            "model_43900.pt",
+            "model_43950.pt",
+            "model_44000.pt",
+            "model_44050.pt",
+            "model_44100.pt",
+            "model_44150.pt",
+            "model_44200.pt",
+            "model_44250.pt",
+            "model_44300.pt",
+            "model_44350.pt",
+            "model_44400.pt",
+            "model_44450.pt",
+            "model_44500.pt",
+            "model_44550.pt",
+            "model_44600.pt",
+            "model_44650.pt",
+            "model_44700.pt",
+            "model_44750.pt",
+            "model_44800.pt",
+            "model_44850.pt",
+            "model_44900.pt",
+            "model_44950.pt",
+            "model_45000.pt",
+            "model_45050.pt",
+            "model_45100.pt",
+            "model_45150.pt",
+            "model_45200.pt",
+            "model_45250.pt",
+            "model_45300.pt",
+            "model_45350.pt",
+            "model_45400.pt",
+            "model_45450.pt",
+            "model_45500.pt",
+            "model_45550.pt",
+            "model_45600.pt",
+            "model_45650.pt",
+            "model_45700.pt",
+            "model_45750.pt",
+            "model_45800.pt",
+            "model_45850.pt",
+            "model_45900.pt",
+            "model_45950.pt",
+            "model_46000.pt",
+            "model_46050.pt",
+            "model_46100.pt",
+            "model_46150.pt",
+            "model_46200.pt",
+            "model_46250.pt",
+            "model_46300.pt",
+            "model_46350.pt",
+            "model_46400.pt",
+            "model_46450.pt",
+            "model_46500.pt",
+            "model_46550.pt"
+          ],
+          "only_b": []
+        }
+      ]
+    },
+    {
+      "name": "2026-10-15_16-53-45_dex_best_distance",
+      "paths": [
+        "logs/TEMP/B1/logs/backup/Isaac-Inspire-Dex-Omni-v0/2026-10-15_16-53-45_dex_best_distance",
+        "logs/backup/Isaac-Inspire-Dex-Omni-v0/2026-10-15_16-53-45_dex_best_distance"
+      ],
+      "pairs": [
+        {
+          "a": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Dex-Omni-v0/2026-10-15_16-53-45_dex_best_distance",
+          "b": "logs/backup/Isaac-Inspire-Dex-Omni-v0/2026-10-15_16-53-45_dex_best_distance",
+          "common": 75,
+          "different": [],
+          "prefix": [
+            "events.out.tfevents.1792050839.irol-System-Product-Name.1093672.0"
+          ],
+          "only_a": [
+            "model_3550.pt",
+            "model_3600.pt",
+            "model_3650.pt",
+            "model_3700.pt",
+            "model_3750.pt",
+            "model_3800.pt",
+            "model_3850.pt",
+            "model_3900.pt",
+            "model_3950.pt",
+            "model_4000.pt",
+            "model_4050.pt",
+            "model_4100.pt",
+            "model_4150.pt",
+            "model_4200.pt",
+            "model_4250.pt",
+            "model_4300.pt",
+            "model_4350.pt",
+            "model_4400.pt",
+            "model_4450.pt",
+            "model_4500.pt",
+            "model_4550.pt",
+            "model_4600.pt",
+            "model_4650.pt",
+            "model_4700.pt",
+            "model_4750.pt",
+            "model_4800.pt",
+            "model_4850.pt",
+            "model_4900.pt",
+            "model_4950.pt",
+            "model_5000.pt",
+            "model_5050.pt",
+            "model_5100.pt",
+            "model_5150.pt",
+            "model_5200.pt",
+            "model_5250.pt",
+            "model_5300.pt",
+            "model_5350.pt",
+            "model_5400.pt",
+            "model_5450.pt",
+            "model_5500.pt",
+            "model_5550.pt",
+            "model_5600.pt",
+            "model_5650.pt",
+            "model_5700.pt",
+            "model_5750.pt",
+            "model_5800.pt",
+            "model_5850.pt",
+            "model_5900.pt",
+            "model_5950.pt",
+            "model_6000.pt",
+            "model_6050.pt",
+            "model_6100.pt",
+            "model_6150.pt",
+            "model_6200.pt",
+            "model_6250.pt",
+            "model_6300.pt",
+            "model_6350.pt",
+            "model_6400.pt",
+            "model_6450.pt",
+            "model_6500.pt",
+            "model_6550.pt",
+            "model_6600.pt",
+            "model_6650.pt",
+            "model_6700.pt",
+            "model_6750.pt",
+            "model_6800.pt",
+            "model_6850.pt",
+            "model_6900.pt",
+            "model_6950.pt"
+          ],
+          "only_b": [
+            "exported/policy.onnx",
+            "exported/policy.pt"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2026-10-16_19-13-47",
+      "paths": [
+        "logs/TEMP/Server/logs/backup/Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0/2026-10-16_19-13-47",
+        "logs/backup/Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0/2026-10-16_19-13-47"
+      ],
+      "pairs": [
+        {
+          "a": "logs/TEMP/Server/logs/backup/Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0/2026-10-16_19-13-47",
+          "b": "logs/backup/Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0/2026-10-16_19-13-47",
+          "common": 1805,
+          "different": [],
+          "prefix": [],
+          "only_a": [],
+          "only_b": [
+            "exported/policy.onnx",
+            "exported/policy.pt",
+            "videos/play/rl-video-step-0.mp4"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2026-10-15_22-04-26_dex_renewal_v0",
+      "paths": [
+        "logs/TEMP/Server/logs/backup/Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0/2026-10-15_22-04-26_dex_renewal_v0",
+        "logs/backup/Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0/2026-10-15_22-04-26_dex_renewal_v0"
+      ],
+      "pairs": [
+        {
+          "a": "logs/TEMP/Server/logs/backup/Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0/2026-10-15_22-04-26_dex_renewal_v0",
+          "b": "logs/backup/Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0/2026-10-15_22-04-26_dex_renewal_v0",
+          "common": 620,
+          "different": [],
+          "prefix": [
+            "events.out.tfevents.1792069477.ssu-System-Product-Name.1507368.0"
+          ],
+          "only_a": [
+            "model_30800.pt",
+            "model_30850.pt",
+            "model_30900.pt",
+            "model_30950.pt",
+            "model_31000.pt",
+            "model_31050.pt",
+            "model_31100.pt",
+            "model_31150.pt",
+            "model_31200.pt",
+            "model_31250.pt",
+            "model_31300.pt",
+            "model_31350.pt",
+            "model_31400.pt",
+            "model_31450.pt",
+            "model_31500.pt",
+            "model_31550.pt",
+            "model_31600.pt",
+            "model_31650.pt",
+            "model_31700.pt",
+            "model_31750.pt",
+            "model_31800.pt",
+            "model_31850.pt",
+            "model_31900.pt",
+            "model_31950.pt",
+            "model_32000.pt",
+            "model_32050.pt",
+            "model_32100.pt",
+            "model_32150.pt",
+            "model_32200.pt",
+            "model_32250.pt",
+            "model_32300.pt",
+            "model_32350.pt",
+            "model_32400.pt",
+            "model_32450.pt",
+            "model_32500.pt",
+            "model_32550.pt",
+            "model_32600.pt",
+            "model_32650.pt",
+            "model_32700.pt",
+            "model_32750.pt",
+            "model_32800.pt",
+            "model_32850.pt",
+            "model_32900.pt",
+            "model_32950.pt",
+            "model_33000.pt",
+            "model_33050.pt",
+            "model_33100.pt",
+            "model_33150.pt",
+            "model_33200.pt",
+            "model_33250.pt",
+            "model_33300.pt",
+            "model_33350.pt",
+            "model_33400.pt",
+            "model_33450.pt",
+            "model_33500.pt",
+            "model_33550.pt",
+            "model_33600.pt",
+            "model_33650.pt",
+            "model_33700.pt",
+            "model_33750.pt"
+          ],
+          "only_b": [
+            "exported/policy.onnx",
+            "exported/policy.pt",
+            "videos/play/rl-video-step-0.mp4"
+          ]
+        }
+      ]
+    }
+  ],
+  "incomplete_run": {
+    "source": "logs/TEMP/Server/logs/backup/Isaac-Inspire-Sweep-Realistic-Physics-v0/2026-10-13_17-39-41_realistic_mass_friction",
+    "existing": "logs/backup/Isaac-Inspire-Sweep-Realistic-Physics-v0/2026-10-13_17-39-41_realistic_mass_friction",
+    "identical": 132,
+    "different": [
+      "model_6750.pt",
+      "exported/policy.pt",
+      "exported/policy.onnx"
+    ]
+  },
+  "actions": [
+    {
+      "source": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Contact-Sweep-v0/2026-10-20_14-05-34",
+      "action": "move",
+      "destination": "logs/backup/Isaac-Inspire-Contact-Sweep-v0/2026-10-20_14-05-34",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Dex-Omni-v0/2026-10-15_15-14-04_dex_best_distance",
+      "action": "move",
+      "destination": "logs/backup/Isaac-Inspire-Dex-Omni-v0/2026-10-15_15-14-04_dex_best_distance",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Dex-Omni-v0/2026-10-15_16-53-45_dex_best_distance",
+      "action": "move",
+      "destination": "logs/backup/Isaac-Inspire-Dex-Omni-v0/B1__2026-10-15_16-53-45_dex_best_distance",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-OSC-v2/2026-10-18_23-23-59",
+      "action": "move",
+      "destination": "logs/backup/Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-OSC-v2/2026-10-18_23-23-59",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1/2026-10-16_20-35-21",
+      "action": "move",
+      "destination": "logs/backup/Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1/2026-10-16_20-35-21",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1/2026-10-18_23-47-33",
+      "action": "move",
+      "destination": "logs/backup/Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1/B1__2026-10-18_23-47-33",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1/2026-10-19_12-15-47",
+      "action": "move",
+      "destination": "logs/backup/Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1/2026-10-19_12-15-47",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Sweep-Baseline-v0/2026-10-13_17-00-33_baseline_mass_z9cm_1rad",
+      "action": "move",
+      "destination": "logs/backup/Isaac-Inspire-Sweep-Baseline-v0/B1__2026-10-13_17-00-33_baseline_mass_z9cm_1rad",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Sweep-Omni-v0/2026-10-14_16-16-28_centered_spawn_goal15cm",
+      "action": "move",
+      "destination": "logs/backup/Isaac-Inspire-Sweep-Omni-v0/B1__2026-10-14_16-16-28_centered_spawn_goal15cm",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Sweep-Omni-v0/2026-10-14_22-34-42_centered_spawn_goal15cm_arm2rad",
+      "action": "delete_duplicate",
+      "preferred": "logs/backup/Isaac-Inspire-Sweep-Omni-v0/2026-10-14_22-34-42_centered_spawn_goal15cm_arm2rad",
+      "reason": "기존 보관본에 모든 파일의 동일 내용 존재"
+    },
+    {
+      "source": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Sweep-Omni-v1/2026-10-15_11-37-21_centered_spawn_goal15cm_arm2rad",
+      "action": "move",
+      "destination": "logs/backup/Isaac-Inspire-Sweep-Omni-v1/2026-10-15_11-37-21_centered_spawn_goal15cm_arm2rad",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/B1/logs/backup/Unregistered/2026-08-13_21-41-17",
+      "action": "move",
+      "destination": "logs/backup/Unregistered/2026-08-13_21-41-17",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/B1/logs/backup/Unregistered/2026-08-25_01-19-13",
+      "action": "move",
+      "destination": "logs/backup/Unregistered/2026-08-25_01-19-13",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/B1/logs/backup/Unregistered/2026-10-06_13-18-48",
+      "action": "move",
+      "destination": "logs/backup/Unregistered/2026-10-06_13-18-48",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/B1/logs/resilient/Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_0/2026-10-22_06-35-02_bc8551cf",
+      "action": "move",
+      "destination": "logs/backup/Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_0/2026-10-22_06-35-02_bc8551cf",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/B1/logs/resilient/Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1/2026-10-22_08-57-45_21191bc6",
+      "action": "move",
+      "destination": "logs/backup/Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1/2026-10-22_08-57-45_21191bc6",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/B1/logs/resilient/Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3/2026-10-22_10-17-25_512d0a65",
+      "action": "move",
+      "destination": "logs/backup/Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3/2026-10-22_10-17-25_512d0a65",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/Server/logs/backup/Isaac-Inspire-Contact-Sweep-v0/2026-10-20_13-30-06",
+      "action": "move",
+      "destination": "logs/backup/Isaac-Inspire-Contact-Sweep-v0/2026-10-20_13-30-06",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/Server/logs/backup/Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0/2026-10-15_21-12-26_dex_renewal_v0",
+      "action": "move",
+      "destination": "logs/backup/Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0/2026-10-15_21-12-26_dex_renewal_v0",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/Server/logs/backup/Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0/2026-10-15_22-04-26_dex_renewal_v0",
+      "action": "move",
+      "destination": "logs/backup/Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0/Server__2026-10-15_22-04-26_dex_renewal_v0",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/Server/logs/backup/Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0/2026-10-16_12-41-16_dex_renewal_v0",
+      "action": "move",
+      "destination": "logs/backup/Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0/2026-10-16_12-41-16_dex_renewal_v0",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/Server/logs/backup/Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0/2026-10-16_15-26-16",
+      "action": "move",
+      "destination": "logs/backup/Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0/2026-10-16_15-26-16",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/Server/logs/backup/Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0/2026-10-16_19-13-47",
+      "action": "delete_duplicate",
+      "preferred": "logs/backup/Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0/2026-10-16_19-13-47",
+      "reason": "기존 보관본에 모든 파일의 동일 내용 존재"
+    },
+    {
+      "source": "logs/TEMP/Server/logs/backup/Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1/2026-10-19_12-15-47",
+      "action": "delete_duplicate",
+      "preferred": "logs/TEMP/B1/logs/backup/Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1/2026-10-19_12-15-47",
+      "reason": "동일 설정·공통 checkpoint 전체 일치·TensorBoard 동일 prefix; B1 41028회 > Server 39037회. 짧은 사본의 exported 2개도 함께 제거"
+    },
+    {
+      "source": "logs/TEMP/Server/logs/backup/Isaac-Inspire-Sweep-Omni-v2/2026-10-15_13-50-41_live_reach200_sweep400",
+      "action": "move",
+      "destination": "logs/backup/Isaac-Inspire-Sweep-Omni-v2/2026-10-15_13-50-41_live_reach200_sweep400",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/Server/logs/backup/Isaac-Inspire-Sweep-Realistic-Physics-v0/2026-10-13_17-39-41_realistic_mass_friction",
+      "action": "move",
+      "destination": "logs/backup/Unregistered/2026-10-13_17-39-41_realistic_mass_friction",
+      "reason": "params/TensorBoard 없음; 기존 동명 run과 checkpoint 1개 및 exported 불일치. 식별 불확실하여 전체 보존"
+    },
+    {
+      "source": "logs/TEMP/Server/logs/backup/Unregistered/2026-08-10_22-01-08",
+      "action": "move",
+      "destination": "logs/backup/Unregistered/2026-08-10_22-01-08",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/Server/logs/backup/Unregistered/2026-08-10_22-32-40",
+      "action": "move",
+      "destination": "logs/backup/Unregistered/2026-08-10_22-32-40",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/Server/logs/backup/Unregistered/2026-08-11_11-21-29",
+      "action": "move",
+      "destination": "logs/backup/Unregistered/2026-08-11_11-21-29",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/Server/logs/backup/Unregistered/2026-08-11_21-01-27",
+      "action": "move",
+      "destination": "logs/backup/Unregistered/2026-08-11_21-01-27",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/Server/logs/backup/Unregistered/2026-08-12_20-20-09",
+      "action": "move",
+      "destination": "logs/backup/Unregistered/2026-08-12_20-20-09",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/Server/logs/backup/Unregistered/2026-08-14_22-50-21",
+      "action": "move",
+      "destination": "logs/backup/Unregistered/2026-08-14_22-50-21",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/Server/logs/backup/Unregistered/2026-08-17_14-30-47",
+      "action": "move",
+      "destination": "logs/backup/Unregistered/2026-08-17_14-30-47",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/Server/logs/backup/Unregistered/2026-08-21_18-18-18",
+      "action": "move",
+      "destination": "logs/backup/Unregistered/2026-08-21_18-18-18",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/Server/logs/backup/Unregistered/2026-08-25_00-58-46",
+      "action": "move",
+      "destination": "logs/backup/Unregistered/2026-08-25_00-58-46",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/Server/logs/backup/Unregistered/2026-08-25_22-44-28",
+      "action": "move",
+      "destination": "logs/backup/Unregistered/2026-08-25_22-44-28",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/Server/logs/backup/Unregistered/2026-08-26_23-25-47",
+      "action": "move",
+      "destination": "logs/backup/Unregistered/2026-08-26_23-25-47",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/Server/logs/backup/Unregistered/2026-08-27_11-14-32",
+      "action": "move",
+      "destination": "logs/backup/Unregistered/2026-08-27_11-14-32",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/Server/logs/backup/Unregistered/2026-08-28_22-56-51",
+      "action": "move",
+      "destination": "logs/backup/Unregistered/2026-08-28_22-56-51",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/Server/logs/backup/Unregistered/2026-09-01_22-39-00",
+      "action": "move",
+      "destination": "logs/backup/Unregistered/2026-09-01_22-39-00",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/Server/logs/backup/Unregistered/2026-09-04_21-33-15",
+      "action": "move",
+      "destination": "logs/backup/Unregistered/2026-09-04_21-33-15",
+      "reason": "500회 이상 보존"
+    },
+    {
+      "source": "logs/TEMP/Server/logs/backup/Unregistered/2026-09-07_21-58-38",
+      "action": "move",
+      "destination": "logs/backup/Unregistered/2026-09-07_21-58-38",
+      "reason": "500회 이상 보존"
+    }
+  ],
+  "verification": {
+    "moved_directories": 39,
+    "moved_leaf_runs": 48,
+    "deleted_duplicate_directories": 3,
+    "deleted_files": 2668,
+    "deleted_bytes": 3699012402,
+    "preserved_files": 24560,
+    "temp_empty": true,
+    "existing_backup_unchanged": true,
+    "rsl_rl_unchanged": true
+  }
+}

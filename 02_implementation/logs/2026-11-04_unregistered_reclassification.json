@@ -1,0 +1,2428 @@
+{
+  "registry": {
+    "Isaac-Inspire-Revision-v0": {
+      "id": "Isaac-Inspire-Revision-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.revision:RevisionEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.revision_envs:RevisionEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.revision_ppo_cfg:RevisionPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Revision-v1": {
+      "id": "Isaac-Inspire-Revision-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.revision:RevisionEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.revision_envs:RevisionV1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.revision_ppo_cfg:RevisionV1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Revision-Test-v1": {
+      "id": "Isaac-Inspire-Revision-Test-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.revision:RevisionEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.revision_envs:RevisionV1TestEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.revision_ppo_cfg:RevisionV1TestPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Revision-v2": {
+      "id": "Isaac-Inspire-Revision-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.revision:RevisionEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.revision_envs:RevisionV2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.revision_ppo_cfg:RevisionV2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Revision-Test-v2": {
+      "id": "Isaac-Inspire-Revision-Test-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.revision:RevisionEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.revision_envs:RevisionV2TestEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.revision_ppo_cfg:RevisionV2TestPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Revision-Test-v2-GT": {
+      "id": "Isaac-Inspire-Revision-Test-v2-GT",
+      "entry_point": "inspire_sweep_baseline.runtime.revision:RevisionEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.revision_envs:RevisionV2TestGTEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.revision_ppo_cfg:RevisionV2TestGTPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1_1": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1_1",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV1_1_1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV1_1_1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1_2": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1_2",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV1_1_2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV1_1_2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_4": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_4",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV1_4EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV1_4PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV1_3EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV1_3PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3_1": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3_1",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV1_3_1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV1_3_1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV1_1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV1_1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_2": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_2",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV1_2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV1_2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_0": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_0",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV1_0EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV1_0PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v2": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v3": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v3",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV3EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV3PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v0": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-FT-Test-v0": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-FT-Test-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter:ContactSweepClutterFTTestEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_envs:ContactSweepClutterFTTestEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_ppo_cfg:ContactSweepClutterV1CurriculumPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Curriculum-v1": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Curriculum-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter:ContactSweepClutterV1CurriculumEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_envs:ContactSweepClutterV1CurriculumEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_ppo_cfg:ContactSweepClutterV1CurriculumPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-v2": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter:ContactSweepClutterV2Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_envs:ContactSweepClutterV2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_ppo_cfg:ContactSweepClutterV2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-v1": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter:ContactSweepClutterV1Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_envs:ContactSweepClutterV1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_ppo_cfg:ContactSweepClutterV1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-v0": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter:ContactSweepClutterEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_envs:ContactSweepClutterEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_ppo_cfg:ContactSweepClutterPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-v0": {
+      "id": "Isaac-Inspire-Contact-Sweep-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep:ContactSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_envs:ContactSweepEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_ppo_cfg:ContactSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Baseline-v0": {
+      "id": "Isaac-Inspire-Sweep-Baseline-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_envs:InspireSweepEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Realistic-Physics-v0": {
+      "id": "Isaac-Inspire-Sweep-Realistic-Physics-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_envs:InspireSweepRealisticPhysicsEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepRealisticPhysicsPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Realistic-Physics-Initial-Privileged-v0": {
+      "id": "Isaac-Inspire-Sweep-Realistic-Physics-Initial-Privileged-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_envs:InspireSweepRealisticInitialPrivilegedEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepRealisticInitialPrivilegedPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Omni-v0": {
+      "id": "Isaac-Inspire-Sweep-Omni-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_envs:InspireSweepOmniEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Omni-v1": {
+      "id": "Isaac-Inspire-Sweep-Omni-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_envs:InspireSweepOmniV1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Omni-v2": {
+      "id": "Isaac-Inspire-Sweep-Omni-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_envs:InspireSweepOmniV2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Dex-Omni-v0": {
+      "id": "Isaac-Inspire-Dex-Omni-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_envs:InspireDexOmniEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Omni-v3": {
+      "id": "Isaac-Inspire-Sweep-Omni-v3",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_envs:InspireSweepOmniV3EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Omni-v4": {
+      "id": "Isaac-Inspire-Sweep-Omni-v4",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_envs:InspireSweepOmniV4EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Omni-Renewal-v0": {
+      "id": "Isaac-Inspire-Sweep-Omni-Renewal-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_renewal_envs:InspireSweepOmniRenewalEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Omni-Renewal-OSC-v0": {
+      "id": "Isaac-Inspire-Sweep-Omni-Renewal-OSC-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_renewal_envs:InspireSweepOmniRenewalOSCEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0": {
+      "id": "Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_renewal_envs:InspireDexSweepOmniRenewalEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Baseline-Tactile-v0": {
+      "id": "Isaac-Inspire-Sweep-Baseline-Tactile-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_envs:InspireSweepTactileEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepTactilePPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Tactile-Sweep-Omni-Renewal-v0": {
+      "id": "Isaac-Inspire-Tactile-Sweep-Omni-Renewal-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_renewal_envs:InspireTactileSweepOmniRenewalEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_omni_renewal_ppo_cfg:InspireTactileSweepOmniRenewalPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v0": {
+      "id": "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_renewal_envs:InspireDexTactileSweepOmniRenewalEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_omni_renewal_ppo_cfg:InspireDexTactileSweepOmniRenewalPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1": {
+      "id": "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_renewal_envs:InspireDexTactileSweepOmniRenewalV1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_omni_renewal_ppo_cfg:InspireDexTactileSweepOmniRenewalV1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v2": {
+      "id": "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_renewal_envs:InspireDexTactileSweepOmniRenewalV2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_omni_renewal_ppo_cfg:InspireDexTactileSweepOmniRenewalV2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v3": {
+      "id": "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v3",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_renewal_envs:InspireDexTactileSweepOmniRenewalV3EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_omni_renewal_ppo_cfg:InspireDexTactileSweepOmniRenewalV3PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-OSC-v2": {
+      "id": "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-OSC-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_renewal_envs:InspireDexTactileSweepOmniRenewalV2OSCEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_omni_renewal_ppo_cfg:InspireDexTactileSweepOmniRenewalV2OSCPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v0": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_envs:FusionHoldingV0EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_ppo_cfg:FusionHoldingV0PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v0": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_envs:FusionHoldingOSCV0EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_ppo_cfg:FusionHoldingOSCV0PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v0": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_object_random_envs:FusionHoldingOSCObjectRandomV0EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_object_random_ppo_cfg:FusionHoldingOSCObjectRandomV0PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v1": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_envs:FusionHoldingV1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_ppo_cfg:FusionHoldingV1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v1": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_envs:FusionHoldingOSCV1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_ppo_cfg:FusionHoldingOSCV1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v1": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_object_random_envs:FusionHoldingOSCObjectRandomV1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_object_random_ppo_cfg:FusionHoldingOSCObjectRandomV1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v2": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_envs:FusionHoldingOSCV2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_ppo_cfg:FusionHoldingOSCV2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v2": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_envs:FusionHoldingV2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_ppo_cfg:FusionHoldingV2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-ObjectRandom-Test-v0": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-ObjectRandom-Test-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_object_random_envs:FusionHoldingObjectRandomTestV0EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_object_random_ppo_cfg:FusionHoldingObjectRandomTestV0PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v3": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v3",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_envs:FusionHoldingV3EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_ppo_cfg:FusionHoldingV3PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v3": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v3",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_envs:FusionHoldingOSCV3EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_ppo_cfg:FusionHoldingOSCV3PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v2": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_object_random_envs:FusionHoldingOSCObjectRandomV2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_object_random_ppo_cfg:FusionHoldingOSCObjectRandomV2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v4": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v4",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_envs:FusionHoldingV4EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_ppo_cfg:FusionHoldingV4PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v4": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v4",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_envs:FusionHoldingOSCV4EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_ppo_cfg:FusionHoldingOSCV4PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-v0": {
+      "id": "Isaac-Inspire-Final-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-v1": {
+      "id": "Isaac-Inspire-Final-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalV1Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalV1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalV1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-v2": {
+      "id": "Isaac-Inspire-Final-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalV1Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalV2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalV2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-v1-1": {
+      "id": "Isaac-Inspire-Final-v1-1",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalV1Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalV1_1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalV1_1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-Test-v1": {
+      "id": "Isaac-Inspire-Final-Test-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalV1Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalV1TestEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalV1TestPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-GoalAccuracy-v0": {
+      "id": "Isaac-Inspire-Final-GoalAccuracy-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalGoalAccuracyEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalGoalAccuracyEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalGoalAccuracyPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-GoalAccuracy-v1": {
+      "id": "Isaac-Inspire-Final-GoalAccuracy-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalGoalAccuracyEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalGoalAccuracyV1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalGoalAccuracyV1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-Test-v2": {
+      "id": "Isaac-Inspire-Final-Test-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalV1Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalV2TestEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalV2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v3": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v3",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_object_random_envs:FusionHoldingOSCObjectRandomV3EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_object_random_ppo_cfg:FusionHoldingOSCObjectRandomV3PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-GoalAccuracy-v0_1": {
+      "id": "Isaac-Inspire-Final-GoalAccuracy-v0_1",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalGoalAccuracyEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalGoalAccuracyV0_1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalGoalAccuracyV0_1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-GoalAccuracy-v0_2": {
+      "id": "Isaac-Inspire-Final-GoalAccuracy-v0_2",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalGoalAccuracyEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalGoalAccuracyV0_2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalGoalAccuracyV0_2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-GoalAccuracy-v0_3": {
+      "id": "Isaac-Inspire-Final-GoalAccuracy-v0_3",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalGoalAccuracyEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalGoalAccuracyV0_3EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalGoalAccuracyV0_3PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-GoalAccuracy-v0_2_1": {
+      "id": "Isaac-Inspire-Final-GoalAccuracy-v0_2_1",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalGoalAccuracyV0_2_1Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalGoalAccuracyV0_2_1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalGoalAccuracyV0_2_1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-GoalAccuracy-v0_2_2": {
+      "id": "Isaac-Inspire-Final-GoalAccuracy-v0_2_2",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalGoalAccuracyV0_2_2Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalGoalAccuracyV0_2_2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalGoalAccuracyV0_2_2PPORunnerCfg"
+      }
+    }
+  },
+  "runs": [
+    {
+      "run": "2026-07-16_20-17-38",
+      "experiment": "ur5e_osc_sweep",
+      "modules": [
+        "sweep_rl.osc_sweep.assets",
+        "sweep_rl.osc_sweep.mdp.actions",
+        "sweep_rl.osc_sweep.mdp.commands",
+        "sweep_rl.osc_sweep.mdp.events",
+        "sweep_rl.osc_sweep.mdp.observations",
+        "sweep_rl.osc_sweep.mdp.rewards",
+        "sweep_rl.osc_sweep.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-07-17_16-54-08",
+      "experiment": "ur5e_osc_sweep_wide_randomization",
+      "modules": [
+        "sweep_rl.osc_sweep.assets",
+        "sweep_rl.osc_sweep.mdp.actions",
+        "sweep_rl.osc_sweep.mdp.commands",
+        "sweep_rl.osc_sweep.mdp.events",
+        "sweep_rl.osc_sweep.mdp.observations",
+        "sweep_rl.osc_sweep.mdp.rewards",
+        "sweep_rl.osc_sweep.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-07-18_23-25-33",
+      "experiment": "ur5e_osc_sweep_constant_velocity",
+      "modules": [
+        "sweep_rl.osc_sweep.assets",
+        "sweep_rl.osc_sweep.mdp.actions",
+        "sweep_rl.osc_sweep.mdp.commands",
+        "sweep_rl.osc_sweep.mdp.events",
+        "sweep_rl.osc_sweep.mdp.observations",
+        "sweep_rl.osc_sweep.mdp.rewards",
+        "sweep_rl.osc_sweep.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-07-19_14-23-29",
+      "experiment": "ur5e_osc_sweep_constant_velocity_upright_random_size",
+      "modules": [
+        "sweep_rl.osc_sweep.assets",
+        "sweep_rl.osc_sweep.mdp.actions",
+        "sweep_rl.osc_sweep.mdp.commands",
+        "sweep_rl.osc_sweep.mdp.events",
+        "sweep_rl.osc_sweep.mdp.observations",
+        "sweep_rl.osc_sweep.mdp.rewards",
+        "sweep_rl.osc_sweep.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-07-19_19-55-35",
+      "experiment": "ur5e_osc_sweep_constant_velocity_upright_random_size_home",
+      "modules": [
+        "sweep_rl.osc_sweep.assets",
+        "sweep_rl.osc_sweep.mdp.actions",
+        "sweep_rl.osc_sweep.mdp.commands",
+        "sweep_rl.osc_sweep.mdp.events",
+        "sweep_rl.osc_sweep.mdp.observations",
+        "sweep_rl.osc_sweep.mdp.rewards",
+        "sweep_rl.osc_sweep.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-07-21_22-05-50",
+      "experiment": "ur5e_osc_sweep_independent",
+      "modules": [
+        "sweep_rl.osc_sweep.assets",
+        "sweep_rl.osc_sweep_independent.mdp.actions",
+        "sweep_rl.osc_sweep_independent.mdp.commands",
+        "sweep_rl.osc_sweep_independent.mdp.events",
+        "sweep_rl.osc_sweep_independent.mdp.observations",
+        "sweep_rl.osc_sweep_independent.mdp.rewards",
+        "sweep_rl.osc_sweep_independent.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-08-06_22-54-49",
+      "experiment": "ur5e_sweep_policy_cube",
+      "modules": [
+        "sweep_rl.sweep_policy_cube.mdp.commands",
+        "sweep_rl.sweep_policy_cube.mdp.events",
+        "sweep_rl.sweep_policy_cube.mdp.observations",
+        "sweep_rl.sweep_policy_cube.mdp.rewards",
+        "sweep_rl.sweep_policy_cube.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-08-07_12-04-12",
+      "experiment": "ur5e_sweep_policy_cube",
+      "modules": [
+        "sweep_rl.sweep_policy_cube.mdp.commands",
+        "sweep_rl.sweep_policy_cube.mdp.events",
+        "sweep_rl.sweep_policy_cube.mdp.observations",
+        "sweep_rl.sweep_policy_cube.mdp.rewards"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-08-07_16-42-37",
+      "experiment": "UR5e_shelf_sweep_random",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-08-07_21-57-53",
+      "experiment": "sweep_shelf_ur5e_gripper_cube_v1",
+      "modules": [
+        "sweep_rl.shelf_cube_pre_reach.mdp.observations",
+        "sweep_rl.shelf_cube_pre_reach.mdp.rewards",
+        "sweep_rl.shelf_cube_sweep.mdp.commands",
+        "sweep_rl.shelf_cube_sweep.mdp.rewards",
+        "sweep_rl.shelf_reach.mdp.rewards"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-08-08_16-37-47",
+      "experiment": "UR5e_shelf_sweep_random",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-08-10_03-46-24",
+      "experiment": null,
+      "modules": [],
+      "config_present": false
+    },
+    {
+      "run": "2026-08-10_21-38-23",
+      "experiment": "UR5e_single_object_shelf_sweep_random",
+      "modules": [
+        "single_object_sweep.mdp.commands.target_goal_command",
+        "single_object_sweep.mdp.events",
+        "single_object_sweep.mdp.observations",
+        "single_object_sweep.mdp.rewards",
+        "single_object_sweep.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-08-10_22-01-08",
+      "experiment": "UR5e_single_object_shelf_sweep_random",
+      "modules": [
+        "single_object_sweep.mdp.commands.target_goal_command",
+        "single_object_sweep.mdp.events",
+        "single_object_sweep.mdp.observations",
+        "single_object_sweep.mdp.rewards",
+        "single_object_sweep.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-08-10_22-32-40",
+      "experiment": "UR5e_single_object_shelf_sweep_diff_ik_abs_v2",
+      "modules": [
+        "single_object_sweep.mdp.actions",
+        "single_object_sweep.mdp.commands.target_goal_command",
+        "single_object_sweep.mdp.events",
+        "single_object_sweep.mdp.observations",
+        "single_object_sweep.mdp.rewards",
+        "single_object_sweep.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-08-11_11-21-29",
+      "experiment": "UR5e_single_object_shelf_sweep_diff_ik_abs_v2",
+      "modules": [
+        "single_object_sweep.mdp.actions",
+        "single_object_sweep.mdp.commands.target_goal_command",
+        "single_object_sweep.mdp.events",
+        "single_object_sweep.mdp.observations",
+        "single_object_sweep.mdp.rewards",
+        "single_object_sweep.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-08-11_21-01-27",
+      "experiment": "UR5e_shelf_sweep_random",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-08-12_20-20-09",
+      "experiment": "UR5e_shelf_sweep_random",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-08-13_21-41-17",
+      "experiment": "UR5e_shelf_sweep_random",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-08-14_22-48-02",
+      "experiment": "UR5e_shelf_sweep_random",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-08-14_22-50-21",
+      "experiment": "UR5e_shelf_sweep_random",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-08-17_14-30-47",
+      "experiment": "UR5e_shelf_sweep_random",
+      "modules": [
+        "sweeping_policy.config.ur5e.joint_pos_random_single_v1_sweep_env_cfg",
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-08-18_13-33-22",
+      "experiment": "UR5e_shelf_sweep_random",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-08-18_13-35-05",
+      "experiment": "UR5e_shelf_sweep_random",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-08-18_13-36-15",
+      "experiment": "UR5e_shelf_sweep_random",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-08-18_13-42-38",
+      "experiment": "UR5e_shelf_sweep_random",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-08-18_13-56-18",
+      "experiment": "UR5e_shelf_sweep_random",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-08-18_22-58-07",
+      "experiment": "UR5e_shelf_sweep_random",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-08-21_18-18-18",
+      "experiment": "UR5e_shelf_sweep_random",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-08-25_00-58-46",
+      "experiment": "UR5e_shelf_sweep_random",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-08-25_01-19-13",
+      "experiment": "UR5e_shelf_sweep_random",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-08-25_22-44-28",
+      "experiment": "UR5e_shelf_sweep_random",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-08-26_23-25-47",
+      "experiment": "UR5e_shelf_sweep_random",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-08-27_11-14-32",
+      "experiment": "UR5e_shelf_sweep_random",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-08-28_22-56-51",
+      "experiment": "UR5e_shelf_sweep_random",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-09-01_12-00-12",
+      "experiment": "UR5e_shelf_sweep_random",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-09-01_22-39-00",
+      "experiment": "UR5e_shelf_sweep_random",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-09-04_21-33-15",
+      "experiment": "UR5e_shelf_sweep_random",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-09-07_21-58-38",
+      "experiment": "UR5e_shelf_sweep_random",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-09-26_20-47-07_quick-test",
+      "experiment": "UR5e_shelf_sweep_random",
+      "modules": [
+        "hand_manipulation_rl.assets.robot",
+        "hand_manipulation_rl.mdp.actions",
+        "hand_manipulation_rl.mdp.events",
+        "hand_manipulation_rl.mdp.observations",
+        "hand_manipulation_rl.mdp.rewards",
+        "hand_manipulation_rl.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-09-27_15-43-25",
+      "experiment": "UR5e_shelf_sweep_random",
+      "modules": [
+        "hand_manipulation_rl.assets.robot",
+        "hand_manipulation_rl.mdp.actions",
+        "hand_manipulation_rl.mdp.events",
+        "hand_manipulation_rl.mdp.observations",
+        "hand_manipulation_rl.mdp.rewards",
+        "hand_manipulation_rl.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-09-27_21-15-36",
+      "experiment": "UR5e_shelf_sweep_approach_v1",
+      "modules": [
+        "hand_manipulation_rl.assets.robot",
+        "hand_manipulation_rl.mdp.actions",
+        "hand_manipulation_rl.mdp.approach_events",
+        "hand_manipulation_rl.mdp.events",
+        "hand_manipulation_rl.mdp.rewards",
+        "hand_manipulation_rl.mdp.terminations",
+        "hand_manipulation_rl.mdp.v1_observations",
+        "hand_manipulation_rl.mdp.v1_rewards"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-09-28_02-45-16",
+      "experiment": "UR5e_shelf_sweep_approach_v2",
+      "modules": [
+        "hand_manipulation_rl.assets.robot",
+        "hand_manipulation_rl.mdp.actions",
+        "hand_manipulation_rl.mdp.approach_events",
+        "hand_manipulation_rl.mdp.events",
+        "hand_manipulation_rl.mdp.rewards",
+        "hand_manipulation_rl.mdp.terminations",
+        "hand_manipulation_rl.mdp.v1_observations",
+        "hand_manipulation_rl.mdp.v1_rewards"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-10-02_19-08-51",
+      "experiment": "hand_manipulation_test",
+      "modules": [
+        "hand_manipulation_test.assets.robot",
+        "hand_manipulation_test.mdp.actions",
+        "hand_manipulation_test.mdp.commands",
+        "hand_manipulation_test.mdp.events",
+        "hand_manipulation_test.mdp.observations",
+        "hand_manipulation_test.mdp.rewards"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-10-02_21-41-00",
+      "experiment": "hand_manipulation_contact",
+      "modules": [
+        "hand_manipulation_test.assets.contact_robot",
+        "hand_manipulation_test.mdp.actions",
+        "hand_manipulation_test.mdp.contact_commands",
+        "hand_manipulation_test.mdp.contact_events",
+        "hand_manipulation_test.mdp.contact_rewards",
+        "hand_manipulation_test.mdp.contact_terminations",
+        "hand_manipulation_test.mdp.events",
+        "hand_manipulation_test.mdp.observations",
+        "hand_manipulation_test.mdp.rewards"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-10-03_22-48-10",
+      "experiment": "hand_manipulation_push",
+      "modules": [
+        "hand_manipulation_test.assets.contact_robot",
+        "hand_manipulation_test.mdp.actions",
+        "hand_manipulation_test.mdp.events",
+        "hand_manipulation_test.mdp.observations",
+        "hand_manipulation_test.mdp.push_commands",
+        "hand_manipulation_test.mdp.push_events",
+        "hand_manipulation_test.mdp.push_rewards",
+        "hand_manipulation_test.mdp.push_terminations",
+        "hand_manipulation_test.mdp.rewards"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-10-04_22-06-26",
+      "experiment": "hand_manipulation_push",
+      "modules": [
+        "hand_manipulation_test.assets.contact_robot",
+        "hand_manipulation_test.mdp.actions",
+        "hand_manipulation_test.mdp.events",
+        "hand_manipulation_test.mdp.observations",
+        "hand_manipulation_test.mdp.push_commands",
+        "hand_manipulation_test.mdp.push_events",
+        "hand_manipulation_test.mdp.push_rewards",
+        "hand_manipulation_test.mdp.push_terminations",
+        "hand_manipulation_test.mdp.rewards"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-10-05_13-31-47",
+      "experiment": "hand_manipulation_push",
+      "modules": [
+        "hand_manipulation_test.assets.contact_robot",
+        "hand_manipulation_test.mdp.actions",
+        "hand_manipulation_test.mdp.events",
+        "hand_manipulation_test.mdp.observations",
+        "hand_manipulation_test.mdp.push_commands",
+        "hand_manipulation_test.mdp.push_events",
+        "hand_manipulation_test.mdp.push_rewards",
+        "hand_manipulation_test.mdp.push_terminations",
+        "hand_manipulation_test.mdp.rewards"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-10-05_22-17-17",
+      "experiment": "hand_manipulation_push_v1",
+      "modules": [
+        "hand_manipulation_test.assets.contact_robot",
+        "hand_manipulation_test.mdp.actions",
+        "hand_manipulation_test.mdp.events",
+        "hand_manipulation_test.mdp.observations",
+        "hand_manipulation_test.mdp.push_events",
+        "hand_manipulation_test.mdp.push_rewards",
+        "hand_manipulation_test.mdp.push_terminations",
+        "hand_manipulation_test.mdp.push_v1_actions",
+        "hand_manipulation_test.mdp.push_v1_commands",
+        "hand_manipulation_test.mdp.push_v1_events",
+        "hand_manipulation_test.mdp.push_v1_rewards",
+        "hand_manipulation_test.mdp.rewards"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-10-06_13-18-48",
+      "experiment": "hand_manipulation_push_v1",
+      "modules": [
+        "hand_manipulation_test.assets.push_v1_robot",
+        "hand_manipulation_test.mdp.actions",
+        "hand_manipulation_test.mdp.events",
+        "hand_manipulation_test.mdp.observations",
+        "hand_manipulation_test.mdp.push_events",
+        "hand_manipulation_test.mdp.push_rewards",
+        "hand_manipulation_test.mdp.push_terminations",
+        "hand_manipulation_test.mdp.push_v1_actions",
+        "hand_manipulation_test.mdp.push_v1_commands",
+        "hand_manipulation_test.mdp.push_v1_events",
+        "hand_manipulation_test.mdp.push_v1_rewards",
+        "hand_manipulation_test.mdp.rewards"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-10-06_20-44-41_sweep_policy_gate",
+      "experiment": "UR5e_shelf_sweep_inspire_right",
+      "modules": [
+        "hand_manipulation_rl.assets.robot",
+        "sweep_inspire_rl.mdp.actions",
+        "sweep_inspire_rl.mdp.events",
+        "sweep_inspire_rl.mdp.observations",
+        "sweep_inspire_rl.mdp.rewards",
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-10-08_13-43-42_fixed_height_penalty",
+      "experiment": "UR5e_shelf_sweep_inspire_right_v2",
+      "modules": [
+        "hand_manipulation_rl.assets.robot",
+        "sweep_inspire_rl.mdp.actions",
+        "sweep_inspire_rl.mdp.events",
+        "sweep_inspire_rl.mdp.observations",
+        "sweep_inspire_rl.mdp.rewards",
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-10-08_16-28-21_wrist_gate_up_alignment",
+      "experiment": "UR5e_shelf_sweep_inspire_right_v2",
+      "modules": [
+        "hand_manipulation_rl.assets.robot",
+        "sweep_inspire_rl.mdp.actions",
+        "sweep_inspire_rl.mdp.events",
+        "sweep_inspire_rl.mdp.observations",
+        "sweep_inspire_rl.mdp.rewards",
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-10-08_19-37-08_source_sweep_no_sensors",
+      "experiment": "UR5e_shelf_sweep_inspire_right_v2",
+      "modules": [
+        "hand_manipulation_rl.assets.robot",
+        "sweep_inspire_rl.mdp.actions",
+        "sweep_inspire_rl.mdp.events",
+        "sweep_inspire_rl.mdp.observations",
+        "sweep_inspire_rl.mdp.rewards",
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-10-08_20-54-43_center_reach_separate_reset",
+      "experiment": "UR5e_shelf_sweep_inspire_right_v1",
+      "modules": [
+        "hand_manipulation_rl.assets.robot",
+        "sweep_inspire_rl.mdp.actions",
+        "sweep_inspire_rl.mdp.events",
+        "sweep_inspire_rl.mdp.observations",
+        "sweep_inspire_rl.mdp.rewards",
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-10-08_21-25-24_inspire_open_joint_position",
+      "experiment": "UR5e_shelf_sweep_random_single_inspire_open",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations",
+        "sweeping_policy.src.ur5e_inspire_open"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-10-09_18-09-55_inspire_hand_2d",
+      "experiment": "UR5e_shelf_sweep_random_single_inspire_hand_v1",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations",
+        "sweeping_policy.src.ur5e_inspire_hand"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-10-10_14-32-43_inspire_hand_mass_cylinder__TEMP",
+      "experiment": "UR5e_shelf_sweep_random_single_inspire_hand_v1_mass",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations",
+        "sweeping_policy.src.mass_cylinder",
+        "sweeping_policy.src.ur5e_inspire_hand"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-10-10_14-32-43_inspire_hand_mass_cylinder__UR5e_shelf_sweep_random_single_inspire_hand_v1_mass",
+      "experiment": "UR5e_shelf_sweep_random_single_inspire_hand_v1_mass",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations",
+        "sweeping_policy.src.mass_cylinder",
+        "sweeping_policy.src.ur5e_inspire_hand"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-10-10_19-19-24_inspire_mass_palm_ft__TEMP",
+      "experiment": "UR5e_shelf_sweep_random_single_inspire_hand_v2_mass",
+      "modules": [
+        "hand_manipulation_rl.assets.robot",
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.inspire_sensor_observations",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations",
+        "sweeping_policy.src.mass_cylinder",
+        "sweeping_policy.src.ur5e_inspire_hand"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-10-10_19-19-24_inspire_mass_palm_ft__UR5e_shelf_sweep_random_single_inspire_hand_v2_mass",
+      "experiment": "UR5e_shelf_sweep_random_single_inspire_hand_v2_mass",
+      "modules": [
+        "hand_manipulation_rl.assets.robot",
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.inspire_sensor_observations",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations",
+        "sweeping_policy.src.mass_cylinder",
+        "sweeping_policy.src.ur5e_inspire_hand"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-10-10_21-55-16_inspire_mass_z4cm_correct_alignment__TEMP",
+      "experiment": "UR5e_shelf_sweep_random_single_inspire_hand_v2_mass",
+      "modules": [
+        "hand_manipulation_rl.assets.robot",
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.inspire_mass_rewards",
+        "sweeping_policy.mdp.inspire_sensor_observations",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations",
+        "sweeping_policy.src.mass_cylinder",
+        "sweeping_policy.src.ur5e_inspire_hand"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-10-10_21-55-16_inspire_mass_z4cm_correct_alignment__UR5e_shelf_sweep_random_single_inspire_hand_v2_mass",
+      "experiment": "UR5e_shelf_sweep_random_single_inspire_hand_v2_mass",
+      "modules": [
+        "hand_manipulation_rl.assets.robot",
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.inspire_mass_rewards",
+        "sweeping_policy.mdp.inspire_sensor_observations",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations",
+        "sweeping_policy.src.mass_cylinder",
+        "sweeping_policy.src.ur5e_inspire_hand"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-10-12_15-18-40_inspire_mass_initial_object__TEMP",
+      "experiment": "UR5e_shelf_sweep_random_single_inspire_initial_v3_mass",
+      "modules": [
+        "hand_manipulation_rl.assets.robot",
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.inspire_mass_rewards",
+        "sweeping_policy.mdp.inspire_sensor_observations",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations",
+        "sweeping_policy.src.mass_cylinder",
+        "sweeping_policy.src.ur5e_inspire_hand"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-10-12_15-18-40_inspire_mass_initial_object__UR5e_shelf_sweep_random_single_inspire_initial_v3_mass",
+      "experiment": "UR5e_shelf_sweep_random_single_inspire_initial_v3_mass",
+      "modules": [
+        "hand_manipulation_rl.assets.robot",
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.inspire_mass_rewards",
+        "sweeping_policy.mdp.inspire_sensor_observations",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations",
+        "sweeping_policy.src.mass_cylinder",
+        "sweeping_policy.src.ur5e_inspire_hand"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-10-12_19-09-21_inspire_hand_mass_limit_1rad__TEMP",
+      "experiment": "UR5e_shelf_sweep_random_single_inspire_hand_v1_mass_limit",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations",
+        "sweeping_policy.src.mass_cylinder",
+        "sweeping_policy.src.ur5e_inspire_hand"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-10-12_19-09-21_inspire_hand_mass_limit_1rad__UR5e_shelf_sweep_random_single_inspire_hand_v1_mass_limit",
+      "experiment": "UR5e_shelf_sweep_random_single_inspire_hand_v1_mass_limit",
+      "modules": [
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations",
+        "sweeping_policy.src.mass_cylinder",
+        "sweeping_policy.src.ur5e_inspire_hand"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-10-12_20-50-51_inspire_mass_privileged_critic",
+      "experiment": "UR5e_shelf_sweep_random_single_inspire_privileged_v4_mass",
+      "modules": [
+        "hand_manipulation_rl.assets.robot",
+        "sweeping_policy.mdp.commands.position_command",
+        "sweeping_policy.mdp.events",
+        "sweeping_policy.mdp.inspire_mass_rewards",
+        "sweeping_policy.mdp.inspire_privileged_observations",
+        "sweeping_policy.mdp.inspire_sensor_observations",
+        "sweeping_policy.mdp.observations",
+        "sweeping_policy.mdp.reward_random_sweep",
+        "sweeping_policy.mdp.terminations",
+        "sweeping_policy.src.mass_cylinder",
+        "sweeping_policy.src.ur5e_inspire_hand"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "2026-10-13_17-39-41_realistic_mass_friction",
+      "experiment": null,
+      "modules": [],
+      "config_present": false
+    },
+    {
+      "run": "2026-10-21_19-36-46",
+      "experiment": "inspire_contact_sweep_clutter_fusion_v1",
+      "modules": [
+        "inspire_sweep_baseline.assets.realistic_spawners",
+        "inspire_sweep_baseline.contact_sweep_clutter.mdp",
+        "inspire_sweep_baseline.contact_sweep_clutter.physics",
+        "inspire_sweep_baseline.contact_sweep_clutter_fusion.curriculum",
+        "inspire_sweep_baseline.contact_sweep_clutter_fusion.events",
+        "inspire_sweep_baseline.contact_sweep_clutter_fusion.observations",
+        "inspire_sweep_baseline.contact_sweep_clutter_fusion.reward_functions",
+        "inspire_sweep_baseline.contact_sweep_clutter_fusion.safety_rewards",
+        "inspire_sweep_baseline.contact_sweep_clutter_fusion_v1.curriculum",
+        "inspire_sweep_baseline.contact_sweep_clutter_v1.mdp",
+        "inspire_sweep_baseline.contact_sweep_clutter_v2.observations_cfg",
+        "inspire_sweep_baseline.mdp.actions",
+        "inspire_sweep_baseline.mdp.asymmetric_observations",
+        "inspire_sweep_baseline.mdp.commands",
+        "inspire_sweep_baseline.mdp.dex_rewards",
+        "inspire_sweep_baseline.mdp.goal_rewards",
+        "inspire_sweep_baseline.mdp.goal_terminations",
+        "inspire_sweep_baseline.mdp.observations",
+        "inspire_sweep_baseline.mdp.rewards",
+        "inspire_sweep_baseline.mdp.terminations"
+      ],
+      "config_present": true
+    },
+    {
+      "run": "_auxiliary",
+      "experiment": null,
+      "modules": [],
+      "config_present": false
+    }
+  ],
+  "matched_run": "2026-10-13_17-39-41_realistic_mass_friction",
+  "matched_environment": "Isaac-Inspire-Sweep-Realistic-Physics-v0",
+  "matching_evidence": [
+    {
+      "file": "exported/policy.onnx",
+      "sha256": "574421057412fbf1702e8aa1da203f9f33f9f629a3db97354da51cd0c37e3c75",
+      "peer_sha256": null,
+      "equal": false
+    },
+    {
+      "file": "exported/policy.pt",
+      "sha256": "e6c37e971768c598b17564a1fa3e8105f13205988d50c7a63e98caf60e72ee27",
+      "peer_sha256": null,
+      "equal": false
+    },
+    {
+      "file": "model_1000.pt",
+      "sha256": "656d3b383884a29c7fc8e1fb3a30061e5f0a677931819094e0001d3ca78d61cf",
+      "peer_sha256": "656d3b383884a29c7fc8e1fb3a30061e5f0a677931819094e0001d3ca78d61cf",
+      "equal": true
+    },
+    {
+      "file": "model_10400.pt",
+      "sha256": "51a331513401e46f29b5799c612599682202c75bd92f1c70c9aa59f63375e332",
+      "peer_sha256": "51a331513401e46f29b5799c612599682202c75bd92f1c70c9aa59f63375e332",
+      "equal": true
+    },
+    {
+      "file": "model_10600.pt",
+      "sha256": "5a7863db8aea9d30675c5f616f6ec2298f7a9f6feed7e81fe5d8bbe2c369ed63",
+      "peer_sha256": "5a7863db8aea9d30675c5f616f6ec2298f7a9f6feed7e81fe5d8bbe2c369ed63",
+      "equal": true
+    },
+    {
+      "file": "model_10750.pt",
+      "sha256": "14498fd491bd99f814cd2d2262be26129e354a24af11608a0bbe5b9e8860a5de",
+      "peer_sha256": "14498fd491bd99f814cd2d2262be26129e354a24af11608a0bbe5b9e8860a5de",
+      "equal": true
+    },
+    {
+      "file": "model_10800.pt",
+      "sha256": "a200ab66c422b5c8542f7301860b7edbecb65c8abe76c28c74b9bfc28d04dc87",
+      "peer_sha256": "a200ab66c422b5c8542f7301860b7edbecb65c8abe76c28c74b9bfc28d04dc87",
+      "equal": true
+    },
+    {
+      "file": "model_11300.pt",
+      "sha256": "e731f81214f29f71b73c626f32b089c68a1431345a5fa316d6a690a3b6f99b5b",
+      "peer_sha256": "e731f81214f29f71b73c626f32b089c68a1431345a5fa316d6a690a3b6f99b5b",
+      "equal": true
+    },
+    {
+      "file": "model_1150.pt",
+      "sha256": "78c5f72f77963afde84842d76796ae34fb2db3b19ac53eee64958ead3c107b03",
+      "peer_sha256": "78c5f72f77963afde84842d76796ae34fb2db3b19ac53eee64958ead3c107b03",
+      "equal": true
+    },
+    {
+      "file": "model_11500.pt",
+      "sha256": "8e322c8189a15596e05ce34881e04b06fb7d991c83e238390c98b80a23ff3b54",
+      "peer_sha256": "8e322c8189a15596e05ce34881e04b06fb7d991c83e238390c98b80a23ff3b54",
+      "equal": true
+    },
+    {
+      "file": "model_11900.pt",
+      "sha256": "cf26bf8b7c329e5681d563b39745577561a39ded5bcd1dbbd7f74464f1f3c4e5",
+      "peer_sha256": "cf26bf8b7c329e5681d563b39745577561a39ded5bcd1dbbd7f74464f1f3c4e5",
+      "equal": true
+    },
+    {
+      "file": "model_1200.pt",
+      "sha256": "5daa13dd3b093e928862424d2958198ffdd2f957a322608a8d97861b4e760050",
+      "peer_sha256": "5daa13dd3b093e928862424d2958198ffdd2f957a322608a8d97861b4e760050",
+      "equal": true
+    },
+    {
+      "file": "model_12000.pt",
+      "sha256": "a0e18c7d54e9d1e1ec2e683ca67b749cd8fb867b4cd2b1b6ff8892446390febe",
+      "peer_sha256": "a0e18c7d54e9d1e1ec2e683ca67b749cd8fb867b4cd2b1b6ff8892446390febe",
+      "equal": true
+    },
+    {
+      "file": "model_12100.pt",
+      "sha256": "0273c1d7f95a9cb0a94ce5e17aab59094959131aeebdf951fe005108302af689",
+      "peer_sha256": "0273c1d7f95a9cb0a94ce5e17aab59094959131aeebdf951fe005108302af689",
+      "equal": true
+    },
+    {
+      "file": "model_12250.pt",
+      "sha256": "dff9e669b262a80f46d18ec23c116e786f98760b95ae4318c1dfa764afc48956",
+      "peer_sha256": "dff9e669b262a80f46d18ec23c116e786f98760b95ae4318c1dfa764afc48956",
+      "equal": true
+    },
+    {
+      "file": "model_12550.pt",
+      "sha256": "343e8753a3ecae8d5a7fe6829df93039d8bea20c35a76672421760562e4dba80",
+      "peer_sha256": "343e8753a3ecae8d5a7fe6829df93039d8bea20c35a76672421760562e4dba80",
+      "equal": true
+    },
+    {
+      "file": "model_12700.pt",
+      "sha256": "34a7d1b1fc059d0a53b7ac8334a1a95640abe4efb02443d5039ce5b5467fa717",
+      "peer_sha256": "34a7d1b1fc059d0a53b7ac8334a1a95640abe4efb02443d5039ce5b5467fa717",
+      "equal": true
+    },
+    {
+      "file": "model_12850.pt",
+      "sha256": "4fe043cd401745bbdba630a539a96ec2eca778d0d46dba2333f634f0e34b0170",
+      "peer_sha256": "4fe043cd401745bbdba630a539a96ec2eca778d0d46dba2333f634f0e34b0170",
+      "equal": true
+    },
+    {
+      "file": "model_13050.pt",
+      "sha256": "4df2488ad1524b086a3ac1bbe7405be2840ccf9eb4fd271018cf3a82e05ce8a1",
+      "peer_sha256": "4df2488ad1524b086a3ac1bbe7405be2840ccf9eb4fd271018cf3a82e05ce8a1",
+      "equal": true
+    },
+    {
+      "file": "model_13200.pt",
+      "sha256": "a423491c99abdd22f08db16aca20c72fe764fbbe5643a8b2c72d5716fb9d51ef",
+      "peer_sha256": "a423491c99abdd22f08db16aca20c72fe764fbbe5643a8b2c72d5716fb9d51ef",
+      "equal": true
+    },
+    {
+      "file": "model_13500.pt",
+      "sha256": "7cc8edd80c4907935f03f0b3de0631561e2d30db96900a7a63cb42f3fbbe8d29",
+      "peer_sha256": "7cc8edd80c4907935f03f0b3de0631561e2d30db96900a7a63cb42f3fbbe8d29",
+      "equal": true
+    },
+    {
+      "file": "model_13700.pt",
+      "sha256": "ccbeff2327d22af63aed69cda70ab379c22f84243df7f236365c0b1dec105e5b",
+      "peer_sha256": "ccbeff2327d22af63aed69cda70ab379c22f84243df7f236365c0b1dec105e5b",
+      "equal": true
+    },
+    {
+      "file": "model_13950.pt",
+      "sha256": "c86ac4ec5ff6e81874400ac0ccff49395cb50b934d99058541f7d0fdce69eb19",
+      "peer_sha256": "c86ac4ec5ff6e81874400ac0ccff49395cb50b934d99058541f7d0fdce69eb19",
+      "equal": true
+    },
+    {
+      "file": "model_1400.pt",
+      "sha256": "82c481874f6ba145f865c51ac823f22c946886e5d23dfea588bdb499ae3237f9",
+      "peer_sha256": "82c481874f6ba145f865c51ac823f22c946886e5d23dfea588bdb499ae3237f9",
+      "equal": true
+    },
+    {
+      "file": "model_14350.pt",
+      "sha256": "5a61b55cd2988ded3608d9fafd935d9c685ffc5cd42d01e13c4e144782a5d60d",
+      "peer_sha256": "5a61b55cd2988ded3608d9fafd935d9c685ffc5cd42d01e13c4e144782a5d60d",
+      "equal": true
+    },
+    {
+      "file": "model_14700.pt",
+      "sha256": "bf078677a2dea16334a28ac40fbcda3ac4590ce28843ccbaa6a54f2d420eaa4a",
+      "peer_sha256": "bf078677a2dea16334a28ac40fbcda3ac4590ce28843ccbaa6a54f2d420eaa4a",
+      "equal": true
+    },
+    {
+      "file": "model_15350.pt",
+      "sha256": "29502f979ab493ff373b1fb0130992ce419bb693330956d17a7af04e08d2eb93",
+      "peer_sha256": "29502f979ab493ff373b1fb0130992ce419bb693330956d17a7af04e08d2eb93",
+      "equal": true
+    },
+    {
+      "file": "model_15450.pt",
+      "sha256": "ed4fafc99ad40ba0ae0fd5d778f2a965ce6c6336377ca3a56a77ef584c322d05",
+      "peer_sha256": "ed4fafc99ad40ba0ae0fd5d778f2a965ce6c6336377ca3a56a77ef584c322d05",
+      "equal": true
+    },
+    {
+      "file": "model_1550.pt",
+      "sha256": "0f24efe1f2f3e978172014835a454e9b81fdaf305340e14c0c7e450bff432b7b",
+      "peer_sha256": "0f24efe1f2f3e978172014835a454e9b81fdaf305340e14c0c7e450bff432b7b",
+      "equal": true
+    },
+    {
+      "file": "model_16050.pt",
+      "sha256": "a328fbd1fd2cba641f0a20723d3ccd924e0f60a7f6af9989b4b13690f416d4f2",
+      "peer_sha256": "a328fbd1fd2cba641f0a20723d3ccd924e0f60a7f6af9989b4b13690f416d4f2",
+      "equal": true
+    },
+    {
+      "file": "model_16150.pt",
+      "sha256": "3c7868d6587fec5f6e09ac90430dfb8766a13b0e41fbce31d21766c2f0f70035",
+      "peer_sha256": "3c7868d6587fec5f6e09ac90430dfb8766a13b0e41fbce31d21766c2f0f70035",
+      "equal": true
+    },
+    {
+      "file": "model_16450.pt",
+      "sha256": "73305dd08265654ed42898bd1f871ce951cb93e5fc1f073c2133577be8b525f6",
+      "peer_sha256": "73305dd08265654ed42898bd1f871ce951cb93e5fc1f073c2133577be8b525f6",
+      "equal": true
+    },
+    {
+      "file": "model_17000.pt",
+      "sha256": "d9ba6e680a1f8b67f94fbb1edc4e2aef44947822f48c7485b298b622f5a65894",
+      "peer_sha256": "d9ba6e680a1f8b67f94fbb1edc4e2aef44947822f48c7485b298b622f5a65894",
+      "equal": true
+    },
+    {
+      "file": "model_17100.pt",
+      "sha256": "e24efe89a3cbea91eb36012b835132e3cdd4e11785d3d419ab94010ebc5850b7",
+      "peer_sha256": "e24efe89a3cbea91eb36012b835132e3cdd4e11785d3d419ab94010ebc5850b7",
+      "equal": true
+    },
+    {
+      "file": "model_17400.pt",
+      "sha256": "27b0148019c60fc8f82ee94883daf3327a2b5cd013c002cdac02d2e9a32bda62",
+      "peer_sha256": "27b0148019c60fc8f82ee94883daf3327a2b5cd013c002cdac02d2e9a32bda62",
+      "equal": true
+    },
+    {
+      "file": "model_17750.pt",
+      "sha256": "ee9410ae8c8ed621da57fc4eaa7ffb09be82197b650728fb38b321fb41d99429",
+      "peer_sha256": "ee9410ae8c8ed621da57fc4eaa7ffb09be82197b650728fb38b321fb41d99429",
+      "equal": true
+    },
+    {
+      "file": "model_17800.pt",
+      "sha256": "8762da79e549751eb9f58e3b82a23785edd8ee3734b09f23ea9ff0c5a0585884",
+      "peer_sha256": "8762da79e549751eb9f58e3b82a23785edd8ee3734b09f23ea9ff0c5a0585884",
+      "equal": true
+    },
+    {
+      "file": "model_17900.pt",
+      "sha256": "f4ced2db39abd763d9fa294b9b6adae5bc92b42c7aa77f878ab30211bd0243c8",
+      "peer_sha256": "f4ced2db39abd763d9fa294b9b6adae5bc92b42c7aa77f878ab30211bd0243c8",
+      "equal": true
+    },
+    {
+      "file": "model_18050.pt",
+      "sha256": "8ebc0a5f020891f9ae3ee01f11945175bfc62239210f109447270b0617c566e6",
+      "peer_sha256": "8ebc0a5f020891f9ae3ee01f11945175bfc62239210f109447270b0617c566e6",
+      "equal": true
+    },
+    {
+      "file": "model_18150.pt",
+      "sha256": "2cd8fbdf728913e137617d6e6f4347baee47fd624194c45f09bb75cdae60196c",
+      "peer_sha256": "2cd8fbdf728913e137617d6e6f4347baee47fd624194c45f09bb75cdae60196c",
+      "equal": true
+    },
+    {
+      "file": "model_18250.pt",
+      "sha256": "42f5565c65bdf5d65d0b88ee7d6c371ce13713dc6859622656a7ec4743de152c",
+      "peer_sha256": "42f5565c65bdf5d65d0b88ee7d6c371ce13713dc6859622656a7ec4743de152c",
+      "equal": true
+    },
+    {
+      "file": "model_18300.pt",
+      "sha256": "162f2e410b717f4636fb84b0007d29935cf4de85a4859bdd6a9f2e25f74f96ac",
+      "peer_sha256": "162f2e410b717f4636fb84b0007d29935cf4de85a4859bdd6a9f2e25f74f96ac",
+      "equal": true
+    },
+    {
+      "file": "model_18350.pt",
+      "sha256": "2e35456afba4fe0cff4f39f7014907d14b9eeb4c30288e417568f272e3d9c27a",
+      "peer_sha256": "2e35456afba4fe0cff4f39f7014907d14b9eeb4c30288e417568f272e3d9c27a",
+      "equal": true
+    },
+    {
+      "file": "model_18450.pt",
+      "sha256": "e04b73d153f20e21427684cf651f6265b95d6d5cde3d75d505c8df0639670130",
+      "peer_sha256": "e04b73d153f20e21427684cf651f6265b95d6d5cde3d75d505c8df0639670130",
+      "equal": true
+    },
+    {
+      "file": "model_18500.pt",
+      "sha256": "1c01b4a664aedd67aeead4c50dc15da8ef3049128d6e21e0ca5ea2c96bcd4136",
+      "peer_sha256": "1c01b4a664aedd67aeead4c50dc15da8ef3049128d6e21e0ca5ea2c96bcd4136",
+      "equal": true
+    },
+    {
+      "file": "model_18700.pt",
+      "sha256": "ac6c0001d008b0ede4c1e627acbc3f1162d4e162010aba6cfb153db5ad2bad65",
+      "peer_sha256": "ac6c0001d008b0ede4c1e627acbc3f1162d4e162010aba6cfb153db5ad2bad65",
+      "equal": true
+    },
+    {
+      "file": "model_18750.pt",
+      "sha256": "7f90b4683556810ae48c3c7117c56bb153056cf7dc8ed448ee9a7e19369ce3e7",
+      "peer_sha256": "7f90b4683556810ae48c3c7117c56bb153056cf7dc8ed448ee9a7e19369ce3e7",
+      "equal": true
+    },
+    {
+      "file": "model_19150.pt",
+      "sha256": "263d62c3e23844758d7a0583bd07e7ba7f3466d17abb09d4a7970df835b1b645",
+      "peer_sha256": "263d62c3e23844758d7a0583bd07e7ba7f3466d17abb09d4a7970df835b1b645",
+      "equal": true
+    },
+    {
+      "file": "model_19900.pt",
+      "sha256": "68f0841c96141f41ff4e0f2315a9c2d136eceba882f31a2a35092ef1cadb075e",
+      "peer_sha256": "68f0841c96141f41ff4e0f2315a9c2d136eceba882f31a2a35092ef1cadb075e",
+      "equal": true
+    },
+    {
+      "file": "model_20100.pt",
+      "sha256": "587f5ec7687802d9208409dcd8de2e5851112f3e10119d34a1fb84091c69fbe3",
+      "peer_sha256": "587f5ec7687802d9208409dcd8de2e5851112f3e10119d34a1fb84091c69fbe3",
+      "equal": true
+    },
+    {
+      "file": "model_20350.pt",
+      "sha256": "613f8455879c87c50c4525246a51ee11f330614b5dd29ee484e10c4f7bc9e8f0",
+      "peer_sha256": "613f8455879c87c50c4525246a51ee11f330614b5dd29ee484e10c4f7bc9e8f0",
+      "equal": true
+    },
+    {
+      "file": "model_20500.pt",
+      "sha256": "1f615df689ba14c9c913e70c0d9c91c126dfa65be3936dc07d967dc752759e28",
+      "peer_sha256": "1f615df689ba14c9c913e70c0d9c91c126dfa65be3936dc07d967dc752759e28",
+      "equal": true
+    },
+    {
+      "file": "model_20650.pt",
+      "sha256": "cf51b4debbe28131bf31877c8f48cd1bf6525d7452708736a477429826e4d6a1",
+      "peer_sha256": "cf51b4debbe28131bf31877c8f48cd1bf6525d7452708736a477429826e4d6a1",
+      "equal": true
+    },
+    {
+      "file": "model_20700.pt",
+      "sha256": "71d035f0d12adac31d41959f795d66502a710c354c564401bf173e0f57d4d86d",
+      "peer_sha256": "71d035f0d12adac31d41959f795d66502a710c354c564401bf173e0f57d4d86d",
+      "equal": true
+    },
+    {
+      "file": "model_2100.pt",
+      "sha256": "78a0e914710b03869eacc7cca38aa1018877a0dc7b7062833e769a480485ce0c",
+      "peer_sha256": "78a0e914710b03869eacc7cca38aa1018877a0dc7b7062833e769a480485ce0c",
+      "equal": true
+    },
+    {
+      "file": "model_21150.pt",
+      "sha256": "b9a23996abc50e5de53e14247d17fb34a0ba0cf0ca047ea455b74ea3019bcca7",
+      "peer_sha256": "b9a23996abc50e5de53e14247d17fb34a0ba0cf0ca047ea455b74ea3019bcca7",
+      "equal": true
+    },
+    {
+      "file": "model_21900.pt",
+      "sha256": "e859ed6416be0a8ba14ab57de7484098b905e25c228665d7e66814f806c8dabd",
+      "peer_sha256": "e859ed6416be0a8ba14ab57de7484098b905e25c228665d7e66814f806c8dabd",
+      "equal": true
+    },
+    {
+      "file": "model_21950.pt",
+      "sha256": "b2c4a1d33ffbbe990119ab7204c1e1c5a1c54ad196dd145710fd232f822ff8bc",
+      "peer_sha256": "b2c4a1d33ffbbe990119ab7204c1e1c5a1c54ad196dd145710fd232f822ff8bc",
+      "equal": true
+    },
+    {
+      "file": "model_22000.pt",
+      "sha256": "05b9702529ac44859f2156f1cedba7c9cf36d725748761beed9606bf1dd76881",
+      "peer_sha256": "05b9702529ac44859f2156f1cedba7c9cf36d725748761beed9606bf1dd76881",
+      "equal": true
+    },
+    {
+      "file": "model_22050.pt",
+      "sha256": "5b7f50821778d9193dd9e1c28c1087e159ed64155169c3b49ceaec7ee9e44cc6",
+      "peer_sha256": "5b7f50821778d9193dd9e1c28c1087e159ed64155169c3b49ceaec7ee9e44cc6",
+      "equal": true
+    },
+    {
+      "file": "model_22100.pt",
+      "sha256": "fdccf1ce73ffccdba0dedac3e47213956aadfe001d59e32c9d0087d8629c22e3",
+      "peer_sha256": "fdccf1ce73ffccdba0dedac3e47213956aadfe001d59e32c9d0087d8629c22e3",
+      "equal": true
+    },
+    {
+      "file": "model_2250.pt",
+      "sha256": "053230e78744f553f3e2e9a6e82fd49296cf8774ad098640504dfbc767abc6f5",
+      "peer_sha256": "053230e78744f553f3e2e9a6e82fd49296cf8774ad098640504dfbc767abc6f5",
+      "equal": true
+    },
+    {
+      "file": "model_22750.pt",
+      "sha256": "ae615ee83e1a5fd4b1900ea207dedfa62c1731239e4c774a822ecad6cfb02e09",
+      "peer_sha256": "ae615ee83e1a5fd4b1900ea207dedfa62c1731239e4c774a822ecad6cfb02e09",
+      "equal": true
+    },
+    {
+      "file": "model_22950.pt",
+      "sha256": "1ea5c3c08ae64263319788ff16452ad8d61503de634204982294c79f1a162e67",
+      "peer_sha256": "1ea5c3c08ae64263319788ff16452ad8d61503de634204982294c79f1a162e67",
+      "equal": true
+    },
+    {
+      "file": "model_23000.pt",
+      "sha256": "f29cca3e25ecd646ffd9c639910783faf190232cc78866eb44899e9dd794f6b2",
+      "peer_sha256": "f29cca3e25ecd646ffd9c639910783faf190232cc78866eb44899e9dd794f6b2",
+      "equal": true
+    },
+    {
+      "file": "model_23250.pt",
+      "sha256": "96c23c510270eec2956aff3dd73dfac9c3d4292d82ea4c91d589e0b7295ad005",
+      "peer_sha256": "96c23c510270eec2956aff3dd73dfac9c3d4292d82ea4c91d589e0b7295ad005",
+      "equal": true
+    },
+    {
+      "file": "model_23800.pt",
+      "sha256": "4099969d0890fa4f47be5aee24ee28a62bf1be25a9973173229c743f4f39aaee",
+      "peer_sha256": "4099969d0890fa4f47be5aee24ee28a62bf1be25a9973173229c743f4f39aaee",
+      "equal": true
+    },
+    {
+      "file": "model_2400.pt",
+      "sha256": "71ba35839b281d8c27f45f2d9583b273e5a8cdda3cc0c3c5298f759f23e94392",
+      "peer_sha256": "71ba35839b281d8c27f45f2d9583b273e5a8cdda3cc0c3c5298f759f23e94392",
+      "equal": true
+    },
+    {
+      "file": "model_24050.pt",
+      "sha256": "84e0f75e86f6109b5b36eb5fb065c376f46c7edb9a589f0cccecbd957a65043b",
+      "peer_sha256": "84e0f75e86f6109b5b36eb5fb065c376f46c7edb9a589f0cccecbd957a65043b",
+      "equal": true
+    },
+    {
+      "file": "model_24450.pt",
+      "sha256": "a6fe3ddb3f97dab75a5a42653ba7ab5c6a4dd99c816e7531cb330b7c46a3c381",
+      "peer_sha256": "a6fe3ddb3f97dab75a5a42653ba7ab5c6a4dd99c816e7531cb330b7c46a3c381",
+      "equal": true
+    },
+    {
+      "file": "model_24650.pt",
+      "sha256": "9a3cc288e7d9a8ec9df150cd54afeccd3400cc31ee9bff5a89e994fb97cad06e",
+      "peer_sha256": "9a3cc288e7d9a8ec9df150cd54afeccd3400cc31ee9bff5a89e994fb97cad06e",
+      "equal": true
+    },
+    {
+      "file": "model_24900.pt",
+      "sha256": "5455997b0fa0448f171ff0161a6ddbcdd01527198df9c287079f1711a81d31c7",
+      "peer_sha256": "5455997b0fa0448f171ff0161a6ddbcdd01527198df9c287079f1711a81d31c7",
+      "equal": true
+    },
+    {
+      "file": "model_250.pt",
+      "sha256": "2419d72327571d0f3457656c069cb4b1ff6b76e5f3a836fd6515b5dcb6dc41dd",
+      "peer_sha256": "2419d72327571d0f3457656c069cb4b1ff6b76e5f3a836fd6515b5dcb6dc41dd",
+      "equal": true
+    },
+    {
+      "file": "model_25150.pt",
+      "sha256": "f5ec4f97f2c4769290f67c9e288025ed84b33e4474bcc1dbcc49f74ec16eaade",
+      "peer_sha256": "f5ec4f97f2c4769290f67c9e288025ed84b33e4474bcc1dbcc49f74ec16eaade",
+      "equal": true
+    },
+    {
+      "file": "model_2550.pt",
+      "sha256": "51048ead3ddd19e1f063a3d38d89faf8b6f23bf111ae142f0f09a52cad6dbbab",
+      "peer_sha256": "51048ead3ddd19e1f063a3d38d89faf8b6f23bf111ae142f0f09a52cad6dbbab",
+      "equal": true
+    },
+    {
+      "file": "model_26200.pt",
+      "sha256": "e9ddfe79cbd294079be9db1f51fca0627963ee6007e55adee520b91966a618c2",
+      "peer_sha256": "e9ddfe79cbd294079be9db1f51fca0627963ee6007e55adee520b91966a618c2",
+      "equal": true
+    },
+    {
+      "file": "model_26650.pt",
+      "sha256": "34616319165549e2e7ee7ebaef8cd60d11296272bb83506a46e32e17466f4b83",
+      "peer_sha256": "34616319165549e2e7ee7ebaef8cd60d11296272bb83506a46e32e17466f4b83",
+      "equal": true
+    },
+    {
+      "file": "model_26800.pt",
+      "sha256": "0d14f2d414b8531cbd1e798857f638b89644da0228cf1fbd39ee214275c432eb",
+      "peer_sha256": "0d14f2d414b8531cbd1e798857f638b89644da0228cf1fbd39ee214275c432eb",
+      "equal": true
+    },
+    {
+      "file": "model_27000.pt",
+      "sha256": "9cb2d914c523a970241eb5a782ac9f2d3bc668c66b615f0922518ec54c09eba9",
+      "peer_sha256": "9cb2d914c523a970241eb5a782ac9f2d3bc668c66b615f0922518ec54c09eba9",
+      "equal": true
+    },
+    {
+      "file": "model_27350.pt",
+      "sha256": "9f8459fb2fb2f07307bbb1f93f87f9e2a4ee4e2bebc59eb8c5513c310567371a",
+      "peer_sha256": "9f8459fb2fb2f07307bbb1f93f87f9e2a4ee4e2bebc59eb8c5513c310567371a",
+      "equal": true
+    },
+    {
+      "file": "model_27450.pt",
+      "sha256": "f73123fe5856b48a4f6db3c0db3b4f1462e536236d6073e80bb39b1ebfc1b525",
+      "peer_sha256": "f73123fe5856b48a4f6db3c0db3b4f1462e536236d6073e80bb39b1ebfc1b525",
+      "equal": true
+    },
+    {
+      "file": "model_27550.pt",
+      "sha256": "3acd3a8ac5a6ee84203fb228d0b2834ffea81596f2becfbb9e4e5ae694fc1f99",
+      "peer_sha256": "3acd3a8ac5a6ee84203fb228d0b2834ffea81596f2becfbb9e4e5ae694fc1f99",
+      "equal": true
+    },
+    {
+      "file": "model_27900.pt",
+      "sha256": "e074d209f6cfe4393d09a294378de7a4dfcb05c2fa2d661c48884850f1b6202b",
+      "peer_sha256": "e074d209f6cfe4393d09a294378de7a4dfcb05c2fa2d661c48884850f1b6202b",
+      "equal": true
+    },
+    {
+      "file": "model_27950.pt",
+      "sha256": "c091010ce3294e6ea868dbe63cf28e428ced491559f5ff2072f4c8078917f382",
+      "peer_sha256": "c091010ce3294e6ea868dbe63cf28e428ced491559f5ff2072f4c8078917f382",
+      "equal": true
+    },
+    {
+      "file": "model_28200.pt",
+      "sha256": "6cef9641ae42a18e6abb387780dd96015fd569b3088d7582064986e0d4ec6a2a",
+      "peer_sha256": "6cef9641ae42a18e6abb387780dd96015fd569b3088d7582064986e0d4ec6a2a",
+      "equal": true
+    },
+    {
+      "file": "model_28750.pt",
+      "sha256": "8b79d36e45896acc74786dd5739ab780f77909ba43c688ec1eb32d49e0ddfd47",
+      "peer_sha256": "8b79d36e45896acc74786dd5739ab780f77909ba43c688ec1eb32d49e0ddfd47",
+      "equal": true
+    },
+    {
+      "file": "model_2900.pt",
+      "sha256": "3a78e3af4428f907791cb768e7733a879ada51519c7ff551bef893fea777a07b",
+      "peer_sha256": "3a78e3af4428f907791cb768e7733a879ada51519c7ff551bef893fea777a07b",
+      "equal": true
+    },
+    {
+      "file": "model_29100.pt",
+      "sha256": "46003e4ae68f4ee33868ce7fc208f98b543f5c6124de6671fcacbf40e30435d1",
+      "peer_sha256": "46003e4ae68f4ee33868ce7fc208f98b543f5c6124de6671fcacbf40e30435d1",
+      "equal": true
+    },
+    {
+      "file": "model_29350.pt",
+      "sha256": "620b0d7fbf3802c6f03629725fe8de74796bc5a8b2b92c11b752e2035aedcbac",
+      "peer_sha256": "620b0d7fbf3802c6f03629725fe8de74796bc5a8b2b92c11b752e2035aedcbac",
+      "equal": true
+    },
+    {
+      "file": "model_29400.pt",
+      "sha256": "8b1198bce8d27a0798b491b3c6b3adc2df3f031c6b62515289b3155745edb584",
+      "peer_sha256": "8b1198bce8d27a0798b491b3c6b3adc2df3f031c6b62515289b3155745edb584",
+      "equal": true
+    },
+    {
+      "file": "model_29600.pt",
+      "sha256": "ee5c0293ec8fcde4957f9ae6ba6ecce15631970e698c6638f15408c6862dc5b5",
+      "peer_sha256": "ee5c0293ec8fcde4957f9ae6ba6ecce15631970e698c6638f15408c6862dc5b5",
+      "equal": true
+    },
+    {
+      "file": "model_29950.pt",
+      "sha256": "6ffb54287229b3bfd010f75a2665545655e6af30354b68472655e2ea5c64df2e",
+      "peer_sha256": "6ffb54287229b3bfd010f75a2665545655e6af30354b68472655e2ea5c64df2e",
+      "equal": true
+    },
+    {
+      "file": "model_30250.pt",
+      "sha256": "57dcd7412d5b4413683ccafdefbff60b1e5c2929bf05a5a36f8f03d2a449f1ba",
+      "peer_sha256": "57dcd7412d5b4413683ccafdefbff60b1e5c2929bf05a5a36f8f03d2a449f1ba",
+      "equal": true
+    },
+    {
+      "file": "model_3050.pt",
+      "sha256": "fa6c299188d4cdaf369ea5966f0a120a9f818ed360f7fff3d949cdbdc1936442",
+      "peer_sha256": "fa6c299188d4cdaf369ea5966f0a120a9f818ed360f7fff3d949cdbdc1936442",
+      "equal": true
+    },
+    {
+      "file": "model_30550.pt",
+      "sha256": "df71c0958a986de15581e969924fc75bbd75ecbdbd1e73ca59434fda51f38478",
+      "peer_sha256": "df71c0958a986de15581e969924fc75bbd75ecbdbd1e73ca59434fda51f38478",
+      "equal": true
+    },
+    {
+      "file": "model_30750.pt",
+      "sha256": "ed4cb4d08a4c22349f60ad59c830ff2a094639fcdf51b64ccb7fab71ff3190e8",
+      "peer_sha256": "ed4cb4d08a4c22349f60ad59c830ff2a094639fcdf51b64ccb7fab71ff3190e8",
+      "equal": true
+    },
+    {
+      "file": "model_30850.pt",
+      "sha256": "14d65d4f92a360e82bd0e497c168d65429b844a1580354305905eca84fd18497",
+      "peer_sha256": "14d65d4f92a360e82bd0e497c168d65429b844a1580354305905eca84fd18497",
+      "equal": true
+    },
+    {
+      "file": "model_31050.pt",
+      "sha256": "6c46c747165e60395165ff34f1b8b53db4955f8b6cbe30bd4ab02163db908182",
+      "peer_sha256": "6c46c747165e60395165ff34f1b8b53db4955f8b6cbe30bd4ab02163db908182",
+      "equal": true
+    },
+    {
+      "file": "model_31750.pt",
+      "sha256": "38a1170808b4b2b7fb1209596a8d707f94b9aa7ca4147c3abf0eff9ab379fb3a",
+      "peer_sha256": "38a1170808b4b2b7fb1209596a8d707f94b9aa7ca4147c3abf0eff9ab379fb3a",
+      "equal": true
+    },
+    {
+      "file": "model_31900.pt",
+      "sha256": "0fc514cb21de87a97f94fe4df16450e8184027f2155242b1dbd13c23320189cf",
+      "peer_sha256": "0fc514cb21de87a97f94fe4df16450e8184027f2155242b1dbd13c23320189cf",
+      "equal": true
+    },
+    {
+      "file": "model_32100.pt",
+      "sha256": "5b4522486286f0628d68260243bc30df695ef5d2322a76ab1edf5d72c5b1419f",
+      "peer_sha256": "5b4522486286f0628d68260243bc30df695ef5d2322a76ab1edf5d72c5b1419f",
+      "equal": true
+    },
+    {
+      "file": "model_32600.pt",
+      "sha256": "9c9a421031b16ba750b1f70c5fff6f4df8240d237970cf9960786e4bb1d55823",
+      "peer_sha256": "9c9a421031b16ba750b1f70c5fff6f4df8240d237970cf9960786e4bb1d55823",
+      "equal": true
+    },
+    {
+      "file": "model_3300.pt",
+      "sha256": "5d32ceb4bf0853be386e72998bb164e56edddb5e6aa778126ff0963e9437e405",
+      "peer_sha256": "5d32ceb4bf0853be386e72998bb164e56edddb5e6aa778126ff0963e9437e405",
+      "equal": true
+    },
+    {
+      "file": "model_33150.pt",
+      "sha256": "fb70e1a05518dfc58a1c6a59f52c67a16e135df4a6ccd646b73c09f4c1b4f60f",
+      "peer_sha256": "fb70e1a05518dfc58a1c6a59f52c67a16e135df4a6ccd646b73c09f4c1b4f60f",
+      "equal": true
+    },
+    {
+      "file": "model_33500.pt",
+      "sha256": "d2a14145d17ad24834511c3e89e76c78e2c9a78ac14590ca206040f4bf7fb479",
+      "peer_sha256": "d2a14145d17ad24834511c3e89e76c78e2c9a78ac14590ca206040f4bf7fb479",
+      "equal": true
+    },
+    {
+      "file": "model_34100.pt",
+      "sha256": "fa87bd2bddca27112b3b0343f4e51463035b68f40e5ece6821240331ce8ead23",
+      "peer_sha256": "fa87bd2bddca27112b3b0343f4e51463035b68f40e5ece6821240331ce8ead23",
+      "equal": true
+    },
+    {
+      "file": "model_34650.pt",
+      "sha256": "e3a71f7ff597b3fd888d5167575aaa01bb067b78c52f83ce47a4b16cc623746c",
+      "peer_sha256": "e3a71f7ff597b3fd888d5167575aaa01bb067b78c52f83ce47a4b16cc623746c",
+      "equal": true
+    },
+    {
+      "file": "model_34800.pt",
+      "sha256": "915990c8414625336fa1ff555347b380c3b718725598e446c5acd67e6f010bef",
+      "peer_sha256": "915990c8414625336fa1ff555347b380c3b718725598e446c5acd67e6f010bef",
+      "equal": true
+    },
+    {
+      "file": "model_350.pt",
+      "sha256": "f2c407376104033f2c8eda0216e4ca8ccf42f80ed1b55cf1b905bc3258bfd96c",
+      "peer_sha256": "f2c407376104033f2c8eda0216e4ca8ccf42f80ed1b55cf1b905bc3258bfd96c",
+      "equal": true
+    },
+    {
+      "file": "model_35250.pt",
+      "sha256": "e8e2ca116856f5f2e6349e39b1e9186b1279d2a674d50028fbb0e90e74ed3e97",
+      "peer_sha256": "e8e2ca116856f5f2e6349e39b1e9186b1279d2a674d50028fbb0e90e74ed3e97",
+      "equal": true
+    },
+    {
+      "file": "model_3650.pt",
+      "sha256": "64bb027ad2cbaed706f3fcab5caf691c41b7d801f8cd36f0c29ccc1d7fe67674",
+      "peer_sha256": "64bb027ad2cbaed706f3fcab5caf691c41b7d801f8cd36f0c29ccc1d7fe67674",
+      "equal": true
+    },
+    {
+      "file": "model_3700.pt",
+      "sha256": "cc4afe15f7c6e4d15e21260f45ac857a93f6c2fce6b43210e77cead77a3bbd51",
+      "peer_sha256": "cc4afe15f7c6e4d15e21260f45ac857a93f6c2fce6b43210e77cead77a3bbd51",
+      "equal": true
+    },
+    {
+      "file": "model_400.pt",
+      "sha256": "f80f22a8ba1afde183fcb78b095dec8d7cf5d66b2879c229c0f321a52cef0e37",
+      "peer_sha256": "f80f22a8ba1afde183fcb78b095dec8d7cf5d66b2879c229c0f321a52cef0e37",
+      "equal": true
+    },
+    {
+      "file": "model_4000.pt",
+      "sha256": "06929f257d88bb1d58426030884500bb2f89753703a9ee7761f25bf503768ab1",
+      "peer_sha256": "06929f257d88bb1d58426030884500bb2f89753703a9ee7761f25bf503768ab1",
+      "equal": true
+    },
+    {
+      "file": "model_4550.pt",
+      "sha256": "ab99d163017acf6808bc1b90f2ce108eb7c38680f0d2d1c7b938097f0e588237",
+      "peer_sha256": "ab99d163017acf6808bc1b90f2ce108eb7c38680f0d2d1c7b938097f0e588237",
+      "equal": true
+    },
+    {
+      "file": "model_4600.pt",
+      "sha256": "3afefe2035e5f91078118b7cea670da74ede29088f9179976440f943f544e0a8",
+      "peer_sha256": "3afefe2035e5f91078118b7cea670da74ede29088f9179976440f943f544e0a8",
+      "equal": true
+    },
+    {
+      "file": "model_4750.pt",
+      "sha256": "59924ec94d85f46c6b9093138de30c24d96985ee56c8c4a603301ec097cf72be",
+      "peer_sha256": "59924ec94d85f46c6b9093138de30c24d96985ee56c8c4a603301ec097cf72be",
+      "equal": true
+    },
+    {
+      "file": "model_5100.pt",
+      "sha256": "98161ed06f8d55ad50d453ee64aacb1fc4aa25e4b723e0f9339316fca432fbf1",
+      "peer_sha256": "98161ed06f8d55ad50d453ee64aacb1fc4aa25e4b723e0f9339316fca432fbf1",
+      "equal": true
+    },
+    {
+      "file": "model_5400.pt",
+      "sha256": "ff0a34e8a8877d7d6e337d39a4089fed513e645075e4bf447a9bb55fd67ecab5",
+      "peer_sha256": "ff0a34e8a8877d7d6e337d39a4089fed513e645075e4bf447a9bb55fd67ecab5",
+      "equal": true
+    },
+    {
+      "file": "model_5950.pt",
+      "sha256": "8be7b3878601b61c2e9f6dbfafb4541f6ee7eeb678b2e7c2c4588a97d7e7a845",
+      "peer_sha256": "8be7b3878601b61c2e9f6dbfafb4541f6ee7eeb678b2e7c2c4588a97d7e7a845",
+      "equal": true
+    },
+    {
+      "file": "model_6100.pt",
+      "sha256": "93a9ca98df06ce2aea3f0a9acc711b5afd211f5359271f7ae47134bf37583312",
+      "peer_sha256": "93a9ca98df06ce2aea3f0a9acc711b5afd211f5359271f7ae47134bf37583312",
+      "equal": true
+    },
+    {
+      "file": "model_6650.pt",
+      "sha256": "10fee236c187e43ec632fa8d03e36bf6800fa7b5537f4d9d06ac5ba2f0eaba21",
+      "peer_sha256": "10fee236c187e43ec632fa8d03e36bf6800fa7b5537f4d9d06ac5ba2f0eaba21",
+      "equal": true
+    },
+    {
+      "file": "model_6750.pt",
+      "sha256": "0cc8dd0dedbf4e46378ce3d6c87741b75106ba4546409e3c57f897d069cdb8d0",
+      "peer_sha256": "8ed7242888b53cd4fd40a5215c342733f183b7c8694929a1e494394a95f0ac8f",
+      "equal": false
+    },
+    {
+      "file": "model_6800.pt",
+      "sha256": "227aa9b582ed672290fe41507e83d26db7655fd1f8dfac59727e9133b8c98a40",
+      "peer_sha256": "227aa9b582ed672290fe41507e83d26db7655fd1f8dfac59727e9133b8c98a40",
+      "equal": true
+    },
+    {
+      "file": "model_6900.pt",
+      "sha256": "2788f8d18c4b3f316ae1c058d76532e7e4f1b1a24156dbd767a5a1751176d52a",
+      "peer_sha256": "2788f8d18c4b3f316ae1c058d76532e7e4f1b1a24156dbd767a5a1751176d52a",
+      "equal": true
+    },
+    {
+      "file": "model_6950.pt",
+      "sha256": "2c60d0276ca399c38a3996f018c95e9be38a98f32ab1e22d2b999aea5b962258",
+      "peer_sha256": "2c60d0276ca399c38a3996f018c95e9be38a98f32ab1e22d2b999aea5b962258",
+      "equal": true
+    },
+    {
+      "file": "model_7550.pt",
+      "sha256": "74787fb5e8b8c0483e98098abad236ef94ee014de308439f45caf2f38796dfdf",
+      "peer_sha256": "74787fb5e8b8c0483e98098abad236ef94ee014de308439f45caf2f38796dfdf",
+      "equal": true
+    },
+    {
+      "file": "model_7700.pt",
+      "sha256": "99f9bbd5cc971c8e77b30d68209a12b20392d588ce4af17bb7fcddb3db681664",
+      "peer_sha256": "99f9bbd5cc971c8e77b30d68209a12b20392d588ce4af17bb7fcddb3db681664",
+      "equal": true
+    },
+    {
+      "file": "model_7850.pt",
+      "sha256": "ff1ab61b502e91d21cbb0921dc181eafeee6fc9a282a82b6bd282f35be2b1ffc",
+      "peer_sha256": "ff1ab61b502e91d21cbb0921dc181eafeee6fc9a282a82b6bd282f35be2b1ffc",
+      "equal": true
+    },
+    {
+      "file": "model_8300.pt",
+      "sha256": "7951a8959552c03c2fa111a1efa097bc25fca8838c5d4cfe6e97c948b67850fc",
+      "peer_sha256": "7951a8959552c03c2fa111a1efa097bc25fca8838c5d4cfe6e97c948b67850fc",
+      "equal": true
+    },
+    {
+      "file": "model_850.pt",
+      "sha256": "4e8595df898faadcd88eca1ee78b5c11ee32a38bfb852f9b2888db2c9b6d841e",
+      "peer_sha256": "4e8595df898faadcd88eca1ee78b5c11ee32a38bfb852f9b2888db2c9b6d841e",
+      "equal": true
+    },
+    {
+      "file": "model_8800.pt",
+      "sha256": "2e7096b515747cbc4cd46212a13f93e9d92ad069d979eda35713e43877c249db",
+      "peer_sha256": "2e7096b515747cbc4cd46212a13f93e9d92ad069d979eda35713e43877c249db",
+      "equal": true
+    },
+    {
+      "file": "model_8900.pt",
+      "sha256": "eb148170a1f863a4e508f1d8adba237bcbf27ee70d5af2db811421fc13bdc9fb",
+      "peer_sha256": "eb148170a1f863a4e508f1d8adba237bcbf27ee70d5af2db811421fc13bdc9fb",
+      "equal": true
+    },
+    {
+      "file": "model_9500.pt",
+      "sha256": "7dee1e11805b88bc1c046e6d794dfa65be25ffc6928b64c48d129a5dad3e4177",
+      "peer_sha256": "7dee1e11805b88bc1c046e6d794dfa65be25ffc6928b64c48d129a5dad3e4177",
+      "equal": true
+    },
+    {
+      "file": "model_9850.pt",
+      "sha256": "6e49358656b8621cc12e576f6d1750825dbb3e45f55db57c20aa24c00968a30d",
+      "peer_sha256": "6e49358656b8621cc12e576f6d1750825dbb3e45f55db57c20aa24c00968a30d",
+      "equal": true
+    }
+  ],
+  "action": {
+    "source": "logs/01. Models/Unregistered/2026-10-13_17-39-41_realistic_mass_friction",
+    "destination": "logs/backup/Isaac-Inspire-Sweep-Realistic-Physics-v0/Unregistered__2026-10-13_17-39-41_realistic_mass_friction",
+    "reason": "현재 등록 환경 및 기존 식별 보관본과 132개 파일 SHA-256 동일; 3개 불일치 파일 포함 전체 보존"
+  },
+  "verification": {
+    "moved_runs": 1,
+    "preserved_files": 135,
+    "sha256_verified_files": 135,
+    "other_logs_unchanged": true,
+    "remaining_directories": 70,
+    "deleted_files": 0
+  }
+}

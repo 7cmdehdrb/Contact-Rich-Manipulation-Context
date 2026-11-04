@@ -1,6 +1,18 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-04 문서 통합: [Wrench-v0 전체 명세와 v1 변경점](environments/WRENCH_V0_V1_ENVIRONMENT.md). 현재 코드 기준 랜덤화·관측·액션·15개 보상·커리큘럼·종료·PPO 및 sensor wrench 제어와 정규화 action-rate를 한 문서에 정리했다. 문서 작업이며 환경 코드 변경 없음.
+
+2026-11-04 후속: Wrench-v1의 robot_action_rate_penalty는 Arm Desired Wrench를 정책 목표 범위로 정규화한 [-1,1] 변화량을 사용한다. Hand raw 계산과 계수는 유지하며 CPU44개 통과. v0는 보존했다.
+
+2026-11-04: **`Inspire-Wrench-v1`**은 Wrench-v0 직접 상속이며 OSC만 F/T sensor 중심6축 closed-loop wrench 제어로 변경한다. `[wrench_abs]`, motion6축0, wrench6축1, feedback gain0.2, 명령축별목표 ±100N/±5Nm, 보정 후 명령 제한 ±120N/±6Nm이다. [참고 코드·파라미터·프레임·실행](environments/WRENCH_V1_ENVIRONMENT.md) · [검증 로그](logs/2026-11-04_wrench_v1_osc.md). CPU80개 통과, 실제 GPU 추종/학습은 미검증.
+
+2026-11-04: **`Inspire-Wrench-v0`**는 Test-v2의 독립 후속 환경이다. 이전 환경 상속 없이 직접 구성하며 EEF120mm·연속3초 정지 성공/+75·RED 확장/Gray 후퇴·startup 랜덤화 분리·Dead Zone10k/3k를 적용한다. [전체 계약·실행](environments/WRENCH_V0_ENVIRONMENT.md) · [검증 로그](logs/2026-11-04_wrench_v0_implementation.md). CPU82개 통과, 실제 GPU collection1~2초는 미검증이다.
+
+2026-11-04: `Revision-Test-v2`에 임시 종료 원인 print를 추가했다. `runtime/revision.py`의 `_reset_idx` TEMP 블록에서 환경 ID·step·발동 term 전체를 출력하며, Test-v2-GT·부모 환경은 제외한다. 종료 판정은 유지한다. 후속으로 `shelf_failure`·`object_fall_or_tilt` 함수의 TEMP 블록에서 매 제어 step 현재 값·임계값·개별 판정을 출력한다. 기존 play 프로세스를 재시작하면 적용된다.
+
 활성 기반 패키지는 `src/inspire_sweep_baseline`이다. **2026-11-03 개발 대상은 Revision-v1을 상속한 Revision-v2 / Test-v2**이며, 기존 Holding → Final 환경은 비교·기존 학습 재현용으로 보존한다. `src/axia80_feasibility`는 현재 사용하지 않는다. 이 문서는 작업 대상을 찾는 색인이다. 수식·수치·실험 이력은 요청한 환경의 설명과 실제 코드만 확인한다.
+
+요청 버전 비교: [Holding OSC·ObjectRandom·Final·Revision 9개 환경 비교](environments/HOLDING_FINAL_REVISION_NINE_ENV_COMPARISON.md)는 씬·관측·보상·커리큘럼·터미네이션·기타와 최종 요약 표를 현재 코드 기준으로 정리한다(2026-11-04).
 
 ## Revision — 독립 기반과 파생 환경
 

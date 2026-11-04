@@ -1,0 +1,2516 @@
+{
+  "registry": {
+    "Isaac-Inspire-Revision-v0": {
+      "id": "Isaac-Inspire-Revision-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.revision:RevisionEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.revision_envs:RevisionEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.revision_ppo_cfg:RevisionPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Revision-v1": {
+      "id": "Isaac-Inspire-Revision-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.revision:RevisionEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.revision_envs:RevisionV1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.revision_ppo_cfg:RevisionV1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Revision-Test-v1": {
+      "id": "Isaac-Inspire-Revision-Test-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.revision:RevisionEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.revision_envs:RevisionV1TestEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.revision_ppo_cfg:RevisionV1TestPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Revision-v2": {
+      "id": "Isaac-Inspire-Revision-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.revision:RevisionEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.revision_envs:RevisionV2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.revision_ppo_cfg:RevisionV2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Revision-Test-v2": {
+      "id": "Isaac-Inspire-Revision-Test-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.revision:RevisionEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.revision_envs:RevisionV2TestEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.revision_ppo_cfg:RevisionV2TestPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Revision-Test-v2-GT": {
+      "id": "Isaac-Inspire-Revision-Test-v2-GT",
+      "entry_point": "inspire_sweep_baseline.runtime.revision:RevisionEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.revision_envs:RevisionV2TestGTEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.revision_ppo_cfg:RevisionV2TestGTPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1_1": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1_1",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV1_1_1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV1_1_1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1_2": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1_2",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV1_1_2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV1_1_2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_4": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_4",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV1_4EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV1_4PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV1_3EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV1_3PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3_1": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3_1",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV1_3_1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV1_3_1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV1_1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV1_1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_2": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_2",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV1_2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV1_2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_0": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_0",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV1_0EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV1_0PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v2": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v3": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v3",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionV3EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionV3PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v0": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_envs:ContactSweepClutterFusionEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_ppo_cfg:ContactSweepClutterFusionPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-FT-Test-v0": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-FT-Test-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter:ContactSweepClutterFTTestEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_envs:ContactSweepClutterFTTestEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_ppo_cfg:ContactSweepClutterV1CurriculumPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Curriculum-v1": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Curriculum-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter:ContactSweepClutterV1CurriculumEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_envs:ContactSweepClutterV1CurriculumEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_ppo_cfg:ContactSweepClutterV1CurriculumPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-v2": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter:ContactSweepClutterV2Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_envs:ContactSweepClutterV2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_ppo_cfg:ContactSweepClutterV2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-v1": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter:ContactSweepClutterV1Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_envs:ContactSweepClutterV1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_ppo_cfg:ContactSweepClutterV1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-v0": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter:ContactSweepClutterEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_envs:ContactSweepClutterEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_ppo_cfg:ContactSweepClutterPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-v0": {
+      "id": "Isaac-Inspire-Contact-Sweep-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep:ContactSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_envs:ContactSweepEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_ppo_cfg:ContactSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Baseline-v0": {
+      "id": "Isaac-Inspire-Sweep-Baseline-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_envs:InspireSweepEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Realistic-Physics-v0": {
+      "id": "Isaac-Inspire-Sweep-Realistic-Physics-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_envs:InspireSweepRealisticPhysicsEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepRealisticPhysicsPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Realistic-Physics-Initial-Privileged-v0": {
+      "id": "Isaac-Inspire-Sweep-Realistic-Physics-Initial-Privileged-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_envs:InspireSweepRealisticInitialPrivilegedEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepRealisticInitialPrivilegedPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Omni-v0": {
+      "id": "Isaac-Inspire-Sweep-Omni-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_envs:InspireSweepOmniEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Omni-v1": {
+      "id": "Isaac-Inspire-Sweep-Omni-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_envs:InspireSweepOmniV1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Omni-v2": {
+      "id": "Isaac-Inspire-Sweep-Omni-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_envs:InspireSweepOmniV2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Dex-Omni-v0": {
+      "id": "Isaac-Inspire-Dex-Omni-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_envs:InspireDexOmniEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Omni-v3": {
+      "id": "Isaac-Inspire-Sweep-Omni-v3",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_envs:InspireSweepOmniV3EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Omni-v4": {
+      "id": "Isaac-Inspire-Sweep-Omni-v4",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_envs:InspireSweepOmniV4EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Omni-Renewal-v0": {
+      "id": "Isaac-Inspire-Sweep-Omni-Renewal-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_renewal_envs:InspireSweepOmniRenewalEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Omni-Renewal-OSC-v0": {
+      "id": "Isaac-Inspire-Sweep-Omni-Renewal-OSC-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_renewal_envs:InspireSweepOmniRenewalOSCEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0": {
+      "id": "Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_renewal_envs:InspireDexSweepOmniRenewalEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Sweep-Baseline-Tactile-v0": {
+      "id": "Isaac-Inspire-Sweep-Baseline-Tactile-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_envs:InspireSweepTactileEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_ppo_cfg:InspireSweepTactilePPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Tactile-Sweep-Omni-Renewal-v0": {
+      "id": "Isaac-Inspire-Tactile-Sweep-Omni-Renewal-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_renewal_envs:InspireTactileSweepOmniRenewalEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_omni_renewal_ppo_cfg:InspireTactileSweepOmniRenewalPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v0": {
+      "id": "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_renewal_envs:InspireDexTactileSweepOmniRenewalEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_omni_renewal_ppo_cfg:InspireDexTactileSweepOmniRenewalPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1": {
+      "id": "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_renewal_envs:InspireDexTactileSweepOmniRenewalV1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_omni_renewal_ppo_cfg:InspireDexTactileSweepOmniRenewalV1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v2": {
+      "id": "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_renewal_envs:InspireDexTactileSweepOmniRenewalV2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_omni_renewal_ppo_cfg:InspireDexTactileSweepOmniRenewalV2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v3": {
+      "id": "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v3",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_renewal_envs:InspireDexTactileSweepOmniRenewalV3EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_omni_renewal_ppo_cfg:InspireDexTactileSweepOmniRenewalV3PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-OSC-v2": {
+      "id": "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-OSC-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.sweep:InspireSweepEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.sweep_omni_renewal_envs:InspireDexTactileSweepOmniRenewalV2OSCEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.sweep_omni_renewal_ppo_cfg:InspireDexTactileSweepOmniRenewalV2OSCPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v0": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_envs:FusionHoldingV0EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_ppo_cfg:FusionHoldingV0PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v0": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_envs:FusionHoldingOSCV0EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_ppo_cfg:FusionHoldingOSCV0PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v0": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_object_random_envs:FusionHoldingOSCObjectRandomV0EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_object_random_ppo_cfg:FusionHoldingOSCObjectRandomV0PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v1": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_envs:FusionHoldingV1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_ppo_cfg:FusionHoldingV1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v1": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_envs:FusionHoldingOSCV1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_ppo_cfg:FusionHoldingOSCV1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v1": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_object_random_envs:FusionHoldingOSCObjectRandomV1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_object_random_ppo_cfg:FusionHoldingOSCObjectRandomV1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v2": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_envs:FusionHoldingOSCV2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_ppo_cfg:FusionHoldingOSCV2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v2": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_envs:FusionHoldingV2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_ppo_cfg:FusionHoldingV2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-ObjectRandom-Test-v0": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-ObjectRandom-Test-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_object_random_envs:FusionHoldingObjectRandomTestV0EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_object_random_ppo_cfg:FusionHoldingObjectRandomTestV0PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v3": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v3",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_envs:FusionHoldingV3EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_ppo_cfg:FusionHoldingV3PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v3": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v3",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_envs:FusionHoldingOSCV3EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_ppo_cfg:FusionHoldingOSCV3PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v2": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_object_random_envs:FusionHoldingOSCObjectRandomV2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_object_random_ppo_cfg:FusionHoldingOSCObjectRandomV2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v4": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v4",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_envs:FusionHoldingV4EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_ppo_cfg:FusionHoldingV4PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v4": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v4",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_envs:FusionHoldingOSCV4EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_ppo_cfg:FusionHoldingOSCV4PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-v0": {
+      "id": "Isaac-Inspire-Final-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-v1": {
+      "id": "Isaac-Inspire-Final-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalV1Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalV1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalV1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-v2": {
+      "id": "Isaac-Inspire-Final-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalV1Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalV2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalV2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-v1-1": {
+      "id": "Isaac-Inspire-Final-v1-1",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalV1Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalV1_1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalV1_1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-Test-v1": {
+      "id": "Isaac-Inspire-Final-Test-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalV1Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalV1TestEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalV1TestPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-GoalAccuracy-v0": {
+      "id": "Isaac-Inspire-Final-GoalAccuracy-v0",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalGoalAccuracyEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalGoalAccuracyEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalGoalAccuracyPPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-GoalAccuracy-v1": {
+      "id": "Isaac-Inspire-Final-GoalAccuracy-v1",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalGoalAccuracyEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalGoalAccuracyV1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalGoalAccuracyV1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-Test-v2": {
+      "id": "Isaac-Inspire-Final-Test-v2",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalV1Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalV2TestEnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalV2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v3": {
+      "id": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v3",
+      "entry_point": "inspire_sweep_baseline.runtime.contact_sweep_clutter_fusion:ContactSweepClutterFusionV1_0Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.contact_sweep_clutter_fusion_holding_osc_object_random_envs:FusionHoldingOSCObjectRandomV3EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.contact_sweep_clutter_fusion_holding_osc_object_random_ppo_cfg:FusionHoldingOSCObjectRandomV3PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-GoalAccuracy-v0_1": {
+      "id": "Isaac-Inspire-Final-GoalAccuracy-v0_1",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalGoalAccuracyEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalGoalAccuracyV0_1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalGoalAccuracyV0_1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-GoalAccuracy-v0_2": {
+      "id": "Isaac-Inspire-Final-GoalAccuracy-v0_2",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalGoalAccuracyEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalGoalAccuracyV0_2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalGoalAccuracyV0_2PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-GoalAccuracy-v0_3": {
+      "id": "Isaac-Inspire-Final-GoalAccuracy-v0_3",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalGoalAccuracyEnv",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalGoalAccuracyV0_3EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalGoalAccuracyV0_3PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-GoalAccuracy-v0_2_1": {
+      "id": "Isaac-Inspire-Final-GoalAccuracy-v0_2_1",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalGoalAccuracyV0_2_1Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalGoalAccuracyV0_2_1EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalGoalAccuracyV0_2_1PPORunnerCfg"
+      }
+    },
+    "Isaac-Inspire-Final-GoalAccuracy-v0_2_2": {
+      "id": "Isaac-Inspire-Final-GoalAccuracy-v0_2_2",
+      "entry_point": "inspire_sweep_baseline.runtime.final:FinalGoalAccuracyV0_2_2Env",
+      "disable_env_checker": true,
+      "kwargs": {
+        "env_cfg_entry_point": "inspire_sweep_baseline.envs.final_envs:FinalGoalAccuracyV0_2_2EnvCfg",
+        "rsl_rl_cfg_entry_point": "inspire_sweep_baseline.agent.final_ppo_cfg:FinalGoalAccuracyV0_2_2PPORunnerCfg"
+      }
+    }
+  },
+  "mapping": {
+    "inspire_revision_v0": [
+      "Isaac-Inspire-Revision-v0"
+    ],
+    "inspire_revision_v1": [
+      "Isaac-Inspire-Revision-v1"
+    ],
+    "inspire_revision_test_v1": [
+      "Isaac-Inspire-Revision-Test-v1"
+    ],
+    "inspire_revision_v2": [
+      "Isaac-Inspire-Revision-v2"
+    ],
+    "inspire_revision_test_v2": [
+      "Isaac-Inspire-Revision-Test-v2"
+    ],
+    "inspire_revision_test_v2_gt": [
+      "Isaac-Inspire-Revision-Test-v2-GT"
+    ],
+    "inspire_contact_sweep_clutter_fusion_v1_1_1": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1_1"
+    ],
+    "inspire_contact_sweep_clutter_fusion_v1_1_2": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1_2"
+    ],
+    "inspire_contact_sweep_clutter_fusion_v1_4": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_4"
+    ],
+    "inspire_contact_sweep_clutter_fusion_v1_3": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3"
+    ],
+    "inspire_contact_sweep_clutter_fusion_v1_3_1": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_3_1"
+    ],
+    "inspire_contact_sweep_clutter_fusion_v1_1": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_1"
+    ],
+    "inspire_contact_sweep_clutter_fusion_v1_2": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_2"
+    ],
+    "inspire_contact_sweep_clutter_fusion_v1_0": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v1_0"
+    ],
+    "inspire_contact_sweep_clutter_fusion_v2": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v2"
+    ],
+    "inspire_contact_sweep_clutter_fusion_v3": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v3"
+    ],
+    "inspire_contact_sweep_clutter_fusion": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v0"
+    ],
+    "inspire_contact_sweep_clutter_v1_curriculum": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-FT-Test-v0",
+      "Isaac-Inspire-Contact-Sweep-Clutter-Curriculum-v1"
+    ],
+    "inspire_contact_sweep_clutter_v2": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-v2"
+    ],
+    "inspire_contact_sweep_clutter_v1": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-v1"
+    ],
+    "inspire_contact_sweep_clutter": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-v0"
+    ],
+    "inspire_contact_sweep": [
+      "Isaac-Inspire-Contact-Sweep-v0"
+    ],
+    "inspire_sweep_baseline": [
+      "Isaac-Inspire-Sweep-Baseline-v0",
+      "Isaac-Inspire-Sweep-Omni-v0",
+      "Isaac-Inspire-Sweep-Omni-v1",
+      "Isaac-Inspire-Sweep-Omni-v2",
+      "Isaac-Inspire-Dex-Omni-v0",
+      "Isaac-Inspire-Sweep-Omni-v3",
+      "Isaac-Inspire-Sweep-Omni-v4",
+      "Isaac-Inspire-Sweep-Omni-Renewal-v0",
+      "Isaac-Inspire-Sweep-Omni-Renewal-OSC-v0",
+      "Isaac-Inspire-Dex-Sweep-Omni-Renewal-v0"
+    ],
+    "inspire_sweep_realistic_physics": [
+      "Isaac-Inspire-Sweep-Realistic-Physics-v0"
+    ],
+    "inspire_sweep_realistic_initial_privileged": [
+      "Isaac-Inspire-Sweep-Realistic-Physics-Initial-Privileged-v0"
+    ],
+    "inspire_sweep_tactile": [
+      "Isaac-Inspire-Sweep-Baseline-Tactile-v0"
+    ],
+    "inspire_tactile_sweep_omni_renewal": [
+      "Isaac-Inspire-Tactile-Sweep-Omni-Renewal-v0"
+    ],
+    "inspire_dex_tactile_sweep_omni_renewal": [
+      "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v0"
+    ],
+    "inspire_dex_tactile_sweep_omni_renewal_v1": [
+      "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v1"
+    ],
+    "inspire_dex_tactile_sweep_omni_renewal_v2": [
+      "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v2"
+    ],
+    "inspire_dex_tactile_sweep_omni_renewal_v3": [
+      "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-v3"
+    ],
+    "inspire_dex_tactile_sweep_omni_renewal_v2_osc": [
+      "Isaac-Inspire-Dex-Tactile-Sweep-Omni-Renewal-OSC-v2"
+    ],
+    "inspire_contact_sweep_clutter_fusion_holding_v0": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v0"
+    ],
+    "inspire_contact_sweep_clutter_fusion_holding_osc_v0": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v0"
+    ],
+    "inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v0": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v0"
+    ],
+    "inspire_contact_sweep_clutter_fusion_holding_v1": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v1"
+    ],
+    "inspire_contact_sweep_clutter_fusion_holding_osc_v1": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v1"
+    ],
+    "inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v1": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v1"
+    ],
+    "inspire_contact_sweep_clutter_fusion_holding_osc_v2": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v2"
+    ],
+    "inspire_contact_sweep_clutter_fusion_holding_v2": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v2"
+    ],
+    "inspire_contact_sweep_clutter_fusion_holding_object_random_test_v0": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-ObjectRandom-Test-v0"
+    ],
+    "inspire_contact_sweep_clutter_fusion_holding_v3": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v3"
+    ],
+    "inspire_contact_sweep_clutter_fusion_holding_osc_v3": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v3"
+    ],
+    "inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v2": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v2"
+    ],
+    "inspire_contact_sweep_clutter_fusion_holding_v4": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-v4"
+    ],
+    "inspire_contact_sweep_clutter_fusion_holding_osc_v4": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v4"
+    ],
+    "inspire_final_v0": [
+      "Isaac-Inspire-Final-v0"
+    ],
+    "inspire_final_v1": [
+      "Isaac-Inspire-Final-v1"
+    ],
+    "inspire_final_v2": [
+      "Isaac-Inspire-Final-v2",
+      "Isaac-Inspire-Final-Test-v2"
+    ],
+    "inspire_final_v1_1": [
+      "Isaac-Inspire-Final-v1-1"
+    ],
+    "inspire_final_v1_test": [
+      "Isaac-Inspire-Final-Test-v1"
+    ],
+    "inspire_final_goal_accuracy_v0": [
+      "Isaac-Inspire-Final-GoalAccuracy-v0"
+    ],
+    "inspire_final_goal_accuracy_v1": [
+      "Isaac-Inspire-Final-GoalAccuracy-v1"
+    ],
+    "inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v3": [
+      "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v3"
+    ],
+    "inspire_final_goal_accuracy_v0_1": [
+      "Isaac-Inspire-Final-GoalAccuracy-v0_1"
+    ],
+    "inspire_final_goal_accuracy_v0_2": [
+      "Isaac-Inspire-Final-GoalAccuracy-v0_2"
+    ],
+    "inspire_final_goal_accuracy_v0_3": [
+      "Isaac-Inspire-Final-GoalAccuracy-v0_3"
+    ],
+    "inspire_final_goal_accuracy_v0_2_1": [
+      "Isaac-Inspire-Final-GoalAccuracy-v0_2_1"
+    ],
+    "inspire_final_goal_accuracy_v0_2_2": [
+      "Isaac-Inspire-Final-GoalAccuracy-v0_2_2"
+    ]
+  },
+  "runs": [
+    {
+      "path": "logs/TEMP/inspire_contact_sweep_clutter_fusion/2026-10-21_18-24-12",
+      "env": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v0",
+      "exp": "inspire_contact_sweep_clutter_fusion",
+      "candidates": [
+        "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v0"
+      ],
+      "max_model": 1200,
+      "loss_step": 1228,
+      "loss_records": 4916,
+      "samples": [
+        [
+          1792574670.4558973,
+          0,
+          [
+            [
+              "Loss/value",
+              200.35581970214844
+            ]
+          ]
+        ],
+        [
+          1792574670.455908,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.0035092737525701523
+            ]
+          ]
+        ],
+        [
+          1792574670.4559143,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.307110786437988
+            ]
+          ]
+        ],
+        [
+          1792574670.4559202,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              0.003375000087544322
+            ]
+          ]
+        ],
+        [
+          1792574672.7657323,
+          1,
+          [
+            [
+              "Loss/value",
+              193.34254455566406
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "2676cf53e8fa66780e54744265fe6097612c6c7c0976cb03705dc15d76678da2"
+    },
+    {
+      "path": "logs/TEMP/inspire_contact_sweep_clutter_fusion/2026-10-21_19-31-34",
+      "env": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v0",
+      "exp": "inspire_contact_sweep_clutter_fusion",
+      "candidates": [
+        "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v0"
+      ],
+      "max_model": 20450,
+      "loss_step": 20453,
+      "loss_records": 77416,
+      "samples": [
+        [
+          1792578712.9486253,
+          1100,
+          [
+            [
+              "Loss/value",
+              0.2074136734008789
+            ]
+          ]
+        ],
+        [
+          1792578712.9486372,
+          1100,
+          [
+            [
+              "Loss/surrogate",
+              0.005275956355035305
+            ]
+          ]
+        ],
+        [
+          1792578712.9486437,
+          1100,
+          [
+            [
+              "Loss/entropy",
+              -5.278895378112793
+            ]
+          ]
+        ],
+        [
+          1792578712.94865,
+          1100,
+          [
+            [
+              "Loss/learning_rate",
+              0.0001316872367169708
+            ]
+          ]
+        ],
+        [
+          1792578716.08093,
+          1101,
+          [
+            [
+              "Loss/value",
+              0.24079637229442596
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "1e3f46da6b21c85f73ed21b4bc351580a0a76b3e29ec297713c5354f616d67a1"
+    },
+    {
+      "path": "logs/TEMP/inspire_contact_sweep_clutter_fusion_holding_object_random_test_v0/2026-10-23_22-40-18",
+      "env": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-ObjectRandom-Test-v0",
+      "exp": "inspire_contact_sweep_clutter_fusion_holding_object_random_test_v0",
+      "candidates": [
+        "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-ObjectRandom-Test-v0"
+      ],
+      "max_model": 0,
+      "loss_step": 1,
+      "loss_records": 8,
+      "samples": [
+        [
+          1792762964.5794227,
+          0,
+          [
+            [
+              "Loss/value",
+              201.36619567871094
+            ]
+          ]
+        ],
+        [
+          1792762964.57944,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.00018593340064398944
+            ]
+          ]
+        ],
+        [
+          1792762964.5794542,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.345131874084473
+            ]
+          ]
+        ],
+        [
+          1792762964.5794673,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1792762969.1374693,
+          1,
+          [
+            [
+              "Loss/value",
+              203.45982360839844
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "dbdb2282a5734f118cdcc0e9d98497b9cdaa060c1cdeb17b8f8b18461caac84f",
+      "tensorboard_loader_verified": true
+    },
+    {
+      "path": "logs/TEMP/inspire_contact_sweep_clutter_fusion_holding_object_random_test_v0/2026-10-23_22-43-35",
+      "env": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-ObjectRandom-Test-v0",
+      "exp": "inspire_contact_sweep_clutter_fusion_holding_object_random_test_v0",
+      "candidates": [
+        "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-ObjectRandom-Test-v0"
+      ],
+      "max_model": 1450,
+      "loss_step": 1452,
+      "loss_records": 5812,
+      "samples": [
+        [
+          1792763157.85384,
+          0,
+          [
+            [
+              "Loss/value",
+              201.36619567871094
+            ]
+          ]
+        ],
+        [
+          1792763157.8538582,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.00018593340064398944
+            ]
+          ]
+        ],
+        [
+          1792763157.8538725,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.345131874084473
+            ]
+          ]
+        ],
+        [
+          1792763157.853886,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1792763162.5364807,
+          1,
+          [
+            [
+              "Loss/value",
+              203.45982360839844
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "57774d12fb7e15e3bd5a5d0714ddc7ace855d2acb6aa1a9841a1c722354c928c"
+    },
+    {
+      "path": "logs/TEMP/inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v0/2026-10-23_20-23-39",
+      "env": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v0",
+      "exp": "inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v0",
+      "candidates": [
+        "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v0"
+      ],
+      "max_model": 0,
+      "loss_step": 8,
+      "loss_records": 36,
+      "samples": [
+        [
+          1792754663.3107336,
+          0,
+          [
+            [
+              "Loss/value",
+              400.93560791015625
+            ]
+          ]
+        ],
+        [
+          1792754663.3107512,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.02261185646057129
+            ]
+          ]
+        ],
+        [
+          1792754663.310765,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.35073471069336
+            ]
+          ]
+        ],
+        [
+          1792754663.3107781,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1792754666.2058413,
+          1,
+          [
+            [
+              "Loss/value",
+              345.64056396484375
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "79f8ff4b7283dacbf7633c512ef3ff8c3a4693858d7949c1e92be10402569915",
+      "tensorboard_loader_verified": true
+    },
+    {
+      "path": "logs/TEMP/inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v0/2026-10-23_20-31-42",
+      "env": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v0",
+      "exp": "inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v0",
+      "candidates": [
+        "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v0"
+      ],
+      "max_model": 0,
+      "loss_step": 4,
+      "loss_records": 20,
+      "samples": [
+        [
+          1792755116.8575816,
+          0,
+          [
+            [
+              "Loss/value",
+              373.4957275390625
+            ]
+          ]
+        ],
+        [
+          1792755116.857599,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.042395174503326416
+            ]
+          ]
+        ],
+        [
+          1792755116.8576128,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.349452018737793
+            ]
+          ]
+        ],
+        [
+          1792755116.857625,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1792755119.6641252,
+          1,
+          [
+            [
+              "Loss/value",
+              366.9568176269531
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "0c87a1f7d16d986e521bfa9b55d607a6f9dee7a560451e138bdc18ce75c2379e",
+      "tensorboard_loader_verified": true
+    },
+    {
+      "path": "logs/TEMP/inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v0/2026-10-23_20-42-37",
+      "env": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v0",
+      "exp": "inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v0",
+      "candidates": [
+        "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v0"
+      ],
+      "max_model": 0,
+      "loss_step": 4,
+      "loss_records": 20,
+      "samples": [
+        [
+          1792755773.813702,
+          0,
+          [
+            [
+              "Loss/value",
+              394.4242248535156
+            ]
+          ]
+        ],
+        [
+          1792755773.8137321,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.024676613509655
+            ]
+          ]
+        ],
+        [
+          1792755773.8137572,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.347509384155273
+            ]
+          ]
+        ],
+        [
+          1792755773.813782,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1792755781.180355,
+          1,
+          [
+            [
+              "Loss/value",
+              377.9221496582031
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "9c71e466bfcbb6deb179b9c910720699baa36c603099af7c17a5b08bf5bc7c87",
+      "tensorboard_loader_verified": true
+    },
+    {
+      "path": "logs/TEMP/inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v0/2026-10-23_20-51-31",
+      "env": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v0",
+      "exp": "inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v0",
+      "candidates": [
+        "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v0"
+      ],
+      "max_model": 0,
+      "loss_step": 1,
+      "loss_records": 8,
+      "samples": [
+        [
+          1792756307.0644038,
+          0,
+          [
+            [
+              "Loss/value",
+              394.38458251953125
+            ]
+          ]
+        ],
+        [
+          1792756307.0644212,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.024689529091119766
+            ]
+          ]
+        ],
+        [
+          1792756307.0644345,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.347514152526855
+            ]
+          ]
+        ],
+        [
+          1792756307.0644472,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1792756312.4754422,
+          1,
+          [
+            [
+              "Loss/value",
+              308.55218505859375
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "8f1f87cfcb85cba99c8f385cece2c95b7f3a7f0f67bf3f1d3f59670b9663f031",
+      "tensorboard_loader_verified": true
+    },
+    {
+      "path": "logs/TEMP/inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v0/2026-10-23_21-00-03",
+      "env": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v0",
+      "exp": "inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v0",
+      "candidates": [
+        "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-ObjectRandom-v0"
+      ],
+      "max_model": 0,
+      "loss_step": 3,
+      "loss_records": 16,
+      "samples": [
+        [
+          1792756819.4328394,
+          0,
+          [
+            [
+              "Loss/value",
+              394.38458251953125
+            ]
+          ]
+        ],
+        [
+          1792756819.432857,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.024689529091119766
+            ]
+          ]
+        ],
+        [
+          1792756819.432871,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.347514152526855
+            ]
+          ]
+        ],
+        [
+          1792756819.432884,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1792756825.29837,
+          1,
+          [
+            [
+              "Loss/value",
+              308.55218505859375
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "887150bf1befb8b6f0805d3de612b56f893a2c91279e59beb98693334faae30a",
+      "tensorboard_loader_verified": true
+    },
+    {
+      "path": "logs/TEMP/inspire_contact_sweep_clutter_fusion_holding_osc_v2/2026-10-24_02-22-38",
+      "env": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v2",
+      "exp": "inspire_contact_sweep_clutter_fusion_holding_osc_v2",
+      "candidates": [
+        "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v2"
+      ],
+      "max_model": 250,
+      "loss_step": 258,
+      "loss_records": 1036,
+      "samples": [
+        [
+          1792776208.672496,
+          0,
+          [
+            [
+              "Loss/value",
+              100.93002319335938
+            ]
+          ]
+        ],
+        [
+          1792776208.6725128,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.005378379486501217
+            ]
+          ]
+        ],
+        [
+          1792776208.6725266,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.345972061157227
+            ]
+          ]
+        ],
+        [
+          1792776208.6725395,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              0.009999999776482582
+            ]
+          ]
+        ],
+        [
+          1792776212.9496021,
+          1,
+          [
+            [
+              "Loss/value",
+              146.0049591064453
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "4b670377078baca5fad2029f742fe88fe2607daf1d22552b95dc9a0565a61e89",
+      "tensorboard_loader_verified": true
+    },
+    {
+      "path": "logs/TEMP/inspire_contact_sweep_clutter_fusion_holding_osc_v2/2026-10-24_02-43-09",
+      "env": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v2",
+      "exp": "inspire_contact_sweep_clutter_fusion_holding_osc_v2",
+      "candidates": [
+        "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v2"
+      ],
+      "max_model": 8600,
+      "loss_step": 8603,
+      "loss_records": 34416,
+      "samples": [
+        [
+          1792777444.4048853,
+          0,
+          [
+            [
+              "Loss/value",
+              101.10038757324219
+            ]
+          ]
+        ],
+        [
+          1792777444.4049125,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.005803617183119059
+            ]
+          ]
+        ],
+        [
+          1792777444.4049382,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.348465919494629
+            ]
+          ]
+        ],
+        [
+          1792777444.4049628,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              0.009999999776482582
+            ]
+          ]
+        ],
+        [
+          1792777448.895768,
+          1,
+          [
+            [
+              "Loss/value",
+              144.6021728515625
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "782f8bac7f49115f5907c679b609b1c581eb05bc0ad81551ecdc43e8558d5af1"
+    },
+    {
+      "path": "logs/TEMP/inspire_contact_sweep_clutter_fusion_v2/2026-10-21_20-31-32",
+      "env": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v2",
+      "exp": "inspire_contact_sweep_clutter_fusion_v2",
+      "candidates": [
+        "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v2"
+      ],
+      "max_model": 14550,
+      "loss_step": 14556,
+      "loss_records": 58228,
+      "samples": [
+        [
+          1792582312.8503408,
+          0,
+          [
+            [
+              "Loss/value",
+              199.98745727539062
+            ]
+          ]
+        ],
+        [
+          1792582312.850357,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.003192896954715252
+            ]
+          ]
+        ],
+        [
+          1792582312.8503673,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.33736801147461
+            ]
+          ]
+        ],
+        [
+          1792582312.8503761,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              0.0004444444493856281
+            ]
+          ]
+        ],
+        [
+          1792582315.425494,
+          1,
+          [
+            [
+              "Loss/value",
+              199.94752502441406
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "57e2511d487180d1d2f190940410c1772120ff9ab1926a03f3b6490fc2b9099c"
+    },
+    {
+      "path": "logs/TEMP/inspire_contact_sweep_clutter_fusion_v3/2026-10-21_21-47-29",
+      "env": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v3",
+      "exp": "inspire_contact_sweep_clutter_fusion_v3",
+      "candidates": [
+        "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v3"
+      ],
+      "max_model": 0,
+      "loss_step": 28,
+      "loss_records": 116,
+      "samples": [
+        [
+          1792586874.8562047,
+          0,
+          [
+            [
+              "Loss/value",
+              199.99560546875
+            ]
+          ]
+        ],
+        [
+          1792586874.8562224,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              0.000143267578096129
+            ]
+          ]
+        ],
+        [
+          1792586874.8562362,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.345081329345703
+            ]
+          ]
+        ],
+        [
+          1792586874.8562496,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1792586878.8764586,
+          1,
+          [
+            [
+              "Loss/value",
+              202.41490173339844
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "c094e1b56c6a38e46e7973f830b416a7aec4ec967dd68e6826726f4b8f083bd6",
+      "tensorboard_loader_verified": true
+    },
+    {
+      "path": "logs/TEMP/inspire_contact_sweep_clutter_fusion_v3/2026-10-21_21-55-18",
+      "env": "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v3",
+      "exp": "inspire_contact_sweep_clutter_fusion_v3",
+      "candidates": [
+        "Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v3"
+      ],
+      "max_model": 7350,
+      "loss_step": 7389,
+      "loss_records": 29560,
+      "samples": [
+        [
+          1792587343.0681841,
+          0,
+          [
+            [
+              "Loss/value",
+              199.99560546875
+            ]
+          ]
+        ],
+        [
+          1792587343.0682018,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              0.000143267578096129
+            ]
+          ]
+        ],
+        [
+          1792587343.068216,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.345081329345703
+            ]
+          ]
+        ],
+        [
+          1792587343.0682294,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1792587346.9299307,
+          1,
+          [
+            [
+              "Loss/value",
+              202.41490173339844
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "aab412ee78f7008dca1dbecf71506e26b4b2eca85e17b5435ad88ca219e51f18"
+    },
+    {
+      "path": "logs/TEMP/inspire_final_goal_accuracy_v0_2/2026-10-30_16-49-04",
+      "env": "Isaac-Inspire-Final-GoalAccuracy-v0_2",
+      "exp": "inspire_final_goal_accuracy_v0_2",
+      "candidates": [
+        "Isaac-Inspire-Final-GoalAccuracy-v0_2"
+      ],
+      "max_model": 0,
+      "loss_step": 4,
+      "loss_records": 20,
+      "samples": [
+        [
+          1793346719.7465096,
+          0,
+          [
+            [
+              "Loss/value",
+              0.43530866503715515
+            ]
+          ]
+        ],
+        [
+          1793346719.746527,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.0037566807586699724
+            ]
+          ]
+        ],
+        [
+          1793346719.7465413,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.369648933410645
+            ]
+          ]
+        ],
+        [
+          1793346719.7465546,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              0.009999999776482582
+            ]
+          ]
+        ],
+        [
+          1793346726.7530947,
+          1,
+          [
+            [
+              "Loss/value",
+              0.43651729822158813
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "8705690b1467cbe90f8fd86e3b882c252d7ad4186261cda41ae7d58ead3517ce",
+      "tensorboard_loader_verified": true
+    },
+    {
+      "path": "logs/TEMP/inspire_final_goal_accuracy_v0_2/2026-10-30_16-53-03",
+      "env": "Isaac-Inspire-Final-GoalAccuracy-v0_2",
+      "exp": "inspire_final_goal_accuracy_v0_2",
+      "candidates": [
+        "Isaac-Inspire-Final-GoalAccuracy-v0_2"
+      ],
+      "max_model": 25900,
+      "loss_step": 25905,
+      "loss_records": 103624,
+      "samples": [
+        [
+          1793346958.86946,
+          0,
+          [
+            [
+              "Loss/value",
+              0.43530866503715515
+            ]
+          ]
+        ],
+        [
+          1793346958.8694873,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.0037566807586699724
+            ]
+          ]
+        ],
+        [
+          1793346958.869515,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.369648933410645
+            ]
+          ]
+        ],
+        [
+          1793346958.8695395,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              0.009999999776482582
+            ]
+          ]
+        ],
+        [
+          1793346965.2987795,
+          1,
+          [
+            [
+              "Loss/value",
+              0.43651729822158813
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "d3b9fefd95e4dbb89528097199894c53bf3db9bb733d4e6ee7816f971944a4cb"
+    },
+    {
+      "path": "logs/TEMP/inspire_final_v1_test/2026-10-27_17-16-27",
+      "env": "Isaac-Inspire-Final-Test-v1",
+      "exp": "inspire_final_v1_test",
+      "candidates": [
+        "Isaac-Inspire-Final-Test-v1"
+      ],
+      "max_model": 9599,
+      "loss_step": 9599,
+      "loss_records": 400,
+      "samples": [
+        [
+          1793089022.5759695,
+          9500,
+          [
+            [
+              "Loss/value",
+              1.3246941566467285
+            ]
+          ]
+        ],
+        [
+          1793089022.5759869,
+          9500,
+          [
+            [
+              "Loss/surrogate",
+              -0.022230904549360275
+            ]
+          ]
+        ],
+        [
+          1793089022.5760012,
+          9500,
+          [
+            [
+              "Loss/entropy",
+              10.911993026733398
+            ]
+          ]
+        ],
+        [
+          1793089022.5760145,
+          9500,
+          [
+            [
+              "Loss/learning_rate",
+              0.0002562890585977584
+            ]
+          ]
+        ],
+        [
+          1793089030.419744,
+          9501,
+          [
+            [
+              "Loss/value",
+              0.4325651526451111
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "f367244dfe00ff7b833082228f744c885d36ad87cd04d2ae6065ac36ddd94bbd"
+    },
+    {
+      "path": "logs/TEMP/inspire_final_v2/2026-10-26_16-53-48",
+      "env": "Unregistered",
+      "exp": "inspire_final_v2",
+      "candidates": [
+        "Isaac-Inspire-Final-v2",
+        "Isaac-Inspire-Final-Test-v2"
+      ],
+      "max_model": 0,
+      "loss_step": 5,
+      "loss_records": 24,
+      "samples": [
+        [
+          1793001259.9721377,
+          0,
+          [
+            [
+              "Loss/value",
+              0.4388250410556793
+            ]
+          ]
+        ],
+        [
+          1793001259.9721544,
+          0,
+          [
+            [
+              "Loss/surrogate",
+              -0.051459427922964096
+            ]
+          ]
+        ],
+        [
+          1793001259.9721682,
+          0,
+          [
+            [
+              "Loss/entropy",
+              11.366900444030762
+            ]
+          ]
+        ],
+        [
+          1793001259.9721808,
+          0,
+          [
+            [
+              "Loss/learning_rate",
+              9.999999747378752e-06
+            ]
+          ]
+        ],
+        [
+          1793001267.1136625,
+          1,
+          [
+            [
+              "Loss/value",
+              0.45910754799842834
+            ]
+          ]
+        ]
+      ],
+      "errors": [],
+      "config_hash": "1a35abc8f179bc4b76388f4da23da355d3a1a3f3652cebb4167243360f511274",
+      "tensorboard_loader_verified": true
+    }
+  ],
+  "actions": [
+    {
+      "source": "logs/TEMP/inspire_contact_sweep_clutter_fusion/2026-10-21_18-24-12",
+      "action": "move",
+      "destination": "logs/backup/Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v0/2026-10-21_18-24-12",
+      "iterations": 1229
+    },
+    {
+      "source": "logs/TEMP/inspire_contact_sweep_clutter_fusion/2026-10-21_19-31-34",
+      "action": "move",
+      "destination": "logs/backup/Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v0/inspire_contact_sweep_clutter_fusion__2026-10-21_19-31-34",
+      "iterations": 20454
+    },
+    {
+      "source": "logs/TEMP/inspire_contact_sweep_clutter_fusion_holding_object_random_test_v0/2026-10-23_22-40-18",
+      "action": "delete_under_500",
+      "iterations": 2
+    },
+    {
+      "source": "logs/TEMP/inspire_contact_sweep_clutter_fusion_holding_object_random_test_v0/2026-10-23_22-43-35",
+      "action": "move",
+      "destination": "logs/backup/Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-ObjectRandom-Test-v0/2026-10-23_22-43-35",
+      "iterations": 1453
+    },
+    {
+      "source": "logs/TEMP/inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v0/2026-10-23_20-23-39",
+      "action": "delete_under_500",
+      "iterations": 9
+    },
+    {
+      "source": "logs/TEMP/inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v0/2026-10-23_20-31-42",
+      "action": "delete_under_500",
+      "iterations": 5
+    },
+    {
+      "source": "logs/TEMP/inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v0/2026-10-23_20-42-37",
+      "action": "delete_under_500",
+      "iterations": 5
+    },
+    {
+      "source": "logs/TEMP/inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v0/2026-10-23_20-51-31",
+      "action": "delete_under_500",
+      "iterations": 2
+    },
+    {
+      "source": "logs/TEMP/inspire_contact_sweep_clutter_fusion_holding_osc_object_random_v0/2026-10-23_21-00-03",
+      "action": "delete_under_500",
+      "iterations": 4
+    },
+    {
+      "source": "logs/TEMP/inspire_contact_sweep_clutter_fusion_holding_osc_v2/2026-10-24_02-22-38",
+      "action": "delete_under_500",
+      "iterations": 259
+    },
+    {
+      "source": "logs/TEMP/inspire_contact_sweep_clutter_fusion_holding_osc_v2/2026-10-24_02-43-09",
+      "action": "move",
+      "destination": "logs/backup/Isaac-Inspire-Contact-Sweep-Clutter-Fusion-Holding-OSC-v2/2026-10-24_02-43-09",
+      "iterations": 8604
+    },
+    {
+      "source": "logs/TEMP/inspire_contact_sweep_clutter_fusion_v2/2026-10-21_20-31-32",
+      "action": "move",
+      "destination": "logs/backup/Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v2/2026-10-21_20-31-32",
+      "iterations": 14557
+    },
+    {
+      "source": "logs/TEMP/inspire_contact_sweep_clutter_fusion_v3/2026-10-21_21-47-29",
+      "action": "delete_under_500",
+      "iterations": 29
+    },
+    {
+      "source": "logs/TEMP/inspire_contact_sweep_clutter_fusion_v3/2026-10-21_21-55-18",
+      "action": "move",
+      "destination": "logs/backup/Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v3/2026-10-21_21-55-18",
+      "iterations": 7390
+    },
+    {
+      "source": "logs/TEMP/inspire_final_goal_accuracy_v0_2/2026-10-30_16-49-04",
+      "action": "delete_under_500",
+      "iterations": 5
+    },
+    {
+      "source": "logs/TEMP/inspire_final_goal_accuracy_v0_2/2026-10-30_16-53-03",
+      "action": "move",
+      "destination": "logs/backup/Isaac-Inspire-Final-GoalAccuracy-v0_2/2026-10-30_16-53-03",
+      "iterations": 25906
+    },
+    {
+      "source": "logs/TEMP/inspire_final_v1_test/2026-10-27_17-16-27",
+      "action": "move",
+      "destination": "logs/backup/Isaac-Inspire-Final-Test-v1/2026-10-27_17-16-27",
+      "iterations": 9600
+    },
+    {
+      "source": "logs/TEMP/inspire_final_v2/2026-10-26_16-53-48",
+      "action": "delete_under_500",
+      "iterations": 6
+    }
+  ],
+  "comparisons": [
+    {
+      "name": "2026-10-21_19-31-34",
+      "paths": [
+        "logs/TEMP/inspire_contact_sweep_clutter_fusion/2026-10-21_19-31-34",
+        "logs/backup/Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v0/2026-10-21_19-31-34"
+      ],
+      "pairs": [
+        {
+          "a": "logs/TEMP/inspire_contact_sweep_clutter_fusion/2026-10-21_19-31-34",
+          "b": "logs/backup/Isaac-Inspire-Contact-Sweep-Clutter-Fusion-v0/2026-10-21_19-31-34",
+          "common": 23,
+          "different": [
+            "exported/policy.pt",
+            "exported/policy.onnx"
+          ],
+          "prefix": [
+            "events.out.tfevents.1792578708.ssu-System-Product-Name.1403956.0"
+          ],
+          "only_a": [
+            "model_10000.pt",
+            "model_10050.pt",
+            "model_10100.pt",
+            "model_10150.pt",
+            "model_10200.pt",
+            "model_10250.pt",
+            "model_10300.pt",
+            "model_10350.pt",
+            "model_10400.pt",
+            "model_10450.pt",
+            "model_10500.pt",
+            "model_10550.pt",
+            "model_10600.pt",
+            "model_10650.pt",
+            "model_10700.pt",
+            "model_10750.pt",
+            "model_10800.pt",
+            "model_10850.pt",
+            "model_10900.pt",
+            "model_10950.pt",
+            "model_11000.pt",
+            "model_11050.pt",
+            "model_11100.pt",
+            "model_11150.pt",
+            "model_11200.pt",
+            "model_11250.pt",
+            "model_11300.pt",
+            "model_11350.pt",
+            "model_11400.pt",
+            "model_11450.pt",
+            "model_11500.pt",
+            "model_11550.pt",
+            "model_11600.pt",
+            "model_11650.pt",
+            "model_11700.pt",
+            "model_11750.pt",
+            "model_11800.pt",
+            "model_11850.pt",
+            "model_11900.pt",
+            "model_11950.pt",
+            "model_12000.pt",
+            "model_12050.pt",
+            "model_12100.pt",
+            "model_12150.pt",
+            "model_12200.pt",
+            "model_12250.pt",
+            "model_12300.pt",
+            "model_12350.pt",
+            "model_12400.pt",
+            "model_12450.pt",
+            "model_12500.pt",
+            "model_12550.pt",
+            "model_12600.pt",
+            "model_12650.pt",
+            "model_12700.pt",
+            "model_12750.pt",
+            "model_12800.pt",
+            "model_12850.pt",
+            "model_12900.pt",
+            "model_12950.pt",
+            "model_13000.pt",
+            "model_13050.pt",
+            "model_13100.pt",
+            "model_13150.pt",
+            "model_13200.pt",
+            "model_13250.pt",
+            "model_13300.pt",
+            "model_13350.pt",
+            "model_13400.pt",
+            "model_13450.pt",
+            "model_13500.pt",
+            "model_13550.pt",
+            "model_13600.pt",
+            "model_13650.pt",
+            "model_13700.pt",
+            "model_13750.pt",
+            "model_13800.pt",
+            "model_13850.pt",
+            "model_13900.pt",
+            "model_13950.pt",
+            "model_14000.pt",
+            "model_14050.pt",
+            "model_14100.pt",
+            "model_14150.pt",
+            "model_14200.pt",
+            "model_14250.pt",
+            "model_14300.pt",
+            "model_14350.pt",
+            "model_14400.pt",
+            "model_14450.pt",
+            "model_14500.pt",
+            "model_14550.pt",
+            "model_14600.pt",
+            "model_14650.pt",
+            "model_14700.pt",
+            "model_14750.pt",
+            "model_14800.pt",
+            "model_14850.pt",
+            "model_14900.pt",
+            "model_14950.pt",
+            "model_15000.pt",
+            "model_15050.pt",
+            "model_15100.pt",
+            "model_15150.pt",
+            "model_15200.pt",
+            "model_15250.pt",
+            "model_15300.pt",
+            "model_15350.pt",
+            "model_15400.pt",
+            "model_15450.pt",
+            "model_15500.pt",
+            "model_15550.pt",
+            "model_15600.pt",
+            "model_15650.pt",
+            "model_15700.pt",
+            "model_15750.pt",
+            "model_15800.pt",
+            "model_15850.pt",
+            "model_15900.pt",
+            "model_15950.pt",
+            "model_16000.pt",
+            "model_16050.pt",
+            "model_16100.pt",
+            "model_16150.pt",
+            "model_16200.pt",
+            "model_16250.pt",
+            "model_16300.pt",
+            "model_16350.pt",
+            "model_16400.pt",
+            "model_16450.pt",
+            "model_16500.pt",
+            "model_16550.pt",
+            "model_16600.pt",
+            "model_16650.pt",
+            "model_16700.pt",
+            "model_16750.pt",
+            "model_16800.pt",
+            "model_16850.pt",
+            "model_16900.pt",
+            "model_16950.pt",
+            "model_17000.pt",
+            "model_17050.pt",
+            "model_17100.pt",
+            "model_17150.pt",
+            "model_17200.pt",
+            "model_17250.pt",
+            "model_17300.pt",
+            "model_17350.pt",
+            "model_17400.pt",
+            "model_17450.pt",
+            "model_17500.pt",
+            "model_17550.pt",
+            "model_17600.pt",
+            "model_17650.pt",
+            "model_17700.pt",
+            "model_17750.pt",
+            "model_17800.pt",
+            "model_17850.pt",
+            "model_17900.pt",
+            "model_17950.pt",
+            "model_18000.pt",
+            "model_18050.pt",
+            "model_18100.pt",
+            "model_18150.pt",
+            "model_18200.pt",
+            "model_18250.pt",
+            "model_18300.pt",
+            "model_18350.pt",
+            "model_18400.pt",
+            "model_18450.pt",
+            "model_18500.pt",
+            "model_18550.pt",
+            "model_18600.pt",
+            "model_18650.pt",
+            "model_18700.pt",
+            "model_18750.pt",
+            "model_18800.pt",
+            "model_18850.pt",
+            "model_18900.pt",
+            "model_18950.pt",
+            "model_19000.pt",
+            "model_19050.pt",
+            "model_19100.pt",
+            "model_19150.pt",
+            "model_19200.pt",
+            "model_19250.pt",
+            "model_19300.pt",
+            "model_19350.pt",
+            "model_19400.pt",
+            "model_19450.pt",
+            "model_1950.pt",
+            "model_19500.pt",
+            "model_19550.pt",
+            "model_19600.pt",
+            "model_19650.pt",
+            "model_19700.pt",
+            "model_19750.pt",
+            "model_19800.pt",
+            "model_19850.pt",
+            "model_19900.pt",
+            "model_19950.pt",
+            "model_2000.pt",
+            "model_20000.pt",
+            "model_20050.pt",
+            "model_20100.pt",
+            "model_20150.pt",
+            "model_20200.pt",
+            "model_20250.pt",
+            "model_20300.pt",
+            "model_20350.pt",
+            "model_20400.pt",
+            "model_20450.pt",
+            "model_2050.pt",
+            "model_2100.pt",
+            "model_2150.pt",
+            "model_2200.pt",
+            "model_2250.pt",
+            "model_2300.pt",
+            "model_2350.pt",
+            "model_2400.pt",
+            "model_2450.pt",
+            "model_2500.pt",
+            "model_2550.pt",
+            "model_2600.pt",
+            "model_2650.pt",
+            "model_2700.pt",
+            "model_2750.pt",
+            "model_2800.pt",
+            "model_2850.pt",
+            "model_2900.pt",
+            "model_2950.pt",
+            "model_3000.pt",
+            "model_3050.pt",
+            "model_3100.pt",
+            "model_3150.pt",
+            "model_3200.pt",
+            "model_3250.pt",
+            "model_3300.pt",
+            "model_3350.pt",
+            "model_3400.pt",
+            "model_3450.pt",
+            "model_3500.pt",
+            "model_3550.pt",
+            "model_3600.pt",
+            "model_3650.pt",
+            "model_3700.pt",
+            "model_3750.pt",
+            "model_3800.pt",
+            "model_3850.pt",
+            "model_3900.pt",
+            "model_3950.pt",
+            "model_4000.pt",
+            "model_4050.pt",
+            "model_4100.pt",
+            "model_4150.pt",
+            "model_4200.pt",
+            "model_4250.pt",
+            "model_4300.pt",
+            "model_4350.pt",
+            "model_4400.pt",
+            "model_4450.pt",
+            "model_4500.pt",
+            "model_4550.pt",
+            "model_4600.pt",
+            "model_4650.pt",
+            "model_4700.pt",
+            "model_4750.pt",
+            "model_4800.pt",
+            "model_4850.pt",
+            "model_4900.pt",
+            "model_4950.pt",
+            "model_5000.pt",
+            "model_5050.pt",
+            "model_5100.pt",
+            "model_5150.pt",
+            "model_5200.pt",
+            "model_5250.pt",
+            "model_5300.pt",
+            "model_5350.pt",
+            "model_5400.pt",
+            "model_5450.pt",
+            "model_5500.pt",
+            "model_5550.pt",
+            "model_5600.pt",
+            "model_5650.pt",
+            "model_5700.pt",
+            "model_5750.pt",
+            "model_5800.pt",
+            "model_5850.pt",
+            "model_5900.pt",
+            "model_5950.pt",
+            "model_6000.pt",
+            "model_6050.pt",
+            "model_6100.pt",
+            "model_6150.pt",
+            "model_6200.pt",
+            "model_6250.pt",
+            "model_6300.pt",
+            "model_6350.pt",
+            "model_6400.pt",
+            "model_6450.pt",
+            "model_6500.pt",
+            "model_6550.pt",
+            "model_6600.pt",
+            "model_6650.pt",
+            "model_6700.pt",
+            "model_6750.pt",
+            "model_6800.pt",
+            "model_6850.pt",
+            "model_6900.pt",
+            "model_6950.pt",
+            "model_7000.pt",
+            "model_7050.pt",
+            "model_7100.pt",
+            "model_7150.pt",
+            "model_7200.pt",
+            "model_7250.pt",
+            "model_7300.pt",
+            "model_7350.pt",
+            "model_7400.pt",
+            "model_7450.pt",
+            "model_7500.pt",
+            "model_7550.pt",
+            "model_7600.pt",
+            "model_7650.pt",
+            "model_7700.pt",
+            "model_7750.pt",
+            "model_7800.pt",
+            "model_7850.pt",
+            "model_7900.pt",
+            "model_7950.pt",
+            "model_8000.pt",
+            "model_8050.pt",
+            "model_8100.pt",
+            "model_8150.pt",
+            "model_8200.pt",
+            "model_8250.pt",
+            "model_8300.pt",
+            "model_8350.pt",
+            "model_8400.pt",
+            "model_8450.pt",
+            "model_8500.pt",
+            "model_8550.pt",
+            "model_8600.pt",
+            "model_8650.pt",
+            "model_8700.pt",
+            "model_8750.pt",
+            "model_8800.pt",
+            "model_8850.pt",
+            "model_8900.pt",
+            "model_8950.pt",
+            "model_9000.pt",
+            "model_9050.pt",
+            "model_9100.pt",
+            "model_9150.pt",
+            "model_9200.pt",
+            "model_9250.pt",
+            "model_9300.pt",
+            "model_9350.pt",
+            "model_9400.pt",
+            "model_9450.pt",
+            "model_9500.pt",
+            "model_9550.pt",
+            "model_9600.pt",
+            "model_9650.pt",
+            "model_9700.pt",
+            "model_9750.pt",
+            "model_9800.pt",
+            "model_9850.pt",
+            "model_9900.pt",
+            "model_9950.pt",
+            "videos/play/rl-video-step-0.mp4"
+          ],
+          "only_b": []
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "moved_runs": 8,
+    "deleted_under_500": 10,
+    "deleted_duplicate_runs": 0,
+    "preserved_files": 1621,
+    "deleted_files": 57,
+    "deleted_bytes": 28987695,
+    "temp_empty": true,
+    "existing_backup_unchanged": true,
+    "rsl_rl_unchanged": true
+  }
+}
