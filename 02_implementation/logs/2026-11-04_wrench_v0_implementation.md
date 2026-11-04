@@ -126,3 +126,22 @@ python src/inspire_sweep_baseline/scripts/train.py \
 production WrenchLayoutBank·zone_masks를 직접 호출했다. 현재 절차적 collider 함수 및 기존 USD size_fraction0.9 실측 bounds로 box/can collider를 재구성하고, Test-v2 환경0의 동일 spawner 형상/scale roster를 사용했다. 과거 pose를 복사하지 않고 seed42·현재 RED23mm/후방20mm/Gray65mm로9단계×16후보 bank를 새로 생성했다.4개 단계의 후보0을 그대로 표시한다. 현재 원격 USD를 새로 검증한 것은 아니며 이 출처 한계를 안내했다.
 
 검증:4개 샘플 complete=True, 실제3/3·3/4·4/5·4/5. 활성 OBB의 zone·wall5mm·모든139쌍의20mm 간격 검사가 통과했다. 생성 PNG 배치/확대를 열어 육안 확인했다. 실물 모양과 보수적 OBB를 구분하고 Gray의 일부 교차 허용을 설명했다. GPU/물리/학습을 실행하지 않았으며 기존 설정·학습 로그·사용자 변경은 보존했다.
+
+
+## 2026-11-04 후속: play startup layout_bank 인자 검사 오류 수정
+
+사용자가 `logs/TEMP/2026-11-04_18-47-31/model_3700.pt`를 Wrench-v0 play로 실행하면서 보고한 EventManager 초기화 ValueError를 수정했다. 명령의 task/checkpoint 옵션 문제가 아니라 startup 함수의 인자 계약 문제다.
+
+- 변경 전: `initialize_wrench_layouts(env, env_ids=None, stages=LAYOUT_STAGES, min_goal_distance=0.05)`.
+- 변경 후: `initialize_wrench_layouts(env, env_ids, stages=LAYOUT_STAGES, min_goal_distance=0.05)`.
+- 원인: 현재 Isaac Lab ManagerBase는 필수 인자와 기본값 인자를 재정렬한 뒤 앞의 env/env_ids 두 인자를 제외하고 params를 비교한다. env_ids에 기본값이 있으면 선택 인자 목록에 남아 기본 params={}와 v0_1의 명시적 params 모두 거부한다. EventManager가 env_ids를 직접 전달하므로 기본값만 제거했다.
+- 회귀 검사: 실제 manager_base.py의 `_resolve_common_term_cfg` 메서드를 AST로 추출해 실제 startup 함수에 실행한다. 빈 params와 stages/min_goal_distance를 명시한 params 두 경우 모두 수정 전 동일 ValueError를 재현했고 수정 후 통과했다. 기존 v0_1 직접 호출 테스트도 관리자의 호출처럼 env_ids=None을 명시하도록 수정했다.
+- 영향·최종 대조: 공통 startup 함수 시그니처 한 곳과 테스트만 변경했다. 이를 공유하는 Wrench 파생 환경에도 적용된다. 등록·상속·Scene·관측·행동·보상·종료·커리큘럼·PPO·배치 수치와 함수 본문은 보존했다. 기존 사용자 작업트리 변경과 학습 로그/checkpoint는 유지했다.
+
+검증 명령:
+
+```bash
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 OMP_NUM_THREADS=1 /home/min/miniconda3/envs/env_isaaclab/bin/python -m pytest src/inspire_sweep_baseline/tests/test_wrench.py src/inspire_sweep_baseline/tests/test_wrench_v0_1.py src/inspire_sweep_baseline/tests/test_wrench_v1.py -q
+```
+
+결과: **67 passed, 6.24s**. 최초 pytest 시도는 ROS 자동 플러그인의 lark 누락으로 수집 전 실패하여 자동 플러그인을 끈 기존 검증 방식으로 실행했다. GPU 전체 play/rollout/정책 로드는 미검증이다. 현재 실행 환경의 nvidia-smi가 NVIDIA 드라이버 통신 실패를 반환했다. 사용자 GPU 환경에서는 기존 play 명령을 재실행한다.

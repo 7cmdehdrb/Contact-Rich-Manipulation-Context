@@ -1,5 +1,7 @@
 # Inspire-Wrench-v0 / v1 최종 환경 명세
 
+2026-11-04 추가: v0의 feasibility 파생인 [Wrench-v0_1](WRENCH_V0_1_ENVIRONMENT.md)은 contact 보상 제거·연속 접촉/각도 거리 보상·3cm 미만 alpha=1·40° 고정·절반 목표 거리를 사용한다. 아래 부모 v0/v1/v2 계약은 보존한다.
+
 2026-11-04 현재 작업트리 기준. 활성 패키지는 `src/inspire_sweep_baseline`이다. 이 문서는 **v0의 전체 환경과 v1의 차이를 함께 설명하는 기준 문서**다. 이후 Hydra override나 코드 수정이 있으면 실행 시점의 설정이 우선한다. 아래 수치는 기본 설정이며, 학습 성능이 검증된 최적값이라는 의미는 아니다.
 
 [환경 설정](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/wrench_envs.py) · [v0 구현 기록](../logs/2026-11-04_wrench_v0_implementation.md) · [v1 구현·후속 변경 기록](../logs/2026-11-04_wrench_v1_osc.md)
@@ -406,3 +408,28 @@ python src/inspire_sweep_baseline/tests/_wrench_probe.py --version v1 --headless
 | 관측 구성 | [mdp/observations/wrench.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observations/wrench.py) |
 | 초기화/reset 모드 | [mdp/events/wrench.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/events/wrench.py) |
 | PPO·실험명 | [agent/wrench_ppo_cfg.py](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/agent/wrench_ppo_cfg.py) |
+
+
+## 13. Inspire-Wrench-v2: v1의 Arm 범위를1/10로 축소
+
+2026-11-04 추가. `WrenchV2EnvCfg(WrenchV1EnvCfg)`가 v1을 직접 상속한다. Gym ID는 **`Inspire-Wrench-v2`**, runtime은 기존 `WrenchEnv`, runner는 `WrenchV2PPORunnerCfg(WrenchV1PPORunnerCfg)`이고 experiment_name은 `inspire_wrench_v2`다. 이 절은 v0/v1 설정을 바꾸지 않는다.
+
+| 항목 | v1 | v2 |
+| --- | --- | --- |
+| Arm 목표 force 축별 | ±100N | ±10N |
+| Arm 목표 moment 축별 | ±5Nm | ±0.5Nm |
+| 보정 후 force 명령 축별 | ±120N | ±12N |
+| 보정 후 moment 명령 축별 | ±6Nm | ±0.6Nm |
+| raw clamp / 정규화 범위 | [-1,1] | [-1,1] |
+| Hand openness | [0,1] | [0,1] |
+| P gain / 중력 보상 | 0.2 / True | 동일 |
+
+v2 post-init은 v1 초기화를 완료한 뒤 `wrench_scale`과 `commanded_wrench_limit`만 각각10으로 나눈다. F/T sensor 기준점, 정책/물리 주기, 관측, 배치, 보상·종료·커리큘럼은 상속한다. 관절 effort 제한과 중력 보상은 로봇 동역학 기준이므로1/10로 줄이지 않는다. 실제 접촉력의 하드 보장을 뜻하지 않는다.
+
+**Action-rate 정규화도 축소된 목표 범위를 기준으로 유지한다.** 상속된 함수는 `clip(raw,-limit,limit)/limit`의 변화량을 사용한다. 이는 v2 Desired Wrench를 축별10N/0.5Nm로 나눈 값과 정확히 같으며 물리 scale이 분자·분모에서 상쇄된다. 따라서 reward 계수0.03을1/10 또는1/100로 추가 축소하지 않는다. Fx 0→5N, Mx 0→0.25Nm는 각각0.0075의 raw 비용으로, v1의0→50N·0→2.5Nm와 같은 상대비용이다. Hand raw 비용과 실제 측정 wrench-change 페널티도 보존한다.
+
+```bash
+python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Wrench-v2 --num_envs 2048 --headless
+```
+
+CPU46개 통과: 최종 v1/v2 구성 차이가 두 범위뿐임, 기존 부모 불변, Gym/runner 연결, 실제 Action의 목표 변환 및 반대 방향 feedback의12N/0.6Nm clamp, 정규화 비용 동등성을 검사했다. GPU probe는 `--version v2`를 지원하지만 이번 작업에서 실행하지 않았다. 실제 접촉 안정성·학습 성능은 미검증이다.

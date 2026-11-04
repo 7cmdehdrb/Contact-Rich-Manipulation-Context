@@ -116,3 +116,14 @@ EnvCfg·Scene·Event·관측·액션·보상·커리큘럼·종료·PPO와 해�
 최종 대조: 추가/수정은 통합 Markdown·버전별 안내·handoff·활성 환경 안내·README·본 로그뿐이며 환경 코드/테스트/학습 로그는 이번 문서 작업에서 변경하지 않았다. 과거 CPU 검증 결과와 미수행 GPU/실물 결과를 분리했고 새 시뮬레이션/학습/CPU 회귀를 수행한 것으로 기록하지 않았다. 문서 수식 형식·상대 링크·diff 공백 검사는 아래 최종 결과를 따른다.
 
 문서 검증 결과: 변경 Markdown7개 math check 통과. 문서 저장소6개 파일의 링크137개를 workspace 외부 경로까지 확인하여 오류0(HTTP URL4개는 fetch하지 않음). root/docs `git diff --check` 통과. README 전체 링크는 기존에 기록된 무관한 GoalAccuracy 문서 누락을 재검사/수정하지 않고, 이번 추가 링크의 대상 존재를 확인했다. 코드와 문서의 수치·표·경계 최종 대조를 완료했다.
+
+
+## 2026-11-04 Wrench-v2 추가: Arm 범위1/10
+
+사용자가 v1 직접 상속과 순수한 액션 범위 축소를 요청했다. 기존 미커밋 작업트리를 기준으로 부모 선언을 보존하고 WrenchV2EnvCfg, WrenchV2PPORunnerCfg, Inspire-Wrench-v2 등록을 추가했다. 최종 계약은 [통합 명세13절](../environments/WRENCH_V0_V1_ENVIRONMENT.md#13-inspire-wrench-v2-v1의-arm-범위를110로-축소)에 기록했다.
+
+변경 전후: Arm 목표100N/5Nm→10N/0.5Nm, 보정 후 제한120N/6Nm→12N/0.6Nm. Hand는 openness이므로 유지했다. action-rate는 v1의 범위 정규화 함수를 그대로 사용하면 축소된 목표 범위가 자동 반영된다. raw clamp/limit에서 물리 scale이 상쇄되므로 계수를 추가 축소하지 않았다. 측정 기반 wrist-wrench 비용/종료·관측·커리큘럼은 변경 요청 범위 밖이며 유지했다.
+
+최종 대조: production Python 파일 해시 비교에서 EnvCfg·runner·registry3개만 변경, 각 기존 AST prefix가 완전히 동일한 것을 확인했다. v1/v2 전체 config 비교에서 두 Arm 범위만 차이가 있고 부모 인스턴스와 새 생성 부모도 불변이다. PPO는 experiment_name만 다르다. 기존 테스트 파일에 v2 파생 격리·실제 Action clamp 및 상대 action-rate 동등성 검증을 추가했고 v0 구조 검사는 v2 새 선언만 제외한다. GPU probe는 v2를 선택하고 v1 대비 정확한 두 필드만 허용하도록 확장했다.
+
+검증: `PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 OMP_NUM_THREADS=1 /home/min/miniconda3/envs/env_isaaclab/bin/python -m pytest -q src/inspire_sweep_baseline/tests/test_wrench_v1.py src/inspire_sweep_baseline/tests/test_wrench.py` →46 passed (4.73s). probe 문법 compile 통과. GPU/실물/학습은 미수행, 학습 로그·기존 사용자 변경 보존.

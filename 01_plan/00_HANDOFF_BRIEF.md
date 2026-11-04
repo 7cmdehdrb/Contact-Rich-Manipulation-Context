@@ -1,5 +1,9 @@
 # 현재 개발 인계
 
+2026-11-04: **Inspire-Wrench-v0_1** 추가. v0 직접 상속, 독립 contact 보상 제거·거리 보상에 연속 접촉과 signed cosine 적용. 사용자 후속 지시로 거리3cm 미만 alpha=1, 기존 높이/계수 유지. Deadzone40° 고정·목표 허용 거리2.5–7.5cm. CPU76개 통과, GPU/학습 미검증. [환경 계약](../02_implementation/environments/WRENCH_V0_1_ENVIRONMENT.md) · [개발 기록](../02_implementation/logs/2026-11-04_wrench_v0_1_implementation.md).
+
+2026-11-04: **Inspire-Wrench-v2** 추가. v1 직접 상속, Arm 목표 ±10N/±0.5Nm·보정 후 제한 ±12N/±0.6Nm로1/10 축소. 범위 정규화 action-rate와 Hand/나머지 환경은 상속한다. CPU46개 통과, GPU 미검증. [v2 계약](../02_implementation/environments/WRENCH_V0_V1_ENVIRONMENT.md#13-inspire-wrench-v2-v1의-arm-범위를110로-축소).
+
 2026-11-04 문서 통합: [Wrench-v0 전체 명세와 v1 변경점](../02_implementation/environments/WRENCH_V0_V1_ENVIRONMENT.md). 현재 코드 기준 랜덤화·관측·액션·15개 보상·커리큘럼·종료·PPO 및 sensor wrench 제어와 정규화 action-rate를 한 문서에 정리했다. 문서 작업이며 환경 코드 변경 없음.
 
 2026-11-04 후속: Wrench-v1의 robot_action_rate_penalty는 Arm Desired Wrench를 정책 목표 범위로 정규화한 [-1,1] 변화량을 사용한다. Hand raw 계산과 계수는 유지하며 CPU44개 통과. v0는 보존했다.
