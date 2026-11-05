@@ -61,3 +61,25 @@ RewardManager 실제 코드가 `func * weight * dt`를 적용함도 확인했다
 ## 최종 정적 검사
 
 변경 Python compileall 통과, 수정 Markdown5개 수식 검사 통과. 신규 계약·로그와 인계·환경 안내의 링크 검사는 통과했다. 패키지 README까지 포함한227개 링크 검사에서는 기존 `FINAL_GOAL_ACCURACY_V0_2_ENVIRONMENT.md` 누락 링크1개가 발견됐다. 이번 신규 링크는 정상이며 과거 문서 링크는 수정하지 않았다. 패키지 범위·문서 submodule `git diff --check`는 통과했다. workspace 전체 검사에는 기존 사용자 문서 `docs/plan/PLAN11.md`의 trailing whitespace/EOF 경고가 남으며 사용자 원문을 보존했다. Markdown 렌더링은 별도 실행하지 않았다.
+
+
+## 후속: Contact Count 임시 출력
+
+사용자는 접촉 위주의 정책 결과를 확인하기 위해 `Inspire-Wrench-v0_2`의 Contact Count print를 요청했고, 곧 주석 처리할 예정임을 명시했다. 기존 환경에 직접 추가했다. 기준 workspace HEAD는 `4379eff0996694029cd39ccd29d3f6854f10eadf`, 문서 HEAD는 `de1ff998d0dfb6e9f0897719c118596f2cd9deae`다. 시작 시 workspace `.vscode/settings.json` 사용자 변경을 보존했다.
+
+변경 전에는 출력이 없었다. 변경 후에는 `mdp/reward_functions/wrench.py`의 `WrenchV0_2ContactMaintenance.__call__`에서 캐시 갱신 직후 환경0을 매 제어 step 출력한다. 누적 `count`, 기존 높이/freshness 포함 접촉 판정 `contact`, `goal_inside`, 최근3개 인정 표본 수 `window_hits`, 현재 인정 여부 `accepted`, 연속 불인정 `misses`, weight·dt 적용 전 `reward_raw`를 출력한다. `TEMP v0_2 diagnostics` 주석 아래 블록 전체를 주석 처리하면 원래 동작으로 돌아간다. 동일 step 중복 조회는 추가 출력하지 않으며 부분/전체 reset의 상태 처리도 유지한다.
+
+최종 diff 대조: 해당 클래스에 조회·print만 추가했다. 등록·상속·EnvCfg·Scene·Command·Event/reset·Observation·Action·Reward 함수 계산/weight/params/순서·Termination·Curriculum 일정·runtime·PPO는 수정하지 않았다. 다른 환경은 이 v0_2 전용 클래스를 사용하지 않는다. 학습 로그와 체크포인트는 수정하지 않았다. 출력은 play/train 모두 적용되며 GPU→CPU 동기화·터미널 출력 비용이 추가된다.
+
+기존 위 pytest 명령으로 **87 passed in 10.71s**를 확인했다. 누적·초기화·cache·경계·부모/파생 구성 회귀가 통과했다. 실제 Isaac Sim play·GPU 출력·정책 성능은 실행하지 않았다. 임시 출력 추가를 접촉 편향 원인의 입증으로 해석하지 않는다.
+
+
+## 후속: Contact Count 상한10·임시 출력 주석 처리
+
+사용자가 play 출력에서 `count=104`를 확인했고, 접촉 유지에 과도하게 집중할 가능성을 이유로 최대 카운트10과 임시 print 주석 처리를 요청했다. 이는 사용자 관찰과 가설이며 정책 편향 원인을 별도 입증한 것은 아니다. 같은 workspace HEAD에서 직전 임시 print 변경 위에 직접 적용했다. 기존 `.vscode/settings.json`과 문서 변경을 보존했다.
+
+변경 전에는 인정 카운트에 상한이 없었다. 변경 후에는 `WrenchV0_2ContactMaintenance.__call__`의 증가 직후 `self._count.clamp_(max=10)`으로 실제 상태와 반환 보상 모두 최대10으로 제한한다. 목표3cm 미만 예외도 같은 상한을 따른다. weight1.45·dt0.02초 기준 인정 step 보상은 최대0.29다. 불인정 step은 계속0을 반환하고, 연속 불인정5회에는 카운트를0으로 초기화한다. 임시 진단 블록은 값 조회부터 print까지 모두 주석 처리해 출력과 동기화 비용을 제거했다. 계측 주석을 해제하면 다시 확인할 수 있다.
+
+최종 전체 대조: 직전 구현 대비 production 변경은 v0_2 전용 클래스의 상한1줄·설명과 임시 계측 주석 처리뿐이다. 등록·상속·EnvCfg·Scene·Command·Observation·Action·Event/reset·Termination·Curriculum·runtime·PPO 및 다른 Reward callable/weight/params/순서는 유지한다. 다른 환경의 접촉 함수는 수정하지 않았다. 학습 로그·체크포인트는 수정하지 않았다.
+
+기존4개 파일 pytest 명령 결과 **89 passed in 11.01s**다. 새 검증2개는 실제 접촉/목표 내부 예외 각각에서10까지 증가·장기 포화·불인정 후 초기화·재접촉1부터 재개·stdout 없음이 확인된다. 기존87개 회귀도 통과했다. 실제 GPU/Isaac Sim play·학습·정책 행동 변화는 미검증이다. 기존 체크포인트를 play할 때도 새 상한은 적용되지만 학습된 정책 가중치 자체는 바뀌지 않는다.

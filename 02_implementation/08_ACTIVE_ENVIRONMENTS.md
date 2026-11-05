@@ -1,5 +1,7 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-05 후속: Wrench-v0_2 Contact Count를 최대10으로 제한하고 임시 print 블록 전체를 주석 처리했다. 접촉 인정·불인정5회 초기화 조건과 weight1.45는 유지한다. 기본dt0.02초에서 접촉 보상 상한은 step당0.29다. CPU89개 통과, GPU/play 미실행.
+
 2026-11-05: **Inspire-Wrench-v0_2** 추가. v0 직접 상속, 접촉 조건 없는 cosine 거리 보상(3cm 미만1), 2-of-3 누적 접촉·불인정5회 초기화, −1/−1 장애물 기준에서2k 시작3k 교대·reset±1 랜덤화. CPU87개 통과, GPU/학습 미검증. [환경·검증 계약](environments/WRENCH_V0_2_ENVIRONMENT.md).
 
 2026-11-04: **Inspire-Wrench-v0_1** 추가. v0 직접 상속, contact 제거·연속 접촉/각도 계수 거리 보상, 거리3cm 미만 alpha=1. Deadzone40° 고정, 목표 허용 거리4.0–7.5cm. CPU78개 통과, GPU/학습 미검증. [환경 계약](environments/WRENCH_V0_1_ENVIRONMENT.md) · [개발 기록](logs/2026-11-04_wrench_v0_1_implementation.md).
