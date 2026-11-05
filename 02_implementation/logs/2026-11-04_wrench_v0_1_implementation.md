@@ -55,3 +55,16 @@ PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 /home/min/miniconda3/envs/env_isaaclab/bin/pyth
 `env_isaaclab`의 PyTorch2.7.0+cu126에서 `torch.cuda.is_available()`가False였다. 실제 GPU 초기화·64/2048 rollout·PPO 학습·물리 접촉 지속성과 학습 성능은 미검증이다. `_wrench_probe.py --version v0_1`은 다음 GPU 호스트를 위한 실행기 확장이며 실행 성공으로 보고하지 않는다. 실제 학습은 환경 계약의 `scripts/train.py` 명령을 사용한다.
 
 최종 정적 검사: 변경/신규 Python12개 compile 성공, workspace와 문서 submodule의 `git diff --check` 통과, 변경 Markdown6개 수식 검사 통과. 링크 검사268개 중 기존 README의 `FINAL_GOAL_ACCURACY_V0_2_ENVIRONMENT.md` 누락 링크1개를 확인했다. 해당 링크는 이번 추가와 무관한 기존 본문이며 변경하지 않았다. 새 환경·로그·색인 링크에서는 오류가 없었다. Markdown 실제 렌더링은 확인하지 않았다.
+
+
+## 2026-11-04 후속: 시작 목표 거리 하한4cm
+
+사용자는 초기 목표 허용 거리2.5cm가 성공 반경3cm 안에 들어갈 수 있음을 지적하고4.0–7.5cm를 요청했다. 기존 v0_1에 직접 적용했다. 이번 기준 코드 HEAD는 `c313625fedd3e82263f60e95e5812a4fc026100f`, 문서 HEAD는 `880d11912061dfa9f9b51a9cb58f7b828534e85c`이며 중간 사용자 변경을 유지했다.
+
+`WrenchV0_1EnvCfg.events.layout_bank.params.min_goal_distance`를0.025→0.04m로 변경했다. 상한0.075m,40° 방향,3cm 미만 alpha=1 보상,접촉 조건,부모 v0와 모든 다른 설정은 유지한다. 생성 코드는 이 하한을 startup bank 후보의 유효성 판정에 사용한다. 기존 ray 선택 방식은 유지하며 균등 거리 샘플러로 바꾸지 않는다. 실행 코드 diff는 이 수치1곳뿐임을 확인했다. runtime·Scene·Command·Event callable·관측·Action·Reward·Termination·Curriculum·PPO·등록·로그 키에는 차이가 없다.
+
+기존 검사에4cm/7.5cm 경계와4cm 미만 상한 거부, 모든 population 단계에서 초기 거리>3cm 확인을 반영했다. 위와 같은5개 테스트 파일 명령으로 **78 passed / 6.65s**. 현재 테스트에는 중간 사용자 변경으로 추가된 검사도 포함되어 이전76개와 총수가 다르다. 전체 설정 대조로 부모 보존도 확인했다. 문서·README의 현행 범위를 갱신했으며 앞선2.5cm 구현 설명은 변경 이력으로 남긴다.
+
+새 범위는 환경 재생성 시 startup bank에 적용된다. 이미 실행 중인 프로세스의 bank는 재생성되지 않으므로 재시작이 필요하다. 실제 GPU rollout·학습은 이번에도 실행하지 않았고 `logs/rsl_rl`은 건드리지 않았다.
+
+정적 검증: 변경 Markdown6개 수식 검사와 두 저장소 diff 공백 검사를 통과했다. 링크268개 검사에서는 이전에 기록한 README의 기존 누락 링크1개만 동일하게 남아 있으며 신규 링크 오류는 없다.

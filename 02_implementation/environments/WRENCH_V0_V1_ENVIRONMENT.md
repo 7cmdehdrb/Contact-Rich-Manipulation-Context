@@ -1,6 +1,6 @@
 # Inspire-Wrench-v0 / v1 최종 환경 명세
 
-2026-11-04 추가: v0의 feasibility 파생인 [Wrench-v0_1](WRENCH_V0_1_ENVIRONMENT.md)은 contact 보상 제거·연속 접촉/각도 거리 보상·3cm 미만 alpha=1·40° 고정·절반 목표 거리를 사용한다. 아래 부모 v0/v1/v2 계약은 보존한다.
+2026-11-04 추가: v0의 feasibility 파생인 [Wrench-v0_1](WRENCH_V0_1_ENVIRONMENT.md)은 contact 보상 제거·연속 접촉/각도 거리 보상·3cm 미만 alpha=1·40° 고정·4.0–7.5cm 목표 거리를 사용한다. 아래 부모 v0/v1/v2 계약은 보존한다.
 
 2026-11-04 현재 작업트리 기준. 활성 패키지는 `src/inspire_sweep_baseline`이다. 이 문서는 **v0의 전체 환경과 v1의 차이를 함께 설명하는 기준 문서**다. 이후 Hydra override나 코드 수정이 있으면 실행 시점의 설정이 우선한다. 아래 수치는 기본 설정이며, 학습 성능이 검증된 최적값이라는 의미는 아니다.
 

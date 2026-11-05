@@ -1,6 +1,8 @@
 # Revision · Holding · Final 환경 안내
 
-2026-11-04: **Inspire-Wrench-v0_1** 추가. v0 직접 상속, contact 제거·연속 접촉/각도 계수 거리 보상, 거리3cm 미만 alpha=1. Deadzone40° 고정, 목표 허용 거리2.5–7.5cm. CPU76개 통과, GPU/학습 미검증. [환경 계약](environments/WRENCH_V0_1_ENVIRONMENT.md) · [개발 기록](logs/2026-11-04_wrench_v0_1_implementation.md).
+2026-11-05: **Inspire-Wrench-v0_2** 추가. v0 직접 상속, 접촉 조건 없는 cosine 거리 보상(3cm 미만1), 2-of-3 누적 접촉·불인정5회 초기화, −1/−1 장애물 기준에서2k 시작3k 교대·reset±1 랜덤화. CPU87개 통과, GPU/학습 미검증. [환경·검증 계약](environments/WRENCH_V0_2_ENVIRONMENT.md).
+
+2026-11-04: **Inspire-Wrench-v0_1** 추가. v0 직접 상속, contact 제거·연속 접촉/각도 계수 거리 보상, 거리3cm 미만 alpha=1. Deadzone40° 고정, 목표 허용 거리4.0–7.5cm. CPU78개 통과, GPU/학습 미검증. [환경 계약](environments/WRENCH_V0_1_ENVIRONMENT.md) · [개발 기록](logs/2026-11-04_wrench_v0_1_implementation.md).
 
 2026-11-04: **Inspire-Wrench-v2** 추가. v1 직접 상속, Arm 목표 ±10N/±0.5Nm·보정 후 제한 ±12N/±0.6Nm로1/10 축소. 범위 정규화 action-rate와 Hand/나머지 환경은 상속한다. CPU46개 통과, GPU 미검증. [v2 계약](environments/WRENCH_V0_V1_ENVIRONMENT.md#13-inspire-wrench-v2-v1의-arm-범위를110로-축소).
 

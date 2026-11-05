@@ -23,7 +23,7 @@ v1/v2의 wrench 제어를 상속하지 않는다. v0의 pose OSC, Actor121D/Crit
 | `target_goal_distance` | 높이 제한 아래 지수 거리 보상 | 연속 접촉 AND 기존 높이 제한, 지수 거리 × 각도 계수 |
 | 거리 보상 weight / scale | 3.7 / 0.05m | 유지 |
 | `target_goal_direction_deadzone` | 30°에서 일정에 따라 감소 | 제거, reset의 제외 반각40° 고정 |
-| 목표 거리 허용 범위 | 5–15cm | 2.5–7.5cm |
+| 목표 거리 허용 범위 | 5–15cm | 4.0–7.5cm |
 | 배치 bank 단계 | 각도·개수9조합 | 40°·개수4조합 |
 | 학습 실험명 | `inspire_wrench_v0` | `inspire_wrench_v0_1` |
 
@@ -61,7 +61,7 @@ Hold, 최초 진입, 연속 정지 성공 보상은 부모 그대로다. 특히 
 
 40°는 기존 코드의 ±X축 방향 제외 반각이다. 허용 각도는40–140°와220–320°이며 목표 방향을40° 하나로 고정하는 뜻이 아니다.
 
-거리 샘플러는 방향별 선반 여유까지의 ray를 최대 거리로 제한한다. **2.5–7.5cm 균등분포가 아니다.** 기존 알고리즘을 유지하면서 허용 하한5→2.5cm, 상한15→7.5cm를 변경한다. 중앙 spawn disk2cm, 물체 bounds와 edge clearance2cm는 보존한다. 충분한 여유가 있는 경우7.5cm가 선택된다.
+거리 샘플러는 방향별 선반 여유까지의 ray를 최대 거리로 제한한다. **4.0–7.5cm 균등분포가 아니다.** 기존 알고리즘을 유지하면서 허용 하한5→4.0cm, 상한15→7.5cm를 변경한다. 중앙 spawn disk2cm, 물체 bounds와 edge clearance2cm는 보존한다. 충분한 여유가 있는 경우7.5cm가 선택된다. 사용자 후속 요청으로 초기 목표 반경3cm 안에서 시작하는 경우를 배제하도록 하한을2.5→4.0cm로 올렸다.
 
 | iteration | 제외 반각 | Gray / White |
 | --- | --- | --- |
@@ -83,7 +83,7 @@ python src/inspire_sweep_baseline/scripts/train.py \
   --task Inspire-Wrench-v0_1 --num_envs 2048 --headless
 ```
 
-CPU76개 통과. 접촉 임계값·연속 표본·부분 reset·중복 조회·거리·각도·3cm strict 경계·기존 높이·모든 population 단계 bank·부모 설정 보존을 검사했다. 기존 목표 샘플러도 작업 시작 시 코드와63개 seeded 조건×256개 샘플에서 정확히 동일했다. GPU가 없는 현재 환경에서는 실제 Isaac Sim 초기화·rollout·PPO·성공률 개선을 검증하지 않았다.
+CPU78개 통과. 접촉 임계값·연속 표본·부분 reset·중복 조회·거리·각도·3cm strict 경계·기존 높이·모든 population 단계 bank·부모 설정 보존을 검사했다. 기존 목표 샘플러도 작업 시작 시 코드와63개 seeded 조건×256개 샘플에서 정확히 동일했다. GPU가 없는 현재 환경에서는 실제 Isaac Sim 초기화·rollout·PPO·성공률 개선을 검증하지 않았다.
 
 GPU 호스트용 실행기는 `v0_1` 옵션을 추가했으며 아직 실행하지 않았다.
 
