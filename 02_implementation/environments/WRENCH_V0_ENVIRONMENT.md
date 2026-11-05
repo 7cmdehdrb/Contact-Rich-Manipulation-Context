@@ -1,5 +1,7 @@
 # Inspire-Wrench-v0 환경
 
+2026-11-05 문서 안내: v0·v0_1·v0_2·v0_3·v0_4의 공통 구성과 현재 수치·버전별 차이는 [Wrench v0 계열 상세 명세](WRENCH_V0_FAMILY_ENVIRONMENTS.md)에서 함께 확인한다.
+
 최종 통합 명세: [Wrench-v0 전체 환경 및 v1 변경점](WRENCH_V0_V1_ENVIRONMENT.md). 랜덤화·관측·액션·전체 보상·커리큘럼·종료와 최신 v1 스케일/action-rate는 통합 문서를 기준으로 읽는다. 아래는 버전별 구현 배경과 검증 기록을 보존한 설명이다.
 
 2026-11-04 구현. 기능 기준은 `Isaac-Inspire-Revision-Test-v2`이며, **기존 환경 상속을 끊은 독립 환경**이다. [개발·검증 기록](../logs/2026-11-04_wrench_v0_implementation.md) · [기능 기준 Test-v2](REVISION_V2_ENVIRONMENT.md).

@@ -1,5 +1,15 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-06 후속: Refactor의 Hand 관절속도 페널티는 원본 URDF 독립 구동6축만 합산하며 미믹6축을 제외한다. 계수·Arm비용·동작제어·관측·종료·커리큘럼은 유지한다.
+
+2026-11-06 Refactor: Wrist3−π/2, Arm속도종료3rad/s. 실제GUI32환경 mass/readback·7168reset검증 및 좌우촉각시험은 [후속 검증 로그](logs/2026-11-06_wrench_refactor_gui_validation.md)를 따른다. 초기 GPU불가 기록은 sandbox 접근 제한으로 정정했다.
+
+2026-11-05 **Inspire-Wrench-Refactor-v0 후속 수정**: 선반30kg 명시적 MassAPI, 오른손790g 및 관성 보정, EEF기준 OSC/Jacobian/속도, tactile.05N. CPU159개 통과. 문서의114파일을 빈 디렉토리에 복원하여 실제 config import/USD 검사 통과. [재구성 상세 명세](environments/WRENCH_REFACTOR_V0_ENVIRONMENT.md) · [소스 부록](environments/WRENCH_REFACTOR_V0_RECONSTRUCTION.md) · [검증 로그](logs/2026-11-05_wrench_refactor_mass_eef_spec.md). GPU물리 검증은 남아 있다.
+
+2026-11-05: **`Inspire-Wrench-Refactor-v0`**는 기존 Wrench CFG/runtime 상속 없는 독립 구성이다. 오른손 원본,17물체 고정풀,34촉각,Actor/Critic 동일차원,연속 목표 균등 및 요청 보상/종료/커리큘럼을 적용했다. [환경 계약](environments/WRENCH_REFACTOR_V0_ENVIRONMENT.md) · [검증/미검증](logs/2026-11-05_wrench_refactor_v0_implementation.md). 실제 PhysX/학습은 NVIDIA driver 부재로 미검증이다.
+
+2026-11-05: [**Wrench v0 계열 상세 명세**](environments/WRENCH_V0_FAMILY_ENVIRONMENTS.md)를 작성했다. v0~v0_4의 상속·Scene/reset·관측·pose OSC·전체 보상·커리큘럼·종료·PPO·로그 해석을 현재 코드로 대조했다. 접촉 weight0.1, Hand raw rate, 정규화 OSC 토크 rate의 상한/기대값 차이를 명시한다. 문서 작업이며 환경 코드·검증 상태는 변경하지 않았다.
+
 2026-11-05: **Inspire-Wrench-v0_3 → v0_4 추가**. v0_2→v0_3→v0_4 직접 상속. v0_3은 Gray/White 각각0–4 균등 reset·population/free-speed 커리큘럼 제거·속도 기준0.02m/s·EEF14cm·OSC 출력 토크 정규화 변화량·최초 진입 무감쇠4cm/s다. v0_4는 높이 조건을 둔 Holding 최단 거리 개선량으로 교체하며 weight3.7을 유지한다. 실제 부모 접촉 weight0.1도 보존했다. CPU103개 통과, GPU/학습 미실행. [환경·검증 계약](environments/WRENCH_V0_3_V0_4_ENVIRONMENTS.md).
 
 2026-11-05 후속: Wrench-v0_2 Contact Count를 최대10으로 제한하고 임시 print 블록 전체를 주석 처리했다. 접촉 인정·불인정5회 초기화 조건과 weight1.45는 유지한다. 기본dt0.02초에서 접촉 보상 상한은 step당0.29다. CPU89개 통과, GPU/play 미실행.

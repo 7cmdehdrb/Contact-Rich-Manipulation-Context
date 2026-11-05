@@ -1,5 +1,7 @@
 # Inspire-Wrench-v0_2 환경
 
+2026-11-05 문서 안내: v0·v0_1·v0_2·v0_3·v0_4의 공통 구성과 현재 수치·버전별 차이는 [Wrench v0 계열 상세 명세](WRENCH_V0_FAMILY_ENVIRONMENTS.md)에서 함께 확인한다.
+
 2026-11-05. [v0 전체 계약](WRENCH_V0_V1_ENVIRONMENT.md)을 직접 상속한 feasibility 환경이다. [개발·검증 기록](../logs/2026-11-05_wrench_v0_2_implementation.md).
 
 ## 등록 및 보존 범위
@@ -31,13 +33,15 @@ r_{\mathrm{distance},t}=3.7\,\Delta t\;\mathbf{1}[h_{\mathrm{EEF},t}<0.12\,\math
 
 ## 접촉 유지 보상
 
-기존 `target_contact` term 이름·weight1.45·threshold0.01N을 유지하고 함수만 `WrenchV0_2ContactMaintenance`로 바꾼다.
+2026-11-05 문서 정정: 현재 코드의 weight는0.1이다. 이전 문서의1.45·최대0.29/step을 코드 기준0.1·최대0.02/step으로 바로잡았다. 이번 정정으로 환경 코드를 변경하지 않았다.
+
+`target_contact` term 이름·threshold0.01N을 유지하되 v0의 weight1.45를0.1로 설정하고 함수는 `WrenchV0_2ContactMaintenance`로 바꾼다.
 
 1. 물리 접촉 표본은 부모 함수 `target_contact_below_height`를 사용한다. fresh 센서, 유한 타겟–손 접촉 합력 norm≥0.01N, EEF 높이120mm 미만을 모두 요구한다.
 2. XY 목표 거리3cm 미만이면 힘·freshness·높이와 무관하게 현재 접촉 표본으로 취급하며, 이력이 없어도 **현재 step을 즉시 접촉 인정**한다. 정확히3cm에서는 이 예외가 없다.
 3. 현재 포함3개 표본에서2개 이상이 접촉이면 인정한다. 시작/reset 전 표본은False다. 인정할 때 카운트에1을 더하되 최대10으로 제한하고 연속 불인정 횟수를0으로 만든다.
 4. 불인정이면 보상은0이고 연속 불인정 횟수에1을 더한다. 1–4회에는 카운트를 보존하고, 5회째에는 카운트를0으로 만든다. 기준은 원시 무접촉5회가 아니라 **윈도우 불인정5회**다.
-5. 인정 step의 실제 보상은 `1.45 * 누적 인정 카운트 * dt`. RewardManager가dt를 한 번 곱하며 기본dt는0.02초다. 최대 카운트10이면 step당0.29를 지급한다.
+5. 인정 step의 실제 보상은 `0.1 * 누적 인정 카운트 * dt`. RewardManager가dt를 한 번 곱하며 기본dt는0.02초다. 최대 카운트10이면 step당0.02를 지급한다.
 
 실제 접촉 신호는 각 물체의 `hand_contact_<object>` 센서에서 현재 target ID를 선택한다. `force_matrix_w`의 손 필터 방향 벡터를 합한 뒤 norm을 취한다. 이는 **normal contact resultant**이며, 접선 마찰이나 각 접촉 norm의 합은 아니다. 반대 방향 힘은 상쇄될 수 있고 선반·비타겟 접촉은 타겟 접촉에 포함되지 않는다. 이 센서 정의는 부모 그대로다.
 

@@ -1,5 +1,7 @@
 # Inspire-Wrench-v0_1 환경
 
+2026-11-05 문서 안내: v0·v0_1·v0_2·v0_3·v0_4의 공통 구성과 현재 수치·버전별 차이는 [Wrench v0 계열 상세 명세](WRENCH_V0_FAMILY_ENVIRONMENTS.md)에서 함께 확인한다.
+
 2026-11-04. [Wrench-v0 전체 계약](WRENCH_V0_V1_ENVIRONMENT.md)을 직접 상속한 feasibility 환경이다. 접촉 유지와 각도 계수의 효과를 짧은 목표 거리에서 비교한다. [개발·검증 로그](../logs/2026-11-04_wrench_v0_1_implementation.md).
 
 ## 등록과 상속

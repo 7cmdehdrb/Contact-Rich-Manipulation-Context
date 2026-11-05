@@ -1,5 +1,15 @@
 # 현재 개발 인계
 
+2026-11-06 후속: Refactor의 Hand 관절속도 페널티는 원본 URDF 독립 구동6축만 합산하며 미믹6축을 제외한다. 계수·Arm비용·동작제어·관측·종료·커리큘럼은 유지한다.
+
+2026-11-06 **Refactor GUI32환경 검증 완료**: startup event 인자 오류·주차 물체 중력 갱신/wake 오류 수정. 최종7168배치에서 공중낙하 없음, 주차 drift3.82µm,140만goal방위 편향 검출 없음. 사용자 후속으로 Wrist3−π/2·Arm속도종료3rad/s. 최종32/32목표도달,21/32안정유지성공,실패0. 왼쪽앞면ch0/오른쪽뒷면ch17·접촉F/T약1.2N을확인했다. [시험·실패 이력](../02_implementation/logs/2026-11-06_wrench_refactor_gui_validation.md). 초기 “GPU driver부재”는 sandbox 접근 제한 오판으로 정정한다.
+
+2026-11-05 Refactor 후속: 선반30kg MassAPI 생성 순서 수정, 오른손 공식 촉각형 총790g에 mass/inertia 비례 보정, EEF task frame·Jacobian·velocity 통일, tactile.05N. CPU159개 및 문서에서114파일 복원/import/USD 검사 통과. GPU물리 미검증. [상세 명세](../02_implementation/environments/WRENCH_REFACTOR_V0_ENVIRONMENT.md) · [변경/검증 기록](../02_implementation/logs/2026-11-05_wrench_refactor_mass_eef_spec.md).
+
+2026-11-05: **`Inspire-Wrench-Refactor-v0` 독립 CFG/runtime 추가**. 오른손 ZIP 원본·실제17물체(8종×2장애물+원통타겟), 초기 물성 고정/높이 캐시·reset0–3/0–3, 방향/조건부 거리 균등, 앞뒤 tactile34, Actor/Critic raw74/MLP90을 구성했다. 출력 토크 정규화·목표 내부도 EEF14cm 제한·거리weight5·진입+15·speed/acceleration 제거를 반영했다. CPU/오른손USD/실제 설정 import 통과, GPU driver 부재로 PhysX/학습 미검증. [전체 계약](../02_implementation/environments/WRENCH_REFACTOR_V0_ENVIRONMENT.md) · [검증 로그](../02_implementation/logs/2026-11-05_wrench_refactor_v0_implementation.md).
+
+2026-11-05: [**Wrench v0 계열 상세 명세**](../02_implementation/environments/WRENCH_V0_FAMILY_ENVIRONMENTS.md)를 작성했다. v0~v0_4의 상속·Scene/reset·관측·pose OSC·전체 보상·커리큘럼·종료·PPO·로그 해석을 현재 코드로 대조했다. 접촉 weight0.1, Hand raw rate, 정규화 OSC 토크 rate의 상한/기대값 차이를 명시한다. 문서 작업이며 환경 코드·검증 상태는 변경하지 않았다.
+
 2026-11-05: **Inspire-Wrench-v0_3 → v0_4 추가**. v0_2→v0_3→v0_4 직접 상속. v0_3은 Gray/White 각각0–4 균등 reset·population/free-speed 커리큘럼 제거·속도 기준0.02m/s·EEF14cm·OSC 출력 토크 정규화 변화량·최초 진입 무감쇠4cm/s다. v0_4는 높이 조건을 둔 Holding 최단 거리 개선량으로 교체하며 weight3.7을 유지한다. 실제 부모 접촉 weight0.1도 보존했다. CPU103개 통과, GPU/학습 미실행. [환경·검증 계약](../02_implementation/environments/WRENCH_V0_3_V0_4_ENVIRONMENTS.md).
 
 2026-11-05 후속: Wrench-v0_2 Contact Count를 최대10으로 제한하고 임시 print 블록 전체를 주석 처리했다. 접촉 인정·불인정5회 초기화 조건과 weight1.45는 유지한다. 기본dt0.02초에서 접촉 보상 상한은 step당0.29다. CPU89개 통과, GPU/play 미실행.

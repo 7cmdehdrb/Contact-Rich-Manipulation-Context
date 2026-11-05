@@ -1,5 +1,7 @@
 # Inspire-Wrench-v0_3 · v0_4 환경
 
+2026-11-05 문서 안내: v0·v0_1·v0_2·v0_3·v0_4의 공통 구성과 현재 수치·버전별 차이는 [Wrench v0 계열 상세 명세](WRENCH_V0_FAMILY_ENVIRONMENTS.md)에서 함께 확인한다.
+
 2026-11-05. 현재 v0_2 코드를 보존하는 직계 파생 두 환경이다. [부모 계약](WRENCH_V0_2_ENVIRONMENT.md) · [개발·검증 기록](../logs/2026-11-05_wrench_v0_3_v0_4_implementation.md).
 
 ## 등록·상속
