@@ -1,5 +1,7 @@
 # Refactor-v0 재구성 소스 부록
 
+2026-11-06 후속: 활성 OSC를 Final·Revision 공통 root-frame 클래스로 변경하고 목표 최소 거리를5cm로 설정했다. 해당4개 소스 record와 reference_config를 갱신했다. [변경 기록](../logs/2026-11-06_wrench_refactor_root_osc_min_goal.md).
+
 2026-11-06 질량30kg/오른손790g/EEF OSC/촉각.05N 및 GPU 검증 수정, Wrist3 −π/2·Arm 종료3rad/s 반영. [환경 상세 명세](WRENCH_REFACTOR_V0_ENVIRONMENT.md)의 재현용 부록이다. 본문을 먼저 읽고 이 부록은 정확한 구현 또는 원본 파일이 없을 때 사용한다.
 
 이 문서는 단순 경로 목록이 아니라 실행 소스 전문을 포함한다. Python 파일은 현재 활성 소스와 byte 대조했다. 등록 `__init__.py`는 **이 환경 하나만** 등록하도록 축약했고 namespace `__init__.py`는 새 빈 package 정의다. 기존 Wrench 환경 CFG를 불러오지 않는다. 나머지 함수 모듈의 역사적 이름과 사용하지 않는 정의는 import 호환성을 위해 원문 그대로 보존한다. 실제 활성 term은 본문 목록만 사용한다.
@@ -192,7 +194,7 @@ asset 경로는 workspace 기준이다. configuration 네 USD 레이어와 root 
 
 ### `reference_config.json`
 
-<!-- reconstruct-file: reference_config.json sha256: 06ef80f1c6c042ae4558e62fb61fdedb97c8010d2b86d7c594de78e89c588303 -->
+<!-- reconstruct-file: reference_config.json sha256: 748efd201a1550bf0b477ec839d3eb722de9d304e828e5834e9e216c5be36592 -->
 ````json
 {
   "env": {
@@ -5954,7 +5956,7 @@ asset 경로는 workspace 기준이다. configuration 네 USD 레이어와 root 
     },
     "actions": {
       "arm_action": {
-        "class_type": "inspire_sweep_baseline.mdp.action_functions.wrench_refactor:WrenchRefactorOSCAction",
+        "class_type": "inspire_sweep_baseline.mdp.action_functions.contact_sweep_clutter_fusion_holding_osc:UR10OperationalSpaceControllerAction",
         "asset_name": "robot",
         "debug_vis": false,
         "clip": null,
@@ -6088,7 +6090,8 @@ asset 경로는 workspace 기준이다. configuration 네 USD 레이어와 root 
           "observation_noise": 0.01,
           "visibility_threshold": 0.35,
           "visibility_flip_probability": 0.01,
-          "observation_swap_probability": 0.1
+          "observation_swap_probability": 0.1,
+          "min_goal_distance": 0.05
         },
         "mode": "reset",
         "interval_range_s": null,
@@ -9195,9 +9198,9 @@ class WrenchRefactorOSCAction(UR10OperationalSpaceControllerAction):
 
 ### `src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/actions/wrench_refactor.py`
 
-<!-- reconstruct-file: src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/actions/wrench_refactor.py sha256: f9b04f567396f7a7eb65d1236b862d7014ecd10e00b57c8607a444fb279b6454 -->
+<!-- reconstruct-file: src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/actions/wrench_refactor.py sha256: ab8aa63115e183d1fe4cd40274f785bd993fef01f579de63731de37132d260be -->
 ````python
-"""Independent Wrench action configuration with EEF-relative bounded OSC."""
+"""Independent Wrench action configuration with Final/Revision root-frame bounded OSC."""
 
 from isaaclab.controllers import OperationalSpaceControllerCfg
 from isaaclab.envs.mdp.actions import OperationalSpaceControllerActionCfg
@@ -9205,13 +9208,13 @@ from isaaclab.managers import ActionTermCfg
 from isaaclab.utils import configclass
 
 from ...assets.robot import ARM_JOINT_NAMES
-from ..action_functions.wrench_refactor import WrenchRefactorOSCAction
+from ..action_functions.contact_sweep_clutter_fusion_holding_osc import UR10OperationalSpaceControllerAction
 from ..action_functions.hand_openness import HandOpennessAction
 
 
 @configclass
 class WrenchRefactorOSCActionCfg(OperationalSpaceControllerActionCfg):
-    class_type: type = WrenchRefactorOSCAction
+    class_type: type = UR10OperationalSpaceControllerAction
     effort_limit_scale: float = 1.0
     minimum_effort_limit: float = 1.0e-6
     saturation_tolerance: float = 1.0e-6
@@ -10829,7 +10832,7 @@ def wrench_layout(bounds, generator, gray=3, white=3, *, red_margin=.023, rear_o
 
 ### `src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/wrench_refactor_layout.py`
 
-<!-- reconstruct-file: src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/wrench_refactor_layout.py sha256: bbf385ddb5d839825dd637b436332cdc3085d0747ce25ed75eb660d98a16604c -->
+<!-- reconstruct-file: src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/wrench_refactor_layout.py sha256: 0c97d926198f27787e7442ba7942dfff22f2653371b80b99ad483373db6a831d -->
 ````python
 """Continuous unbiased goal sampling and fixed-pool OBB placement (pure torch)."""
 import math
@@ -10838,20 +10841,24 @@ from .bbox_scene_layout import LayoutConfig, footprint_from_bounds, generate_lay
 
 
 def sample_commands(bounds, generator, spawn_radius=.02, edge_clearance=.02,
-                    excluded_x_half_angle=math.pi / 6):
-    """Uniform allowed angle, then uniform distance from zero to the safe edge.
+                    excluded_x_half_angle=math.pi / 6, min_goal_distance=.05):
+    """Uniform allowed angle, then uniform distance from min_goal_distance to the safe edge.
 
     Shelf-local +/-X are 12/6 o'clock; +/-Y are the two lateral directions.
-    No ray clipping to 15 cm, minimum push length or direction fallback.
+    No ray clipping to 15 cm or direction fallback; the inner disk is excluded.
     """
     if not math.isfinite(excluded_x_half_angle) or not 0 <= excluded_x_half_angle < math.pi / 2:
         raise ValueError('Invalid direction deadzone')
     if not math.isfinite(spawn_radius) or spawn_radius < 0 or not math.isfinite(edge_clearance) or edge_clearance < .005:
         raise ValueError('Invalid spawn disk or edge clearance')
+    if not math.isfinite(min_goal_distance) or min_goal_distance < 0:
+        raise ValueError('Invalid minimum goal distance')
     half = bounds[:, :, :2].abs().amax(1)
     safe = bounds.new_tensor([.20, .50]) - half - edge_clearance
     if bool((safe <= spawn_radius).any()):
         raise ValueError('Target footprint leaves no central spawn disk')
+    if bool((safe - spawn_radius < min_goal_distance).any()):
+        raise ValueError('Minimum goal distance must fit every direction from the spawn disk')
     draws = torch.rand((len(bounds), 4), device=bounds.device, dtype=bounds.dtype, generator=generator)
     angle = 2 * math.pi * draws[:, 0]
     target = spawn_radius * draws[:, 1:2].sqrt() * torch.stack((angle.cos(), angle.sin()), -1)
@@ -10859,7 +10866,7 @@ def sample_commands(bounds, generator, spawn_radius=.02, edge_clearance=.02,
     theta = excluded_x_half_angle + (2 * draws[:, 2] % 1) * (math.pi - 2 * excluded_x_half_angle) + side * math.pi
     direction = torch.stack((theta.cos(), theta.sin()), -1)
     maximum = ((safe - direction.sign() * target) / direction.abs().clamp_min(1e-12)).amin(-1)
-    distance = maximum * draws[:, 3]
+    distance = min_goal_distance + (maximum - min_goal_distance) * draws[:, 3]
     return target, target + direction * distance[:, None]
 
 
@@ -12130,7 +12137,7 @@ def reset_wrench_uniform_scene(env, env_ids, spawn_radius=.02, goal_distance=.15
 
 ### `src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/event_functions/wrench_refactor.py`
 
-<!-- reconstruct-file: src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/event_functions/wrench_refactor.py sha256: 809c381ab5bbda69f026f67fd49a9c74c48cb1cec8f0d49ec8bba580a25cb1e7 -->
+<!-- reconstruct-file: src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/event_functions/wrench_refactor.py sha256: b8ea757bf7f32f03d356bfdd33ee8164c740a538bf2e770e8ae3a5b77df5eb57 -->
 ````python
 """Fixed geometry/material lifecycle; reset only poses, activity and snapshots."""
 import math
@@ -12212,7 +12219,7 @@ def initialize_physics(env, env_ids, mass_scale=1.5):
 
 
 def reset_scene(env, env_ids, spawn_radius=.02, edge_clearance=.02,
-                excluded_x_half_angle=math.pi / 6, observation_noise=.01,
+                excluded_x_half_angle=math.pi / 6, min_goal_distance=.05, observation_noise=.01,
                 visibility_threshold=.35, visibility_flip_probability=.01,
                 observation_swap_probability=.1):
     ids = (torch.arange(env.num_envs, device=env.device) if env_ids is None
@@ -12224,7 +12231,7 @@ def reset_scene(env, env_ids, spawn_radius=.02, edge_clearance=.02,
         env._revision_bounds_t[ids], env._refactor_spawn_z[ids], env._revision_layout_rng, counts,
         red_margin=env.cfg.red_margin, rear_offset=env.cfg.rear_offset,
         spawn_radius=spawn_radius, edge_clearance=edge_clearance,
-        excluded_x_half_angle=excluded_x_half_angle)
+        excluded_x_half_angle=excluded_x_half_angle, min_goal_distance=min_goal_distance)
     shelf = env.scene['shelf'].data
     rotation = shelf.root_quat_w[ids, None].expand(-1, 17, -1)
     world = shelf.root_pos_w[ids, None] + quat_apply(rotation, local)
@@ -12260,7 +12267,7 @@ def reset_scene(env, env_ids, spawn_radius=.02, edge_clearance=.02,
 
 ### `src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/events/wrench_refactor.py`
 
-<!-- reconstruct-file: src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/events/wrench_refactor.py sha256: 304ce028a6162d6c42324ed4614cfe70a5532538d327aea0e8a1b6c6b5eb78a1 -->
+<!-- reconstruct-file: src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/events/wrench_refactor.py sha256: 2261f52699522220274b2f7514c0d63fae2306d20dad1ad7f42810ccd16b45d9 -->
 ````python
 """Independent Refactor lifecycle: no physics randomization on reset."""
 from isaaclab.envs.mdp import reset_scene_to_default
@@ -12275,7 +12282,7 @@ class WrenchRefactorEventsCfg:
     object_physics = EventTerm(func=initialize_physics, mode='startup', params={'mass_scale': 1.5})
     reset_all = EventTerm(func=reset_scene_to_default, mode='reset')
     object_spawn = EventTerm(func=reset_scene, mode='reset', params={
-        'spawn_radius': .02, 'edge_clearance': .02,
+        'spawn_radius': .02, 'edge_clearance': .02, 'min_goal_distance': .05,
         'excluded_x_half_angle': 0.5235987755982988, 'observation_noise': .01,
         'visibility_threshold': .35, 'visibility_flip_probability': .01,
         'observation_swap_probability': .1,

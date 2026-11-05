@@ -57,7 +57,7 @@ python src/inspire_sweep_baseline/tests/_wrench_refactor_probe.py --num_envs 64 
 
 ## 목표 방향·거리와 시각화
 
-선반 local ±X가 12시/6시, ±Y가 양옆이다. 반각 α를 제외한 두 구간 `[α, π−α]`, `[π+α, 2π−α]`에서 방향을 균등 추출한다. 원통 초기 위치는 반경2cm 원판에서 면적 균등이다. 방향별 최대 거리는 원통 footprint와 가장자리 여유2cm를 뺀 선반 사각형에 대한 ray 교차로 계산한다. **거리는 0부터 그 최대 거리까지 균등 추첨**한다. 이전 5cm 최소 길이·15cm 최대 길이·추가 ±(0.16,0.46)m clamp는 적용하지 않는다. 따라서 처음부터 목표 반경3cm 안인 에피소드도 가능하다.
+선반 local ±X가 12시/6시, ±Y가 양옆이다. 반각 α를 제외한 두 구간 `[α, π−α]`, `[π+α, 2π−α]`에서 방향을 균등 추출한다. 원통 초기 위치는 반경2cm 원판에서 면적 균등이다. 방향별 최대 거리는 원통 footprint와 가장자리 여유2cm를 뺀 선반 사각형에 대한 ray 교차로 계산한다. **거리는 시작점으로부터 5cm 이상, 해당 방향의 최대 거리 이하에서 균등 추첨**한다. 반경5cm 원의 내부는 목표 중심으로 사용할 수 없으며5cm 경계는 허용한다. 15cm 최대 길이·추가 ±(0.16,0.46)m clamp는 적용하지 않는다. 방위를 먼저 균등 추출하고 거리 `0.05 + U(0,1)*(maximum-0.05)`를 적용하므로 방위 편향 없이 최소 거리를 보장한다. 각 방위의 최대 거리가5cm 미만인 비정상 구성은 재추첨 대신 오류로 처리한다.
 
 기존 샘플러는 방향 후보를 균등 추출하지만 거리는 해당 ray의 상한을 그대로 사용했다. 중앙 원통10,000개 검사는 +Y4909개/−Y5091개, 거리0.15m 고정이었다. 왼쪽 방향을 금지하는 비대칭 조건은 확인되지 않았다. 기존 유한 bank의 환경별 방향 표본 편차와 학습된 정책의 행동 편향은 별도 문제이며 실제 정책 검증은 수행하지 않았다.
 
@@ -97,7 +97,7 @@ F/T는 `PureWristWrench`/`PureWrenchReader`를 재사용한다. 실제 PhysX의 
 
 Actor 장애물은 reset 시 가시성0.35·mask flip1%·좌표±1cm·인접 swap10%를 유지한다. Critic은 모든 **활성** 비타겟 물체의 현재 root XYZ, noise/가시성 필터/mask flip/swap 모두 없음이다. 기존 Critic에는 swap10%가 있었으나 ‘변조 없음’ 요구에 따라 제거했다. 두 raw 그룹의 tactile1% flip과 F/T 표준편차0.05N/0.005Nm noise는 기존 분포를 유지하며 그룹별로 추출한다. 물리 tactile sample은 공유한다.
 
-Arm은 v0_2의 `pose_rel` 6D OSC, position scale0.03m, orientation scale0.15rad, RPY 변환, EEF task frame을 사용하고 gain·gravity·effort cap을 유지한다. Hand는 기존 2D openness0–1과12관절 mapping을 오른손 축에 연결한다. v1/v2의 wrench command controller는 사용하지 않는다. 액션 페널티는 사용자 최종 정정대로 **출력 토크** 기준이다.
+Arm은 v0_2의 `pose_rel` 6D OSC, position scale0.03m, orientation scale0.15rad, RPY 변환, Final·Revision과 같은 root task frame을 사용하고 gain·gravity·effort cap을 유지한다. Hand는 기존 2D openness0–1과12관절 mapping을 오른손 축에 연결한다. v1/v2의 wrench command controller는 사용하지 않는다. 액션 페널티는 사용자 최종 정정대로 **출력 토크** 기준이다.
 
 PPO 수치는 Wrench-v0_2와 동일: rollout36, MLP256/128/64 ELU, 인코더32 ReLU, 초기 표준편차1, gamma0.98, lambda0.95, clip0.2, epoch8, minibatch4, 학습률0.001 adaptive, entropy0.005, KL0.02, max grad1, 저장50iteration, 최대90000iteration. 시간은 physics0.01초×decimation2, episode10초다. CPU의 실제 RSL-RL PPO update에서 두 인코더 갱신 및138D Actor JIT 결과 일치를 검증했다. 이는 시뮬레이션 학습 결과가 아니다.
 
@@ -146,7 +146,7 @@ Runtime의 거리·EEF/타겟 속도·가속도 평균, 최대 force/moment, 실
 
 ## 재구성 계약과 문서 사용 순서
 
-이 문서는 **2026-11-05 후속 질량/EEF/촉각 수정까지 포함한 Refactor-v0**의 실행 계약이다. 이전 Wrench 환경 파일이 없어도 재구성할 수 있도록 수치·기하·상태 갱신을 아래에 명시한다. [재구성 소스 부록](WRENCH_REFACTOR_V0_RECONSTRUCTION.md)은 실제 호출되는 모듈과 그 import 의존성, 학습 진입점, 환경 등록 코드의 파일별 전문·SHA-256·추출 방법을 담는다. 본문은 설계와 의미를, 부록은 부동소수점 처리·텐서 정렬·캐시·예외 처리까지 포함하는 정확한 구현을 제공한다. 부록은 실행 코드와 대조한 스냅샷이며 별도 개발 브랜치가 아니다.
+이 문서는 **2026-11-06 root-frame OSC·목표 최소5cm 수정까지 포함한 Refactor-v0**의 실행 계약이다. 이전 Wrench 환경 파일이 없어도 재구성할 수 있도록 수치·기하·상태 갱신을 아래에 명시한다. [재구성 소스 부록](WRENCH_REFACTOR_V0_RECONSTRUCTION.md)은 실제 호출되는 모듈과 그 import 의존성, 학습 진입점, 환경 등록 코드의 파일별 전문·SHA-256·추출 방법을 담는다. 본문은 설계와 의미를, 부록은 부동소수점 처리·텐서 정렬·캐시·예외 처리까지 포함하는 정확한 구현을 제공한다. 부록은 실행 코드와 대조한 스냅샷이며 별도 개발 브랜치가 아니다.
 
 재구성 입력은 본문, 소스 부록, 아래 자산 목록, 지정한 Isaac Lab/Isaac Sim/RSL-RL 설치다. 라이브러리 자체를 새로 구현할 필요는 없다. 기존 환경 CFG는 복사하거나 상속하지 않고 `ManagerBasedRLEnvCfg`에서 새로 구성한다. 함수 모듈 중 역사적 이름이 있는 것은 실제 import 의존성 때문에 포함된 것이다. 모듈에 정의된 모든 보상이나 curriculum을 활성화하는 의미가 아니다. 활성 목록은 본문의 13개 보상·5개 종료·1개 curriculum이 전부다.
 
@@ -285,30 +285,15 @@ EEF frame은 `axia80_link` local `(0,0,.1427)`, quaternion `(w,x,y,z)=(.5,-.5,-.
 
 가상 safety frame은 `inspire_base_link`에 부착하며 같은 `TOOL_ROTATION_H`를 쓴다. `finger_frame` 두 점은 `(.07,0,.13)`, `(-.07,0,.13)`이고 `wrist_frame`은 `(0,0,-.17)`이다. 이 점들은 tactile pad가 아니다.
 
-### OSC: task frame과 제어점의 일치
+### OSC: Final·Revision과 동일한 root-frame 제어
 
-매 policy step 처음, **현재 offset EEF pose**를 robot root frame에서 읽어 task frame으로 clone한다. 이 task frame을 해당 명령의2개 physics substep 동안 고정한다. physics마다 EEF pose/velocity/Jacobian/dynamics는 새로 읽는다. live pose tensor를 task frame에 alias하면 목표가 손을 따라 움직이므로 금지한다.
+2026-11-06 사용자 후속 요청으로 활성 Action을 `UR10OperationalSpaceControllerAction`으로 변경했다. `task_frame_rel_path=None`이며 상대 명령은 로봇 root 축에서 해석한다. 이전 `WrenchRefactorOSCAction`의 EEF task-frame·Jacobian·속도 override는 호출하지 않는다. 기존 정의는 과거 계측 재현용으로 파일에 남아 있지만 활성 Cfg가 가리키지 않는다.
 
-Raw Arm translation3개에.03m를 곱한다. rotation3개에.15rad를 곱한 RPY를 quaternion→axis-angle로 변환하여 `pose_rel` 명령으로 넣는다. 값1이 각 축의 스케일에 해당하며 Arm raw action 자체를±1에 clamp하지 않는다. 최종 토크를 limit로 제한한다.
+제어 위치는 오른손 Scene의 `axia80_link`에 지정한 EEF offset `(0,0,.1427)`와 quaternion `(.5,-.5,-.5,-.5)`를 유지한다. 공통 클래스는 UR10이라는 이름과 무관하게 cfg에서 로봇·Arm6축·body·offset을 읽고, 실제 오른손 articulation의 Jacobian·질량행렬·중력항을 사용한다. 왼손 자산이나 손 관절을 가져오지 않는다. 오른손 USD, Wrist3−π/2, Hand2D mapping·센서·F/T 보정은 그대로다.
 
-EEF axes에서 명령이 `(dx,dy,dz)`라면 root-frame 목표는 아래와 같다.
+Raw Arm translation3개에.03m를 곱한다. rotation3개에.15rad를 곱한 RPY를 quaternion→axis-angle로 변환한다. 위치 목표는 현재 offset EEF 위치에 root 축의 delta를 더한 값이다. 회전 delta 역시 기본 `pose_rel` 경로에서 root 축 기준으로 적용한다. Arm raw 자체를±1에 clamp하지 않으며 최종 토크를 관절 limit로 제한한다.
 
-```math
-p_d^B=p_E^B+R_E^B(0.03\,a_{0:3}),\qquad
-q_d^B=q_E^B\otimes q_{RPY}(0.15\,a_{3:6}).
-```
-
-따라서 EEF가 root Z축으로90° 돌아 있으면 EEF +X 명령은 root +Y 이동이다. `motion_control_axes_task=(1,1,1,1,1,1)`은 EEF task frame의 여섯 motion axes를 모두 제어한다. 이 설정만으로 task frame이 자동으로 EEF가 되는 것은 아니므로 별도 task-frame 함수가 필요하다. contact wrench axes는 전부0이며 F/T를 force-control command로 사용하지 않는다.
-
-Offset Jacobian과 velocity도 동일한 EEF origin으로 운반한다. `r_L=(0,0,.1427)`, `r_B=R_L^B r_L`이라고 할 때:
-
-```math
-J_{v,E}^B=J_{v,L}^B-[r_B]_\times J_{\omega,L}^B,\qquad
-J_{\omega,E}^B=J_{\omega,L}^B,\qquad
-v_E^W=v_L^W+\omega_L^W\times(R_L^W r_L).
-```
-
-Jacobian의 두 블록은 root axes이므로 local lever arm을 그대로 넣지 않는다. 각속도는 root axes로 유지하고 offset quaternion으로 다시 회전하지 않는다. 속도 원점은 `body_link_vel_w`이며, 이 Isaac Lab 버전의 `body_vel_w`는 **COM 속도 alias**이므로 여기서는 사용하지 않는다. 로봇 base는 고정되어 root velocity는0이다.
+Jacobian과 속도는 Final·Revision이 사용하는 설치된 Isaac Lab 기본 구현을 그대로 사용한다. 즉 이전 Refactor 전용의 회전한 lever arm Jacobian·link-origin 속도 보정으로 대체하지 않는다. 이는 사용자가 요청한 제어 방식 통일에 따른 명시적인 동작 변경이며, 전용 보정의 물리 정확도가 개선되었다는 의미가 아니다. gain과 EEF offset을 같게 두고 명령 프레임·기본 계산 경로를 통일했다.
 
 OSC는 full inertial dynamics decoupling, gravity compensation, fixed impedance를 사용한다. motion stiffness는 병진100·회전50, damping ratio는 모두1, nullspace는 none이다. 라이브러리의 operational mass `Λ=(JM⁻¹Jᵀ)⁻¹`, pose error, damping으로 task wrench를 만들고 `Jᵀ`로 토크를 반환한다. Coriolis compensation을 임의로 추가하지 않는다. 한 환경의 토크 벡터 중 하나라도 nonfinite면 그 환경6축 전체를0으로 만든 뒤 effort limit로 clamp한다. 포화 여부를 별도 bool로 보관하고 실제 적용된 토크를 action-rate 보상에 사용한다.
 
@@ -524,7 +509,7 @@ Runner는 기본 PPO를 `NumericalPPO`로 바꾸는 기존 수치 점검을 사�
 1. 부록 추출 스크립트로 **새 빈 디렉토리**에 코드를 복원하고 파일별SHA를 검사한다. 기존 workspace에 덮어쓰지 않는다.
 2. asset 디렉토리를 위 구조로 복사하고 local hash를 비교한다. 외부 shelf/YCB reference closure를 준비한다.
 3. USD-only probe로30개 hand body 합0.790kg,29개 right joint frame 정합,17개 paired region,measurement child identity,선반 MassAPI 순서를 확인한다.
-4. 실제 Isaac AppLauncher에서 config-only probe를 실행한다. scene objects17개, shelf30, tactile.05, EEF actionclass, Actor/Critic group routing이 맞는지 확인한다.
+4. 실제 Isaac AppLauncher에서 config-only probe를 실행한다. scene objects17개, shelf30, tactile.05, root-frame 공통 OSC actionclass, Actor/Critic group routing이 맞는지 확인한다.
 5. GPU가 있는 환경에서64개 reset/부분reset/rollout probe를 실행한다. 실제 PhysX shelf mass30과 hand sum.790, reset 전후 mass/friction/scale 불변, finite74/64 관측을 검사한다.
 6. 실제 접촉 없이 손 자세/Arm을 움직이며 pure F/T residual을 기록한다. 단일물체 앞뒤 동시 접촉을 만들어 두 tactile 채널이 모두 켜지고 force buffer가overflow하지 않는지 확인한다.
 7.2048개 최대수량 reset throughput/contact buffer를 측정한 뒤 `train.py` PPO rollout/update와 장기 학습을 검증한다.

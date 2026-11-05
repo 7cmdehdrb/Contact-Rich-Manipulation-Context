@@ -1,5 +1,7 @@
 # Inspire-Wrench-Refactor-v1
 
+2026-11-06 기반 변경 상속: OSC는 Final·Revision과 같은 root-frame 공통 구현이며, 목표 최소 거리는 시작점으로부터5cm다. 오른손 자산·EEF offset은 유지한다. [후속 기록](../logs/2026-11-06_wrench_refactor_root_osc_min_goal.md).
+
 [부모 v0 전체 명세](WRENCH_REFACTOR_V0_ENVIRONMENT.md) · [개발 및 검증 기록](../logs/2026-11-06_wrench_refactor_v1.md)
 
 2026-11-06. `WrenchRefactorV1EnvCfg(WrenchRefactorEnvCfg)`의 직접 상속 환경이다. runtime은 부모의 `WrenchRefactorEnv`, 보상은 `WrenchRefactorV1RewardsCfg(WrenchRefactorRewardsCfg)`를 사용한다. 부모 v0는 보존한다.

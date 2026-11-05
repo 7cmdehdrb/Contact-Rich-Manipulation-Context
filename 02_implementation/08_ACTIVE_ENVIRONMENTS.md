@@ -1,5 +1,11 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-06 정정: **v2←v0**(별도 접촉 보상·거리weight5×누적변위 cosine, root OSC), **v3←v2**(EEF task-space OSC). v0/v1 보존. [v3 계약](environments/WRENCH_REFACTOR_V3_ENVIRONMENT.md) · [검증](logs/2026-11-06_wrench_refactor_v2_fix_v3.md).
+
+2026-11-06 후속: **Refactor-v0 기반 직접 수정**. OSC를 Final·Revision 공통 root-frame 구현으로 전환하고 목표 중심은 시작점에서5cm 이상 떨어진 곳만 샘플링한다. 오른손 USD·EEF offset·Hand·F/T는 보존하며 v1/v2도 상속한다. [변경·검증](logs/2026-11-06_wrench_refactor_root_osc_min_goal.md).
+
+2026-11-06: **Inspire-Wrench-Refactor-v2**는 사용자 정정으로 v0 직접 상속. 별도 접촉 보상·거리weight5를 유지하고 거리 항에 XY signed cosine을 곱한다. [계약](environments/WRENCH_REFACTOR_V2_ENVIRONMENT.md).
+
 2026-11-06: **Inspire-Wrench-Refactor-v1** 추가. v0직접상속,접촉유지보상제거·현재step접촉조건부거리보상weight25. [계약](environments/WRENCH_REFACTOR_V1_ENVIRONMENT.md).
 
 2026-11-06 후속: Refactor의 Hand 관절속도 페널티는 원본 URDF 독립 구동6축만 합산하며 미믹6축을 제외한다. 계수·Arm비용·동작제어·관측·종료·커리큘럼은 유지한다.
