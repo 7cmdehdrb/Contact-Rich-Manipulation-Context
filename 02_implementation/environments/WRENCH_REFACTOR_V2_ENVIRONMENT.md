@@ -1,6 +1,8 @@
 # Inspire-Wrench-Refactor-v2
 
-2026-11-06 기반 변경 상속: OSC는 Final·Revision과 같은 root-frame 공통 구현이며, 목표 최소 거리는 시작점으로부터5cm다. 오른손 자산·EEF offset은 유지한다. [후속 기록](../logs/2026-11-06_wrench_refactor_root_osc_min_goal.md).
+2026-11-06 기반 변경 상속: 목표 중심은 물체 시작점에서 **6–12cm** 범위만 사용한다. 방향 금지각 커리큘럼은 유지한다. [영역·검증](../logs/2026-11-06_wrench_refactor_goal_annulus.md).
+
+2026-11-06 기반 변경 상속: OSC는 Final·Revision과 같은 root-frame 공통 구현이며, 목표 최소 거리는 시작점으로부터6cm다. 오른손 자산·EEF offset은 유지한다. [후속 기록](../logs/2026-11-06_wrench_refactor_root_osc_min_goal.md).
 
 2026-11-06. [v0 부모 계약](WRENCH_REFACTOR_V0_ENVIRONMENT.md) · [v0 전체 명세](WRENCH_REFACTOR_V0_ENVIRONMENT.md) · [개발 기록](../logs/2026-11-06_wrench_refactor_v2.md).
 
@@ -40,7 +42,7 @@ r_{distance,t}=5\exp(-\|\mathbf{g}-\mathbf{p}_t\|/0.05)\,c_t\,\Delta t\,
 
 ## 유지되는 구성
 
-Scene·자산·17물체·물성·reset·목표분포(최소5cm)·관측·OSC·Hand·센서·다른12개 보상·터미네이션5개·커리큘럼은 v0의 최종 설정을 상속한다. Actor/Critic raw74와 장애물64, encoder64→32→16, MLP입력90을 유지한다. Hold·최초진입·성공 보상에 코사인이나 새 접촉 조건을 추가하지 않는다.
+Scene·자산·17물체·물성·reset·목표분포(최소6cm)·관측·OSC·Hand·센서·다른12개 보상·터미네이션5개·커리큘럼은 v0의 최종 설정을 상속한다. Actor/Critic raw74와 장애물64, encoder64→32→16, MLP입력90을 유지한다. Hold·최초진입·성공 보상에 코사인이나 새 접촉 조건을 추가하지 않는다.
 
 코드: `mdp/reward_functions/wrench_refactor.py::displacement_cosine_goal_distance`, `mdp/rewards/wrench_refactor.py::WrenchRefactorV2RewardsCfg`, `envs/wrench_refactor_envs.py::WrenchRefactorV2EnvCfg`, `agent/wrench_refactor_ppo_cfg.py::WrenchRefactorV2PPORunnerCfg`. 등록은 패키지 `__init__.py`다.
 

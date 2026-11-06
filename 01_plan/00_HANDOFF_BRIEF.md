@@ -1,5 +1,13 @@
 # 현재 개발 인계
 
+2026-11-06: **Refactor v0_1/v1_1/v2_1/v3_1** 추가. 각 원본v0/v1/v2/v3 직접 상속, Action Rate를raw정책출력변화로변경·Arm cap제거·계수0.03유지. [계약](../02_implementation/environments/WRENCH_REFACTOR_POLICY_RATE_ENVIRONMENTS.md).
+
+2026-11-06: **Inspire-Wrench-Refactor-v3-Test** 임시 환경 추가. v3 직접 상속, 왼쪽(world −Y) 목표만 생성; 나머지 환경·PPO 수치 보존. [계약·검증](../02_implementation/logs/2026-11-06_wrench_refactor_v3_test_left.md).
+
+2026-11-06 수치 후속: Refactor 공통 목표 거리는 **6–12cm**다. 기존5–10cm에서 수치만 바꾸고 방향·샘플링·OSC·보상은 유지했다.
+
+2026-11-06 후속: **Refactor v0 및 모든 파생 환경 목표 거리를5–10cm로 제한**. 방위/조건부 거리 균등과 방향 deadzone 커리큘럼 유지. [최종 영역·검증](../02_implementation/logs/2026-11-06_wrench_refactor_goal_annulus.md).
+
 2026-11-06 정정: **v2←v0**(별도 접촉 보상·거리weight5×누적변위 cosine, root OSC), **v3←v2**(EEF task-space OSC). v0/v1 보존. [v3 계약](../02_implementation/environments/WRENCH_REFACTOR_V3_ENVIRONMENT.md) · [검증](../02_implementation/logs/2026-11-06_wrench_refactor_v2_fix_v3.md).
 
 2026-11-06 후속: **Refactor-v0 기반 직접 수정**. OSC를 Final·Revision 공통 root-frame 구현으로 전환하고 목표 중심은 시작점에서5cm 이상 떨어진 곳만 샘플링한다. 오른손 USD·EEF offset·Hand·F/T는 보존하며 v1/v2도 상속한다. [변경·검증](../02_implementation/logs/2026-11-06_wrench_refactor_root_osc_min_goal.md).

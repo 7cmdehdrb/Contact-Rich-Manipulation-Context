@@ -1,5 +1,9 @@
 # Refactor-v0 재구성 소스 부록
 
+2026-11-06 수치 후속: 현재 목표 거리 하한0.06m·상한0.12m. 아래3개 소스와 reference_config를 갱신했다.
+
+2026-11-06 후속: 목표 최대10cm를 추가했다. 샘플러·이벤트 함수·이벤트 설정3개 record와 reference_config를 갱신했다. [기록](../logs/2026-11-06_wrench_refactor_goal_annulus.md).
+
 2026-11-06 후속: 활성 OSC를 Final·Revision 공통 root-frame 클래스로 변경하고 목표 최소 거리를5cm로 설정했다. 해당4개 소스 record와 reference_config를 갱신했다. [변경 기록](../logs/2026-11-06_wrench_refactor_root_osc_min_goal.md).
 
 2026-11-06 질량30kg/오른손790g/EEF OSC/촉각.05N 및 GPU 검증 수정, Wrist3 −π/2·Arm 종료3rad/s 반영. [환경 상세 명세](WRENCH_REFACTOR_V0_ENVIRONMENT.md)의 재현용 부록이다. 본문을 먼저 읽고 이 부록은 정확한 구현 또는 원본 파일이 없을 때 사용한다.
@@ -194,7 +198,7 @@ asset 경로는 workspace 기준이다. configuration 네 USD 레이어와 root 
 
 ### `reference_config.json`
 
-<!-- reconstruct-file: reference_config.json sha256: 748efd201a1550bf0b477ec839d3eb722de9d304e828e5834e9e216c5be36592 -->
+<!-- reconstruct-file: reference_config.json sha256: a353ffe539ba8a48c9ef62fe11d0aa120796ff3f0d69107d5ae9766724b39fda -->
 ````json
 {
   "env": {
@@ -6091,7 +6095,8 @@ asset 경로는 workspace 기준이다. configuration 네 USD 레이어와 root 
           "visibility_threshold": 0.35,
           "visibility_flip_probability": 0.01,
           "observation_swap_probability": 0.1,
-          "min_goal_distance": 0.05
+          "min_goal_distance": 0.06,
+          "max_goal_distance": 0.12
         },
         "mode": "reset",
         "interval_range_s": null,
@@ -10832,7 +10837,7 @@ def wrench_layout(bounds, generator, gray=3, white=3, *, red_margin=.023, rear_o
 
 ### `src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/wrench_refactor_layout.py`
 
-<!-- reconstruct-file: src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/wrench_refactor_layout.py sha256: 0c97d926198f27787e7442ba7942dfff22f2653371b80b99ad483373db6a831d -->
+<!-- reconstruct-file: src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/wrench_refactor_layout.py sha256: 7dd3410ea96b42b925657dd980ee8707c2ef72fc8ff1a49417c7db95b22f03bb -->
 ````python
 """Continuous unbiased goal sampling and fixed-pool OBB placement (pure torch)."""
 import math
@@ -10841,11 +10846,11 @@ from .bbox_scene_layout import LayoutConfig, footprint_from_bounds, generate_lay
 
 
 def sample_commands(bounds, generator, spawn_radius=.02, edge_clearance=.02,
-                    excluded_x_half_angle=math.pi / 6, min_goal_distance=.05):
-    """Uniform allowed angle, then uniform distance from min_goal_distance to the safe edge.
+                    excluded_x_half_angle=math.pi / 6, min_goal_distance=.06, max_goal_distance=.12):
+    """Uniform allowed angle, then uniform distance within the annulus and safe shelf edge.
 
     Shelf-local +/-X are 12/6 o'clock; +/-Y are the two lateral directions.
-    No ray clipping to 15 cm or direction fallback; the inner disk is excluded.
+    Distances are capped at max_goal_distance; the inner disk is excluded.
     """
     if not math.isfinite(excluded_x_half_angle) or not 0 <= excluded_x_half_angle < math.pi / 2:
         raise ValueError('Invalid direction deadzone')
@@ -10853,6 +10858,8 @@ def sample_commands(bounds, generator, spawn_radius=.02, edge_clearance=.02,
         raise ValueError('Invalid spawn disk or edge clearance')
     if not math.isfinite(min_goal_distance) or min_goal_distance < 0:
         raise ValueError('Invalid minimum goal distance')
+    if not math.isfinite(max_goal_distance) or max_goal_distance < min_goal_distance:
+        raise ValueError('Maximum goal distance must be finite and >= minimum')
     half = bounds[:, :, :2].abs().amax(1)
     safe = bounds.new_tensor([.20, .50]) - half - edge_clearance
     if bool((safe <= spawn_radius).any()):
@@ -10866,6 +10873,7 @@ def sample_commands(bounds, generator, spawn_radius=.02, edge_clearance=.02,
     theta = excluded_x_half_angle + (2 * draws[:, 2] % 1) * (math.pi - 2 * excluded_x_half_angle) + side * math.pi
     direction = torch.stack((theta.cos(), theta.sin()), -1)
     maximum = ((safe - direction.sign() * target) / direction.abs().clamp_min(1e-12)).amin(-1)
+    maximum = maximum.clamp_max(max_goal_distance)
     distance = min_goal_distance + (maximum - min_goal_distance) * draws[:, 3]
     return target, target + direction * distance[:, None]
 
@@ -12137,7 +12145,7 @@ def reset_wrench_uniform_scene(env, env_ids, spawn_radius=.02, goal_distance=.15
 
 ### `src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/event_functions/wrench_refactor.py`
 
-<!-- reconstruct-file: src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/event_functions/wrench_refactor.py sha256: b8ea757bf7f32f03d356bfdd33ee8164c740a538bf2e770e8ae3a5b77df5eb57 -->
+<!-- reconstruct-file: src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/event_functions/wrench_refactor.py sha256: 241bf0d760c456b5a84ae6e8e27f353ffc0e8686677556712813ff71ee8632df -->
 ````python
 """Fixed geometry/material lifecycle; reset only poses, activity and snapshots."""
 import math
@@ -12219,7 +12227,8 @@ def initialize_physics(env, env_ids, mass_scale=1.5):
 
 
 def reset_scene(env, env_ids, spawn_radius=.02, edge_clearance=.02,
-                excluded_x_half_angle=math.pi / 6, min_goal_distance=.05, observation_noise=.01,
+                excluded_x_half_angle=math.pi / 6, min_goal_distance=.06, max_goal_distance=.12,
+                observation_noise=.01,
                 visibility_threshold=.35, visibility_flip_probability=.01,
                 observation_swap_probability=.1):
     ids = (torch.arange(env.num_envs, device=env.device) if env_ids is None
@@ -12231,7 +12240,8 @@ def reset_scene(env, env_ids, spawn_radius=.02, edge_clearance=.02,
         env._revision_bounds_t[ids], env._refactor_spawn_z[ids], env._revision_layout_rng, counts,
         red_margin=env.cfg.red_margin, rear_offset=env.cfg.rear_offset,
         spawn_radius=spawn_radius, edge_clearance=edge_clearance,
-        excluded_x_half_angle=excluded_x_half_angle, min_goal_distance=min_goal_distance)
+        excluded_x_half_angle=excluded_x_half_angle, min_goal_distance=min_goal_distance,
+        max_goal_distance=max_goal_distance)
     shelf = env.scene['shelf'].data
     rotation = shelf.root_quat_w[ids, None].expand(-1, 17, -1)
     world = shelf.root_pos_w[ids, None] + quat_apply(rotation, local)
@@ -12267,7 +12277,7 @@ def reset_scene(env, env_ids, spawn_radius=.02, edge_clearance=.02,
 
 ### `src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/events/wrench_refactor.py`
 
-<!-- reconstruct-file: src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/events/wrench_refactor.py sha256: 2261f52699522220274b2f7514c0d63fae2306d20dad1ad7f42810ccd16b45d9 -->
+<!-- reconstruct-file: src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/events/wrench_refactor.py sha256: 0d1d2d98d7aa940430cee680f61cd19ef6d9c55a6baf2c8d2a3657bfd988c3c6 -->
 ````python
 """Independent Refactor lifecycle: no physics randomization on reset."""
 from isaaclab.envs.mdp import reset_scene_to_default
@@ -12282,7 +12292,7 @@ class WrenchRefactorEventsCfg:
     object_physics = EventTerm(func=initialize_physics, mode='startup', params={'mass_scale': 1.5})
     reset_all = EventTerm(func=reset_scene_to_default, mode='reset')
     object_spawn = EventTerm(func=reset_scene, mode='reset', params={
-        'spawn_radius': .02, 'edge_clearance': .02, 'min_goal_distance': .05,
+        'spawn_radius': .02, 'edge_clearance': .02, 'min_goal_distance': .06, 'max_goal_distance': .12,
         'excluded_x_half_angle': 0.5235987755982988, 'observation_noise': .01,
         'visibility_threshold': .35, 'visibility_flip_probability': .01,
         'observation_swap_probability': .1,

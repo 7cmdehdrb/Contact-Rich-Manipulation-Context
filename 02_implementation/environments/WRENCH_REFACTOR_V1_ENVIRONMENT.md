@@ -1,6 +1,8 @@
 # Inspire-Wrench-Refactor-v1
 
-2026-11-06 기반 변경 상속: OSC는 Final·Revision과 같은 root-frame 공통 구현이며, 목표 최소 거리는 시작점으로부터5cm다. 오른손 자산·EEF offset은 유지한다. [후속 기록](../logs/2026-11-06_wrench_refactor_root_osc_min_goal.md).
+2026-11-06 기반 변경 상속: 목표 중심은 물체 시작점에서 **6–12cm** 범위만 사용한다. 방향 금지각 커리큘럼은 유지한다. [영역·검증](../logs/2026-11-06_wrench_refactor_goal_annulus.md).
+
+2026-11-06 기반 변경 상속: OSC는 Final·Revision과 같은 root-frame 공통 구현이며, 목표 최소 거리는 시작점으로부터6cm다. 오른손 자산·EEF offset은 유지한다. [후속 기록](../logs/2026-11-06_wrench_refactor_root_osc_min_goal.md).
 
 [부모 v0 전체 명세](WRENCH_REFACTOR_V0_ENVIRONMENT.md) · [개발 및 검증 기록](../logs/2026-11-06_wrench_refactor_v1.md)
 
