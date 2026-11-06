@@ -1,5 +1,7 @@
 # Refactor-Relative-v0 환경 명세
 
+2026-11-06 최종 갱신: Axia 질량을 v0부터 **0.280kg**으로 설정한다. 활성 Relative 환경은 v0·v2·v3이며 v1은 삭제했다. EEF pose를 제외한 공간 관측은 EEF 기준이다. [변경·검증 기록](../logs/2026-11-06_relative_family_280g_v3.md).
+
 2026-11-06 실제 코드의 기본 설정 기준. 이 문서는 다른 환경 설명서를 읽지 않아도 환경의 생성, 초기화, 입력과 출력, 보상, 종료, 학습 난이도 변화를 이해할 수 있도록 작성했다. 명령행으로 설정을 덮어쓴 실행은 아래 기본값과 다를 수 있다.
 
 ## 1. 과업과 기본 구성
@@ -15,6 +17,7 @@
 | 제어 간격 | 물리 2step당 1회, 0.02초, 50Hz |
 | 에피소드 시간 한도 | 10초, 최대500 제어step |
 | 로봇 | UR5e 6축 Arm + Inspire 오른손12관절 |
+| Axia 하우징 질량 | 0.280kg; Relative-v0 및 모든 파생 환경 공통 |
 | 손 질량 | 0.790kg; 손의 질량·관성 비례 보정 |
 | 선반 | 질량30kg; 기본 위치는 환경 원점 대비 (−0.7, 0, 0)m |
 | 작업면 | 선반 local Z=1.05m, XY 범위 약 [−0.20, 0.20]×[−0.50, 0.50]m |
@@ -41,12 +44,12 @@ EEF는 손가락 관절의 굽힘과 독립적인 손목 부착 기준점이다.
 
 | Arm 관절 | 초기 위치 | 토크 한도 | 물리 속도 한도 |
 | --- | --- | --- | --- |
-| shoulder_pan | 0 | 150Nm | 2rad/s |
-| shoulder_lift | −2.2 | 150Nm | 2rad/s |
-| elbow | 2.2 | 150Nm | 2rad/s |
-| wrist_1 | 0 | 28Nm | 4rad/s |
-| wrist_2 | 1.57 | 28Nm | 4rad/s |
-| wrist_3 | −π/2 | 28Nm | 4rad/s |
+| shoulder_pan | 0 | 150Nm | 3.14rad/s |
+| shoulder_lift | −2.2 | 150Nm | 3.14rad/s |
+| elbow | 2.2 | 150Nm | 3.14rad/s |
+| wrist_1 | 0 | 28Nm | 3.14rad/s |
+| wrist_2 | 1.57 | 28Nm | 3.14rad/s |
+| wrist_3 | −π/2 | 28Nm | 3.14rad/s |
 
 Arm actuator의 position stiffness/damping은0이며 OSC가 토크를 계산한다. Hand12관절은 URDF 한도인 effort10Nm·velocity1rad/s를 사용하고 stiffness1.2, damping0.06, armature0.0001이다. Hand action은12관절을2개 openness 명령으로 제어한다. 소스의 `inspire_left_*` 관절명은 호환용 이름이며 실제 형상·관절축은 오른손이다.
 
@@ -423,7 +426,7 @@ r_wrench_change = -dt*0.1*C_wrench
 | --- | --- | --- |
 | 1. object_fall_or_tilt | 활성 물체 중 바닥 nonfinite, 바닥<작업면−0.01m, 기울기>=0.9rad 중 하나 | 실패 terminated |
 | 2. shelf_failure | 선반6D 속도 norm>0.1, wrist 높이<작업면+0.03m, 선반 초기 대비3D 변위>0.05m 중 하나 | 실패 terminated |
-| 3. arm_joint_velocity | Arm6관절 중 `abs(qdot)>3rad/s` | 실패 terminated |
+| 3. arm_joint_velocity | Arm6관절 중 `abs(qdot)>현재 threshold` (4.0→2.0rad/s 커리큘럼) | 실패 terminated |
 | 4. target_goal_success | `d<=0.03m` AND 타겟3D 속력<=0.005m/s를 연속3초 유지, 현재 실패 없음 | 성공 terminated |
 | 5. timeout | episode 길이가500 제어step 도달 | 시간 제한 truncated |
 
@@ -431,7 +434,7 @@ r_wrench_change = -dt*0.1*C_wrench
 
 물체 바닥은 원점 높이가 아니라, 현재 물체 자세와 실제 크기가 반영된 bbox8개 꼭짓점의 선반 좌표 최저점이다. 기본 작업면1.05m에서 바닥1.04m 미만이면 낙하 실패다. 정확히1.04m는 이 조건만으로 실패하지 않는다. 기울기는0.9rad와 같아도 실패한다. 타겟과 모든 활성 장애물을 검사하며 주차 물체는 검사하지 않는다.
 
-선반 변위와 속도 조건은 엄격한 `>`이고 wrist clearance는 엄격한 `<`다. finger clearance를 직접 검사하는 종료 조건은 비활성(`check_fingers=False`)이다. Arm 속도도 정확히3rad/s에서는 실패하지 않는다. 물리 속도 한도와 종료 속도 한도는 별개이며 wrist의 물리 한도4rad/s에서도3rad/s 초과 종료가 활성이다.
+선반 변위와 속도 조건은 엄격한 `>`이고 wrist clearance는 엄격한 `<`다. finger clearance를 직접 검사하는 종료 조건은 비활성(`check_fingers=False`)이다. Arm 속도는 현재 threshold와 정확히 같으면 실패하지 않는다. 물리 속도 한도는6관절 모두3.14rad/s 고정이며, 종료 threshold는4.0에서2.0rad/s까지 감소한다. 초기 threshold는 물리 한도보다 높고,14,500iteration부터3.1rad/s로 물리 한도보다 낮아진다.
 
 ### 6.2 성공 유지 시간
 
@@ -441,7 +444,7 @@ r_wrench_change = -dt*0.1*C_wrench
 
 ## 7. 커리큘럼
 
-활성 curriculum term은 `target_goal_direction_deadzone`, 즉 **목표 방향의 금지 반각** 하나다. 선반 local +X와−X 주변을 제외하는 반각을30도에서0도로 단계적으로 줄인다. 물체 수·목표 거리·성공 반경·속도 한도·보상 계수의 curriculum은 없다.
+활성 curriculum term은 목표 방향의 금지 반각 `target_goal_direction_deadzone`과 관절 속도 종료 임계값 `arm_joint_velocity_threshold`의2개다. 물체 수·목표 거리·성공 반경·물리 속도 한도·보상 계수는 curriculum으로 변경하지 않는다. 목표 방향은 기존대로 선반 local +X와−X 주변을 제외하는 반각을30도에서0도로 줄인다.
 
 | PPO learning iteration | 금지 반각 α |
 | --- | --- |
@@ -456,6 +459,26 @@ r_wrench_change = -dt*0.1*C_wrench
 기본 허용 방위각은 `[α, π−α]`와`[π+α, 2π−α]` 두 구간이다. 처음에는±X 주변을 피하는 방향 위주로 학습하고, 이후 허용 방향을 넓힌다.0도에 도달하면 전 방향을 허용한다.
 
 일정의 단위는 물리step·episode 수가 아니라 **PPO iteration**이다. runner가 iteration을 전달하면 다음 object_spawn의 `excluded_x_half_angle`을 갱신한다. 진행 중인 episode의 고정 goal을 바꾸지는 않으며 다음 reset부터 새 각도 범위를 사용한다. 기본 rollout은 환경당36 제어step/iteration이다. 환경만 직접 생성하면 learning_iteration 기본값은0이다.
+
+### 7.1 관절 속도 종료 임계값
+
+Relative-v0/v1/v2 공통으로10,000iteration까지4.0rad/s를 유지한다. 첫 감소는10,250이며 이후250iteration마다0.05rad/s 감소하고20,000부터2.0rad/s를 유지한다.
+
+```math
+n(i)=\max\left(0,\left\lfloor\frac{i-10000}{250}\right\rfloor\right),\qquad
+v_{\mathrm{term}}(i)=\max(2.0,4.0-0.05n(i))
+```
+
+| PPO iteration | 종료 threshold(rad/s) |
+| --- | --- |
+| 0–10,249 | 4.0 |
+| 10,250–10,499 | 3.95 |
+| 14,250–14,499 | 3.15 |
+| 14,500–14,749 | 3.1 |
+| 19,750–19,999 | 2.05 |
+| 20,000 이후 | 2.0 |
+
+매번 절대 iteration에서 재계산하므로 reset·부분 reset·checkpoint resume·iteration 되감기 시 누적 감소가 없다. 기존 runner의 `set_learning_iteration` 경로로 TerminationManager 설정을 갱신하여 진행 중인 episode에도 적용된다. 별도 print 출력은 없다. Axia 질량은 v0부터0.280kg이며 v2·v3가 상속한다. 이전 Base 장애물 관측 실험인 v1은 삭제했다.
 
 ## 8. 실행·학습 설정·코드 위치
 
@@ -485,3 +508,13 @@ PPO는 rollout36, 최대90,000 iteration, 저장 간격50, learning rate0.001/ad
 | PPO·encoder | `agent/wrench_refactor_ppo_cfg.py`, `agent/wrench_refactor_models.py` |
 
 문서 작성 시 실행 코드는 변경하지 않았다. 기존 구현 검증에서 CPU65개, GPU64/2048환경 각각180step·부분 reset·초기 바닥 정렬·고정 물성 검사가 통과했고,64환경에서 `train.py`2 iteration과 양쪽 encoder 갱신을 확인했다. 이는 장기 수렴·최종 성공률·실물 성능의 검증은 아니다. 문서 작성 자체에서는 시뮬레이션이나 학습을 추가 실행하지 않았다.
+
+## 9. Relative 계열 비교와 F/T 검증
+
+| 환경 | Actor 타겟 | Critic 타겟 | 접촉·거리 보상 |
+| --- | --- | --- | --- |
+| v0 | 초기 위치 | 초기 위치 | 별도 접촉 유지 + cosine 거리 weight5 |
+| v2 | 초기 위치 | 현재 위치 | v0와 동일 |
+| v3 | 초기 위치 | 초기 위치 | 접촉 유지 삭제 + 현재 step 접촉 조건부 cosine 거리 weight25 |
+
+세 환경 모두 현재 EEF 기준으로 타겟·목표·장애물을 표현하며, EEF pose만 base 기준이다. v2·v3는 각각 v0의 직접 자식이다. Axia 280g은 공통이고, 손 질량790g은 유지한다. F/T 측정 joint는 Axia와 손 사이에 있으므로 하우징은 측정 경계 위쪽이며 보정 대상은 하위 손이다. 기존 보정기는 실제 PhysX 질량·관성으로 하위 손의 중력·관성 wrench를 제거한다. 하우징 질량을 손 보정 합계에 추가하지 않는다. GPU 정적·동적·기지 외력 검증 결과는 [최종 개발 로그](../logs/2026-11-06_relative_family_280g_v3.md)에 기록한다.

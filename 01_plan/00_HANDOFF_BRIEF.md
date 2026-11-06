@@ -1,5 +1,19 @@
 # 현재 개발 인계
 
+2026-11-06 **현재 Relative 계약**: 활성 환경은v0·v2·v3, v1은 코드·등록·runner를 삭제했다. Axia는 v0부터280g 공통이다. v0/v3는 Actor·Critic 모두 초기 타겟, v2는 **Actor 초기 / Critic 현재**다. 모두 EEF 좌표이며 EEF pose만 Base다. v3는 v0 직접 상속으로 접촉 유지 보상을 없애고 현재 접촉 조건부 cosine 거리(weight25)를 사용한다. 물리 속도3.14rad/s·effort150/150/150/28/28/28Nm·종료4→2 커리큘럼은 유지한다. [최종 변경·검증](../02_implementation/logs/2026-11-06_relative_family_280g_v3.md) · [v3 계약](../02_implementation/environments/WRENCH_REFACTOR_RELATIVE_V3_ENVIRONMENT.md).
+
+아래 날짜별 항목은 이전 작업 이력이다. Relative의 질량·v2 관측 역할·v1 활성 여부는 위 현재 계약을 우선한다.
+
+2026-11-06 최종: Relative-v0/v1/v2의 Arm6축 물리 속도3.14rad/s, effort150/150/150/28/28/28Nm. 종료 임계값4.0을10,000까지 유지하고10,250부터250iteration마다0.05 감소하여20,000부터2.0 유지. 진단 print 롤백·속도 종료 활성. **사용자 정정으로 Relative-v1 Axia280g 유지**, v0/v2 질량은 기존값. [변경·검증](../02_implementation/logs/2026-11-06_relative_joint_limits_curriculum.md).
+
+2026-11-06 후속: Relative-v1에만 Axia 질량 0.280 kg 적용. F/T 측정 경계 위쪽 하우징이므로 하위 손 보정식 유지. CPU86개·4환경 PhysX 보정 시험 통과. model_400/seed42/400step 비교에서 wrist3 종료11→13회로 완화 확인 안 됨. v0/v2·공통 질량 상수는 보존.
+
+2026-11-06 후속: Relative-v1에만 arm joint velocity 종료 진단 출력 활성화. 초과 관절명·속도·env ID·3 rad/s 임계값 출력, 종료 판정과 다른 환경은 보존. CPU 79개 통과, Sim·Lab 실행 생략.
+
+2026-11-06: **Inspire-Wrench-Refactor-Relative-v2** 추가. v0 직접 상속, Actor 타겟만 현재 위치로 변경하고 Critic은 초기 위치를 유지한다. 둘 다 EEF 기준이며 장애물도 v0의 EEF snapshot이다. CPU 검사만 실행; 사용자 요청으로 Sim·Lab·학습 검증 생략. [계약](../02_implementation/environments/WRENCH_REFACTOR_RELATIVE_V2_ENVIRONMENT.md) · [검증](../02_implementation/logs/2026-11-06_wrench_refactor_relative_v2.md).
+
+2026-11-06: **Inspire-Wrench-Refactor-Relative-v1** 추가. Relative-v0 직접 상속, 장애물 입력만 EEF→Base 초기 snapshot으로 변경한다. Refactor Actor와 동일 함수이며 다른 환경·encoder·공통 Actor/Critic 입력은 보존한다. [계약](../02_implementation/environments/WRENCH_REFACTOR_RELATIVE_V1_ENVIRONMENT.md) · [검증](../02_implementation/logs/2026-11-06_wrench_refactor_relative_v1.md).
+
 2026-11-06: **Inspire-Wrench-Refactor-Relative-v0** 추가. v3_1 직접 상속, Actor/Critic 공통 EEF 상대 초기 관측·goal XYZ·촉각17D, URDF Hand effort10Nm, 최초 진입+10. 부모 스폰/reset/기타 보상 보존. [계약](../02_implementation/environments/WRENCH_REFACTOR_RELATIVE_V0_ENVIRONMENT.md) · [검증 기록](../02_implementation/logs/2026-11-06_wrench_refactor_relative_v0.md).
 
 2026-11-06: **Refactor v0 기반 수동 조작**은 `scripts/manual_wrench_refactor.py`다. world XYZ/RPY + 기존 Hand2D, 전체/선반/로봇 reset·선반 상태 snapshot 저장/복원. 부모 환경 파일·Gym·PPO는 보존한다. [실행·검증 기록](../02_implementation/logs/2026-11-06_wrench_refactor_manual.md).
