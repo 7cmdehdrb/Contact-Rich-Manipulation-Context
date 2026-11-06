@@ -1,5 +1,9 @@
 # 현재 개발 인계
 
+2026-11-06: **Inspire-Wrench-Refactor-Relative-v0** 추가. v3_1 직접 상속, Actor/Critic 공통 EEF 상대 초기 관측·goal XYZ·촉각17D, URDF Hand effort10Nm, 최초 진입+10. 부모 스폰/reset/기타 보상 보존. [계약](../02_implementation/environments/WRENCH_REFACTOR_RELATIVE_V0_ENVIRONMENT.md) · [검증 기록](../02_implementation/logs/2026-11-06_wrench_refactor_relative_v0.md).
+
+2026-11-06: **Refactor v0 기반 수동 조작**은 `scripts/manual_wrench_refactor.py`다. world XYZ/RPY + 기존 Hand2D, 전체/선반/로봇 reset·선반 상태 snapshot 저장/복원. 부모 환경 파일·Gym·PPO는 보존한다. [실행·검증 기록](../02_implementation/logs/2026-11-06_wrench_refactor_manual.md).
+
 2026-11-06: **Refactor v0_1/v1_1/v2_1/v3_1** 추가. 각 원본v0/v1/v2/v3 직접 상속, Action Rate를raw정책출력변화로변경·Arm cap제거·계수0.03유지. [계약](../02_implementation/environments/WRENCH_REFACTOR_POLICY_RATE_ENVIRONMENTS.md).
 
 2026-11-06: **Inspire-Wrench-Refactor-v3-Test** 임시 환경 추가. v3 직접 상속, 왼쪽(world −Y) 목표만 생성; 나머지 환경·PPO 수치 보존. [계약·검증](../02_implementation/logs/2026-11-06_wrench_refactor_v3_test_left.md).

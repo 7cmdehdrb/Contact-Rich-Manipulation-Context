@@ -1,5 +1,7 @@
 # Inspire-Wrench-Refactor-v0
 
+2026-11-06: 체크포인트 없이 EEF Cartesian/Hand2D를 조작하고 전체·선반·로봇 reset 및 선반 상태 복원을 수행하는 [수동 실행기](../logs/2026-11-06_wrench_refactor_manual.md)를 추가했다. 원본 환경은 보존하며 수동 인스턴스만 v3 EEF 보정 OSC를 사용한다.
+
 2026-11-06 후속 검증: [GUI32환경 리셋·좌우 밀기 및 수정 기록](../logs/2026-11-06_wrench_refactor_gui_validation.md). Wrist3−π/2, Arm속도종료3rad/s가 현재값이다.
 
 2026-11-05 질량·EEF·촉각 후속 수정 반영. 사용자 요청에 따라 v0_2를 검토 기준으로 삼고 **기존 환경 설정 상속을 끊은** 독립 환경이다. ‘변경 없음’의 근거는 v0·v0_1·v0_2·v0_3·v0_4·v1·v2의 활성 구성과 호출 함수를 모두 대조한 결과다. [개발·검증 기록](../logs/2026-11-05_wrench_refactor_v0_implementation.md).

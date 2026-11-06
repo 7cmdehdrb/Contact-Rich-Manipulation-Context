@@ -1,0 +1,273 @@
+{
+  "threshold": 0.35,
+  "misclassification_flips": false,
+  "model": "front orthographic, equal-height circular proxy footprints; before observation noise",
+  "recognized_color": "#357ba8",
+  "excluded_color": "#9ba3ad",
+  "variants": [
+    {
+      "scenario": "separated",
+      "centers_board_m": [
+        [
+          -0.3,
+          0.12
+        ],
+        [
+          -0.1,
+          0.25
+        ],
+        [
+          0.11,
+          0.17
+        ],
+        [
+          0.31,
+          0.29
+        ]
+      ],
+      "radii_m": [
+        0.042,
+        0.045,
+        0.046,
+        0.044
+      ],
+      "visible_ratio": [
+        0.9999999999999996,
+        1.0,
+        1.0,
+        0.9999999999999997
+      ],
+      "recognized": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "scenario": "full_occlusion",
+      "centers_board_m": [
+        [
+          -0.14,
+          0.1
+        ],
+        [
+          -0.14,
+          0.27
+        ],
+        [
+          0.18,
+          0.11
+        ],
+        [
+          0.18,
+          0.29
+        ]
+      ],
+      "radii_m": [
+        0.048,
+        0.048,
+        0.044,
+        0.04
+      ],
+      "visible_ratio": [
+        0.9999999999999999,
+        0.0,
+        0.9999999999999997,
+        0.0
+      ],
+      "recognized": [
+        true,
+        false,
+        true,
+        false
+      ]
+    },
+    {
+      "scenario": "partial_above_threshold",
+      "centers_board_m": [
+        [
+          -0.12,
+          0.1
+        ],
+        [
+          -0.075,
+          0.28
+        ],
+        [
+          0.2,
+          0.11
+        ],
+        [
+          0.25,
+          0.29
+        ]
+      ],
+      "radii_m": [
+        0.05,
+        0.05,
+        0.042,
+        0.04
+      ],
+      "visible_ratio": [
+        0.9999999999999999,
+        0.44999999999999996,
+        1.0,
+        0.5999999999999995
+      ],
+      "recognized": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "scenario": "partial_below_threshold",
+      "centers_board_m": [
+        [
+          -0.12,
+          0.1
+        ],
+        [
+          -0.095,
+          0.28
+        ],
+        [
+          0.2,
+          0.11
+        ],
+        [
+          0.218,
+          0.29
+        ]
+      ],
+      "radii_m": [
+        0.05,
+        0.05,
+        0.042,
+        0.04
+      ],
+      "visible_ratio": [
+        0.9999999999999999,
+        0.24999999999999994,
+        1.0,
+        0.19999999999999982
+      ],
+      "recognized": [
+        true,
+        false,
+        true,
+        false
+      ]
+    },
+    {
+      "scenario": "combined_occluders",
+      "centers_board_m": [
+        [
+          -0.05,
+          0.1
+        ],
+        [
+          0.05,
+          0.1
+        ],
+        [
+          0.0,
+          0.28
+        ],
+        [
+          -0.3,
+          0.24
+        ],
+        [
+          0.3,
+          0.24
+        ]
+      ],
+      "radii_m": [
+        0.035,
+        0.035,
+        0.06,
+        0.045,
+        0.045
+      ],
+      "visible_ratio": [
+        1.0,
+        1.0,
+        0.25,
+        0.9999999999999997,
+        0.9999999999999997
+      ],
+      "recognized": [
+        true,
+        true,
+        false,
+        true,
+        true
+      ]
+    },
+    {
+      "scenario": "depth_chain",
+      "centers_board_m": [
+        [
+          -0.16,
+          0.085
+        ],
+        [
+          -0.13,
+          0.215
+        ],
+        [
+          -0.08,
+          0.345
+        ],
+        [
+          0.1,
+          0.085
+        ],
+        [
+          0.14,
+          0.215
+        ],
+        [
+          0.2,
+          0.345
+        ],
+        [
+          0.34,
+          0.15
+        ]
+      ],
+      "radii_m": [
+        0.045,
+        0.04,
+        0.035,
+        0.04,
+        0.045,
+        0.035,
+        0.04
+      ],
+      "visible_ratio": [
+        1.0,
+        0.3125000000000001,
+        0.6428571428571428,
+        1.0,
+        0.49999999999999983,
+        0.7142857142857144,
+        0.9999999999999994
+      ],
+      "recognized": [
+        true,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    }
+  ],
+  "numpy_torch_match": true,
+  "all_labels_absent": true
+}

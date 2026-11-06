@@ -1,5 +1,9 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-06: **Inspire-Wrench-Refactor-Relative-v0**는 v3_1 직접 상속이다. Actor/Critic/storage 공통58+64D, EEF 상대 초기 타겟·장애물 및 goal XYZ, 촉각17D, Hand effort10Nm, 최초 진입+10. [계약·실행](environments/WRENCH_REFACTOR_RELATIVE_V0_ENVIRONMENT.md) · [검증 기록](logs/2026-11-06_wrench_refactor_relative_v0.md).
+
+2026-11-06: **Refactor 수동 조작 실행기**를 추가했다. v0 Scene/Hand와 v3 EEF 보정 OSC를 사용해 한 환경에서 world XYZ/RPY·Hand2D를 조작하며 전체/선반/로봇 reset·선반 snapshot 저장/복원을 제공한다. 기존 Gym 환경·PPO 변경 없음. [실행·동작·검증](logs/2026-11-06_wrench_refactor_manual.md).
+
 2026-11-06: **Inspire-Wrench-Refactor-v0_1/v1_1/v2_1/v3_1**는각원본직접상속의정책입력Action Rate변형이다. Arm cap제거·계수유지, 양쪽목표·속도종료유지. [등록·계약·실행](environments/WRENCH_REFACTOR_POLICY_RATE_ENVIRONMENTS.md).
 
 2026-11-06: **Inspire-Wrench-Refactor-v3-Test**는 v3 직접 상속의 왼쪽(world −Y) 목표 전용 진단 환경이다. 기존 v3 checkpoint 사용 가능. [계약·실행·검증](logs/2026-11-06_wrench_refactor_v3_test_left.md).

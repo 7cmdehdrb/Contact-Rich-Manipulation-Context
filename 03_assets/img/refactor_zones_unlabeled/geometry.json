@@ -1,0 +1,104 @@
+{
+  "variants": [
+    {
+      "image": 1,
+      "sample_index": 16251,
+      "target_board_m": [
+        0.012704475782811642,
+        0.21128904819488525
+      ],
+      "goal_board_m": [
+        0.06604223698377609,
+        0.15771642327308655
+      ],
+      "direction_board_deg": -45.125867978264075,
+      "target_goal_distance_m": 0.07559724152088165,
+      "partition_is_disjoint_and_complete": true
+    },
+    {
+      "image": 2,
+      "sample_index": 9729,
+      "target_board_m": [
+        0.003174151759594679,
+        0.19126281142234802
+      ],
+      "goal_board_m": [
+        0.09764837473630905,
+        0.19151119887828827
+      ],
+      "direction_board_deg": 0.15063918181439653,
+      "target_goal_distance_m": 0.09447455406188965,
+      "partition_is_disjoint_and_complete": true
+    },
+    {
+      "image": 3,
+      "sample_index": 7646,
+      "target_board_m": [
+        0.009579632431268692,
+        0.20410004258155823
+      ],
+      "goal_board_m": [
+        0.09124323725700378,
+        0.285515695810318
+      ],
+      "direction_board_deg": 44.91288218937557,
+      "target_goal_distance_m": 0.11531458795070648,
+      "partition_is_disjoint_and_complete": true
+    },
+    {
+      "image": 4,
+      "sample_index": 9235,
+      "target_board_m": [
+        -0.014156147837638855,
+        0.19959156215190887
+      ],
+      "goal_board_m": [
+        -0.09604836255311966,
+        0.28110265731811523
+      ],
+      "direction_board_deg": 135.13363982292313,
+      "target_goal_distance_m": 0.1155439019203186,
+      "partition_is_disjoint_and_complete": true
+    },
+    {
+      "image": 5,
+      "sample_index": 9573,
+      "target_board_m": [
+        -0.011509797535836697,
+        0.1892796903848648
+      ],
+      "goal_board_m": [
+        -0.10647688060998917,
+        0.1889823079109192
+      ],
+      "direction_board_deg": -179.82058959983843,
+      "target_goal_distance_m": 0.0949675515294075,
+      "partition_is_disjoint_and_complete": true
+    },
+    {
+      "image": 6,
+      "sample_index": 14005,
+      "target_board_m": [
+        0.01452775951474905,
+        0.19576959311962128
+      ],
+      "goal_board_m": [
+        -0.0377679206430912,
+        0.1426900178194046
+      ],
+      "direction_board_deg": -134.57378287703554,
+      "target_goal_distance_m": 0.07451362162828445,
+      "partition_is_disjoint_and_complete": true
+    }
+  ],
+  "no_labels": true,
+  "no_obstacles_or_target_goal_markers": true,
+  "source": "production sample_commands + zone_masks; point-footprint zones",
+  "settings": {
+    "red_margin_m": 0.023,
+    "gray_padding_m": 0.065,
+    "rear_offset_m": 0.02,
+    "excluded_half_angle_deg": 30,
+    "target_half_extent_m": 0.04
+  }
+}
