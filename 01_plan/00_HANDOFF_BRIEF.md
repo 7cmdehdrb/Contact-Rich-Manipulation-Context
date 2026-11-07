@@ -1,5 +1,7 @@
 # 현재 개발 인계
 
+2026-11-07 **Relative-v2_1 추가**: v2 직접 상속, 거리 항만 시작→목표와 시작→현재의 XY 누적 변위 cosine으로 교체한다. weight5·scale0.05·높이 gate·거리 증가 페널티−12.97 및 나머지 v2 전체 계약 보존. v0/v2/v3 기존 동작은 변경하지 않는다. [환경 계약](../02_implementation/environments/WRENCH_REFACTOR_RELATIVE_V2_ENVIRONMENT.md#relative-v2_1-시작점-기준-누적-변위-cosine) · [개발·검증](../02_implementation/logs/2026-11-07_relative_v2_1.md).
+
 2026-11-07 **Relative 공통 실시간 이동 보상**: v0의 cosine을 현재→목표와 저장 기준점→현재의 XY 방향 비교로 변경했다. 매step 평가 후1mm 이상 이동한 환경만 기준점을 갱신한다. 별도 매step 거리 증가 페널티 `target_inverse_distance`는 실제 `−12.97×max(d_t−d_(t−1),0)`이며 v2/v3도 동일 상속한다. v3는 최초 진입·Hold·성공 보상과 성공 종료를 제거한다. 실패가 없으면10초 timeout까지 진행한다. CPU85개, 버전별GPU2환경180step, v3 PPO32환경2iteration 통과. [설계·계수·검증·제약](../02_implementation/logs/2026-11-07_relative_motion_rewards.md).
 
 2026-11-07 **Relative-v0 관측·Action Rate 한도 구현**: v0의 공통 설정으로 v2/v3에도 전파한다. 질량·관성 보정과 EEF 변환, noise를 거친 최종 F/T 관측을 힘 각 축±150N·모멘트 각 축±8N·m로 제한한다. raw Arm/기존 clamp Hand action-rate는 그룹별 제곱합 cap100을 적용한다. 공통 센서 보정·보상/진단용 wrench·다른 Refactor 환경은 보존한다. [변경·검증 및 미검증 범위](../02_implementation/logs/2026-11-07_relative_observation_action_limits.md).

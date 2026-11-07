@@ -1,5 +1,7 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-07 **Inspire-Wrench-Refactor-Relative-v2_1** 추가. v2 직접 상속으로 거리 항만 시작점 기준 누적 이동 cosine으로 변경하며 `target_inverse_distance`를 유지한다. [계약](environments/WRENCH_REFACTOR_RELATIVE_V2_ENVIRONMENT.md#relative-v2_1-시작점-기준-누적-변위-cosine) · [검증](logs/2026-11-07_relative_v2_1.md).
+
 2026-11-07 **Relative 공통 보상·v3 종료 변경**: v0/v2/v3는 현재→목표와 실시간 이동 벡터 cosine을 사용한다. 이동 기준점은XY1mm 이상일 때 갱신하며, 별도 직전step 대비 거리 증가에는 `target_inverse_distance`(−12.97/m)를 적용한다. v3의 최초 진입·유지·성공 보상 및 성공 종료는 제거한다. 실패가 없으면10초 timeout으로 끝난다. [구현·검증](logs/2026-11-07_relative_motion_rewards.md).
 
 2026-11-07 **Relative-v0 공통 한도**: v2/v3에 F/T 최종 관측 힘±150N·모멘트±8N·m 및 raw Action Rate의 Arm·Hand 제곱합 각각 cap100이 상속된다. clipping은 질량·관성 보정과 noise 이후 관측에만 적용하며 보상/진단 원본을 보존한다. [구현·검증](logs/2026-11-07_relative_observation_action_limits.md).
