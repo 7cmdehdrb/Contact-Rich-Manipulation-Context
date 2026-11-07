@@ -1,5 +1,7 @@
 # Refactor-Relative-v0 환경 명세
 
+2026-11-07 후속: cosine을 현재→목표 방향과 실시간 이동 벡터로 변경했다. 이동 기준 위치는 XY 변위1mm 이상일 때만 갱신한다. 매step 거리 증가에만 `target_inverse_distance`(−12.97/m)를 적용하며 v2/v3에 상속한다. [변경·검증](../logs/2026-11-07_relative_motion_rewards.md).
+
 2026-11-07 갱신: 보정·noise 이후 F/T 관측 힘±150N·모멘트±8N·m 및 raw Action Rate 그룹별 cap100을 추가했다. v2/v3에 공통 상속된다. [구현·검증 기록](../logs/2026-11-07_relative_observation_action_limits.md).
 
 2026-11-06 최종 갱신: Axia 질량을 v0부터 **0.280kg**으로 설정한다. 활성 Relative 환경은 v0·v2·v3이며 v1은 삭제했다. EEF pose를 제외한 공간 관측은 EEF 기준이다. [변경·검증 기록](../logs/2026-11-06_relative_family_280g_v3.md).
@@ -267,7 +269,7 @@ Hand 목표는 `q_target = q_closed + openness×(q_open−q_closed)`다. open �
 
 ### 5.1 지급 규칙과 전체 항목
 
-활성 보상은13개다. RewardManager는 기본적으로 각 함수 반환값에 `weight×dt`를 곱한다. 여기서 `dt=0.02초`다. 아래 식은 혼동을 피하기 위해 **weight와 dt를 적용한 실제 한 제어step 보상**으로 쓴다. Reaching과 일회성 이벤트는 함수 내부에서 dt를 나누어 상쇄한다.
+활성 보상은14개다. RewardManager는 기본적으로 각 함수 반환값에 `weight×dt`를 곱한다. 여기서 `dt=0.02초`다. 아래 식은 혼동을 피하기 위해 **weight와 dt를 적용한 실제 한 제어step 보상**으로 쓴다. Reaching·일회성 이벤트·거리 증가 페널티는 함수 내부에서 dt를 나누어 상쇄한다.
 
 `d`는 현재 타겟 link 원점과 goal 사이 world XY 거리(m), `H`는 EEF world Z가 **초기 선반 작업면+0.14m보다 엄격히 낮음**을 뜻한다. 정확히14cm 높이에서는 H가 거짓이다. H의 기준은 움직이는 선반의 현재 높이나 타겟 윗면이 아니다.
 
@@ -275,6 +277,7 @@ Hand 목표는 `q_target = q_closed + openness×(q_open−q_closed)`다. open �
 | --- | --- | --- |
 | target_reaching | +30 | EEF–타겟 최단 접근 기록 개선1m당+30 |
 | target_goal_distance | +5 | `dt×5×exp(−d/0.05)×cosine`, H 필요 |
+| target_inverse_distance | −12.97 | `−12.97×max(d_t−d_(t−1), 0)`, 접촉·높이 gate 없음 |
 | target_goal_hold | +10 | `dt×10×Smoothstep 점유 점수`, H 및 유효 타겟 필요 |
 | target_contact | +0.1 | `dt×0.1×인정 누적 count`, count 최대10 |
 | robot_action_rate_penalty | −1 | raw Arm 및 clamp Hand action 변화 제곱 비용 |
@@ -301,18 +304,22 @@ r_reaching = 30 * (B_old - B_new)
 
 정지·후퇴·기존 최단 거리까지 재접근은 추가 보상을 주지 않는다. 10cm 안쪽에서는 이 항의 추가 개선량이 없다. 현재 타겟 위치를 사용하므로 타겟이 EEF 쪽으로 움직이는 경우도 개선으로 계산될 수 있다.
 
-### 5.3 거리: 누적 변위 cosine
+### 5.3 거리: 실시간 이동 cosine과 이탈 페널티
 
-타겟 시작 XY를 `p0`, 현재 XY를 `p`, goal XY를 `g`라고 한다.
+현재 타겟 XY를 `p`, 저장한 이동 기준 XY를 `a`, goal XY를 `g`라고 한다. reset에서 `a`를 새 타겟 위치로 초기화한다.
 
 ```math
 c=\mathrm{clip}\left(
-\frac{(\mathbf{g}-\mathbf{p}_0)\cdot(\mathbf{p}-\mathbf{p}_0)}
-{\|\mathbf{g}-\mathbf{p}_0\|\,\|\mathbf{p}-\mathbf{p}_0\|},-1,1\right),
+\frac{(\mathbf{g}-\mathbf{p})\cdot(\mathbf{p}-\mathbf{a})}
+{\|\mathbf{g}-\mathbf{p}\|\,\|\mathbf{p}-\mathbf{a}\|},-1,1\right),
 \qquad r_{distance}=0.02\times5\times e^{-d/0.05}\times c\times H.
 ```
 
-두 벡터 중 길이가1e−8m 이하이면0이다. **현재 속도 방향이 아니라 시작점부터의 누적 이동 방향**을 사용한다. 같은 직선상에서 goal을 지나치거나 goal 쪽 위치에서 잠시 후퇴해도 누적 변위가 goal 방향이면 cosine은 양수일 수 있다. 반대 방향이면 음수다. 현재step 접촉 조건은 없으며, goal3cm 내부라고 cosine을1로 강제하지 않는다.
+매 제어step 위 벡터와 보상을 계산한 **후**, `||p−a||_XY >= 0.001m`인 환경만 `a=p`로 갱신한다. 1mm 미만의 이동도 매step 평가하며, 1mm는 보상 deadband가 아니다. 두 벡터 중 길이가1e−8m 이하이면0이고 정확한 목표점에서도 방향이 없어0이다. 목표를 지나친 뒤 더 멀어지는 이동은 음수, 다시 목표를 향하는 이동은 양수다. 현재step 접촉 조건은 없으며 goal3cm 내부라고 cosine을1로 강제하지 않는다. 기준점을 갱신하기 전의 미세 왕복은 마지막1mm 기준점에 대한 방향을 평가한다.
+
+`target_inverse_distance`는 위 기준점과 별도로 **직전 제어step**의 타겟 위치를 저장한다. 실제 한step 페널티는 `−12.97×max(d_t−d_(t−1), 0)`이다. 거리 감소·정지는0이며 접촉·EEF 높이와 무관하다. 함수가 거리 증가량을 dt로 나누어 반환하므로 RewardManager의 dt 곱과 상쇄된다. 부분 reset에서는 해당 환경의 두 위치 이력만 새 스폰 위치로 초기화하여 reset 이동을 청구하지 않는다.
+
+계수는 H가 참이고 cosine=1인 10cm→0cm의3초 등속 이동에 대한 기존 거리 보상 적분 `5×3×0.05/0.1×(1−exp(−2)) = 6.484985`를 기준으로 한다. 그20%를10cm 이탈 비용에 대응시켜 `w=−round(0.2×6.484985/0.1, 2)=−12.97`이다. v3의 거리 weight25와 관계없이 공통 계수를 그대로 상속한다. 제어step 이산화와 정확한 목표점의 cosine0으로 실제 표본 누적 비율은 근소하게 달라질 수 있다.
 
 ### 5.4 Hold: 2.5–3.5cm Smoothstep
 

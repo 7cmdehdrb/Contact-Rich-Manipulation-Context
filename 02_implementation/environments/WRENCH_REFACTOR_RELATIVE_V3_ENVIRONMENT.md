@@ -1,5 +1,7 @@
 # Inspire-Wrench-Refactor-Relative-v3
 
+2026-11-07 후속: v0의 실시간 이동 cosine·1mm 기준점 갱신과 거리 증가 페널티를 상속한다. 최초 진입·목표 유지·성공 보상 및 성공 종료는 제거했다. [변경·검증](../logs/2026-11-07_relative_motion_rewards.md).
+
 2026-11-07 공통 변경: Relative-v0의 F/T 최종 관측 한도(힘 각 축±150N·모멘트 각 축±8N·m)와 raw Action Rate 그룹별 제곱합 cap100을 상속한다. 질량·관성 보정 후 관측만 제한하며 현재 접촉 조건부 거리 보상 등 v3 고유 차이는 유지한다. [구현·검증](../logs/2026-11-07_relative_observation_action_limits.md).
 
 2026-11-06. Relative-v0를 직접 상속하여 별도 접촉 유지 보상을 없애고, 기존 cosine 거리 보상을 현재 step 접촉 조건으로 제한하는 실험이다. 거리 weight는 Refactor-v1을 참고하여5에서25로 올린다.
@@ -18,7 +20,7 @@
 | 타겟 / 장애물 | 초기 snapshot을 현재 EEF 기준으로 변환 |
 | Axia / 손 질량 | 0.280kg / 0.790kg |
 
-[Relative-v0 전체 명세](WRENCH_REFACTOR_RELATIVE_V0_ENVIRONMENT.md)의 초기화·물체 및 목표 생성·액션·관측·종료·커리큘럼을 그대로 상속한다. 목표와 보정 F/T도 EEF 기준이며 EEF pose만 base 기준이다. v2의 비대칭 Critic 관측은 사용하지 않는다.
+[Relative-v0 전체 명세](WRENCH_REFACTOR_RELATIVE_V0_ENVIRONMENT.md)의 초기화·물체 및 목표 생성·액션·관측·커리큘럼을 그대로 상속한다. 종료는 아래 성공 종료 제거만 다르다. 목표와 보정 F/T도 EEF 기준이며 EEF pose만 base 기준이다. v2의 비대칭 Critic 관측은 사용하지 않는다.
 
 ## 보상 변경
 
@@ -26,14 +28,20 @@
 | --- | --- | --- |
 | `target_contact` | 별도 접촉 유지 보상 | 삭제 (`None`) |
 | `target_goal_distance` | cosine 거리, weight5 | 현재 접촉 조건부 cosine 거리, weight25 |
+| `target_inverse_distance` | 거리 증가량×−12.97 | 동일 상속; 접촉·높이 gate 없음 |
+| `target_goal_first_entry_bonus` | 최초 진입+10 | 삭제 (`None`) |
+| `target_goal_hold` | 유지 weight10 | 삭제 (`None`) |
+| `target_goal_success_bonus` | 성공+75 | 삭제 (`None`) |
 
-기존 `displacement_cosine_goal_distance` 출력에 현재 step의 `target_contact_below_height` 조건을 적용한다. 실제 타겟-손 접촉력0.01N 이상, fresh 센서 값, EEF 높이가 초기 선반면보다14cm 미만인 경우만 지급한다. 과거 접촉 횟수·2/3 step 유지 상태를 이 gate에 사용하지 않으며, 목표 내부라는 이유로 접촉 조건을 우회하지 않는다. 접촉이 끊긴 step에는 거리 보상이0이다.
+`RelativeMotionCosineGoalDistance`에 `require_contact=True`로 현재 step의 `target_contact_below_height` 조건을 적용한다. 실제 타겟-손 접촉력0.01N 이상, fresh 센서 값, EEF 높이가 초기 선반면보다14cm 미만인 경우만 지급한다. 과거 접촉 횟수·2/3 step 유지 상태를 이 gate에 사용하지 않으며, 목표 내부라는 이유로 접촉 조건을 우회하지 않는다. 접촉이 끊긴 step에는 거리 보상이0이지만 이동 기준점은 계속 갱신한다.
 
-초기→현재 타겟 변위와 초기→목표 벡터의 XY signed cosine은 그대로다. 역방향 변위의 음수 cosine, 변위0에서 보상0, 기존 거리 scale0.05 및 유효성 조건을 보존한다. 조건 충족 시 거리 함수×cosine×25×step_dt로 최종 보상에 반영된다. 기본 step_dt0.02초에서 양의 상한은 step당0.5다. 최초 진입 보너스10과 나머지 보상은 변경하지 않는다.
+현재→목표 벡터와 마지막 기준점→현재 이동 벡터의 XY signed cosine을 사용한다. 매step 계산 후 이동1mm 이상일 때 기준점을 갱신한다. 변위0·정확한 목표점에서 보상0이며 거리 scale0.05를 보존한다. 조건 충족 시 거리 함수×cosine×25×step_dt로 최종 보상에 반영된다. 기본 step_dt0.02초에서 양의 상한은 step당0.5다. 활성 보상은10개다.
 
 ## 제어·종료·커리큘럼
 
 현재 EEF frame OSC와 raw 정책 action-rate를 유지한다. Arm6관절 물리 속도 한도3.14rad/s, effort150/150/150/28/28/28Nm이다. 속도 종료 임계값은10,000iteration까지4.0rad/s,10,250부터250iteration마다0.05씩 감소하고20,000부터2.0을 유지한다. 기존 목표 방향 커리큘럼 및 다른 종료 조건은 같다.
+
+`target_goal_success=None`으로 안정 유지 성공에 의한 조기 종료를 사용하지 않는다. 실패가 없으면 목표를 달성해도10초 timeout까지 지속한다. 물체 낙하·기울기, 선반 실패, Arm 속도 초과 종료는 유지하므로 모든 에피소드가 반드시 timeout으로 끝나는 것은 아니다.
 
 ## 실행과 검증
 

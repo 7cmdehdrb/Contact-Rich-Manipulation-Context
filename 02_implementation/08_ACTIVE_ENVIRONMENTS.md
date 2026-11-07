@@ -1,5 +1,7 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-07 **Relative 공통 보상·v3 종료 변경**: v0/v2/v3는 현재→목표와 실시간 이동 벡터 cosine을 사용한다. 이동 기준점은XY1mm 이상일 때 갱신하며, 별도 직전step 대비 거리 증가에는 `target_inverse_distance`(−12.97/m)를 적용한다. v3의 최초 진입·유지·성공 보상 및 성공 종료는 제거한다. 실패가 없으면10초 timeout으로 끝난다. [구현·검증](logs/2026-11-07_relative_motion_rewards.md).
+
 2026-11-07 **Relative-v0 공통 한도**: v2/v3에 F/T 최종 관측 힘±150N·모멘트±8N·m 및 raw Action Rate의 Arm·Hand 제곱합 각각 cap100이 상속된다. clipping은 질량·관성 보정과 noise 이후 관측에만 적용하며 보상/진단 원본을 보존한다. [구현·검증](logs/2026-11-07_relative_observation_action_limits.md).
 
 2026-11-06 **현재 Relative 계약**: 활성 환경은v0·v2·v3, v1은 코드·등록·runner를 삭제했다. Axia는 v0부터280g 공통이다. v0/v3는 Actor·Critic 모두 초기 타겟, v2는 **Actor 초기 / Critic 현재**다. 모두 EEF 좌표이며 EEF pose만 Base다. v3는 v0 직접 상속으로 접촉 유지 보상을 없애고 현재 접촉 조건부 cosine 거리(weight25)를 사용한다. 물리 속도3.14rad/s·effort150/150/150/28/28/28Nm·종료4→2 커리큘럼은 유지한다. [최종 변경·검증](logs/2026-11-06_relative_family_280g_v3.md) · [v3 계약](environments/WRENCH_REFACTOR_RELATIVE_V3_ENVIRONMENT.md).

@@ -1,5 +1,7 @@
 # 현재 개발 인계
 
+2026-11-07 **Relative 공통 실시간 이동 보상**: v0의 cosine을 현재→목표와 저장 기준점→현재의 XY 방향 비교로 변경했다. 매step 평가 후1mm 이상 이동한 환경만 기준점을 갱신한다. 별도 매step 거리 증가 페널티 `target_inverse_distance`는 실제 `−12.97×max(d_t−d_(t−1),0)`이며 v2/v3도 동일 상속한다. v3는 최초 진입·Hold·성공 보상과 성공 종료를 제거한다. 실패가 없으면10초 timeout까지 진행한다. CPU85개, 버전별GPU2환경180step, v3 PPO32환경2iteration 통과. [설계·계수·검증·제약](../02_implementation/logs/2026-11-07_relative_motion_rewards.md).
+
 2026-11-07 **Relative-v0 관측·Action Rate 한도 구현**: v0의 공통 설정으로 v2/v3에도 전파한다. 질량·관성 보정과 EEF 변환, noise를 거친 최종 F/T 관측을 힘 각 축±150N·모멘트 각 축±8N·m로 제한한다. raw Arm/기존 clamp Hand action-rate는 그룹별 제곱합 cap100을 적용한다. 공통 센서 보정·보상/진단용 wrench·다른 Refactor 환경은 보존한다. [변경·검증 및 미검증 범위](../02_implementation/logs/2026-11-07_relative_observation_action_limits.md).
 
 2026-11-06 **현재 Relative 계약**: 활성 환경은v0·v2·v3, v1은 코드·등록·runner를 삭제했다. Axia는 v0부터280g 공통이다. v0/v3는 Actor·Critic 모두 초기 타겟, v2는 **Actor 초기 / Critic 현재**다. 모두 EEF 좌표이며 EEF pose만 Base다. v3는 v0 직접 상속으로 접촉 유지 보상을 없애고 현재 접촉 조건부 cosine 거리(weight25)를 사용한다. 물리 속도3.14rad/s·effort150/150/150/28/28/28Nm·종료4→2 커리큘럼은 유지한다. [최종 변경·검증](../02_implementation/logs/2026-11-06_relative_family_280g_v3.md) · [v3 계약](../02_implementation/environments/WRENCH_REFACTOR_RELATIVE_V3_ENVIRONMENT.md).

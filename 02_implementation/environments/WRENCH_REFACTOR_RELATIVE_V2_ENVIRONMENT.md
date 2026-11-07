@@ -1,5 +1,7 @@
 # Inspire-Wrench-Refactor-Relative-v2
 
+2026-11-07 후속: Relative-v0의 실시간 이동 cosine(기준점은 XY 이동1mm 이상일 때 갱신)과 `target_inverse_distance`(실제 step 페널티 `−12.97×max(d_t−d_(t−1), 0)`)를 그대로 상속한다. v2의 최초 진입·유지·성공 보상 및 성공 종료는 유지한다. [변경·검증](../logs/2026-11-07_relative_motion_rewards.md).
+
 2026-11-07 공통 변경: Relative-v0의 F/T 최종 관측 한도(힘 각 축±150N·모멘트 각 축±8N·m)와 raw Action Rate 그룹별 제곱합 cap100을 상속한다. policy와 critic 모두 보정·좌표변환·noise 이후 제한하며 질량·관성 보정 및 보상/진단용 wrench는 보존한다. [구현·검증](../logs/2026-11-07_relative_observation_action_limits.md).
 
 2026-11-06. Relative-v0를 직접 상속하여 **Critic의 초기 타겟 위치를 현재 타겟 위치로 변경**한다. Actor는 v0의 초기 타겟 위치를 유지한다. 두 위치 모두 현재 EEF 기준 XYZ다. v1을 상속하지 않으므로 장애물도 v0의 EEF 기준 초기 관측을 유지한다.
