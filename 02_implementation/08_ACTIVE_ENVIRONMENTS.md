@@ -1,5 +1,7 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-07 **Relative-v0 공통 한도**: v2/v3에 F/T 최종 관측 힘±150N·모멘트±8N·m 및 raw Action Rate의 Arm·Hand 제곱합 각각 cap100이 상속된다. clipping은 질량·관성 보정과 noise 이후 관측에만 적용하며 보상/진단 원본을 보존한다. [구현·검증](logs/2026-11-07_relative_observation_action_limits.md).
+
 2026-11-06 **현재 Relative 계약**: 활성 환경은v0·v2·v3, v1은 코드·등록·runner를 삭제했다. Axia는 v0부터280g 공통이다. v0/v3는 Actor·Critic 모두 초기 타겟, v2는 **Actor 초기 / Critic 현재**다. 모두 EEF 좌표이며 EEF pose만 Base다. v3는 v0 직접 상속으로 접촉 유지 보상을 없애고 현재 접촉 조건부 cosine 거리(weight25)를 사용한다. 물리 속도3.14rad/s·effort150/150/150/28/28/28Nm·종료4→2 커리큘럼은 유지한다. [최종 변경·검증](logs/2026-11-06_relative_family_280g_v3.md) · [v3 계약](environments/WRENCH_REFACTOR_RELATIVE_V3_ENVIRONMENT.md).
 
 아래 날짜별 항목은 이전 작업 이력이다. Relative의 질량·v2 관측 역할·v1 활성 여부는 위 현재 계약을 우선한다.

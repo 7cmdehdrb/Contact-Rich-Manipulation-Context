@@ -1,8 +1,10 @@
 # Refactor-Relative-v0 환경 명세
 
+2026-11-07 갱신: 보정·noise 이후 F/T 관측 힘±150N·모멘트±8N·m 및 raw Action Rate 그룹별 cap100을 추가했다. v2/v3에 공통 상속된다. [구현·검증 기록](../logs/2026-11-07_relative_observation_action_limits.md).
+
 2026-11-06 최종 갱신: Axia 질량을 v0부터 **0.280kg**으로 설정한다. 활성 Relative 환경은 v0·v2·v3이며 v1은 삭제했다. EEF pose를 제외한 공간 관측은 EEF 기준이다. [변경·검증 기록](../logs/2026-11-06_relative_family_280g_v3.md).
 
-2026-11-06 실제 코드의 기본 설정 기준. 이 문서는 다른 환경 설명서를 읽지 않아도 환경의 생성, 초기화, 입력과 출력, 보상, 종료, 학습 난이도 변화를 이해할 수 있도록 작성했다. 명령행으로 설정을 덮어쓴 실행은 아래 기본값과 다를 수 있다.
+2026-11-07 실제 코드의 기본 설정 기준. 이 문서는 다른 환경 설명서를 읽지 않아도 환경의 생성, 초기화, 입력과 출력, 보상, 종료, 학습 난이도 변화를 이해할 수 있도록 작성했다. 명령행으로 설정을 덮어쓴 실행은 아래 기본값과 다를 수 있다.
 
 ## 1. 과업과 기본 구성
 
@@ -210,6 +212,8 @@ goal도 같은 식으로 현재 EEF에 대한 상대 XYZ를 계산하되, 고정
 
 관측에는 힘 성분별 표준편차0.05N, 모멘트 성분별 표준편차0.005Nm의 독립 영평균 Gaussian noise를 더한다. 초기 무효 물리 샘플은0으로 처리한 뒤 관측 noise를 적용한다. wrench 변화 보상은 이 보정 신호의 관측 noise 적용 전 값을 사용한다.
 
+2026-11-07부터 **보정·EEF 변환·noise 이후** 최종 관측을 각 힘 성분±150N, 각 모멘트 성분±8N·m로 제한한다. `wrist_wrench_observation_limits`는 Relative-v0에 정의하며 v2의 별도 Critic과 v3에도 상속된다. noise를 끈 평가에서도 동일한 한도를 적용한다. raw joint reaction, 손의 질량·관성 보정, 보상/진단의 보정 wrench는 clipping하지 않는다. [구현·보정 검증](../logs/2026-11-07_relative_observation_action_limits.md).
+
 ## 4. 액션
 
 ### 4.1 8차원 구성
@@ -340,12 +344,12 @@ Hold 외곽3.5cm와 성공 반경3cm는 서로 다른 기준이다.
 Arm은 OSC 배율 적용 전 raw action6축을 사용한다. Hand는 현재와 직전 raw action2축을 각각0–1로 clamp한 뒤 차이를 계산한다.
 
 ```text
-C_action = 0.03*sum((a_arm[t]-a_arm[t-1])^2)
-         + 0.03*sum((clamp(a_hand[t])-clamp(a_hand[t-1]))^2)
+C_action = 0.03*min(sum((a_arm[t]-a_arm[t-1])^2), 100)
+         + 0.03*min(sum((clamp(a_hand[t])-clamp(a_hand[t-1]))^2), 100)
 r_action_rate = -dt*C_action
 ```
 
-Arm의 합산 cap은 없다. OSC 출력 토크 변화나 tanh(action) 변화로 계산하지 않는다.
+2026-11-07부터 Arm·Hand 그룹별 합산 cap100을 적용한다. OSC 출력 토크 변화나 tanh(action) 변화로 계산하지 않는다. Hand의0–1 제한으로 Hand 제곱합은 실제 최대2이며, dt0.02초에서 전체 action-rate 페널티의 최대 절댓값은0.0612다. 이 cap은 Relative-v0에서 지정하여 v2/v3가 상속하며, 기존 Refactor-v3_1 등의 uncapped 기본 동작은 유지한다.
 
 ```text
 C_velocity = 0.03*min(sum(qdot_arm^2), 100)

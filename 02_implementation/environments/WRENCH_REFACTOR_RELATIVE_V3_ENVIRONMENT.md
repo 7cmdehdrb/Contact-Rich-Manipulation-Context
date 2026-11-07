@@ -1,5 +1,7 @@
 # Inspire-Wrench-Refactor-Relative-v3
 
+2026-11-07 공통 변경: Relative-v0의 F/T 최종 관측 한도(힘 각 축±150N·모멘트 각 축±8N·m)와 raw Action Rate 그룹별 제곱합 cap100을 상속한다. 질량·관성 보정 후 관측만 제한하며 현재 접촉 조건부 거리 보상 등 v3 고유 차이는 유지한다. [구현·검증](../logs/2026-11-07_relative_observation_action_limits.md).
+
 2026-11-06. Relative-v0를 직접 상속하여 별도 접촉 유지 보상을 없애고, 기존 cosine 거리 보상을 현재 step 접촉 조건으로 제한하는 실험이다. 거리 weight는 Refactor-v1을 참고하여5에서25로 올린다.
 
 ## 등록과 공통 구성

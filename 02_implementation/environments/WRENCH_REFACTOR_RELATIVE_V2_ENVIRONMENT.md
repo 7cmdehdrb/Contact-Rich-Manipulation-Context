@@ -1,5 +1,7 @@
 # Inspire-Wrench-Refactor-Relative-v2
 
+2026-11-07 공통 변경: Relative-v0의 F/T 최종 관측 한도(힘 각 축±150N·모멘트 각 축±8N·m)와 raw Action Rate 그룹별 제곱합 cap100을 상속한다. policy와 critic 모두 보정·좌표변환·noise 이후 제한하며 질량·관성 보정 및 보상/진단용 wrench는 보존한다. [구현·검증](../logs/2026-11-07_relative_observation_action_limits.md).
+
 2026-11-06. Relative-v0를 직접 상속하여 **Critic의 초기 타겟 위치를 현재 타겟 위치로 변경**한다. Actor는 v0의 초기 타겟 위치를 유지한다. 두 위치 모두 현재 EEF 기준 XYZ다. v1을 상속하지 않으므로 장애물도 v0의 EEF 기준 초기 관측을 유지한다.
 
 ## 등록과 관측
