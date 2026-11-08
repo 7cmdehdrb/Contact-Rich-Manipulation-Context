@@ -1,5 +1,7 @@
 # Inspire-Wrench-Refactor-Relative-v2
 
+Relative-v2_3은 `debug_reaching_point=True`로 Reaching 기준점에 자홍색 구(반지름8mm)를 표시한다. 실제 보상 기준점과 함께 움직이는 비물리 시각화이며, 구의 크기는 접근 반경5cm와 별개다. `env.debug_reaching_point=False`로 숨길 수 있다.
+
 2026-11-08 **Relative-v2_3**: `WrenchRefactorRelativeV2_3EnvCfg`가 v2_1을 직접 상속한다. `target_reaching`만 `OppositeReachProgress`로 교체하여 현재 물체에서 목표 반대 방향 XY5cm, 선반 바닥면+물체 높이/2 지점을 추적한다. 접근 반경은 사용자 후속 지시에 따라5cm다. Contact 유지·나머지 보상·관측·제어·종료·커리큘럼·PPO 수치는 v2_1과 동일하다. Gym ID는 `Inspire-Wrench-Refactor-Relative-v2_3`, 실험명은 `inspire_wrench_refactor_relative_v2_3`. [수식·reset·전체 대조·검증](../logs/2026-11-08_relative_v2_3.md).
 
 2026-11-07 파생 **Relative-v2_1** 추가: v2를 직접 상속하여 거리 항만 시작→목표와 시작→현재의 누적 변위 cosine으로 바꾼다. 아래 v2_1 절과 [개발 기록](../logs/2026-11-07_relative_v2_1.md)을 따른다. 기존 v2는 수정하지 않는다.
@@ -71,3 +73,9 @@ python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Wrench-Refacto
 2026-11-08: `WrenchRefactorRelativeV2_2EnvCfg`는 v2_1을 직접 상속하고 부모 초기화 후 `self.rewards.target_contact = None`만 설정한다. 거리 보상·Hold·최초 진입·성공·종료·관측·제어·커리큘럼은 v2_1 그대로다.
 
 Gym ID는 `Inspire-Wrench-Refactor-Relative-v2_2`, runtime은 동일한 `WrenchRefactorEnv`다. `WrenchRefactorRelativeV2_2PPORunnerCfg`도 v2_1 runner를 직접 상속하며 experiment_name만 `inspire_wrench_refactor_relative_v2_2`로 구분한다. GPU 스모크는 사용자 요청으로 생략했다. [개발·검증 기록](../logs/2026-11-08_relative_v2_2.md).
+
+## Relative-v2_4: ?? ??? ?? ?? ???
+
+2026-11-08: v2_1 ?? ??. Distance? `WrenchV0_4GoalProgress`? ???? ?? ?? XY ?? ???? ????. Reaching weight? Holding OSC? ???30??? Distance weight100? ????. cosine? ???? `target_inverse_distance = None`?? ?? ?? ??? ????. **EEF? ?? ?? ??+14cm ??? ??? ??**??, ?? ?? ?? ???? ??? ?? ???? ???. Contact ? ??? ?? ??? ????.
+
+Gym ID? `Inspire-Wrench-Refactor-Relative-v2_4`, runner experiment_name? `inspire_wrench_refactor_relative_v2_4`?. [?? ???????? ??](../logs/2026-11-08_relative_v2_4.md).
