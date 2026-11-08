@@ -87,3 +87,7 @@ Gym ID? `Inspire-Wrench-Refactor-Relative-v2_4`, runner experiment_name? `inspir
 ## Relative-v2_6: fixed straight-left goal
 
 2026-11-08: direct v2_1 child. Only `events.object_spawn.params.fixed_goal_offset = (0.0, -0.09)` changes: one goal 9cm left of the randomized initial target, using shelf-local -Y (world -Y here). All rewards, Reaching, observations, control and termination remain v2_1. The fixed offset overrides direction sampling throughout the existing curriculum. Gym ID: `Inspire-Wrench-Refactor-Relative-v2_6`; experiment_name: `inspire_wrench_refactor_relative_v2_6`. [Contract and validation](../logs/2026-11-08_relative_v2_6.md).
+
+## Relative-v2_7: goal-conditioned initial arm pose
+
+2026-11-08: direct v2_1 child, adding only an IK reset event after object_spawn. Left goals (including exact push/pull ties) start with the EEF 10-14cm on the target's right; right goals start 10-14cm on its left. EEF remains 10-13cm outside the shelf front, with default height +/-1cm and unchanged default orientation. Arm joints are solved from the spawned USD chain. All rewards, goal distributions, observations, controllers, termination and PPO parameters remain v2_1. Gym ID: `Inspire-Wrench-Refactor-Relative-v2_7`. [Full contract, failures and validation](../logs/2026-11-08_relative_v2_7.md).

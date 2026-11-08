@@ -1,5 +1,17 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-08 **Collection 성능 진단**:2048환경 실제 train.py에서 reset IK·OBB search의 작은 배치 CUDA 호출 비용을 확인했다. 구성·난수열을 보존하는 CPU 계산 경로를 적용했다. [함수별 프로파일·검증·유지한 비용](logs/2026-11-08_collection_profile.md).
+
+2026-11-08 **Relative-IK 최종 범위 확정**: 전면 바깥8–10cm·물체 좌우10–18cm·기본 높이−1~+3cm.86,722개 후보 사전 검증 후 reset SVD·재추출 비활성화. 최종 박스2×8×4cm. [비교 실험·시간 측정](logs/2026-11-08_relative_ik_family.md).
+
+2026-11-08 **Relative-IK 범위 확장**: v0/v1 초기 EEF 범위를 전면 바깥8–13cm·물체 좌우10–18cm·기본 높이−1~+3cm로 확대. 정규화 Jacobian 조건수80 및 관절 여유0.05rad 검사 후 부적합 후보 재추출. [계약·검증](logs/2026-11-08_relative_ik_family.md).
+
+2026-11-08 **Relative-IK 시각화**: IK-v0/v1 모두 좌우 초기 EEF 샘플링 영역을 비물리 테두리 박스2개로 표시한다. [설명](environments/WRENCH_REFACTOR_RELATIVE_IK_ENVIRONMENTS.md).
+
+2026-11-08 **Relative-IK-v0/v1** 추가: v2_7 IK 초기화, Actor/Critic 공통 초기 물체 관측. v1은 접촉 조건부 누적 cosine(weight5), Contact/Hold/최초 진입/성공 보상과3초 성공 종료 제거. [환경 계약](environments/WRENCH_REFACTOR_RELATIVE_IK_ENVIRONMENTS.md) · [검증](logs/2026-11-08_relative_ik_family.md).
+
+2026-11-08 **Relative-v2_7**: direct v2_1 child; goal-conditioned IK initial Arm pose, opposite target side, outside shelf, default orientation preserved. CPU91 and GPU reset/IK checks passed. [Contract and validation](logs/2026-11-08_relative_v2_7.md).
+
 2026-11-08 **Relative-v2_6**: direct v2_1 child; only goal distribution changes to a fixed 9cm straight-left offset. [Contract and validation](logs/2026-11-08_relative_v2_6.md).
 
 2026-11-08 **Relative-v2_5**: direct v2_4 child; Contact reward disabled, all other environment settings preserved. [Contract and validation](logs/2026-11-08_relative_v2_5.md).

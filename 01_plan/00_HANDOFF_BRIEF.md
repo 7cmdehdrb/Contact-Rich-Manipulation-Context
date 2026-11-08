@@ -1,5 +1,11 @@
 # 현재 개발 인계
 
+2026-11-08 **Collection 최적화**: 환경 구성 변경 없이 reset 작은 배치의 IK(≤128)·Refactor OBB search(≤8)를 CPU로 계산한다. CUDA 난수 순서와 검색/수렴 계약은 유지한다. [프로파일·성능·동등성 검증](../02_implementation/logs/2026-11-08_collection_profile.md).
+
+2026-11-08 **Relative-IK-v0/v1 최종**: 공통 초기 물체 관측, 양쪽 비물리 IK 박스. 사전86,722개 후보 검사로 전면 바깥8–10cm·물체 좌우10–18cm·기본 높이−1~+3cm로 확정했다. reset SVD·재추출은 비활성화하며 후보1개/IK1회 호출이다. v1의 접촉 조건부 누적 cosine Distance(weight5), 보상4개·3초 성공 종료 제거 및 일반10초 Timeout은 유지한다. [계약](../02_implementation/environments/WRENCH_REFACTOR_RELATIVE_IK_ENVIRONMENTS.md) · [비교 실험·검증](../02_implementation/logs/2026-11-08_relative_ik_family.md).
+
+2026-11-08 **Relative-v2_7**: direct v2_1 child; goal-conditioned IK initial Arm pose, opposite target side, outside shelf, default orientation preserved. CPU91 and GPU reset/IK checks passed. [Contract and validation](../02_implementation/logs/2026-11-08_relative_v2_7.md).
+
 2026-11-08 **Relative-v2_6**: direct v2_1 child; only goal distribution changes to a fixed 9cm straight-left offset. [Contract and validation](../02_implementation/logs/2026-11-08_relative_v2_6.md).
 
 2026-11-08 **Relative-v2_5**: direct v2_4 child; Contact reward disabled, all other environment settings preserved. [Contract and validation](../02_implementation/logs/2026-11-08_relative_v2_5.md).
