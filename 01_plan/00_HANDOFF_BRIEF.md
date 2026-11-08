@@ -1,5 +1,7 @@
 # 현재 개발 인계
 
+2026-11-08 **Relative-v2_3 추가**: v2_1 직접 상속, Contact 유지. Reaching을 현재 물체의 목표 반대쪽 XY5cm·높이 중간점으로 변경하고 접근 반경도5cm로 설정. [계약·검증](../02_implementation/logs/2026-11-08_relative_v2_3.md).
+
 2026-11-08 **Relative-v2_2 추가**: v2_1 직접 상속, `rewards.target_contact = None`만 적용. GPU 스모크는 사용자 요청으로 생략. [변경·정적 검증](../02_implementation/logs/2026-11-08_relative_v2_2.md).
 
 2026-11-08 **Relative-v2_1/v3 방향별 Test 8개 추가**: 각 부모 직접 상속, Right/Pull/Left/Push 목표 각도만 제한. [환경 계약 및 8개 순차 녹화 명령](../02_implementation/logs/2026-11-08_relative_direction_tests.md).

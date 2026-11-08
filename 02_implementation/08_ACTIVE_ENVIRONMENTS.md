@@ -1,5 +1,7 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-08 **Inspire-Wrench-Refactor-Relative-v2_3**: v2_1 직접 상속, Contact 유지. Reaching 기준점은 현재 물체의 목표 반대 방향 XY5cm·물체 중간 높이이며 접근 반경5cm. [계약·검증](logs/2026-11-08_relative_v2_3.md).
+
 2026-11-08 **Inspire-Wrench-Refactor-Relative-v2_2** 추가: v2_1 직접 상속, Contact 유지 보상만 `None`. 나머지 환경·PPO 수치는 보존한다. [변경·정적 검증](logs/2026-11-08_relative_v2_2.md). GPU 스모크는 사용자 요청으로 생략했다.
 
 2026-11-08 **Relative-v2_1/v3 방향별 Test 8개 추가**: 각 부모 직접 상속, Right/Pull/Left/Push 목표 각도만 제한. [환경 계약 및 8개 순차 녹화 명령](logs/2026-11-08_relative_direction_tests.md).

@@ -1,5 +1,7 @@
 # Inspire-Wrench-Refactor-Relative-v2
 
+2026-11-08 **Relative-v2_3**: `WrenchRefactorRelativeV2_3EnvCfg`가 v2_1을 직접 상속한다. `target_reaching`만 `OppositeReachProgress`로 교체하여 현재 물체에서 목표 반대 방향 XY5cm, 선반 바닥면+물체 높이/2 지점을 추적한다. 접근 반경은 사용자 후속 지시에 따라5cm다. Contact 유지·나머지 보상·관측·제어·종료·커리큘럼·PPO 수치는 v2_1과 동일하다. Gym ID는 `Inspire-Wrench-Refactor-Relative-v2_3`, 실험명은 `inspire_wrench_refactor_relative_v2_3`. [수식·reset·전체 대조·검증](../logs/2026-11-08_relative_v2_3.md).
+
 2026-11-07 파생 **Relative-v2_1** 추가: v2를 직접 상속하여 거리 항만 시작→목표와 시작→현재의 누적 변위 cosine으로 바꾼다. 아래 v2_1 절과 [개발 기록](../logs/2026-11-07_relative_v2_1.md)을 따른다. 기존 v2는 수정하지 않는다.
 
 2026-11-07 후속: Relative-v0의 실시간 이동 cosine(기준점은 XY 이동1mm 이상일 때 갱신)과 `target_inverse_distance`(실제 step 페널티 `−12.97×max(d_t−d_(t−1), 0)`)를 그대로 상속한다. v2의 최초 진입·유지·성공 보상 및 성공 종료는 유지한다. [변경·검증](../logs/2026-11-07_relative_motion_rewards.md).
