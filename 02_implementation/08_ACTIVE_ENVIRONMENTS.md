@@ -1,5 +1,7 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-09 **Relative-IK-v0_1**: direct IK-v0 child; only first-entry bonus disabled. Other environment and PPO settings preserved. [Contract and validation](logs/2026-11-09_relative_ik_v0_1.md).
+
 2026-11-08 **Collection 성능 진단**:2048환경 실제 train.py에서 reset IK·OBB search의 작은 배치 CUDA 호출 비용을 확인했다. 구성·난수열을 보존하는 CPU 계산 경로를 적용했다. [함수별 프로파일·검증·유지한 비용](logs/2026-11-08_collection_profile.md).
 
 2026-11-08 **Relative-IK 최종 범위 확정**: 전면 바깥8–10cm·물체 좌우10–18cm·기본 높이−1~+3cm.86,722개 후보 사전 검증 후 reset SVD·재추출 비활성화. 최종 박스2×8×4cm. [비교 실험·시간 측정](logs/2026-11-08_relative_ik_family.md).

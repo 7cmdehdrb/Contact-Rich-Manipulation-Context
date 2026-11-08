@@ -43,3 +43,7 @@ python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Wrench-Refacto
 ```
 
 실험명은 각각 `inspire_wrench_refactor_relative_ik_v0`, `inspire_wrench_refactor_relative_ik_v1`이다. EnvCfg와 RunnerCfg는 기존 `envs/wrench_refactor_envs.py`, `agent/wrench_refactor_ppo_cfg.py`에 추가했으며 runtime은 기존 `WrenchRefactorEnv`다.
+
+## IK-v0_1
+
+`Inspire-Wrench-Refactor-Relative-IK-v0_1` directly inherits IK-v0 and sets only `target_goal_first_entry_bonus` to `None`. All other settings, including both IK boxes, remain unchanged. PPO experiment_name is `inspire_wrench_refactor_relative_ik_v0_1`; training parameters are inherited. [Contract and validation](../logs/2026-11-09_relative_ik_v0_1.md).
