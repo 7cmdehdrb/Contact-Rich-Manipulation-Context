@@ -1,5 +1,9 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-08 **Relative-v2_6**: direct v2_1 child; only goal distribution changes to a fixed 9cm straight-left offset. [Contract and validation](logs/2026-11-08_relative_v2_6.md).
+
+2026-11-08 **Relative-v2_5**: direct v2_4 child; Contact reward disabled, all other environment settings preserved. [Contract and validation](logs/2026-11-08_relative_v2_5.md).
+
 2026-11-08 **Relative-v2_4 ??**: v2_1 ?? ??, EEF14cm ?? ??? ??? ?? XY ?? ???(weight100), cosine??? ?? ?? ??. Contact ? ?? ?? ??. [?????](logs/2026-11-08_relative_v2_4.md).
 
 2026-11-08 Relative-v2_3의 Reaching Point에 기본 활성 자홍색 비물리 마커를 추가했다. [표시·검증 기록](logs/2026-11-08_relative_v2_3.md#후속-reaching-point-시각화).

@@ -79,3 +79,11 @@ Gym ID는 `Inspire-Wrench-Refactor-Relative-v2_2`, runtime은 동일한 `WrenchR
 2026-11-08: v2_1 ?? ??. Distance? `WrenchV0_4GoalProgress`? ???? ?? ?? XY ?? ???? ????. Reaching weight? Holding OSC? ???30??? Distance weight100? ????. cosine? ???? `target_inverse_distance = None`?? ?? ?? ??? ????. **EEF? ?? ?? ??+14cm ??? ??? ??**??, ?? ?? ?? ???? ??? ?? ???? ???. Contact ? ??? ?? ??? ????.
 
 Gym ID? `Inspire-Wrench-Refactor-Relative-v2_4`, runner experiment_name? `inspire_wrench_refactor_relative_v2_4`?. [?? ???????? ??](../logs/2026-11-08_relative_v2_4.md).
+
+## Relative-v2_5: contact maintenance disabled
+
+2026-11-08: direct v2_4 child; only `rewards.target_contact = None`. Height-gated best-distance progress (weight100), Reaching (object link origin, radius10cm, weight30) and all other environment settings remain unchanged. Gym ID: `Inspire-Wrench-Refactor-Relative-v2_5`; PPO experiment_name: `inspire_wrench_refactor_relative_v2_5`. [Contract and validation](../logs/2026-11-08_relative_v2_5.md).
+
+## Relative-v2_6: fixed straight-left goal
+
+2026-11-08: direct v2_1 child. Only `events.object_spawn.params.fixed_goal_offset = (0.0, -0.09)` changes: one goal 9cm left of the randomized initial target, using shelf-local -Y (world -Y here). All rewards, Reaching, observations, control and termination remain v2_1. The fixed offset overrides direction sampling throughout the existing curriculum. Gym ID: `Inspire-Wrench-Refactor-Relative-v2_6`; experiment_name: `inspire_wrench_refactor_relative_v2_6`. [Contract and validation](../logs/2026-11-08_relative_v2_6.md).

@@ -1,5 +1,9 @@
 # 현재 개발 인계
 
+2026-11-08 **Relative-v2_6**: direct v2_1 child; only goal distribution changes to a fixed 9cm straight-left offset. [Contract and validation](../02_implementation/logs/2026-11-08_relative_v2_6.md).
+
+2026-11-08 **Relative-v2_5**: direct v2_4 child; Contact reward disabled, all other environment settings preserved. [Contract and validation](../02_implementation/logs/2026-11-08_relative_v2_5.md).
+
 2026-11-08 **Relative-v2_4 ??**: v2_1 ?? ??, EEF14cm ?? ??? ??? ?? XY ?? ???(weight100), cosine??? ?? ?? ??. Contact ? ?? ?? ??. [?????](../02_implementation/logs/2026-11-08_relative_v2_4.md).
 
 2026-11-08 **Relative-v2_3 추가**: v2_1 직접 상속, Contact 유지. Reaching을 현재 물체의 목표 반대쪽 XY5cm·높이 중간점으로 변경하고 접근 반경도5cm로 설정. [계약·검증](../02_implementation/logs/2026-11-08_relative_v2_3.md).
