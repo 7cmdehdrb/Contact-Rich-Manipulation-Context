@@ -1,5 +1,9 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-08 **Inspire-Wrench-Refactor-Relative-v2_2** 추가: v2_1 직접 상속, Contact 유지 보상만 `None`. 나머지 환경·PPO 수치는 보존한다. [변경·정적 검증](logs/2026-11-08_relative_v2_2.md). GPU 스모크는 사용자 요청으로 생략했다.
+
+2026-11-08 **Relative-v2_1/v3 방향별 Test 8개 추가**: 각 부모 직접 상속, Right/Pull/Left/Push 목표 각도만 제한. [환경 계약 및 8개 순차 녹화 명령](logs/2026-11-08_relative_direction_tests.md).
+
 2026-11-07 **Inspire-Wrench-Refactor-Relative-v2_1** 추가. v2 직접 상속으로 거리 항만 시작점 기준 누적 이동 cosine으로 변경하며 `target_inverse_distance`를 유지한다. [계약](environments/WRENCH_REFACTOR_RELATIVE_V2_ENVIRONMENT.md#relative-v2_1-시작점-기준-누적-변위-cosine) · [검증](logs/2026-11-07_relative_v2_1.md).
 
 2026-11-07 **Relative 공통 보상·v3 종료 변경**: v0/v2/v3는 현재→목표와 실시간 이동 벡터 cosine을 사용한다. 이동 기준점은XY1mm 이상일 때 갱신하며, 별도 직전step 대비 거리 증가에는 `target_inverse_distance`(−12.97/m)를 적용한다. v3의 최초 진입·유지·성공 보상 및 성공 종료는 제거한다. 실패가 없으면10초 timeout으로 끝난다. [구현·검증](logs/2026-11-07_relative_motion_rewards.md).

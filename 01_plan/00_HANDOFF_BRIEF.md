@@ -1,5 +1,9 @@
 # 현재 개발 인계
 
+2026-11-08 **Relative-v2_2 추가**: v2_1 직접 상속, `rewards.target_contact = None`만 적용. GPU 스모크는 사용자 요청으로 생략. [변경·정적 검증](../02_implementation/logs/2026-11-08_relative_v2_2.md).
+
+2026-11-08 **Relative-v2_1/v3 방향별 Test 8개 추가**: 각 부모 직접 상속, Right/Pull/Left/Push 목표 각도만 제한. [환경 계약 및 8개 순차 녹화 명령](../02_implementation/logs/2026-11-08_relative_direction_tests.md).
+
 2026-11-07 **Relative-v2_1 추가**: v2 직접 상속, 거리 항만 시작→목표와 시작→현재의 XY 누적 변위 cosine으로 교체한다. weight5·scale0.05·높이 gate·거리 증가 페널티−12.97 및 나머지 v2 전체 계약 보존. v0/v2/v3 기존 동작은 변경하지 않는다. [환경 계약](../02_implementation/environments/WRENCH_REFACTOR_RELATIVE_V2_ENVIRONMENT.md#relative-v2_1-시작점-기준-누적-변위-cosine) · [개발·검증](../02_implementation/logs/2026-11-07_relative_v2_1.md).
 
 2026-11-07 **Relative 공통 실시간 이동 보상**: v0의 cosine을 현재→목표와 저장 기준점→현재의 XY 방향 비교로 변경했다. 매step 평가 후1mm 이상 이동한 환경만 기준점을 갱신한다. 별도 매step 거리 증가 페널티 `target_inverse_distance`는 실제 `−12.97×max(d_t−d_(t−1),0)`이며 v2/v3도 동일 상속한다. v3는 최초 진입·Hold·성공 보상과 성공 종료를 제거한다. 실패가 없으면10초 timeout까지 진행한다. CPU85개, 버전별GPU2환경180step, v3 PPO32환경2iteration 통과. [설계·계수·검증·제약](../02_implementation/logs/2026-11-07_relative_motion_rewards.md).

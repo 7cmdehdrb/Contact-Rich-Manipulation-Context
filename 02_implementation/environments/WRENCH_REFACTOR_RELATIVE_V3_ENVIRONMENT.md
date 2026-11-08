@@ -52,3 +52,7 @@ python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Wrench-Refacto
 ```
 
 GPU 스모크는2환경180step 및 부분 reset으로 수행했다. 보상 수식과 현재 접촉 gate는 CPU 시험으로 추가 검증했다. 실제 관측 좌표와 물리 질량·한계, 설정 전체 차이는 GPU에서 대조했다. 대규모 학습 성능은 미검증이다. [개발·검증 기록](../logs/2026-11-06_relative_family_280g_v3.md).
+
+## 방향별 Test 평가
+
+2026-11-08: 해당 부모를 직접 상속하는 Right/Pull/Left/Push 환경을 추가했다(v2 계열은 v2_1 기준). [목표 구간·부모 대조·녹화 명령·검증 범위](../logs/2026-11-08_relative_direction_tests.md).

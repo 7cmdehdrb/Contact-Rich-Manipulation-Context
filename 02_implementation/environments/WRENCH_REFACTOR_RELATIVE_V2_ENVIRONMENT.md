@@ -59,3 +59,13 @@ H는 기존 EEF 높이 gate다. 목표→현재와 목표→시작을 비교하�
 ```powershell
 python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Wrench-Refactor-Relative-v2_1 --num_envs 2048 --headless
 ```
+
+## 방향별 Test 평가
+
+2026-11-08: 해당 부모를 직접 상속하는 Right/Pull/Left/Push 환경을 추가했다(v2 계열은 v2_1 기준). [목표 구간·부모 대조·녹화 명령·검증 범위](../logs/2026-11-08_relative_direction_tests.md).
+
+## Relative-v2_2: Contact 유지 보상 제거
+
+2026-11-08: `WrenchRefactorRelativeV2_2EnvCfg`는 v2_1을 직접 상속하고 부모 초기화 후 `self.rewards.target_contact = None`만 설정한다. 거리 보상·Hold·최초 진입·성공·종료·관측·제어·커리큘럼은 v2_1 그대로다.
+
+Gym ID는 `Inspire-Wrench-Refactor-Relative-v2_2`, runtime은 동일한 `WrenchRefactorEnv`다. `WrenchRefactorRelativeV2_2PPORunnerCfg`도 v2_1 runner를 직접 상속하며 experiment_name만 `inspire_wrench_refactor_relative_v2_2`로 구분한다. GPU 스모크는 사용자 요청으로 생략했다. [개발·검증 기록](../logs/2026-11-08_relative_v2_2.md).
