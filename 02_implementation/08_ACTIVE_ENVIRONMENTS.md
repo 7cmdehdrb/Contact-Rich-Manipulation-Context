@@ -1,5 +1,7 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-09 **Relative-IK-v0_2_2_4**: v0_2_2_3-Fast-Test 직접 상속. play 전용 RED/WHITE·장애물 점유 표시(기본4환경), 물체 가속도 비용/관련 일정2개 제거.10초 timeout에서 XY 거리<3cm이고 동시 실패가 없으면 success 분류; timeout bootstrap 유지. `Metrics/timeout_success_rate`로 세션 누적 timeout 성공률 기록. CPU47개 통과, GPU/play 렌더·학습 미검증. [계약·검증](logs/2026-11-09_relative_ik_v0_2_2_4.md).
+
 2026-11-09 **Relative-IK-v0_2_2_3-Fast-Test**: v0_2_2_2-Fast-Test 직접 상속. 접촉 카운트 상한20, 최종 불인정마다−2(하한0). 최종 불인정 step 보상0, 재접촉 인정 시 잔여 카운트+1로 지급 재개. 높이15cm 이상도 보상0. Holding 보상 goal_hold 및 커리큘럼 goal_speed_scale 제거. 나머지 부모 계약 보존. CPU43개 통과, GPU/학습 미실행. [계약·검증](logs/2026-11-09_relative_ik_v0_2_2_3_fast.md).
 
 2026-11-09 **Relative-IK-v0_2_2_2-Fast-Test**: v0_2_2_2-Test 직접 상속. 원 기반 RED/WHITE 배치·장애물0–6 균등·Warp IK·박스 기본 OFF·캐시와 최종 상태 기록 통합. 부모 환경/PPO 보존. CPU 검증 완료, GPU/PhysX 및 Collection 성능 미검증. [환경·실행](environments/WRENCH_REFACTOR_RELATIVE_IK_FAST_TEST_ENVIRONMENT.md) · [개발·검증](logs/2026-11-09_relative_ik_fast_test.md).

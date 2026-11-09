@@ -1,5 +1,7 @@
 # 현재 개발 인계
 
+2026-11-09 **Relative-IK-v0_2_2_4**: v0_2_2_3-Fast-Test 직접 상속. play 전용 RED/WHITE·장애물 점유 표시(기본4환경), 물체 가속도 비용/관련 일정2개 제거.10초 timeout에서 XY 거리<3cm이고 동시 실패가 없으면 success 분류; timeout bootstrap 유지. `Metrics/timeout_success_rate`로 세션 누적 timeout 성공률 기록. CPU47개 통과, GPU/play 렌더·학습 미검증. [계약·검증](../02_implementation/logs/2026-11-09_relative_ik_v0_2_2_4.md).
+
 2026-11-09 **Relative-IK-v0_2_2_3-Fast-Test**: v0_2_2_2-Fast-Test 직접 상속. 접촉 카운트 상한20, 최종 불인정마다−2(하한0). 최종 불인정 step 보상0, 재접촉 인정 시 잔여 카운트+1로 지급 재개. 높이15cm 이상도 보상0. Holding 보상 goal_hold 및 커리큘럼 goal_speed_scale 제거. 나머지 부모 계약 보존. CPU43개 통과, GPU/학습 미실행. [계약·검증](../02_implementation/logs/2026-11-09_relative_ik_v0_2_2_3_fast.md).
 
 2026-11-09 **Relative-IK-v0_2_2_2-Fast-Test 구현**: 사용자 후속 지시에 따라 v0_2_2_2-Test를 직접 상속한 새 환경에만 적용했다. 부모 보존. GRAY 삭제·장애물0–6 균등분포·외접원 RED/WHITE·5mm 안전 셀·Warp IK·IK 박스 기본 OFF·기하 캐시/중복 쓰기 제거. CPU 회귀156개 통과, 합성 배치100,000개 실패0, 실제 로봇 USD 기반 IK2048개 대조 통과. **GPU/PhysX·실제 물체 배치·Collection 개선은 미검증**. [환경·실행](../02_implementation/environments/WRENCH_REFACTOR_RELATIVE_IK_FAST_TEST_ENVIRONMENT.md) · [개발·검증](../02_implementation/logs/2026-11-09_relative_ik_fast_test.md).
