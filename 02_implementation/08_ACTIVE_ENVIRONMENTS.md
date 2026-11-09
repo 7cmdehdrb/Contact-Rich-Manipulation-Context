@@ -1,5 +1,7 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-09 **Relative-IK-v0_2-Test 독립 환경**: IK-v0_1 Scene·EEF OSC·대칭 관측·실패 종료와 Holding OSC v2 보상을 결합. 반경3cm 고정·성공 종료 삭제·장애물 증가 없음·느린 방향/팔 종료 일정 유지. 후속 요청으로 `arm_speed_excess`/`arm_free_speed` 삭제, 팔 제한은 IK-v0_1 유지, 손은 원본 URDF의10Nm·1rad/s 명시. [환경 계약](environments/WRENCH_REFACTOR_RELATIVE_IK_V0_2_TEST_ENVIRONMENT.md) · [검증 기록](logs/2026-11-09_relative_ik_v0_2_test.md).
+
 2026-11-09 **Relative-IK-v0_1**: direct IK-v0 child; only first-entry bonus disabled. Other environment and PPO settings preserved. [Contract and validation](logs/2026-11-09_relative_ik_v0_1.md).
 
 2026-11-08 **Collection 성능 진단**:2048환경 실제 train.py에서 reset IK·OBB search의 작은 배치 CUDA 호출 비용을 확인했다. 구성·난수열을 보존하는 CPU 계산 경로를 적용했다. [함수별 프로파일·검증·유지한 비용](logs/2026-11-08_collection_profile.md).
