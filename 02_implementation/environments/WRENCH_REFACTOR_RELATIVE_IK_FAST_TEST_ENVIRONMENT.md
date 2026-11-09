@@ -63,3 +63,9 @@ python src/inspire_sweep_baseline/tests/_wrench_refactor_fast_probe.py \
 ## v0_2_2_5 파생 환경
 
 `Inspire-Wrench-Refactor-Relative-IK-v0_2_2_5`는 v0_2_2_4를 직접 상속한다. Goal Distance를 현재 타겟 접촉 조건부 policy step 접근량(weight120)으로 교체하고 같은 접촉 조건의 방향 이탈 비용(weight−6)을 추가한다. 기존 후퇴−25.94를 유지하고 접촉 유지 카운트 보상은 제거한다. physics step별 누적은 없으며 나머지 부모 계약은 보존한다. [전체 변경·실행·검증](../logs/2026-11-09_relative_ik_v0_2_2_5.md).
+
+## v0_2_2_6 및 메트릭 후속 변경
+
+v0_2_2_4/runtime의 timeout/success 메트릭을 최근N개 완료 에피소드 창으로 변경했다. 기본N=10,000, 조기 실패도 창에 포함하고 timeout/success count는 해당 창 안에서만 집계한다. v0_2_2_5 및 v0_2_2_6에도 적용된다. 종료/성공 판정은 유지한다.
+
+`Inspire-Wrench-Refactor-Relative-IK-v0_2_2_6`는 v0_2_2_4를 직접 상속하며 Reach만 변경한다. 타겟3D BBOX 중심과 EEF 거리의10cm 바깥 초과량에 대해0.1/(0.1+초과량)의 근접도를 지속 지급한다. weight30과 초기 기존 Reach 최대예산을 기준으로10초 지급률을 정해 총액 상한을 맞췄다. 나머지 보상·일정은 v0_2_2_4와 같다. [수식·규모·검증·실행](../logs/2026-11-09_relative_ik_v0_2_2_6.md).

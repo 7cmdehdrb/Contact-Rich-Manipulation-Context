@@ -1,8 +1,12 @@
 # 현재 개발 인계
 
+2026-11-09 **Relative-IK-v0_2_2_6**: v0_2_2_4 직접 상속(v0_2_2_5 아님), Reach만 현재 타겟3D BBOX 중심–EEF 거리의 완화된 역수 보상으로 교체.10cm 이내 최대, 지속 근접/추종 유도. weight30 유지·기존 초기 Reach 최대예산을10초로 나누어 규모 보정. Goal Distance100·접촉 카운트 보상 등 부모 계약 유지. CPU56개 통과, GPU/학습 미검증. [계약·검증](../02_implementation/logs/2026-11-09_relative_ik_v0_2_2_6.md).
+
+2026-11-09 **최근 에피소드 집계 적용**: 카운터 최초 도입 환경 v0_2_2_4의 runtime부터 직접 수정했다. 최근 완료 에피소드N개(기본10,000·설정 가능, 조기실패 포함) 안에서 timeout/success count와 rate를 계산한다. v0_2_2_5 및 새 v0_2_2_6도 상속한다. 성공 판정·종료·보상 의미는 보존한다. [변경·검증](../02_implementation/logs/2026-11-09_relative_ik_v0_2_2_6.md).
+
 2026-11-09 **Relative-IK-v0_2_2_5**: v0_2_2_4 직접 상속. 현재 타겟 접촉·EEF15cm 미만 조건으로 policy step 접근 보상120·고정 지시 방향 이탈 비용−6. 기존 후퇴−25.94 유지, 접촉 카운트 보상 삭제. physics 누적 없음, Holding/가속도 복원 없음. 나머지 부모 계약 보존. CPU53개 통과, GPU/학습 미검증. [계약·검증](../02_implementation/logs/2026-11-09_relative_ik_v0_2_2_5.md).
 
-2026-11-09 **Relative-IK-v0_2_2_4**: v0_2_2_3-Fast-Test 직접 상속. play 전용 RED/WHITE·장애물 점유 표시(기본4환경), 물체 가속도 비용/관련 일정2개 제거.10초 timeout에서 XY 거리<3cm이고 동시 실패가 없으면 success 분류; timeout bootstrap 유지. `Metrics/timeout_success_rate`로 세션 누적 timeout 성공률 기록. CPU47개 통과, GPU/play 렌더·학습 미검증. [계약·검증](../02_implementation/logs/2026-11-09_relative_ik_v0_2_2_4.md).
+2026-11-09 **Relative-IK-v0_2_2_4**: v0_2_2_3-Fast-Test 직접 상속. play 전용 RED/WHITE·장애물 점유 표시(기본4환경), 물체 가속도 비용/관련 일정2개 제거.10초 timeout에서 XY 거리<3cm이고 동시 실패가 없으면 success 분류; timeout bootstrap 유지. 최초 구현은 세션 누적이었으며 현재 최근N개 집계로 변경됨(위 최신 기록 참조). CPU47개 통과, GPU/play 렌더·학습 미검증. [계약·검증](../02_implementation/logs/2026-11-09_relative_ik_v0_2_2_4.md).
 
 2026-11-09 **Relative-IK-v0_2_2_3-Fast-Test**: v0_2_2_2-Fast-Test 직접 상속. 접촉 카운트 상한20, 최종 불인정마다−2(하한0). 최종 불인정 step 보상0, 재접촉 인정 시 잔여 카운트+1로 지급 재개. 높이15cm 이상도 보상0. Holding 보상 goal_hold 및 커리큘럼 goal_speed_scale 제거. 나머지 부모 계약 보존. CPU43개 통과, GPU/학습 미실행. [계약·검증](../02_implementation/logs/2026-11-09_relative_ik_v0_2_2_3_fast.md).
 
