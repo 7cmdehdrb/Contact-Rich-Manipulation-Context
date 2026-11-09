@@ -92,6 +92,50 @@ Holding의 접촉은 타겟 전용이 아니며 선반 접촉도 포함한다. �
 
 Holding의 push_fast 및 hand_velocity 종료를 추가하지 않는다. 목표를 안정적으로 유지해도 성공 종료/성공 보너스는 없으며 실패가 없으면 timeout까지 진행한다.
 
+## 공통 학습 Metrics — 2026-11-09 후속
+
+v0_2-Test와 아래 v0_2_1-Test 모두 사용한다. 기존 수집 함수는 성공 종료에서 호출되었으나 성공 종료 제거 후 호출 경로가 없어, 실제로는 장애물 개수/배치 완료만 기록되었다. 이제 timeout wrapper가 매 정책 step의 reset 직전 상태에서 수집하고 원래 `time_out`을 그대로 반환한다. 성공 종료를 복원하지 않으며 실패 조건과10초 제한은 유지한다.
+
+| TensorBoard key (`Metrics/` 접두사) | 의미 |
+| --- | --- |
+| target_goal_distance_xy_m_mean | 에피소드 내 타겟–목표XY 거리 평균(m) |
+| target_goal_distance_xy_m_final | reset 직전 마지막 샘플의 목표XY 거리(m) |
+| target_goal_distance_xy_m_min | 에피소드 내 최소 목표XY 거리(m) |
+| eef_linear_speed_m_s_mean | 실제 EEF점3D 선속력의 시간 평균(m/s) |
+| eef_linear_speed_m_s_episode_max | 실제 EEF점3D 선속력의 에피소드 최대값(m/s) |
+| target_linear_speed_m_s_mean | 타겟3D 선속력의 시간 평균(m/s) |
+| target_linear_speed_m_s_episode_max | 타겟3D 선속력의 에피소드 최대값(m/s) |
+| target_within_goal_radius_fraction_mean | 타겟XY 거리≤3cm인 샘플 비율(0–1) |
+
+각 항은 **이번 reset에 포함된 에피소드별 통계의 평균**으로 출력한다. 최대값도 전 환경 통합 최대가 아니라 에피소드 최대들의 평균이다. 물체 속도는 타겟 기준이며 장애물 전체 평균이 아니다. 목표 반경 체류율은 XY 조건만 사용하므로 Holding의 자세·높이 유효성 또는 성공률과 다르다. 매 정책 step(20ms)에서 샘플링하므로 physics substep 순간 최대를 보장하지 않는다. 비유한 샘플은 평균·최대 집계에서 제외한다.
+
+기존 `obstacle_actual_gray`, `obstacle_actual_white`, `layout_complete` Metrics는 삭제했다. Episode Reward·Termination 및 CurriculumManager 로그는 유지한다. 추가 센서 조회·가속도 readback·매 step CPU 전송 없이 기존 GPU pose/velocity 버퍼로 계산한다. 기존 미호출 force/moment·가속도 수집 코드는 제거했다. 선택 reset은 선택 환경의 통계만 초기화한다.
+
+256환경·동일 씬의 활성/비활성 교차 측정에서 환경 step 시간 중앙값 증가는 약0.51%였다. 이는 단일 실행의 환경 step 측정이며 전체 PPO Collection Time이나2048환경의 보장은 아니다. [측정 및 검증 기록](../logs/2026-11-09_relative_ik_v0_2_1_metrics.md).
+
+## v0_2_1-Test: 보상 분리와 속도 비용 제거
+
+- Gym ID: `Inspire-Wrench-Refactor-Relative-IK-v0_2_1-Test`.
+- 실험명: `inspire_wrench_refactor_relative_ik_v0_2_1-Test`.
+- EnvCfg: `WrenchRefactorRelativeIKV0_2_1TestEnvCfg(WrenchRefactorRelativeIKV0_2TestEnvCfg)`.
+- Rewards/Curriculum/PPO도 각각 v0_2-Test 설정을 직접 상속한다. runtime은 부모의 `WrenchRefactorRelativeIKV0_2TestEnv`를 공유한다.
+- Scene·관측·행동·reset·센서·제어·목표·종료는 부모와 같다. 위 Metrics 개선도 부모로부터 함께 사용한다.
+
+| 부모 term | 자식 변경 |
+| --- | --- |
+| object: weight−30, tilt+5×displacement | 제거하고 아래 두 항으로 분리 |
+| object_tilt | 활성 타겟·장애물 기울기 비용, weight−30, free5°·fail0.9rad |
+| obstacle_displacement | 활성 비타겟의 초기 대비3D 변위 제곱합, 합산 후 cap0.04, weight−150 |
+| eef_linear_speed / eef_free_speed | 보상·관련 커리큘럼 삭제 |
+| pushing_speed / pushing_free_speed | 보상·관련 커리큘럼 삭제 |
+| arm_speed_excess / arm_free_speed | 부모에서 이미 삭제되어 자식에도 없음 |
+
+두 분리 항은 기존 계산 함수를 그대로 사용하며 합산 보상은 기존 object와 같다(부동소수점 반올림 오차 범위). 부모의 object 보상과 EEF/타겟 속도 비용은 유지한다. 자식의 활성 보상15개·커리큘럼10개이며 나머지 계수/일정은 부모 그대로다. 속도 제곱 비용 `arm_joint_velocity`, 물체 가속도 비용, 팔 속도 종료는 별도이므로 유지한다.
+
+```bash
+python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Wrench-Refactor-Relative-IK-v0_2_1-Test --num_envs 2048 --headless
+```
+
 ## 실행
 
 Isaac Lab Python 환경에서 workspace 루트 기준:
@@ -101,3 +145,32 @@ python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Wrench-Refacto
 ```
 
 기존 IK-v0_1과 정책 입력/모델 구조는 같지만 보상 과업은 달라진다. 검증 체크포인트는 학습 성능의 증거가 아니다. 실제 검사 명령·산출물과 미검증 범위는 [개발 로그](../logs/2026-11-09_relative_ik_v0_2_test.md)를 따른다.
+
+
+## v0_2_1-Reset-Test: 그룹별 초기 조건 공유·물성 재추첨
+
+Gym ID는 `Inspire-Wrench-Refactor-Relative-IK-v0_2_1-Reset-Test`, 실험명은 `inspire_wrench_refactor_relative_ik_v0_2_1-Reset-Test`다. `WrenchRefactorRelativeIKV0_2_1ResetTestEnvCfg`는 v0_2_1-Test를 직접 상속하며 보상·관측·액션·종료·커리큘럼·PPO 수치는 그대로다. runtime은 기존 v0_2-Test runtime을 상속해 명시적 seed reset 때 추가 난수 스트림과 저장 목록을 초기화한다.
+
+초기화 규칙만 다음처럼 변경한다.
+
+| 설정 | 초기 비교용 기본값 | 의미 |
+| --- | ---: | --- |
+| reset_size_groups | 16 | `env_id % 16`으로 같은 크기 구성을 공유;2048환경이면 그룹당128환경 |
+| reset_pool_capacity | 8 | 그룹마다 저장할 배치·목표·초기 IK 묶음 개수 |
+| reset_pool_refresh_interval | 32 | 목록이 찬 뒤 해당 그룹이 참여하는 reset 호출32회마다 한 묶음 교체 |
+
+그룹 수·저장 수·교체 주기는 성능 측정으로 확정된 최적값이 아니라 변경 가능한 실험 기본값이다. 물체17슬롯의 각 크기는0.9–1.1 균등 추출하며 같은 그룹에서 슬롯별로 동일하다. 그룹끼리는 다른 구성을 사용하고 크기는 실행 중 고정한다. 형상 목록·충돌 물성·관절 한계·센서 구성은 유지한다.
+
+처음에는 그룹이 reset에 참여할 때마다 부모의 원래 배치/IK 알고리즘으로 한 묶음을 만들어 최대8개를 채운다. 같은 그룹의 동시 reset 대상은 한 묶음을 공유한다. 이후 기존 묶음 중 균등 선택하며, 매32회 한 묶음을 새로 만들어 순환 교체한다. **장애물 개수8개라는 뜻이 아니다.** 기존 Gray/White 각각0–3개 분포와 목표 생성 규칙을 사용하지만, 환경 사이 초기 조건의 상관 및 재사용이 생긴다. 저장되는 것은 물체 상태·활성 목록·목표 변위·로봇 관절각·IK 진단/표시 정보이며 관측 노이즈와 물성은 저장해 재사용하지 않는다.
+
+목표 방향을 포함한 배치/IK 파라미터가 바뀌면 전체 저장 목록을 비우고 현재 규칙으로 다시 채운다. iteration rewind에도 동일하게 적용한다. 실제 상태는 선택된 reset 환경에만 쓴다. 저장된 위치에는 환경 원점 이동을 적용하고 모든 물체/팔 속도를 초기화한다. 관측 스냅샷·노이즈·가시성·액션/보상 이력·Metrics는 기존 lifecycle에 따라 새로 만든다.
+
+질량은 각 reset 환경의17개 물체별로 독립 균등 추첨(0.230–0.500kg×1.5)한다. 관성은 각 물체의 최초 형상별 관성에 질량 비율을 적용한다. 선반·물체·손의 정적/동적 마찰도 기존 균등 material bucket에서 다시 고른다. 이미 생성된 PhysX 버퍼의 대상 행만 갱신하며 재질 생성과 전체 readback을 반복하지 않는다. 선반 질량30kg과 로봇 질량·관절 설정은 그대로다. 부모 v0_2_1-Test는 여전히 startup에서만 물성을 정한다.
+
+```bash
+python src/inspire_sweep_baseline/scripts/train.py \
+  --task Inspire-Wrench-Refactor-Relative-IK-v0_2_1-Reset-Test \
+  --num_envs 2048 --headless
+```
+
+Hydra 설정 override 예: `env.reset_size_groups=16 env.reset_pool_capacity=8 env.reset_pool_refresh_interval=32`. 비교 시 초기 그룹별8회 생성 구간과 재사용 구간을 구분한다. 방향 커리큘럼이 바뀐 직후에도 생성 비용이 다시 발생한다. 사용자가 Collection Time을 비교할 예정이며 개선율은 아직 측정하지 않았다. [구현·검증 기록](../logs/2026-11-09_relative_ik_reset_test.md).
