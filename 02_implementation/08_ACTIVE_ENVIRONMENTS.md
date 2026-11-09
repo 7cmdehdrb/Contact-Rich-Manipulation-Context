@@ -1,5 +1,9 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-09 **Relative-IK-v0_2_2_3-Fast-Test**: v0_2_2_2-Fast-Test 직접 상속. 접촉 카운트 상한20, 최종 불인정마다−2(하한0), 불인정 보상0 유지. Holding 보상 goal_hold 및 커리큘럼 goal_speed_scale 제거. 나머지 부모 계약 보존. CPU42개 통과, GPU/학습 미실행. [계약·검증](logs/2026-11-09_relative_ik_v0_2_2_3_fast.md).
+
+2026-11-09 **Relative-IK-v0_2_2_2-Fast-Test**: v0_2_2_2-Test 직접 상속. 원 기반 RED/WHITE 배치·장애물0–6 균등·Warp IK·박스 기본 OFF·캐시와 최종 상태 기록 통합. 부모 환경/PPO 보존. CPU 검증 완료, GPU/PhysX 및 Collection 성능 미검증. [환경·실행](environments/WRENCH_REFACTOR_RELATIVE_IK_FAST_TEST_ENVIRONMENT.md) · [개발·검증](logs/2026-11-09_relative_ik_fast_test.md).
+
 2026-11-09 **Relative-IK-v0_2_2_2-Test**: v0_2_2_1-Test 직접 상속. 목표 XY 거리 증가량에만 부과하는 `target_inverse_distance` 추가, 참조 weight -12.97의 두 배인 -25.94. Contact 및 나머지 설정 유지. [계약·검증](logs/2026-11-09_relative_ik_v0_2_2_2_inverse_distance.md).
 
 2026-11-09 **Relative-IK-v0_2_2_1-Test**: v0_2_2-Test 직접 상속. Contact의 2-of-3 인정은 유지하고, 1회 불인정 시 누적 카운트를 즉시 초기화한다(부모는 5회). 높이 15cm 미만·상한 10·weight 0.1 및 나머지 설정 유지. 사용자 관찰인 “후반에 멈춘 뒤 물체가 추가로 밀리는 현상”을 줄이려는 의도로 접촉 유지 요구를 강화했다. [계약·검증](logs/2026-11-09_relative_ik_v0_2_2_1_contact.md).
