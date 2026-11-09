@@ -59,3 +59,7 @@ python src/inspire_sweep_baseline/tests/_wrench_refactor_fast_probe.py \
 ## v0_2_2_4 파생 환경
 
 `Inspire-Wrench-Refactor-Relative-IK-v0_2_2_4`는 v0_2_2_3-Fast-Test를 직접 상속한다. play 전용 스폰 영역 표시, 물체 가속도 비용 및 관련 일정 제거,10초 timeout의 XY 거리<3cm 성공 분류와 전용 비율 기록을 추가한다. 기존 접촉/물리/reset/PPO 계약은 유지한다. [전체 변경·실행·검증](../logs/2026-11-09_relative_ik_v0_2_2_4.md).
+
+## v0_2_2_5 파생 환경
+
+`Inspire-Wrench-Refactor-Relative-IK-v0_2_2_5`는 v0_2_2_4를 직접 상속한다. Goal Distance를 현재 타겟 접촉 조건부 policy step 접근량(weight120)으로 교체하고 같은 접촉 조건의 방향 이탈 비용(weight−6)을 추가한다. 기존 후퇴−25.94를 유지하고 접촉 유지 카운트 보상은 제거한다. physics step별 누적은 없으며 나머지 부모 계약은 보존한다. [전체 변경·실행·검증](../logs/2026-11-09_relative_ik_v0_2_2_5.md).

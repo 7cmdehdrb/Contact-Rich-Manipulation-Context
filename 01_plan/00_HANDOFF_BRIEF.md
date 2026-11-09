@@ -1,5 +1,7 @@
 # 현재 개발 인계
 
+2026-11-09 **Relative-IK-v0_2_2_5**: v0_2_2_4 직접 상속. 현재 타겟 접촉·EEF15cm 미만 조건으로 policy step 접근 보상120·고정 지시 방향 이탈 비용−6. 기존 후퇴−25.94 유지, 접촉 카운트 보상 삭제. physics 누적 없음, Holding/가속도 복원 없음. 나머지 부모 계약 보존. CPU53개 통과, GPU/학습 미검증. [계약·검증](../02_implementation/logs/2026-11-09_relative_ik_v0_2_2_5.md).
+
 2026-11-09 **Relative-IK-v0_2_2_4**: v0_2_2_3-Fast-Test 직접 상속. play 전용 RED/WHITE·장애물 점유 표시(기본4환경), 물체 가속도 비용/관련 일정2개 제거.10초 timeout에서 XY 거리<3cm이고 동시 실패가 없으면 success 분류; timeout bootstrap 유지. `Metrics/timeout_success_rate`로 세션 누적 timeout 성공률 기록. CPU47개 통과, GPU/play 렌더·학습 미검증. [계약·검증](../02_implementation/logs/2026-11-09_relative_ik_v0_2_2_4.md).
 
 2026-11-09 **Relative-IK-v0_2_2_3-Fast-Test**: v0_2_2_2-Fast-Test 직접 상속. 접촉 카운트 상한20, 최종 불인정마다−2(하한0). 최종 불인정 step 보상0, 재접촉 인정 시 잔여 카운트+1로 지급 재개. 높이15cm 이상도 보상0. Holding 보상 goal_hold 및 커리큘럼 goal_speed_scale 제거. 나머지 부모 계약 보존. CPU43개 통과, GPU/학습 미실행. [계약·검증](../02_implementation/logs/2026-11-09_relative_ik_v0_2_2_3_fast.md).
