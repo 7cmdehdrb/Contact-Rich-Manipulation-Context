@@ -54,4 +54,4 @@ python src/inspire_sweep_baseline/tests/_wrench_refactor_fast_probe.py \
 
 ## v0_2_2_3-Fast-Test 파생 환경
 
-`Inspire-Wrench-Refactor-Relative-IK-v0_2_2_3-Fast-Test`는 위 v0_2_2_2-Fast-Test를 직접 상속한다. 접촉 카운트 상한을20으로 늘리고, 최종 불인정마다2를 빼되0 아래로 내려가지 않는다. 불인정 step 보상은0이다. goal_hold와 goal_speed_scale을 제거하며 나머지 설정은 부모와 같다. [전체 변경·실행·검증](../logs/2026-11-09_relative_ik_v0_2_2_3_fast.md).
+`Inspire-Wrench-Refactor-Relative-IK-v0_2_2_3-Fast-Test`는 위 v0_2_2_2-Fast-Test를 직접 상속한다. 접촉 카운트 상한을20으로 늘리고, 최종 불인정마다2를 빼되0 아래로 내려가지 않는다. 최종 불인정 step에는 보상0이며, 재접촉 인정 시 남은 카운트에서+1한 값으로 지급을 재개한다. 초기 선반 표면 기준 EEF 높이15cm 이상도 보상0이다. goal_hold와 goal_speed_scale을 제거하며 나머지 설정은 부모와 같다. [전체 변경·실행·검증](../logs/2026-11-09_relative_ik_v0_2_2_3_fast.md).
