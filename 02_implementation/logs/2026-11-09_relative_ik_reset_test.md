@@ -59,3 +59,7 @@ python src/inspire_sweep_baseline/scripts/train.py \
 GPU 결과: `outputs/relative_ik_reset_test_validation/result.json`. stdout: `/tmp/ik_reset_probe.log`. Collection 비교는 같은 환경 수·seed·학습 조건에서 수행한다.
 
 최종 정적/문서 검사: 작업트리 변경 Python AST 통과, 변경 문서4개 math 검사 통과, 내부 링크193개 오류0, 코드/문서 저장소 `git diff --check` 통과.
+
+## 사용자 평가 후 잠정 보류
+
+2026-11-09 사용자는 Reset-Test 방식의 효과가 크지 않다고 평가해 잠정 보류했다. 구현·등록·학습 로그는 보존하며, 다음 v0_2_2 접촉 유지 실험은 Reset-Test가 아닌 일반 v0_2_1-Test를 부모로 사용한다. 이는 사용자 실험 평가이며 별도의 새 성능 측정을 수행한 것은 아니다.

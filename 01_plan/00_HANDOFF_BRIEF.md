@@ -1,6 +1,8 @@
 # 현재 개발 인계
 
-2026-11-09 **Relative-IK-v0_2_1-Reset-Test**: v0_2_1-Test 직접 상속.16개 크기 그룹, 그룹당8개 초기 배치·목표·IK 공유/재사용, 목록 충전 뒤32회마다1개 교체. 질량·관성·마찰은 매 reset 독립 추첨. 보상·관측·제어·종료·커리큘럼 유지. [검증·실행](../02_implementation/logs/2026-11-09_relative_ik_reset_test.md).
+2026-11-09 **Relative-IK-v0_2_2-Test**: 일반 v0_2_1-Test 직접 상속. Contact만 타겟 전용2-of-3 카운트로 변경(상한10·5회 연속 불인정 초기화·weight0.1), 후속 수정으로 Contact의 EEF 높이를 초기 선반 표면 위15cm 미만으로 제한, 목표 점유 우회 없음. 속도 초과 비용은 계속 없음. [계약·검증](../02_implementation/logs/2026-11-09_relative_ik_v0_2_2_contact.md).
+
+2026-11-09 **Relative-IK-v0_2_1-Reset-Test — 잠정 보류**: 사용자 비교에서 효과가 크지 않아 후속 실험에 적용하지 않는다. 기존 코드·로그는 보존한다. v0_2_1-Test 직접 상속.16개 크기 그룹, 그룹당8개 초기 배치·목표·IK 공유/재사용, 목록 충전 뒤32회마다1개 교체. 질량·관성·마찰은 매 reset 독립 추첨. 보상·관측·제어·종료·커리큘럼 유지. [검증·실행](../02_implementation/logs/2026-11-09_relative_ik_reset_test.md).
 
 2026-11-09 **Relative-IK-v0_2_1-Test**: v0_2-Test 직접 상속, object를 tilt/장애물 변위로 동등 분리, EEF·타겟 속도 비용/일정 제거. 부모·자식 공통 목표 거리·속도 Metrics8개 수집을 복구하고 장애물 개수 Metrics 제거. [계약·성능 검증](../02_implementation/logs/2026-11-09_relative_ik_v0_2_1_metrics.md).
 

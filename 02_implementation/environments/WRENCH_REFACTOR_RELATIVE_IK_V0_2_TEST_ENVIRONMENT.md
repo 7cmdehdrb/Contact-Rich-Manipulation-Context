@@ -174,3 +174,37 @@ python src/inspire_sweep_baseline/scripts/train.py \
 ```
 
 Hydra 설정 override 예: `env.reset_size_groups=16 env.reset_pool_capacity=8 env.reset_pool_refresh_interval=32`. 비교 시 초기 그룹별8회 생성 구간과 재사용 구간을 구분한다. 방향 커리큘럼이 바뀐 직후에도 생성 비용이 다시 발생한다. 사용자가 Collection Time을 비교할 예정이며 개선율은 아직 측정하지 않았다. [구현·검증 기록](../logs/2026-11-09_relative_ik_reset_test.md).
+
+
+## v0_2_2-Test: 타겟 접촉 카운트 실험
+
+`Inspire-Wrench-Refactor-Relative-IK-v0_2_2-Test`는 **일반 v0_2_1-Test를 직접 상속**한다. Reset-Test는 사용자가 효과가 크지 않다고 평가해 잠정 보류했으며, 새 환경에 그룹/캐시 reset을 적용하지 않는다. 실험명은 `inspire_wrench_refactor_relative_ik_v0_2_2-Test`다.
+
+사용자 목적은 EEF/타겟 속도 초과 비용 없이 접촉 유지 보상으로 타겟의 빠른 이동·넘어짐을 줄일 수 있는지 비교하는 것이다. 이 가설의 성립은 아직 검증하지 않았다.
+
+부모 대비 `hand_contact` 한 항만 변경한다. term 이름은 로그 연속성을 위해 유지하고, 함수는 `TargetContactMaintenance`, weight는 **0.1**, 접촉 임계값은0.01N이다.
+
+| 단계 | 정확한 조건 |
+| --- | --- |
+| 원시 접촉 | 현재 타겟–손 접촉력의 벡터 합 크기≥0.01N, 최신 센서, 유한 힘 |
+| 접촉 범위 | 타겟만 인정; 장애물/선반 접촉 제외 |
+| EEF 높이 | 초기 선반 표면 위15cm 미만; 경계 포함 그 이상/비유한 값이면 즉시 불인정 |
+| 목표 점유 | 접촉을 대신하지 않음; 목표3cm 안이어도 실제 접촉 필요 |
+| 인정 창 | 현재 포함 최근3개 정책 step에서 원시 접촉2개 이상 |
+| 카운트 | 인정된 창마다1 증가, 최대10 |
+| 불인정 창 | 보상0;4회까지 카운트 보존,5회 연속 불인정이면0으로 초기화 |
+| 에피소드 reset | 선택 환경의 history/count/misses/보상 캐시 초기화 |
+
+최근 창의 판정이므로 현재 접촉이 없어도 직전2step 접촉이 남아 있으면 한 step 인정될 수 있다. 같은 step에 함수를 재호출해도 증가하지 않으며, step 평가가 누락되면 연속성을 보장할 수 없어 history/count를 초기화한다. 인정이 다시 나오면 연속 불인정 횟수는0으로 돌아간다.
+
+RewardManager의 dt 적용 후 `0.1 × count × 0.02`가 지급되므로 최대 **0.02/step(초당1.0)**이다. 부모의 이진 보상 최대0.029/step보다 상한도 낮아진다. 처음부터 계속 접촉하면 원시 접촉 두 번째 step부터 count1로 지급한다. 목표 점유 보상 `goal_hold` 자체는 부모 그대로 유지한다.
+
+Refactor 계열의 카운트 버퍼·선택 reset 구현을 재사용하되 사용자 확정에 따라 타겟 접촉만 사용하고 목표 점유 우회를 제거했다. 후속 요청으로 Contact 전용 `eef_height_limit=0.15`를 추가했다. 초기 선반 표면 기준 높이를 원시 접촉과 현재 창 인정에 모두 적용하므로 이전 접촉 이력이 남아 있어도15cm 이상에서는 즉시 보상0이고,5회 연속 불인정이면 카운트가 초기화된다. 다른 보상의 높이 설정은 바꾸지 않는다. 원래 Refactor 함수나 다른 환경의 보상은 수정하지 않았다. Scene·센서·관측·액션·목표·나머지 보상14개·종료4개·커리큘럼10개·PPO 수치는 부모와 같다. eef_linear_speed/pushing_speed/arm_speed_excess는 계속 비활성이다. 질량·마찰은 일반 부모처럼 startup에서만 설정된다.
+
+```bash
+python src/inspire_sweep_baseline/scripts/train.py \
+  --task Inspire-Wrench-Refactor-Relative-IK-v0_2_2-Test \
+  --num_envs 2048 --headless
+```
+
+[구현·검증 기록](../logs/2026-11-09_relative_ik_v0_2_2_contact.md)
