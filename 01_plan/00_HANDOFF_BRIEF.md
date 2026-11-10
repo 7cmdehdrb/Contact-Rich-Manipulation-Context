@@ -1,5 +1,13 @@
 # 현재 개발 인계
 
+2026-11-10 **Simple 목표 내부 풀 카운트**: Simple-v0의 접촉 유지 term을 변경했다. 목표 XY 거리<3cm이면 접촉·이력·EEF 높이와 무관하게 count/reward20. 밖에서는 기존 +1/−2·불인정 보상0. Simple-v1/Hard-v0에 상속, Prof와 과거 Relative-IK 환경은 보존. [변경·검증](../02_implementation/logs/2026-11-10_simple_goal_full_contact.md).
+
+2026-11-10 **Simple 계열 종합 설명서**: 베이스 환경의 전체 Manager 구성·관측/액션·보상·종료·커리큘럼·메트릭·PPO와 파생 환경별 변경/실험 의도를 정리했다. 환경 코드는 변경하지 않았다. [설명서](../02_implementation/environments/SWEEP_SIMPLE_ENVIRONMENTS.md) · [문서화 기록](../02_implementation/logs/2026-11-10_sweep_simple_documentation.md).
+
+2026-11-10 **Simple Hard 계열**: `Inspire-Sweep-Simple-Hard-v0`는 Simple-v1, `Inspire-Sweep-Simple-Prof-Hard-v0`는 Simple-Prof-v1 직접 상속. 목표7–15cm·전방향 DeadZone0도 고정, 방향별 최대 가능 거리가15cm 미만이면 그 최대 거리(7cm 미만 포함)를 선택한다. 안전 root 경계 startup 캐시·reset에서 직접 교점 산출, 방향 재추출 없음. 나머지 부모 계약 유지. CPU78개 통과·2개 skip, GPU/학습 미검증. [계약](../02_implementation/environments/SWEEP_SIMPLE_ENVIRONMENTS.md#hard-v0-공통-변경) · [개발·검증](../02_implementation/logs/2026-11-10_sweep_simple_hard.md).
+
+2026-11-10 **Sweep Simple 독립 계열**: `Inspire-Sweep-Simple-v0`는 현재 Relative-IK v0_2_2_4와 동등한 독립 EnvCfg/runtime이다. Simple-Prof-v0는 v0_2_2_5 보상, Simple-v1는 v0_2_2_6 Reach, Prof-v1는 Prof-v0에서 Reach만 변경한다. 기존 환경 보존·Fast reset 유지. CPU71개 통과, GPU/PhysX·렌더·학습 미검증. [환경 계약](../02_implementation/environments/SWEEP_SIMPLE_ENVIRONMENTS.md) · [개발·검증](../02_implementation/logs/2026-11-10_sweep_simple_family.md).
+
 2026-11-09 **Relative-IK-v0_2_2_6**: v0_2_2_4 직접 상속(v0_2_2_5 아님), Reach만 현재 타겟3D BBOX 중심–EEF 거리의 완화된 역수 보상으로 교체.10cm 이내 최대, 지속 근접/추종 유도. weight30 유지·기존 초기 Reach 최대예산을10초로 나누어 규모 보정. Goal Distance100·접촉 카운트 보상 등 부모 계약 유지. CPU56개 통과, GPU/학습 미검증. [계약·검증](../02_implementation/logs/2026-11-09_relative_ik_v0_2_2_6.md).
 
 2026-11-09 **최근 에피소드 집계 적용**: 카운터 최초 도입 환경 v0_2_2_4의 runtime부터 직접 수정했다. 최근 완료 에피소드N개(기본10,000·설정 가능, 조기실패 포함) 안에서 timeout/success count와 rate를 계산한다. v0_2_2_5 및 새 v0_2_2_6도 상속한다. 성공 판정·종료·보상 의미는 보존한다. [변경·검증](../02_implementation/logs/2026-11-09_relative_ik_v0_2_2_6.md).
