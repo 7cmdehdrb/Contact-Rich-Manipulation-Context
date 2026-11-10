@@ -14,13 +14,13 @@
 ManagerBasedRLEnvCfg
 └── SweepSimpleEnvCfg                         Inspire-Sweep-Simple-v0
     ├── SweepSimpleProfEnvCfg                 Inspire-Sweep-Simple-Prof-v0
-    │   └── SweepSimpleProfV1EnvCfg           Inspire-Sweep-Simple-Prof-v1  -> .250 학습 중
+    │   └── SweepSimpleProfV1EnvCfg           Inspire-Sweep-Simple-Prof-v1  -> .250 학습 종료
     │       └── SweepSimpleProfHardEnvCfg     Inspire-Sweep-Simple-Prof-Hard-v0 
     └── SweepSimpleV1EnvCfg                   Inspire-Sweep-Simple-v1
-        ├── SweepSimpleFingerEnvCfg           Inspire-Sweep-Simple-Finger-v0 -> .30 학습 중
+        ├── SweepSimpleFingerEnvCfg           Inspire-Sweep-Simple-Finger-v0 -> .30 학습 종료
         │   └── SweepSimpleFingerV1EnvCfg     Inspire-Sweep-Simple-Finger-v1
         │       └── SweepSimpleFingerV2EnvCfg Inspire-Sweep-Simple-Finger-v2
-        └── SweepSimpleHardEnvCfg             Inspire-Sweep-Simple-Hard-v0 -> .180 학습 중
+        └── SweepSimpleHardEnvCfg             Inspire-Sweep-Simple-Hard-v0 -> .180 학습 결과 확인 중
 ```
 
 | 새 task ID | 동작 기준 | 직접 부모와 차이 | PPO experiment_name |
@@ -36,6 +36,18 @@ ManagerBasedRLEnvCfg
 | `Inspire-Sweep-Simple-Finger-v2` | Finger-v1 | 로그 Distance, 연속 체류 게이트, 후퇴 Reach 및 성공 판정 | `inspire_sweep_simple_finger_v2` |
 
 공통 런타임 `SweepSimpleEnv`는 `ManagerBasedRLEnv`를 직접 상속한다. EnvCfg·SceneCfg·Manager Cfg·PPO도 과거 테스트 Cfg를 상속하거나 인스턴스화하지 않는다. 보상/종료/리셋 함수, Warp IK, OSC 구현, 자산 스포너, 정책 모델 구현은 그대로 공유한다. 따라서 독립성의 범위는 **환경 구성과 런타임의 과거 상속 제거**이며, 모든 연산 함수와 자산을 복제한 계열은 아니다.
+
+## 학습 현황과 후속 방향
+
+2026-11-11 사용자 보고 기준이다. 아래는 사용자가 관찰한 학습 결과와 연구 방향이며, 이번 문서 갱신에서 학습 로그나 영상을 별도로 분석한 결과는 아니다.
+
+| 환경 | 상태 | 관찰 결과·판단 | 후속 방향 |
+| --- | --- | --- | --- |
+| `Simple-Prof-v1` | 학습 종료 | 목표에 가까워지는 보상을 극대화하는 과정에서 다른 보상 요구를 사실상 무시하고, 물체를 위에서 누르면서 목표점 근처에서 매우 빠르게 왕복하는 행동이 관찰됨. 사용자는 거리 보상 자체의 구조 문제로 판단 | 거리 보상 구조를 개선하는 후속 환경을 구축할 예정. 구체적 환경 이름·설계는 아직 확정하지 않음 |
+| `Simple-Finger-v0` | 학습 종료 | 손가락 독립 제어 결과는 유망하지만, 목표 도달 정확도가 부족하고 움직임이 지나치게 빠름 | 이를 개선할 Finger-v1/v2 구현 완료. v1에서 액션 범위·속도를 제한하고, v2에서 정밀 접근·체류·후퇴를 유도. 개선 효과는 후속 학습으로 확인 |
+| `Simple-Hard-v0` | 학습 결과 확인 중 | 결과 검토를 계속하고 있으나, 사용자 판단으로 Finger 계열의 결과가 좋아 후속 연구를 Finger 중심으로 진행할 예정 | Hard 결과 확인은 유지하며, 개발·학습의 우선 방향은 Finger 계열로 이동 |
+
+Prof-v1의 왕복 현상은 관찰된 결과이고, 거리 보상 구조가 원인이라는 것은 사용자의 현재 판단이다. 원인 분리 실험이나 정량 비교로 확정한 결론과 구분한다. Finger-v1/v2는 이미 구현되었지만, 이 보고만으로 해당 문제의 해결이나 학습 완료를 의미하지 않는다.
 
 ## 베이스 환경: Inspire-Sweep-Simple-v0
 
