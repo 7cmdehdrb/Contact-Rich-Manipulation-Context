@@ -1,5 +1,7 @@
 # 현재 개발 인계
 
+2026-11-10 **Simple Finger-v0**: `Inspire-Sweep-Simple-Finger-v0`는 Simple-v1 직접 상속. 손 관측은 실제 drive6관절(rad), 액션은 독립 절대 목표6관절(rad), 순서는 엄지 굽힘→검지→중지→약지→소지→엄지 대립. Last Action tanh 유지. policy66+obstacles64, 전체action12; 모델·action-rate·reset 차원 대응. 나머지 부모 계약 보존. CPU86개 통과·2개 skip, GPU/PhysX·학습 미검증. [개발·검증](../02_implementation/logs/2026-11-10_sweep_simple_finger.md).
+
 2026-11-10 **Simple 목표 내부 풀 카운트**: Simple-v0의 접촉 유지 term을 변경했다. 목표 XY 거리<3cm이면 접촉·이력·EEF 높이와 무관하게 count/reward20. 밖에서는 기존 +1/−2·불인정 보상0. Simple-v1/Hard-v0에 상속, Prof와 과거 Relative-IK 환경은 보존. [변경·검증](../02_implementation/logs/2026-11-10_simple_goal_full_contact.md).
 
 2026-11-10 **Simple 계열 종합 설명서**: 베이스 환경의 전체 Manager 구성·관측/액션·보상·종료·커리큘럼·메트릭·PPO와 파생 환경별 변경/실험 의도를 정리했다. 환경 코드는 변경하지 않았다. [설명서](../02_implementation/environments/SWEEP_SIMPLE_ENVIRONMENTS.md) · [문서화 기록](../02_implementation/logs/2026-11-10_sweep_simple_documentation.md).
