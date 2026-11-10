@@ -1,10 +1,12 @@
 # Sweep Simple 환경 계열
 
-2026-11-10 기준 실제 코드에 근거한 환경 설명서. 베이스 전체 구성과 파생 환경의 변경·실험 의도를 함께 정리한다. 기존 실험 환경에서 상속을 분리한 계열이며, 실제 코드의 후속 변경도 반영한다. [환경 안내](../08_ACTIVE_ENVIRONMENTS.md) · [개발·검증 기록](../logs/2026-11-10_sweep_simple_family.md).
+2026-11-11 기준 실제 코드에 근거한 환경 설명서. 베이스 전체 구성과 파생 환경의 변경·실험 의도를 함께 정리한다. 기존 실험 환경에서 상속을 분리한 계열이며, 실제 코드의 후속 변경도 반영한다. [환경 안내](../08_ACTIVE_ENVIRONMENTS.md) · [개발·검증 기록](../logs/2026-11-10_sweep_simple_family.md).
 
 2026-11-10 후속 변경: **Simple-v0·Simple-v1·Simple-Hard-v0는 타겟 root와 목표의 XY 거리가3cm 미만이면 접촉 유지 count/reward를 즉시20으로 인정한다.** 접촉·이력·EEF 높이 조건을 우회한다. Prof 계열은 접촉 유지 보상이 없어 영향이 없다. 따라서 Simple-v0/v1은 이제 과거 v0_2_2_4/6와 이 한 가지 차이가 있다. [변경 기록](../logs/2026-11-10_simple_goal_full_contact.md).
 
 2026-11-10 추가: **Simple-Finger-v0는 Simple-v1을 직접 상속하여 손 관측과 제어를 독립 구동6관절로 확장한다.** Last Action의 tanh를 유지하며, 목표 내부 풀 카운트도 상속한다. [Finger 비교·관절 순서·실행](#finger-v0-독립-손가락-제어).
+
+2026-11-11 추가: **Finger-v1은 정책 출력·입력·Last Action 범위와 속도 비용/종료를 변경하고, Finger-v2는 로그 Distance와 2cm·3초 달성 후 후퇴를 적용한다.** [v1/v2 계약](#finger-v1v2-출력-범위와-정밀-이동후퇴) · [검증 기록](../logs/2026-11-11_sweep_simple_finger_v1_v2.md).
 
 ## 등록과 상속
 
@@ -16,6 +18,8 @@ ManagerBasedRLEnvCfg
     │       └── SweepSimpleProfHardEnvCfg     Inspire-Sweep-Simple-Prof-Hard-v0 
     └── SweepSimpleV1EnvCfg                   Inspire-Sweep-Simple-v1
         ├── SweepSimpleFingerEnvCfg           Inspire-Sweep-Simple-Finger-v0 -> .30 학습 중
+        │   └── SweepSimpleFingerV1EnvCfg     Inspire-Sweep-Simple-Finger-v1
+        │       └── SweepSimpleFingerV2EnvCfg Inspire-Sweep-Simple-Finger-v2
         └── SweepSimpleHardEnvCfg             Inspire-Sweep-Simple-Hard-v0 -> .180 학습 중
 ```
 
@@ -28,6 +32,8 @@ ManagerBasedRLEnvCfg
 | `Inspire-Sweep-Simple-Hard-v0` | Simple-v1 | 목표 거리 확대·DeadZone 삭제 | `inspire_sweep_simple_hard_v0` |
 | `Inspire-Sweep-Simple-Prof-Hard-v0` | Simple-Prof-v1 | 동일한 목표 샘플링 변경 | `inspire_sweep_simple_prof_hard_v0` |
 | `Inspire-Sweep-Simple-Finger-v0` | Simple-v1 | 손 관측·명령을 독립 구동6관절로 확장 | `inspire_sweep_simple_finger_v0` |
+| `Inspire-Sweep-Simple-Finger-v1` | Finger-v0 | 범위가 제한된 정책, Last Action tanh 제거, 속도 비용/종료 강화 | `inspire_sweep_simple_finger_v1` |
+| `Inspire-Sweep-Simple-Finger-v2` | Finger-v1 | 로그 Distance, 연속 체류 게이트, 후퇴 Reach 및 성공 판정 | `inspire_sweep_simple_finger_v2` |
 
 공통 런타임 `SweepSimpleEnv`는 `ManagerBasedRLEnv`를 직접 상속한다. EnvCfg·SceneCfg·Manager Cfg·PPO도 과거 테스트 Cfg를 상속하거나 인스턴스화하지 않는다. 보상/종료/리셋 함수, Warp IK, OSC 구현, 자산 스포너, 정책 모델 구현은 그대로 공유한다. 따라서 독립성의 범위는 **환경 구성과 런타임의 과거 상속 제거**이며, 모든 연산 함수와 자산을 복제한 계열은 아니다.
 
@@ -178,7 +184,7 @@ Actor와 Critic은 동일한 `policy` 58차원 + `obstacles` 64차원 그룹을 
 
 위 custom metric은 TensorBoard의 `Metrics/` 아래 기록한다. 평균/최대/최종 거리 통계는 해당 reset 배치의 에피소드 값들을 평균한다. timeout 집계는 기본N=10,000의 rolling window이며 조기실패도 창의 한 자리를 차지한다. 같은 step의 완료 순서는 env ID 오름차순이다. 이외 RewardManager/TerminationManager/CurriculumManager와 runner의 기본 보상·종료·학습 로그도 사용한다.
 
-PPO는 actor/critic 각각 장애물 encoder(hidden32, embedding16, ReLU)와 MLP `[256,128,64]`(활성함수 ELU)를 사용한다. 입력 정규화는 OFF, Gaussian 초기 std1이다. 환경당 rollout36 steps, 최대90,000 iteration,50 iteration마다 저장한다. PPO는 epoch8·minibatch4, learning rate0.001(adaptive, desired KL0.02), gamma0.98, GAE lambda0.95, clip0.2, entropy0.005, value loss coefficient1, clipped value loss ON, gradient norm1을 사용한다. 모든 파생 환경에서 이 학습 하이퍼파라미터를 유지하고 로그 실험명을 구분한다. Finger-v0는 손 관측·액션 확장에 맞춰 모델 입출력 차원과 모델 클래스를 변경한다.
+PPO는 actor/critic 각각 장애물 encoder(hidden32, embedding16, ReLU)와 MLP `[256,128,64]`(활성함수 ELU)를 사용한다. 입력 정규화는 OFF, Gaussian 초기 std1이다. 환경당 rollout36 steps, 최대90,000 iteration,50 iteration마다 저장한다. PPO는 epoch8·minibatch4, learning rate0.001(adaptive, desired KL0.02), gamma0.98, GAE lambda0.95, clip0.2, entropy0.005, value loss coefficient1, clipped value loss ON, gradient norm1을 사용한다. 모든 파생 환경에서 이 학습 하이퍼파라미터를 유지하고 로그 실험명을 구분한다. Finger-v0는 손 관측·액션 확장에 맞춰 모델 입출력 차원과 모델 클래스를 변경한다. Finger-v1/v2는 같은 입출력 차원을 유지하면서 actor를 범위 제한 분포로 변경한다. 나머지 PPO 하이퍼파라미터는 위와 같다.
 
 ## 파생 환경 비교와 실험 의도
 
@@ -193,6 +199,8 @@ PPO는 actor/critic 각각 장애물 encoder(hidden32, embedding16, ReLU)와 MLP
 | `Simple-Hard-v0` | Simple-v1 | 목표6–12cm→7–15cm 또는 방향별 최대 가능 거리. DeadZone curriculum 제거, 처음부터0도 | 접촉 유지 보상+v1 Reach 정책이 더 긴 이동과 Pull/Push 포함 전방향 과제를 초기부터 학습할 수 있는지 확인 |
 | `Simple-Prof-Hard-v0` | Simple-Prof-v1 | Simple-Hard와 동일한 목표·DeadZone 변경 | 같은 어려운 목표 분포에서 Prof 보상 구성이 어떻게 작동하는지, Simple-Hard와 비교 |
 | `Simple-Finger-v0` | Simple-v1 | 손 관측2→6D 실제 관절 위치, 손 액션2→6D 독립 절대 위치 제어. Last Action tanh 유지 | 압축된 전체 굽힘 대신 손가락별 자유도를 제공하면 접촉 자세 선택과 타겟 추종·밀기 행동이 개선되는지 비교 |
+| `Simple-Finger-v1` | Finger-v0 | 정책 출력·환경 액션 입력을 raw 범위로 제한. Last Action의 tanh 삭제 및 clip. 팔 속도 비용2배, 종료2→1rad/s | 과도한 순간 밀기를 줄이는 제어·학습 조건을 시험 |
+| `Simple-Finger-v2` | Finger-v1 | 가까운 거리 개선을 강조하고, 목표2cm 안에서3초 유지 후 역방향 Reach로 전환 | 중심 정밀 접근과 충분한 체류를 달성한 뒤 손을 조금 후퇴시키는 행동을 시험 |
 
 Prof-v0/v1의 접근 보상과 방향 비용은 현재 타겟 접촉·EEF15cm 미만을 요구한다. 접촉 유지의2-of-3 이력을 사용하지 않는다. 방향 이탈 비용은 각 step의 XY 이동거리에서 초기 지시 방향 성분을 뺀 양으로, 측면·역방향 이동을 비용화한다. 접근은 과거 최고 기록을 넘지 않아도 이전 step보다 가까워지면 보상한다. 비접촉 동안의 이동은 나중에 재접촉할 때 소급 보상하지 않는다.
 
@@ -209,7 +217,7 @@ Prof-v0/v1의 접근 보상과 방향 비용은 현재 타겟 접촉·EEF15cm �
 | 접촉 유지 | `GoalContactMaintenance`, 0.1 | 동일 | 없음 | 없음 |
 | 목표에서 멀어짐 | `RelativeInverseDistance`, −25.94 | 동일 | 동일 | 동일 |
 
-Simple의 접촉 유지 보상은 목표3cm 미만에서 무조건20이다. 그 밖에서는 기존과 같이 상한20, 인정 시+1, 불인정 시−2(최소0), 최종 불인정 step의 보상0이다. 기존2-of-3 접촉 인정과 초기 선반 표면 기준 EEF 높이15cm 미만 조건을 보존한다. 목표 내부 예외는 Simple-v1/Hard/Finger에도 상속된다. Prof의 접근/방향 이탈은 현재 타겟 접촉·EEF 높이15cm 미만 조건을 사용한다.
+Simple의 접촉 유지 보상은 목표3cm 미만에서 무조건20이다. 그 밖에서는 기존과 같이 상한20, 인정 시+1, 불인정 시−2(최소0), 최종 불인정 step의 보상0이다. 기존2-of-3 접촉 인정과 초기 선반 표면 기준 EEF 높이15cm 미만 조건을 보존한다. 목표 내부 예외는 Simple-v1/Hard/Finger-v0/Finger-v1에도 상속된다. Finger-v2는 이3cm 예외를 삭제하고, 아래의 연속3초 게이트 달성 후에만 무조건 풀 카운트를 적용한다. Prof의 접근/방향 이탈은 현재 타겟 접촉·EEF 높이15cm 미만 조건을 사용한다.
 
 v1 Reach는 현재 타겟의3D BBOX 중심과 EEF 프레임 사이 거리에서10cm를 뺀 값을0으로 하한 처리한다. 이 값을 `g`, 기존 reset 시 Reach 예산 거리를 `g0`, 에피소드 길이를 `T=10초`라 하면, weight 적용 전 보상 함수는 다음과 같다.
 
@@ -266,22 +274,90 @@ PPO 모델은 입력66D와 출력12D에 맞춘 `SweepSimpleFingerModel`을 사�
 python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Simple-Finger-v0 --headless
 ```
 
+## Finger-v1/v2: 출력 범위와 정밀 이동·후퇴
+
+두 환경은 `Finger-v0 → Finger-v1 → Finger-v2` 순서로 직접 상속한다. 부모와 이전 Simple 환경은 보존한다. 관측66+64D, 액션12D, 손 구동관절 순서와 물리 자산은 동일하다.
+
+### 버전별 핵심 비교
+
+| 항목 | Finger-v0 | Finger-v1 | Finger-v2 |
+| --- | --- | --- | --- |
+| Last Action | raw 액션에 tanh | clip한 raw 액션, tanh 없음 | v1 유지 |
+| 정책 출력 | Gaussian | 팔 raw 병진±0.5·회전±π/2, 손 drive 관절 한계 내 출력 | v1 유지 |
+| 팔 관절 속도 비용 | −0.03 | −0.06 | v1 유지 |
+| 팔 속도 종료 일정 | 부모 일정 | 2000 iteration까지2rad/s, 이후250마다 감소하여5000에서1rad/s | v1 유지 |
+| Goal Distance | 선형 최고 기록 개선 | v0 유지 | 가까울수록 민감한 로그 최고 기록 개선, 누적 곡선 면적 보정 |
+| 접촉 무조건 풀 카운트 | 현재 목표 XY<3cm | v0 유지 | XY<2cm 연속3초 달성 후 에피소드 끝까지 |
+| Reach 목표 | 현재 물체3D 중심, 최대 보상 반경10cm | v0 유지 | 게이트 후 고정 후퇴점으로 전환, 최대 보상 반경2cm |
+| timeout 성공 | 종료 시 XY<3cm | v0 유지 | 해당 에피소드에서 게이트를 한 번이라도 달성 |
+
+성공 조건은 모든 버전에서 동시 실패가 없다는 조건을 함께 요구한다. Finger-v2의 게이트는 성공 이력이며, 후퇴 완료 판정은 아니다.
+
+### Finger-v1
+
+| 항목 | 변경 |
+| --- | --- |
+| 정책 출력 | Gaussian 샘플을 tanh와 affine 변환으로 각 raw 범위에 제한. deterministic play와 export도 동일 |
+| 병진 raw 범위 | 각 축±0.5. 기존 scale0.03을 나중에 곱하므로 상대 목표는 각 축±1.5cm |
+| 회전 raw 범위 | 각 축±π/2. 기존 scale0.15를 나중에 곱하므로 각 RPY 명령은±13.5도 |
+| 손 raw 범위 | 위 URDF6개 drive 범위. 하한0, 상한0.5864/1.4381/1.4381/1.4381/1.4381/1.1641rad |
+| 입력 방어 | runtime에서 ActionManager 이전에 clip. Arm/Hand term도 clip하여 raw 이력부터 범위를 지킴 |
+| Last Action | tanh 삭제. 같은 범위로 clip한 raw 명령12D. Arm scale 적용 전 값 |
+| 팔 관절 속도 비용 | `arm_joint_velocity`: −0.03→−0.06, 함수·cap100 유지 |
+| 속도 종료 |0–2000 iteration은2rad/s.2250부터250마다1/12rad/s 감소,5000부터1rad/s |
+| 그 외 | 손 속도 비용−0.01, action-rate 비용, 물리 속도 제한 Arm3.14/Hand1rad/s와 OSC gains 등 보존 |
+
+정책의 tanh 변환과 **Last Action의 tanh 제거는 별개**다. PPO log-prob는 변환의 Jacobian을 포함하고, KL은 공통 가역 변환 아래의 원래 Normal 분포로 계산한다. entropy에는 Jacobian의 재매개화 표본 추정치를 포함한다. 표준편차는 양수를 보장하는 log parameter이며 latent log-std를 [−5,2]로 제한한다. std 로그는 latent Normal 기준이다. 입력 NaN/Inf는 유한값으로 바꾼 뒤 clip하지만, 이것이 모든 학습 발산을 방지한다는 보장은 아니다.
+
+### Finger-v2
+
+| 항목 | 변경 |
+| --- | --- |
+| Distance | 현재 타겟 root–목표의 노이즈 없는 GT XY 거리. 에피소드 최고 기록 개선에 로그 변환 적용, 중심0cm까지 계속 지급 |
+| 크기 보정 | 초기 거리별로 누적 보상 곡선 아래 면적을 기존 선형 곡선과 일치시킴. weight100·epsilon1cm |
+| 게이트 진입 | XY 거리 **2cm 미만**에서 연속3초. policy dt0.02에서150회 연속 표본.2cm 이상/비유한 거리는 달성 전 timer 초기화 |
+| 게이트 유지 | 한 번 달성하면 해당 에피소드 끝까지 유지. 이후 이탈해도 해제하지 않음 |
+| Reach 전환 | 게이트 전: 물체3D 중심의 기존10cm 최대 보상 구간. 게이트 후: 고정 후퇴 목표의 **3D 거리2cm 이내** 최대 보상 |
+| 후퇴 목표 | 지정된 목표점에서 초기 물체 위치 방향으로 XY5cm 이동. Z는 초기 선반 윗면+8cm. reset 때 캐시 |
+| Contact | 기존3cm 무조건 인정 삭제. 게이트 전 실제 접촉 카운트 규칙, 게이트 후 접촉/높이와 무관하게 count/reward20 |
+| Success |10초 timeout에서 게이트 달성 여부로 판정. 동시 물체/선반/팔속도 실패 우선. 목표에서 이후 이탈해도 달성 이력은 유지 |
+
+게이트는 reward/termination에서 공유하며 같은 policy step에는 한 번만 갱신한다. reset 시 선택한 환경의 타이머·게이트·후퇴 좌표를 초기화하고, 직전 에피소드 성공 집계를 먼저 완료한다. 게이트 순간에 조기 종료하지 않는다. success는 **후퇴 완료 여부를 요구하지 않으며**, 게이트 달성 후 다른 실패로 조기 종료한 에피소드는 기존 timeout 성공 집계에 포함하지 않는다.
+
+초기 거리 `d0`, 현재까지 최소 거리 `b`, epsilon `e=0.01m`에 대해 weight 적용 전 누적 접근 보상은 다음이다.
+
+```math
+A=\frac{d_0^2}{2[d_0-e\log(1+d_0/e)]},\qquad
+P(b)=A\log\frac{e+d_0}{e+b}
+```
+
+step 보상은 `100 × 새 P − 100 × 이전 P`이며 기존과 같이 내부에서 dt를 나누어 RewardManager의 dt 곱을 상쇄한다. 시작9cm에서는 중심 도달 총 보상13.92398, 기존9와 다르지만 곡선 면적은 양쪽40.5 reward·cm로 같다. 왕복 재접근은 최고 기록을 갱신하지 않으면 지급하지 않는다. `target_inverse_distance`의 선형 멀어짐 비용−25.94는 이번 요청에서 변경하지 않았다.
+
+후퇴 Reach는 부모의 초기 Reach 예산·weight30·distance_scale0.1을 유지한다. 기존 초기 Reach 예산이0인 특수 에피소드에서는 후퇴 Reach도0이다. 게이트·후퇴 좌표·현재 물체 GT를 새 관측으로 추가하지 않는다. 따라서 입력은 기존 초기 물체 스냅샷·센서·로봇 상태 그대로이며, 후퇴 학습 성능은 실제 학습으로 확인해야 한다. Holding·가속도 보상이나 보상 커리큘럼을 복원하지 않았다. 목표3cm 점유 시간 metric과 목표 표시 반경은 그대로여서, v2의 success 의미와 구분해야 한다.
+
+```bash
+python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Simple-Finger-v1 --headless
+python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Simple-Finger-v2 --headless
+```
+
+v0와 v1은 차원은 같지만 Last Action 의미·정책 분포/저장 parameter가 바뀌므로 기존 v0 checkpoint의 무변환 resume을 지원하지 않는다. v1과 v2의 모델 구조는 같다. CPU 검증 범위와 GPU 미검증 사항은 [개발 로그](../logs/2026-11-11_sweep_simple_finger_v1_v2.md)를 따른다.
+
 ## 공통 보존 계약
 
 - physics dt0.01초, decimation2, policy dt0.02초, timeout10초, 기본2,048환경.
 - 타겟 cylinder1개·물리 장애물16개 고정 roster, 활성 장애물0–6 균등 추첨, 관측 슬롯16개.
 - 외접원 기반 RED/WHITE, 간격1cm, 안전 셀5mm, 기존 Warp IK 리셋과 시드 유지. GRAY 배치 없음. 호환 필드는 초기 구성 후 `None`으로 남는다.
-- 센서·OSC·로봇 제한·자산·마찰/질량 설정 유지. Finger는 위 손 관측·제어 및 차원 대응만 예외다.
-- 목표 XY 거리3cm 미만이고 동시 실패가 없는10초 timeout을 success로 기록한다. timeout과 success는 중첩되는 truncation 항목이며 기존 bootstrap 계약을 유지한다.
+- 센서·OSC gains·물리 관절 제한·자산·마찰/질량 설정 유지. Finger-v0는 손 관측·제어와 차원을 변경하고, Finger-v1/v2는 추가로 액션 명령 범위와 팔 속도 종료 조건을 변경한다. 속도 종료 임계값은 물리 관절 속도 제한과 별개다.
+- 기본은 목표 XY 거리3cm 미만이고 동시 실패가 없는10초 timeout을 success로 기록한다. Finger-v2만 위 게이트 달성 이력으로 거리 조건을 대체한다. timeout과 success는 중첩되는 truncation 항목이며 기존 bootstrap 계약을 유지한다.
 - 최근 완료 에피소드10,000개(조기실패 포함) 안의 timeout/success count와 rate 유지. 같은 step 완료의 순서는 env ID 오름차순.
 - 스폰 영역 표시는 `play.py`에서만 켜지고 `train.py`에서는 영상 촬영도 포함해 꺼진다. 기존 스크립트의 공통 `debug_spawn_regions` 처리로 동작한다.
-- 나머지 보상, term 순서, 파라미터, 커리큘럼 일정, PPO 설정은 대응하는 기존 버전과 같다. Hard는 위 목표 이벤트와 DeadZone 변경, Finger는 위 손 제어와 차원 대응만 예외다. task ID·구성 클래스 이름·로그 실험명은 새 이름이다.
+- 나머지 보상, term 순서, 파라미터, 커리큘럼 일정, PPO 설정은 대응하는 기존 버전과 같다. Hard는 위 목표 이벤트와 DeadZone 변경, Finger는 각 버전 절에 명시한 제어·보상·종료 변경이 예외다. task ID·구성 클래스 이름·로그 실험명은 새 이름이다.
 
 ## 파일과 실행
 
 활성 패키지 `src/inspire_sweep_baseline/inspire_sweep_baseline` 기준:
 
-- `envs/sweep_simple_envs.py`: 일곱 EnvCfg 조합.
+- `envs/sweep_simple_envs.py`: 아홉 EnvCfg 조합.
 - `runtime/sweep_simple.py`: 독립 런타임 및 최근 에피소드 통계.
 - `assets/scenes/sweep_simple.py`: 독립 씬 구성.
 - `mdp/{actions,commands,observations,events,rewards,curricula,terminations}/sweep_simple.py`: 역할별 구성.
@@ -289,8 +365,10 @@ python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Simple-F
 - `assets/hand_kinematics.py`: Finger의6개 drive 순서·관절 한계·mimic 비율.
 - `mdp/action_functions/sweep_simple.py`, `mdp/observation_functions/sweep_simple.py`: Finger의 독립 위치 제어·실제 관절 위치 관측.
 - `agent/sweep_simple_models.py`: Finger의66D 직접 관측과64D 장애물 입력을 받는 모델.
-- `agent/sweep_simple_ppo_cfg.py`: 독립 PPO 기본과 일곱 로그 실험명.
-- `__init__.py`: 일곱 Gym ID 등록.
+- `agent/sweep_simple_distributions.py`: v1/v2 범위 제한 정책 분포·PPO likelihood·export.
+- `mdp/action_functions/sweep_simple_osc.py`, `mdp/termination_functions/sweep_simple.py`: v1/v2 OSC 입력 방어와 v2 성공 판정.
+- `agent/sweep_simple_ppo_cfg.py`: 독립 PPO 기본과 아홉 로그 실험명.
+- `__init__.py`: 아홉 Gym ID 등록.
 
 workspace root에서 기존 Isaac Lab Python 환경을 활성화한 뒤 실행한다.
 
@@ -298,4 +376,6 @@ workspace root에서 기존 Isaac Lab Python 환경을 활성화한 뒤 실행�
 python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Simple-v0 --headless
 ```
 
-나머지 버전은 위 표의 task ID로 교체한다. Finger-v0는 관측·액션 차원이 달라 기존8D 액션 체크포인트를 직접 재개할 수 없다. 다른 Simple 파생 환경의 기존 모델 구조는 유지한다. Finger 구현은 CPU 검사86개 통과·2개 skip이며, GPU 드라이버 문제로 PhysX·GPU rollout·렌더링·학습 성능은 미검증이다. [검증 범위](../logs/2026-11-10_sweep_simple_finger.md#검증).
+나머지 버전은 위 표의 task ID로 교체한다. Finger-v0는 관측·액션 차원이 달라 기존8D 액션 체크포인트를 직접 재개할 수 없다. Finger-v0→v1도 정책 분포와 저장 parameter가 달라 무변환 resume을 지원하지 않는다. Finger-v1/v2의 모델 구조는 동일하지만 실제 학습 체크포인트 전이는 미검증이다.
+
+Finger-v0 도입 당시 CPU 검사는86개 통과·2개 skip이었다([당시 검증](../logs/2026-11-10_sweep_simple_finger.md#검증)). Finger-v1/v2 구현 후 기존 환경 회귀를 포함한 최종 CPU 검사는 **110개 통과·2개 skip**이다([최신 검증](../logs/2026-11-11_sweep_simple_finger_v1_v2.md#검증)). GPU 드라이버 문제로 PhysX·GPU rollout·렌더링·학습 성능은 미검증이다.
