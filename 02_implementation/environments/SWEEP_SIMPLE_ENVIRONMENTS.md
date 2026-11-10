@@ -15,7 +15,7 @@ ManagerBasedRLEnvCfg
     │   └── SweepSimpleProfV1EnvCfg           Inspire-Sweep-Simple-Prof-v1  -> .250 학습 중
     │       └── SweepSimpleProfHardEnvCfg     Inspire-Sweep-Simple-Prof-Hard-v0 
     └── SweepSimpleV1EnvCfg                   Inspire-Sweep-Simple-v1
-        ├── SweepSimpleFingerEnvCfg           Inspire-Sweep-Simple-Finger-v0 -> 집 학습 중
+        ├── SweepSimpleFingerEnvCfg           Inspire-Sweep-Simple-Finger-v0 -> .30 학습 중
         └── SweepSimpleHardEnvCfg             Inspire-Sweep-Simple-Hard-v0 -> .180 학습 중
 ```
 
