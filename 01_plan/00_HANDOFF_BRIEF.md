@@ -4,6 +4,22 @@
 
 2026-11-11 **Simple Finger-v1/v2**: v0→v1→v2 직접 상속. v1은 정책 출력/입력/Last Action raw clip(팔±0.5/±π/2, 손 URDF6축), Last Action tanh 제거, 팔속도 비용−0.06 및 종료2→1rad/s(2000–5000/250). v2는 면적 일치 로그 Distance·중심까지 접근, XY<2cm 연속3초 후 영구 gate, 목표에서 초기 물체 방향5cm·선반 위8cm의 후퇴 Reach(최대 보상 반경2cm), gate 기반 Contact/timeout success. 부모 보존. CPU110개 통과·2개 skip, GPU/PhysX·학습 미검증. [계약·검증](../02_implementation/logs/2026-11-11_sweep_simple_finger_v1_v2.md).
 
+2026-11-10 **Finger model3000 evaluation complete**: 128 envs x20 episodes, seed42; timeout2470 / early90. Timeout <=3cm79.84%, median1.71cm, moving Contact88.12%. Final pastel/Times New Roman plots, 200-point-per-quadrant scatter alpha0.65, Q1-Q4 box0-7cm, theoretical goal region saved under `outputs/sweep_evaluation/finger_3000_seed42/analysis/plots`. Raw reconciliation zero mismatches; CPU30 passed. [Results](../02_implementation/experiments/2026-11-10_finger_model3000_evaluation.md).
+
+2026-11-10 **오차 박스 서식만 갱신**: 사용자 요청으로 현재 `analysis/plots2`의 종합오차그림2개만 재렌더링. Times New Roman 실제times.ttf 적용, Y축0–7cm, all 집계항목 제거(Q1–Q4의 평균마커 유지), 박스 간격0.5→0.22 축소. `--error-only`로 기존box CSV를 사용해 다른42개 그림/CSV 해시불변 확인. [실행 안내](../02_implementation/environments/SWEEP_EVALUATION.md).
+
+2026-11-10 **박스 플롯 큰 오차 제외**: 사용자 요청으로 공통 상위Q3+1.5IQR(6.198785cm) 초과144개를 오차 통계에서 제외,2,299개로 박스/평균/극값 재계산. 주축0–10cm, 잔존최대6.183cm여서 이번엔 break 불필요. 잔존10cm 초과 시 상단+물결 축 생략 지원. 원본85개 파일 불변, 제외목록CSV 보존. [결과](../02_implementation/experiments/2026-11-10_finger_model1200_evaluation.md).
+
+2026-11-10 **오차 통계 박스 플롯**: 사용자 요청으로 기존 error 통계Bar를 box plot으로 대체. 상자25–75%·중앙값선·평균마름모·실제최소–최대 수염, 전체+GT Q1–Q4와 개별이미지 재생성. `error_boxplot.png` 및 기존 `error_statistics.png`에 저장. 입력85개 해시 불변·검사28개 통과. [결과](../02_implementation/experiments/2026-11-10_finger_model1200_evaluation.md).
+
+2026-11-10 **GT 사분면 플롯 정정**: 사용자 확인으로 선반 원점 GT의 X/Y 부호(Q1–Q4)로 모든 플롯을 재분류, 축은 선반X/Y, 중심 확대±5cm로 변경했다. 기존 절대 GT 위치를 초기→목표 sector로 색칠해115/2,560개가 경계를 넘어 보였음. GT값은 수정하지 않음. 오차 중앙값·평균·최소·최대 Bar Plot과 최소 caption 적용, 종합6장+개별30장. 원시/추출85개 파일 불변, 검사27개 통과. [현재 결과](../02_implementation/experiments/2026-11-10_finger_model1200_evaluation.md) · [실행 안내](../02_implementation/environments/SWEEP_EVALUATION.md).
+
+2026-11-10 **평가 플롯 후속**: 사용자 요청으로 재수집/재추출 없이 기존 model1200 결과를 다시 그렸다. 없는11–1/5–7시를 생략하고 전체+유효4방향만 표시한다. `plot_sweep_results.py --individual`로 종합5장+개별25장 저장, raw/추출85개 입력 해시 불변, 평가 검사16개 통과. [재실행 안내](../02_implementation/environments/SWEEP_EVALUATION.md) · [결과](../02_implementation/experiments/2026-11-10_finger_model1200_evaluation.md).
+
+2026-11-10 **Finger model1200 실제 평가**: 사용자 요청으로128환경×각20개 완료 에피소드(2,560개)를 순차 수집→추출→플롯했다. Timeout2,443/조기 종료117, 목표3cm 이내69.05%(전체 에피소드 기준65.90%), 오차 중앙값2.20cm/P90 4.89cm, moving Contact84.42%. 11–1/5–7시는30도 DeadZone으로0샘플. 원시1,224,661행 접촉 판정 독립 대조 불일치0. 전체 범위+±10cm 확대 플롯 제공. [정량 결과·그림·근거](../02_implementation/experiments/2026-11-10_finger_model1200_evaluation.md).
+
+2026-11-10 **병렬 정책 결과 수집**: 환경/학습 계약 변경 없이 `collect_sweep_results.py` → `extract_sweep_results.py` → `plot_sweep_results.py` 추가. Timeout 최종 오차·실제 생성 목표를 전체/6방향으로, 속력>=0.001m/s인 policy step의 실제 Contact 인정 비율을 집계한다. 목표 내부 보상20과 실제 Contact 구분, reset 전 capture, 환경당 완료 quota·빈 방향·부분 에피소드 표시. CPU44개 통과, 제공 Finger model1200으로2환경×500step 실제 수집·추출·플롯 완료. [사용·데이터 계약](../02_implementation/environments/SWEEP_EVALUATION.md) · [개발·검증](../02_implementation/logs/2026-11-10_sweep_evaluation.md).
+
 2026-11-10 **Simple Finger-v0**: `Inspire-Sweep-Simple-Finger-v0`는 Simple-v1 직접 상속. 손 관측은 실제 drive6관절(rad), 액션은 독립 절대 목표6관절(rad), 순서는 엄지 굽힘→검지→중지→약지→소지→엄지 대립. Last Action tanh 유지. policy66+obstacles64, 전체action12; 모델·action-rate·reset 차원 대응. 나머지 부모 계약 보존. CPU86개 통과·2개 skip, GPU/PhysX·학습 미검증. [개발·검증](../02_implementation/logs/2026-11-10_sweep_simple_finger.md).
 
 2026-11-10 **Simple 목표 내부 풀 카운트**: Simple-v0의 접촉 유지 term을 변경했다. 목표 XY 거리<3cm이면 접촉·이력·EEF 높이와 무관하게 count/reward20. 밖에서는 기존 +1/−2·불인정 보상0. Simple-v1/Hard-v0에 상속, Prof와 과거 Relative-IK 환경은 보존. [변경·검증](../02_implementation/logs/2026-11-10_simple_goal_full_contact.md).
