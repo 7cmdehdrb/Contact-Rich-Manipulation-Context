@@ -1,5 +1,9 @@
 # 현재 개발 인계
 
+2026-11-11 **물체 스폰 영역 시각화 삭제**: 사용자 요청으로 Simple 베이스와 Relative-IK v0_2_2_4의 표시 구현·설정·전용 분류 함수·train/play 활성화 코드를 모두 제거했다. 실제 RED/WHITE 배치·IK·보상·종료는 유지한다. [범위·검증](../02_implementation/logs/2026-11-11_remove_spawn_region_visualization.md).
+
+2026-11-11 **Simple Semi-Prof-v0**: Finger-v1 직접 파생. 손6축·bounded OSC/Last Action·속도 일정 보존. 현재 Reach30, 접촉2-of-3+현재 EEF15cm 미만 조건부 로그 Distance120(불인정 개선분 소급 없음), 접촉 유지 삭제, 멀어짐−31.128. 방향0.33은 현재 물체→목표 XY(Z=0)와 법선+마찰3D 합력 비교. 수평1N 이상·실제 접촉 필요, XY<1cm이면 방향 점수1이고 재이탈하면 각도 계산 복귀.3cm latch 없음.1cm 내부에서는 수직 힘 감점도 우회. CPU 검증·GPU 미검증 범위는 [개발 로그](../02_implementation/logs/2026-11-11_sweep_simple_semi_prof.md), 전체 계약은 [환경 안내](../02_implementation/environments/SWEEP_SIMPLE_ENVIRONMENTS.md#semi-prof-v0-접촉-조건부-정밀-이동과-힘-방향).
+
 2026-11-11 **Simple 학습 현황(사용자 보고)**: Prof-v1·Finger-v0 학습 종료. Prof-v1은 목표 근처에서 물체를 위에서 누르며 빠르게 왕복하는 현상이 관찰되어 거리 보상 구조 개선 환경을 계획한다. Finger-v0의 정확도·과속 문제에 대응하는 v1/v2는 구현 완료이며 효과는 후속 학습에서 확인한다. Simple-Hard-v0는 결과 확인 중이고 후속 연구는 Finger 중심으로 진행할 예정이다. [관찰·판단·후속 방향](../02_implementation/environments/SWEEP_SIMPLE_ENVIRONMENTS.md#학습-현황과-후속-방향).
 
 2026-11-11 **Simple Finger-v1/v2**: v0→v1→v2 직접 상속. v1은 정책 출력/입력/Last Action raw clip(팔±0.5/±π/2, 손 URDF6축), Last Action tanh 제거, 팔속도 비용−0.06 및 종료2→1rad/s(2000–5000/250). v2는 면적 일치 로그 Distance·중심까지 접근, XY<2cm 연속3초 후 영구 gate, 목표에서 초기 물체 방향5cm·선반 위8cm의 후퇴 Reach(최대 보상 반경2cm), gate 기반 Contact/timeout success. 부모 보존. CPU110개 통과·2개 skip, GPU/PhysX·학습 미검증. [계약·검증](../02_implementation/logs/2026-11-11_sweep_simple_finger_v1_v2.md).

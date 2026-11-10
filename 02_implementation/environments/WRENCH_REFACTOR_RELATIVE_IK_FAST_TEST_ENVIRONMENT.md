@@ -58,7 +58,7 @@ python src/inspire_sweep_baseline/tests/_wrench_refactor_fast_probe.py \
 
 ## v0_2_2_4 파생 환경
 
-`Inspire-Wrench-Refactor-Relative-IK-v0_2_2_4`는 v0_2_2_3-Fast-Test를 직접 상속한다. play 전용 스폰 영역 표시, 물체 가속도 비용 및 관련 일정 제거,10초 timeout의 XY 거리<3cm 성공 분류와 전용 비율 기록을 추가한다. 기존 접촉/물리/reset/PPO 계약은 유지한다. [전체 변경·실행·검증](../logs/2026-11-09_relative_ik_v0_2_2_4.md).
+`Inspire-Wrench-Refactor-Relative-IK-v0_2_2_4`는 v0_2_2_3-Fast-Test를 직접 상속한다. 물체 가속도 비용 및 관련 일정 제거,10초 timeout의 XY 거리<3cm 성공 분류와 전용 비율 기록을 추가한다. 기존 접촉/물리/reset/PPO 계약은 유지한다. [전체 변경·실행·검증](../logs/2026-11-09_relative_ik_v0_2_2_4.md).
 
 ## v0_2_2_5 파생 환경
 
@@ -69,3 +69,5 @@ python src/inspire_sweep_baseline/tests/_wrench_refactor_fast_probe.py \
 v0_2_2_4/runtime의 timeout/success 메트릭을 최근N개 완료 에피소드 창으로 변경했다. 기본N=10,000, 조기 실패도 창에 포함하고 timeout/success count는 해당 창 안에서만 집계한다. v0_2_2_5 및 v0_2_2_6에도 적용된다. 종료/성공 판정은 유지한다.
 
 `Inspire-Wrench-Refactor-Relative-IK-v0_2_2_6`는 v0_2_2_4를 직접 상속하며 Reach만 변경한다. 타겟3D BBOX 중심과 EEF 거리의10cm 바깥 초과량에 대해0.1/(0.1+초과량)의 근접도를 지속 지급한다. weight30과 초기 기존 Reach 최대예산을 기준으로10초 지급률을 정해 총액 상한을 맞췄다. 나머지 보상·일정은 v0_2_2_4와 같다. [수식·규모·검증·실행](../logs/2026-11-09_relative_ik_v0_2_2_6.md).
+
+2026-11-11 후속: v0_2_2_4에 도입했던 스폰 영역 시각화는 Simple 계열의 복제 구현과 함께 완전히 삭제했다. 실제 원형 RED/WHITE 배치·IK·성공 판정은 유지한다. [삭제·검증](../logs/2026-11-11_remove_spawn_region_visualization.md).
