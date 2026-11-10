@@ -1,5 +1,7 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-11 **중대 이슈: Finger-v1/v2·Semi-Prof PPO gradient 비유한값**. 공유 tanh→atanh 정책의 포화·역복원 경로에서 동일 오류를 CPU 재현했다. 일반 Gaussian + 실행 직전 clip으로 수정: PPO 원본 샘플 보존, Last Action/action-rate는 clip 후 raw 값, 정규화 없음. 축별 초기 분포와 진단을 적용하고 구 tanh checkpoint 직접 Resume를 거부한다. 원격 실패 dump 미확보·GPU 장기 학습 미검증. [사건·근거·검증](logs/2026-11-11_gaussian_action_clipping_incident.md). 아래 초기 구현 기록보다 이 수정 계약이 우선한다.
+
 2026-11-11 **물체 스폰 영역 시각화 삭제**: 사용자 요청으로 Simple 베이스와 Relative-IK v0_2_2_4의 표시 구현·설정·전용 분류 함수·train/play 활성화 코드를 모두 제거했다. 실제 RED/WHITE 배치·IK·보상·종료는 유지한다. [범위·검증](logs/2026-11-11_remove_spawn_region_visualization.md).
 
 2026-11-11 **Simple Semi-Prof-v0**: Finger-v1 직접 파생. 손6축·bounded OSC/Last Action·속도 일정 보존. 현재 Reach30, 접촉2-of-3+현재 EEF15cm 미만 조건부 로그 Distance120(불인정 개선분 소급 없음), 접촉 유지 삭제, 멀어짐−31.128. 방향0.33은 현재 물체→목표 XY(Z=0)와 법선+마찰3D 합력 비교. 수평1N 이상·실제 접촉 필요, XY<1cm이면 방향 점수1이고 재이탈하면 각도 계산 복귀.3cm latch 없음.1cm 내부에서는 수직 힘 감점도 우회. CPU 검증·GPU 미검증 범위는 [개발 로그](logs/2026-11-11_sweep_simple_semi_prof.md), 전체 계약은 [환경 안내](environments/SWEEP_SIMPLE_ENVIRONMENTS.md#semi-prof-v0-접촉-조건부-정밀-이동과-힘-방향).

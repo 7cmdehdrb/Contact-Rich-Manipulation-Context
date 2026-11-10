@@ -1,5 +1,7 @@
 # Holding · Final 개발 로그
 
+- [2026-11-11 중대 이슈: Gaussian 액션 클리핑 전환](2026-11-11_gaussian_action_clipping_incident.md): Finger-v1/v2·Semi-Prof 공유 정책의 gradient 오류 재현·tanh/atanh 제거·원본 PPO 샘플과 실행 명령 분리·회귀 검증.
+
 현재 계열과 공통 작업 기록을 안내한다. 이전 환경의 로그 색인은 [정리 전 백업](../history/2026-10-27_agent_context/README.md)에 보존했다. 개별 과거 로그는 변경하지 않는다.
 
 - [2026-10-28 Final GoalAccuracy v0_1](2026-10-28_final_goal_accuracy_v0_1.md): 2cm 인정·타겟 접촉·외곽 Hold·지수 거리 보상·직육면체 타겟·명칭 정리, 부모 보존·CPU 및 USD 검증·물리 실행 제한.

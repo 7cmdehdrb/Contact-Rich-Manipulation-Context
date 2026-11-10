@@ -1,5 +1,7 @@
 # Sweep Simple 환경 계열
 
+2026-11-11 **중대 이슈 수정 — Finger-v1/v2·Semi-Prof-v0**: 정책의 tanh/atanh 변환을 제거하고 일반 Gaussian으로 변경했다. PPO는 Clip 전 샘플, 제어·Last Action·action-rate는 Clip 후 raw 명령을 사용한다. 정규화 없음. 이전 tanh 정책 checkpoint의 직접 Resume는 거부하며 신규 학습이 기준이다. [원인·변경·검증·미검증 범위](../logs/2026-11-11_gaussian_action_clipping_incident.md). 아래 상속도의 학습 현황 메모는 기존 사용자 기록이며, 수정 후 학습 검증을 뜻하지 않는다.
+
 2026-11-11 기준 실제 코드에 근거한 환경 설명서. 베이스 전체 구성과 파생 환경의 변경·실험 의도를 함께 정리한다. 기존 실험 환경에서 상속을 분리한 계열이며, 실제 코드의 후속 변경도 반영한다. [환경 안내](../08_ACTIVE_ENVIRONMENTS.md) · [개발·검증 기록](../logs/2026-11-10_sweep_simple_family.md).
 
 2026-11-10 후속 변경: **Simple-v0·Simple-v1·Simple-Hard-v0는 타겟 root와 목표의 XY 거리가3cm 미만이면 접촉 유지 count/reward를 즉시20으로 인정한다.** 접촉·이력·EEF 높이 조건을 우회한다. Prof 계열은 접촉 유지 보상이 없어 영향이 없다. 따라서 Simple-v0/v1은 이제 과거 v0_2_2_4/6와 이 한 가지 차이가 있다. [변경 기록](../logs/2026-11-10_simple_goal_full_contact.md).
@@ -20,10 +22,10 @@ ManagerBasedRLEnvCfg
     │       └── SweepSimpleProfHardEnvCfg     Inspire-Sweep-Simple-Prof-Hard-v0 
     └── SweepSimpleV1EnvCfg                   Inspire-Sweep-Simple-v1
         ├── SweepSimpleFingerEnvCfg           Inspire-Sweep-Simple-Finger-v0 -> .30 학습 종료
-        │   └── SweepSimpleFingerV1EnvCfg     Inspire-Sweep-Simple-Finger-v1
-        │       ├── SweepSimpleFingerV2EnvCfg Inspire-Sweep-Simple-Finger-v2
-        │       └── SweepSimpleSemiProfEnvCfg Inspire-Sweep-Simple-Semi-Prof-v0
-        └── SweepSimpleHardEnvCfg             Inspire-Sweep-Simple-Hard-v0 -> .180 학습 결과 확인 중
+        │   └── SweepSimpleFingerV1EnvCfg     Inspire-Sweep-Simple-Finger-v1 -> .30 학습 중
+        │       ├── SweepSimpleFingerV2EnvCfg Inspire-Sweep-Simple-Finger-v2 -> .180 학습 중
+        │       └── SweepSimpleSemiProfEnvCfg Inspire-Sweep-Simple-Semi-Prof-v0 -> .250 학습 중
+        └── SweepSimpleHardEnvCfg             Inspire-Sweep-Simple-Hard-v0 -> .180 학습 종료. Finger-v0이 우수함
 ```
 
 | 새 task ID | 동작 기준 | 직접 부모와 차이 | PPO experiment_name |
@@ -35,7 +37,7 @@ ManagerBasedRLEnvCfg
 | `Inspire-Sweep-Simple-Hard-v0` | Simple-v1 | 목표 거리 확대·DeadZone 삭제 | `inspire_sweep_simple_hard_v0` |
 | `Inspire-Sweep-Simple-Prof-Hard-v0` | Simple-Prof-v1 | 동일한 목표 샘플링 변경 | `inspire_sweep_simple_prof_hard_v0` |
 | `Inspire-Sweep-Simple-Finger-v0` | Simple-v1 | 손 관측·명령을 독립 구동6관절로 확장 | `inspire_sweep_simple_finger_v0` |
-| `Inspire-Sweep-Simple-Finger-v1` | Finger-v0 | 범위가 제한된 정책, Last Action tanh 제거, 속도 비용/종료 강화 | `inspire_sweep_simple_finger_v1` |
+| `Inspire-Sweep-Simple-Finger-v1` | Finger-v0 | Gaussian 정책·실행 명령 clip, Last Action tanh 제거, 속도 비용/종료 강화 | `inspire_sweep_simple_finger_v1` |
 | `Inspire-Sweep-Simple-Finger-v2` | Finger-v1 | 로그 Distance, 연속 체류 게이트, 후퇴 Reach 및 성공 판정 | `inspire_sweep_simple_finger_v2` |
 | `Inspire-Sweep-Simple-Semi-Prof-v0` | Finger-v1 | 접촉 조건부 로그 Distance120·멀어짐−31.128·3D 힘 방향0.33, 접촉 유지 삭제 | `inspire_sweep_simple_semi_prof_v0` |
 
@@ -200,7 +202,7 @@ Actor와 Critic은 동일한 `policy` 58차원 + `obstacles` 64차원 그룹을 
 
 위 custom metric은 TensorBoard의 `Metrics/` 아래 기록한다. 평균/최대/최종 거리 통계는 해당 reset 배치의 에피소드 값들을 평균한다. timeout 집계는 기본N=10,000의 rolling window이며 조기실패도 창의 한 자리를 차지한다. 같은 step의 완료 순서는 env ID 오름차순이다. 이외 RewardManager/TerminationManager/CurriculumManager와 runner의 기본 보상·종료·학습 로그도 사용한다.
 
-PPO는 actor/critic 각각 장애물 encoder(hidden32, embedding16, ReLU)와 MLP `[256,128,64]`(활성함수 ELU)를 사용한다. 입력 정규화는 OFF, Gaussian 초기 std1이다. 환경당 rollout36 steps, 최대90,000 iteration,50 iteration마다 저장한다. PPO는 epoch8·minibatch4, learning rate0.001(adaptive, desired KL0.02), gamma0.98, GAE lambda0.95, clip0.2, entropy0.005, value loss coefficient1, clipped value loss ON, gradient norm1을 사용한다. 모든 파생 환경에서 이 학습 하이퍼파라미터를 유지하고 로그 실험명을 구분한다. Finger-v0는 손 관측·액션 확장에 맞춰 모델 입출력 차원과 모델 클래스를 변경한다. Finger-v1/v2는 같은 입출력 차원을 유지하면서 actor를 범위 제한 분포로 변경한다. 나머지 PPO 하이퍼파라미터는 위와 같다.
+PPO는 actor/critic 각각 장애물 encoder(hidden32, embedding16, ReLU)와 MLP `[256,128,64]`(활성함수 ELU)를 사용한다. 입력 정규화는 OFF, Gaussian 초기 std1이다. 환경당 rollout36 steps, 최대90,000 iteration,50 iteration마다 저장한다. PPO는 epoch8·minibatch4, learning rate0.001(adaptive, desired KL0.02), gamma0.98, GAE lambda0.95, clip0.2, entropy0.005, value loss coefficient1, clipped value loss ON, gradient norm1을 사용한다. 모든 파생 환경에서 이 학습 하이퍼파라미터를 유지하고 로그 실험명을 구분한다. Finger-v0는 손 관측·액션 확장에 맞춰 모델 입출력 차원과 모델 클래스를 변경한다. Finger-v1/v2·Semi-Prof-v0는 같은 입출력 차원과 일반 Gaussian을 사용하되, 아래에 명시한 축별 초기 평균·std를 적용한다. PPO 저장 샘플은 제한하지 않고 실행 명령만 clip한다. 나머지 PPO 하이퍼파라미터는 위와 같다.
 
 ## 파생 환경 비교와 실험 의도
 
@@ -215,7 +217,7 @@ PPO는 actor/critic 각각 장애물 encoder(hidden32, embedding16, ReLU)와 MLP
 | `Simple-Hard-v0` | Simple-v1 | 목표6–12cm→7–15cm 또는 방향별 최대 가능 거리. DeadZone curriculum 제거, 처음부터0도 | 접촉 유지 보상+v1 Reach 정책이 더 긴 이동과 Pull/Push 포함 전방향 과제를 초기부터 학습할 수 있는지 확인 |
 | `Simple-Prof-Hard-v0` | Simple-Prof-v1 | Simple-Hard와 동일한 목표·DeadZone 변경 | 같은 어려운 목표 분포에서 Prof 보상 구성이 어떻게 작동하는지, Simple-Hard와 비교 |
 | `Simple-Finger-v0` | Simple-v1 | 손 관측2→6D 실제 관절 위치, 손 액션2→6D 독립 절대 위치 제어. Last Action tanh 유지 | 압축된 전체 굽힘 대신 손가락별 자유도를 제공하면 접촉 자세 선택과 타겟 추종·밀기 행동이 개선되는지 비교 |
-| `Simple-Finger-v1` | Finger-v0 | 정책 출력·환경 액션 입력을 raw 범위로 제한. Last Action의 tanh 삭제 및 clip. 팔 속도 비용2배, 종료2→1rad/s | 과도한 순간 밀기를 줄이는 제어·학습 조건을 시험 |
+| `Simple-Finger-v1` | Finger-v0 | 정책은 일반 Gaussian, 환경 액션 입력을 raw 범위로 clip. Last Action의 tanh 삭제 및 clip. 팔 속도 비용2배, 종료2→1rad/s | 과도한 순간 밀기를 줄이는 제어·학습 조건을 시험 |
 | `Simple-Finger-v2` | Finger-v1 | 가까운 거리 개선을 강조하고, 목표2cm 안에서3초 유지 후 역방향 Reach로 전환 | 중심 정밀 접근과 충분한 체류를 달성한 뒤 손을 조금 후퇴시키는 행동을 시험 |
 | `Simple-Semi-Prof-v0` | Finger-v1 | 현재 Reach 유지, 접촉 조건부 로그 Distance120, 멀어짐−31.128, 접촉 유지 삭제, 현재 목표 방향 대비3D 합력 정렬0.33 | 왕복 접근 보상 반복 수령을 막고 접촉을 통한 정밀 이동과 수평 방향 힘을 유도하는지 시험 |
 
@@ -300,7 +302,7 @@ python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Simple-F
 | 항목 | Finger-v0 | Finger-v1 | Finger-v2 |
 | --- | --- | --- | --- |
 | Last Action | raw 액션에 tanh | clip한 raw 액션, tanh 없음 | v1 유지 |
-| 정책 출력 | Gaussian | 팔 raw 병진±0.5·회전±π/2, 손 drive 관절 한계 내 출력 | v1 유지 |
+| 정책 출력 | Gaussian | 일반 Gaussian. 실행 직전에 팔 raw 병진±0.5·회전±π/2, 손 drive 관절 한계로 clip | v1 유지 |
 | 팔 관절 속도 비용 | −0.03 | −0.06 | v1 유지 |
 | 팔 속도 종료 일정 | 부모 일정 | 2000 iteration까지2rad/s, 이후250마다 감소하여5000에서1rad/s | v1 유지 |
 | Goal Distance | 선형 최고 기록 개선 | v0 유지 | 가까울수록 민감한 로그 최고 기록 개선, 누적 곡선 면적 보정 |
@@ -314,7 +316,9 @@ python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Simple-F
 
 | 항목 | 변경 |
 | --- | --- |
-| 정책 출력 | Gaussian 샘플을 tanh와 affine 변환으로 각 raw 범위에 제한. deterministic play와 export도 동일 |
+| 정책 출력 | 일반 Gaussian Raw Action. PPO는 원본 샘플과 Gaussian log probability를 저장·계산. tanh/atanh 없음 |
+| 초기 분포 | Arm 평균0 부근·Hand 평균관절중앙 부근. std: 병진0.2, 회전0.5rad, 손 관절 범위 폭/6. 마지막 Linear 가중치를 초기값의0.01배로 하여 평균의 초기 상태 의존성을 작게 설정 |
+| Action 페널티 | 현재·직전 모두 clip 후·scale 전 명령의 차이 제곱합. weight·cap 유지 |
 | 병진 raw 범위 | 각 축±0.5. 기존 scale0.03을 나중에 곱하므로 상대 목표는 각 축±1.5cm |
 | 회전 raw 범위 | 각 축±π/2. 기존 scale0.15를 나중에 곱하므로 각 RPY 명령은±13.5도 |
 | 손 raw 범위 | 위 URDF6개 drive 범위. 하한0, 상한0.5864/1.4381/1.4381/1.4381/1.4381/1.1641rad |
@@ -324,7 +328,11 @@ python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Simple-F
 | 속도 종료 |0–2000 iteration은2rad/s.2250부터250마다1/12rad/s 감소,5000부터1rad/s |
 | 그 외 | 손 속도 비용−0.01, action-rate 비용, 물리 속도 제한 Arm3.14/Hand1rad/s와 OSC gains 등 보존 |
 
-정책의 tanh 변환과 **Last Action의 tanh 제거는 별개**다. PPO log-prob는 변환의 Jacobian을 포함하고, KL은 공통 가역 변환 아래의 원래 Normal 분포로 계산한다. entropy에는 Jacobian의 재매개화 표본 추정치를 포함한다. 표준편차는 양수를 보장하는 log parameter이며 latent log-std를 [−5,2]로 제한한다. std 로그는 latent Normal 기준이다. 입력 NaN/Inf는 유한값으로 바꾼 뒤 clip하지만, 이것이 모든 학습 발산을 방지한다는 보장은 아니다.
+2026-11-11 중대 이슈 수정 이후에는 **정책과 Last Action 모두 tanh/atanh를 사용하지 않는다.** 표준편차는 학습 가능한 log parameter의 exp이며, log probability·entropy·KL은 라이브러리의 일반 Gaussian 계산을 그대로 사용한다. 과거 latent log-std clamp도 제거했다. 관측과 액션의 정규화는 없다. 환경 step 진입 시 원본을 덮어쓰지 않는 clip을 수행하여 ActionManager에 전달한다. Last Action과 action-rate는 이 실행 명령을 공유하며, Action term의 방어 clip도 유지한다. reset 손 명령0은 변경하지 않는다. 기존 입력 NaN/Inf 방어와 NumericalPPO의 오류 검사·업데이트 복구/중단을 유지한다.
+
+축별 `PolicyAction/clip_fraction/<axis>`, `PolicyAction/mean/<axis>`, `PolicyAction/std/<axis>`를 TensorBoard에 기록한다. clip 비율은 scale 전 범위를 벗어난 원본 샘플 비율, mean/std는 raw Gaussian 값이다. 각각 policy step의 병렬 환경 평균을 계산하고 logger가 rollout 구간 평균을 기록한다.
+
+Deterministic play도 환경 입력에서 clip한다. **JIT/ONNX 정책 export 자체는 무제한 Gaussian 평균을 출력하므로**, 외부 배포 소비자는 같은 축별 clip → 기존 scale 순서를 적용해야 한다. 과거 tanh 정책 checkpoint는 출력 의미가 달라 strict=False여도 직접 로딩을 거부한다. 수정 후 Gaussian checkpoint의 저장·로드·JIT 일치만 CPU에서 확인했다. 장기 학습 안정성은 별도 검증이 필요하다.
 
 ### Finger-v2
 
@@ -365,7 +373,7 @@ v0와 v1은 차원은 같지만 Last Action 의미·정책 분포/저장 paramet
 
 | 항목 | 최종 구성 |
 | --- | --- |
-| 관측·제어 | Finger-v1 그대로: policy66+obstacles64, 액션12D(팔6+손6), bounded 정책과 입력 clip, Last Action은 clip한 raw 값 |
+| 관측·제어 | Finger-v1 그대로: policy66+obstacles64, 액션12D(팔6+손6), 일반 Gaussian 정책과 입력 clip, Last Action은 clip한 raw 값 |
 | 속도·커리큘럼 | 팔 속도 비용−0.06, 속도 종료2→1rad/s(2000–5000 iteration,250 간격). DeadZone·나머지 보상 일정은 Finger-v1 유지 |
 | Reach | Prof-v1과 동일한 `InverseDistanceReach`, weight30. 현재 물체3D BBOX 중심–EEF 거리10cm 이내 최대, 부모 초기 예산·시간 보정 유지. 후퇴 목표 전환 없음 |
 | Distance | Finger-v2의 면적 보정 로그 최고 기록 개선, epsilon1cm, **weight120**. 현재 GT XY 거리로 중심0까지 개선 가능 |
@@ -416,7 +424,7 @@ python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Simple-S
 - `mdp/action_functions/sweep_simple.py`, `mdp/observation_functions/sweep_simple.py`: Finger의 독립 위치 제어·실제 관절 위치 관측.
 - `agent/sweep_simple_models.py`: Finger의66D 직접 관측과64D 장애물 입력을 받는 모델.
 - `mdp/common/sweep_simple_force.py`: Semi-Prof의 타겟 법선·마찰 집계와 physics substep 평균.
-- `agent/sweep_simple_distributions.py`: v1/v2 범위 제한 정책 분포·PPO likelihood·export.
+- `agent/sweep_simple_distributions.py`: v1/v2·Semi-Prof 일반 Gaussian 초기화·액션 진단·구 tanh checkpoint 거부.
 - `mdp/action_functions/sweep_simple_osc.py`, `mdp/termination_functions/sweep_simple.py`: v1/v2 OSC 입력 방어와 v2 성공 판정.
 - `agent/sweep_simple_ppo_cfg.py`: 독립 PPO 기본과 열 개 로그 실험명.
 - `__init__.py`: 열 개 Gym ID 등록.
