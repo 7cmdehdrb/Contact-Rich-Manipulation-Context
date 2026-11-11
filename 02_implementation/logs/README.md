@@ -1,5 +1,25 @@
 # Holding · Final 개발 로그
 
+- 2026-11-11 **전체 환경 Action 변화 비용 상한 제거**: 활성 inspire_sweep_baseline 전 계열의 action-rate 출력 cap과 관련 설정 제거. 가중치·입력 처리·다른 비용 상한 유지. 과거 문서의 action-rate cap100 설명보다 이번 계약이 우선한다. [기록](2026-11-11_action_rate_uncapped.md).
+
+- 2026-11-11 **Finger-v1 속도 조건 변경**: 팔 속도 종료1.0rad/s 고정·해당 커리큘럼 제거·팔 비용−0.03. v2/Semi-Prof 및 세 Raw 자식에도 상속. 액션·Last Action·PPO 및 다른 일정 유지. [기록](2026-11-11_finger_v1_fixed_velocity.md).
+
+- 2026-11-11 **Wrench 실행·관측 Clip 적용**: 참고 예제와 같은 센서 범위 Clip→Scale→모멘트 보정, 손6축 URDF Raw Clip, Last Action은 tanh 없이 Clip된 Raw12D. PPO 원본 샘플·기존 action-rate·고정1rad/s 종료 유지. [계약·검증](2026-11-11_finger_wrench_action_clipping.md).
+
+- 2026-11-11 **Wrench 팔 속도 종료 수정**: 기존 Finger-v0-Wrench ID의 임계값을1.0rad/s 고정으로 변경하고 해당 커리큘럼만 비활성화했다. 부모·제어기·보상·다른 일정 보존. [후속 기록](2026-11-11_finger_v0_wrench_osc.md#후속-변경-팔-속도-종료10rads-고정).
+
+- 2026-11-11 **Simple 최종 환경 문서 갱신**: Test/Wrench를 포함한15개 ID와 Finger 제어·종료 비교표, 프레임 차이 및 검증 범위를 정리했다. 코드 변경 없음. [기록](2026-11-11_sweep_simple_final_documentation.md).
+
+- [2026-11-11 Finger-v0-Wrench 센서 Wrench OSC](2026-11-11_finger_v0_wrench_osc.md): Finger-v0 직접 상속·팔 제어만 변경·모멘트 원점 보정·부모 보존.
+
+- [2026-11-11 Finger-v0-Test 고정 속도 종료](2026-11-11_finger_v0_test_velocity_termination.md): Finger-v0 직접 상속·팔1.0rad/s 고정 종료·관련 커리큘럼만 제거.
+
+- [2026-11-11 Raw 환경 분리·원환경 play 복원](2026-11-11_finger_raw_environment_split.md): 기존3개 ID 롤백·Raw3개 ID 추가, Semi-Prof5% 상한 제거 유지.
+
+- [2026-11-11 Finger Raw Action 복원](2026-11-11_finger_raw_action_restore.md): 추가 Clip 제거·Last Action tanh·속도 비용−0.03 복원, 터미네이션 보존.
+
+- [2026-11-11 Semi-Prof 보상 순서 오류](2026-11-11_semi_prof_reward_order_incident.md): Wrench 활성화 시 중단 재현·사용자 지시에 따른5% 상한/순서 제약 제거·실제 RewardManager 커리큘럼 회귀.
+
 - [2026-11-11 중대 이슈: Gaussian 액션 클리핑 전환](2026-11-11_gaussian_action_clipping_incident.md): Finger-v1/v2·Semi-Prof 공유 정책의 gradient 오류 재현·tanh/atanh 제거·원본 PPO 샘플과 실행 명령 분리·회귀 검증.
 
 현재 계열과 공통 작업 기록을 안내한다. 이전 환경의 로그 색인은 [정리 전 백업](../history/2026-10-27_agent_context/README.md)에 보존했다. 개별 과거 로그는 변경하지 않는다.

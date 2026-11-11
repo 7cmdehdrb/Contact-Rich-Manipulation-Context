@@ -1,5 +1,25 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-11 **전체 환경 Action 변화 비용 상한 제거**: 활성 inspire_sweep_baseline 전 계열의 action-rate 출력 cap과 관련 설정 제거. 가중치·입력 처리·다른 비용 상한 유지. 과거 문서의 action-rate cap100 설명보다 이번 계약이 우선한다. [기록](logs/2026-11-11_action_rate_uncapped.md).
+
+2026-11-11 **Finger-v1 속도 조건 변경**: 팔 속도 종료1.0rad/s 고정·해당 커리큘럼 제거·팔 비용−0.03. v2/Semi-Prof 및 세 Raw 자식에도 상속. 액션·Last Action·PPO 및 다른 일정 유지. [기록](logs/2026-11-11_finger_v1_fixed_velocity.md).
+
+2026-11-11 **Wrench 실행·관측 Clip 적용**: 참고 예제와 같은 센서 범위 Clip→Scale→모멘트 보정, 손6축 URDF Raw Clip, Last Action은 tanh 없이 Clip된 Raw12D. PPO 원본 샘플·기존 action-rate·고정1rad/s 종료 유지. [계약·검증](logs/2026-11-11_finger_wrench_action_clipping.md).
+
+2026-11-11 **Wrench 팔 속도 종료 수정**: 기존 Finger-v0-Wrench ID의 임계값을1.0rad/s 고정으로 변경하고 해당 커리큘럼만 비활성화했다. 부모·제어기·보상·다른 일정 보존. [후속 기록](logs/2026-11-11_finger_v0_wrench_osc.md#후속-변경-팔-속도-종료10rads-고정).
+
+2026-11-11 **Simple 최종 환경 문서 갱신**: Test/Wrench를 포함한15개 ID와 Finger 제어·종료 비교표, 프레임 차이 및 검증 범위를 정리했다. 코드 변경 없음. [기록](logs/2026-11-11_sweep_simple_final_documentation.md).
+
+2026-11-11 **Finger-v0-Wrench 추가**: Finger-v0 직접 상속, 팔 액션만 AXIA80 센서 원점·축 기준 wrench_abs OSC로 변경. 힘10N/모멘트1N·m scale, 중력 보상·기존 effort 방어 유지, native 모멘트 원점 보정. 손·관측·보상·종료·커리큘럼 보존. CPU67개 통과, GPU 미검증. [계약·검증](logs/2026-11-11_finger_v0_wrench_osc.md).
+
+2026-11-11 **Finger-v0-Test 추가**: Finger-v0 직접 상속, 팔 절댓값 관절 속도>1.0rad/s 실패 종료를 고정 적용하고 해당 임계값 커리큘럼만 제거했다. 나머지 구성·다른 커리큘럼·부모 환경 보존. CPU65개 통과, GPU/PhysX·학습 미검증. [변경·검증](logs/2026-11-11_finger_v0_test_velocity_termination.md).
+
+2026-11-11 **현재 계약: 원환경 롤백·Raw ID 분리**. 기존 Finger-v1/v2·Semi-Prof-v0를 실행 Clip·Clip된 Last Action·팔 비용−0.06으로 복원해 기존 ID로 play한다. Clip 제거·tanh Last Action·비용−0.03은 각 부모를 직접 상속한 Finger-Raw-v1/Finger-Raw-v2/Semi-Prof-Raw-v0로 분리했다. 속도 터미네이션 유지, Semi-Prof5% 상한 제거는 원환경에도 유지. [ID·play·대조·검증](logs/2026-11-11_finger_raw_environment_split.md). 아래 직접 수정 이력은 이 결정으로 대체된다.
+
+2026-11-11 **최종 후속 변경: Finger-v1/v2·Semi-Prof-v0**. 팔 Joint Velocity 비용−0.06→−0.03, 추가 Raw Action Clip 삭제, Last Action은 tanh(raw action)으로 복원했다. 제어·PPO·action-rate는 원본 Raw Action. 일반 Gaussian·초기 분포·속도 종료2→1rad/s(2000–5000/250)·Semi-Prof5% 상한 제거는 유지. 과거 bounded 정책 복원 아님. [변경·검증](logs/2026-11-11_finger_raw_action_restore.md). 아래 동일 날짜의 사건 기록보다 이 계약이 우선한다.
+
+2026-11-11 **Semi-Prof 중대 이슈 후속 수정**: 양의 `force_direction`이 부모 `wrench_change` 뒤에 배치되어 Wrench 활성화 시 순서 검사로 중단됐다. 사용자 후속 지시로 Semi-Prof의 양의 보상 연동5% 상한과 순서 의존을 제거했다. Wrench 변화량·가중치·일정·Gaussian 정책은 유지한다. 실제 RewardManager/커리큘럼 CPU 회귀와 관련92개 검사 통과, GPU 학습 미검증. [원인·검증 누락·수정](logs/2026-11-11_semi_prof_reward_order_incident.md).
+
 2026-11-11 **중대 이슈: Finger-v1/v2·Semi-Prof PPO gradient 비유한값**. 공유 tanh→atanh 정책의 포화·역복원 경로에서 동일 오류를 CPU 재현했다. 일반 Gaussian + 실행 직전 clip으로 수정: PPO 원본 샘플 보존, Last Action/action-rate는 clip 후 raw 값, 정규화 없음. 축별 초기 분포와 진단을 적용하고 구 tanh checkpoint 직접 Resume를 거부한다. 원격 실패 dump 미확보·GPU 장기 학습 미검증. [사건·근거·검증](logs/2026-11-11_gaussian_action_clipping_incident.md). 아래 초기 구현 기록보다 이 수정 계약이 우선한다.
 
 2026-11-11 **물체 스폰 영역 시각화 삭제**: 사용자 요청으로 Simple 베이스와 Relative-IK v0_2_2_4의 표시 구현·설정·전용 분류 함수·train/play 활성화 코드를 모두 제거했다. 실제 RED/WHITE 배치·IK·보상·종료는 유지한다. [범위·검증](logs/2026-11-11_remove_spawn_region_visualization.md).
