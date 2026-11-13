@@ -1,5 +1,9 @@
 # Holding · Final 개발 로그
 
+- 2026-11-13 **Finger-ForceDirection-v0 추가**: Finger-v0-Test 직접 자식. 기존 힘 방향 보상0.33 추가(방향 무시1cm·실제 접촉/수평1N 필요), 목표 내 접촉 간주3→1cm. 성공 종료/메트릭3cm·Clip·Last Action·PPO·기존 보상 보존. 장기 학습 개시 보고 없음. [계약·리뷰·검증](2026-11-13_finger_test_force_direction.md).
+
+- 2026-11-13 **Simple 학습 현황 정정(사용자 보고)**: 기존 Finger-v1/v2·Semi-Prof-v0는 실패·방안 잠정 폐기. 과도한 손 동작 대응을 우선하며 현재 .180에서 Finger-v0-Test, .250에서 Prof-v2 학습 중. v1 실패 후 Test를 수정한 네이밍 혼선은 기록만 보존한다. 실제 Prof 변경 대상은 Prof-v1 자식 Prof-v2이며 Prof-v0 직접 수정이 아니다. [상태·경위](2026-11-13_simple_training_status.md).
+
 - 2026-11-13 **Prof-v2 손6축 후속 변경**: 해당 ID에만 Finger와 같은 drive6관절 관측·절대 rad 제어를 적용했다. 액션12D·policy66D+obstacles64D, PPO 모델·action-rate 손6채널·zero-radian reset 연동. Runner Clip±π/2·raw Last Action·팔1rad/s 종료·접촉 높이12cm 유지. Prof-v1/Finger 유지, 구8D Prof-v2 checkpoint 직접 재개 불가. [변경·검증](2026-11-13_sweep_simple_prof_v2.md#후속-변경-prof-v2-손6차원-관측제어).
 
 - 2026-11-13 **Simple Prof-v2 추가**: Prof-v1 직접 상속. 팔 속도 종료1.0rad/s 고정·해당 커리큘럼 제거, Runner `clip_actions=π/2`, 접촉 조건부 Goal Distance/방향 비용의 EEF 높이15→12cm. Last Action은 Clip 후 raw 입력·tanh 제거, 보상식/계수 보존. CPU69개·GPU64환경/2iterations 검증, 장기 행동 개선 미검증. [변경·검증](2026-11-13_sweep_simple_prof_v2.md).

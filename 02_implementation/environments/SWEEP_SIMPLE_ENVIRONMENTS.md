@@ -1,6 +1,10 @@
 # Sweep Simple 환경 계열
 
-2026-11-13 **Prof-v2 추가, 현재 등록16개 ID**. Prof-v1에서 속도 종료·Runner Clip·Last Action·접촉 보상 높이를 변경했고, 후속 지시로 Prof-v2에만 손6축 관측·제어를 적용했다. [Prof-v2 계약](#prof-v2-속도-제한과-접촉-높이) · [개발·검증](../logs/2026-11-13_sweep_simple_prof_v2.md).
+2026-11-13 **Finger-ForceDirection-v0 추가, 현재17개 ID**. Test가 안정적으로 동작한다는 가정 아래 정확도 향상을 시험하는 새 자식이다. 보상의1cm 예외와 성공 판정의3cm는 의도적으로 분리했다. [계약](#finger-forcedirection-v0-1cm-보상과-3cm-성공) · [리뷰·검증](../logs/2026-11-13_finger_test_force_direction.md).
+
+2026-11-13 **현재 우선순위·학습 현황(사용자 보고)**: 기존 Finger-v1/v2·Semi-Prof-v0 학습은 실패했고 해당 방안은 잠정 폐기했다. 우선 지나치게 빠른 손 동작을 다룬다. 현재 **.180: Finger-v0-Test**, **.250: Prof-v2 (`inspire_sweep_simple_prof_v2`)** 학습 중이다. [현재 상태·네이밍 경위](#학습-현황과-후속-방향). 아래 과거 구현 기록은 현재 학습 진행을 의미하지 않는다.
+
+2026-11-13 **Prof-v2 추가 당시 등록16개 ID**. Prof-v1에서 속도 종료·Runner Clip·Last Action·접촉 보상 높이를 변경했고, 후속 지시로 Prof-v2에만 손6축 관측·제어를 적용했다. [Prof-v2 계약](#prof-v2-속도-제한과-접촉-높이) · [개발·검증](../logs/2026-11-13_sweep_simple_prof_v2.md).
 
 2026-11-13 **Finger-v0-Test 실행 경계 변경**: Runner `clip_actions=π/2`로 12축을 OSC scale 전에 공통 제한하고 Last Action은 Clip 후 manager 입력을 그대로 관측한다. tanh·추가 관측 Clip·action-rate 비용 cap 없음. 다른 환경 유지. [변경·검증](../logs/2026-11-13_finger_v0_test_runner_clip.md).
 
@@ -12,9 +16,9 @@
 
 원환경/Raw 분리는 유지한다. Finger-v1/v2·Semi-Prof-v0는 실행 Clip·Clip된 Last Action, 대응 Raw ID는 실행 Clip 없음·Last Action tanh다. Semi-Prof5% 상한 제거는 양쪽에 유지한다. [비교·play](#raw-파생-환경과-원환경-play).
 
-2026-11-11 **중대 이슈 수정 — Finger-v1/v2·Semi-Prof-v0**: 정책의 tanh/atanh 변환을 제거하고 일반 Gaussian으로 변경했다. PPO는 Clip 전 샘플, 제어·Last Action·action-rate는 Clip 후 raw 명령을 사용한다. 정규화 없음. 이전 tanh 정책 checkpoint의 직접 Resume는 거부하며 신규 학습이 기준이다. [원인·변경·검증·미검증 범위](../logs/2026-11-11_gaussian_action_clipping_incident.md). 아래 상속도의 학습 현황 메모는 기존 사용자 기록이며, 수정 후 학습 검증을 뜻하지 않는다.
+2026-11-11 **중대 이슈 수정 — Finger-v1/v2·Semi-Prof-v0**: 정책의 tanh/atanh 변환을 제거하고 일반 Gaussian으로 변경했다. PPO는 Clip 전 샘플, 제어·Last Action·action-rate는 Clip 후 raw 명령을 사용한다. 정규화 없음. 이전 tanh 정책 checkpoint의 직접 Resume는 거부하며 신규 학습이 기준이다. [원인·변경·검증·미검증 범위](../logs/2026-11-11_gaussian_action_clipping_incident.md). 이 문단은 당시 수정 이력이며, 현재 실험 상태는 아래 학습 현황을 따른다.
 
-2026-11-11 기준 실제 코드에 근거한 환경 설명서. 베이스 전체 구성과 파생 환경의 변경·실험 의도를 함께 정리한다. 기존 실험 환경에서 상속을 분리한 계열이며, 실제 코드의 후속 변경도 반영한다. [환경 안내](../08_ACTIVE_ENVIRONMENTS.md) · [개발·검증 기록](../logs/2026-11-10_sweep_simple_family.md).
+2026-11-13까지의 실제 코드 변경과 사용자 학습 현황을 반영한 환경 설명서. 베이스 전체 구성과 파생 환경의 변경·실험 의도를 함께 정리한다. 기존 실험 환경에서 상속을 분리한 계열이며, 실제 코드의 후속 변경도 반영한다. [환경 안내](../08_ACTIVE_ENVIRONMENTS.md) · [개발·검증 기록](../logs/2026-11-10_sweep_simple_family.md).
 
 2026-11-10 후속 변경: **Simple-v0·Simple-v1·Simple-Hard-v0는 타겟 root와 목표의 XY 거리가3cm 미만이면 접촉 유지 count/reward를 즉시20으로 인정한다.** 접촉·이력·EEF 높이 조건을 우회한다. Prof 계열은 접촉 유지 보상이 없어 영향이 없다. 따라서 Simple-v0/v1은 이제 과거 v0_2_2_4/6와 이 한 가지 차이가 있다. [변경 기록](../logs/2026-11-10_simple_goal_full_contact.md).
 
@@ -31,17 +35,18 @@ ManagerBasedRLEnvCfg
 └── SweepSimpleEnvCfg                         Inspire-Sweep-Simple-v0
     ├── SweepSimpleProfEnvCfg                 Inspire-Sweep-Simple-Prof-v0
     │   └── SweepSimpleProfV1EnvCfg           Inspire-Sweep-Simple-Prof-v1  -> .250 학습 종료
-    │       ├── SweepSimpleProfV2EnvCfg       Inspire-Sweep-Simple-Prof-v2
+    │       ├── SweepSimpleProfV2EnvCfg       Inspire-Sweep-Simple-Prof-v2 -> .250 학습 중
     │       └── SweepSimpleProfHardEnvCfg     Inspire-Sweep-Simple-Prof-Hard-v0 
     └── SweepSimpleV1EnvCfg                   Inspire-Sweep-Simple-v1
         ├── SweepSimpleFingerEnvCfg           Inspire-Sweep-Simple-Finger-v0 -> .30 학습 종료
         │   ├── SweepSimpleFingerWrenchEnvCfg Inspire-Sweep-Simple-Finger-v0-Wrench
-        │   ├── SweepSimpleFingerV0TestEnvCfg Inspire-Sweep-Simple-Finger-v0-Test
-        │   └── SweepSimpleFingerV1EnvCfg     Inspire-Sweep-Simple-Finger-v1 -> .30 학습 중
+        │   ├── SweepSimpleFingerV0TestEnvCfg Inspire-Sweep-Simple-Finger-v0-Test -> .180 학습 중
+        │   │   └── SweepSimpleFingerForceDirectionEnvCfg Inspire-Sweep-Simple-Finger-ForceDirection-v0
+        │   └── SweepSimpleFingerV1EnvCfg     Inspire-Sweep-Simple-Finger-v1 -> 이전 .30 실행 실패, 방안 잠정 폐기
         │       ├── SweepSimpleFingerRawV1EnvCfg Inspire-Sweep-Simple-Finger-Raw-v1
-        │       ├── SweepSimpleFingerV2EnvCfg Inspire-Sweep-Simple-Finger-v2 -> .180 학습 중
+        │       ├── SweepSimpleFingerV2EnvCfg Inspire-Sweep-Simple-Finger-v2 -> 이전 .180 실행 실패, 방안 잠정 폐기
         │       │   └── SweepSimpleFingerRawV2EnvCfg Inspire-Sweep-Simple-Finger-Raw-v2
-        │       └── SweepSimpleSemiProfEnvCfg Inspire-Sweep-Simple-Semi-Prof-v0 -> .250 학습 중
+        │       └── SweepSimpleSemiProfEnvCfg Inspire-Sweep-Simple-Semi-Prof-v0 -> 이전 .250 실행 실패, 방안 잠정 폐기
         │           └── SweepSimpleSemiProfRawEnvCfg Inspire-Sweep-Simple-Semi-Prof-Raw-v0
         └── SweepSimpleHardEnvCfg             Inspire-Sweep-Simple-Hard-v0 -> .180 학습 종료. Finger-v0이 우수함
 ```
@@ -58,6 +63,7 @@ ManagerBasedRLEnvCfg
 | `Inspire-Sweep-Simple-Finger-v0` | Simple-v1 | 손 관측·명령을 독립 구동6관절로 확장 | `inspire_sweep_simple_finger_v0` |
 | `Inspire-Sweep-Simple-Finger-v0-Wrench` | Finger-v0 | 센서 wrench OSC·실행/Last Action Clip·팔 속도 종료1rad/s 고정 | `inspire_sweep_simple_finger_v0_wrench` |
 | `Inspire-Sweep-Simple-Finger-v0-Test` | Finger-v0 | Runner Clip±π/2·Last Action 그대로·팔 속도 종료1.0rad/s 고정 | `inspire_sweep_simple_finger_v0_test` |
+| `Inspire-Sweep-Simple-Finger-ForceDirection-v0` | Finger-v0-Test | 힘 방향0.33 추가·방향 예외/접촉 간주1cm, 성공3cm 유지 | `inspire_sweep_simple_finger_force_direction_v0` |
 | `Inspire-Sweep-Simple-Finger-v1` | Finger-v0 | Gaussian 정책·실행 Clip·Clip된 Last Action, 팔 속도 종료1rad/s 고정 | `inspire_sweep_simple_finger_v1` |
 | `Inspire-Sweep-Simple-Finger-v2` | Finger-v1 | 로그 Distance, 연속 체류 게이트, 후퇴 Reach 및 성공 판정 | `inspire_sweep_simple_finger_v2` |
 | `Inspire-Sweep-Simple-Semi-Prof-v0` | Finger-v1 | 접촉 조건부 로그 Distance120·멀어짐−31.128·3D 힘 방향0.33, 접촉 유지 삭제 | `inspire_sweep_simple_semi_prof_v0` |
@@ -75,6 +81,7 @@ ManagerBasedRLEnvCfg
 | --- | --- | --- | --- | --- | --- |
 | `Finger-v0` | pose_rel·EEF | 없음 | tanh(raw) | −0.03 | 4→2rad/s |
 | `Finger-v0-Test` | pose_rel·EEF | Runner에서 12축 공통±π/2 | Clip 후 manager raw 그대로 | −0.03 | **1rad/s 고정** |
+| `Finger-ForceDirection-v0` | pose_rel·EEF | Test와 동일 | Test와 동일 | −0.03 | **1rad/s 고정** |
 | `Finger-v0-Wrench` | **wrench_abs·AXIA80 센서** | 센서 범위·손 URDF | Clip된 raw | −0.03 | **1rad/s 고정** |
 | `Finger-v1` | pose_rel·EEF | 있음 | Clip된 raw | −0.03 | 1rad/s 고정 |
 | `Finger-v2` | pose_rel·EEF | 있음 | Clip된 raw | −0.03 | 1rad/s 고정 |
@@ -89,6 +96,47 @@ Wrench의 센서 기준 액션과 기존 EEF 기준 `wrist_wrench` 관측을 구
 
 ## 학습 현황과 후속 방향
 
+**2026-11-13 사용자 보고를 현재 상태로 적용한다.** 이번 갱신은 원격 프로세스·학습 로그·영상을 새로 조회한 결과가 아니다. 아래 `.180`·`.250`은 사용자가 지정한 학습 머신 표기를 그대로 사용한다.
+
+| 환경 | 현재 상태 | 머신 | 현재 판단·목적 |
+| --- | --- | --- | --- |
+| `Inspire-Sweep-Simple-Finger-v0-Test` | **학습 중** | .180 | Finger-v1 학습 중단 후 이 ID에 Runner Action Clip·raw Last Action을 적용. 고정 팔 속도 종료와 함께 급한 과속 문제부터 확인 |
+| `Inspire-Sweep-Simple-Prof-v2` | **학습 중** | .250 | 실험명 `inspire_sweep_simple_prof_v2`. Prof 계열에도 유사한 원인이 있는지 보려는 실험. Runner Clip·고정 종료·접촉 높이12cm·손6축 적용 |
+| `Inspire-Sweep-Simple-Finger-v1` | **학습 실패·방안 잠정 폐기** | 이전 .30 | 사용자가 학습이 터졌다고 보고. 후속 수정은 v1 자체가 아니라 v0-Test에 적용됨 |
+| `Inspire-Sweep-Simple-Finger-v2` | **학습 실패·방안 잠정 폐기** | 이전 .180 | 기존 문서의 진행 중 표기를 정정. 정밀 접근·체류·후퇴 방안보다 급한 과속 문제 해결을 우선 |
+| `Inspire-Sweep-Simple-Semi-Prof-v0` | **학습 실패·방안 잠정 폐기** | 이전 .250 | 기존 문서의 진행 중 표기를 정정. 보상 구조·힘 방향 방안은 잠정 보류 |
+| `Inspire-Sweep-Simple-Finger-v0-Wrench` | 보류 | 현재 실행 보고 없음 | 앞선 환경 자체 문제로 보류한 상태 유지 |
+
+기존에 “학습 중”으로 표시했던 Finger-v1/v2·Semi-Prof-v0는 모두 실패했다는 사용자 판단을 반영했다. 세 환경의 실패 형태가 모두 동일한 수치 오류였다고 단정하지 않는다. **잠정 폐기는 해당 실험 방안의 우선순위를 내린다는 뜻이며, 코드·등록 ID·과거 결과를 삭제한다는 뜻이 아니다.** Raw 파생 환경 등 별도 실행 보고가 없는 ID에 개별 실패 결과를 추정해 붙이지 않는다.
+
+### 네이밍과 수정 대상 경위
+
+1. `Inspire-Sweep-Simple-Finger-v1`의 학습이 터졌고, 그 대응 수정이 `Inspire-Sweep-Simple-Finger-v0-Test`에 적용됐다. 사용자는 이 대상/네이밍 선택이 잘못됐다고 회고했으며 **기록만 요청했다**. 현재 v0-Test를 v1의 새 이름이나 직접 자식으로 간주하지 않는다. 실제 부모는 계속 Finger-v0다. ID 변경·재번호 부여·수정의 v1 재적용은 하지 않았다.
+2. 이번 대응의 핵심은 **Action Clip 방식과 터미네이션 설정**이다. 두 현재 실험 모두 Runner `clip_actions=π/2`로 실행 입력을 제한하고, Last Action은 Clip 후 raw 값 그대로 사용하며, 팔 관절 속도 실패 종료는1.0rad/s 고정이다. Test의 종료 조건은 앞선 변경에서 이미 고정돼 있었고, 이번 수치 중단 대응에서는 Runner Clip·Last Action이 추가 변경됐다.
+3. 사용자가 “Prof-v0 쪽에도 비슷한 변경”이라고 표현한 것은 **Prof 계열에서도 같은 원인인지 확인하려는 실험 의도**로 기록한다. 실제 코드 변경 대상은 **Prof-v1을 직접 상속한 Prof-v2**이며, Prof-v0와 Prof-v1 자체는 수정하지 않았다. Prof-v2에는 접촉 조건부 높이15→12cm와 후속 손6축 관측·제어도 적용했다.
+
+새 `Finger-ForceDirection-v0`은 구현·단기 검증을 완료했으며 장기 학습 시작 보고는 없다. Test의 안정적 동작을 전제로 하는 정확도 실험이고, 위 .180/.250 실행 목록을 대체하지 않는다.
+
+현재 목표는 사용자가 지적한 **지나치게 빠른 손 동작**부터 해결하는 것이다. 다만 구현한1.0rad/s 실패 종료는 **팔6관절 속도** 조건이며 손가락 속도 종료가 아니다. Runner 액션 범위 제한도 실제 손/EEF 속도의 직접 제한과 동일하지 않다. 이 설정으로 과속·왕복 행동과 수치 중단이 해소되는지는 현재 두 학습 결과로 확인해야 한다. 공통 원인이라는 추정과 확정 진단을 구분한다. [기존 수치 중단 진단](../logs/2026-11-13_wr4_numerical_diagnosis.md).
+
+### 현재 학습 두 환경의 공통 계약
+
+| 항목 | Finger-v0-Test | Prof-v2 |
+| --- | --- | --- |
+| 직접 EnvCfg 부모 | Finger-v0 | Prof-v1 |
+| 손 관측/제어 | drive6관절 위치/절대 rad 목표 | 동일 |
+| 전체 액션·관측 | action12, policy66+obstacles64 | 동일 |
+| 실행 액션 제한 | Runner에서12축 공통±π/2, OSC scale 전 | 동일 |
+| Last Action | Clip 후 manager raw 그대로 | 동일 |
+| action-rate 비용 | 팔/손 각각6축 변화 제곱합, 별도 상한 없음 | 동일 |
+| 팔 관절 속도 종료 | 절댓값>1.0rad/s, 해당 curriculum 없음 | 동일 |
+| 접촉 관련 높이 | 부모 Finger 보상 조건 유지 | Goal Distance/방향 비용 EEF<12cm |
+
+기존 손 관절 URDF 목표 제한·OSC scale/회전 변환·토크 제한은 유지한다. “추가 후처리 없음”은 raw Action/Last Action에 별도 tanh나 bespoke Clip을 붙이지 않는다는 뜻이다. “패널티 상한 없음”은 **action-rate**에 해당하며, 관절 속도 비용 등의 기존 상한까지 제거했다는 뜻이 아니다. 두 환경은 보상 체계와 부모가 달라 Clip 효과만 분리한 비교 실험은 아니다.
+
+<details>
+<summary>2026-11-11 당시 관찰·후속 계획 — 현재 상태로 사용하지 않음</summary>
+
 2026-11-11 사용자 보고 기준이다. 아래는 사용자가 관찰한 학습 결과와 연구 방향이며, 이번 문서 갱신에서 학습 로그나 영상을 별도로 분석한 결과는 아니다.
 
 | 환경 | 상태 | 관찰 결과·판단 | 후속 방향 |
@@ -98,6 +146,9 @@ Wrench의 센서 기준 액션과 기존 EEF 기준 `wrist_wrench` 관측을 구
 | `Simple-Hard-v0` | 학습 결과 확인 중 | 결과 검토를 계속하고 있으나, 사용자 판단으로 Finger 계열의 결과가 좋아 후속 연구를 Finger 중심으로 진행할 예정 | Hard 결과 확인은 유지하며, 개발·학습의 우선 방향은 Finger 계열로 이동 |
 
 Prof-v1의 왕복 현상은 관찰된 결과이고, 거리 보상 구조가 원인이라는 것은 사용자의 현재 판단이다. 원인 분리 실험이나 정량 비교로 확정한 결론과 구분한다. Finger-v1/v2는 이미 구현되었지만, 이 보고만으로 해당 문제의 해결이나 학습 완료를 의미하지 않는다.
+
+
+</details>
 
 ## 베이스 환경: Inspire-Sweep-Simple-v0
 
@@ -440,6 +491,33 @@ python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Simple-F
 
 [개발·부모 대조·검증](../logs/2026-11-11_finger_v0_test_velocity_termination.md).
 
+## Finger-ForceDirection-v0: 1cm 보상과 3cm 성공
+
+`Inspire-Sweep-Simple-Finger-ForceDirection-v0`은 **Finger-v0-Test의 직접 자식**이다. 부모가 문제 없이 돌아간다는 가정 아래 힘 방향 보상을 더해 정확도 향상을 시험한다. 부모 안정성이 검증됐다는 선언은 아니며, .180의 Test와 별도 ID/실험명이다.
+
+주요 변경은 두 가지다. 기존 Semi-Prof의 힘 방향 보상(weight0.33, `min_force=1.0`, `near_radius=0.01`)을 추가하고, 기존 `hand_contact`의 목표 내 무조건 접촉 인정 반경만3cm에서1cm로 줄였다. Semi-Prof의 로그 거리 보상·후퇴 비용·접촉 보상 삭제·Wrench 비용 상한 제거는 가져오지 않는다.
+
+| 판정 | 새 환경 기준 | 의미 |
+| --- | --- | --- |
+| 힘 방향 각도 무시 | 현재 물체→목표 XY 거리 **<1cm** | 방향 점수1; 실제 접촉·유효한 수평 합력≥1N은 계속 필요 |
+| 무조건 접촉 보상 | 현재 물체→목표 XY 거리 **<1cm** | 실제 접촉·높이에 무관하게 기존 count/reward20 부여 |
+| 접촉 보상의1cm 밖 | 부모 그대로 | 실제 접촉2-of-3 이력·EEF15cm 미만, +1/−2 count 규칙 |
+| 성공 종료 | timeout에서 XY 거리 **<3cm**, 동시 실패 없음 | 부모 성공 함수 그대로; 목표에 들어온 즉시 종료하는 조건 아님 |
+| 목표 내부 비율 메트릭 | XY 거리 **≤3cm** | `goal_success_radius=0.03` 유지 |
+| timeout 성공률 메트릭 | 부모 성공 종료 결과 집계 | 따라서 실제 성공 판정은 위 `<3cm` 기준 |
+
+정확히1cm에서는 두 보상의 무조건 인정이 없다. 정확히3cm에서는 목표 내부 비율에는 포함되지만 성공 종료에는 포함되지 않는 **부모의 기존 경계 차이**를 보존했다.1cm와3cm를 하나의 설정으로 묶지 않았다.1cm 밖으로 다시 벗어나면 예외는 즉시 해제된다. 단, 접촉 보상의 기존 count 누적/감쇠 상태는 그대로 이어지며 실제 접촉 이력을 목표 점유로 위조하지 않는다.
+
+힘은 타겟 물체가 손에서 받는 **법선력+마찰력의3D 합력**을 physics substep별로 수집해 policy step 안에서 평균한다. 현재 물체→목표 벡터를 선반 XY 평면으로 투영한 방향과 비교하므로 목표를 지나치면 올바른 방향도 반전된다. 초기 지시 방향이나 손목 F/T 자체를 사용하지 않는다. 각도0°에서1,45°에서0.25,90° 이상에서0이며 weight0.33과 policy dt는 RewardManager가 적용한다.1cm 밖에서는 수직 힘도 각도에 포함되어 상부 누르기가 감점된다.1cm 안에서는 각도만 무시하며, 비접촉·약한 힘·유효하지 않은 샘플에는 지급하지 않는다.
+
+새 runtime은 Test와 같은 `SweepSimpleFingerEnv`를 직접 상속하고 접촉력 수집만 추가한다. Scene/센서·자산·reset 배치·팔/손 제어·관측66+64D·action12D·Runner Clip±π/2·raw Last Action·무상한 action-rate·팔 속도>1rad/s 종료·기타 커리큘럼·모델/PPO 설정은 유지한다. PPO 자식은 실험명만 바뀐다. 새 양의 보상은 부모 `wrench_change` 앞에 배치해 기존5% 양의 보상 연동 예산과 기존 항들 사이의 순서를 보존한다. 새 양의 보상이 예산 합계에 포함되는 것은 기존 비용 정의에 따른 결과다.
+
+```bash
+python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Simple-Finger-ForceDirection-v0 --headless
+```
+
+CPU76개와 GPU64환경·2iterations를 통과했다. 코드리뷰에서 요청 범위·부모 보존을 확인했다. 장기 안정성·정확도 개선과 부모 checkpoint 재개 성능은 미검증이다. 모델 입출력 차원은 Test와 같지만 이번 검증은 신규 학습으로 수행했다. [전체 변경·경계 테스트·코드리뷰](../logs/2026-11-13_finger_test_force_direction.md).
+
 ## Finger-v1/v2: 출력 범위와 정밀 이동·후퇴
 
 두 환경은 `Finger-v0 → Finger-v1 → Finger-v2` 순서로 직접 상속한다. 부모와 이전 Simple 환경은 보존한다. 관측66+64D, 액션12D, 손 구동관절 순서와 물리 자산은 동일하다.
@@ -588,7 +666,7 @@ python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Simple-S
 - physics dt0.01초, decimation2, policy dt0.02초, timeout10초, 기본2,048환경.
 - 타겟 cylinder1개·물리 장애물16개 고정 roster, 활성 장애물0–6 균등 추첨, 관측 슬롯16개.
 - 외접원 기반 RED/WHITE, 간격1cm, 안전 셀5mm, 기존 Warp IK 리셋과 시드 유지. GRAY 배치 없음. 호환 필드는 초기 구성 후 `None`으로 남는다.
-- 센서·물리 관절 제한·자산·마찰/질량 설정 유지. pose OSC의 gains는 유지하며, Finger-v0-Wrench만 motion 제어를 사용하지 않는 센서 기준 wrench OSC로 변경한다. Finger-v0-Test와 Finger-v0-Wrench는 팔 속도 종료를1rad/s로 고정한다. Finger-v0는 손 관측·제어와 차원을 변경하고, Finger-v1/v2는 Gaussian 초기 분포·실행 Clip·고정1rad/s 종료를 사용한다. Raw ID는 Clip 제거·Last Action tanh를 적용하며 팔 비용은 원환경과 같은−0.03이다. 속도 종료 임계값은 물리 관절 속도 제한과 별개다.
+- 센서·물리 관절 제한·자산·마찰/질량 설정 유지. pose OSC의 gains는 유지하며, Finger-v0-Wrench만 motion 제어를 사용하지 않는 센서 기준 wrench OSC로 변경한다. Finger-v0-Test·Finger-v0-Wrench·Prof-v2는 팔 속도 종료를1rad/s로 고정한다. Prof-v2는 Prof-v1의 보상 계열에 손6축 관측·제어와 Runner Clip을 적용한다. Finger-v0는 손 관측·제어와 차원을 변경하고, Finger-v1/v2는 Gaussian 초기 분포·실행 Clip·고정1rad/s 종료를 사용한다. Raw ID는 Clip 제거·Last Action tanh를 적용하며 팔 비용은 원환경과 같은−0.03이다. 속도 종료 임계값은 물리 관절 속도 제한과 별개다.
 - 기본은 목표 XY 거리3cm 미만이고 동시 실패가 없는10초 timeout을 success로 기록한다. Finger-v2와 이를 직접 상속하는 Finger-Raw-v2는 위 게이트 달성 이력으로 거리 조건을 대체한다. timeout과 success는 중첩되는 truncation 항목이며 기존 bootstrap 계약을 유지한다.
 - 최근 완료 에피소드10,000개(조기실패 포함) 안의 timeout/success count와 rate 유지. 같은 step 완료의 순서는 env ID 오름차순.
 - 물체 스폰 영역 시각화는2026-11-11 전체 삭제했다. Simple 베이스와 과거 Relative-IK v0_2_2_4의 marker·설정·표시 전용 계산·train/play 연결을 제거했으며, 실제 RED/WHITE 배치 계산은 유지한다. [삭제 기록](../logs/2026-11-11_remove_spawn_region_visualization.md).
@@ -598,7 +676,7 @@ python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Simple-S
 
 활성 패키지 `src/inspire_sweep_baseline/inspire_sweep_baseline` 기준:
 
-- `envs/sweep_simple_envs.py`: 열다섯 개 EnvCfg 조합.
+- `envs/sweep_simple_envs.py`: 열일곱 개 EnvCfg 조합.
 - `runtime/sweep_simple.py`: 독립 런타임 및 최근 에피소드 통계.
 - `assets/scenes/sweep_simple.py`: 독립 씬 구성.
 - `mdp/{actions,commands,observations,events,rewards,curricula,terminations}/sweep_simple.py`: 역할별 구성.
@@ -621,8 +699,13 @@ python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Simple-v
 
 나머지 버전은 위 표의 task ID로 교체한다. Finger-v0는 관측·액션 차원이 달라 기존8D 액션 체크포인트를 직접 재개할 수 없다. Finger-v0→v1도 정책 분포와 저장 parameter가 달라 무변환 resume을 지원하지 않는다. Finger-v1/v2의 모델 구조는 동일하지만 실제 학습 체크포인트 전이는 미검증이다.
 
-Finger-v0 도입 당시 CPU 검사는86개 통과·2개 skip이었다([당시 검증](../logs/2026-11-10_sweep_simple_finger.md#검증)). Finger-v1/v2 구현 후 기존 환경 회귀를 포함한 당시 CPU 검사는 **110개 통과·2개 skip**이었다([당시 검증](../logs/2026-11-11_sweep_simple_finger_v1_v2.md#검증)). GPU 드라이버 문제로 PhysX·GPU rollout·렌더링·학습 성능은 미검증이다.
+Finger-v0 도입 당시 CPU 검사는86개 통과·2개 skip이었다([당시 검증](../logs/2026-11-10_sweep_simple_finger.md#검증)). Finger-v1/v2 구현 후 기존 환경 회귀를 포함한 당시 CPU 검사는 **110개 통과·2개 skip**이었다([당시 검증](../logs/2026-11-11_sweep_simple_finger_v1_v2.md#검증)). 당시 GPU 드라이버 문제로 해당 버전의 PhysX·GPU rollout·렌더링·학습 성능은 미검증으로 기록됐다. 이후 사용자 보고의 학습 실패 상태와2026-11-13 Test/Prof-v2 단기 검증은 위 현재 현황 및 아래 후속 기록을 따른다.
 
 Semi-Prof-v0 추가 후 기존 계열 회귀를 포함한 CPU 검사는 **119개 통과·2개 skip**이다. 실제 GPU/PhysX·Collection Time·학습 효과는 미검증이다. [Semi-Prof 검증 범위](../logs/2026-11-11_sweep_simple_semi_prof.md#검증).
 
-최신 추가 환경 검증은 Finger-v0-Test **65개 통과**, Finger-v0-Wrench 추가 후 관련 회귀 **67개 통과**다. 검사 대상 파일이 달라 이전110/119개 결과와 총수를 직접 비교하지 않는다. [Test 검증](../logs/2026-11-11_finger_v0_test_velocity_termination.md#최종-대조와-검증) · [Wrench 검증](../logs/2026-11-11_finger_v0_wrench_osc.md#검증). 이는2026-11-11 문서 갱신 당시 결과다. 2026-11-13 Test 변경의 검증 결과는 [Runner Clip 변경 기록](../logs/2026-11-13_finger_v0_test_runner_clip.md)을 따른다.
+2026-11-11 당시 추가 환경 검증은 Finger-v0-Test **65개 통과**, Finger-v0-Wrench 추가 후 관련 회귀 **67개 통과**다. 검사 대상 파일이 달라 이전110/119개 결과와 총수를 직접 비교하지 않는다. [Test 검증](../logs/2026-11-11_finger_v0_test_velocity_termination.md#최종-대조와-검증) · [Wrench 검증](../logs/2026-11-11_finger_v0_wrench_osc.md#검증). 이는2026-11-11 문서 갱신 당시 결과다. 2026-11-13 Test 변경의 검증 결과는 [Runner Clip 변경 기록](../logs/2026-11-13_finger_v0_test_runner_clip.md)을 따른다.
+
+
+2026-11-13 최신 변경 검증: Finger-v0-Test Runner Clip·raw Last Action은 CPU66개 및 GPU64환경·2iterations를 통과했다. Prof-v2 손6축까지 반영한 관련 회귀는 CPU70개, GPU64환경·2iterations를 통과했다. [Test 검증](../logs/2026-11-13_finger_v0_test_runner_clip.md) · [Prof-v2 최종 검증](../logs/2026-11-13_sweep_simple_prof_v2.md#손6축-검증). 이는 단기 실행·설정 검증이며, 현재 .180/.250의 장기 학습 성공을 의미하지 않는다. 이번 문서 갱신에서는 학습을 새로 실행하지 않았다.
+
+2026-11-13 ForceDirection 추가 후 관련 CPU76개 및 GPU64환경·2iterations를 통과했다. [해당 검증](../logs/2026-11-13_finger_test_force_direction.md). 단기 실행 확인이며 장기 정확도 향상을 입증하지 않는다.
