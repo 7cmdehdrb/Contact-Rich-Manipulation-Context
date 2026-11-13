@@ -1,5 +1,11 @@
 # 현재 개발 인계
 
+2026-11-13 **Prof-v2 손6축 후속 변경**: 해당 ID에만 Finger와 같은 drive6관절 관측·절대 rad 제어를 적용했다. 액션12D·policy66D+obstacles64D, PPO 모델·action-rate 손6채널·zero-radian reset 연동. Runner Clip±π/2·raw Last Action·팔1rad/s 종료·접촉 높이12cm 유지. Prof-v1/Finger 유지, 구8D Prof-v2 checkpoint 직접 재개 불가. [변경·검증](../02_implementation/logs/2026-11-13_sweep_simple_prof_v2.md#후속-변경-prof-v2-손6차원-관측제어).
+
+2026-11-13 **Simple Prof-v2 추가**: Prof-v1 직접 상속. 팔 속도 종료1.0rad/s 고정·해당 커리큘럼 제거, Runner `clip_actions=π/2`, 접촉 조건부 Goal Distance/방향 비용의 EEF 높이15→12cm. Last Action은 Clip 후 raw 입력·tanh 제거, 보상식/계수 보존. CPU69개·GPU64환경/2iterations 검증, 장기 행동 개선 미검증. [변경·검증](../02_implementation/logs/2026-11-13_sweep_simple_prof_v2.md).
+
+2026-11-13 **Finger-v0-Test Runner Clip**: 해당 ID에만 `clip_actions=π/2`를 적용한다. 12축 공통 Clip은 OSC scale 전이며, Last Action은 manager 입력 그대로(tanh·추가 Clip 없음), action-rate는 Clip 후 current/previous 값의 제곱합·cap 없음. 부모·v1·Wrench 유지. [변경·검증](../02_implementation/logs/2026-11-13_finger_v0_test_runner_clip.md).
+
 2026-11-11 **전체 환경 Action 변화 비용 상한 제거**: 활성 inspire_sweep_baseline 전 계열의 action-rate 출력 cap과 관련 설정 제거. 가중치·입력 처리·다른 비용 상한 유지. 과거 문서의 action-rate cap100 설명보다 이번 계약이 우선한다. [기록](../02_implementation/logs/2026-11-11_action_rate_uncapped.md).
 
 2026-11-11 **Finger-v1 속도 조건 변경**: 팔 속도 종료1.0rad/s 고정·해당 커리큘럼 제거·팔 비용−0.03. v2/Semi-Prof 및 세 Raw 자식에도 상속. 액션·Last Action·PPO 및 다른 일정 유지. [기록](../02_implementation/logs/2026-11-11_finger_v1_fixed_velocity.md).
