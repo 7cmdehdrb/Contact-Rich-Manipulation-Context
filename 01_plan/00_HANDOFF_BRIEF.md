@@ -1,5 +1,7 @@
 # 현재 개발 인계
 
+2026-11-13 **Simple17환경 EEF 높이12cm 통일·ForceDirection cosine**: 활성 보상 eef_height_limit를 모두0.12로 고정. Finger-ForceDirection-v0만 힘 방향 원점수를 signed cosine(정방향+1·직각0·반대−1)으로 변경했다.1cm 방향/접촉 예외·성공3cm·가중치0.33 유지. Semi-Prof 방향식·충돌/후퇴 높이는 유지. [변경·검증](../02_implementation/logs/2026-11-13_simple_height_cosine.md).
+
 2026-11-13 **Finger-ForceDirection-v0 추가**: Finger-v0-Test 직접 자식. 기존 힘 방향 보상0.33 추가(방향 무시1cm·실제 접촉/수평1N 필요), 목표 내 접촉 간주3→1cm. 성공 종료/메트릭3cm·Clip·Last Action·PPO·기존 보상 보존. 장기 학습 개시 보고 없음. [계약·리뷰·검증](../02_implementation/logs/2026-11-13_finger_test_force_direction.md).
 
 2026-11-13 **Simple 학습 현황 정정(사용자 보고)**: 기존 Finger-v1/v2·Semi-Prof-v0는 실패·방안 잠정 폐기. 과도한 손 동작 대응을 우선하며 현재 .180에서 Finger-v0-Test, .250에서 Prof-v2 학습 중. v1 실패 후 Test를 수정한 네이밍 혼선은 기록만 보존한다. 실제 Prof 변경 대상은 Prof-v1 자식 Prof-v2이며 Prof-v0 직접 수정이 아니다. [상태·경위](../02_implementation/environments/SWEEP_SIMPLE_ENVIRONMENTS.md#학습-현황과-후속-방향).

@@ -1,5 +1,7 @@
 # Sweep Simple 환경 계열
 
+2026-11-13 **Simple17환경 EEF 높이12cm 통일·ForceDirection cosine**: 활성 보상 eef_height_limit를 모두0.12로 고정. Finger-ForceDirection-v0만 힘 방향 원점수를 signed cosine(정방향+1·직각0·반대−1)으로 변경했다.1cm 방향/접촉 예외·성공3cm·가중치0.33 유지. Semi-Prof 방향식·충돌/후퇴 높이는 유지. [최신 변경·검증](../logs/2026-11-13_simple_height_cosine.md). 아래 날짜별 기록의15cm 설명보다 이 계약이 우선한다.
+
 2026-11-13 **Finger-ForceDirection-v0 추가, 현재17개 ID**. Test가 안정적으로 동작한다는 가정 아래 정확도 향상을 시험하는 새 자식이다. 보상의1cm 예외와 성공 판정의3cm는 의도적으로 분리했다. [계약](#finger-forcedirection-v0-1cm-보상과-3cm-성공) · [리뷰·검증](../logs/2026-11-13_finger_test_force_direction.md).
 
 2026-11-13 **현재 우선순위·학습 현황(사용자 보고)**: 기존 Finger-v1/v2·Semi-Prof-v0 학습은 실패했고 해당 방안은 잠정 폐기했다. 우선 지나치게 빠른 손 동작을 다룬다. 현재 **.180: Finger-v0-Test**, **.250: Prof-v2 (`inspire_sweep_simple_prof_v2`)** 학습 중이다. [현재 상태·네이밍 경위](#학습-현황과-후속-방향). 아래 과거 구현 기록은 현재 학습 진행을 의미하지 않는다.
@@ -248,9 +250,9 @@ Actor와 Critic은 동일한 `policy` 58차원 + `obstacles` 64차원 그룹을 
 | `obstacle_displacement` |−150| 활성 장애물 변위 비용. displacement_max_cost0.04 |
 | `target_inverse_distance` |−25.94| 직전 policy step보다 목표 XY 거리가 늘어난 부분만 비용. 이름과 달리 거리의 역수 보상이 아님 |
 
-목표 XY 거리<3cm에서는 count와 term 출력을20으로 설정한다. 접촉 없음·EEF 높이15cm 이상이어도 지급하며, 실패/성공 종료 조건 자체는 바꾸지 않는다. weight0.1과 dt0.02에서 이 term의 step 기여는0.04다. 목표 내부를 실제 접촉 이력으로 꾸미지는 않는다. 목표에서 벗어나면 저장된 count20에서 원래 접촉 인정/감쇠 규칙을 적용한다.
+목표 XY 거리<3cm에서는 count와 term 출력을20으로 설정한다. 접촉 없음·EEF 높이12cm 이상이어도 지급하며, 실패/성공 종료 조건 자체는 바꾸지 않는다. weight0.1과 dt0.02에서 이 term의 step 기여는0.04다. 목표 내부를 실제 접촉 이력으로 꾸미지는 않는다. 목표에서 벗어나면 저장된 count20에서 원래 접촉 인정/감쇠 규칙을 적용한다.
 
-목표 밖의 접촉 유지에서는 타겟–손 접촉력0.01N 이상·유효 센서·EEF가 초기 선반 표면 위15cm 미만인지를 매 step 기록한다. 최근3회 중2회 이상 만족하고 현재 높이도 유효하면 인정한다. 인정 시 count+1(상한20), 불인정 시 count−2(하한0). 인정 step만 남은 count에 비례한 보상을 지급하며, 불인정 step은0이다. 따라서 현재 순간 접촉이 끊겼더라도2-of-3 이력상 인정될 수 있고, 목표 밖에서 높이15cm 이상이면 이력에 관계없이 불인정이다.
+목표 밖의 접촉 유지에서는 타겟–손 접촉력0.01N 이상·유효 센서·EEF가 초기 선반 표면 위12cm 미만인지를 매 step 기록한다. 최근3회 중2회 이상 만족하고 현재 높이도 유효하면 인정한다. 인정 시 count+1(상한20), 불인정 시 count−2(하한0). 인정 step만 남은 count에 비례한 보상을 지급하며, 불인정 step은0이다. 따라서 현재 순간 접촉이 끊겼더라도2-of-3 이력상 인정될 수 있고, 목표 밖에서 높이12cm 이상이면 이력에 관계없이 불인정이다.
 
 비활성 term도 명시한다: `goal_hold`(Holding), `object`(통합 물체 비용; tilt/변위로 분리), `pushing_speed`, `eef_linear_speed`, `eef_orientation`, `object_acceleration`. 베이스에는 `direction_deviation`도 없다.
 
@@ -319,7 +321,7 @@ PPO는 actor/critic 각각 장애물 encoder(hidden32, embedding16, ReLU)와 MLP
 | `Simple-Finger-v2` | Finger-v1 | 가까운 거리 개선을 강조하고, 목표2cm 안에서3초 유지 후 역방향 Reach로 전환 | 중심 정밀 접근과 충분한 체류를 달성한 뒤 손을 조금 후퇴시키는 행동을 시험 |
 | `Simple-Semi-Prof-v0` | Finger-v1 | 현재 Reach 유지, 접촉 조건부 로그 Distance120, 멀어짐−31.128, 접촉 유지 삭제, 현재 목표 방향 대비3D 합력 정렬0.33 | 왕복 접근 보상 반복 수령을 막고 접촉을 통한 정밀 이동과 수평 방향 힘을 유도하는지 시험 |
 
-Prof-v0/v1의 접근 보상과 방향 비용은 현재 타겟 접촉·EEF15cm 미만을 요구한다. 접촉 유지의2-of-3 이력을 사용하지 않는다. 방향 이탈 비용은 각 step의 XY 이동거리에서 초기 지시 방향 성분을 뺀 양으로, 측면·역방향 이동을 비용화한다. 접근은 과거 최고 기록을 넘지 않아도 이전 step보다 가까워지면 보상한다. 비접촉 동안의 이동은 나중에 재접촉할 때 소급 보상하지 않는다.
+Prof-v0/v1의 접근 보상과 방향 비용은 현재 타겟 접촉·EEF12cm 미만을 요구한다. 접촉 유지의2-of-3 이력을 사용하지 않는다. 방향 이탈 비용은 각 step의 XY 이동거리에서 초기 지시 방향 성분을 뺀 양으로, 측면·역방향 이동을 비용화한다. 접근은 과거 최고 기록을 넘지 않아도 이전 step보다 가까워지면 보상한다. 비접촉 동안의 이동은 나중에 재접촉할 때 소급 보상하지 않는다.
 
 비교 실험에서는 Simple-v0↔v1 및 Prof-v0↔v1이 Reach 단독 변경이다. Simple-v0↔Prof-v0는 세 보상 변경의 묶음이며, v1↔Hard는 목표 거리와 방향 curriculum 두 변경의 묶음이다. 후자에서 관찰된 차이를 단일 요인의 효과로 단정하지 않는다. Simple-v1↔Finger-v0는 손 상태·제어 표현의 변경을 비교한다. Finger는 action-rate의 계수를 유지하지만 손 채널 수와 명령 단위가 달라지므로 실제 비용 규모까지 같다는 뜻은 아니다.
 
@@ -334,7 +336,7 @@ Prof-v0/v1의 접근 보상과 방향 비용은 현재 타겟 접촉·EEF15cm �
 | 접촉 유지 | `GoalContactMaintenance`, 0.1 | 동일 | 없음 | 없음 |
 | 목표에서 멀어짐 | `RelativeInverseDistance`, −25.94 | 동일 | 동일 | 동일 |
 
-Simple의 접촉 유지 보상은 목표3cm 미만에서 무조건20이다. 그 밖에서는 기존과 같이 상한20, 인정 시+1, 불인정 시−2(최소0), 최종 불인정 step의 보상0이다. 기존2-of-3 접촉 인정과 초기 선반 표면 기준 EEF 높이15cm 미만 조건을 보존한다. 목표 내부 예외는 Simple-v1/Hard/Finger-v0/Finger-v1에도 상속된다. Finger-v2는 이3cm 예외를 삭제하고, 아래의 연속3초 게이트 달성 후에만 무조건 풀 카운트를 적용한다. Prof의 접근/방향 이탈은 현재 타겟 접촉·EEF 높이15cm 미만 조건을 사용한다.
+Simple의 접촉 유지 보상은 목표3cm 미만에서 무조건20이다. 그 밖에서는 기존과 같이 상한20, 인정 시+1, 불인정 시−2(최소0), 최종 불인정 step의 보상0이다. 기존2-of-3 접촉 인정과 초기 선반 표면 기준 EEF 높이12cm 미만 조건을 보존한다. 목표 내부 예외는 Simple-v1/Hard/Finger-v0/Finger-v1에도 상속된다. Finger-v2는 이3cm 예외를 삭제하고, 아래의 연속3초 게이트 달성 후에만 무조건 풀 카운트를 적용한다. Prof의 접근/방향 이탈은 현재 타겟 접촉·EEF 높이12cm 미만 조건을 사용한다.
 
 v1 Reach는 현재 타겟의3D BBOX 중심과 EEF 프레임 사이 거리에서10cm를 뺀 값을0으로 하한 처리한다. 이 값을 `g`, 기존 reset 시 Reach 예산 거리를 `g0`, 에피소드 길이를 `T=10초`라 하면, weight 적용 전 보상 함수는 다음과 같다.
 
@@ -346,13 +348,13 @@ RewardManager의 policy dt 곱을 그대로 사용한다. 초기 `g0`는 기존 
 
 ## Prof-v2: 속도 제한과 접촉 높이
 
-`Inspire-Sweep-Simple-Prof-v2`는 **Prof-v1을 직접 상속**한다. Prof-v1과 형제 Prof-Hard는 변경하지 않는다. 사용자 관찰인 상부 누르기·빠른 왕복 행동에 세 제약을 적용하며, 목표 관련 보상 함수는 부모와 같다. 후속 지시로 손 표현만 Finger의6축으로 변경했으며 action-rate는12채널용 함수를 사용한다.
+`Inspire-Sweep-Simple-Prof-v2`는 **Prof-v1을 직접 상속**한다. Prof-v1과 형제 Prof-Hard는 변경하지 않는다. 사용자 관찰인 상부 누르기·빠른 왕복 행동에 세 제약을 적용하며, 목표 관련 보상 함수는 부모와 같다. 현재는 부모도12cm이므로 높이는 부모와의 차이가 아니다. 후속 지시로 손 표현만 Finger의6축으로 변경했으며 action-rate는12채널용 함수를 사용한다.
 
 | 항목 | Prof-v1 | Prof-v2 |
 | --- | --- | --- |
 | 팔 관절 속도 실패 종료 | 초기4.0rad/s, 기존 커리큘럼 | 절댓값>1.0rad/s 고정, 해당 커리큘럼 제거 |
 | Runner `clip_actions` | None | π/2, 전체12축 공통 |
-| `goal_distance`, `direction_deviation` 높이 조건 | 선반 표면 기준 EEF<15cm | EEF<12cm |
+| `goal_distance`, `direction_deviation` 높이 조건 | 선반 표면 기준 EEF<12cm | EEF<12cm |
 | Last Action | tanh(manager action) | Runner Clip 후 manager action 그대로, tanh·추가 Clip 없음 |
 | 손 관측·제어 | openness2축 | 독립 drive6관절 위치(rad) 관측·절대 목표(rad) 제어 |
 | 전체 관측·액션 | policy58+obstacles64, action8 | policy66+obstacles64, action12 |
@@ -360,7 +362,7 @@ RewardManager의 policy dt 곱을 그대로 사용한다. 초기 `g0`는 기존 
 
 Clip은 `RslRlVecEnvWrapper`에서 ActionManager와 OSC scale **전**에 적용한다. 팔6축+손 drive6축을 각각±π/2로 제한한다. 병진 scale0.03 이후 축별±4.71cm, 회전 scale0.15 이후 Euler 축별±13.5°이고 이후 기존 회전 표현 변환을 수행한다. 손은 Finger와 동일한 순서(엄지 굽힘→검지→중지→약지→소지→엄지 대립)의 절대 rad 목표이며, 기존 URDF 물리 범위 제한과 mimic mapping을 사용한다. PPO rollout/log-prob는 Clip 전 Gaussian 샘플, action-rate는 Clip 후 manager current/previous를 사용한다. 사용자 후속 답변에 따라 Finger-v0-Test와 같은 Runner Clip과 raw Last Action을 사용한다. 관측 함수 안에 별도 Clip·tanh를 추가하지 않는다.
 
-실제 Prof 보상 높이는14cm가 아니라 term params의15cm였다. 두 `ContactConditionedSweep` term의 `eef_height_limit`만0.12로 변경했다. 현재 타겟 접촉·센서 유효성을 요구하고 높이가 정확히12cm이면 보상을 인정하지 않는다. 별도의 `hand_contact` 유지 보상은 Prof 부모부터 비활성이다. 지속 근접 `reaching`의 함수·weight30은 변경하지 않으며 높이 gate도 추가하지 않았다. 일반 환경의 기존 `goal_reward_height_limit/contact_height_limit` 필드0.14는 이 두 term의 실제 gate가 아니다.
+실제 Prof 보상 높이는14cm가 아니라 term params의15cm였다. Prof-v2 도입 당시에는 두 `ContactConditionedSweep` term의 `eef_height_limit`만0.12로 변경했다. 이후 전체 환경 통일로 부모 Prof-v0/v1과 Prof-Hard도 현재0.12를 사용한다. 현재 타겟 접촉·센서 유효성을 요구하고 높이가 정확히12cm이면 보상을 인정하지 않는다. 별도의 `hand_contact` 유지 보상은 Prof 부모부터 비활성이다. 지속 근접 `reaching`의 함수·weight30은 변경하지 않으며 높이 gate도 추가하지 않았다. 일반 환경의 기존 `goal_reward_height_limit/contact_height_limit` 필드0.14는 이 두 term의 실제 gate가 아니다.
 
 팔 속도 종료는 정지/속도 제한 제어기가 아니라 **실패 종료 조건**이다. 물리 관절 속도 한계·OSC·손 속도 종료는 변경하지 않았다. 다른 커리큘럼은 유지한다.
 
@@ -495,20 +497,20 @@ python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Simple-F
 
 `Inspire-Sweep-Simple-Finger-ForceDirection-v0`은 **Finger-v0-Test의 직접 자식**이다. 부모가 문제 없이 돌아간다는 가정 아래 힘 방향 보상을 더해 정확도 향상을 시험한다. 부모 안정성이 검증됐다는 선언은 아니며, .180의 Test와 별도 ID/실험명이다.
 
-주요 변경은 두 가지다. 기존 Semi-Prof의 힘 방향 보상(weight0.33, `min_force=1.0`, `near_radius=0.01`)을 추가하고, 기존 `hand_contact`의 목표 내 무조건 접촉 인정 반경만3cm에서1cm로 줄였다. Semi-Prof의 로그 거리 보상·후퇴 비용·접촉 보상 삭제·Wrench 비용 상한 제거는 가져오지 않는다.
+주요 변경은 두 가지다. Semi-Prof와 같은 힘 수집/유효성 조건에 signed cosine 힘 방향 보상(weight0.33, `min_force=1.0`, `near_radius=0.01`)을 적용하고, 기존 `hand_contact`의 목표 내 무조건 접촉 인정 반경만3cm에서1cm로 줄였다. Semi-Prof의 로그 거리 보상·후퇴 비용·접촉 보상 삭제·Wrench 비용 상한 제거는 가져오지 않는다.
 
 | 판정 | 새 환경 기준 | 의미 |
 | --- | --- | --- |
 | 힘 방향 각도 무시 | 현재 물체→목표 XY 거리 **<1cm** | 방향 점수1; 실제 접촉·유효한 수평 합력≥1N은 계속 필요 |
 | 무조건 접촉 보상 | 현재 물체→목표 XY 거리 **<1cm** | 실제 접촉·높이에 무관하게 기존 count/reward20 부여 |
-| 접촉 보상의1cm 밖 | 부모 그대로 | 실제 접촉2-of-3 이력·EEF15cm 미만, +1/−2 count 규칙 |
+| 접촉 보상의1cm 밖 | 부모 그대로 | 실제 접촉2-of-3 이력·EEF12cm 미만, +1/−2 count 규칙 |
 | 성공 종료 | timeout에서 XY 거리 **<3cm**, 동시 실패 없음 | 부모 성공 함수 그대로; 목표에 들어온 즉시 종료하는 조건 아님 |
 | 목표 내부 비율 메트릭 | XY 거리 **≤3cm** | `goal_success_radius=0.03` 유지 |
 | timeout 성공률 메트릭 | 부모 성공 종료 결과 집계 | 따라서 실제 성공 판정은 위 `<3cm` 기준 |
 
 정확히1cm에서는 두 보상의 무조건 인정이 없다. 정확히3cm에서는 목표 내부 비율에는 포함되지만 성공 종료에는 포함되지 않는 **부모의 기존 경계 차이**를 보존했다.1cm와3cm를 하나의 설정으로 묶지 않았다.1cm 밖으로 다시 벗어나면 예외는 즉시 해제된다. 단, 접촉 보상의 기존 count 누적/감쇠 상태는 그대로 이어지며 실제 접촉 이력을 목표 점유로 위조하지 않는다.
 
-힘은 타겟 물체가 손에서 받는 **법선력+마찰력의3D 합력**을 physics substep별로 수집해 policy step 안에서 평균한다. 현재 물체→목표 벡터를 선반 XY 평면으로 투영한 방향과 비교하므로 목표를 지나치면 올바른 방향도 반전된다. 초기 지시 방향이나 손목 F/T 자체를 사용하지 않는다. 각도0°에서1,45°에서0.25,90° 이상에서0이며 weight0.33과 policy dt는 RewardManager가 적용한다.1cm 밖에서는 수직 힘도 각도에 포함되어 상부 누르기가 감점된다.1cm 안에서는 각도만 무시하며, 비접촉·약한 힘·유효하지 않은 샘플에는 지급하지 않는다.
+힘은 타겟 물체가 손에서 받는 **법선력+마찰력의3D 합력**을 physics substep별로 수집해 policy step 안에서 평균한다. 현재 물체→목표 벡터를 선반 XY 평면으로 투영한 방향과 비교하므로 목표를 지나치면 올바른 방향도 반전된다. 초기 지시 방향이나 손목 F/T 자체를 사용하지 않는다. 원점수는 `cos(θ) = dot(F, d) / (||F||·||d||)`로,0°에서+1,45°에서약+0.707,90°에서0,135°에서약−0.707,180°에서−1이다. weight0.33과 policy dt는 RewardManager가 적용한다. 정반대 힘은 양의 보상이 아니라 음의 비용을 만든다.1cm 밖에서는 수직 힘도 각도에 포함되어 상부 누르기가 감점된다.1cm 안에서는 각도만 무시하며, 비접촉·약한 힘·유효하지 않은 샘플에는 지급하지 않는다.
 
 새 runtime은 Test와 같은 `SweepSimpleFingerEnv`를 직접 상속하고 접촉력 수집만 추가한다. Scene/센서·자산·reset 배치·팔/손 제어·관측66+64D·action12D·Runner Clip±π/2·raw Last Action·무상한 action-rate·팔 속도>1rad/s 종료·기타 커리큘럼·모델/PPO 설정은 유지한다. PPO 자식은 실험명만 바뀐다. 새 양의 보상은 부모 `wrench_change` 앞에 배치해 기존5% 양의 보상 연동 예산과 기존 항들 사이의 순서를 보존한다. 새 양의 보상이 예산 합계에 포함되는 것은 기존 비용 정의에 따른 결과다.
 
@@ -636,7 +638,7 @@ python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Simple-S
 | 속도·커리큘럼 | 팔 속도 비용−0.03, 속도 종료1rad/s 고정(관련 커리큘럼 없음). DeadZone·나머지 보상 일정은 Finger-v1 유지 |
 | Reach | Prof-v1과 동일한 `InverseDistanceReach`, weight30. 현재 물체3D BBOX 중심–EEF 거리10cm 이내 최대, 부모 초기 예산·시간 보정 유지. 후퇴 목표 전환 없음 |
 | Distance | Finger-v2의 면적 보정 로그 최고 기록 개선, epsilon1cm, **weight120**. 현재 GT XY 거리로 중심0까지 개선 가능 |
-| Distance 지급 조건 | 타겟의 핸드 필터별 법선력 크기 합≥0.01N인 policy sample이 최근3회 중2회 이상, **현재 EEF가 초기 선반 표면+15cm 미만**. 이력은 접촉 bool만 저장하고 유지 count는 없음 |
+| Distance 지급 조건 | 타겟의 핸드 필터별 법선력 크기 합≥0.01N인 policy sample이 최근3회 중2회 이상, **현재 EEF가 초기 선반 표면+12cm 미만**. 이력은 접촉 bool만 저장하고 유지 count는 없음 |
 | 소급 지급 방지 | 비접촉·높이 불인정 step도 최고 기록 갱신. 당시 개선분은 소멸하며 나중에 재접촉하거나 높이를 낮춰도 지급하지 않음. 같은 기록까지 왕복하는 동안 추가 Distance 없음 |
 | 접촉 유지 | `hand_contact=None`. 목표3cm 무조건 풀 카운트 및 Finger-v2 체류 게이트 모두 없음 |
 | 멀어짐 | 기존 `RelativeInverseDistance` 유지, **weight−31.128**(−25.94의1.2배). 접촉과 무관하게 직전 step보다 증가한 XY 거리 비용 |
@@ -709,3 +711,5 @@ Semi-Prof-v0 추가 후 기존 계열 회귀를 포함한 CPU 검사는 **119개
 2026-11-13 최신 변경 검증: Finger-v0-Test Runner Clip·raw Last Action은 CPU66개 및 GPU64환경·2iterations를 통과했다. Prof-v2 손6축까지 반영한 관련 회귀는 CPU70개, GPU64환경·2iterations를 통과했다. [Test 검증](../logs/2026-11-13_finger_v0_test_runner_clip.md) · [Prof-v2 최종 검증](../logs/2026-11-13_sweep_simple_prof_v2.md#손6축-검증). 이는 단기 실행·설정 검증이며, 현재 .180/.250의 장기 학습 성공을 의미하지 않는다. 이번 문서 갱신에서는 학습을 새로 실행하지 않았다.
 
 2026-11-13 ForceDirection 추가 후 관련 CPU76개 및 GPU64환경·2iterations를 통과했다. [해당 검증](../logs/2026-11-13_finger_test_force_direction.md). 단기 실행 확인이며 장기 정확도 향상을 입증하지 않는다.
+
+현재 보상 높이 조건은 모든17개 ID에서12cm 미만으로 고정이며 높이를 변경하는 curriculum은 없다. 기존 목표 내부 접촉/후퇴 상태 예외는 유지한다. 일반 EnvCfg의0.14 필드는 이 보상들의 실제 gate가 아니며 변경하지 않았다.
