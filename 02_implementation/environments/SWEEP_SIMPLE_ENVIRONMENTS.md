@@ -1,5 +1,7 @@
 # Sweep Simple 환경 계열
 
+두 환경의 공통 Scene·랜덤화·130D 관측·12D 제어와 보상 수식은 [Prof-v2 · Finger-ForceDirection-v0 상세 명세](SWEEP_PROF_V2_AND_FINGER_FORCE_DIRECTION_V0.md)를 참고한다(2026-11-14 현재 코드 대조).
+
 2026-11-13 **Simple17환경 EEF 높이12cm 통일·ForceDirection cosine**: 활성 보상 eef_height_limit를 모두0.12로 고정. Finger-ForceDirection-v0만 힘 방향 원점수를 signed cosine(정방향+1·직각0·반대−1)으로 변경했다.1cm 방향/접촉 예외·성공3cm·가중치0.33 유지. Semi-Prof 방향식·충돌/후퇴 높이는 유지. [최신 변경·검증](../logs/2026-11-13_simple_height_cosine.md). 아래 날짜별 기록의15cm 설명보다 이 계약이 우선한다.
 
 2026-11-13 **Finger-ForceDirection-v0 추가, 현재17개 ID**. Test가 안정적으로 동작한다는 가정 아래 정확도 향상을 시험하는 새 자식이다. 보상의1cm 예외와 성공 판정의3cm는 의도적으로 분리했다. [계약](#finger-forcedirection-v0-1cm-보상과-3cm-성공) · [리뷰·검증](../logs/2026-11-13_finger_test_force_direction.md).

@@ -2,6 +2,10 @@
 
 - 2026-11-18 **독립 Stabilize → Sweep 순차 구현**: 표면점 관측·접촉 계측·Gate·보상·제한 reset·독립 PPO와 CPU/GPU 검증. 기존 초기 조건을 유지하며 IK 미수렴으로 Ticket10 행동 평가 미완료. [변경·검증·리뷰·제한](2026-11-18_stabilize_sweep_implementation.md).
 
+- 2026-11-18 **실제 가시 메쉬 표면점·자유 검토 카메라**: 독립 `surface_point`의 실제 메쉬 첫 교점 기반 가시 mask, 2D 면적 중심 대표점의 3D 복원, 기존 OBB 비교 및 관측과 분리된 자유 카메라. 사용자 결과 확인 완료, 최종 환경 미연결. [원리·검증·실행·후속 기준](2026-11-18_surface_point_mesh.md).
+
+- 2026-11-14 **Prof-v2 · Finger-ForceDirection-v0 상세 설명 작성**: 현재 코드 기준 공통 Scene·랜덤화 시점·관측·제어와 환경별 보상 수식을 정리했다. 코드 변경·추가 학습 없음. [작성·검증](2026-11-14_prof_force_direction_detail.md).
+
 - 2026-11-13 **Simple17환경 EEF 높이12cm 통일·ForceDirection cosine**: 활성 보상 eef_height_limit를 모두0.12로 고정. Finger-ForceDirection-v0만 힘 방향 원점수를 signed cosine(정방향+1·직각0·반대−1)으로 변경했다.1cm 방향/접촉 예외·성공3cm·가중치0.33 유지. Semi-Prof 방향식·충돌/후퇴 높이는 유지. [변경·검증](2026-11-13_simple_height_cosine.md).
 
 - 2026-11-13 **Finger-ForceDirection-v0 추가**: Finger-v0-Test 직접 자식. 기존 힘 방향 보상0.33 추가(방향 무시1cm·실제 접촉/수평1N 필요), 목표 내 접촉 간주3→1cm. 성공 종료/메트릭3cm·Clip·Last Action·PPO·기존 보상 보존. 장기 학습 개시 보고 없음. [계약·리뷰·검증](2026-11-13_finger_test_force_direction.md).

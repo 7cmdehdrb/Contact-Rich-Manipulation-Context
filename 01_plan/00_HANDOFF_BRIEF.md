@@ -1,6 +1,28 @@
 # 현재 개발 인계
 
-2026-11-18 **독립 Stabilize → Sweep 구현·검증**: 후속 `$implement` 지시로 `Inspire-Stabilize-Sweep-v0`를 추가했다. 초기 표면점 관측, 제한된 reset, 실제 COM 접촉 계측,30sample Gate, 단계별 보상·timeout과 독립 PPO를 연결했다. 신규 CPU37개·GPU2환경 통합 검사 통과. 전체 회귀의 기존 실패2개는 시작 커밋에서 재현했다. **기존 초기 조건 유지, Ticket10 행동 평가 미완료**가 사용자 최종 결정이다. seed0–7 중6개 배치가4후보 IK 미수렴으로 중단되므로 학습 준비 완료로 취급하지 않는다. [환경 안내](../02_implementation/environments/STABILIZE_SWEEP.md) · [명세](environments/2026-11-18_stabilize_sweep_spec.md) · [구현·검증·한계](../02_implementation/logs/2026-11-18_stabilize_sweep_implementation.md).
+2026-11-18 **Sweep Only 파생 환경 추가**: `Inspire-Sweep-Only-v0`는 Stabilize 부모를 상속하고 안정화 점수·초기 이동/회전 비용·Gate를 제거한다. 초기 관측부터 Sweep(phase1), 압착 및 모든 나머지 보상·초기화 복구·관측·제어·종료는 유지한다. 별도 PPO 로그 이름 `inspire_sweep_only_v0`. CPU43개·GPU4환경 검증 통과, 장기 학습 미실행. [차이·실행·검증](../02_implementation/environments/STABILIZE_SWEEP.md#sweep-only-파생-환경).
+
+2026-11-18 **독립 Stabilize → Sweep 구현·검증**: 후속 `$implement` 지시로 `Inspire-Stabilize-Sweep-v0`를 추가했다. 초기 표면점 관측, 제한된 reset, 실제 COM 접촉 계측,30sample Gate, 단계별 보상·timeout과 독립 PPO를 연결했다. 초기 자세 변경 후, 사용자가 **IK 실패 행만 다른 배치로 복구**하도록 요청했다. 후속 방향·높이 정정으로 손바닥은 항상 로봇 기준 왼쪽을 향하고 오른쪽 밀기는 손등을 사용한다. 손 하단은 실제 충돌 정점 기준 상판 위5mm에 맞추며 손목 고도각0°/+2°를 최대4후보로 검사한다. 좌우 목표 분포는 유지하되4후보 실패 행만 타겟·목표를 최대8회 추가 재추출한다. 성공 행을 보존하고 정책 Termination·보상에 초기화 실패를 섞지 않는다. 최초 포함9배치가 모두 실패하면 진단 오류로 중단한다. 검증 범위는 상세 설명·개발 로그를 따른다. Ticket10 행동 평가는 여전히 미완료다. [상세 환경 설명](../02_implementation/environments/STABILIZE_SWEEP.md) · [명세](environments/2026-11-18_stabilize_sweep_spec.md) · [구현·검증·한계](../02_implementation/logs/2026-11-18_stabilize_sweep_implementation.md).
+
+2026-11-18 **실제 가시 메쉬 표면점으로 수정·사용자 확인 완료**: `surface_point` 뷰어 기본을 OBB 근사에서 실제 USD 시각 메쉬의 GPU 광선 질의로 변경했다. 기본 1 mm, 가시 mask 면적 중심 대표점 및 bbox 중앙 비교 옵션. 사선 원근·자유 검토 카메라와 고정 관측 분리, 실제 mask 창 추가. 사용자가 현재 결과를 수용하고 기록을 요청했다. 이전 박스 근사 설명은 과거 방식이며 최종 환경에는 아직 연결하지 않았다. [변경·원리·검증·후속 기준](../02_implementation/logs/2026-11-18_surface_point_mesh.md).
+
+2026-11-18 **정면 대표 표면점 벤치**: 별도 `src/surface_point`에서 유한 높이 정면 노출 영역의 대표 표면점을 기존 관측 OBB·원본 OBB와 비교한다. 이미지 없이 박스 근사 기하를 사용하며 실제 메쉬 표면은 미측정. Simple/fixture GPU 검증 및 CPU 29개 테스트 통과. [변경·수치·실행](../02_implementation/logs/2026-11-18_surface_point_bench.md).
+
+2026-11-18 **OBB 중심 Gaussian 원리 문서**: 현재 조회 방식의 입력·사전 표·후보 재관측·가중치·평균/공분산·예외·확률 해석을 코드 참조 없이 읽는 [독립 설명](../02_implementation/environments/OBB_CENTROID_GAUSSIAN_METHOD.md)에 정리했다. 계산 동작 변경 없음.
+
+2026-11-18 **Gaussian 조회 가속**: 8종 사전 기하 표와 최대 16개 후보 검증을 뷰어 기본값으로 적용했다. RTX 3090 반복 Reset부터 전체 표시까지 중앙값 238 ms(9회), 첫 렌더 Reset 1.43초. 기존 추정기는 비교용으로 유지한다. 미보정 근사 모델이며 최종 환경 미연결. [변경·측정·한계](../02_implementation/logs/2026-11-18_centroid_lookup_acceleration.md).
+
+2026-11-18 **Gaussian 가시성 보완**: 얇은 타원만 표시하던 뷰어에 밀도 색상 mesh·90% 경계와 관측별 확대 XY 밀도 패널을 추가했다. 계산 대기/ON/OFF를 명시하고 실제 공분산은 보존한다. [변경·검증](../02_implementation/logs/2026-11-18_gaussian_density_visibility.md).
+
+2026-11-18 **Gaussian 뷰어 버튼 수정**: 계산 중 New placement·재관측을 막던 처리를 삭제했다. 이전 계산을 후보 평가 단계에서 취소하고 최신 요청만 실행하며 stale 결과를 폐기한다. CPU49개·GPU 실제 버튼 검증. [원인·검증](../02_implementation/logs/2026-11-18_centroid_viewer_buttons.md).
+
+2026-11-18 **관측 OBB + Gaussian GPU 뷰어**: `src/centroid_belief/scripts/show.py`에서 기존 Simple 정지 장면의 관측별 Gaussian 평균·90% 타원을 비충돌 표시한다. 실제 RTX 3090 데스크톱에서 실행했으며 추정은 백그라운드로 진행한다. 기존 baseline/관측 코드는 보존하고 최종 환경 미연결이다. [변경·검증](../02_implementation/logs/2026-11-18_centroid_gaussian_viewer.md).
+
+2026-11-18 **중심 확률 단일 Gaussian 출력**: `src/centroid_belief` 기본 API를 평균 2개·공분산 3개의 5값 출력으로 변경했다. 완전 관측 후보군을 먼저 재관측하여 템플릿 부분 관측 후보군과 함께 평가한다. 초기 비중 0.5와 3 mm 허용 오차는 미보정 모델 설정이다. 이전 KDE 결과는 보존하며 최종 환경 미연결이다. [실험·계약](../02_implementation/experiments/2026-11-18_obb_centroid_gaussian.md) · [변경 기록](../02_implementation/logs/2026-11-18_centroid_gaussian.md).
+
+2026-11-18 **OBB 기반 전체 중심 확률 추정**: 별도 `src/centroid_belief`에서 관측 OBB만 입력받는 CPU 기하 추정기를 구현했다. 8종 OBB 근사 템플릿·중요도 표집·KDE를 사용하며 물리 시뮬레이션·학습·최종 환경 연결은 없다. 실제 YCB 치수와 확률 보정은 미검증이다. [실험 및 한계](../02_implementation/experiments/2026-11-18_obb_centroid_belief.md) · [변경·검증](../02_implementation/logs/2026-11-18_centroid_belief.md).
+
+2026-11-18 **초기 부분 관측 OBB 통합 인계**: 독립 검토 패키지의 관측 계약·무제한 뷰어·가림 후보 선택·좌표 및 reset 연결·미확정 정책 입력을 [별도 인계](../02_implementation/environments/OBSERVED_OBB_INTEGRATION.md)에 정리했다. 최종 환경 미연결, GPU 라이브 검증 미완료. 검토용 배치 조건과 뷰어 무제한 실행을 학습 배치·episode 계약으로 자동 확대하지 않는다.
 
 2026-11-13 **Simple17환경 EEF 높이12cm 통일·ForceDirection cosine**: 활성 보상 eef_height_limit를 모두0.12로 고정. Finger-ForceDirection-v0만 힘 방향 원점수를 signed cosine(정방향+1·직각0·반대−1)으로 변경했다.1cm 방향/접촉 예외·성공3cm·가중치0.33 유지. Semi-Prof 방향식·충돌/후퇴 높이는 유지. [변경·검증](../02_implementation/logs/2026-11-13_simple_height_cosine.md).
 

@@ -1,6 +1,10 @@
 # Revision · Holding · Final 환경 안내
 
-2026-11-18 **독립 Stabilize → Sweep 추가**: `Inspire-Stabilize-Sweep-v0`의 독립 구성·표면점 관측·Gate·보상·reset을 구현했다. CPU 및 GPU 통합 검증 완료 범위와 IK 실패에 따른 Ticket10 행동 평가 미완료 상태는 [환경 안내](environments/STABILIZE_SWEEP.md) · [개발 로그](logs/2026-11-18_stabilize_sweep_implementation.md)를 따른다.
+2026-11-18 **Sweep Only 파생 환경 추가**: `Inspire-Sweep-Only-v0`는 Stabilize 부모를 상속하고 안정화 점수·초기 이동/회전 비용·Gate를 제거한다. 초기 관측부터 Sweep(phase1), 압착 및 모든 나머지 보상·초기화 복구·관측·제어·종료는 유지한다. 별도 PPO 로그 이름 `inspire_sweep_only_v0`. CPU43개·GPU4환경 검증 통과, 장기 학습 미실행. [차이·실행·검증](environments/STABILIZE_SWEEP.md#sweep-only-파생-환경).
+
+2026-11-18 **독립 Stabilize → Sweep 추가**: `Inspire-Stabilize-Sweep-v0`의 독립 구성·표면점 관측·Gate·보상·reset을 구현했다. 후속 사용자 승인에 따라 타겟·목표 재추출 없이 초기 높이·손목 방향을 변경해 학습 시작의 IK 오류를 수정했다. 후속 정정으로 실제 손바닥(EEF +Z)은 항상 로봇 기준 왼쪽을 향하고 오른쪽 밀기는 손등을 사용한다. 손 하단은 상판 위5mm로 낮췄으며 좌우 목표 분포는 유지한다. 이후 실패 복구 요청에 따라4후보 실패 행만 타겟·목표를 최대8회 추가 재추출한다. 정책 Termination으로 처리하지 않으며 성공 행은 보존한다. 통합 검증과 Ticket10 행동 평가 미완료 범위는 [장면·초기화·관측·제어·보상·종료·PPO 상세 설명](environments/STABILIZE_SWEEP.md) · [개발 로그](logs/2026-11-18_stabilize_sweep_implementation.md)를 따른다.
+
+2026-11-14 **Prof-v2 · Finger-ForceDirection-v0 상세 문서**: 환경 조합·Scene·생성/reset 랜덤화·관측·보상 수식과 판정 경계를 [독립 명세](environments/SWEEP_PROF_V2_AND_FINGER_FORCE_DIRECTION_V0.md)에 정리했다. 실행 코드 변경 없음.
 
 2026-11-13 **Simple17환경 EEF 높이12cm 통일·ForceDirection cosine**: 활성 보상 eef_height_limit를 모두0.12로 고정. Finger-ForceDirection-v0만 힘 방향 원점수를 signed cosine(정방향+1·직각0·반대−1)으로 변경했다.1cm 방향/접촉 예외·성공3cm·가중치0.33 유지. Semi-Prof 방향식·충돌/후퇴 높이는 유지. [변경·검증](logs/2026-11-13_simple_height_cosine.md).
 
