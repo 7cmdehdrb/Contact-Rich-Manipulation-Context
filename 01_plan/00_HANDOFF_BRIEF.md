@@ -1,5 +1,7 @@
 # 현재 개발 인계
 
+2026-11-18 **Finger 초기화 Test2종 추가**: `Inspire-Stabilize-Sweep-v0-Test`와 `Inspire-Sweep-Only-v0-Test`가 각각 원본을 상속한다. 사용자 선택에 따라 Finger 공통 원형 배치·기본 방향 단일 Warp IK를 재사용하고 대표 표면점 관측은 유지한다. 후속 요청으로 Test에만 Finger Reach(weight30)를 추가했다. 나머지 보상/Gate 및 기존 두 환경은 보존한다. Test는 원본의5mm 초기 높이·충돌 hull/4후보/8회 복구를 사용하지 않는다. [차이·실행·검증 범위](../02_implementation/environments/STABILIZE_SWEEP.md#finger-초기화-test-환경).
+
 2026-11-18 **Sweep Only 파생 환경 추가**: `Inspire-Sweep-Only-v0`는 Stabilize 부모를 상속하고 안정화 점수·초기 이동/회전 비용·Gate를 제거한다. 초기 관측부터 Sweep(phase1), 압착 및 모든 나머지 보상·초기화 복구·관측·제어·종료는 유지한다. 별도 PPO 로그 이름 `inspire_sweep_only_v0`. CPU43개·GPU4환경 검증 통과, 장기 학습 미실행. [차이·실행·검증](../02_implementation/environments/STABILIZE_SWEEP.md#sweep-only-파생-환경).
 
 2026-11-18 **독립 Stabilize → Sweep 구현·검증**: 후속 `$implement` 지시로 `Inspire-Stabilize-Sweep-v0`를 추가했다. 초기 표면점 관측, 제한된 reset, 실제 COM 접촉 계측,30sample Gate, 단계별 보상·timeout과 독립 PPO를 연결했다. 초기 자세 변경 후, 사용자가 **IK 실패 행만 다른 배치로 복구**하도록 요청했다. 후속 방향·높이 정정으로 손바닥은 항상 로봇 기준 왼쪽을 향하고 오른쪽 밀기는 손등을 사용한다. 손 하단은 실제 충돌 정점 기준 상판 위5mm에 맞추며 손목 고도각0°/+2°를 최대4후보로 검사한다. 좌우 목표 분포는 유지하되4후보 실패 행만 타겟·목표를 최대8회 추가 재추출한다. 성공 행을 보존하고 정책 Termination·보상에 초기화 실패를 섞지 않는다. 최초 포함9배치가 모두 실패하면 진단 오류로 중단한다. 검증 범위는 상세 설명·개발 로그를 따른다. Ticket10 행동 평가는 여전히 미완료다. [상세 환경 설명](../02_implementation/environments/STABILIZE_SWEEP.md) · [명세](environments/2026-11-18_stabilize_sweep_spec.md) · [구현·검증·한계](../02_implementation/logs/2026-11-18_stabilize_sweep_implementation.md).

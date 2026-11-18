@@ -251,3 +251,68 @@ OPENBLAS_NUM_THREADS=1 /home/min/miniconda3/envs/env_isaaclab/bin/python src/ins
 미검증:장기 PPO 학습·부모 대비 학습 성능·대규모 throughput·GUI 육안 확인. 실제 GPU 등록/reset/step 통과는 학습된 조작 성능의 증거가 아니다. 기존 Stabilize 명세/티켓은 부모 계약으로 유지하고 자식 차이는 상세 환경 문서의 별도 절에 기록한다.
 
 수식 검사5개 문서 및 root/대상 문서 diff 검사가 통과했다. 링크 검사에서는 새 링크 오류가 없으나 기존 README의 `FINAL_GOAL_ACCURACY_V0_2_ENVIRONMENT.md` 참조1개가 누락 경로로 검출됐다. HEAD의 README에도 같은 참조가 있음을 확인했으며 이번 요청과 무관하여 변경하지 않았다. 문서 저장소의 변경4개 문서만 검사하면 링크 오류가 없다. 임시 GPU 로그와 부모 정의 기준 파일은 `/tmp/stabilize_sweep_reset_debug/sweep_only`에 모았다.
+
+
+## 파생 환경 추가: Finger 초기화 Test2종
+
+### 요청 및 범위
+
+사용자가 학습 iteration 약90초를 보고하고, 직접 최적화보다 우선 각 환경에 `-Test`를 붙여 기존 Finger와 같은 초기화를 사용하도록 요청했다. 초기 관측 범위를 확인한 결과 **초기 배치·IK만 교체하고 대표 표면점 관측 유지**를 선택했다. 따라서 이번 작업은90초 원인 전체 분석이나 PPO/physics 최적화가 아닌 초기화 비교 환경 추가다.
+
+`Inspire-Stabilize-Sweep-v0-Test`와 `Inspire-Sweep-Only-v0-Test`는 각각 기존 EnvCfg를 직접 상속하고 같은 부모 runtime을 재사용한다. Finger-v0/v1/v2와 ForceDirection의 공통 `SweepSimpleEventsCfg`가 사용하는 `fast_reset_scene`을 그대로 호출한다. Hard 계열의 변경 분포는 사용하지 않는다. Test EventCfg는 Finger reset term을 복사하여 파라미터를 보존하고 callback만 표면 관측 어댑터로 교체한다.
+
+### 차이·보존·제약
+
+- Finger 원형 장애물 배치·RED ZONE·단일 Warp IK를 재사용한다. EEF는 선반 앞 X0.28–0.30m, 타겟의 반대 Y쪽0.10–0.18m, 기본 FK 높이+1cm±2cm이며 방향은 기본 quaternion이다. 원본 Stabilize의 목표 정렬·표면5cm·손 하단5mm 초기 자세와 다르다.
+- 전용 robot collision hull 구성·self-collision LP 검사·4자세 후보/8회 재추출은 호출하지 않는다. 단일 IK 실패나 원형 배치 불가 예외는 Finger 원본 처리 그대로다. 기존 원본2환경의 회복 로직은 그대로 유지한다.
+- 어댑터는 Finger가 커밋한 물체 pose를 선반 frame으로 복원해 기존 snapshot 함수를 호출한다. 대표 표면점·mask 노출 조건·분리 component 및 target-only fallback을 보존한다. fallback으로 제거할 장애물만 선택 환경의 물리 state·중력 mask와 배치 cache에 반영한다. physics step은 없다.
+- Finger가 만든 중심점 관측 buffer는 정책에 연결하지 않는다. 기존 표면점 world cache만 갱신한다. 정책 관측67D/obstacles64D, 동작12D, Gate 유무·보상·종료·센서·커리큘럼은 부모와 같다. 물성·자산 분포도 그대로다.
+- PPO는 각각 experiment_name에 `_test`만 붙인다. 기존 체크포인트나 학습 로그를 변경하지 않는다. 부모 클래스 정의와 Finger 공유 코드의 원본 해시를 기록해 변경하지 않았음을 대조한다.
+- reset 비용 진단에 `Reset/finger_placement_ms`를 추가한다. 표면점 생성은 유지되므로 그 비용까지 제거됐다고 주장하지 않는다. Test에서 수집하지 않는 IK 복구 횟수는0, 단일 IK 시도는1로 기록한다.
+
+### 검증
+
+CPU 회귀에서 두 task가 각각 부모 runtime을 재사용함을 확인하고, 어댑터의 실제 표면점 cache 반영 및 target-only fallback의 선택 행 state/중력 갱신과 다른 환경 불변을 검사한다. 전용45개 테스트가 통과했다.
+
+첫 GPU 실행에서 EventManager가 `**finger_params`를 필수 파라미터로 오인하여 구성 검증을 거부했다. 공개 event 함수의 인자를 Finger와 같은 명시적 signature로 바꿔 수정했다. 임의의 Manager 우회 없이 실제 reset event 경로에서 검증한다.
+
+영구 GPU 검사에 두 Test task 선택을 추가했다. 실제 EnvCfg 전체 대조에서 object_spawn event만 변경됨과 PPO 로그 이름만 변경됨을 확인한다. 동일 자산·seed123의 Finger 원본 함수와 Test reset을 대조해 관절·타겟·목표 및 관측 fallback 뒤 남는 물체 pose 일치를 확인한다. 전용 `_stabilize_robot_geometry`가 생성되지 않음과 표면점이 centroid로 바뀌지 않았음도 검사한다. 부모별 실제 step·Gate 유무·부분/자동 reset·timeout·실제 contact probe 검증을 재사용한다.
+
+최종 GPU 결과:Stabilize Test4환경·Sweep Only Test64환경에서 각각 seed0–7 감사32개·512개 행이 모두 성공했다. 학습 래퍼 첫 reset, Finger 원본 함수와 동일 seed 결과 대조, 실제 reset/step·부분 격리·자동 reset·부모별 Gate 동작·접촉 계측이 통과했다. 변경4파일 mypy도 통과했다. [원시 검증 및 부모/Finger 기준 해시](../../03_assets/validation/2026-11-18_stabilize_sweep_finger_tests.json)를 보존했다.
+
+reset 호출 중앙값은4환경143.79ms·64환경1,993.98ms, Finger 배치·IK 호출만은18.53ms·19.81ms였다. 환경당 표면점 생성 중앙값은9.96ms·10.67ms다. 실제 학습 iteration90초를 재현/분해하거나 동일 조건 A/B throughput을 측정하지 않았으므로90초 문제가 해결됐다는 결론을 내리지 않는다. 공유 센서/보상/관측/정책 처리도 최적화하지 않았다. 이번 Test는 초기화 비교를 위한 환경이다.
+
+```bash
+WARP_CACHE_PATH=/tmp/stabilize_warp_cache PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 OPENBLAS_NUM_THREADS=1 /home/min/miniconda3/envs/env_isaaclab/bin/python -m pytest src/inspire_sweep_baseline/tests/test_stabilize_sweep.py -q
+/home/min/.local/bin/mypy --follow-imports=skip --ignore-missing-imports src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/event_functions/stabilize_sweep.py src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/events/stabilize_sweep.py src/inspire_sweep_baseline/inspire_sweep_baseline/envs/stabilize_sweep_envs.py src/inspire_sweep_baseline/inspire_sweep_baseline/agent/stabilize_sweep_ppo_cfg.py
+OPENBLAS_NUM_THREADS=1 /home/min/miniconda3/envs/env_isaaclab/bin/python src/inspire_sweep_baseline/scripts/check_stabilize_sweep.py --headless --task Inspire-Stabilize-Sweep-v0-Test --num-envs 4 --audit-resets 8 --output /tmp/stabilize_finger_test_4.json
+OPENBLAS_NUM_THREADS=1 /home/min/miniconda3/envs/env_isaaclab/bin/python src/inspire_sweep_baseline/scripts/check_stabilize_sweep.py --headless --task Inspire-Sweep-Only-v0-Test --num-envs 64 --audit-resets 8 --output /tmp/sweep_only_finger_test_64.json
+```
+
+최종 대조:기존5모듈의 class/function 정의 AST와 Finger 공유3파일 전체 해시가 작업 전과 동일하다. 부모 reset/runtime·보상·Gate/phase state·관측·action·termination·curriculum·PPO 연산은 수정하지 않았다. 신규 event adapter·Cfg/PPO 자식·task 등록과 검증만 추가했다. Test EnvCfg 전체의 차이는 event1개이고 PPO 전체의 차이는 experiment_name1개임을 실제 로딩 결과로 확인했다. 기존 학습 로그 및 사용자 작업을 보존했다.
+
+미검증:2,048환경 실제 학습 iteration·장기 PPO·완전한 시간 병목 분석·모든 seed에서의 Finger 단일 IK 성공. 표면 관측은 사용자 선택에 따라 유지하므로 per-env ray/mask 비용이 여전히 있다. GUI 및 문서 UI 렌더링은 확인하지 않았다.
+
+수식 검사5개 문서와 root/변경 문서 diff 검사가 통과했다. 문서 저장소의 변경4개 문서 링크 검사도 통과했다. README의 기존 누락 링크는 이전 절의 기록대로 별도 이슈이며 새 링크는 정상 상세 절을 가리킨다. 임시 실행 로그와 기준 해시는 `/tmp/stabilize_sweep_reset_debug/finger_tests`에 모았다.
+
+
+## 두 Test에 Finger Reach 추가
+
+사용자 요청: “Reach 보상을 추가하는걸 깜빡했네. -Test 에는 추가해줘.” 적용 대상은 `Inspire-Stabilize-Sweep-v0-Test`와 `Inspire-Sweep-Only-v0-Test`다. 앞 절의 초기화 교체 당시에는 부모와 동일하게 Reach가 없었으며, 이번 변경은 두 Test에만 이를 추가한다.
+
+`mdp/rewards/stabilize_sweep.py`에 각 부모 보상 설정을 상속하는 Test 보상 설정을 두고 `SweepSimpleFingerRewardsCfg().reaching.copy()`로 독립된 term을 재사용한다. 두 Test EnvCfg에만 연결했다. 공유 Finger 함수·설정 및 원본 두 보상 클래스는 변경하지 않았다.
+
+수식은 Finger-v0/v1의 `InverseDistanceReach`, weight30, near_radius0.10m, distance_scale0.10m, ee_frame이다. 현재 EEF–타겟 BBOX 중심의 3차원 거리에 대한 역거리 proximity를 초기 EEF–타겟 root의 유효 거리와10초 episode 길이로 정규화한다. RewardManager의 dt 적분을 그대로 적용한다. 접촉·높이·Gate 조건 없이 지급하며, Stabilize Test의 Gate 이후에도 유지한다. 초기 거리 정규화는 선택 행 reset에서만 갱신한다. 관측용 대표 표면점을 보상 계산용 실제 중심점으로 교체하는 작업은 하지 않는다.
+
+최종 대조:실제 등록 EnvCfg 전체를 각 부모와 비교하여 object_spawn event 및 reaching term만 다름을 검사했다. Reach term의 함수·weight·params는 Finger와 일치하며 원본의 reaching은 계속 None이다. 나머지 보상·Gate 유무·표면점 관측·초기화·IK·action·termination·curriculum·PPO는 기존 계약을 보존한다. 학습 로그와 사용자 변경은 보존했다.
+
+검증:CPU45개 통과, 수정 보상/EnvCfg2파일 mypy 통과. 두 Test 각각 GPU4환경·seed0–1의 reset 감사, 학습 래퍼 초기 reset, 동일 seed Finger 배치 대조, 실제 step·부분/자동 reset·Gate 차이·접촉 계측을 통과했다. 새 검사에서는 실제 RewardManager의 reaching 출력과 weight30 적용값을 현재 거리 수식과 대조하고, reset 대상 행의 초기 거리 갱신과 다른 행의 불변을 검사했다. [원시 결과](../../03_assets/validation/2026-11-18_stabilize_sweep_test_reach.json)에 보존했다.
+
+```bash
+OPENBLAS_NUM_THREADS=1 /home/min/miniconda3/envs/env_isaaclab/bin/python src/inspire_sweep_baseline/scripts/check_stabilize_sweep.py --headless --task Inspire-Stabilize-Sweep-v0-Test --num-envs 4 --audit-resets 2 --output /tmp/stabilize_test_reach.json
+OPENBLAS_NUM_THREADS=1 /home/min/miniconda3/envs/env_isaaclab/bin/python src/inspire_sweep_baseline/scripts/check_stabilize_sweep.py --headless --task Inspire-Sweep-Only-v0-Test --num-envs 4 --audit-resets 2 --output /tmp/sweep_only_test_reach.json
+```
+
+미검증:Reach 추가 후 장기 PPO 학습·학습 행동 개선·iteration time 개선·GUI 및 문서 UI 렌더링. 기존 CPU 검사는 회귀 검증이며 새 Reach 연결과 수치 검증은 위 GPU 통합 검사에 포함했다.
+
+문서 수식 검사5개 파일, 문서 링크 검사4개 파일, root/변경 문서 diff 검사가 통과했다. README의 기존 누락 링크는 앞 절에 기록한 별도 이슈다.

@@ -1,0 +1,406 @@
+{
+  "scope": "Reach reward in both -Test environments only",
+  "cpu_tests": {
+    "passed": 45
+  },
+  "mypy": {
+    "passed": true,
+    "files": [
+      "mdp/rewards/stabilize_sweep.py",
+      "envs/stabilize_sweep_envs.py"
+    ]
+  },
+  "gpu": [
+    {
+      "task": "Inspire-Stabilize-Sweep-v0-Test",
+      "seed": 42,
+      "num_envs": 4,
+      "reset_audit": [
+        {
+          "seed": 0,
+          "ok": true,
+          "ms": 382.7869590022601,
+          "max_position_error_m": 0.00041656705434434116,
+          "max_rotation_error_rad": 4.491801155381836e-05,
+          "metrics": {
+            "Reset/requested_obstacles": 3.25,
+            "Reset/actual_obstacles": 3.25,
+            "Reset/placement_skipped": 0.0,
+            "Reset/empty_fraction": 0.25,
+            "Reset/ik_attempts": 1.0,
+            "Reset/layout_resamples": 0.0,
+            "Reset/ik_recovery_fraction": 0.0,
+            "Reset/finger_placement_ms": 89.5672760088928,
+            "Reset/observation_ms": 12.84442949690856,
+            "Reset/observation_upload_ms": 0.24204824876505882,
+            "Reset/observation_readback_ms": 0.5076087400084361,
+            "Reset/observation_ray_ms": 0.5179850122658536,
+            "Reset/observation_components_ms": 7.163014503021259,
+            "Reset/observation_fallbacks": 0.0,
+            "Reset/target_missing_fallbacks": 0.0,
+            "Reset/slot_overflow_fallbacks": 0.0,
+            "Reset/batch_ms": 367.5254450063221
+          }
+        },
+        {
+          "seed": 1,
+          "ok": true,
+          "ms": 52.82378999982029,
+          "max_position_error_m": 9.603352373233065e-05,
+          "max_rotation_error_rad": 2.097147807944566e-05,
+          "metrics": {
+            "Reset/requested_obstacles": 1.0,
+            "Reset/actual_obstacles": 1.0,
+            "Reset/placement_skipped": 0.0,
+            "Reset/empty_fraction": 0.25,
+            "Reset/ik_attempts": 1.0,
+            "Reset/layout_resamples": 0.0,
+            "Reset/ik_recovery_fraction": 0.0,
+            "Reset/finger_placement_ms": 18.814673007000238,
+            "Reset/observation_ms": 3.114994498901069,
+            "Reset/observation_upload_ms": 0.20149799820501357,
+            "Reset/observation_readback_ms": 0.24463400768581778,
+            "Reset/observation_ray_ms": 0.2693584974622354,
+            "Reset/observation_components_ms": 1.5033837407827377,
+            "Reset/observation_fallbacks": 0.0,
+            "Reset/target_missing_fallbacks": 0.0,
+            "Reset/slot_overflow_fallbacks": 0.0,
+            "Reset/batch_ms": 35.96719802590087
+          }
+        }
+      ],
+      "test_contract_reset_and_reach_only": true,
+      "finger_initial_pose_and_surface_observation": true,
+      "training_wrapper_initial_reset": true,
+      "same_seed_matches_original_finger_initialization": true,
+      "centroid_com": {
+        "height": [
+          0.09446421265602112,
+          0.10472942143678665,
+          0.10353399068117142,
+          0.10784359276294708
+        ],
+        "centroid_minus_root": [
+          [
+            0.0,
+            0.0,
+            0.04723215103149414
+          ],
+          [
+            0.0,
+            0.0,
+            0.05236470699310303
+          ],
+          [
+            0.0,
+            0.0,
+            0.05176699161529541
+          ],
+          [
+            0.0,
+            0.0,
+            0.05392181873321533
+          ]
+        ],
+        "com_minus_root": [
+          [
+            0.0,
+            0.0,
+            0.018892884254455566
+          ],
+          [
+            0.0,
+            0.0,
+            0.02094590663909912
+          ],
+          [
+            0.0,
+            0.0,
+            0.020706772804260254
+          ],
+          [
+            0.0,
+            0.0,
+            0.021568775177001953
+          ]
+        ]
+      },
+      "partial_reset_isolation": true,
+      "reach_matches_finger_formula_and_partial_reset": true,
+      "real_step_ms": 379.5137227498344,
+      "real_physics_smoke": true,
+      "controlled_gate_manager_boundary": true,
+      "same_step_gate_timeout_and_partial_reset": true,
+      "actual_contact_probe": {
+        "load_N": [
+          61.538307189941406,
+          1118.5772705078125,
+          1441.1080322265625,
+          910.8406982421875
+        ],
+        "force_N": [
+          [
+            7.484611988067627,
+            28.061931610107422,
+            -1.36963951587677
+          ],
+          [
+            -46.10201644897461,
+            100.08737182617188,
+            -8.12292766571045
+          ],
+          [
+            -18.56696319580078,
+            68.01477813720703,
+            10.27059555053711
+          ],
+          [
+            -50.269412994384766,
+            102.1435546875,
+            -14.469198226928711
+          ]
+        ],
+        "moment_Nm": [
+          [
+            -0.2467358410358429,
+            -0.19434385001659393,
+            0.6673626899719238
+          ],
+          [
+            -2.504692554473877,
+            -1.6730775833129883,
+            5.12359094619751
+          ],
+          [
+            -1.3246586322784424,
+            -1.3821041584014893,
+            7.7180633544921875
+          ],
+          [
+            -2.4801876544952393,
+            -1.6905968189239502,
+            4.119897842407227
+          ]
+        ]
+      },
+      "final_reset_metrics": {
+        "Reset/requested_obstacles": 0.0,
+        "Reset/actual_obstacles": 0.0,
+        "Reset/placement_skipped": 0.0,
+        "Reset/empty_fraction": 1.0,
+        "Reset/ik_attempts": 1.0,
+        "Reset/layout_resamples": 0.0,
+        "Reset/ik_recovery_fraction": 0.0,
+        "Reset/finger_placement_ms": 11.683610995532945,
+        "Reset/observation_ms": 1.3256429811008275,
+        "Reset/observation_upload_ms": 0.17397099873051047,
+        "Reset/observation_readback_ms": 0.16123498789966106,
+        "Reset/observation_ray_ms": 0.22307701874524355,
+        "Reset/observation_components_ms": 0.4346859932411462,
+        "Reset/observation_fallbacks": 0.0,
+        "Reset/target_missing_fallbacks": 0.0,
+        "Reset/slot_overflow_fallbacks": 0.0,
+        "Reset/batch_ms": 14.464097999734804
+      }
+    },
+    {
+      "task": "Inspire-Sweep-Only-v0-Test",
+      "seed": 42,
+      "num_envs": 4,
+      "reset_audit": [
+        {
+          "seed": 0,
+          "ok": true,
+          "ms": 382.30509601999074,
+          "max_position_error_m": 0.00041656705434434116,
+          "max_rotation_error_rad": 4.491801155381836e-05,
+          "metrics": {
+            "Reset/requested_obstacles": 3.25,
+            "Reset/actual_obstacles": 3.25,
+            "Reset/placement_skipped": 0.0,
+            "Reset/empty_fraction": 0.25,
+            "Reset/ik_attempts": 1.0,
+            "Reset/layout_resamples": 0.0,
+            "Reset/ik_recovery_fraction": 0.0,
+            "Reset/finger_placement_ms": 88.52963600656949,
+            "Reset/observation_ms": 12.89562025340274,
+            "Reset/observation_upload_ms": 0.2539507477195002,
+            "Reset/observation_readback_ms": 0.4975689953425899,
+            "Reset/observation_ray_ms": 0.5745830058003776,
+            "Reset/observation_components_ms": 7.178055748227052,
+            "Reset/observation_fallbacks": 0.0,
+            "Reset/target_missing_fallbacks": 0.0,
+            "Reset/slot_overflow_fallbacks": 0.0,
+            "Reset/batch_ms": 365.01036598929204
+          }
+        },
+        {
+          "seed": 1,
+          "ok": true,
+          "ms": 53.446751000592485,
+          "max_position_error_m": 9.603352373233065e-05,
+          "max_rotation_error_rad": 2.097147807944566e-05,
+          "metrics": {
+            "Reset/requested_obstacles": 1.0,
+            "Reset/actual_obstacles": 1.0,
+            "Reset/placement_skipped": 0.0,
+            "Reset/empty_fraction": 0.25,
+            "Reset/ik_attempts": 1.0,
+            "Reset/layout_resamples": 0.0,
+            "Reset/ik_recovery_fraction": 0.0,
+            "Reset/finger_placement_ms": 18.772224022541195,
+            "Reset/observation_ms": 3.009355757967569,
+            "Reset/observation_upload_ms": 0.16463200154248625,
+            "Reset/observation_readback_ms": 0.24244599626399577,
+            "Reset/observation_ray_ms": 0.24856825621100143,
+            "Reset/observation_components_ms": 1.4873807522235438,
+            "Reset/observation_fallbacks": 0.0,
+            "Reset/target_missing_fallbacks": 0.0,
+            "Reset/slot_overflow_fallbacks": 0.0,
+            "Reset/batch_ms": 35.787932021776214
+          }
+        }
+      ],
+      "test_contract_reset_and_reach_only": true,
+      "parent_contract_only_three_reward_terms_removed": true,
+      "ppo_only_experiment_name_changed": true,
+      "finger_initial_pose_and_surface_observation": true,
+      "training_wrapper_initial_reset": true,
+      "same_seed_matches_original_finger_initialization": true,
+      "centroid_com": {
+        "height": [
+          0.09446421265602112,
+          0.10472942143678665,
+          0.10353399068117142,
+          0.10784359276294708
+        ],
+        "centroid_minus_root": [
+          [
+            0.0,
+            0.0,
+            0.04723215103149414
+          ],
+          [
+            0.0,
+            0.0,
+            0.05236470699310303
+          ],
+          [
+            0.0,
+            0.0,
+            0.05176699161529541
+          ],
+          [
+            0.0,
+            0.0,
+            0.05392181873321533
+          ]
+        ],
+        "com_minus_root": [
+          [
+            0.0,
+            0.0,
+            0.018892884254455566
+          ],
+          [
+            0.0,
+            0.0,
+            0.02094590663909912
+          ],
+          [
+            0.0,
+            0.0,
+            0.020706772804260254
+          ],
+          [
+            0.0,
+            0.0,
+            0.021568775177001953
+          ]
+        ]
+      },
+      "partial_reset_isolation": true,
+      "reach_matches_finger_formula_and_partial_reset": true,
+      "real_step_ms": 501.19830449693836,
+      "real_physics_smoke": true,
+      "sweep_from_reset_without_gate": true,
+      "same_step_gate_timeout_and_partial_reset": true,
+      "actual_contact_probe": {
+        "load_N": [
+          61.538307189941406,
+          1118.5772705078125,
+          1441.1080322265625,
+          910.8406982421875
+        ],
+        "force_N": [
+          [
+            7.484611988067627,
+            28.061931610107422,
+            -1.36963951587677
+          ],
+          [
+            -46.10201644897461,
+            100.08737182617188,
+            -8.12292766571045
+          ],
+          [
+            -18.56696319580078,
+            68.01477813720703,
+            10.27059555053711
+          ],
+          [
+            -50.269412994384766,
+            102.1435546875,
+            -14.469198226928711
+          ]
+        ],
+        "moment_Nm": [
+          [
+            -0.2467358410358429,
+            -0.19434385001659393,
+            0.6673626899719238
+          ],
+          [
+            -2.504692554473877,
+            -1.6730775833129883,
+            5.12359094619751
+          ],
+          [
+            -1.3246586322784424,
+            -1.3821041584014893,
+            7.7180633544921875
+          ],
+          [
+            -2.4801876544952393,
+            -1.6905968189239502,
+            4.119897842407227
+          ]
+        ]
+      },
+      "final_reset_metrics": {
+        "Reset/requested_obstacles": 0.0,
+        "Reset/actual_obstacles": 0.0,
+        "Reset/placement_skipped": 0.0,
+        "Reset/empty_fraction": 1.0,
+        "Reset/ik_attempts": 1.0,
+        "Reset/layout_resamples": 0.0,
+        "Reset/ik_recovery_fraction": 0.0,
+        "Reset/finger_placement_ms": 18.138507002731785,
+        "Reset/observation_ms": 1.9531930156517774,
+        "Reset/observation_upload_ms": 0.2724250080063939,
+        "Reset/observation_readback_ms": 0.22242299746721983,
+        "Reset/observation_ray_ms": 0.28535601450130343,
+        "Reset/observation_components_ms": 0.6820039998274297,
+        "Reset/observation_fallbacks": 0.0,
+        "Reset/target_missing_fallbacks": 0.0,
+        "Reset/slot_overflow_fallbacks": 0.0,
+        "Reset/batch_ms": 22.195574012584984
+      }
+    }
+  ],
+  "not_validated": [
+    "long PPO training",
+    "iteration time improvement",
+    "GUI rendering"
+  ]
+}

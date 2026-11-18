@@ -8,6 +8,42 @@
 
 [개발 명세](../../01_plan/environments/2026-11-18_stabilize_sweep_spec.md) · [Ticket 범위와 상태](../../01_plan/environments/2026-11-18_stabilize_sweep_ticket_review.md) · [구현·검증 기록](../logs/2026-11-18_stabilize_sweep_implementation.md)
 
+## Finger 초기화 Test 환경
+
+Iteration Time 약90초라는 사용자 보고에 따라, 초기화 경로를 비교할 두 파생 환경을 추가했다. 사용자는 **초기 배치·IK만 Finger 방식으로 교체하고 대표 표면점 관측은 유지**하도록 선택했다.
+
+| Test task | 직접 상속하는 EnvCfg | Runtime | PPO 로그 이름 |
+| --- | --- | --- | --- |
+| `Inspire-Stabilize-Sweep-v0-Test` | `StabilizeSweepEnvCfg` | 부모 `StabilizeSweepEnv` 재사용 | `inspire_stabilize_sweep_v0_test` |
+| `Inspire-Sweep-Only-v0-Test` | `SweepOnlyEnvCfg` | 부모 `SweepOnlyEnv` 재사용 | `inspire_sweep_only_v0_test` |
+
+두 Test는 `SweepSimpleEventsCfg`를 공유하는 기존 Finger-v0/v1/v2 계열의 `fast_reset_scene`과 reset 파라미터를 그대로 호출한다. 원형 footprint/RED ZONE 기반 배치, 타겟 반지름2cm 영역, 목표6–12cm·30도 제외각, 장애물0–6개와 단일 Warp IK를 재사용한다. 기존 Finger 소스와 두 원본 환경은 수정하지 않는다.
+
+초기 EEF는 선반 로컬 X=0.28–0.30m, 타겟과 반대 Y쪽으로0.10–0.18m, 기본 FK 높이+0.01m에 Z±0.02m에서 추출한다. 손 방향은 기본 quaternion으로 고정한다. 따라서 원본 Stabilize의 목표축 표면 간격5cm·손 하단 상판+5mm 자세와 다르다. 전용 로봇 충돌 hull 구성·자기충돌 선형계획 검사·4후보 탐색·실패 행8회 재추출은 Test에서 사용하지 않는다. 배치 free cell 부족이나 단일 IK 미수렴의 오류 처리는 Finger 원본을 따른다. 원본 Stabilize/Sweep Only의 제한적 복구는 그대로 유지한다.
+
+Finger reset 직후 같은 대표 표면점 snapshot을 생성해 policy 관측 cache를 갱신한다. Finger 함수가 만든 중심점 관측은 정책 입력으로 사용하지 않는다. 표면점의 노출 비율·분리 component·타겟 최대 component 선택, EEF 변환, episode 내 월드점 고정, 관측 실패/슬롯 초과 시 장애물0개 fallback은 유지한다. 이 fallback이 발생한 경우에만 Finger가 배치한 장애물을 추가로 제거한다. 물리 step 없이 선택 환경만 갱신한다.
+
+후속 요청으로 두 Test에 Finger-v0/v1과 동일한 `InverseDistanceReach`를 추가했다. 환경 설정의 차이는 reset event와 `reaching` 보상이다. 나머지 보상, Stabilize Test의 Gate, Sweep Only Test의 Gate 없음, 관측67D/64D·액션12D·종료·커리큘럼은 각각 부모와 동일하다. PPO는 로그 이름만 분리한다. 원본 두 환경에는 Reach를 추가하지 않는다.
+
+Reach는 EEF와 현재 타겟 BBOX 중심의 3차원 거리 `d`를 사용하며 weight30, near_radius0.10m, distance_scale0.10m다. 초기 EEF와 타겟 root의 거리에서0.10m를 뺀 양수 부분 `D0`를 episode 동안 고정하며, 부분 reset에서는 해당 행만 갱신한다. Finger 구현의 초기 root 기준 정규화와 실행 중 BBOX 중심 기준 거리를 그대로 재사용한다. 제어 step 지급액은 다음과 같다.
+
+```math
+r_{\mathrm{reach}}=30\,\Delta t\,\frac{D_0}{T}\,\frac{0.10}{0.10+\max(d-0.10,0)},\qquad T=10\,\mathrm{s}.
+```
+
+접촉·높이·Gate 조건은 없다. Stabilize Test에서는 Gate 전후 모두, Sweep Only Test에서는 reset 직후부터 지급된다. 정책에 현재 중심점 관측을 추가하는 변경은 아니다.
+
+```bash
+python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Stabilize-Sweep-v0-Test
+python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Only-v0-Test
+```
+
+`Reset/finger_placement_ms`는 Finger 배치·IK 호출 시간, `Reset/observation_ms`는 환경당 표면점 생성 시간, `Reset/batch_ms`는 전체 reset event 시간이다. 표면점 관측 비용은 여전히 남으며90초 학습 iteration의 원인이나 개선 폭을 이 변경만으로 확정하지 않는다.
+
+초기화 교체 검증(Reach 추가 전):CPU45개·변경4파일 mypy 통과. Stabilize Test4환경과 Sweep Only Test64환경에서 각각 seed0–7 전체 reset, 같은 seed의 Finger 원본 결과 대조, 실제 step·부분/자동 reset·Gate 차이·표면 관측·접촉 계측이 통과했다. reset 호출 시간 중앙값은4환경143.79ms,64환경1,993.98ms였고 Finger 배치/IK만의 중앙값은18.53ms·19.81ms였다. 표면점 생성 시간은 환경당9.96ms·10.67ms였으며 reset 전체에는 그 밖의 Manager 처리도 포함된다. GPU warmup/관측/진단을 포함한 이 검사 시간을 학습 iteration throughput으로 해석하지 않는다. [원시 결과](../../03_assets/validation/2026-11-18_stabilize_sweep_finger_tests.json)에 보존했다.
+
+Reach 추가 후 검증:CPU45개·보상/환경 설정2파일 mypy 통과. 두 Test 각각 GPU4환경·seed0–1 reset 및 실제 step에서 Finger Reach 수식/weight, 부분 reset 상태 격리, 기존 Gate 차이를 확인했다. 전체 설정 대조에서 부모 대비 reset event와 Reach만 다른 것을 검증했다. [Reach 검증 결과](../../03_assets/validation/2026-11-18_stabilize_sweep_test_reach.json). 장기 학습과 iteration time 개선은 평가하지 않았다.
+
 ## Sweep Only 파생 환경
 
 `Inspire-Sweep-Only-v0`는 이 문서의 `Inspire-Stabilize-Sweep-v0`를 상속하며 Stabilize 보상과 Gate를 제거한 비교 환경이다. 부모 환경의 구성과 동작은 유지한다.
@@ -380,7 +416,7 @@ F/T 변화 비용은 벡터 차이 norm이 아니라 `abs(norm(current)−norm(p
 
 선반 충돌·접근 비용은 기존 함수를 그대로 쓴다. 선반 초기 위치 대비 변위 norm과6D 속도 norm의 합이0.005보다 크면1을 추가한다. 별도로 선반 root 위1.06m 기준점에서 EEF 거리가0.2m 미만일 때 가상 finger 높이2cm 및 wrist 높이8cm에 대한 선형 근접 비용을 더한다. 이 항의1.06m 기준과 아래 실패 조건의1.05m 기준은 기존 구현 그대로다.
 
-기존 Reach, 독립 goal-distance/hold, 접촉 유지 단독 보상, 방향 단독 보상은 활성화하지 않는다. 물체 가속도·EEF 속도·EEF orientation 등의 비활성 비용도 임의로 추가하지 않는다.
+원본 두 환경은 기존 Reach, 독립 goal-distance/hold, 접촉 유지 단독 보상, 방향 단독 보상을 활성화하지 않는다. 두 `-Test`만 앞 절의 Reach를 추가로 사용한다. 물체 가속도·EEF 속도·EEF orientation 등의 비활성 비용도 임의로 추가하지 않는다.
 
 ## 종료 조건과 성공 집계
 
