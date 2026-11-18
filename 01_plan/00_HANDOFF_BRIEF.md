@@ -1,5 +1,7 @@
 # 현재 개발 인계
 
+2026-11-18 **독립 Stabilize → Sweep 구현·검증**: 후속 `$implement` 지시로 `Inspire-Stabilize-Sweep-v0`를 추가했다. 초기 표면점 관측, 제한된 reset, 실제 COM 접촉 계측,30sample Gate, 단계별 보상·timeout과 독립 PPO를 연결했다. 신규 CPU37개·GPU2환경 통합 검사 통과. 전체 회귀의 기존 실패2개는 시작 커밋에서 재현했다. **기존 초기 조건 유지, Ticket10 행동 평가 미완료**가 사용자 최종 결정이다. seed0–7 중6개 배치가4후보 IK 미수렴으로 중단되므로 학습 준비 완료로 취급하지 않는다. [환경 안내](../02_implementation/environments/STABILIZE_SWEEP.md) · [명세](environments/2026-11-18_stabilize_sweep_spec.md) · [구현·검증·한계](../02_implementation/logs/2026-11-18_stabilize_sweep_implementation.md).
+
 2026-11-13 **Simple17환경 EEF 높이12cm 통일·ForceDirection cosine**: 활성 보상 eef_height_limit를 모두0.12로 고정. Finger-ForceDirection-v0만 힘 방향 원점수를 signed cosine(정방향+1·직각0·반대−1)으로 변경했다.1cm 방향/접촉 예외·성공3cm·가중치0.33 유지. Semi-Prof 방향식·충돌/후퇴 높이는 유지. [변경·검증](../02_implementation/logs/2026-11-13_simple_height_cosine.md).
 
 2026-11-13 **Finger-ForceDirection-v0 추가**: Finger-v0-Test 직접 자식. 기존 힘 방향 보상0.33 추가(방향 무시1cm·실제 접촉/수평1N 필요), 목표 내 접촉 간주3→1cm. 성공 종료/메트릭3cm·Clip·Last Action·PPO·기존 보상 보존. 장기 학습 개시 보고 없음. [계약·리뷰·검증](../02_implementation/logs/2026-11-13_finger_test_force_direction.md).

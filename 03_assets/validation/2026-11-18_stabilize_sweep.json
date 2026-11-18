@@ -1,0 +1,165 @@
+{
+  "seed": 42,
+  "num_envs": 2,
+  "reset_audit": [
+    {
+      "seed": 0,
+      "ok": true,
+      "ms": 2157.4884000001475,
+      "metrics": {
+        "Reset/requested_obstacles": 3.5,
+        "Reset/actual_obstacles": 3.5,
+        "Reset/placement_skipped": 0.0,
+        "Reset/empty_fraction": 0.0,
+        "Reset/ik_attempts": 1.0,
+        "Reset/observation_ms": 15.607286492013372,
+        "Reset/observation_upload_ms": 0.30794250778853893,
+        "Reset/observation_readback_ms": 0.47457449545618147,
+        "Reset/observation_ray_ms": 1.059421498212032,
+        "Reset/observation_components_ms": 8.268145495094359,
+        "Reset/observation_fallbacks": 0.0,
+        "Reset/target_missing_fallbacks": 0.0,
+        "Reset/slot_overflow_fallbacks": 0.0,
+        "Reset/batch_ms": 2006.1213260050863
+      }
+    },
+    {
+      "seed": 1,
+      "ok": false,
+      "error": "Stabilize IK/collision exhausted 4 candidates: env_ids=[0], attempts=[{'env_ids': [0, 1], 'ik_valid': [False, True], 'collision_free': [False, True], 'desired_position_shelf': [[-0.08320102095603943, 0.1032625064253807, 1.211461067199707], [0.0490972138941288, -0.1400890350341797, 1.211461067199707]], 'errors': [[0.22348341345787048, 0.10507946461439133], [2.9321596230147406e-05, 9.843636689765844e-06]]}, {'env_ids': [0], 'ik_valid': [False], 'collision_free': [False], 'desired_position_shelf': [[-0.08222289383411407, 0.09088481962680817, 1.211461067199707]], 'errors': [[0.21935462951660156, 0.0973460003733635]]}, {'env_ids': [0], 'ik_valid': [False], 'collision_free': [False], 'desired_position_shelf': [[-0.07677143812179565, 0.10849058628082275, 1.211461067199707]], 'errors': [[0.194724440574646, 0.040365125983953476]]}, {'env_ids': [0], 'ik_valid': [False], 'collision_free': [False], 'desired_position_shelf': [[-0.06693340092897415, 0.1063048467040062, 1.211461067199707]], 'errors': [[0.18565303087234497, 0.04559639096260071]]}]",
+      "ms": 190.15705201309174
+    },
+    {
+      "seed": 2,
+      "ok": true,
+      "ms": 87.5302649801597,
+      "metrics": {
+        "Reset/requested_obstacles": 0.5,
+        "Reset/actual_obstacles": 0.5,
+        "Reset/placement_skipped": 0.0,
+        "Reset/empty_fraction": 0.5,
+        "Reset/ik_attempts": 1.0,
+        "Reset/observation_ms": 1.9218405068386346,
+        "Reset/observation_upload_ms": 0.19951249123550951,
+        "Reset/observation_readback_ms": 0.2124739985447377,
+        "Reset/observation_ray_ms": 0.3011305088875815,
+        "Reset/observation_components_ms": 0.769895501434803,
+        "Reset/observation_fallbacks": 0.0,
+        "Reset/target_missing_fallbacks": 0.0,
+        "Reset/slot_overflow_fallbacks": 0.0,
+        "Reset/batch_ms": 72.48549899668433
+      }
+    },
+    {
+      "seed": 3,
+      "ok": false,
+      "error": "Stabilize IK/collision exhausted 4 candidates: env_ids=[1], attempts=[{'env_ids': [0, 1], 'ik_valid': [True, False], 'collision_free': [True, False], 'desired_position_shelf': [[-0.04676003009080887, -0.1334025263786316, 1.211461067199707], [-0.10949786752462387, 0.07172668725252151, 1.211461067199707]], 'errors': [[2.8544091037474573e-05, 8.528392754669767e-06], [0.14748115837574005, 0.036455027759075165]]}, {'env_ids': [1], 'ik_valid': [False], 'collision_free': [False], 'desired_position_shelf': [[-0.1267358958721161, 0.0604473315179348, 1.211461067199707]], 'errors': [[0.2183855026960373, 0.06742609292268753]]}, {'env_ids': [1], 'ik_valid': [False], 'collision_free': [False], 'desired_position_shelf': [[-0.11968743801116943, 0.06559192389249802, 1.211461067199707]], 'errors': [[0.18382951617240906, 0.05671565979719162]]}, {'env_ids': [1], 'ik_valid': [False], 'collision_free': [False], 'desired_position_shelf': [[-0.11622661352157593, 0.07119876891374588, 1.211461067199707]], 'errors': [[0.15752123296260834, 0.04018479213118553]]}]",
+      "ms": 98.79907299182378
+    },
+    {
+      "seed": 4,
+      "ok": false,
+      "error": "Stabilize IK/collision exhausted 4 candidates: env_ids=[0], attempts=[{'env_ids': [0, 1], 'ik_valid': [False, True], 'collision_free': [False, True], 'desired_position_shelf': [[-0.06742075830698013, 0.12409916520118713, 1.211461067199707], [-0.06647950410842896, -0.11209402978420258, 1.211461067199707]], 'errors': [[0.18031395971775055, 0.03337860479950905], [8.359166713489685e-06, 3.0717437766725197e-06]]}, {'env_ids': [0], 'ik_valid': [False], 'collision_free': [False], 'desired_position_shelf': [[-0.05949284881353378, 0.11158015578985214, 1.211461067199707]], 'errors': [[0.1912345141172409, 0.06538627296686172]]}, {'env_ids': [0], 'ik_valid': [False], 'collision_free': [False], 'desired_position_shelf': [[-0.05638241022825241, 0.10860072076320648, 1.211461067199707]], 'errors': [[0.17432834208011627, 0.043269749730825424]]}, {'env_ids': [0], 'ik_valid': [False], 'collision_free': [False], 'desired_position_shelf': [[-0.06468416005373001, 0.11471976339817047, 1.211461067199707]], 'errors': [[0.2089383602142334, 0.08416818827390671]]}]",
+      "ms": 98.50764600560069
+    },
+    {
+      "seed": 5,
+      "ok": false,
+      "error": "Stabilize IK/collision exhausted 4 candidates: env_ids=[0], attempts=[{'env_ids': [0, 1], 'ik_valid': [False, True], 'collision_free': [False, True], 'desired_position_shelf': [[0.01718446984887123, 0.11474249511957169, 1.211461067199707], [-0.08075757324695587, -0.06953133642673492, 1.211461067199707]], 'errors': [[0.18475061655044556, 0.025111738592386246], [1.8857406757888384e-05, 9.010556823341176e-06]]}, {'env_ids': [0], 'ik_valid': [False], 'collision_free': [False], 'desired_position_shelf': [[0.0019760839641094208, 0.11877118796110153, 1.211461067199707]], 'errors': [[0.19814828038215637, 0.09306930005550385]]}, {'env_ids': [0], 'ik_valid': [False], 'collision_free': [False], 'desired_position_shelf': [[0.003621266223490238, 0.1195279136300087, 1.211461067199707]], 'errors': [[0.18816080689430237, 0.07425820827484131]]}, {'env_ids': [0], 'ik_valid': [False], 'collision_free': [False], 'desired_position_shelf': [[0.008644726127386093, 0.12124817073345184, 1.211461067199707]], 'errors': [[0.1937353014945984, 0.06273213773965836]]}]",
+      "ms": 232.94109699781984
+    },
+    {
+      "seed": 6,
+      "ok": false,
+      "error": "Stabilize IK/collision exhausted 4 candidates: env_ids=[0, 1], attempts=[{'env_ids': [0, 1], 'ik_valid': [False, False], 'collision_free': [True, False], 'desired_position_shelf': [[0.08822982013225555, 0.10832688212394714, 1.211461067199707], [0.07069160044193268, 0.0998542532324791, 1.211461067199707]], 'errors': [[0.08049995452165604, 0.0065466114319860935], [0.11235237121582031, 0.008451384492218494]]}, {'env_ids': [0, 1], 'ik_valid': [False, False], 'collision_free': [True, True], 'desired_position_shelf': [[0.09473339468240738, 0.09523049741983414, 1.211461067199707], [0.0676945373415947, 0.11375930160284042, 1.211461067199707]], 'errors': [[0.06066250801086426, 0.0071381148882210255], [0.11109279096126556, 0.009135658852756023]]}, {'env_ids': [0, 1], 'ik_valid': [False, False], 'collision_free': [True, False], 'desired_position_shelf': [[0.09476526826620102, 0.1086934506893158, 1.211461067199707], [0.06411582231521606, 0.11730054765939713, 1.211461067199707]], 'errors': [[0.06271872669458389, 0.005715840961784124], [0.11602456122636795, 0.00950957927852869]]}, {'env_ids': [0, 1], 'ik_valid': [False, False], 'collision_free': [True, True], 'desired_position_shelf': [[0.08658728003501892, 0.11210645735263824, 1.211461067199707], [0.061859969049692154, 0.1067444309592247, 1.211461067199707]], 'errors': [[0.077781543135643, 0.008493730798363686], [0.11331617087125778, 0.010430194437503815]]}]",
+      "ms": 492.7357349952217
+    },
+    {
+      "seed": 7,
+      "ok": false,
+      "error": "Stabilize IK/collision exhausted 4 candidates: env_ids=[0, 1], attempts=[{'env_ids': [0, 1], 'ik_valid': [False, False], 'collision_free': [False, False], 'desired_position_shelf': [[-0.07757913321256638, 0.09026184678077698, 1.211461067199707], [0.03500013053417206, 0.10291416198015213, 1.211461067199707]], 'errors': [[0.1688636839389801, 0.029531126841902733], [0.16053059697151184, 0.025933844968676567]]}, {'env_ids': [0, 1], 'ik_valid': [False, False], 'collision_free': [False, False], 'desired_position_shelf': [[-0.08085290342569351, 0.08233611285686493, 1.211461067199707], [0.03144334256649017, 0.10232992470264435, 1.211461067199707]], 'errors': [[0.1686749905347824, 0.03071545995771885], [0.16996417939662933, 0.006024302449077368]]}, {'env_ids': [0, 1], 'ik_valid': [False, False], 'collision_free': [False, False], 'desired_position_shelf': [[-0.0748518779873848, 0.08844386041164398, 1.211461067199707], [0.033881768584251404, 0.10965892672538757, 1.211461067199707]], 'errors': [[0.18743441998958588, 0.0349627323448658], [0.1642344444990158, 0.023012816905975342]]}, {'env_ids': [0, 1], 'ik_valid': [False, False], 'collision_free': [False, False], 'desired_position_shelf': [[-0.08787588030099869, 0.0769394040107727, 1.211461067199707], [0.030368667095899582, 0.11703669279813766, 1.211461067199707]], 'errors': [[0.18656930327415466, 0.03837265074253082], [0.16462785005569458, 0.03426460549235344]]}]",
+      "ms": 177.547241008142
+    }
+  ],
+  "centroid_com": {
+    "height": [
+      0.10483101010322571,
+      0.09489783644676208
+    ],
+    "centroid_minus_root": [
+      [
+        0.0,
+        0.0,
+        0.05241549015045166
+      ],
+      [
+        0.0,
+        0.0,
+        0.04744887351989746
+      ]
+    ],
+    "com_minus_root": [
+      [
+        0.0,
+        0.0,
+        0.020966172218322754
+      ],
+      [
+        0.0,
+        0.0,
+        0.018979549407958984
+      ]
+    ]
+  },
+  "partial_reset_isolation": true,
+  "real_step_ms": 338.6495809972985,
+  "real_physics_smoke": true,
+  "controlled_gate_manager_boundary": true,
+  "same_step_gate_timeout_and_partial_reset": true,
+  "actual_contact_probe": {
+    "load_N": [
+      24.67418670654297,
+      17.72785186767578
+    ],
+    "force_N": [
+      [
+        -15.285749435424805,
+        17.52790641784668,
+        -7.416298866271973
+      ],
+      [
+        -9.964265823364258,
+        13.527203559875488,
+        -7.399149417877197
+      ]
+    ],
+    "moment_Nm": [
+      [
+        -0.10633184015750885,
+        -0.19458739459514618,
+        0.010976608842611313
+      ],
+      [
+        -0.26884201169013977,
+        -0.21551747620105743,
+        0.054945867508649826
+      ]
+    ]
+  },
+  "final_reset_metrics": {
+    "Reset/requested_obstacles": 0.0,
+    "Reset/actual_obstacles": 0.0,
+    "Reset/placement_skipped": 0.0,
+    "Reset/empty_fraction": 1.0,
+    "Reset/ik_attempts": 1.0,
+    "Reset/observation_ms": 2.0347919780761003,
+    "Reset/observation_upload_ms": 0.31103601213544607,
+    "Reset/observation_readback_ms": 0.17059801029972732,
+    "Reset/observation_ray_ms": 0.6345299771055579,
+    "Reset/observation_components_ms": 0.4681349964812398,
+    "Reset/observation_fallbacks": 0.0,
+    "Reset/target_missing_fallbacks": 0.0,
+    "Reset/slot_overflow_fallbacks": 0.0,
+    "Reset/batch_ms": 54.54469702090137
+  }
+}
