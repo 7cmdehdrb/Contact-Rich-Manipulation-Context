@@ -344,3 +344,14 @@ Phase·압착 제거 후 CPU 95개(66D/67D 모델 forward·gradient·TorchScript
 python src/inspire_sweep_baseline/scripts/train.py \
   --task Inspire-Sweep-Only-v1-Test --num_envs 2048 --headless
 ```
+
+## Sweep Only v2 Test
+
+`Inspire-Sweep-Only-v2-Test`는 `SweepOnlyV2TestEnvCfg`에서 v1-Test를 직접 상속하며 부모 post-init 이후 `events.object_spawn.params['excluded_x_half_angle']=0.0`만 변경한다. 기존 방향 커리큘럼은 비활성이므로 0°가 학습 내내 유지된다. 목표 거리 6–12cm·RED·물체 배치 제약·Finger 초기화·IK는 유지하며 방향 제외 구간만 없앤다. 정방향 50, 역방향 −10 및 나머지 v1-Test 구성은 같다. runner도 v1-Test 직접 자식이고 로그 이름만 `inspire_sweep_only_v2_test`다.
+
+```bash
+python src/inspire_sweep_baseline/scripts/train.py \
+  --task Inspire-Sweep-Only-v2-Test --num_envs 2048 --headless
+```
+
+사용자가 이 컴퓨터에서 학습 중이므로 GPU 테스트를 금지했다. 코드 구문·실제 파생 클래스 정의의 CPU 실행·등록·변경 범위 정적 검사만 통과했으며, 신규 ID의 Isaac Sim reset·step·학습은 미실행이다.
