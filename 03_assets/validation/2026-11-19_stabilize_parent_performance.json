@@ -1,0 +1,2028 @@
+{
+  "generated_utc": "2026-11-19T03:16:18.171542+00:00",
+  "scope": "Common performance optimizations extended to standard four-candidate IK environments; no new under-10-second claim.",
+  "production_contract": {
+    "changed_files_this_turn": [
+      "tests/test_stabilize_sweep.py",
+      "scripts/check_stabilize_sweep.py",
+      "inspire_sweep_baseline/mdp/event_functions/stabilize_sweep.py",
+      "inspire_sweep_baseline/mdp/common/stabilize_sweep_contact.py",
+      "inspire_sweep_baseline/mdp/common/stabilize_sweep_layout.py"
+    ],
+    "unchanged_event_functions_excluding_docstrings": [
+      "InitialPose",
+      "_geometry",
+      "choose_initial_pose",
+      "plan_initial_layout",
+      "snapshot",
+      "_snapshot_batched",
+      "write_test_reset_root_state",
+      "write_test_reset_object_state",
+      "reset_scene_finger_test"
+    ],
+    "all_cfg_runtime_registration_ppo_unchanged": true,
+    "ik_geometry_module_unchanged": true
+  },
+  "source_hashes": {
+    "tests/test_stabilize_sweep.py": {
+      "before": "edfd32123ada93faa8e7f58a640c623b0a8a03e691fb72fd4bbe5a78ad0aaf29",
+      "after": "1e442f1fecf4e4c90b2b4f40a35d79ae64ed13f6204c76e80b1e97821128d5ce"
+    },
+    "scripts/check_stabilize_sweep.py": {
+      "before": "514dd8854d7dce3bdb54c011b7a6a91df1e4026a032fb00061a0f31a81c0df60",
+      "after": "aac7b67520f28253ba2db076bce7fd645234e144cd76f26d7d03d6cfc50da798"
+    },
+    "inspire_sweep_baseline/mdp/event_functions/stabilize_sweep.py": {
+      "before": "f229a1456429dc5872df6673c510f3773d29343fb5c2276aedb7496786751b42",
+      "after": "16f8f2cbeaedac7cfd113e7624889548d88fcaa0706c666f14a8e3c23954750c"
+    },
+    "inspire_sweep_baseline/mdp/common/stabilize_sweep_contact.py": {
+      "before": "6d7919f59c64326a502d0c9a25270fc801f9a82a765a21962b674587af55cec1",
+      "after": "fc7b016bf904afb6e231e104f22cc9677c629b88766fef81ba4eec62e9d4f334"
+    },
+    "inspire_sweep_baseline/mdp/common/stabilize_sweep_layout.py": {
+      "before": "71a8665a23548517def2e68a7b3eb43afed44ccf619ac408a69a1e74fc4f334c",
+      "after": "7e7d356cb33fe0663a0615334bdad068361b64132932766423ef0a5137b24c5c"
+    }
+  },
+  "cpu": {
+    "exit_code": 0,
+    "log": "........................................................................ [ 54%]\n............................................................             [100%]\n132 passed in 11.70s\n",
+    "tests": 132
+  },
+  "mypy": {
+    "exit_code": 0,
+    "files": 3,
+    "options": [
+      "--follow-imports=skip",
+      "--ignore-missing-imports"
+    ]
+  },
+  "gpu_checks": [
+    {
+      "exit_code": 0,
+      "result": {
+        "task": "Inspire-Stabilize-Sweep-v0",
+        "seed": 42,
+        "num_envs": 4,
+        "reset_audit": [
+          {
+            "seed": 0,
+            "ok": true,
+            "ms": 120.49256899626926,
+            "max_position_error_m": 0.0004975938354618847,
+            "max_rotation_error_rad": 8.926905138650909e-05,
+            "metrics": {
+              "Reset/requested_obstacles": 3.25,
+              "Reset/actual_obstacles": 3.25,
+              "Reset/placement_skipped": 0.0,
+              "Reset/empty_fraction": 0.25,
+              "Reset/ik_attempts": 1.0,
+              "Reset/layout_resamples": 0.0,
+              "Reset/ik_recovery_fraction": 0.0,
+              "Reset/observation_ms": 0.6748290034011006,
+              "Reset/observation_upload_ms": 0.13870400190353394,
+              "Reset/observation_readback_ms": 0.019405502825975418,
+              "Reset/observation_ray_ms": 0.3845120072364807,
+              "Reset/observation_components_ms": 0.026367999613285065,
+              "Reset/observation_fallbacks": 0.0,
+              "Reset/target_missing_fallbacks": 0.0,
+              "Reset/slot_overflow_fallbacks": 0.0,
+              "Reset/batch_ms": 104.57498900359496
+            }
+          },
+          {
+            "seed": 1,
+            "ok": true,
+            "ms": 102.4407240038272,
+            "max_position_error_m": 0.0004690964997280389,
+            "max_rotation_error_rad": 4.289594653528184e-05,
+            "metrics": {
+              "Reset/requested_obstacles": 1.0,
+              "Reset/actual_obstacles": 1.0,
+              "Reset/placement_skipped": 0.0,
+              "Reset/empty_fraction": 0.25,
+              "Reset/ik_attempts": 1.0,
+              "Reset/layout_resamples": 0.0,
+              "Reset/ik_recovery_fraction": 0.0,
+              "Reset/observation_ms": 0.5457294973894022,
+              "Reset/observation_upload_ms": 0.14019200205802917,
+              "Reset/observation_readback_ms": 0.019298000552225858,
+              "Reset/observation_ray_ms": 0.22300800681114197,
+              "Reset/observation_components_ms": 0.050912000238895416,
+              "Reset/observation_fallbacks": 0.0,
+              "Reset/target_missing_fallbacks": 0.0,
+              "Reset/slot_overflow_fallbacks": 0.0,
+              "Reset/batch_ms": 87.25666199461557
+            }
+          }
+        ],
+        "injected_initial_ik_failure_recovered": true,
+        "static_local_com_cache_checks": {
+          "reset": 3,
+          "physics_step": 1,
+          "timeout_partial_reset": 1,
+          "physical_contact": 1
+        },
+        "test_inactive_parking_grid_and_unchanged_collision_groups": true,
+        "batched_surface_matches_original_mesh_observer": true,
+        "minimum_actual_contact_face_goal_cosine": 0.9869318008422852,
+        "minimum_hand_bottom_clearance_m": 0.004566669464111328,
+        "maximum_hand_bottom_clearance_m": 0.004995942115783691,
+        "palm_always_left": true,
+        "training_wrapper_initial_reset": true,
+        "bounded_failed_row_resampling": true,
+        "centroid_com": {
+          "height": [
+            0.09446421265602112,
+            0.10472942143678665,
+            0.10353399068117142,
+            0.10784359276294708
+          ],
+          "centroid_minus_root": [
+            [
+              0.0,
+              0.0,
+              0.04723215103149414
+            ],
+            [
+              0.0,
+              0.0,
+              0.05236470699310303
+            ],
+            [
+              0.0,
+              0.0,
+              0.05176699161529541
+            ],
+            [
+              0.0,
+              0.0,
+              0.05392181873321533
+            ]
+          ],
+          "com_minus_root": [
+            [
+              0.0,
+              0.0,
+              0.018892884254455566
+            ],
+            [
+              0.0,
+              0.0,
+              0.02094590663909912
+            ],
+            [
+              0.0,
+              0.0,
+              0.020706772804260254
+            ],
+            [
+              0.0,
+              0.0,
+              0.021568775177001953
+            ]
+          ]
+        },
+        "injected_partial_collision_failure_recovered": true,
+        "partial_reset_isolation": true,
+        "real_step_ms": 336.3711920028436,
+        "test_inactive_bodies_stationary_and_contact_free_after_physics": true,
+        "real_physics_smoke": true,
+        "controlled_gate_manager_boundary": true,
+        "same_step_gate_timeout_and_partial_reset": true,
+        "injected_auto_reset_ik_failure_recovered": true,
+        "actual_contact_probe": {
+          "load_N": [
+            3.200713872909546,
+            25.544588088989258,
+            23.567060470581055,
+            22.490510940551758
+          ],
+          "force_N": [
+            [
+              -2.254497766494751,
+              -0.21891401708126068,
+              -2.65104603767395
+            ],
+            [
+              -14.30972957611084,
+              19.582822799682617,
+              -10.32441520690918
+            ],
+            [
+              -12.932127952575684,
+              18.049442291259766,
+              -10.434480667114258
+            ],
+            [
+              -11.827754974365234,
+              17.62395668029785,
+              -8.773926734924316
+            ]
+          ],
+          "moment_Nm": [
+            [
+              0.009311238303780556,
+              -0.08086317777633667,
+              -0.012878542765974998
+            ],
+            [
+              -0.11692545562982559,
+              -0.10772420465946198,
+              0.12771296501159668
+            ],
+            [
+              -0.084443598985672,
+              -0.06900455057621002,
+              0.14117690920829773
+            ],
+            [
+              -0.11903358995914459,
+              -0.07137778401374817,
+              0.16536803543567657
+            ]
+          ]
+        },
+        "final_reset_metrics": {
+          "Reset/requested_obstacles": 3.0,
+          "Reset/actual_obstacles": 3.0,
+          "Reset/placement_skipped": 0.0,
+          "Reset/empty_fraction": 0.0,
+          "Reset/ik_attempts": 5.0,
+          "Reset/layout_resamples": 1.0,
+          "Reset/ik_recovery_fraction": 1.0,
+          "Reset/observation_ms": 4.113942006370053,
+          "Reset/observation_upload_ms": 1.0206400156021118,
+          "Reset/observation_readback_ms": 0.127006002003327,
+          "Reset/observation_ray_ms": 1.2738560438156128,
+          "Reset/observation_components_ms": 0.9240000247955322,
+          "Reset/observation_fallbacks": 0.0,
+          "Reset/target_missing_fallbacks": 0.0,
+          "Reset/slot_overflow_fallbacks": 0.0,
+          "Reset/batch_ms": 252.2809249931015
+        }
+      }
+    },
+    {
+      "exit_code": 0,
+      "result": {
+        "task": "Inspire-Sweep-Only-v0",
+        "seed": 42,
+        "num_envs": 64,
+        "reset_audit": [
+          {
+            "seed": 0,
+            "ok": true,
+            "ms": 745.7087590009905,
+            "max_position_error_m": 0.0004925064858980477,
+            "max_rotation_error_rad": 0.0016986001282930374,
+            "metrics": {
+              "Reset/requested_obstacles": 3.375,
+              "Reset/actual_obstacles": 3.375,
+              "Reset/placement_skipped": 0.0,
+              "Reset/empty_fraction": 0.078125,
+              "Reset/ik_attempts": 1.0,
+              "Reset/layout_resamples": 0.0,
+              "Reset/ik_recovery_fraction": 0.0,
+              "Reset/observation_ms": 0.09156690612144303,
+              "Reset/observation_upload_ms": 0.01209999993443489,
+              "Reset/observation_readback_ms": 0.0012657815204875078,
+              "Reset/observation_ray_ms": 0.052299000322818756,
+              "Reset/observation_components_ms": 0.01696000061929226,
+              "Reset/observation_fallbacks": 0.0,
+              "Reset/target_missing_fallbacks": 0.0,
+              "Reset/slot_overflow_fallbacks": 0.0,
+              "Reset/batch_ms": 731.5400689840317
+            }
+          },
+          {
+            "seed": 1,
+            "ok": true,
+            "ms": 685.1176130003296,
+            "max_position_error_m": 0.0004509921127464622,
+            "max_rotation_error_rad": 0.000683148333337158,
+            "metrics": {
+              "Reset/requested_obstacles": 2.734375,
+              "Reset/actual_obstacles": 2.734375,
+              "Reset/placement_skipped": 0.0,
+              "Reset/empty_fraction": 0.21875,
+              "Reset/ik_attempts": 1.0,
+              "Reset/layout_resamples": 0.0,
+              "Reset/ik_recovery_fraction": 0.0,
+              "Reset/observation_ms": 0.08047776555031305,
+              "Reset/observation_upload_ms": 0.008749499917030334,
+              "Reset/observation_readback_ms": 0.0013164221854822244,
+              "Reset/observation_ray_ms": 0.047439999878406525,
+              "Reset/observation_components_ms": 0.014271999709308147,
+              "Reset/observation_fallbacks": 0.0,
+              "Reset/target_missing_fallbacks": 0.0,
+              "Reset/slot_overflow_fallbacks": 0.0,
+              "Reset/batch_ms": 670.9302359959111
+            }
+          },
+          {
+            "seed": 2,
+            "ok": true,
+            "ms": 707.8682540159207,
+            "max_position_error_m": 0.0004843143397010863,
+            "max_rotation_error_rad": 0.0003058711881749332,
+            "metrics": {
+              "Reset/requested_obstacles": 2.765625,
+              "Reset/actual_obstacles": 2.765625,
+              "Reset/placement_skipped": 0.0,
+              "Reset/empty_fraction": 0.21875,
+              "Reset/ik_attempts": 1.0,
+              "Reset/layout_resamples": 0.0,
+              "Reset/ik_recovery_fraction": 0.0,
+              "Reset/observation_ms": 0.08177618747140514,
+              "Reset/observation_upload_ms": 0.008894500322639942,
+              "Reset/observation_readback_ms": 0.001251734374818625,
+              "Reset/observation_ray_ms": 0.04788399860262871,
+              "Reset/observation_components_ms": 0.014800000004470348,
+              "Reset/observation_fallbacks": 0.0,
+              "Reset/target_missing_fallbacks": 0.0,
+              "Reset/slot_overflow_fallbacks": 0.0,
+              "Reset/batch_ms": 692.7244259859435
+            }
+          },
+          {
+            "seed": 3,
+            "ok": true,
+            "ms": 775.6053349876311,
+            "max_position_error_m": 0.00048220925964415073,
+            "max_rotation_error_rad": 0.00174168951343745,
+            "metrics": {
+              "Reset/requested_obstacles": 3.0,
+              "Reset/actual_obstacles": 3.0,
+              "Reset/placement_skipped": 0.0,
+              "Reset/empty_fraction": 0.1875,
+              "Reset/ik_attempts": 1.015625,
+              "Reset/layout_resamples": 0.0,
+              "Reset/ik_recovery_fraction": 0.0,
+              "Reset/observation_ms": 0.07998482851689914,
+              "Reset/observation_upload_ms": 0.00887999963015318,
+              "Reset/observation_readback_ms": 0.0012359064385236707,
+              "Reset/observation_ray_ms": 0.04508800059556961,
+              "Reset/observation_components_ms": 0.01595200039446354,
+              "Reset/observation_fallbacks": 0.0,
+              "Reset/target_missing_fallbacks": 0.0,
+              "Reset/slot_overflow_fallbacks": 0.0,
+              "Reset/batch_ms": 761.6589349927381
+            }
+          },
+          {
+            "seed": 4,
+            "ok": true,
+            "ms": 854.9555859935936,
+            "max_position_error_m": 0.00043453247053548694,
+            "max_rotation_error_rad": 0.0004708842607215047,
+            "metrics": {
+              "Reset/requested_obstacles": 3.046875,
+              "Reset/actual_obstacles": 3.046875,
+              "Reset/placement_skipped": 0.0,
+              "Reset/empty_fraction": 0.109375,
+              "Reset/ik_attempts": 1.078125,
+              "Reset/layout_resamples": 0.0,
+              "Reset/ik_recovery_fraction": 0.0,
+              "Reset/observation_ms": 0.08662864092912059,
+              "Reset/observation_upload_ms": 0.008869499899446964,
+              "Reset/observation_readback_ms": 0.0013073126865492668,
+              "Reset/observation_ray_ms": 0.05189850181341171,
+              "Reset/observation_components_ms": 0.01576000079512596,
+              "Reset/observation_fallbacks": 0.0,
+              "Reset/target_missing_fallbacks": 0.0,
+              "Reset/slot_overflow_fallbacks": 0.0,
+              "Reset/batch_ms": 839.837824983988
+            }
+          },
+          {
+            "seed": 5,
+            "ok": true,
+            "ms": 732.9976879991591,
+            "max_position_error_m": 0.00046202304656617343,
+            "max_rotation_error_rad": 0.0004681210848502815,
+            "metrics": {
+              "Reset/requested_obstacles": 3.0625,
+              "Reset/actual_obstacles": 3.0625,
+              "Reset/placement_skipped": 0.0,
+              "Reset/empty_fraction": 0.140625,
+              "Reset/ik_attempts": 1.0,
+              "Reset/layout_resamples": 0.0,
+              "Reset/ik_recovery_fraction": 0.0,
+              "Reset/observation_ms": 0.08611795328761218,
+              "Reset/observation_upload_ms": 0.008890500292181969,
+              "Reset/observation_readback_ms": 0.0013375470189203043,
+              "Reset/observation_ray_ms": 0.05158400163054466,
+              "Reset/observation_components_ms": 0.015647999942302704,
+              "Reset/observation_fallbacks": 0.0,
+              "Reset/target_missing_fallbacks": 0.0,
+              "Reset/slot_overflow_fallbacks": 0.0,
+              "Reset/batch_ms": 717.864603997441
+            }
+          },
+          {
+            "seed": 6,
+            "ok": true,
+            "ms": 751.7733720014803,
+            "max_position_error_m": 0.00045786151895299554,
+            "max_rotation_error_rad": 0.0014136985410004854,
+            "metrics": {
+              "Reset/requested_obstacles": 3.0625,
+              "Reset/actual_obstacles": 3.0625,
+              "Reset/placement_skipped": 0.0,
+              "Reset/empty_fraction": 0.203125,
+              "Reset/ik_attempts": 1.0,
+              "Reset/layout_resamples": 0.0,
+              "Reset/ik_recovery_fraction": 0.0,
+              "Reset/observation_ms": 0.08191607821572688,
+              "Reset/observation_upload_ms": 0.009069999679923058,
+              "Reset/observation_readback_ms": 0.0013033595678280108,
+              "Reset/observation_ray_ms": 0.0464479997754097,
+              "Reset/observation_components_ms": 0.01568000018596649,
+              "Reset/observation_fallbacks": 0.0,
+              "Reset/target_missing_fallbacks": 0.0,
+              "Reset/slot_overflow_fallbacks": 0.0,
+              "Reset/batch_ms": 737.7200830087531
+            }
+          },
+          {
+            "seed": 7,
+            "ok": true,
+            "ms": 741.2057539913803,
+            "max_position_error_m": 0.00047545827692374587,
+            "max_rotation_error_rad": 0.0003443688037805259,
+            "metrics": {
+              "Reset/requested_obstacles": 2.609375,
+              "Reset/actual_obstacles": 2.609375,
+              "Reset/placement_skipped": 0.0,
+              "Reset/empty_fraction": 0.171875,
+              "Reset/ik_attempts": 1.0,
+              "Reset/layout_resamples": 0.0,
+              "Reset/ik_recovery_fraction": 0.0,
+              "Reset/observation_ms": 0.08413909381488338,
+              "Reset/observation_upload_ms": 0.00685400003567338,
+              "Reset/observation_readback_ms": 0.001324234290223103,
+              "Reset/observation_ray_ms": 0.04549799859523773,
+              "Reset/observation_components_ms": 0.014800000004470348,
+              "Reset/observation_fallbacks": 0.0,
+              "Reset/target_missing_fallbacks": 0.0,
+              "Reset/slot_overflow_fallbacks": 0.0,
+              "Reset/batch_ms": 727.0711259916425
+            }
+          }
+        ],
+        "parent_contract_only_three_reward_terms_removed": true,
+        "ppo_only_experiment_name_changed": true,
+        "static_local_com_cache_checks": {
+          "reset": 9,
+          "physics_step": 1,
+          "timeout_partial_reset": 1,
+          "physical_contact": 1
+        },
+        "test_inactive_parking_grid_and_unchanged_collision_groups": true,
+        "batched_surface_matches_original_mesh_observer": true,
+        "minimum_actual_contact_face_goal_cosine": 0.9849843978881836,
+        "minimum_hand_bottom_clearance_m": 0.004561901092529297,
+        "maximum_hand_bottom_clearance_m": 0.005035996437072754,
+        "palm_always_left": true,
+        "training_wrapper_initial_reset": true,
+        "bounded_failed_row_resampling": true,
+        "centroid_com": {
+          "height": [
+            0.09758911281824112,
+            0.10979046672582626,
+            0.10279999673366547,
+            0.10113899409770966,
+            0.10369228571653366,
+            0.10685703903436661,
+            0.10552000254392624,
+            0.09458096325397491,
+            0.09064200520515442,
+            0.09630905836820602,
+            0.09535481780767441,
+            0.09421965479850769,
+            0.10885819792747498,
+            0.10752735286951065,
+            0.09629356116056442,
+            0.10310877114534378,
+            0.09791263937950134,
+            0.10829095542430878,
+            0.0991770401597023,
+            0.09529760479927063,
+            0.09493254870176315,
+            0.10122736543416977,
+            0.09525483101606369,
+            0.10169172286987305,
+            0.10795646160840988,
+            0.09798800945281982,
+            0.09438641369342804,
+            0.10995075106620789,
+            0.10019052773714066,
+            0.0918181911110878,
+            0.09094233065843582,
+            0.09219298511743546,
+            0.10254891961812973,
+            0.10584158450365067,
+            0.09844320267438889,
+            0.0912705510854721,
+            0.09763238579034805,
+            0.10992243140935898,
+            0.10058228671550751,
+            0.10942156612873077,
+            0.10721559822559357,
+            0.09022962301969528,
+            0.1044144406914711,
+            0.10363420844078064,
+            0.10073940455913544,
+            0.09533650428056717,
+            0.10281923413276672,
+            0.09223104268312454,
+            0.098695307970047,
+            0.09907447546720505,
+            0.10907632112503052,
+            0.1075170561671257,
+            0.09526778012514114,
+            0.10001172125339508,
+            0.09357304126024246,
+            0.10825255513191223,
+            0.10741037130355835,
+            0.09596889466047287,
+            0.10277899354696274,
+            0.10217940807342529,
+            0.09305678308010101,
+            0.10525021702051163,
+            0.10078758001327515,
+            0.10557252913713455
+          ],
+          "centroid_minus_root": [
+            [
+              0.0,
+              0.0,
+              0.04879450798034668
+            ],
+            [
+              0.0,
+              0.0,
+              0.05489528179168701
+            ],
+            [
+              0.0,
+              0.0,
+              0.051399946212768555
+            ],
+            [
+              0.0,
+              0.0,
+              0.05056953430175781
+            ],
+            [
+              0.0,
+              0.0,
+              0.05184614658355713
+            ],
+            [
+              0.0,
+              0.0,
+              0.0534285306930542
+            ],
+            [
+              0.0,
+              0.0,
+              0.05276000499725342
+            ],
+            [
+              0.0,
+              0.0,
+              0.04729044437408447
+            ],
+            [
+              0.0,
+              0.0,
+              0.045320987701416016
+            ],
+            [
+              0.0,
+              0.0,
+              0.048154473304748535
+            ],
+            [
+              0.0,
+              0.0,
+              0.04767739772796631
+            ],
+            [
+              0.0,
+              0.0,
+              0.04710984230041504
+            ],
+            [
+              0.0,
+              0.0,
+              0.054429054260253906
+            ],
+            [
+              0.0,
+              0.0,
+              0.053763628005981445
+            ],
+            [
+              0.0,
+              0.0,
+              0.048146724700927734
+            ],
+            [
+              0.0,
+              0.0,
+              0.05155444145202637
+            ],
+            [
+              0.0,
+              0.0,
+              0.04895627498626709
+            ],
+            [
+              0.0,
+              0.0,
+              0.0541454553604126
+            ],
+            [
+              0.0,
+              0.0,
+              0.049588561058044434
+            ],
+            [
+              0.0,
+              0.0,
+              0.04764878749847412
+            ],
+            [
+              0.0,
+              0.0,
+              0.047466278076171875
+            ],
+            [
+              0.0,
+              0.0,
+              0.0506136417388916
+            ],
+            [
+              0.0,
+              0.0,
+              0.04762744903564453
+            ],
+            [
+              0.0,
+              0.0,
+              0.05084586143493652
+            ],
+            [
+              0.0,
+              0.0,
+              0.05397820472717285
+            ],
+            [
+              0.0,
+              0.0,
+              0.04899406433105469
+            ],
+            [
+              0.0,
+              0.0,
+              0.047193169593811035
+            ],
+            [
+              0.0,
+              0.0,
+              0.05497539043426514
+            ],
+            [
+              0.0,
+              0.0,
+              0.050095319747924805
+            ],
+            [
+              0.0,
+              0.0,
+              0.04590904712677002
+            ],
+            [
+              0.0,
+              0.0,
+              0.04547119140625
+            ],
+            [
+              0.0,
+              0.0,
+              0.04609644412994385
+            ],
+            [
+              0.0,
+              0.0,
+              0.05127441883087158
+            ],
+            [
+              0.0,
+              0.0,
+              0.05292081832885742
+            ],
+            [
+              0.0,
+              0.0,
+              0.04922163486480713
+            ],
+            [
+              0.0,
+              0.0,
+              0.045635223388671875
+            ],
+            [
+              0.0,
+              0.0,
+              0.04881620407104492
+            ],
+            [
+              0.0,
+              0.0,
+              0.054961204528808594
+            ],
+            [
+              0.0,
+              0.0,
+              0.05029118061065674
+            ],
+            [
+              0.0,
+              0.0,
+              0.0547107458114624
+            ],
+            [
+              0.0,
+              0.0,
+              0.053607821464538574
+            ],
+            [
+              0.0,
+              0.0,
+              0.045114755630493164
+            ],
+            [
+              0.0,
+              0.0,
+              0.052207231521606445
+            ],
+            [
+              0.0,
+              0.0,
+              0.05181705951690674
+            ],
+            [
+              0.0,
+              0.0,
+              0.0503697395324707
+            ],
+            [
+              0.0,
+              0.0,
+              0.0476682186126709
+            ],
+            [
+              0.0,
+              0.0,
+              0.05140960216522217
+            ],
+            [
+              0.0,
+              0.0,
+              0.04611551761627197
+            ],
+            [
+              0.0,
+              0.0,
+              0.049347639083862305
+            ],
+            [
+              0.0,
+              0.0,
+              0.04953718185424805
+            ],
+            [
+              0.0,
+              0.0,
+              0.05453813076019287
+            ],
+            [
+              0.0,
+              0.0,
+              0.05375850200653076
+            ],
+            [
+              0.0,
+              0.0,
+              0.04763388633728027
+            ],
+            [
+              0.0,
+              0.0,
+              0.05000591278076172
+            ],
+            [
+              0.0,
+              0.0,
+              0.04678654670715332
+            ],
+            [
+              0.0,
+              0.0,
+              0.05412626266479492
+            ],
+            [
+              0.0,
+              0.0,
+              0.05370521545410156
+            ],
+            [
+              0.0,
+              0.0,
+              0.04798448085784912
+            ],
+            [
+              0.0,
+              0.0,
+              0.051389455795288086
+            ],
+            [
+              0.0,
+              0.0,
+              0.05108976364135742
+            ],
+            [
+              0.0,
+              0.0,
+              0.04652833938598633
+            ],
+            [
+              0.0,
+              0.0,
+              0.052625060081481934
+            ],
+            [
+              0.0,
+              0.0,
+              0.05039381980895996
+            ],
+            [
+              0.0,
+              0.0,
+              0.05278623104095459
+            ]
+          ],
+          "com_minus_root": [
+            [
+              0.0,
+              0.0,
+              0.01951777935028076
+            ],
+            [
+              0.0,
+              0.0,
+              0.021958112716674805
+            ],
+            [
+              0.0,
+              0.0,
+              0.020560026168823242
+            ],
+            [
+              0.0,
+              0.0,
+              0.020227789878845215
+            ],
+            [
+              0.0,
+              0.0,
+              0.02073848247528076
+            ],
+            [
+              0.0,
+              0.0,
+              0.02137136459350586
+            ],
+            [
+              0.0,
+              0.0,
+              0.021103978157043457
+            ],
+            [
+              0.0,
+              0.0,
+              0.01891624927520752
+            ],
+            [
+              0.0,
+              0.0,
+              0.018128395080566406
+            ],
+            [
+              0.0,
+              0.0,
+              0.019261837005615234
+            ],
+            [
+              0.0,
+              0.0,
+              0.019070982933044434
+            ],
+            [
+              0.0,
+              0.0,
+              0.018843889236450195
+            ],
+            [
+              0.0,
+              0.0,
+              0.021771669387817383
+            ],
+            [
+              0.0,
+              0.0,
+              0.02150547504425049
+            ],
+            [
+              0.0,
+              0.0,
+              0.019258737564086914
+            ],
+            [
+              0.0,
+              0.0,
+              0.020621776580810547
+            ],
+            [
+              0.0,
+              0.0,
+              0.019582509994506836
+            ],
+            [
+              0.0,
+              0.0,
+              0.02165818214416504
+            ],
+            [
+              0.0,
+              0.0,
+              0.019835352897644043
+            ],
+            [
+              0.0,
+              0.0,
+              0.01905953884124756
+            ],
+            [
+              0.0,
+              0.0,
+              0.01898646354675293
+            ],
+            [
+              0.0,
+              0.0,
+              0.02024543285369873
+            ],
+            [
+              0.0,
+              0.0,
+              0.019050955772399902
+            ],
+            [
+              0.0,
+              0.0,
+              0.02033829689025879
+            ],
+            [
+              0.0,
+              0.0,
+              0.02159130573272705
+            ],
+            [
+              0.0,
+              0.0,
+              0.019597649574279785
+            ],
+            [
+              0.0,
+              0.0,
+              0.018877267837524414
+            ],
+            [
+              0.0,
+              0.0,
+              0.021990180015563965
+            ],
+            [
+              0.0,
+              0.0,
+              0.020038127899169922
+            ],
+            [
+              0.0,
+              0.0,
+              0.018363595008850098
+            ],
+            [
+              0.0,
+              0.0,
+              0.0181884765625
+            ],
+            [
+              0.0,
+              0.0,
+              0.01843857765197754
+            ],
+            [
+              0.0,
+              0.0,
+              0.020509839057922363
+            ],
+            [
+              0.0,
+              0.0,
+              0.02116835117340088
+            ],
+            [
+              0.0,
+              0.0,
+              0.01968860626220703
+            ],
+            [
+              0.0,
+              0.0,
+              0.01825416088104248
+            ],
+            [
+              0.0,
+              0.0,
+              0.01952648162841797
+            ],
+            [
+              0.0,
+              0.0,
+              0.021984457969665527
+            ],
+            [
+              0.0,
+              0.0,
+              0.020116448402404785
+            ],
+            [
+              0.0,
+              0.0,
+              0.02188432216644287
+            ],
+            [
+              0.0,
+              0.0,
+              0.02144312858581543
+            ],
+            [
+              0.0,
+              0.0,
+              0.018045902252197266
+            ],
+            [
+              0.0,
+              0.0,
+              0.020882844924926758
+            ],
+            [
+              0.0,
+              0.0,
+              0.020726799964904785
+            ],
+            [
+              0.0,
+              0.0,
+              0.02014791965484619
+            ],
+            [
+              0.0,
+              0.0,
+              0.01906728744506836
+            ],
+            [
+              0.0,
+              0.0,
+              0.020563840866088867
+            ],
+            [
+              0.0,
+              0.0,
+              0.01844620704650879
+            ],
+            [
+              0.0,
+              0.0,
+              0.01973903179168701
+            ],
+            [
+              0.0,
+              0.0,
+              0.01981484889984131
+            ],
+            [
+              0.0,
+              0.0,
+              0.02181529998779297
+            ],
+            [
+              0.0,
+              0.0,
+              0.021503448486328125
+            ],
+            [
+              0.0,
+              0.0,
+              0.01905357837677002
+            ],
+            [
+              0.0,
+              0.0,
+              0.020002365112304688
+            ],
+            [
+              0.0,
+              0.0,
+              0.01871466636657715
+            ],
+            [
+              0.0,
+              0.0,
+              0.02165055274963379
+            ],
+            [
+              0.0,
+              0.0,
+              0.021482110023498535
+            ],
+            [
+              0.0,
+              0.0,
+              0.01919376850128174
+            ],
+            [
+              0.0,
+              0.0,
+              0.020555853843688965
+            ],
+            [
+              0.0,
+              0.0,
+              0.02043592929840088
+            ],
+            [
+              0.0,
+              0.0,
+              0.01861131191253662
+            ],
+            [
+              0.0,
+              0.0,
+              0.021050095558166504
+            ],
+            [
+              0.0,
+              0.0,
+              0.020157575607299805
+            ],
+            [
+              0.0,
+              0.0,
+              0.021114468574523926
+            ]
+          ]
+        },
+        "partial_reset_isolation": true,
+        "real_step_ms": 325.0541462475667,
+        "test_inactive_bodies_stationary_and_contact_free_after_physics": true,
+        "real_physics_smoke": true,
+        "sweep_from_reset_without_gate": true,
+        "same_step_gate_timeout_and_partial_reset": true,
+        "actual_contact_probe": {
+          "load_N": [
+            25.45489501953125,
+            25.66811752319336,
+            23.52214241027832,
+            24.150299072265625,
+            28.650470733642578,
+            22.44883918762207,
+            27.632177352905273,
+            25.60081672668457,
+            11.720000267028809,
+            22.51874351501465,
+            18.728063583374023,
+            21.23747444152832,
+            25.753536224365234,
+            22.901020050048828,
+            18.410327911376953,
+            21.625486373901367,
+            24.844772338867188,
+            27.63395881652832,
+            24.2554931640625,
+            19.37335205078125,
+            17.838064193725586,
+            21.326887130737305,
+            17.968355178833008,
+            23.155298233032227,
+            17.28693389892578,
+            15.203205108642578,
+            22.01486587524414,
+            18.147512435913086,
+            20.562625885009766,
+            14.336248397827148,
+            21.2950382232666,
+            14.977721214294434,
+            29.07308006286621,
+            27.291515350341797,
+            16.592275619506836,
+            17.619747161865234,
+            18.69492530822754,
+            15.379532814025879,
+            25.42000389099121,
+            17.960474014282227,
+            31.5659236907959,
+            24.62409210205078,
+            21.559412002563477,
+            15.910841941833496,
+            26.4422607421875,
+            23.575450897216797,
+            22.347963333129883,
+            23.24594497680664,
+            14.883458137512207,
+            22.769180297851562,
+            20.627277374267578,
+            22.36519432067871,
+            19.769927978515625,
+            15.976901054382324,
+            16.31237030029297,
+            18.122833251953125,
+            23.719161987304688,
+            17.43151092529297,
+            29.126096725463867,
+            22.860260009765625,
+            20.892099380493164,
+            22.313508987426758,
+            26.15134620666504,
+            20.401912689208984
+          ],
+          "force_N": [
+            [
+              -15.240148544311523,
+              19.21937370300293,
+              -9.206902503967285
+            ],
+            [
+              -13.525242805480957,
+              19.831890106201172,
+              -11.611249923706055
+            ],
+            [
+              -13.017687797546387,
+              18.01534652709961,
+              -10.147543907165527
+            ],
+            [
+              -13.74480152130127,
+              18.261920928955078,
+              -10.292447090148926
+            ],
+            [
+              -15.86589241027832,
+              21.931821823120117,
+              -12.848830223083496
+            ],
+            [
+              -11.914214134216309,
+              17.69677734375,
+              -7.975846290588379
+            ],
+            [
+              -15.368549346923828,
+              21.094348907470703,
+              -12.145976066589355
+            ],
+            [
+              -14.273822784423828,
+              19.74748420715332,
+              -11.121758460998535
+            ],
+            [
+              -6.899296283721924,
+              8.929688453674316,
+              -4.6441755294799805
+            ],
+            [
+              -11.836021423339844,
+              17.564245223999023,
+              -10.578629493713379
+            ],
+            [
+              -10.408538818359375,
+              14.422235488891602,
+              -7.4239912033081055
+            ],
+            [
+              -10.502828598022461,
+              17.170740127563477,
+              -10.780637741088867
+            ],
+            [
+              -13.554710388183594,
+              19.881845474243164,
+              -11.68764591217041
+            ],
+            [
+              -11.929584503173828,
+              17.99053192138672,
+              -9.053483009338379
+            ],
+            [
+              -10.571730613708496,
+              14.047226905822754,
+              -6.77298641204834
+            ],
+            [
+              -12.257452964782715,
+              16.617414474487305,
+              -7.763059616088867
+            ],
+            [
+              -14.2796630859375,
+              18.84832191467285,
+              -9.15661334991455
+            ],
+            [
+              -14.963641166687012,
+              21.735595703125,
+              -9.796460151672363
+            ],
+            [
+              -14.002663612365723,
+              18.469327926635742,
+              -8.275995254516602
+            ],
+            [
+              -10.403011322021484,
+              15.039180755615234,
+              -8.607348442077637
+            ],
+            [
+              -9.36259651184082,
+              14.085841178894043,
+              -7.723333358764648
+            ],
+            [
+              -12.150272369384766,
+              16.353254318237305,
+              -7.844210624694824
+            ],
+            [
+              -10.294824600219727,
+              13.676142692565918,
+              -6.936535835266113
+            ],
+            [
+              -13.329225540161133,
+              17.783109664916992,
+              -8.007219314575195
+            ],
+            [
+              -8.791646957397461,
+              13.560940742492676,
+              -6.9359259605407715
+            ],
+            [
+              -7.950765132904053,
+              11.576422691345215,
+              -7.210415840148926
+            ],
+            [
+              -11.463851928710938,
+              17.440576553344727,
+              -10.377716064453125
+            ],
+            [
+              -9.236044883728027,
+              14.212319374084473,
+              -7.488897323608398
+            ],
+            [
+              -10.702112197875977,
+              15.69490909576416,
+              -9.512476921081543
+            ],
+            [
+              -8.364751815795898,
+              10.925209045410156,
+              -5.6505560874938965
+            ],
+            [
+              -11.55589771270752,
+              16.85550880432129,
+              -9.205753326416016
+            ],
+            [
+              -8.810894012451172,
+              11.449772834777832,
+              -5.420464515686035
+            ],
+            [
+              -16.629274368286133,
+              22.3616943359375,
+              -10.597848892211914
+            ],
+            [
+              -15.681174278259277,
+              20.96583366394043,
+              -9.412372589111328
+            ],
+            [
+              -9.372847557067871,
+              12.628334999084473,
+              -6.32647180557251
+            ],
+            [
+              -8.842315673828125,
+              14.314465522766113,
+              -8.4581298828125
+            ],
+            [
+              -9.662025451660156,
+              14.397430419921875,
+              -8.95158863067627
+            ],
+            [
+              -8.124241828918457,
+              12.122271537780762,
+              -4.951195240020752
+            ],
+            [
+              -14.495848655700684,
+              19.576839447021484,
+              -9.234733581542969
+            ],
+            [
+              -9.083539009094238,
+              14.048661231994629,
+              -7.579192161560059
+            ],
+            [
+              -17.474483489990234,
+              24.52242088317871,
+              -11.687251091003418
+            ],
+            [
+              -14.5744047164917,
+              18.839923858642578,
+              -8.995827674865723
+            ],
+            [
+              -12.628013610839844,
+              16.574989318847656,
+              -6.064517974853516
+            ],
+            [
+              -9.36476993560791,
+              12.21603775024414,
+              -4.050457954406738
+            ],
+            [
+              -15.525588035583496,
+              20.30099868774414,
+              -8.24058723449707
+            ],
+            [
+              -13.164384841918945,
+              17.98698616027832,
+              -10.282830238342285
+            ],
+            [
+              -13.107290267944336,
+              17.02802848815918,
+              -7.01962947845459
+            ],
+            [
+              -13.85096263885498,
+              17.812532424926758,
+              -7.486479759216309
+            ],
+            [
+              -8.14864730834961,
+              11.194336891174316,
+              -6.482706069946289
+            ],
+            [
+              -12.392383575439453,
+              17.184452056884766,
+              -10.153874397277832
+            ],
+            [
+              -10.580233573913574,
+              16.00883674621582,
+              -9.2112398147583
+            ],
+            [
+              -12.013202667236328,
+              17.640949249267578,
+              -7.3557634353637695
+            ],
+            [
+              -11.258423805236816,
+              15.042610168457031,
+              -7.894648551940918
+            ],
+            [
+              -8.381232261657715,
+              12.03765869140625,
+              -7.43461799621582
+            ],
+            [
+              -9.425141334533691,
+              12.437287330627441,
+              -6.17677640914917
+            ],
+            [
+              -9.539702415466309,
+              13.600629806518555,
+              -8.74523639678955
+            ],
+            [
+              -12.509564399719238,
+              18.52516746520996,
+              -9.685604095458984
+            ],
+            [
+              -10.222594261169434,
+              13.367643356323242,
+              -5.532403945922852
+            ],
+            [
+              -16.75029945373535,
+              22.44974708557129,
+              -9.96167278289795
+            ],
+            [
+              -13.48104476928711,
+              17.37057113647461,
+              -7.234471797943115
+            ],
+            [
+              -11.270378112792969,
+              16.70121955871582,
+              -7.220652103424072
+            ],
+            [
+              -12.054803848266602,
+              17.151458740234375,
+              -9.749319076538086
+            ],
+            [
+              -15.103742599487305,
+              19.842117309570312,
+              -10.543096542358398
+            ],
+            [
+              -11.663105964660645,
+              15.728131294250488,
+              -6.452285289764404
+            ]
+          ],
+          "moment_Nm": [
+            [
+              -0.06382531672716141,
+              -0.10161753743886948,
+              0.046636372804641724
+            ],
+            [
+              -0.06121354550123215,
+              -0.023940935730934143,
+              0.2042827010154724
+            ],
+            [
+              -0.09507150948047638,
+              -0.07927917689085007,
+              0.13394635915756226
+            ],
+            [
+              -0.10015381872653961,
+              -0.11060091108083725,
+              0.09580489993095398
+            ],
+            [
+              -0.10627458989620209,
+              -0.08685567229986191,
+              0.15898846089839935
+            ],
+            [
+              -0.14832206070423126,
+              -0.10080669820308685,
+              0.14393405616283417
+            ],
+            [
+              -0.09122137725353241,
+              -0.08056837320327759,
+              0.1551315039396286
+            ],
+            [
+              -0.3984902501106262,
+              -0.29114463925361633,
+              0.09188239276409149
+            ],
+            [
+              -0.16309496760368347,
+              -0.14847533404827118,
+              0.015018576756119728
+            ],
+            [
+              -0.3399551808834076,
+              -0.21964415907859802,
+              0.11331591755151749
+            ],
+            [
+              -0.3047927916049957,
+              -0.23452436923980713,
+              0.06222221255302429
+            ],
+            [
+              -0.3173677623271942,
+              -0.15747442841529846,
+              0.14520809054374695
+            ],
+            [
+              -0.07364757359027863,
+              -0.024009965360164642,
+              0.20860204100608826
+            ],
+            [
+              -0.12675166130065918,
+              -0.06826132535934448,
+              0.17644095420837402
+            ],
+            [
+              -0.2862856984138489,
+              -0.25028377771377563,
+              0.036673810333013535
+            ],
+            [
+              -0.13103874027729034,
+              -0.11934763938188553,
+              0.10182133316993713
+            ],
+            [
+              -0.4014071524143219,
+              -0.3483975827693939,
+              0.058256350457668304
+            ],
+            [
+              -0.17987920343875885,
+              -0.12366602569818497,
+              0.1640767902135849
+            ],
+            [
+              -0.40107500553131104,
+              -0.352688729763031,
+              0.051620326936244965
+            ],
+            [
+              -0.29745614528656006,
+              -0.20740462839603424,
+              0.08418429642915726
+            ],
+            [
+              -0.2888704538345337,
+              -0.18447691202163696,
+              0.09331141412258148
+            ],
+            [
+              -0.12739886343479156,
+              -0.11829470843076706,
+              0.09458968043327332
+            ],
+            [
+              -0.27836790680885315,
+              -0.2394021451473236,
+              0.0438838005065918
+            ],
+            [
+              -0.15485697984695435,
+              -0.14252327382564545,
+              0.09336411207914352
+            ],
+            [
+              -0.08698008954524994,
+              -0.041556160897016525,
+              0.1491507887840271
+            ],
+            [
+              -0.21631336212158203,
+              -0.15128128230571747,
+              0.08141709119081497
+            ],
+            [
+              -0.3370637595653534,
+              -0.20354439318180084,
+              0.12052620947360992
+            ],
+            [
+              -0.0603051632642746,
+              -0.031060094013810158,
+              0.15702897310256958
+            ],
+            [
+              -0.3076426684856415,
+              -0.21478904783725739,
+              0.10743020474910736
+            ],
+            [
+              -0.2112264186143875,
+              -0.18544426560401917,
+              0.023766374215483665
+            ],
+            [
+              -0.33975863456726074,
+              -0.22315455973148346,
+              0.08846074342727661
+            ],
+            [
+              -0.2242305427789688,
+              -0.20108389854431152,
+              0.018379906192421913
+            ],
+            [
+              -0.19276376068592072,
+              -0.16971120238304138,
+              0.12432505190372467
+            ],
+            [
+              -0.1704256683588028,
+              -0.1635485589504242,
+              0.10804135352373123
+            ],
+            [
+              -0.2457394003868103,
+              -0.22038687765598297,
+              0.03975391387939453
+            ],
+            [
+              -0.27272820472717285,
+              -0.14194852113723755,
+              0.10913852602243423
+            ],
+            [
+              -0.2685185670852661,
+              -0.17934532463550568,
+              0.09744417667388916
+            ],
+            [
+              -0.09012633562088013,
+              -0.07039153575897217,
+              0.10635300725698471
+            ],
+            [
+              -0.17136377096176147,
+              -0.1510303020477295,
+              0.10215301811695099
+            ],
+            [
+              -0.05821768566966057,
+              -0.025294560939073563,
+              0.15829303860664368
+            ],
+            [
+              -0.18828924000263214,
+              -0.15450650453567505,
+              0.13949885964393616
+            ],
+            [
+              -0.3988891839981079,
+              -0.3333497941493988,
+              0.039720457047224045
+            ],
+            [
+              -0.17258810997009277,
+              -0.16601267457008362,
+              0.0635451227426529
+            ],
+            [
+              -0.133407324552536,
+              -0.13158634305000305,
+              0.04000260680913925
+            ],
+            [
+              -0.21334800124168396,
+              -0.19920754432678223,
+              0.07986529916524887
+            ],
+            [
+              -0.356759250164032,
+              -0.27547314763069153,
+              0.07591041922569275
+            ],
+            [
+              -0.16059738397598267,
+              -0.16773027181625366,
+              0.05464978888630867
+            ],
+            [
+              -0.3803539276123047,
+              -0.33499616384506226,
+              0.01755240559577942
+            ],
+            [
+              -0.20913398265838623,
+              -0.1795319765806198,
+              0.05249897390604019
+            ],
+            [
+              -0.33846649527549744,
+              -0.2630936801433563,
+              0.09027547389268875
+            ],
+            [
+              -0.053163401782512665,
+              -0.018438423052430153,
+              0.17411458492279053
+            ],
+            [
+              -0.16233496367931366,
+              -0.11540152132511139,
+              0.13724341988563538
+            ],
+            [
+              -0.29869428277015686,
+              -0.257201224565506,
+              0.04236869141459465
+            ],
+            [
+              -0.22463856637477875,
+              -0.16915282607078552,
+              0.08026398718357086
+            ],
+            [
+              -0.24197697639465332,
+              -0.21540236473083496,
+              0.025460990145802498
+            ],
+            [
+              -0.018363727256655693,
+              -0.013680483214557171,
+              0.12696148455142975
+            ],
+            [
+              -0.11192938685417175,
+              -0.06940741091966629,
+              0.16287359595298767
+            ],
+            [
+              -0.28276655077934265,
+              -0.24962231516838074,
+              0.025800878182053566
+            ],
+            [
+              -0.21360188722610474,
+              -0.18266554176807404,
+              0.12700237333774567
+            ],
+            [
+              -0.16360750794410706,
+              -0.17241890728473663,
+              0.05254697799682617
+            ],
+            [
+              -0.39159587025642395,
+              -0.2618180811405182,
+              0.09101748466491699
+            ],
+            [
+              -0.08276529610157013,
+              -0.05534326285123825,
+              0.15365809202194214
+            ],
+            [
+              -0.12682239711284637,
+              -0.1368013322353363,
+              0.08271633088588715
+            ],
+            [
+              -0.13592445850372314,
+              -0.12686684727668762,
+              0.0905594676733017
+            ]
+          ]
+        },
+        "final_reset_metrics": {
+          "Reset/requested_obstacles": 0.0,
+          "Reset/actual_obstacles": 0.0,
+          "Reset/placement_skipped": 0.0,
+          "Reset/empty_fraction": 1.0,
+          "Reset/ik_attempts": 1.0,
+          "Reset/layout_resamples": 0.0,
+          "Reset/ik_recovery_fraction": 0.0,
+          "Reset/observation_ms": 2.1340620005503297,
+          "Reset/observation_upload_ms": 0.5600000023841858,
+          "Reset/observation_readback_ms": 0.09678001515567303,
+          "Reset/observation_ray_ms": 0.25600001215934753,
+          "Reset/observation_components_ms": 0.822272002696991,
+          "Reset/observation_fallbacks": 0.0,
+          "Reset/target_missing_fallbacks": 0.0,
+          "Reset/slot_overflow_fallbacks": 0.0,
+          "Reset/batch_ms": 63.89332699473016
+        }
+      }
+    }
+  ],
+  "training": {
+    "task": "Inspire-Stabilize-Sweep-v0",
+    "exit_code": 0,
+    "command": "PYTHONUNBUFFERED=1 /home/min/miniconda3/envs/env_isaaclab/bin/python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Stabilize-Sweep-v0 --headless --num_envs 2048 --seed 42 --max_iterations 3 agent.experiment_name=/tmp/stabilize_perf/parent_stabilize > /tmp/stabilize_parent_train.log 2>&1",
+    "timing": {
+      "log": "/tmp/stabilize_parent_train.log",
+      "metric": "RSL-RL iteration time (collection + learning)",
+      "excluded_from_metric": [
+        "simulator startup",
+        "initial reset",
+        "logger overhead",
+        "checkpoint I/O"
+      ],
+      "limit_seconds_exclusive": 10.0,
+      "expected_iterations": 3,
+      "logged_iterations": 3,
+      "complete_iterations": 3,
+      "excluded_iterations": [],
+      "passed": false,
+      "errors": [
+        "Iteration 0: time is not strictly below 10s",
+        "Iteration 1: time is not strictly below 10s",
+        "Iteration 2: time is not strictly below 10s"
+      ],
+      "iterations": [
+        {
+          "iteration": 0,
+          "declared_total_iterations": 3,
+          "collection_seconds": 40.64,
+          "learning_seconds": 0.417,
+          "iteration_seconds": 41.06,
+          "collection_plus_learning_seconds": 41.057,
+          "rounding_upper_bound_seconds": 41.058,
+          "below_limit": false
+        },
+        {
+          "iteration": 1,
+          "declared_total_iterations": 3,
+          "collection_seconds": 34.677,
+          "learning_seconds": 0.387,
+          "iteration_seconds": 35.06,
+          "collection_plus_learning_seconds": 35.064,
+          "rounding_upper_bound_seconds": 35.065,
+          "below_limit": false
+        },
+        {
+          "iteration": 2,
+          "declared_total_iterations": 3,
+          "collection_seconds": 42.887,
+          "learning_seconds": 0.356,
+          "iteration_seconds": 43.24,
+          "collection_plus_learning_seconds": 43.243,
+          "rounding_upper_bound_seconds": 43.244,
+          "below_limit": false
+        }
+      ],
+      "summary": {
+        "collection_seconds": {
+          "min": 34.677,
+          "median": 40.64,
+          "max": 42.887
+        },
+        "learning_seconds": {
+          "min": 0.356,
+          "median": 0.387,
+          "max": 0.417
+        },
+        "iteration_seconds": {
+          "min": 35.06,
+          "median": 41.06,
+          "max": 43.24
+        },
+        "collection_plus_learning_seconds": {
+          "min": 35.064,
+          "median": 41.057,
+          "max": 43.243
+        }
+      }
+    }
+  },
+  "limitations": [
+    "The standard IK run completed 3 iterations but did not meet a 10-second threshold.",
+    "Sweep-Only standard variant was validated at64 environments; its2048 PPO timing was not measured.",
+    "No long-term learned-behavior claim.",
+    "Previous Test32-iteration results are historical and are not standard IK measurements."
+  ]
+}

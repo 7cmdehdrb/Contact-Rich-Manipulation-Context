@@ -1,5 +1,9 @@
 # 현재 개발 인계
 
+2026-11-19 **일반 IK 환경에도 공통 성능 개선 적용**: `Inspire-Stabilize-Sweep-v0`와 `Inspire-Sweep-Only-v0`에 대표점 GPU 배치·고정 COM cache·비활성 XY 주차·중복 native 기록 생략을 연결했다. 일반 배치는 로봇 점유 공간 검사를 유지한32행 처리/fused RED이며,4후보 IK·충돌 메쉬·실패 행8회 추가 재추출·손 방향/높이·보상/PPO는 유지한다. Test 초기화 경로는 보존한다. CPU132개·일반 Stabilize GPU4환경 실패 주입·Sweep Only GPU64환경8seed 통과. 아래 Test의10초 미만 수치는 일반 환경의 측정값이 아니다. [후속 변경·검증](../02_implementation/logs/2026-11-19_stabilize_parent_performance.md).
+
+2026-11-19 **Stabilize/Sweep Only Test 성능 개선 완료**: 두 `-Test`만 대표점 GPU 배치 처리·배치 셀 선택·고정 COM cache·중복 reset 생략을 적용하고 비활성 물체 주차를 작업 영역 밖 XY 격자로 옮겼다. RTX3090에서 각각2048환경·headless·seed42·32회가 모두10초 미만이었다. Stabilize 중앙값8.81/최대9.44초, Sweep Only8.69/9.18초. 관측1mm·활성 배치/RNG·보상/Gate·horizon36·PPO8×4 유지, CPU131개·양쪽 GPU64환경 검증 통과. 최초 시뮬레이터 생성은 시간 지표에서 제외하며 장기 행동 평가는 미완료다. [변경·실행·검증·한계](../02_implementation/logs/2026-11-18_stabilize_sweep_performance.md).
+
 2026-11-18 **Finger 초기화 Test2종 추가**: `Inspire-Stabilize-Sweep-v0-Test`와 `Inspire-Sweep-Only-v0-Test`가 각각 원본을 상속한다. 사용자 선택에 따라 Finger 공통 원형 배치·기본 방향 단일 Warp IK를 재사용하고 대표 표면점 관측은 유지한다. 후속 요청으로 Test에만 Finger Reach(weight30)를 추가했다. 나머지 보상/Gate 및 기존 두 환경은 보존한다. Test는 원본의5mm 초기 높이·충돌 hull/4후보/8회 복구를 사용하지 않는다. [차이·실행·검증 범위](../02_implementation/environments/STABILIZE_SWEEP.md#finger-초기화-test-환경).
 
 2026-11-18 **Sweep Only 파생 환경 추가**: `Inspire-Sweep-Only-v0`는 Stabilize 부모를 상속하고 안정화 점수·초기 이동/회전 비용·Gate를 제거한다. 초기 관측부터 Sweep(phase1), 압착 및 모든 나머지 보상·초기화 복구·관측·제어·종료는 유지한다. 별도 PPO 로그 이름 `inspire_sweep_only_v0`. CPU43개·GPU4환경 검증 통과, 장기 학습 미실행. [차이·실행·검증](../02_implementation/environments/STABILIZE_SWEEP.md#sweep-only-파생-환경).
