@@ -1,5 +1,7 @@
 # Inspire-Sweep-Only-v0 상세 환경 설명
 
+계열 전체의 버전 비교와 최신 사용자 보고 학습 현황은 [Inspire-Sweep-Only 계열 안내](SWEEP_ONLY_FAMILY.md)를 먼저 참고한다. 이 문서는 일반 v0의 상세 구현과 파생 환경별 기술 설명을 유지한다.
+
 2026-11-19 기준 실제 구현을 설명한다. `Inspire-Sweep-Only-v0`는 손을 타겟의 밀기 반대편에 IK로 배치한 뒤 곧바로 밀기를 수행하는 환경이다. 접촉 안정화 보상, 초기 물체 이동·회전 비용, Stabilize Gate는 사용하지 않는다. 압착 페널티와 Phase 관측도 사용하지 않는다. 내부 Sweep 상태와 나머지 제약은 유지한다.
 
 이 문서의 중심은 `-Test`가 없는 일반 환경이다. 부모와 Test의 설계 이력은 [Stabilize 계열 설명](STABILIZE_SWEEP.md), 기존 성능 측정은 [일반 IK 초기화 성능 기록](../logs/2026-11-19_sweep_only_ik_performance.md)을 참고한다. 아래 설명은 코드의 현재 동작이며 학습된 정책의 성공을 뜻하지 않는다.
@@ -355,3 +357,33 @@ python src/inspire_sweep_baseline/scripts/train.py \
 ```
 
 사용자가 이 컴퓨터에서 학습 중이므로 GPU 테스트를 금지했다. 코드 구문·실제 파생 클래스 정의의 CPU 실행·등록·변경 범위 정적 검사만 통과했으며, 신규 ID의 Isaac Sim reset·step·학습은 미실행이다.
+
+
+## Sweep Only v1_2 Test
+
+`Inspire-Sweep-Only-v1_2-Test`의 `SweepOnlyV1_2TestEnvCfg`는 v1-Test를 직접 상속한다. 정방향 Weight는 50에서 100, 역방향 Weight는 −10에서 −25로 변경한다. `sweep_normalize_contact_count=False`를 runtime에서 상태 계산으로 전달하여 접촉 계수에 `count / 20` 대신 카운트 `count`를 그대로 사용한다. 카운트 범위 0–20, 증가·감소 규칙, 접촉 인식·높이·방향 조건은 그대로다.
+
+따라서 유효 접촉 조건에서 정방향 보상은 `100 * max(d_prev - d, 0) * count * alignment`, 역방향은 `-25 * max(d - d_prev, 0)`이다. 동일 상태·이력·방향에서 v1 대비 각각 40배와 2.5배이며, 실제 학습 중 누적 수령액이 같은 배수임을 의미하지 않는다. v1의 Deadzone 30° 고정·Finger 초기화·Reach·관측·제어·다른 보상·종료·커리큘럼·PPO를 유지한다. v2-Test의 Deadzone 0°는 상속하지 않는다.
+
+등록 runtime은 기존 `SweepOnlyEnv`, runner는 v1 runner의 직접 자식 `SweepOnlyV1_2TestPPORunnerCfg`이며 experiment name만 `inspire_sweep_only_v1_2_test`로 바뀐다. 기존 모든 환경은 새 정규화 설정의 기본값 True로 이전 동작을 유지한다.
+
+```bash
+python src/inspire_sweep_baseline/scripts/train.py \
+  --task Inspire-Sweep-Only-v1_2-Test --num_envs 2048 --headless
+```
+
+위 명령은 안내이며 실행하지 않았다. CPU 회귀 10개와 별도 378행 상태·수식 검사 및 등록·구문·상속 정적 검사를 통과했다. GPU·Isaac Sim reset/step·학습 성능은 미검증이다. [개발 기록](../logs/2026-11-19_sweep_only_v1_2_test.md).
+
+
+## Sweep Only v2_2 Test
+
+`Inspire-Sweep-Only-v2_2-Test`의 `SweepOnlyV2_2TestEnvCfg`는 v1_2-Test를 직접 상속한다. 부모 post-init 후 `events.object_spawn.params['excluded_x_half_angle']=0.0`만 변경한다. 방향 커리큘럼은 비활성이므로 Deadzone은 0° 고정이다. 정방향 Weight 100, 역방향 −25, 원시 접촉 카운트(20으로 나누지 않음), 접촉·높이·방향 조건과 그 외 전체 환경 구성은 v1_2-Test와 같다. 기존 v2-Test의 보상 50/−10과 혼동하지 않는다.
+
+Runtime은 `SweepOnlyEnv`를 유지한다. `SweepOnlyV2_2TestPPORunnerCfg`도 v1_2 runner를 직접 상속하며 experiment name만 `inspire_sweep_only_v2_2_test`로 변경한다.
+
+```bash
+python src/inspire_sweep_baseline/scripts/train.py \
+  --task Inspire-Sweep-Only-v2_2-Test --num_envs 2048 --headless
+```
+
+명령은 안내이며 실행하지 않았다. 표준 라이브러리만 사용하여 구문·등록·직접 상속·파생 설정 및 기존 코드 보존을 검사했다. GPU·Isaac Sim reset/step·학습은 미실행이다. [개발 기록](../logs/2026-11-19_sweep_only_v2_2_test.md).
