@@ -147,3 +147,11 @@ GPU 통합 검사는 기존 실행기를 갱신하여 활성 관측 목록에 Ph
 기존 GPU 검사 실행기의 부모 대조에도 명시적 weight 차이를 반영했다. 단순 계수 변경이므로 새 테스트를 추가하지 않고 실제 등록 설정을 직렬화하여 직전 검증 설정과 전체 비교한다. 기존 사용자 변경·학습 로그는 보존한다.
 
 검증: 실제 Isaac Sim 등록 설정 `/tmp/sweep_retreat_20_cfg.json`을 직전 `/tmp/sweep_no_phase_after_cfg.json`과 전체 대조했다. Sweep Only 두 ID는 해당 weight 한 항목만 변경됐고 Stabilize 두 ID는 전체 설정이 동일했다. 패키지·문서 diff 검사를 통과했다. 이번 계수 수정 후 물리 rollout·학습 성능은 재측정하지 않았다.
+
+## Sweep Only v1 Test 추가
+
+사용자 요청으로 `Inspire-Sweep-Only-v0-Test`의 직접 자식 `Inspire-Sweep-Only-v1-Test`를 추가했다. 기존 역할별 파일 안에 EnvCfg와 runner를 추가하고 Gym 등록을 연결했다. 새 파일·runtime·보상 함수는 만들지 않았다. EnvCfg는 부모 post-init을 호출한 뒤 정방향 계수 30→50, 역방향 계수 −20→−10만 수정한다. runner는 부모를 직접 상속하며 로그 이름만 `inspire_sweep_only_v1_test`로 분리한다. 초기 배치·IK·Reach·66D 관측·64D 장애물·Phase/압착 비활성·Action·종료·커리큘럼·PPO는 보존한다. 부모와 다른 기존 환경의 계수는 변경하지 않는다.
+
+검증은 `/tmp/sweep_only_v1_validate.py`로 실제 등록 설정을 Isaac Sim 안에서 직렬화하고 직전 네 환경 전체 설정 `/tmp/sweep_retreat_20_cfg.json`과 비교한다. 자식과 부모 차이도 두 weight와 experiment name만 허용한다. 같은 실행에서 신규 ID의 GPU 4환경 reset·4 policy step·부분 reset, 66D/64D 관측, live RewardManager 계수와 Phase/squeeze 비활성을 확인한다. 장기 학습·2048환경 성능은 이번 단순 계수 실험 추가 범위에서 실행하지 않는다.
+
+실행 결과: `V1_TEST_CONFIG_AND_GPU_SMOKE_PASS`, `CONFIG_SNAPSHOT_PASS`, exit 0. 기존 네 ID 설정은 직전 검증값과 전체 일치하고, 새 자식은 부모 대비 두 보상 weight와 experiment name만 달랐다. GPU 4환경 reset·step·부분 reset 검사를 통과했다. 원시 로그 `/tmp/sweep_only_v1_validate.log`, 전체 설정 `/tmp/sweep_only_v1_cfg.json`. 패키지·문서 diff 검사 통과.

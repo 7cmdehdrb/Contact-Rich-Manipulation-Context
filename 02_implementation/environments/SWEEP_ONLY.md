@@ -333,3 +333,14 @@ Phase·압착 제거 후 CPU 95개(66D/67D 모델 forward·gradient·TorchScript
 - Test의 초기 로봇 전체 점유 공간 비겹침이나 무제한 reset 복구.
 
 현재 조건 검토에서는 사용자 확인대로 기존 PPO `clip_actions`를 유지한다. mask 중심과 bbox 중심의 차이, startup에서만 적용되는 물성 랜덤화, Test 초기 로봇 충돌 검사 부재는 현재 구현의 범위로 구분해 기록한다.
+
+## Sweep Only v1 Test
+
+`Inspire-Sweep-Only-v1-Test`는 `Inspire-Sweep-Only-v0-Test`를 직접 상속한다. `SweepOnlyV1TestEnvCfg`는 부모 post-init 이후 `sweep_progress.weight=50.0`, `sweep_retreat.weight=-10.0`만 변경한다. 기존 `SweepOnlyEnv` runtime을 사용하고, `SweepOnlyV1TestPPORunnerCfg`는 부모 runner에서 experiment name만 `inspire_sweep_only_v1_test`로 변경한다.
+
+일반 물체 옆 시작이 아니라 Test의 Finger 초기화·Reach를 유지한다. 관측 66D+64D, Phase 관측·압착 없음, 제어·물성·reset·종료·커리큘럼·모델·PPO는 v0-Test와 동일하다. 앞 절의 30/−20 계수는 v0 및 v0-Test에 대한 설명이다.
+
+```bash
+python src/inspire_sweep_baseline/scripts/train.py \
+  --task Inspire-Sweep-Only-v1-Test --num_envs 2048 --headless
+```

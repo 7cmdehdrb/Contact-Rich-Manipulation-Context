@@ -1,5 +1,7 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-19: `Inspire-Sweep-Only-v1-Test`를 `Inspire-Sweep-Only-v0-Test` 직접 자식으로 추가했다. `sweep_progress=50`, `sweep_retreat=−10`만 변경하며 로그 이름은 `inspire_sweep_only_v1_test`다. 부모의 30/−20과 나머지 환경은 유지한다.
+
 2026-11-19 후속: Sweep Only 일반·Test의 `sweep_retreat` weight를 −38.91에서 **−20**으로 변경했다. 정방향 weight 30과 거리 식은 유지하고 Stabilize 두 환경은 기존 −38.91을 유지한다.
 
 2026-11-19 후속: `Inspire-Sweep-Only-v0`와 `Inspire-Sweep-Only-v0-Test`에서 Phase 관측·압착 페널티를 제거했다. 내부 phase 유지, 직접 관측 66D/장애물 64D/export 130D. Stabilize는 기존 동작을 유지한다. [상세 계약](environments/SWEEP_ONLY.md) · [변경 기록](logs/2026-11-19_stabilize_family_audit.md#sweep-only-phase-관측압착-페널티-삭제).

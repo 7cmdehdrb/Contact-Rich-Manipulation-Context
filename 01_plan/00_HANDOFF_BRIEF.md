@@ -1,5 +1,7 @@
 # 현재 개발 인계
 
+2026-11-19: `Inspire-Sweep-Only-v1-Test`를 `Inspire-Sweep-Only-v0-Test` 직접 자식으로 추가했다. `sweep_progress=50`, `sweep_retreat=−10`만 변경하며 로그 이름은 `inspire_sweep_only_v1_test`다. 부모의 30/−20과 나머지 환경은 유지한다.
+
 2026-11-19 후속: Sweep Only 일반·Test의 `sweep_retreat` weight를 −38.91에서 **−20**으로 변경했다. 정방향 weight 30과 거리 식은 유지하고 Stabilize 두 환경은 기존 −38.91을 유지한다.
 
 2026-11-19 후속: **Sweep Only 일반·Test에서 Phase 관측과 압착 페널티를 제거**했다. Phase는 내부 상태만 유지하고 Actor·Critic 직접 입력은 66D, obstacle 64D, export 130D다. Stabilize 두 환경은 변경하지 않았다. 기존 67D 모델 체크포인트는 직접 호환되지 않는다. [변경·검증](../02_implementation/logs/2026-11-19_stabilize_family_audit.md#sweep-only-phase-관측압착-페널티-삭제).
