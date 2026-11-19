@@ -580,3 +580,7 @@ CPU39개 및 production2파일 mypy가 통과했다. GPU4환경·64환경 각각
 | 종료 조건 | [TerminationCfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/terminations/stabilize_sweep.py) |
 | 학습 설정 | [PPOCfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/agent/stabilize_sweep_ppo_cfg.py) |
 | 실제 환경 검증 | [GPU 검사](../../../../src/inspire_sweep_baseline/scripts/check_stabilize_sweep.py) · [CPU 테스트](../../../../src/inspire_sweep_baseline/tests/test_stabilize_sweep.py) |
+
+## Test 대표점 시각화
+
+`Inspire-Stabilize-Sweep-v0-Test`와 `Inspire-Sweep-Only-v0-Test`는 GUI에서 타겟과 유효 장애물의 초기 대표 표면점을 빨간 점(반지름 6mm)으로 표시한다. 물리 속성이 없고, 정책의 초기 관측과 동일하게 다음 reset까지 세계 좌표에 고정된다. 일반 headless 학습은 표시를 생성하지 않는다. `env.debug_surface_points=False`로 끌 수 있다. 비활성 대기 물체의 환경 간 물리 충돌은 필터링되지만 화면에는 보일 수 있다. [변경·간섭 검토·검증 범위](../logs/2026-11-19_stabilize_surface_markers.md).

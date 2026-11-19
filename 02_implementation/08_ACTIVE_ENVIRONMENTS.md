@@ -1,5 +1,7 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-19: 두 Stabilize/Sweep Only `-Test`에 GUI 대표 표면점 빨간 마커를 추가했다. 초기 관측 위치에 고정되며 물리 속성이 없다. 일반 headless에서는 생성하지 않는다. [비활성 물체 간섭 검토와 검증](logs/2026-11-19_stabilize_surface_markers.md).
+
 2026-11-19 **일반 IK 환경에도 공통 성능 개선 적용**: `Inspire-Stabilize-Sweep-v0`와 `Inspire-Sweep-Only-v0`에 대표점 GPU 배치·고정 COM cache·비활성 XY 주차·중복 native 기록 생략을 연결했다. 일반 배치는 로봇 점유 공간 검사를 유지한32행 처리/fused RED이며,4후보 IK·충돌 메쉬·실패 행8회 추가 재추출·손 방향/높이·보상/PPO는 유지한다. Test 초기화 경로는 보존한다. CPU132개·일반 Stabilize GPU4환경 실패 주입·Sweep Only GPU64환경8seed 통과. 아래 Test의10초 미만 수치는 일반 환경의 측정값이 아니다. [후속 변경·검증](logs/2026-11-19_stabilize_parent_performance.md).
 
 2026-11-19 **두 Test의2048환경 성능 검증**: `Inspire-Stabilize-Sweep-v0-Test`와 `Inspire-Sweep-Only-v0-Test`의 대표점·배치·reset 비용과 비활성 물체 이동을 개선했다. RTX3090·headless·seed42로 각각32회를 실행해 최대9.44초/9.18초로 전 회차10초 미만이었다. 관측 규칙·활성 배치/RNG·보상·학습량은 유지하고 원본 두 환경과 Finger의 기본 경로는 보존한다. 시작 시 시뮬레이터 생성은 iteration 지표에서 제외한다. [성능 개선·검증·한계](logs/2026-11-18_stabilize_sweep_performance.md).
