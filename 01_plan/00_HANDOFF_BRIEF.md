@@ -1,5 +1,13 @@
 # 현재 개발 인계
 
+2026-11-19 후속: Sweep Only 일반·Test의 `sweep_retreat` weight를 −38.91에서 **−20**으로 변경했다. 정방향 weight 30과 거리 식은 유지하고 Stabilize 두 환경은 기존 −38.91을 유지한다.
+
+2026-11-19 후속: **Sweep Only 일반·Test에서 Phase 관측과 압착 페널티를 제거**했다. Phase는 내부 상태만 유지하고 Actor·Critic 직접 입력은 66D, obstacle 64D, export 130D다. Stabilize 두 환경은 변경하지 않았다. 기존 67D 모델 체크포인트는 직접 호환되지 않는다. [변경·검증](../02_implementation/logs/2026-11-19_stabilize_family_audit.md#sweep-only-phase-관측압착-페널티-삭제).
+
+2026-11-19 **Stabilize/Sweep Only 네 환경 조건 검토·공통 코드 정리 완료**: 사용자 확인대로 `clip_actions=π/2`를 유지하고 미사용 14cm 필드를 실제 계산에 연결된 `sweep_contact_height_limit=0.12`로 정리했다. 상태 생성·초기 표면점 저장을 공통화했으며 CPU 211개와 네 ID 각각 GPU 4환경 reset·step·부분 reset 검사를 통과했다. Test도 단일 IK를 사용하며 초기 로봇 점유 공간 제외는 미적용이다. mask 대표점과 bbox 중앙점, 팔 전용 속도 종료 등은 [조건별 검토·변경·검증](../02_implementation/logs/2026-11-19_stabilize_family_audit.md)에 구분했다. [일반 Sweep Only 상세 설명](../02_implementation/environments/SWEEP_ONLY.md)을 추가했으며 이번 정리 후 2048환경 학습 성능은 재측정하지 않았다.
+
+2026-11-19 **일반 Sweep Only 물체 옆 초기화 성능 개선 완료**: `Inspire-Sweep-Only-v0`가 RTX3090·2048환경·headless·seed42·32회 전부 collection10초 미만(collection 중앙값8.322초·최대9.579초)을 기록했다. 실제 hull의 GPU 분리 증명+기존 LP fallback, 경계 재검사를 포함한 GPU SAT·FK·채택 FK 재사용, 로봇 점유 검사와 장애물 셀 선택의 GPU 처리를 적용했다. 손의 밀기 반대편 위치·RED·로봇 비겹침·분포·관측·보상·PPO를 유지했다. 일반 Stabilize도 공통 초기화 계산을 사용하며 Stabilize 보상 자체는 이번 범위가 아니다. Test 경로는 보존한다. [병목·변경·실제 배치·측정·한계](../02_implementation/logs/2026-11-19_sweep_only_ik_performance.md).
+
 2026-11-19: 두 Stabilize/Sweep Only `-Test`에 GUI 대표 표면점 빨간 마커를 추가했다. 초기 관측 위치에 고정되며 물리 속성이 없다. 일반 headless에서는 생성하지 않는다. [비활성 물체 간섭 검토와 검증](../02_implementation/logs/2026-11-19_stabilize_surface_markers.md).
 
 2026-11-19 **일반 IK 환경에도 공통 성능 개선 적용**: `Inspire-Stabilize-Sweep-v0`와 `Inspire-Sweep-Only-v0`에 대표점 GPU 배치·고정 COM cache·비활성 XY 주차·중복 native 기록 생략을 연결했다. 일반 배치는 로봇 점유 공간 검사를 유지한32행 처리/fused RED이며,4후보 IK·충돌 메쉬·실패 행8회 추가 재추출·손 방향/높이·보상/PPO는 유지한다. Test 초기화 경로는 보존한다. CPU132개·일반 Stabilize GPU4환경 실패 주입·Sweep Only GPU64환경8seed 통과. 아래 Test의10초 미만 수치는 일반 환경의 측정값이 아니다. [후속 변경·검증](../02_implementation/logs/2026-11-19_stabilize_parent_performance.md).

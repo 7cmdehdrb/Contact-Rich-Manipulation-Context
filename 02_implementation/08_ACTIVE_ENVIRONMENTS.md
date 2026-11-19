@@ -1,5 +1,13 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-19 후속: Sweep Only 일반·Test의 `sweep_retreat` weight를 −38.91에서 **−20**으로 변경했다. 정방향 weight 30과 거리 식은 유지하고 Stabilize 두 환경은 기존 −38.91을 유지한다.
+
+2026-11-19 후속: `Inspire-Sweep-Only-v0`와 `Inspire-Sweep-Only-v0-Test`에서 Phase 관측·압착 페널티를 제거했다. 내부 phase 유지, 직접 관측 66D/장애물 64D/export 130D. Stabilize는 기존 동작을 유지한다. [상세 계약](environments/SWEEP_ONLY.md) · [변경 기록](logs/2026-11-19_stabilize_family_audit.md#sweep-only-phase-관측압착-페널티-삭제).
+
+2026-11-19 **Stabilize/Sweep Only 네 환경 검토·정리**: `clip_actions=π/2` 유지, 실제 접촉 높이 설정을 12cm로 일원화하고 상태 생성·표면점 저장 중복을 정리했다. CPU 211개·네 ID 각각 GPU 4환경 통합 검사 통과. Test 초기 로봇 점유 공간 미검사 등 조건 차이는 [전체 검토 기록](logs/2026-11-19_stabilize_family_audit.md)에 명시했다. 일반 IK·Gate 없는 환경은 [Sweep Only 상세 설명](environments/SWEEP_ONLY.md)을 따른다.
+
+2026-11-19 **일반 `Inspire-Sweep-Only-v0` reset 가속**: RTX3090에서2048환경·headless·seed42·32회 모두 collection10초 미만(collection 중앙값8.322초·최대9.579초). GPU convex face 분리 증명과 LP fallback·경계 재검사를 포함한 GPU SAT·FK·채택 FK 재사용·로봇 영역을 피하는 GPU 장애물 배치를 적용했다. 밀기 반대편 손·RED·로봇 비겹침·기존 재시도·보상·관측·PPO를 유지한다. 일반 Stabilize는 초기화 계산만 공유하며 안정화 보상 검증은 제외한다. [변경·검증·원시 결과](logs/2026-11-19_sweep_only_ik_performance.md).
+
 2026-11-19: 두 Stabilize/Sweep Only `-Test`에 GUI 대표 표면점 빨간 마커를 추가했다. 초기 관측 위치에 고정되며 물리 속성이 없다. 일반 headless에서는 생성하지 않는다. [비활성 물체 간섭 검토와 검증](logs/2026-11-19_stabilize_surface_markers.md).
 
 2026-11-19 **일반 IK 환경에도 공통 성능 개선 적용**: `Inspire-Stabilize-Sweep-v0`와 `Inspire-Sweep-Only-v0`에 대표점 GPU 배치·고정 COM cache·비활성 XY 주차·중복 native 기록 생략을 연결했다. 일반 배치는 로봇 점유 공간 검사를 유지한32행 처리/fused RED이며,4후보 IK·충돌 메쉬·실패 행8회 추가 재추출·손 방향/높이·보상/PPO는 유지한다. Test 초기화 경로는 보존한다. CPU132개·일반 Stabilize GPU4환경 실패 주입·Sweep Only GPU64환경8seed 통과. 아래 Test의10초 미만 수치는 일반 환경의 측정값이 아니다. [후속 변경·검증](logs/2026-11-19_stabilize_parent_performance.md).

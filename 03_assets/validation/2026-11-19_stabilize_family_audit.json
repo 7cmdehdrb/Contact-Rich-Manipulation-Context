@@ -1,0 +1,2984 @@
+{
+  "date": "2026-11-19",
+  "task": "Audit and consolidate four Stabilize/Sweep Only environments; document general Sweep Only",
+  "baseline_commit": "913c2846fc81b8cf1d281d34af3c1aaf1b1252c8",
+  "baseline_note": "Task began with earlier IK performance edits in working tree. Compare to task snapshot, not HEAD, for changes attributable to this audit.",
+  "user_clarification": {
+    "action": "Use existing clip_actions field; retain pi/2 wrapper execution clip, do not replace Gaussian policy distribution.",
+    "height": "12 cm; old 14 cm cfg fields were unused. Explicit new 0.12 setting now drives unchanged default strict boundary."
+  },
+  "cleanup_review": {
+    "review_type": "read-only review of current-turn production cleanup",
+    "baseline": "/tmp/stabilize_family_task_before",
+    "current_root": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline",
+    "changed_production_files": [
+      {
+        "path": "inspire_sweep_baseline/agent/stabilize_sweep_ppo_cfg.py",
+        "before_sha256": "e93895d8b9c7d89fec2572b17c4c9c30724384f91e8c0c5baa73c7d37ca7453d",
+        "after_sha256": "206da25b2f7414ec6a93b29c78e1e50f73526518742934a60cf928d2a0a96084",
+        "summary": "Comment clarifies execution wrapper clipping versus unbounded Gaussian actor/PPO storage; AST identical."
+      },
+      {
+        "path": "inspire_sweep_baseline/envs/stabilize_sweep_envs.py",
+        "before_sha256": "220dab5f4c5ed2d2849f25c147ea1b6ffc27c7207f7a6d6e7d33f19a184641ac",
+        "after_sha256": "aecfb13719b120d5db690f8ef7e4f55d205ae1abd476f847a3caf4efce1e4d2a",
+        "summary": "Replace two unused 0.14 m compatibility fields by explicit sweep_contact_height_limit=0.12 m; remove their redundant assignment; add family docstring."
+      },
+      {
+        "path": "inspire_sweep_baseline/mdp/common/stabilize_sweep_state.py",
+        "before_sha256": "c8e0cdd904be5aa0be307c2bf38e12f9429fbe86924f29d248c45b745d2faba4",
+        "after_sha256": "2c2824a947c3a27d7fffa1dbd719e91211ac1b78b40b43504764d58550488954",
+        "summary": "finish accepts keyword-only height_limit=.12; recognized-contact expression uses this argument; all other state equations unchanged."
+      },
+      {
+        "path": "inspire_sweep_baseline/mdp/event_functions/stabilize_sweep.py",
+        "before_sha256": "5cc53cc9e525c5e8155409d5cfe3bba845356141f51e269c110ff9b9ff868e38",
+        "after_sha256": "9bb894c473a251e4588adad3b6d883393f8c25bf0c0fd46144961fff8a0bc1e6",
+        "summary": "Extract selected-row point writes and eight identical observation metrics into _commit_surface_snapshot; both reset paths preserve physical commit/fallback order, RNG and log key order."
+      },
+      {
+        "path": "inspire_sweep_baseline/mdp/observations/stabilize_sweep.py",
+        "before_sha256": "d3c30c0f2bec65cb21e7785cbe12b5a70e1f47ed5a0711aed7d5715c51a9a532",
+        "after_sha256": "dee3edb6185760b9ab88165a5ea1f2597c788039d0b16dc22d67ee80f9648245",
+        "summary": "Remove unused hand_configuration import; all observation terms unchanged."
+      },
+      {
+        "path": "inspire_sweep_baseline/mdp/rewards/stabilize_sweep.py",
+        "before_sha256": "128522755e6bd3353487fda3d710550d5cb7f2ef5ca180df951ccb624dfb84d5",
+        "after_sha256": "58b2dbbda7dd936e3cf50c3ddf53a5d9712c0cfaf7dde44a188397990f38950c",
+        "summary": "Remove unused shelf_failure import and simplify math import; all reward terms unchanged."
+      },
+      {
+        "path": "inspire_sweep_baseline/runtime/stabilize_sweep.py",
+        "before_sha256": "f746dda31c55c9f242eacced12c552307afe9384f7a18cde576a04137b1eca19",
+        "after_sha256": "5e7f9ad8bd51cced88aa08439c82725249ae4eec2c53ad73760e44105be1d518",
+        "summary": "Construct appropriate family state once through _state_type, bind explicit 0.12 m height cfg to finish, remove unused height aliases and combine identical seed guard."
+      }
+    ],
+    "added_production_python_files": [],
+    "deleted_production_python_files": [],
+    "unchanged_production_python_count": 292,
+    "critical_files_byte_preserved": [
+      {
+        "path": "inspire_sweep_baseline/mdp/common/stabilize_sweep_geometry.py",
+        "sha256": "65f79615c87dd562aaca5363b4f2ac246ca7e2d4098470baa03dcd6ff6d3e97a"
+      },
+      {
+        "path": "inspire_sweep_baseline/mdp/common/stabilize_sweep_layout.py",
+        "sha256": "8722f667797d81095795353979380f0d0445e0a5e145a934ecc256f72133591f"
+      },
+      {
+        "path": "inspire_sweep_baseline/mdp/common/stabilize_sweep_surface.py",
+        "sha256": "f9fa4acf69b5694b53279d24e820e4edfc9e06ea6d657329d00f58679724df9a"
+      },
+      {
+        "path": "inspire_sweep_baseline/mdp/common/stabilize_sweep_reset.py",
+        "sha256": "cc16c4d719bcf7265472b234c0633dbc1b71574d7c87608c8062df196082fd57"
+      },
+      {
+        "path": "inspire_sweep_baseline/mdp/event_functions/wrench_refactor_relative_ik_test.py",
+        "sha256": "4a4bbb8c68492b57b7d8b3ee042c9d7aa2cc3590e662084dd8c02ba2fc5408ad"
+      },
+      {
+        "path": "inspire_sweep_baseline/mdp/common/wrench_refactor_layout.py",
+        "sha256": "ea39a75ffc3b545e935eb40da72ad1ed3de4ba1574553564cabf82545da3747d"
+      },
+      {
+        "path": "inspire_sweep_baseline/assets/scenes/stabilize_sweep.py",
+        "sha256": "fa5114b0627ce446febb871c0170f3c3ba34e14bb37db9db2c180731d0d13e01"
+      },
+      {
+        "path": "inspire_sweep_baseline/mdp/curricula/stabilize_sweep.py",
+        "sha256": "f0bb7d0b62b16a92d684871cdce1b1027f9ddb5fdbab60e7a9ad4a04073ae26d"
+      },
+      {
+        "path": "inspire_sweep_baseline/mdp/actions/stabilize_sweep.py",
+        "sha256": "614f62938a195b3de9bee33d637354a5024f7b3fc448a80c841571d927acd4d8"
+      },
+      {
+        "path": "inspire_sweep_baseline/mdp/termination_functions/stabilize_sweep.py",
+        "sha256": "a3c3b9c57a89d57803a031034afc9d44dd2fcddbc683fe52e8a4f23079d94b47"
+      },
+      {
+        "path": "inspire_sweep_baseline/mdp/terminations/stabilize_sweep.py",
+        "sha256": "3d3d7dc16324dd6aba3f239304de2917bae3a29354b97664698cf03180e9db34"
+      },
+      {
+        "path": "inspire_sweep_baseline/agent/stabilize_sweep_models.py",
+        "sha256": "670005629ecae35d2f3cf49028a280a83ddb8a706e3935c3f78446965b9bb092"
+      },
+      {
+        "path": "inspire_sweep_baseline/mdp/commands/stabilize_sweep.py",
+        "sha256": "3b32814c9a357ebba2d512cd6a640b268e0df71787b40baa864be5705096e67b"
+      },
+      {
+        "path": "inspire_sweep_baseline/mdp/reward_functions/stabilize_sweep.py",
+        "sha256": "ddd6270454a027561f4b1895d880ddf0bc4f6f0329b1c6fc56d768996971a1e7"
+      },
+      {
+        "path": "inspire_sweep_baseline/mdp/observation_functions/stabilize_sweep.py",
+        "sha256": "a7f9e619bfc030bc82c177183e005caaf09880cd3712d323c5375d876a24a218"
+      },
+      {
+        "path": "inspire_sweep_baseline/__init__.py",
+        "sha256": "304ce7bdd9fdbc9203806136a0b4874ac87c0cb675db249c91af2aa55e8d1461"
+      }
+    ],
+    "config_snapshots": {
+      "before": {
+        "path": "/tmp/stabilize_family_before_cfg.json",
+        "sha256": "d467428f3ec2bf63472010f058c104c30d97bae7913d54fa2fc134ac27c38ee9"
+      },
+      "after": {
+        "path": "/tmp/stabilize_family_after_cfg.json",
+        "sha256": "ee5a39f56c36bc0839b964a4e01afb668dac00e0ae777be17b2aa85513d19107"
+      },
+      "differences": {
+        "Inspire-Stabilize-Sweep-v0": [
+          {
+            "path": "/env/contact_height_limit",
+            "change": "removed",
+            "before": 0.14
+          },
+          {
+            "path": "/env/goal_reward_height_limit",
+            "change": "removed",
+            "before": 0.14
+          },
+          {
+            "path": "/env/sweep_contact_height_limit",
+            "change": "added",
+            "after": 0.12
+          }
+        ],
+        "Inspire-Sweep-Only-v0": [
+          {
+            "path": "/env/contact_height_limit",
+            "change": "removed",
+            "before": 0.14
+          },
+          {
+            "path": "/env/goal_reward_height_limit",
+            "change": "removed",
+            "before": 0.14
+          },
+          {
+            "path": "/env/sweep_contact_height_limit",
+            "change": "added",
+            "after": 0.12
+          }
+        ],
+        "Inspire-Stabilize-Sweep-v0-Test": [
+          {
+            "path": "/env/contact_height_limit",
+            "change": "removed",
+            "before": 0.14
+          },
+          {
+            "path": "/env/goal_reward_height_limit",
+            "change": "removed",
+            "before": 0.14
+          },
+          {
+            "path": "/env/sweep_contact_height_limit",
+            "change": "added",
+            "after": 0.12
+          }
+        ],
+        "Inspire-Sweep-Only-v0-Test": [
+          {
+            "path": "/env/contact_height_limit",
+            "change": "removed",
+            "before": 0.14
+          },
+          {
+            "path": "/env/goal_reward_height_limit",
+            "change": "removed",
+            "before": 0.14
+          },
+          {
+            "path": "/env/sweep_contact_height_limit",
+            "change": "added",
+            "after": 0.12
+          }
+        ]
+      },
+      "all_other_settings_entrypoints_and_runners_identical": true
+    },
+    "shared_snapshot_review": {
+      "added_function": "_commit_surface_snapshot",
+      "changed_functions": [
+        "reset_scene",
+        "reset_scene_finger_test"
+      ],
+      "other_function_or_class_definitions_ast_identical": 9,
+      "buffer_writes": [
+        "_surface_target_w[ids]",
+        "_surface_obstacles_w[ids]",
+        "_surface_valid[ids]"
+      ],
+      "metric_order": [
+        "Reset/observation_ms",
+        "Reset/observation_upload_ms",
+        "Reset/observation_readback_ms",
+        "Reset/observation_ray_ms",
+        "Reset/observation_components_ms",
+        "Reset/observation_fallbacks",
+        "Reset/target_missing_fallbacks",
+        "Reset/slot_overflow_fallbacks"
+      ],
+      "checks": [
+        "No RNG operations added or moved; snapshot executes at the same point in each reset.",
+        "Only selected ids receive point/mask writes; partial-reset untouched rows remain untouched.",
+        "General commit_scene and COM cache run before point writes exactly as before.",
+        "Test target-only physical fallback commit and gravity updates remain before point writes.",
+        "General-only _sweep_phase=False assignment remains outside shared helper; Test does not gain this assignment.",
+        "Metric expressions and len(ids) denominator are copied unchanged; key insertion order and batch_ms final measurement retained.",
+        "Observation metric scalar reductions occur at helper call instead of dictionary literal; values are unchanged, wall-clock timing naturally varies."
+      ],
+      "existing_targeted_tests": {
+        "command": "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 /home/min/miniconda3/envs/env_isaaclab/bin/python -m pytest src/inspire_sweep_baseline/tests/test_stabilize_sweep.py -q -k 'finger_reset_adapter or batched_snapshot'",
+        "passed": 5,
+        "deselected": 89,
+        "seconds": 1.44,
+        "log": "/tmp/stabilize_shared_snapshot_cpu.log"
+      }
+    },
+    "state_factory_review": {
+      "post_construction_behavior": "Both SweepOnly variants still have achieved/reward_phase true and use SweepOnlyState; Stabilize variants retain StabilizeState.",
+      "initialization_difference": "SweepOnlyState now exists before manager shape probing rather than being allocated after base construction. Initialization phase is consistently true earlier; no task reset or policy rollout runs in that interval in the current IsaacLab manager constructor.",
+      "benefit": "Removes a redundant full state allocation and avoids discarding references to manager-visible state.",
+      "height_behavior": "Default recognized-contact boundary remains strict eef_z < initial_shelf_z + 1.05 + .12; named setting now drives the existing threshold."
+    },
+    "family_isolation": {
+      "changed_file_scope": "All seven changed production files are specific to this four-environment family.",
+      "external_shared_callers": "Legacy fast_reset_scene imports write_test_reset_root_state/write_test_reset_object_state from the edited event module; both definitions are AST identical and no module import dependencies changed.",
+      "source_types": "No base Finger/Relative/Final configs, reset samplers, action or observation implementations edited."
+    },
+    "findings": [],
+    "nonblocking_contract_notes": [
+      "Removing old unused config fields changes config schema: external overrides of goal_reward_height_limit/contact_height_limit for these four tasks must migrate to sweep_contact_height_limit. Defaults and serialized scene/MDP/PPO settings otherwise match.",
+      "Audit mismatches are not silently repaired by this cleanup: Gaussian actor raw output remains unbounded, Test robot-space collision checking remains absent, mask-area-centroid surface representative differs from bbox center. Record these explicitly in user-facing audit/docs.",
+      "Current-task GPU/CPU full-suite runs are owned by root; this review does not claim they passed or claim current 2048 timing was rerun."
+    ],
+    "verdict": "No actionable behavior regression identified within intended cleanup scope; configuration comparison and source isolation checks pass."
+  },
+  "cpu": {
+    "total_passed": 211,
+    "environment": {
+      "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "WARP_CACHE_PATH": "/tmp/stabilize_warp_cache",
+      "PYTHONPATH": "/home/min/miniconda3/envs/env_isaaclab/lib/python3.11/site-packages/isaacsim/extscache/omni.warp.core-1.8.2+lx64"
+    },
+    "runs": [
+      {
+        "command": [
+          "/home/min/miniconda3/envs/env_isaaclab/bin/python",
+          "-m",
+          "pytest",
+          "src/inspire_sweep_baseline/tests/test_stabilize_sweep.py",
+          "src/inspire_sweep_baseline/tests/test_stabilize_sweep_surface_batch.py",
+          "src/inspire_sweep_baseline/tests/test_stabilize_sweep_com_cache.py",
+          "-q"
+        ],
+        "passed": 151,
+        "seconds": 25.34,
+        "exit_code": 0,
+        "log": {
+          "path": "/tmp/stabilize_family_core_cpu.log",
+          "sha256": "4d26de45c28ce3198decc030efeda3d0cff09f137429e6f94875597c91a4ff4b"
+        },
+        "log_content": "........................................................................ [ 47%]\n........................................................................ [ 95%]\n.......                                                                  [100%]\n151 passed in 25.34s\n"
+      },
+      {
+        "command": [
+          "/home/min/miniconda3/envs/env_isaaclab/bin/python",
+          "-m",
+          "pytest",
+          "src/inspire_sweep_baseline/tests/test_clutter_v2_wrench.py",
+          "src/inspire_sweep_baseline/tests/test_wrench_refactor_relative.py",
+          "src/inspire_sweep_baseline/tests/test_tactile_observations.py",
+          "src/inspire_sweep_baseline/tests/test_tactile_geometry.py",
+          "src/inspire_sweep_baseline/tests/test_tactile_configuration.py",
+          "-q"
+        ],
+        "passed": 60,
+        "seconds": 5.8,
+        "exit_code": 0,
+        "log": {
+          "path": "/tmp/stabilize_family_sensors_cpu.log",
+          "sha256": "dffa89e24e5afc51cd0445c9513c65b703779302ba5fd7961782ce85d14e8670"
+        },
+        "log_content": "............................................................             [100%]\n60 passed in 5.80s\n"
+      }
+    ]
+  },
+  "gpu": {
+    "environment": {
+      "PYTHONUNBUFFERED": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "WARP_CACHE_PATH": "/tmp/stabilize_warp_cache"
+    },
+    "runs": [
+      {
+        "task": "Inspire-Stabilize-Sweep-v0",
+        "exit_code": 0,
+        "command": [
+          "/home/min/miniconda3/envs/env_isaaclab/bin/python",
+          "src/inspire_sweep_baseline/scripts/check_stabilize_sweep.py",
+          "--headless",
+          "--num-envs",
+          "4",
+          "--task",
+          "Inspire-Stabilize-Sweep-v0",
+          "--audit-resets",
+          "2",
+          "--output",
+          "/tmp/stabilize_family_stabilize_gpu.json"
+        ],
+        "seconds": 22.863445107999723,
+        "output": "/tmp/stabilize_family_stabilize_gpu.json",
+        "log": "/tmp/stabilize_family_stabilize_gpu.log",
+        "result": {
+          "task": "Inspire-Stabilize-Sweep-v0",
+          "seed": 42,
+          "num_envs": 4,
+          "reset_audit": [
+            {
+              "seed": 0,
+              "ok": true,
+              "ms": 74.58983303513378,
+              "max_position_error_m": 0.0004975938354618847,
+              "max_rotation_error_rad": 8.926905138650909e-05,
+              "metrics": {
+                "Reset/requested_obstacles": 3.25,
+                "Reset/actual_obstacles": 3.25,
+                "Reset/placement_skipped": 0.0,
+                "Reset/empty_fraction": 0.25,
+                "Reset/ik_attempts": 1.0,
+                "Reset/layout_resamples": 0.0,
+                "Reset/ik_recovery_fraction": 0.0,
+                "Reset/observation_ms": 0.8070650073932484,
+                "Reset/observation_upload_ms": 0.2035199999809265,
+                "Reset/observation_readback_ms": 0.020505758584477007,
+                "Reset/observation_ray_ms": 0.44492799043655396,
+                "Reset/observation_components_ms": 0.026623999699950218,
+                "Reset/observation_fallbacks": 0.0,
+                "Reset/target_missing_fallbacks": 0.0,
+                "Reset/slot_overflow_fallbacks": 0.0,
+                "Reset/batch_ms": 59.495806985069066
+              }
+            },
+            {
+              "seed": 1,
+              "ok": true,
+              "ms": 31.95668396074325,
+              "max_position_error_m": 0.0004690964997280389,
+              "max_rotation_error_rad": 4.289594653528184e-05,
+              "metrics": {
+                "Reset/requested_obstacles": 1.0,
+                "Reset/actual_obstacles": 1.0,
+                "Reset/placement_skipped": 0.0,
+                "Reset/empty_fraction": 0.25,
+                "Reset/ik_attempts": 1.0,
+                "Reset/layout_resamples": 0.0,
+                "Reset/ik_recovery_fraction": 0.0,
+                "Reset/observation_ms": 0.6025004986440763,
+                "Reset/observation_upload_ms": 0.07398399710655212,
+                "Reset/observation_readback_ms": 0.019343002350069582,
+                "Reset/observation_ray_ms": 0.2667520046234131,
+                "Reset/observation_components_ms": 0.05913599953055382,
+                "Reset/observation_fallbacks": 0.0,
+                "Reset/target_missing_fallbacks": 0.0,
+                "Reset/slot_overflow_fallbacks": 0.0,
+                "Reset/batch_ms": 18.037925008684397
+              }
+            }
+          ],
+          "static_local_com_cache_checks": {
+            "reset": 3,
+            "physics_step": 1,
+            "timeout_partial_reset": 1,
+            "physical_contact": 1
+          },
+          "test_inactive_parking_grid_and_unchanged_collision_groups": true,
+          "batched_surface_matches_original_mesh_observer": true,
+          "minimum_actual_contact_face_goal_cosine": 0.9869318008422852,
+          "minimum_actual_hand_to_target_push_axis_gap_m": 0.04568435251712799,
+          "minimum_hand_bottom_clearance_m": 0.004566669464111328,
+          "maximum_hand_bottom_clearance_m": 0.004997611045837402,
+          "palm_always_left": true,
+          "minimum_obstacle_red_clearance_m": 0.01571977138519287,
+          "minimum_obstacle_robot_envelope_clearance_m": 0.005754359066486359,
+          "committed_robot_object_obb_nonoverlap": true,
+          "committed_obstacles_outside_red_and_robot_envelope": true,
+          "training_wrapper_initial_reset": true,
+          "bounded_failed_row_resampling": true,
+          "centroid_com": {
+            "height": [
+              0.09446421265602112,
+              0.10472942143678665,
+              0.10353399068117142,
+              0.10784359276294708
+            ],
+            "centroid_minus_root": [
+              [
+                0.0,
+                0.0,
+                0.04723215103149414
+              ],
+              [
+                0.0,
+                0.0,
+                0.05236470699310303
+              ],
+              [
+                0.0,
+                0.0,
+                0.05176699161529541
+              ],
+              [
+                0.0,
+                0.0,
+                0.05392181873321533
+              ]
+            ],
+            "com_minus_root": [
+              [
+                0.0,
+                0.0,
+                0.018892884254455566
+              ],
+              [
+                0.0,
+                0.0,
+                0.02094590663909912
+              ],
+              [
+                0.0,
+                0.0,
+                0.020706772804260254
+              ],
+              [
+                0.0,
+                0.0,
+                0.021568775177001953
+              ]
+            ]
+          },
+          "partial_reset_native_state_flags_and_roster_isolation": true,
+          "partial_reset_all_untouched_commands_observations_and_active_masks": true,
+          "partial_reset_isolation": true,
+          "real_step_ms": 382.7520602499135,
+          "test_inactive_bodies_stationary_and_contact_free_after_physics": true,
+          "real_physics_smoke": true,
+          "controlled_gate_manager_boundary": true,
+          "same_step_gate_timeout_and_partial_reset": true,
+          "actual_contact_probe": {
+            "load_N": [
+              25.420801162719727,
+              25.544588088989258,
+              23.567060470581055,
+              22.490510940551758
+            ],
+            "force_N": [
+              [
+                -15.325944900512695,
+                19.467512130737305,
+                -5.997189998626709
+              ],
+              [
+                -14.30972957611084,
+                19.582822799682617,
+                -10.32441520690918
+              ],
+              [
+                -12.932127952575684,
+                18.049442291259766,
+                -10.434480667114258
+              ],
+              [
+                -11.827754974365234,
+                17.62395668029785,
+                -8.773926734924316
+              ]
+            ],
+            "moment_Nm": [
+              [
+                -0.17425736784934998,
+                -0.1624411791563034,
+                0.035738505423069
+              ],
+              [
+                -0.11692545562982559,
+                -0.10772420465946198,
+                0.12771296501159668
+              ],
+              [
+                -0.084443598985672,
+                -0.06900455057621002,
+                0.14117690920829773
+              ],
+              [
+                -0.11903358995914459,
+                -0.07137778401374817,
+                0.16536803543567657
+              ]
+            ]
+          },
+          "final_reset_metrics": {
+            "Reset/requested_obstacles": 0.0,
+            "Reset/actual_obstacles": 0.0,
+            "Reset/placement_skipped": 0.0,
+            "Reset/empty_fraction": 1.0,
+            "Reset/ik_attempts": 1.0,
+            "Reset/layout_resamples": 0.0,
+            "Reset/ik_recovery_fraction": 0.0,
+            "Reset/observation_ms": 2.0806780084967613,
+            "Reset/observation_upload_ms": 0.5532159805297852,
+            "Reset/observation_readback_ms": 0.07820798782631755,
+            "Reset/observation_ray_ms": 0.28646400570869446,
+            "Reset/observation_components_ms": 0.7895039916038513,
+            "Reset/observation_fallbacks": 0.0,
+            "Reset/target_missing_fallbacks": 0.0,
+            "Reset/slot_overflow_fallbacks": 0.0,
+            "Reset/batch_ms": 18.22480297414586
+          }
+        },
+        "raw_result": {
+          "path": "/tmp/stabilize_family_stabilize_gpu.json",
+          "sha256": "6f83690cbca79bc660273b3c19569dca80d2d66d50ddea949b31c86fb8451d1a"
+        },
+        "raw_log": {
+          "path": "/tmp/stabilize_family_stabilize_gpu.log",
+          "sha256": "bf1cadab68d7feb95e87117f2ab8cf5539076b9dc56c12bbbeb00de464434105"
+        }
+      },
+      {
+        "task": "Inspire-Sweep-Only-v0",
+        "exit_code": 0,
+        "command": [
+          "/home/min/miniconda3/envs/env_isaaclab/bin/python",
+          "src/inspire_sweep_baseline/scripts/check_stabilize_sweep.py",
+          "--headless",
+          "--num-envs",
+          "4",
+          "--task",
+          "Inspire-Sweep-Only-v0",
+          "--audit-resets",
+          "2",
+          "--output",
+          "/tmp/stabilize_family_sweep_only_gpu.json"
+        ],
+        "seconds": 21.493092537042685,
+        "output": "/tmp/stabilize_family_sweep_only_gpu.json",
+        "log": "/tmp/stabilize_family_sweep_only_gpu.log",
+        "result": {
+          "task": "Inspire-Sweep-Only-v0",
+          "seed": 42,
+          "num_envs": 4,
+          "reset_audit": [
+            {
+              "seed": 0,
+              "ok": true,
+              "ms": 73.0763030005619,
+              "max_position_error_m": 0.0004975938354618847,
+              "max_rotation_error_rad": 8.926905138650909e-05,
+              "metrics": {
+                "Reset/requested_obstacles": 3.25,
+                "Reset/actual_obstacles": 3.25,
+                "Reset/placement_skipped": 0.0,
+                "Reset/empty_fraction": 0.25,
+                "Reset/ik_attempts": 1.0,
+                "Reset/layout_resamples": 0.0,
+                "Reset/ik_recovery_fraction": 0.0,
+                "Reset/observation_ms": 0.6926810019649565,
+                "Reset/observation_upload_ms": 0.14828799664974213,
+                "Reset/observation_readback_ms": 0.018931750673800707,
+                "Reset/observation_ray_ms": 0.3808639943599701,
+                "Reset/observation_components_ms": 0.025599999353289604,
+                "Reset/observation_fallbacks": 0.0,
+                "Reset/target_missing_fallbacks": 0.0,
+                "Reset/slot_overflow_fallbacks": 0.0,
+                "Reset/batch_ms": 57.09650501376018
+              }
+            },
+            {
+              "seed": 1,
+              "ok": true,
+              "ms": 33.43197604408488,
+              "max_position_error_m": 0.0004690964997280389,
+              "max_rotation_error_rad": 4.289594653528184e-05,
+              "metrics": {
+                "Reset/requested_obstacles": 1.0,
+                "Reset/actual_obstacles": 1.0,
+                "Reset/placement_skipped": 0.0,
+                "Reset/empty_fraction": 0.25,
+                "Reset/ik_attempts": 1.0,
+                "Reset/layout_resamples": 0.0,
+                "Reset/ik_recovery_fraction": 0.0,
+                "Reset/observation_ms": 0.5340265051927418,
+                "Reset/observation_upload_ms": 0.14182400703430176,
+                "Reset/observation_readback_ms": 0.018564242054708302,
+                "Reset/observation_ray_ms": 0.2603519856929779,
+                "Reset/observation_components_ms": 0.016896000131964684,
+                "Reset/observation_fallbacks": 0.0,
+                "Reset/target_missing_fallbacks": 0.0,
+                "Reset/slot_overflow_fallbacks": 0.0,
+                "Reset/batch_ms": 18.66718998644501
+              }
+            }
+          ],
+          "parent_contract_only_three_reward_terms_removed": true,
+          "ppo_only_experiment_name_changed": true,
+          "static_local_com_cache_checks": {
+            "reset": 3,
+            "physics_step": 1,
+            "timeout_partial_reset": 1,
+            "physical_contact": 1
+          },
+          "test_inactive_parking_grid_and_unchanged_collision_groups": true,
+          "batched_surface_matches_original_mesh_observer": true,
+          "minimum_actual_contact_face_goal_cosine": 0.9869318008422852,
+          "minimum_actual_hand_to_target_push_axis_gap_m": 0.04568435251712799,
+          "minimum_hand_bottom_clearance_m": 0.004566669464111328,
+          "maximum_hand_bottom_clearance_m": 0.004997611045837402,
+          "palm_always_left": true,
+          "minimum_obstacle_red_clearance_m": 0.01571977138519287,
+          "minimum_obstacle_robot_envelope_clearance_m": 0.005754359066486359,
+          "committed_robot_object_obb_nonoverlap": true,
+          "committed_obstacles_outside_red_and_robot_envelope": true,
+          "training_wrapper_initial_reset": true,
+          "bounded_failed_row_resampling": true,
+          "centroid_com": {
+            "height": [
+              0.09446421265602112,
+              0.10472942143678665,
+              0.10353399068117142,
+              0.10784359276294708
+            ],
+            "centroid_minus_root": [
+              [
+                0.0,
+                0.0,
+                0.04723215103149414
+              ],
+              [
+                0.0,
+                0.0,
+                0.05236470699310303
+              ],
+              [
+                0.0,
+                0.0,
+                0.05176699161529541
+              ],
+              [
+                0.0,
+                0.0,
+                0.05392181873321533
+              ]
+            ],
+            "com_minus_root": [
+              [
+                0.0,
+                0.0,
+                0.018892884254455566
+              ],
+              [
+                0.0,
+                0.0,
+                0.02094590663909912
+              ],
+              [
+                0.0,
+                0.0,
+                0.020706772804260254
+              ],
+              [
+                0.0,
+                0.0,
+                0.021568775177001953
+              ]
+            ]
+          },
+          "partial_reset_native_state_flags_and_roster_isolation": true,
+          "partial_reset_all_untouched_commands_observations_and_active_masks": true,
+          "partial_reset_isolation": true,
+          "real_step_ms": 332.8467940009432,
+          "test_inactive_bodies_stationary_and_contact_free_after_physics": true,
+          "real_physics_smoke": true,
+          "sweep_from_reset_without_gate": true,
+          "same_step_gate_timeout_and_partial_reset": true,
+          "actual_contact_probe": {
+            "load_N": [
+              25.420801162719727,
+              25.544588088989258,
+              23.567060470581055,
+              22.490510940551758
+            ],
+            "force_N": [
+              [
+                -15.325944900512695,
+                19.467512130737305,
+                -5.997189998626709
+              ],
+              [
+                -14.30972957611084,
+                19.582822799682617,
+                -10.32441520690918
+              ],
+              [
+                -12.932127952575684,
+                18.049442291259766,
+                -10.434480667114258
+              ],
+              [
+                -11.827754974365234,
+                17.62395668029785,
+                -8.773926734924316
+              ]
+            ],
+            "moment_Nm": [
+              [
+                -0.17425736784934998,
+                -0.1624411791563034,
+                0.035738505423069
+              ],
+              [
+                -0.11692545562982559,
+                -0.10772420465946198,
+                0.12771296501159668
+              ],
+              [
+                -0.084443598985672,
+                -0.06900455057621002,
+                0.14117690920829773
+              ],
+              [
+                -0.11903358995914459,
+                -0.07137778401374817,
+                0.16536803543567657
+              ]
+            ]
+          },
+          "final_reset_metrics": {
+            "Reset/requested_obstacles": 0.0,
+            "Reset/actual_obstacles": 0.0,
+            "Reset/placement_skipped": 0.0,
+            "Reset/empty_fraction": 1.0,
+            "Reset/ik_attempts": 1.0,
+            "Reset/layout_resamples": 0.0,
+            "Reset/ik_recovery_fraction": 0.0,
+            "Reset/observation_ms": 2.3787569953128695,
+            "Reset/observation_upload_ms": 0.5959680080413818,
+            "Reset/observation_readback_ms": 0.0793189974501729,
+            "Reset/observation_ray_ms": 0.4679679870605469,
+            "Reset/observation_components_ms": 0.7342079877853394,
+            "Reset/observation_fallbacks": 0.0,
+            "Reset/target_missing_fallbacks": 0.0,
+            "Reset/slot_overflow_fallbacks": 0.0,
+            "Reset/batch_ms": 23.73760298360139
+          }
+        },
+        "raw_result": {
+          "path": "/tmp/stabilize_family_sweep_only_gpu.json",
+          "sha256": "3e5a61b7f1008c79f2b838cd57aac48a2f1abec320e33720e5f9a5408f9f96ab"
+        },
+        "raw_log": {
+          "path": "/tmp/stabilize_family_sweep_only_gpu.log",
+          "sha256": "5ef13268b89654fc4c13c6970445ce13b121db9e4e21a9324c28b4c74819cd4c"
+        }
+      },
+      {
+        "task": "Inspire-Stabilize-Sweep-v0-Test",
+        "exit_code": 0,
+        "command": [
+          "/home/min/miniconda3/envs/env_isaaclab/bin/python",
+          "src/inspire_sweep_baseline/scripts/check_stabilize_sweep.py",
+          "--headless",
+          "--num-envs",
+          "4",
+          "--task",
+          "Inspire-Stabilize-Sweep-v0-Test",
+          "--audit-resets",
+          "2",
+          "--output",
+          "/tmp/stabilize_family_stabilize_test_gpu.json"
+        ],
+        "seconds": 20.988256859011017,
+        "output": "/tmp/stabilize_family_stabilize_test_gpu.json",
+        "log": "/tmp/stabilize_family_stabilize_test_gpu.log",
+        "result": {
+          "task": "Inspire-Stabilize-Sweep-v0-Test",
+          "seed": 42,
+          "num_envs": 4,
+          "reset_audit": [
+            {
+              "seed": 0,
+              "ok": true,
+              "ms": 83.48405500873923,
+              "max_position_error_m": 0.00041656705434434116,
+              "max_rotation_error_rad": 4.491801155381836e-05,
+              "metrics": {
+                "Reset/requested_obstacles": 3.25,
+                "Reset/actual_obstacles": 3.25,
+                "Reset/placement_skipped": 0.0,
+                "Reset/empty_fraction": 0.25,
+                "Reset/ik_attempts": 1.0,
+                "Reset/layout_resamples": 0.0,
+                "Reset/ik_recovery_fraction": 0.0,
+                "Reset/finger_placement_ms": 36.82609897805378,
+                "Reset/observation_ms": 0.7222792482934892,
+                "Reset/observation_upload_ms": 0.1740799993276596,
+                "Reset/observation_readback_ms": 0.020073246560059488,
+                "Reset/observation_ray_ms": 0.3855920135974884,
+                "Reset/observation_components_ms": 0.02887200005352497,
+                "Reset/observation_fallbacks": 0.0,
+                "Reset/target_missing_fallbacks": 0.0,
+                "Reset/slot_overflow_fallbacks": 0.0,
+                "Reset/batch_ms": 68.57208494329825
+              }
+            },
+            {
+              "seed": 1,
+              "ok": true,
+              "ms": 28.75941200181842,
+              "max_position_error_m": 9.603352373233065e-05,
+              "max_rotation_error_rad": 2.097147807944566e-05,
+              "metrics": {
+                "Reset/requested_obstacles": 1.0,
+                "Reset/actual_obstacles": 1.0,
+                "Reset/placement_skipped": 0.0,
+                "Reset/empty_fraction": 0.25,
+                "Reset/ik_attempts": 1.0,
+                "Reset/layout_resamples": 0.0,
+                "Reset/ik_recovery_fraction": 0.0,
+                "Reset/finger_placement_ms": 9.336876042652875,
+                "Reset/observation_ms": 0.5413915059762076,
+                "Reset/observation_upload_ms": 0.12618400156497955,
+                "Reset/observation_readback_ms": 0.01839050673879683,
+                "Reset/observation_ray_ms": 0.2383359968662262,
+                "Reset/observation_components_ms": 0.032255999743938446,
+                "Reset/observation_fallbacks": 0.0,
+                "Reset/target_missing_fallbacks": 0.0,
+                "Reset/slot_overflow_fallbacks": 0.0,
+                "Reset/batch_ms": 13.008470996282995
+              }
+            }
+          ],
+          "shelf_support_physics": {
+            "disable_gravity": false,
+            "bodies": [
+              {
+                "path": "/World/envs/env_0/Shelf/rack",
+                "kinematic_enabled": false
+              }
+            ],
+            "fixed_joints": []
+          },
+          "test_contract_reset_and_reach_only": true,
+          "static_local_com_cache_checks": {
+            "reset": 3,
+            "partial_reset": 1,
+            "physics_step": 1,
+            "timeout_partial_reset": 1,
+            "physical_contact": 1
+          },
+          "test_inactive_parking_grid_and_unchanged_collision_groups": true,
+          "surface_markers_match_policy_snapshot_and_have_no_physics": true,
+          "batched_surface_matches_original_mesh_observer": true,
+          "finger_initial_pose_and_surface_observation": true,
+          "training_wrapper_initial_reset": true,
+          "reference_finger_sampler_without_test_overrides": true,
+          "same_seed_matches_original_finger_initialization": true,
+          "test_legacy_centroid_buffer_unused_and_zero": true,
+          "test_reset_matches_finger_except_inactive_xyz_and_all_rng": true,
+          "reset_native_equality": "numerical exact: atol=rtol=0, +0/-0 equivalent",
+          "centroid_com": {
+            "height": [
+              0.09446421265602112,
+              0.10472942143678665,
+              0.10353399068117142,
+              0.10784359276294708
+            ],
+            "centroid_minus_root": [
+              [
+                0.0,
+                0.0,
+                0.04723215103149414
+              ],
+              [
+                0.0,
+                0.0,
+                0.05236470699310303
+              ],
+              [
+                0.0,
+                0.0,
+                0.05176699161529541
+              ],
+              [
+                0.0,
+                0.0,
+                0.05392181873321533
+              ]
+            ],
+            "com_minus_root": [
+              [
+                0.0,
+                0.0,
+                0.018892884254455566
+              ],
+              [
+                0.0,
+                0.0,
+                0.02094590663909912
+              ],
+              [
+                0.0,
+                0.0,
+                0.020706772804260254
+              ],
+              [
+                0.0,
+                0.0,
+                0.021568775177001953
+              ]
+            ]
+          },
+          "partial_reset_native_state_flags_and_roster_isolation": true,
+          "partial_reset_all_untouched_commands_observations_and_active_masks": true,
+          "partial_reset_clears_only_selected_legacy_rows": true,
+          "partial_reset_isolation": true,
+          "reach_matches_finger_formula_and_partial_reset": true,
+          "real_step_ms": 409.89213224384,
+          "test_inactive_bodies_stationary_and_contact_free_after_physics": true,
+          "real_physics_smoke": true,
+          "controlled_gate_manager_boundary": true,
+          "same_step_gate_timeout_and_partial_reset": true,
+          "actual_contact_probe": {
+            "load_N": [
+              61.538307189941406,
+              1118.5772705078125,
+              1441.1080322265625,
+              910.8406982421875
+            ],
+            "force_N": [
+              [
+                7.484611988067627,
+                28.061931610107422,
+                -1.36963951587677
+              ],
+              [
+                -46.10201644897461,
+                100.08737182617188,
+                -8.12292766571045
+              ],
+              [
+                -18.56696319580078,
+                68.01477813720703,
+                10.27059555053711
+              ],
+              [
+                -50.269412994384766,
+                102.1435546875,
+                -14.469198226928711
+              ]
+            ],
+            "moment_Nm": [
+              [
+                -0.2467358410358429,
+                -0.19434385001659393,
+                0.6673626899719238
+              ],
+              [
+                -2.504692554473877,
+                -1.6730775833129883,
+                5.12359094619751
+              ],
+              [
+                -1.3246586322784424,
+                -1.3821041584014893,
+                7.7180633544921875
+              ],
+              [
+                -2.4801876544952393,
+                -1.6905968189239502,
+                4.119897842407227
+              ]
+            ]
+          },
+          "final_reset_metrics": {
+            "Reset/requested_obstacles": 0.0,
+            "Reset/actual_obstacles": 0.0,
+            "Reset/placement_skipped": 0.0,
+            "Reset/empty_fraction": 1.0,
+            "Reset/ik_attempts": 1.0,
+            "Reset/layout_resamples": 0.0,
+            "Reset/ik_recovery_fraction": 0.0,
+            "Reset/finger_placement_ms": 7.791773008648306,
+            "Reset/observation_ms": 2.243157010525465,
+            "Reset/observation_upload_ms": 0.5529599785804749,
+            "Reset/observation_readback_ms": 0.07537502096965909,
+            "Reset/observation_ray_ms": 0.29183998703956604,
+            "Reset/observation_components_ms": 0.9359359741210938,
+            "Reset/observation_fallbacks": 0.0,
+            "Reset/target_missing_fallbacks": 0.0,
+            "Reset/slot_overflow_fallbacks": 0.0,
+            "Reset/batch_ms": 11.441678972914815
+          }
+        },
+        "raw_result": {
+          "path": "/tmp/stabilize_family_stabilize_test_gpu.json",
+          "sha256": "535425134f297c8b1801fbd09cc244858a00aace42e7e9e3caad16d82c61a67b"
+        },
+        "raw_log": {
+          "path": "/tmp/stabilize_family_stabilize_test_gpu.log",
+          "sha256": "3adecca54e79037c1524268ac856dc24ee9c38d34090e302d8a827829769ed5b"
+        }
+      },
+      {
+        "task": "Inspire-Sweep-Only-v0-Test",
+        "exit_code": 0,
+        "command": [
+          "/home/min/miniconda3/envs/env_isaaclab/bin/python",
+          "src/inspire_sweep_baseline/scripts/check_stabilize_sweep.py",
+          "--headless",
+          "--num-envs",
+          "4",
+          "--task",
+          "Inspire-Sweep-Only-v0-Test",
+          "--audit-resets",
+          "2",
+          "--output",
+          "/tmp/stabilize_family_sweep_only_test_gpu.json"
+        ],
+        "seconds": 21.480515203962568,
+        "output": "/tmp/stabilize_family_sweep_only_test_gpu.json",
+        "log": "/tmp/stabilize_family_sweep_only_test_gpu.log",
+        "result": {
+          "task": "Inspire-Sweep-Only-v0-Test",
+          "seed": 42,
+          "num_envs": 4,
+          "reset_audit": [
+            {
+              "seed": 0,
+              "ok": true,
+              "ms": 83.37488101096824,
+              "max_position_error_m": 0.00041656705434434116,
+              "max_rotation_error_rad": 4.491801155381836e-05,
+              "metrics": {
+                "Reset/requested_obstacles": 3.25,
+                "Reset/actual_obstacles": 3.25,
+                "Reset/placement_skipped": 0.0,
+                "Reset/empty_fraction": 0.25,
+                "Reset/ik_attempts": 1.0,
+                "Reset/layout_resamples": 0.0,
+                "Reset/ik_recovery_fraction": 0.0,
+                "Reset/finger_placement_ms": 36.01710498332977,
+                "Reset/observation_ms": 0.7184360001701862,
+                "Reset/observation_upload_ms": 0.17151999473571777,
+                "Reset/observation_readback_ms": 0.0191730068763718,
+                "Reset/observation_ray_ms": 0.3850240111351013,
+                "Reset/observation_components_ms": 0.029184000566601753,
+                "Reset/observation_fallbacks": 0.0,
+                "Reset/target_missing_fallbacks": 0.0,
+                "Reset/slot_overflow_fallbacks": 0.0,
+                "Reset/batch_ms": 67.46168696554378
+              }
+            },
+            {
+              "seed": 1,
+              "ok": true,
+              "ms": 26.64662298047915,
+              "max_position_error_m": 9.603352373233065e-05,
+              "max_rotation_error_rad": 2.097147807944566e-05,
+              "metrics": {
+                "Reset/requested_obstacles": 1.0,
+                "Reset/actual_obstacles": 1.0,
+                "Reset/placement_skipped": 0.0,
+                "Reset/empty_fraction": 0.25,
+                "Reset/ik_attempts": 1.0,
+                "Reset/layout_resamples": 0.0,
+                "Reset/ik_recovery_fraction": 0.0,
+                "Reset/finger_placement_ms": 8.728867978788912,
+                "Reset/observation_ms": 0.515303501742892,
+                "Reset/observation_upload_ms": 0.13439999520778656,
+                "Reset/observation_readback_ms": 0.01809325476642698,
+                "Reset/observation_ray_ms": 0.22067199647426605,
+                "Reset/observation_components_ms": 0.0453840009868145,
+                "Reset/observation_fallbacks": 0.0,
+                "Reset/target_missing_fallbacks": 0.0,
+                "Reset/slot_overflow_fallbacks": 0.0,
+                "Reset/batch_ms": 12.229233980178833
+              }
+            }
+          ],
+          "shelf_support_physics": {
+            "disable_gravity": false,
+            "bodies": [
+              {
+                "path": "/World/envs/env_0/Shelf/rack",
+                "kinematic_enabled": false
+              }
+            ],
+            "fixed_joints": []
+          },
+          "test_contract_reset_and_reach_only": true,
+          "parent_contract_only_three_reward_terms_removed": true,
+          "ppo_only_experiment_name_changed": true,
+          "static_local_com_cache_checks": {
+            "reset": 3,
+            "partial_reset": 1,
+            "physics_step": 1,
+            "timeout_partial_reset": 1,
+            "physical_contact": 1
+          },
+          "test_inactive_parking_grid_and_unchanged_collision_groups": true,
+          "surface_markers_match_policy_snapshot_and_have_no_physics": true,
+          "batched_surface_matches_original_mesh_observer": true,
+          "finger_initial_pose_and_surface_observation": true,
+          "training_wrapper_initial_reset": true,
+          "reference_finger_sampler_without_test_overrides": true,
+          "same_seed_matches_original_finger_initialization": true,
+          "test_legacy_centroid_buffer_unused_and_zero": true,
+          "test_reset_matches_finger_except_inactive_xyz_and_all_rng": true,
+          "reset_native_equality": "numerical exact: atol=rtol=0, +0/-0 equivalent",
+          "centroid_com": {
+            "height": [
+              0.09446421265602112,
+              0.10472942143678665,
+              0.10353399068117142,
+              0.10784359276294708
+            ],
+            "centroid_minus_root": [
+              [
+                0.0,
+                0.0,
+                0.04723215103149414
+              ],
+              [
+                0.0,
+                0.0,
+                0.05236470699310303
+              ],
+              [
+                0.0,
+                0.0,
+                0.05176699161529541
+              ],
+              [
+                0.0,
+                0.0,
+                0.05392181873321533
+              ]
+            ],
+            "com_minus_root": [
+              [
+                0.0,
+                0.0,
+                0.018892884254455566
+              ],
+              [
+                0.0,
+                0.0,
+                0.02094590663909912
+              ],
+              [
+                0.0,
+                0.0,
+                0.020706772804260254
+              ],
+              [
+                0.0,
+                0.0,
+                0.021568775177001953
+              ]
+            ]
+          },
+          "partial_reset_native_state_flags_and_roster_isolation": true,
+          "partial_reset_all_untouched_commands_observations_and_active_masks": true,
+          "partial_reset_clears_only_selected_legacy_rows": true,
+          "partial_reset_isolation": true,
+          "reach_matches_finger_formula_and_partial_reset": true,
+          "real_step_ms": 368.3085987577215,
+          "test_inactive_bodies_stationary_and_contact_free_after_physics": true,
+          "real_physics_smoke": true,
+          "sweep_from_reset_without_gate": true,
+          "same_step_gate_timeout_and_partial_reset": true,
+          "actual_contact_probe": {
+            "load_N": [
+              61.538307189941406,
+              1118.5772705078125,
+              1441.1080322265625,
+              910.8406982421875
+            ],
+            "force_N": [
+              [
+                7.484611988067627,
+                28.061931610107422,
+                -1.36963951587677
+              ],
+              [
+                -46.10201644897461,
+                100.08737182617188,
+                -8.12292766571045
+              ],
+              [
+                -18.56696319580078,
+                68.01477813720703,
+                10.27059555053711
+              ],
+              [
+                -50.269412994384766,
+                102.1435546875,
+                -14.469198226928711
+              ]
+            ],
+            "moment_Nm": [
+              [
+                -0.2467358410358429,
+                -0.19434385001659393,
+                0.6673626899719238
+              ],
+              [
+                -2.504692554473877,
+                -1.6730775833129883,
+                5.12359094619751
+              ],
+              [
+                -1.3246586322784424,
+                -1.3821041584014893,
+                7.7180633544921875
+              ],
+              [
+                -2.4801876544952393,
+                -1.6905968189239502,
+                4.119897842407227
+              ]
+            ]
+          },
+          "final_reset_metrics": {
+            "Reset/requested_obstacles": 0.0,
+            "Reset/actual_obstacles": 0.0,
+            "Reset/placement_skipped": 0.0,
+            "Reset/empty_fraction": 1.0,
+            "Reset/ik_attempts": 1.0,
+            "Reset/layout_resamples": 0.0,
+            "Reset/ik_recovery_fraction": 0.0,
+            "Reset/finger_placement_ms": 7.904556987341493,
+            "Reset/observation_ms": 2.1764060365967453,
+            "Reset/observation_upload_ms": 0.5489280223846436,
+            "Reset/observation_readback_ms": 0.07582904072478414,
+            "Reset/observation_ray_ms": 0.30291199684143066,
+            "Reset/observation_components_ms": 0.8634880185127258,
+            "Reset/observation_fallbacks": 0.0,
+            "Reset/target_missing_fallbacks": 0.0,
+            "Reset/slot_overflow_fallbacks": 0.0,
+            "Reset/batch_ms": 11.542827996890992
+          }
+        },
+        "raw_result": {
+          "path": "/tmp/stabilize_family_sweep_only_test_gpu.json",
+          "sha256": "b3334086265042aadb2f366bcdea4dfe93431a85ebacbeab5685aba605a7f3a4"
+        },
+        "raw_log": {
+          "path": "/tmp/stabilize_family_sweep_only_test_gpu.log",
+          "sha256": "c0d86792bbc619d0f59a0f00e5d6dca453f2f1119b269a0939536a5cad719c7f"
+        }
+      }
+    ]
+  },
+  "tests_and_checker_sources": [
+    {
+      "path": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/tests/test_stabilize_sweep.py",
+      "sha256": "dd766c11e5d132f7f6d227cb277745d2997ef03eb7868e903215df56989dd66a"
+    },
+    {
+      "path": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/tests/test_stabilize_sweep_surface_batch.py",
+      "sha256": "07cfd7bf468ae2284bbd6753438a3b37e3fa7f57546464129d7f98d9070aa261"
+    },
+    {
+      "path": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/tests/test_stabilize_sweep_com_cache.py",
+      "sha256": "4193a957888bc0f65d38e078c4659b2dc198ac671f060eac7776e757c696643a"
+    },
+    {
+      "path": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/tests/test_clutter_v2_wrench.py",
+      "sha256": "e4049d37f82e818ead8c513b3c29c9af5b4436310135c8190b612052029de999"
+    },
+    {
+      "path": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/tests/test_wrench_refactor_relative.py",
+      "sha256": "54edd26c6d66c4bbbb292d74ea7550cfe720867a269c0669e03b19fcedff35c6"
+    },
+    {
+      "path": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/tests/test_tactile_observations.py",
+      "sha256": "a9f7e122a7f8eef6d84d46d46817cec9219054376b87ad9ddc120b3b75c92a1d"
+    },
+    {
+      "path": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/tests/test_tactile_geometry.py",
+      "sha256": "08ee605f5021319b2f1c8f8c77bb4740db1418d64909f8836304a91d91d5a371"
+    },
+    {
+      "path": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/tests/test_tactile_configuration.py",
+      "sha256": "048a58bd3495d1a9b4b6acb091681a2904930e3de9a2f61223db228f25cb3525"
+    },
+    {
+      "path": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/scripts/check_stabilize_sweep.py",
+      "sha256": "e367d650d33ccc57d422f812756bc0e8fbc289136b3b3ab959478ddaf87fea73"
+    }
+  ],
+  "limitations": [
+    "Test paths still use single Warp IK but do not exclude initial robot occupancy.",
+    "Surface representative is nearest valid hit to visible mask area centroid, not necessarily bbox center.",
+    "Joint velocity termination applies to arm six joints only. Speed penalties sum squared velocities.",
+    "Physical randomization is startup-only, not per reset.",
+    "Axia-like final EEF observation clipping is not a model of raw native sensor saturation/electronic bandwidth.",
+    "Gate lifecycle check includes controlled sample replay; physical contact smoke does not establish learned stabilization success.",
+    "No new 2048-environment training timing or long-run policy success evaluation in this audit.",
+    "Existing logs/rsl_rl and unrelated docs/plan/PLAN18.md changes preserved."
+  ],
+  "document_validation": {
+    "status": "completed",
+    "markdown_math": {
+      "files": 6,
+      "passed": true
+    },
+    "links": {
+      "stats": {
+        "markdown_files": 6,
+        "internal_links": 484,
+        "external_links": 83,
+        "errors": 1
+      },
+      "errors": [
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "../../example/Contact-Rich-Manipulation-Context/02_implementation/environments/FINAL_GOAL_ACCURACY_V0_2_ENVIRONMENT.md",
+          "line": 1522,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/example/Contact-Rich-Manipulation-Context/02_implementation/environments/FINAL_GOAL_ACCURACY_V0_2_ENVIRONMENT.md",
+          "error": "missing-path",
+          "external": false
+        }
+      ],
+      "external_links": [
+        {
+          "source": "02_implementation/08_ACTIVE_ENVIRONMENTS.md",
+          "destination": "../../../src/shelf_object_gallery/README.md",
+          "line": 209,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/shelf_object_gallery/README.md"
+        },
+        {
+          "source": "02_implementation/environments/STABILIZE_SWEEP.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/stabilize_sweep_envs.py",
+          "line": 575,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/envs/stabilize_sweep_envs.py"
+        },
+        {
+          "source": "02_implementation/environments/STABILIZE_SWEEP.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/scenes/stabilize_sweep.py",
+          "line": 576,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/assets/scenes/stabilize_sweep.py"
+        },
+        {
+          "source": "02_implementation/environments/STABILIZE_SWEEP.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/runtime/stabilize_sweep.py",
+          "line": 577,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/runtime/stabilize_sweep.py"
+        },
+        {
+          "source": "02_implementation/environments/STABILIZE_SWEEP.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/event_functions/stabilize_sweep.py",
+          "line": 578,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/event_functions/stabilize_sweep.py"
+        },
+        {
+          "source": "02_implementation/environments/STABILIZE_SWEEP.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/stabilize_sweep_surface.py",
+          "line": 579,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/stabilize_sweep_surface.py"
+        },
+        {
+          "source": "02_implementation/environments/STABILIZE_SWEEP.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/stabilize_sweep_contact.py",
+          "line": 580,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/stabilize_sweep_contact.py"
+        },
+        {
+          "source": "02_implementation/environments/STABILIZE_SWEEP.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/stabilize_sweep_state.py",
+          "line": 581,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/stabilize_sweep_state.py"
+        },
+        {
+          "source": "02_implementation/environments/STABILIZE_SWEEP.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observations/stabilize_sweep.py",
+          "line": 582,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observations/stabilize_sweep.py"
+        },
+        {
+          "source": "02_implementation/environments/STABILIZE_SWEEP.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/rewards/stabilize_sweep.py",
+          "line": 583,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/rewards/stabilize_sweep.py"
+        },
+        {
+          "source": "02_implementation/environments/STABILIZE_SWEEP.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/terminations/stabilize_sweep.py",
+          "line": 584,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/terminations/stabilize_sweep.py"
+        },
+        {
+          "source": "02_implementation/environments/STABILIZE_SWEEP.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/agent/stabilize_sweep_ppo_cfg.py",
+          "line": 585,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/agent/stabilize_sweep_ppo_cfg.py"
+        },
+        {
+          "source": "02_implementation/environments/STABILIZE_SWEEP.md",
+          "destination": "../../../../src/inspire_sweep_baseline/scripts/check_stabilize_sweep.py",
+          "line": 586,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/scripts/check_stabilize_sweep.py"
+        },
+        {
+          "source": "02_implementation/environments/STABILIZE_SWEEP.md",
+          "destination": "../../../../src/inspire_sweep_baseline/tests/test_stabilize_sweep.py",
+          "line": 586,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/tests/test_stabilize_sweep.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py",
+          "line": 22,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/__init__.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/envs/stabilize_sweep_envs.py",
+          "line": 22,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/envs/stabilize_sweep_envs.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/runtime/stabilize_sweep.py",
+          "line": 22,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/runtime/stabilize_sweep.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/agent/stabilize_sweep_ppo_cfg.py",
+          "line": 22,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/agent/stabilize_sweep_ppo_cfg.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/scenes/stabilize_sweep.py",
+          "line": 44,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/assets/scenes/stabilize_sweep.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/robot.py",
+          "line": 44,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/assets/robot.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/scripts/build_wrench_right_hand.py",
+          "line": 44,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/scripts/build_wrench_right_hand.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/hand_kinematics.py",
+          "line": 44,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/assets/hand_kinematics.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/events/stabilize_sweep.py",
+          "line": 60,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/events/stabilize_sweep.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/event_functions/wrench_refactor.py",
+          "line": 60,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/event_functions/wrench_refactor.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/realistic_physics.py",
+          "line": 60,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/realistic_physics.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/assets/revision_spawners.py",
+          "line": 60,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/assets/revision_spawners.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/event_functions/stabilize_sweep.py",
+          "line": 95,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/event_functions/stabilize_sweep.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/stabilize_sweep_reset.py",
+          "line": 95,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/stabilize_sweep_reset.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/stabilize_sweep_geometry.py",
+          "line": 95,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/stabilize_sweep_geometry.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/stabilize_sweep_layout.py",
+          "line": 95,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/stabilize_sweep_layout.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/wrench_refactor_layout.py",
+          "line": 95,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/wrench_refactor_layout.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/actions/stabilize_sweep.py",
+          "line": 115,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/actions/stabilize_sweep.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/action_functions/wrench_refactor.py",
+          "line": 115,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/action_functions/wrench_refactor.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/action_functions/sweep_simple.py",
+          "line": 115,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/action_functions/sweep_simple.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../IsaacLab/source/isaaclab_rl/isaaclab_rl/rsl_rl/vecenv_wrapper.py",
+          "line": 115,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/IsaacLab/source/isaaclab_rl/isaaclab_rl/rsl_rl/vecenv_wrapper.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observations/stabilize_sweep.py",
+          "line": 148,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observations/stabilize_sweep.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observation_functions/stabilize_sweep.py",
+          "line": 148,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observation_functions/stabilize_sweep.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/stabilize_sweep_surface.py",
+          "line": 148,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/stabilize_sweep_surface.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/agent/wrench_refactor_models.py",
+          "line": 148,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/agent/wrench_refactor_models.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observation_functions/wrench_refactor.py",
+          "line": 176,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observation_functions/wrench_refactor.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observation_functions/final.py",
+          "line": 176,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observation_functions/final.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/compensated_wrench.py",
+          "line": 176,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/compensated_wrench.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observation_functions/contact_sweep_clutter.py",
+          "line": 176,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observation_functions/contact_sweep_clutter.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/runtime/stabilize_sweep.py",
+          "line": 176,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/runtime/stabilize_sweep.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/rewards/stabilize_sweep.py",
+          "line": 246,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/rewards/stabilize_sweep.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/stabilize_sweep_state.py",
+          "line": 246,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/stabilize_sweep_state.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/stabilize_sweep_contact.py",
+          "line": 246,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/stabilize_sweep_contact.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/contact_sweep_clutter_fusion.py",
+          "line": 246,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/contact_sweep_clutter_fusion.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/sweep.py",
+          "line": 246,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/sweep.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/curricula/stabilize_sweep.py",
+          "line": 262,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/curricula/stabilize_sweep.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/curriculum_functions/contact_sweep_clutter_fusion_holding.py",
+          "line": 262,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/curriculum_functions/contact_sweep_clutter_fusion_holding.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/terminations/stabilize_sweep.py",
+          "line": 282,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/terminations/stabilize_sweep.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/termination_functions/stabilize_sweep.py",
+          "line": 282,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/termination_functions/stabilize_sweep.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/termination_functions/revision.py",
+          "line": 282,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/termination_functions/revision.py"
+        },
+        {
+          "source": "02_implementation/environments/SWEEP_ONLY.md",
+          "destination": "../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/termination_functions/final.py",
+          "line": 282,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/termination_functions/final.py"
+        },
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "inspire_sweep_baseline/envs/sweep_omni_envs.py",
+          "line": 613,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_envs.py"
+        },
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py",
+          "line": 770,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py"
+        },
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py",
+          "line": 770,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py"
+        },
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py",
+          "line": 838,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py"
+        },
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "inspire_sweep_baseline/agent/sweep_omni_renewal_ppo_cfg.py",
+          "line": 838,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/agent/sweep_omni_renewal_ppo_cfg.py"
+        },
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py",
+          "line": 855,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py"
+        },
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "inspire_sweep_baseline/mdp/rewards/sweep_omni_renewal.py",
+          "line": 855,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/rewards/sweep_omni_renewal.py"
+        },
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "inspire_sweep_baseline/mdp/reward_functions/goal_rewards.py",
+          "line": 855,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/reward_functions/goal_rewards.py"
+        },
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "inspire_sweep_baseline/envs/contact_sweep_envs.py",
+          "line": 864,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_envs.py"
+        },
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "inspire_sweep_baseline/envs/contact_sweep_clutter_envs.py",
+          "line": 895,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_envs.py"
+        },
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "../scene_randomization/LOGIC.md",
+          "line": 897,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/scene_randomization/LOGIC.md"
+        },
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "inspire_sweep_baseline/envs/contact_sweep_clutter_envs.py",
+          "line": 929,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_envs.py"
+        },
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "inspire_sweep_baseline/envs/contact_sweep_clutter_envs.py",
+          "line": 974,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_envs.py"
+        },
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "inspire_sweep_baseline/mdp/curricula/contact_sweep_clutter.py",
+          "line": 974,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/curricula/contact_sweep_clutter.py"
+        },
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "inspire_sweep_baseline/envs/contact_sweep_clutter_envs.py",
+          "line": 1006,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_envs.py"
+        },
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py",
+          "line": 1052,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py"
+        },
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "inspire_sweep_baseline/runtime/sweep.py",
+          "line": 1060,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/runtime/sweep.py"
+        },
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py",
+          "line": 1076,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py"
+        },
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py",
+          "line": 1098,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py"
+        },
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py",
+          "line": 1121,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/envs/sweep_omni_renewal_envs.py"
+        },
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "inspire_sweep_baseline/mdp/action_functions/bounded_osc.py",
+          "line": 1121,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/action_functions/bounded_osc.py"
+        },
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "inspire_sweep_baseline/envs/contact_sweep_clutter_fusion_envs.py",
+          "line": 1168,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_fusion_envs.py"
+        },
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "inspire_sweep_baseline/envs/contact_sweep_clutter_fusion_envs.py",
+          "line": 1197,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_fusion_envs.py"
+        },
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "inspire_sweep_baseline/envs/contact_sweep_clutter_fusion_envs.py",
+          "line": 1236,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_fusion_envs.py"
+        },
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "scripts/collect_fusion_telemetry.py",
+          "line": 1269,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/scripts/collect_fusion_telemetry.py"
+        },
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "inspire_sweep_baseline/runtime/contact_sweep_clutter_fusion_telemetry.py",
+          "line": 1269,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/runtime/contact_sweep_clutter_fusion_telemetry.py"
+        },
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "inspire_sweep_baseline/envs/contact_sweep_clutter_fusion_envs.py",
+          "line": 1298,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_fusion_envs.py"
+        },
+        {
+          "source": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/README.md",
+          "destination": "inspire_sweep_baseline/envs/contact_sweep_clutter_fusion_holding_envs.py",
+          "line": 1413,
+          "kind": "inline",
+          "target": "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/envs/contact_sweep_clutter_fusion_holding_envs.py"
+        }
+      ]
+    },
+    "new_link_errors": 0,
+    "preexisting_link_error_confirmed_in_HEAD": "../../example/Contact-Rich-Manipulation-Context/02_implementation/environments/FINAL_GOAL_ACCURACY_V0_2_ENVIRONMENT.md",
+    "root_git_diff_check_passed": true,
+    "docs_git_diff_check_passed": true,
+    "new_markdown_trailing_whitespace_check_passed": true,
+    "production_hashes_rechecked_after_docs": true
+  },
+  "followup_sweep_only_remove_phase_and_squeeze": {
+    "scope": [
+      "Inspire-Sweep-Only-v0",
+      "Inspire-Sweep-Only-v0-Test"
+    ],
+    "baseline": "/tmp/sweep_no_phase_before",
+    "config_comparison": {
+      "Inspire-Stabilize-Sweep-v0": [],
+      "Inspire-Sweep-Only-v0": [
+        "observations.policy.phase -> None",
+        "rewards.squeeze -> None",
+        "actor/critic model class -> SweepOnlyModel (66D)"
+      ],
+      "Inspire-Stabilize-Sweep-v0-Test": [],
+      "Inspire-Sweep-Only-v0-Test": [
+        "observations.policy.phase -> None",
+        "rewards.squeeze -> None",
+        "actor/critic model class -> SweepOnlyModel (66D)"
+      ]
+    },
+    "changed_files": [
+      {
+        "path": "src/inspire_sweep_baseline/tests/test_stabilize_sweep.py",
+        "before_sha256": "dd766c11e5d132f7f6d227cb277745d2997ef03eb7868e903215df56989dd66a",
+        "after_sha256": "a67d08f002815a3eda49bb0cfadeb0096b5883cef8ecec6ccde5af4cd83c64d3"
+      },
+      {
+        "path": "src/inspire_sweep_baseline/scripts/check_stabilize_sweep.py",
+        "before_sha256": "e367d650d33ccc57d422f812756bc0e8fbc289136b3b3ab959478ddaf87fea73",
+        "after_sha256": "a46aaf6d8d802da73ea64546d3148731e11f34fefa6c191ca86fe12de80b5709"
+      },
+      {
+        "path": "src/inspire_sweep_baseline/inspire_sweep_baseline/agent/stabilize_sweep_models.py",
+        "before_sha256": "670005629ecae35d2f3cf49028a280a83ddb8a706e3935c3f78446965b9bb092",
+        "after_sha256": "404bab4c925194807b1c71a25b388fc47788d09dd8156e2cfde47c1ebf5c61cf"
+      },
+      {
+        "path": "src/inspire_sweep_baseline/inspire_sweep_baseline/agent/stabilize_sweep_ppo_cfg.py",
+        "before_sha256": "206da25b2f7414ec6a93b29c78e1e50f73526518742934a60cf928d2a0a96084",
+        "after_sha256": "a3994609b9145432a44dbf496c839a042d91fe759d4b6b8d27d45cd69477ad9b"
+      },
+      {
+        "path": "src/inspire_sweep_baseline/inspire_sweep_baseline/envs/stabilize_sweep_envs.py",
+        "before_sha256": "aecfb13719b120d5db690f8ef7e4f55d205ae1abd476f847a3caf4efce1e4d2a",
+        "after_sha256": "56bc8d756dab0e28375a156b5b57184f88434d10eee606741c68f3d5e839ae7c"
+      },
+      {
+        "path": "src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/observations/stabilize_sweep.py",
+        "before_sha256": "dee3edb6185760b9ab88165a5ea1f2597c788039d0b16dc22d67ee80f9648245",
+        "after_sha256": "140c9590d246c3691ac24c49c6c0567a8a2fc748ae0f821b541a07da4d1c1ba5"
+      },
+      {
+        "path": "src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/rewards/stabilize_sweep.py",
+        "before_sha256": "58b2dbbda7dd936e3cf50c3ddf53a5d9712c0cfaf7dde44a188397990f38950c",
+        "after_sha256": "133f2ad77bd76873921d9b0e506c426a69f4b5524b26076ee2dec4a7a22c9d0e"
+      }
+    ],
+    "cpu": {
+      "passed": 95,
+      "seconds": 11.88,
+      "suite": "src/inspire_sweep_baseline/tests/test_stabilize_sweep.py",
+      "log": "........................................................................ [ 75%]\n.......................                                                  [100%]\n95 passed in 11.88s\n"
+    },
+    "gpu": [
+      {
+        "task": "Inspire-Stabilize-Sweep-v0",
+        "exit_code": 0,
+        "command": [
+          "/home/min/miniconda3/envs/env_isaaclab/bin/python",
+          "src/inspire_sweep_baseline/scripts/check_stabilize_sweep.py",
+          "--headless",
+          "--num-envs",
+          "4",
+          "--task",
+          "Inspire-Stabilize-Sweep-v0",
+          "--audit-resets",
+          "2",
+          "--output",
+          "/tmp/sweep_no_phase_stabilize_gpu.json"
+        ],
+        "seconds": 23.39291514904471,
+        "output": "/tmp/sweep_no_phase_stabilize_gpu.json",
+        "log": "/tmp/sweep_no_phase_stabilize_gpu.log",
+        "result": {
+          "task": "Inspire-Stabilize-Sweep-v0",
+          "seed": 42,
+          "num_envs": 4,
+          "reset_audit": [
+            {
+              "seed": 0,
+              "ok": true,
+              "ms": 71.71801797812805,
+              "max_position_error_m": 0.0004975938354618847,
+              "max_rotation_error_rad": 8.926905138650909e-05,
+              "metrics": {
+                "Reset/requested_obstacles": 3.25,
+                "Reset/actual_obstacles": 3.25,
+                "Reset/placement_skipped": 0.0,
+                "Reset/empty_fraction": 0.25,
+                "Reset/ik_attempts": 1.0,
+                "Reset/layout_resamples": 0.0,
+                "Reset/ik_recovery_fraction": 0.0,
+                "Reset/observation_ms": 0.6927884969627485,
+                "Reset/observation_upload_ms": 0.17100000381469727,
+                "Reset/observation_readback_ms": 0.01889874693006277,
+                "Reset/observation_ray_ms": 0.3776000142097473,
+                "Reset/observation_components_ms": 0.025855999439954758,
+                "Reset/observation_fallbacks": 0.0,
+                "Reset/target_missing_fallbacks": 0.0,
+                "Reset/slot_overflow_fallbacks": 0.0,
+                "Reset/batch_ms": 57.10620200261474
+              }
+            },
+            {
+              "seed": 1,
+              "ok": true,
+              "ms": 32.73082396481186,
+              "max_position_error_m": 0.0004690964997280389,
+              "max_rotation_error_rad": 4.289594653528184e-05,
+              "metrics": {
+                "Reset/requested_obstacles": 1.0,
+                "Reset/actual_obstacles": 1.0,
+                "Reset/placement_skipped": 0.0,
+                "Reset/empty_fraction": 0.25,
+                "Reset/ik_attempts": 1.0,
+                "Reset/layout_resamples": 0.0,
+                "Reset/ik_recovery_fraction": 0.0,
+                "Reset/observation_ms": 0.5205755005590618,
+                "Reset/observation_upload_ms": 0.14127199351787567,
+                "Reset/observation_readback_ms": 0.01823324419092387,
+                "Reset/observation_ray_ms": 0.21580800414085388,
+                "Reset/observation_components_ms": 0.04761600121855736,
+                "Reset/observation_fallbacks": 0.0,
+                "Reset/target_missing_fallbacks": 0.0,
+                "Reset/slot_overflow_fallbacks": 0.0,
+                "Reset/batch_ms": 18.20731902262196
+              }
+            }
+          ],
+          "static_local_com_cache_checks": {
+            "reset": 3,
+            "physics_step": 1,
+            "timeout_partial_reset": 1,
+            "physical_contact": 1
+          },
+          "test_inactive_parking_grid_and_unchanged_collision_groups": true,
+          "batched_surface_matches_original_mesh_observer": true,
+          "minimum_actual_contact_face_goal_cosine": 0.9869318008422852,
+          "minimum_actual_hand_to_target_push_axis_gap_m": 0.04568435251712799,
+          "minimum_hand_bottom_clearance_m": 0.004566669464111328,
+          "maximum_hand_bottom_clearance_m": 0.004997611045837402,
+          "palm_always_left": true,
+          "minimum_obstacle_red_clearance_m": 0.01571977138519287,
+          "minimum_obstacle_robot_envelope_clearance_m": 0.005754359066486359,
+          "committed_robot_object_obb_nonoverlap": true,
+          "committed_obstacles_outside_red_and_robot_envelope": true,
+          "training_wrapper_initial_reset": true,
+          "bounded_failed_row_resampling": true,
+          "policy_observation_dim": 67,
+          "centroid_com": {
+            "height": [
+              0.09446421265602112,
+              0.10472942143678665,
+              0.10353399068117142,
+              0.10784359276294708
+            ],
+            "centroid_minus_root": [
+              [
+                0.0,
+                0.0,
+                0.04723215103149414
+              ],
+              [
+                0.0,
+                0.0,
+                0.05236470699310303
+              ],
+              [
+                0.0,
+                0.0,
+                0.05176699161529541
+              ],
+              [
+                0.0,
+                0.0,
+                0.05392181873321533
+              ]
+            ],
+            "com_minus_root": [
+              [
+                0.0,
+                0.0,
+                0.018892884254455566
+              ],
+              [
+                0.0,
+                0.0,
+                0.02094590663909912
+              ],
+              [
+                0.0,
+                0.0,
+                0.020706772804260254
+              ],
+              [
+                0.0,
+                0.0,
+                0.021568775177001953
+              ]
+            ]
+          },
+          "partial_reset_native_state_flags_and_roster_isolation": true,
+          "partial_reset_all_untouched_commands_observations_and_active_masks": true,
+          "partial_reset_isolation": true,
+          "real_step_ms": 340.2814132423373,
+          "test_inactive_bodies_stationary_and_contact_free_after_physics": true,
+          "real_physics_smoke": true,
+          "controlled_gate_manager_boundary": true,
+          "same_step_gate_timeout_and_partial_reset": true,
+          "actual_contact_probe": {
+            "load_N": [
+              25.420801162719727,
+              25.544588088989258,
+              23.567060470581055,
+              22.490510940551758
+            ],
+            "force_N": [
+              [
+                -15.325944900512695,
+                19.467512130737305,
+                -5.997189998626709
+              ],
+              [
+                -14.30972957611084,
+                19.582822799682617,
+                -10.32441520690918
+              ],
+              [
+                -12.932127952575684,
+                18.049442291259766,
+                -10.434480667114258
+              ],
+              [
+                -11.827754974365234,
+                17.62395668029785,
+                -8.773926734924316
+              ]
+            ],
+            "moment_Nm": [
+              [
+                -0.17425736784934998,
+                -0.1624411791563034,
+                0.035738505423069
+              ],
+              [
+                -0.11692545562982559,
+                -0.10772420465946198,
+                0.12771296501159668
+              ],
+              [
+                -0.084443598985672,
+                -0.06900455057621002,
+                0.14117690920829773
+              ],
+              [
+                -0.11903358995914459,
+                -0.07137778401374817,
+                0.16536803543567657
+              ]
+            ]
+          },
+          "final_reset_metrics": {
+            "Reset/requested_obstacles": 0.0,
+            "Reset/actual_obstacles": 0.0,
+            "Reset/placement_skipped": 0.0,
+            "Reset/empty_fraction": 1.0,
+            "Reset/ik_attempts": 1.0,
+            "Reset/layout_resamples": 0.0,
+            "Reset/ik_recovery_fraction": 0.0,
+            "Reset/observation_ms": 2.1105700288899243,
+            "Reset/observation_upload_ms": 0.5416960120201111,
+            "Reset/observation_readback_ms": 0.07774803088977933,
+            "Reset/observation_ray_ms": 0.27750399708747864,
+            "Reset/observation_components_ms": 0.8256639838218689,
+            "Reset/observation_fallbacks": 0.0,
+            "Reset/target_missing_fallbacks": 0.0,
+            "Reset/slot_overflow_fallbacks": 0.0,
+            "Reset/batch_ms": 18.622461997438222
+          }
+        },
+        "log_sha256": "13ff2b965d81282d0bd3311c0ba127085b58c1a83ec29776afbfbec39337a1ab"
+      },
+      {
+        "task": "Inspire-Sweep-Only-v0",
+        "exit_code": 0,
+        "command": [
+          "/home/min/miniconda3/envs/env_isaaclab/bin/python",
+          "src/inspire_sweep_baseline/scripts/check_stabilize_sweep.py",
+          "--headless",
+          "--num-envs",
+          "4",
+          "--task",
+          "Inspire-Sweep-Only-v0",
+          "--audit-resets",
+          "2",
+          "--output",
+          "/tmp/sweep_no_phase_sweep_only_gpu.json"
+        ],
+        "seconds": 22.18772801302839,
+        "output": "/tmp/sweep_no_phase_sweep_only_gpu.json",
+        "log": "/tmp/sweep_no_phase_sweep_only_gpu.log",
+        "result": {
+          "task": "Inspire-Sweep-Only-v0",
+          "seed": 42,
+          "num_envs": 4,
+          "reset_audit": [
+            {
+              "seed": 0,
+              "ok": true,
+              "ms": 73.09188396902755,
+              "max_position_error_m": 0.0004975938354618847,
+              "max_rotation_error_rad": 8.926905138650909e-05,
+              "metrics": {
+                "Reset/requested_obstacles": 3.25,
+                "Reset/actual_obstacles": 3.25,
+                "Reset/placement_skipped": 0.0,
+                "Reset/empty_fraction": 0.25,
+                "Reset/ik_attempts": 1.0,
+                "Reset/layout_resamples": 0.0,
+                "Reset/ik_recovery_fraction": 0.0,
+                "Reset/observation_ms": 0.6937577563803643,
+                "Reset/observation_upload_ms": 0.16890400648117065,
+                "Reset/observation_readback_ms": 0.019714250811375678,
+                "Reset/observation_ray_ms": 0.37964800000190735,
+                "Reset/observation_components_ms": 0.026367999613285065,
+                "Reset/observation_fallbacks": 0.0,
+                "Reset/target_missing_fallbacks": 0.0,
+                "Reset/slot_overflow_fallbacks": 0.0,
+                "Reset/batch_ms": 57.47045902535319
+              }
+            },
+            {
+              "seed": 1,
+              "ok": true,
+              "ms": 33.429702976718545,
+              "max_position_error_m": 0.0004690964997280389,
+              "max_rotation_error_rad": 4.289594653528184e-05,
+              "metrics": {
+                "Reset/requested_obstacles": 1.0,
+                "Reset/actual_obstacles": 1.0,
+                "Reset/placement_skipped": 0.0,
+                "Reset/empty_fraction": 0.25,
+                "Reset/ik_attempts": 1.0,
+                "Reset/layout_resamples": 0.0,
+                "Reset/ik_recovery_fraction": 0.0,
+                "Reset/observation_ms": 0.5153039965080097,
+                "Reset/observation_upload_ms": 0.1379839926958084,
+                "Reset/observation_readback_ms": 0.018540245946496725,
+                "Reset/observation_ray_ms": 0.21537600457668304,
+                "Reset/observation_components_ms": 0.04625599831342697,
+                "Reset/observation_fallbacks": 0.0,
+                "Reset/target_missing_fallbacks": 0.0,
+                "Reset/slot_overflow_fallbacks": 0.0,
+                "Reset/batch_ms": 18.8982899999246
+              }
+            }
+          ],
+          "sweep_only_phase_observation_and_squeeze_absent": true,
+          "static_local_com_cache_checks": {
+            "reset": 3,
+            "physics_step": 1,
+            "timeout_partial_reset": 1,
+            "physical_contact": 1
+          },
+          "test_inactive_parking_grid_and_unchanged_collision_groups": true,
+          "batched_surface_matches_original_mesh_observer": true,
+          "minimum_actual_contact_face_goal_cosine": 0.9869318008422852,
+          "minimum_actual_hand_to_target_push_axis_gap_m": 0.04568435251712799,
+          "minimum_hand_bottom_clearance_m": 0.004566669464111328,
+          "maximum_hand_bottom_clearance_m": 0.004997611045837402,
+          "palm_always_left": true,
+          "minimum_obstacle_red_clearance_m": 0.01571977138519287,
+          "minimum_obstacle_robot_envelope_clearance_m": 0.005754359066486359,
+          "committed_robot_object_obb_nonoverlap": true,
+          "committed_obstacles_outside_red_and_robot_envelope": true,
+          "training_wrapper_initial_reset": true,
+          "bounded_failed_row_resampling": true,
+          "policy_observation_dim": 66,
+          "centroid_com": {
+            "height": [
+              0.09446421265602112,
+              0.10472942143678665,
+              0.10353399068117142,
+              0.10784359276294708
+            ],
+            "centroid_minus_root": [
+              [
+                0.0,
+                0.0,
+                0.04723215103149414
+              ],
+              [
+                0.0,
+                0.0,
+                0.05236470699310303
+              ],
+              [
+                0.0,
+                0.0,
+                0.05176699161529541
+              ],
+              [
+                0.0,
+                0.0,
+                0.05392181873321533
+              ]
+            ],
+            "com_minus_root": [
+              [
+                0.0,
+                0.0,
+                0.018892884254455566
+              ],
+              [
+                0.0,
+                0.0,
+                0.02094590663909912
+              ],
+              [
+                0.0,
+                0.0,
+                0.020706772804260254
+              ],
+              [
+                0.0,
+                0.0,
+                0.021568775177001953
+              ]
+            ]
+          },
+          "partial_reset_native_state_flags_and_roster_isolation": true,
+          "partial_reset_all_untouched_commands_observations_and_active_masks": true,
+          "partial_reset_isolation": true,
+          "real_step_ms": 336.1295924987644,
+          "test_inactive_bodies_stationary_and_contact_free_after_physics": true,
+          "real_physics_smoke": true,
+          "sweep_from_reset_without_gate": true,
+          "same_step_gate_timeout_and_partial_reset": true,
+          "actual_contact_probe": {
+            "load_N": [
+              25.420801162719727,
+              25.544588088989258,
+              23.567060470581055,
+              22.490510940551758
+            ],
+            "force_N": [
+              [
+                -15.325944900512695,
+                19.467512130737305,
+                -5.997189998626709
+              ],
+              [
+                -14.30972957611084,
+                19.582822799682617,
+                -10.32441520690918
+              ],
+              [
+                -12.932127952575684,
+                18.049442291259766,
+                -10.434480667114258
+              ],
+              [
+                -11.827754974365234,
+                17.62395668029785,
+                -8.773926734924316
+              ]
+            ],
+            "moment_Nm": [
+              [
+                -0.17425736784934998,
+                -0.1624411791563034,
+                0.035738505423069
+              ],
+              [
+                -0.11692545562982559,
+                -0.10772420465946198,
+                0.12771296501159668
+              ],
+              [
+                -0.084443598985672,
+                -0.06900455057621002,
+                0.14117690920829773
+              ],
+              [
+                -0.11903358995914459,
+                -0.07137778401374817,
+                0.16536803543567657
+              ]
+            ]
+          },
+          "final_reset_metrics": {
+            "Reset/requested_obstacles": 0.0,
+            "Reset/actual_obstacles": 0.0,
+            "Reset/placement_skipped": 0.0,
+            "Reset/empty_fraction": 1.0,
+            "Reset/ik_attempts": 1.0,
+            "Reset/layout_resamples": 0.0,
+            "Reset/ik_recovery_fraction": 0.0,
+            "Reset/observation_ms": 2.0840049837715924,
+            "Reset/observation_upload_ms": 0.5560320019721985,
+            "Reset/observation_readback_ms": 0.0764590222388506,
+            "Reset/observation_ray_ms": 0.2734079957008362,
+            "Reset/observation_components_ms": 0.796671986579895,
+            "Reset/observation_fallbacks": 0.0,
+            "Reset/target_missing_fallbacks": 0.0,
+            "Reset/slot_overflow_fallbacks": 0.0,
+            "Reset/batch_ms": 19.363990053534508
+          }
+        },
+        "log_sha256": "0791b2bfe0d2f79e51a96e2c574f1b43da7455b4ae66a6e4b0cd9babb332fa9a"
+      },
+      {
+        "task": "Inspire-Stabilize-Sweep-v0-Test",
+        "exit_code": 0,
+        "command": [
+          "/home/min/miniconda3/envs/env_isaaclab/bin/python",
+          "src/inspire_sweep_baseline/scripts/check_stabilize_sweep.py",
+          "--headless",
+          "--num-envs",
+          "4",
+          "--task",
+          "Inspire-Stabilize-Sweep-v0-Test",
+          "--audit-resets",
+          "2",
+          "--output",
+          "/tmp/sweep_no_phase_stabilize_test_gpu.json"
+        ],
+        "seconds": 21.256994930037763,
+        "output": "/tmp/sweep_no_phase_stabilize_test_gpu.json",
+        "log": "/tmp/sweep_no_phase_stabilize_test_gpu.log",
+        "result": {
+          "task": "Inspire-Stabilize-Sweep-v0-Test",
+          "seed": 42,
+          "num_envs": 4,
+          "reset_audit": [
+            {
+              "seed": 0,
+              "ok": true,
+              "ms": 83.76184501685202,
+              "max_position_error_m": 0.00041656705434434116,
+              "max_rotation_error_rad": 4.491801155381836e-05,
+              "metrics": {
+                "Reset/requested_obstacles": 3.25,
+                "Reset/actual_obstacles": 3.25,
+                "Reset/placement_skipped": 0.0,
+                "Reset/empty_fraction": 0.25,
+                "Reset/ik_attempts": 1.0,
+                "Reset/layout_resamples": 0.0,
+                "Reset/ik_recovery_fraction": 0.0,
+                "Reset/finger_placement_ms": 36.76153300330043,
+                "Reset/observation_ms": 0.7376080029644072,
+                "Reset/observation_upload_ms": 0.1815280020236969,
+                "Reset/observation_readback_ms": 0.019941493519581854,
+                "Reset/observation_ray_ms": 0.3916560113430023,
+                "Reset/observation_components_ms": 0.031231999397277832,
+                "Reset/observation_fallbacks": 0.0,
+                "Reset/target_missing_fallbacks": 0.0,
+                "Reset/slot_overflow_fallbacks": 0.0,
+                "Reset/batch_ms": 68.85891401907429
+              }
+            },
+            {
+              "seed": 1,
+              "ok": true,
+              "ms": 28.66544300923124,
+              "max_position_error_m": 9.603352373233065e-05,
+              "max_rotation_error_rad": 2.097147807944566e-05,
+              "metrics": {
+                "Reset/requested_obstacles": 1.0,
+                "Reset/actual_obstacles": 1.0,
+                "Reset/placement_skipped": 0.0,
+                "Reset/empty_fraction": 0.25,
+                "Reset/ik_attempts": 1.0,
+                "Reset/layout_resamples": 0.0,
+                "Reset/ik_recovery_fraction": 0.0,
+                "Reset/finger_placement_ms": 9.636914008297026,
+                "Reset/observation_ms": 0.528666510945186,
+                "Reset/observation_upload_ms": 0.1382880061864853,
+                "Reset/observation_readback_ms": 0.018195511074736714,
+                "Reset/observation_ray_ms": 0.22088000178337097,
+                "Reset/observation_components_ms": 0.04966399818658829,
+                "Reset/observation_fallbacks": 0.0,
+                "Reset/target_missing_fallbacks": 0.0,
+                "Reset/slot_overflow_fallbacks": 0.0,
+                "Reset/batch_ms": 13.233293022494763
+              }
+            }
+          ],
+          "shelf_support_physics": {
+            "disable_gravity": false,
+            "bodies": [
+              {
+                "path": "/World/envs/env_0/Shelf/rack",
+                "kinematic_enabled": false
+              }
+            ],
+            "fixed_joints": []
+          },
+          "test_contract_reset_and_reach_only": true,
+          "static_local_com_cache_checks": {
+            "reset": 3,
+            "partial_reset": 1,
+            "physics_step": 1,
+            "timeout_partial_reset": 1,
+            "physical_contact": 1
+          },
+          "test_inactive_parking_grid_and_unchanged_collision_groups": true,
+          "surface_markers_match_policy_snapshot_and_have_no_physics": true,
+          "batched_surface_matches_original_mesh_observer": true,
+          "finger_initial_pose_and_surface_observation": true,
+          "training_wrapper_initial_reset": true,
+          "reference_finger_sampler_without_test_overrides": true,
+          "same_seed_matches_original_finger_initialization": true,
+          "test_legacy_centroid_buffer_unused_and_zero": true,
+          "test_reset_matches_finger_except_inactive_xyz_and_all_rng": true,
+          "reset_native_equality": "numerical exact: atol=rtol=0, +0/-0 equivalent",
+          "policy_observation_dim": 67,
+          "centroid_com": {
+            "height": [
+              0.09446421265602112,
+              0.10472942143678665,
+              0.10353399068117142,
+              0.10784359276294708
+            ],
+            "centroid_minus_root": [
+              [
+                0.0,
+                0.0,
+                0.04723215103149414
+              ],
+              [
+                0.0,
+                0.0,
+                0.05236470699310303
+              ],
+              [
+                0.0,
+                0.0,
+                0.05176699161529541
+              ],
+              [
+                0.0,
+                0.0,
+                0.05392181873321533
+              ]
+            ],
+            "com_minus_root": [
+              [
+                0.0,
+                0.0,
+                0.018892884254455566
+              ],
+              [
+                0.0,
+                0.0,
+                0.02094590663909912
+              ],
+              [
+                0.0,
+                0.0,
+                0.020706772804260254
+              ],
+              [
+                0.0,
+                0.0,
+                0.021568775177001953
+              ]
+            ]
+          },
+          "partial_reset_native_state_flags_and_roster_isolation": true,
+          "partial_reset_all_untouched_commands_observations_and_active_masks": true,
+          "partial_reset_clears_only_selected_legacy_rows": true,
+          "partial_reset_isolation": true,
+          "reach_matches_finger_formula_and_partial_reset": true,
+          "real_step_ms": 374.6917127573397,
+          "test_inactive_bodies_stationary_and_contact_free_after_physics": true,
+          "real_physics_smoke": true,
+          "controlled_gate_manager_boundary": true,
+          "same_step_gate_timeout_and_partial_reset": true,
+          "actual_contact_probe": {
+            "load_N": [
+              61.538307189941406,
+              1118.5772705078125,
+              1441.1080322265625,
+              910.8406982421875
+            ],
+            "force_N": [
+              [
+                7.484611988067627,
+                28.061931610107422,
+                -1.36963951587677
+              ],
+              [
+                -46.10201644897461,
+                100.08737182617188,
+                -8.12292766571045
+              ],
+              [
+                -18.56696319580078,
+                68.01477813720703,
+                10.27059555053711
+              ],
+              [
+                -50.269412994384766,
+                102.1435546875,
+                -14.469198226928711
+              ]
+            ],
+            "moment_Nm": [
+              [
+                -0.2467358410358429,
+                -0.19434385001659393,
+                0.6673626899719238
+              ],
+              [
+                -2.504692554473877,
+                -1.6730775833129883,
+                5.12359094619751
+              ],
+              [
+                -1.3246586322784424,
+                -1.3821041584014893,
+                7.7180633544921875
+              ],
+              [
+                -2.4801876544952393,
+                -1.6905968189239502,
+                4.119897842407227
+              ]
+            ]
+          },
+          "final_reset_metrics": {
+            "Reset/requested_obstacles": 0.0,
+            "Reset/actual_obstacles": 0.0,
+            "Reset/placement_skipped": 0.0,
+            "Reset/empty_fraction": 1.0,
+            "Reset/ik_attempts": 1.0,
+            "Reset/layout_resamples": 0.0,
+            "Reset/ik_recovery_fraction": 0.0,
+            "Reset/finger_placement_ms": 8.721827005501837,
+            "Reset/observation_ms": 2.3098689853213727,
+            "Reset/observation_upload_ms": 0.6072319746017456,
+            "Reset/observation_readback_ms": 0.07572898175567389,
+            "Reset/observation_ray_ms": 0.2815999984741211,
+            "Reset/observation_components_ms": 0.9524480104446411,
+            "Reset/observation_fallbacks": 0.0,
+            "Reset/target_missing_fallbacks": 0.0,
+            "Reset/slot_overflow_fallbacks": 0.0,
+            "Reset/batch_ms": 12.458333978429437
+          }
+        },
+        "log_sha256": "2815f06093ca98b0f1bf6d66855aeb421b53c32b09ad261e66eab592778071ad"
+      },
+      {
+        "task": "Inspire-Sweep-Only-v0-Test",
+        "exit_code": 0,
+        "command": [
+          "/home/min/miniconda3/envs/env_isaaclab/bin/python",
+          "src/inspire_sweep_baseline/scripts/check_stabilize_sweep.py",
+          "--headless",
+          "--num-envs",
+          "4",
+          "--task",
+          "Inspire-Sweep-Only-v0-Test",
+          "--audit-resets",
+          "2",
+          "--output",
+          "/tmp/sweep_no_phase_sweep_only_test_gpu.json"
+        ],
+        "seconds": 20.779982812993694,
+        "output": "/tmp/sweep_no_phase_sweep_only_test_gpu.json",
+        "log": "/tmp/sweep_no_phase_sweep_only_test_gpu.log",
+        "result": {
+          "task": "Inspire-Sweep-Only-v0-Test",
+          "seed": 42,
+          "num_envs": 4,
+          "reset_audit": [
+            {
+              "seed": 0,
+              "ok": true,
+              "ms": 84.32248799363151,
+              "max_position_error_m": 0.00041656705434434116,
+              "max_rotation_error_rad": 4.491801155381836e-05,
+              "metrics": {
+                "Reset/requested_obstacles": 3.25,
+                "Reset/actual_obstacles": 3.25,
+                "Reset/placement_skipped": 0.0,
+                "Reset/empty_fraction": 0.25,
+                "Reset/ik_attempts": 1.0,
+                "Reset/layout_resamples": 0.0,
+                "Reset/ik_recovery_fraction": 0.0,
+                "Reset/finger_placement_ms": 36.97241499321535,
+                "Reset/observation_ms": 0.7233009964693338,
+                "Reset/observation_upload_ms": 0.177839994430542,
+                "Reset/observation_readback_ms": 0.01913674350362271,
+                "Reset/observation_ray_ms": 0.384768009185791,
+                "Reset/observation_components_ms": 0.0289280004799366,
+                "Reset/observation_fallbacks": 0.0,
+                "Reset/target_missing_fallbacks": 0.0,
+                "Reset/slot_overflow_fallbacks": 0.0,
+                "Reset/batch_ms": 68.45849298406392
+              }
+            },
+            {
+              "seed": 1,
+              "ok": true,
+              "ms": 28.659720032010227,
+              "max_position_error_m": 9.603352373233065e-05,
+              "max_rotation_error_rad": 2.097147807944566e-05,
+              "metrics": {
+                "Reset/requested_obstacles": 1.0,
+                "Reset/actual_obstacles": 1.0,
+                "Reset/placement_skipped": 0.0,
+                "Reset/empty_fraction": 0.25,
+                "Reset/ik_attempts": 1.0,
+                "Reset/layout_resamples": 0.0,
+                "Reset/ik_recovery_fraction": 0.0,
+                "Reset/finger_placement_ms": 9.67292400309816,
+                "Reset/observation_ms": 0.5392969906097278,
+                "Reset/observation_upload_ms": 0.14023199677467346,
+                "Reset/observation_readback_ms": 0.01869523839559406,
+                "Reset/observation_ray_ms": 0.2240000069141388,
+                "Reset/observation_components_ms": 0.04966399818658829,
+                "Reset/observation_fallbacks": 0.0,
+                "Reset/target_missing_fallbacks": 0.0,
+                "Reset/slot_overflow_fallbacks": 0.0,
+                "Reset/batch_ms": 13.419618015177548
+              }
+            }
+          ],
+          "shelf_support_physics": {
+            "disable_gravity": false,
+            "bodies": [
+              {
+                "path": "/World/envs/env_0/Shelf/rack",
+                "kinematic_enabled": false
+              }
+            ],
+            "fixed_joints": []
+          },
+          "test_contract_reset_and_reach_only": true,
+          "sweep_only_phase_observation_and_squeeze_absent": true,
+          "static_local_com_cache_checks": {
+            "reset": 3,
+            "partial_reset": 1,
+            "physics_step": 1,
+            "timeout_partial_reset": 1,
+            "physical_contact": 1
+          },
+          "test_inactive_parking_grid_and_unchanged_collision_groups": true,
+          "surface_markers_match_policy_snapshot_and_have_no_physics": true,
+          "batched_surface_matches_original_mesh_observer": true,
+          "finger_initial_pose_and_surface_observation": true,
+          "training_wrapper_initial_reset": true,
+          "reference_finger_sampler_without_test_overrides": true,
+          "same_seed_matches_original_finger_initialization": true,
+          "test_legacy_centroid_buffer_unused_and_zero": true,
+          "test_reset_matches_finger_except_inactive_xyz_and_all_rng": true,
+          "reset_native_equality": "numerical exact: atol=rtol=0, +0/-0 equivalent",
+          "policy_observation_dim": 66,
+          "centroid_com": {
+            "height": [
+              0.09446421265602112,
+              0.10472942143678665,
+              0.10353399068117142,
+              0.10784359276294708
+            ],
+            "centroid_minus_root": [
+              [
+                0.0,
+                0.0,
+                0.04723215103149414
+              ],
+              [
+                0.0,
+                0.0,
+                0.05236470699310303
+              ],
+              [
+                0.0,
+                0.0,
+                0.05176699161529541
+              ],
+              [
+                0.0,
+                0.0,
+                0.05392181873321533
+              ]
+            ],
+            "com_minus_root": [
+              [
+                0.0,
+                0.0,
+                0.018892884254455566
+              ],
+              [
+                0.0,
+                0.0,
+                0.02094590663909912
+              ],
+              [
+                0.0,
+                0.0,
+                0.020706772804260254
+              ],
+              [
+                0.0,
+                0.0,
+                0.021568775177001953
+              ]
+            ]
+          },
+          "partial_reset_native_state_flags_and_roster_isolation": true,
+          "partial_reset_all_untouched_commands_observations_and_active_masks": true,
+          "partial_reset_clears_only_selected_legacy_rows": true,
+          "partial_reset_isolation": true,
+          "reach_matches_finger_formula_and_partial_reset": true,
+          "real_step_ms": 385.16142223670613,
+          "test_inactive_bodies_stationary_and_contact_free_after_physics": true,
+          "real_physics_smoke": true,
+          "sweep_from_reset_without_gate": true,
+          "same_step_gate_timeout_and_partial_reset": true,
+          "actual_contact_probe": {
+            "load_N": [
+              61.538307189941406,
+              1118.5772705078125,
+              1441.1080322265625,
+              910.8406982421875
+            ],
+            "force_N": [
+              [
+                7.484611988067627,
+                28.061931610107422,
+                -1.36963951587677
+              ],
+              [
+                -46.10201644897461,
+                100.08737182617188,
+                -8.12292766571045
+              ],
+              [
+                -18.56696319580078,
+                68.01477813720703,
+                10.27059555053711
+              ],
+              [
+                -50.269412994384766,
+                102.1435546875,
+                -14.469198226928711
+              ]
+            ],
+            "moment_Nm": [
+              [
+                -0.2467358410358429,
+                -0.19434385001659393,
+                0.6673626899719238
+              ],
+              [
+                -2.504692554473877,
+                -1.6730775833129883,
+                5.12359094619751
+              ],
+              [
+                -1.3246586322784424,
+                -1.3821041584014893,
+                7.7180633544921875
+              ],
+              [
+                -2.4801876544952393,
+                -1.6905968189239502,
+                4.119897842407227
+              ]
+            ]
+          },
+          "final_reset_metrics": {
+            "Reset/requested_obstacles": 0.0,
+            "Reset/actual_obstacles": 0.0,
+            "Reset/placement_skipped": 0.0,
+            "Reset/empty_fraction": 1.0,
+            "Reset/ik_attempts": 1.0,
+            "Reset/layout_resamples": 0.0,
+            "Reset/ik_recovery_fraction": 0.0,
+            "Reset/finger_placement_ms": 7.892593042925,
+            "Reset/observation_ms": 2.187674050219357,
+            "Reset/observation_upload_ms": 0.42473599314689636,
+            "Reset/observation_readback_ms": 0.07749401265755296,
+            "Reset/observation_ray_ms": 0.2959359884262085,
+            "Reset/observation_components_ms": 0.8735039830207825,
+            "Reset/observation_fallbacks": 0.0,
+            "Reset/target_missing_fallbacks": 0.0,
+            "Reset/slot_overflow_fallbacks": 0.0,
+            "Reset/batch_ms": 11.534791032318026
+          }
+        },
+        "log_sha256": "42920529e5ef71b5dde2ea9c52916462b9480c2412edf7fb6e122a06d622e950"
+      }
+    ],
+    "verification_limits": [
+      "No new training performance or policy success measurement.",
+      "ONNX adapter dimensions checked; no ONNX runtime execution.",
+      "Old 67D checkpoints not converted."
+    ],
+    "intermediate_failures": [
+      "CPU test collection pytest import ordering fixed, then full suite passed.",
+      "Two GPU checker failures from obsolete last-observation-is-phase assertions; checker updated, integration rerun passed."
+    ],
+    "document_checks": {
+      "math_files_passed": 6,
+      "new_link_errors": 0,
+      "preexisting_readme_link_error": true,
+      "package_diff_check_passed": true,
+      "document_repo_diff_check_passed": true,
+      "unrelated_root_whitespace": "docs/plan/PLAN18.md:284, left untouched"
+    }
+  }
+}

@@ -1,6 +1,12 @@
 # Inspire-Stabilize-Sweep-v0 상세 환경 설명
 
+2026-11-19 후속 변경: 아래 기존 공통 관측·압착 설명 중 **Sweep Only 일반·Test에는 Phase 관측과 압착 페널티가 더 이상 적용되지 않는다.** 두 환경은 직접 관측 66D와 export 130D를 사용한다. 이 문서의 Stabilize 일반·Test는 기존 67D·Phase 관측·압착 비용을 유지한다. 최신 Sweep Only 계약은 [상세 설명](SWEEP_ONLY.md)을 따른다.
+
+2026-11-19 조건 검토 후 공통 상태 생성·초기 표면점 저장을 정리했다. PPO `clip_actions=π/2`를 유지하고 실제 Sweep 접촉 높이 조건은 `sweep_contact_height_limit=0.12`로 관리한다. 기존 미사용 `goal_reward_height_limit`·`contact_height_limit` override는 새 필드로 바꿔야 한다. CPU 211개·네 환경 GPU reset·step·부분 reset 검사를 통과했다. [조건별 검토와 한계](../logs/2026-11-19_stabilize_family_audit.md), [일반 IK Sweep Only 상세 설명](SWEEP_ONLY.md)을 추가했다.
+
 2026-11-19 기준. `src/inspire_sweep_baseline`에 구현한 독립 Stabilize → Sweep 환경의 현재 동작을 설명한다. 기존 코드 기준 `d70802e`·root `3a94b60` 이후의 reset 오류 수정·사용자 승인 초기 자세 변경과 두 Test의 성능 개선을 반영한다.
+
+2026-11-19 추가: 일반 `Inspire-Sweep-Only-v0`의 물체 옆 초기화도2048환경·headless·32회에서 전부 collection10초 미만을 확인했다(collection 중앙값8.322초·최대9.579초, RTX3090·seed42). 원본 hull의 GPU 분리 증명과 기존 LP fallback, 경계 재검사를 포함한 GPU SAT·FK·채택 후보 재사용, 일반 로봇 영역 검사·장애물 선택의 GPU 처리를 적용했다. 초기 손 목표·충돌 조건·관측·보상·PPO는 유지한다. [원인·검증·한계](../logs/2026-11-19_sweep_only_ik_performance.md).
 
 이 환경은 초기 장면에서 얻은 물체의 대표 표면점과 실행 중 로봇 상태·촉각·손목 F/T를 이용해, 먼저 안정적인 접촉을 만든 다음 타겟을 목표 위치로 미는 과업이다. 하나의 정책이 총10초 동안 두 단계를 수행한다. 초기 시각 관측 이후 실제 물체 이동을 시각으로 계속 추적하지 않는다.
 
@@ -10,7 +16,7 @@
 
 ## 일반 IK 환경의 공통 최적화
 
-2026-11-19 후속 요청으로 `Inspire-Stabilize-Sweep-v0`와 `Inspire-Sweep-Only-v0`도 Test와 같은 대표점 GPU 배치 처리·CPU bounds·고정 local COM cache·비활성 주차·native 중복 기록 생략을 사용한다. 부모의4후보 IK·충돌 메쉬 검사·실패 행8회 추가 재추출·손 방향/높이 조건은 그대로다. 일반 장애물 배치는 로봇 점유 공간을 피하는 원래 계산을32행씩 처리하고 RED 계산만 합친다. Test의 단일 IK·협력 셀 선택기·Reach 보상을 일반 환경으로 옮기지 않는다. [적용 차이와 검증](../logs/2026-11-19_stabilize_parent_performance.md).
+2026-11-19 후속 요청으로 `Inspire-Stabilize-Sweep-v0`와 `Inspire-Sweep-Only-v0`도 Test와 같은 대표점 GPU 배치 처리·CPU bounds·고정 local COM cache·비활성 주차·native 중복 기록 생략을 사용한다. 부모의4후보 IK·충돌 메쉬 검사·실패 행8회 추가 재추출·손 방향/높이 조건은 그대로다. 일반 장애물 배치는 로봇 점유 공간을 피하는 원래 계산을256행 단위 GPU 커널에서 처리하고, 뒤의 작은 후보도 계속 시도하는 전용 셀 선택기를 사용한다. Test의 단일 IK·협력 셀 선택기·Reach 보상을 일반 환경으로 옮기지 않는다. [적용 차이와 검증](../logs/2026-11-19_stabilize_parent_performance.md).
 
 ## Finger 초기화 Test 환경
 
@@ -29,7 +35,7 @@ Iteration Time 약90초라는 사용자 보고에 따라, 초기화 경로를 �
 
 Finger reset 직후 같은 대표 표면점 snapshot을 생성해 policy 관측 cache를 갱신한다. Finger 함수가 만든 중심점 관측은 정책 입력으로 사용하지 않는다. 표면점의 노출 비율·분리 component·타겟 최대 component 선택, EEF 변환, episode 내 월드점 고정, 관측 실패/슬롯 초과 시 장애물0개 fallback은 유지한다. 이 fallback이 발생한 경우에만 Finger가 배치한 장애물을 추가로 제거한다. 물리 step 없이 선택 환경만 갱신한다.
 
-후속 성능 개선에서는 두 Test와 일반 IK 환경 모두 실제 메쉬의 삼각형 투영으로 광선 후보를 줄이고, 기존과 같은 ray/triangle 교차 판정·1mm 격자·4연결 조각·대표점 선택을256환경씩 GPU에서 처리한다. 투영 범위의 CPU 준비 계산도 기존 double 산술·float32 변환을 보존한 단일 kernel로 합친다. 메쉬와 노출·조각·XYZ 관측 규칙은 유지한다. Finger 배치 계산은512행씩 묶고 RED ZONE 거리와 셀 선택을 GPU에서 처리하며, 활성 배치와 난수 진행을 보존한다. 정책에서 사용하지 않는 기존 centroid 관측 계산은 생략하되 그 계산의 난수 소비는 유지한다. startup 이후 고정 로컬 COM을 캐시하고 현재 world COM과 접촉 모멘트는 계속 갱신한다. 일반 IK 환경은 로봇 점유 공간 검사를 유지하는32행 배치와 fused RED를 사용하며, Test용 셀 선택기로 교체하지 않는다. 기존 Finger의 기본 경로는 보존한다. [성능 개선·검증](../logs/2026-11-18_stabilize_sweep_performance.md).
+후속 성능 개선에서는 두 Test와 일반 IK 환경 모두 실제 메쉬의 삼각형 투영으로 광선 후보를 줄이고, 기존과 같은 ray/triangle 교차 판정·1mm 격자·4연결 조각·대표점 선택을256환경씩 GPU에서 처리한다. 투영 범위의 CPU 준비 계산도 기존 double 산술·float32 변환을 보존한 단일 kernel로 합친다. 메쉬와 노출·조각·XYZ 관측 규칙은 유지한다. Finger 배치 계산은512행씩 묶고 RED ZONE 거리와 셀 선택을 GPU에서 처리하며, 활성 배치와 난수 진행을 보존한다. 정책에서 사용하지 않는 기존 centroid 관측 계산은 생략하되 그 계산의 난수 소비는 유지한다. startup 이후 고정 로컬 COM을 캐시하고 현재 world COM과 접촉 모멘트는 계속 갱신한다. 일반 IK 환경은 로봇 점유 공간 검사를 유지하는256행 GPU 배치와 fused RED·일반용 셀 선택기를 사용한다. 기존 Finger의 기본 경로는 보존한다. [성능 개선·검증](../logs/2026-11-18_stabilize_sweep_performance.md).
 
 두 Test와 일반 IK 환경의 비활성 물체는 높은 Z52–82m 대신 환경 기준 +X3m부터 간격45cm의4×4 격자에 보관하며, 각 slot의 활성 초기 배치와 같은 선반 좌표계 Z를 유지한다. 로봇의 보수적 도달 영역 밖이며 기존 환경 간 충돌 필터와 중력 off를 유지한다. 활성 물체 위치·방향·분포·IK는 바뀌지 않는다. 비활성 물체와 고정 로봇 베이스의 실제 native pose/velocity가 요청값과 수치적으로 정확히 같을 때만 중복 기록을 생략하고, 최초 reset·활성 전환·다른 상태에는 정상 기록한다. 일반 환경에도 같은 주차·COM cache·중복 기록 생략을 적용한 후속 검증은 [일반 IK 성능 개선 기록](../logs/2026-11-19_stabilize_parent_performance.md)을 따른다.
 
