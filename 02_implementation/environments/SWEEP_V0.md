@@ -92,3 +92,29 @@ python src/inspire_sweep_baseline/scripts/train.py \
 ```
 
 실제 전체 설정 대조·CPU116개·RTX3090 GPU4환경 검증과 미검증 범위는 [개발 로그](../logs/2026-11-20_sweep_v0.md)에 기록했다. 장기 학습 및 방향별 행동 선호도 개선은 측정하지 않았다.
+
+## Single Contact 파생 환경
+
+`Inspire-Sweep-Single-Contact-v0`는 `Inspire-Sweep-v0`를 직접 상속한다. 로그 이름은 `inspire_sweep_single_contact_v0`다. EnvCfg는 `SweepSingleContactEnvCfg`, runtime은 `SweepSingleContactEnv`, PPO Cfg는 `SweepSingleContactPPORunnerCfg`이며 모두 기존 Sweep v0의 역할별 파일에 둔다.
+
+최근3개 **정책 제어 스텝** 중 유효한 타겟 접촉이2회 이상이고 기존 높이 조건을 만족하면, 접촉 계수 $h_t$를 즉시1로 사용한다. 미인정이면0이다. 누적 증가·감소 카운트에 따른 점진적인 보상 증가는 없다.
+
+```math
+h_t=\begin{cases}
+1,&\text{최근 3스텝 중 2회 이상 접촉 인정 및 기존 높이 조건 충족},\\
+0,&\text{그 밖의 경우}.
+\end{cases}
+```
+
+이 환경에는 `contact_count` 필드가 없다. 최근3스텝의 boolean 접촉 이력으로 `contact_recognized: bool`을 판정하며, 보상 계산에서만 `float(contact_recognized)`로1/0을 얻는다. 누적 증가·감소나0/20 대체 표현을 사용하지 않는다. 양의 Sweep 식의 다른 계수와 방향별 접촉면 계수는 유지한다. 인정 직후, 접촉 카운트가 이미20이었던 부모와 같은 최대 접촉 계수를 받는다.
+
+현재 스텝의 실제 접촉·유효 데이터·수평 평균 힘1N 이상·힘 방향 정렬·타겟→목표 거리 유효성은 별도 기존 조건으로 남는다. 따라서 과거2회 접촉으로 이력 조건이 충족되어도 현재 힘 조건이 충족되지 않으면 양의 Sweep 보상은0이다. 높이는 기존처럼 EEF가 상판 위12cm **미만**이어야 한다.
+
+부모 환경의 누적 방식은 그대로 보존한다. 자식의 역방향·Reach·접촉면 선호·고정 비용·정규화 F/T 관측·ActionPenalty·reset·종료·PPO 값은 보존한다. 자식의 전체 EnvCfg 값은 부모와 동일하며 runtime의 state 종류만 다르다. PPO에서는 로그 이름만 바뀐다.
+
+```bash
+python src/inspire_sweep_baseline/scripts/train.py \
+  --task Inspire-Sweep-Single-Contact-v0 --num_envs 2048 --headless
+```
+
+[개발·검증 기록](../logs/2026-11-20_sweep_single_contact.md): CPU110개, GPU4환경 reset·8step·부분reset·추가1step·직접 이력 probe 통과. 장기 학습은 실행하지 않았다.

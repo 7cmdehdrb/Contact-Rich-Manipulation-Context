@@ -1,5 +1,7 @@
 # 현재 개발 인계
 
+2026-11-20 후속: **`Inspire-Sweep-Single-Contact-v0`** 추가. Sweep v0 직접 자식, 최근3 policy step 중2회 인정 여부를 boolean으로 판정, 보상 계수1/0. 후속 정정으로 count20/0 표현도 제거했고 자식 state에는 contact_count 필드가 없다. 부모 누적 방식·높이·현재 힘 조건·모든 설정 보존, PPO는 로그 이름 `inspire_sweep_single_contact_v0`만 변경. CPU110개·GPU4환경8step/부분reset/이력probe 통과, 학습 미실행. [계약](../02_implementation/environments/SWEEP_V0.md#single-contact-파생-환경) · [개발·검증](../02_implementation/logs/2026-11-20_sweep_single_contact.md).
+
 2026-11-20 후속: **독립 `Inspire-Sweep-v0`** 추가. EnvCfg/PPO Cfg는 Isaac Lab 기반 직접 상속, 별도 runtime 진입점·공통 lifecycle 재사용. v2-Test-ActionPenalty-LinearReach 기능 기준, 구역1/2 손등·3/4 손바닥1.5/반대0.7, Deadzone0°·Pull/Push60°·좌우120°, 활성5개 커리큘럼 삭제·50N/-0.04/30N/3Nm/-0.1 고정, 관측만 F/T clip÷한계로 [-1,1]. 물리 reward 보존. CPU116개·RTX3090 GPU4환경8step/부분reset 통과, 학습 미실행. 로그 `inspire_sweep_v0`. [계약](../02_implementation/environments/SWEEP_V0.md) · [개발·검증](../02_implementation/logs/2026-11-20_sweep_v0.md).
 
 2026-11-20 후속: `Inspire-Sweep-Only-v2-Test-ActionPenalty-LinearReach` 추가. v2-Test-ActionPenalty 직접 상속, Reach만 weight0.8·10cm plateau·45cm에서0인 선형식으로 교체했다. 초기 거리·episode 길이 배율 제거, Sweep50/−10/count÷20·Deadzone0°·ActionPenalty·나머지 구성 유지. 로그 `inspire_sweep_only_v2_test_action_penalty_linear_reach`. CPU108개·RTX3090 GPU4환경8step·부분reset/추가step 통과, 학습 미실행. [계약](../02_implementation/environments/SWEEP_ONLY_FAMILY.md#linearreach-파생-환경) · [개발·검증](../02_implementation/logs/2026-11-20_sweep_only_v2_test_action_penalty_linear_reach.md).
