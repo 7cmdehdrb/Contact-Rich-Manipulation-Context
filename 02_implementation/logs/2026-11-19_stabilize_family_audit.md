@@ -155,3 +155,11 @@ GPU 통합 검사는 기존 실행기를 갱신하여 활성 관측 목록에 Ph
 검증은 `/tmp/sweep_only_v1_validate.py`로 실제 등록 설정을 Isaac Sim 안에서 직렬화하고 직전 네 환경 전체 설정 `/tmp/sweep_retreat_20_cfg.json`과 비교한다. 자식과 부모 차이도 두 weight와 experiment name만 허용한다. 같은 실행에서 신규 ID의 GPU 4환경 reset·4 policy step·부분 reset, 66D/64D 관측, live RewardManager 계수와 Phase/squeeze 비활성을 확인한다. 장기 학습·2048환경 성능은 이번 단순 계수 실험 추가 범위에서 실행하지 않는다.
 
 실행 결과: `V1_TEST_CONFIG_AND_GPU_SMOKE_PASS`, `CONFIG_SNAPSHOT_PASS`, exit 0. 기존 네 ID 설정은 직전 검증값과 전체 일치하고, 새 자식은 부모 대비 두 보상 weight와 experiment name만 달랐다. GPU 4환경 reset·step·부분 reset 검사를 통과했다. 원시 로그 `/tmp/sweep_only_v1_validate.log`, 전체 설정 `/tmp/sweep_only_v1_cfg.json`. 패키지·문서 diff 검사 통과.
+
+## Sweep Only v2 Test — Deadzone 0도
+
+사용자 요청은 v1-Test 직접 상속 및 Deadzone 30°→0° 고정이며, 현재 컴퓨터에서 학습 중이므로 GPU 테스트를 수행하지 말라는 제약이 있다. 기존 envs·agent 파일에 `SweepOnlyV2TestEnvCfg`·`SweepOnlyV2TestPPORunnerCfg`를 추가하고 `Inspire-Sweep-Only-v2-Test`를 기존 `SweepOnlyEnv` runtime으로 등록했다. 부모 post-init을 호출한 뒤 reset event의 `excluded_x_half_angle`만 0으로 변경했다. 부모 방향 커리큘럼이 None이므로 고정값을 덮어쓰는 일정이 없다. 로그 이름만 `inspire_sweep_only_v2_test`로 분리한다. 기존 환경 및 학습 프로세스·로그·체크포인트를 수정하거나 중단하지 않았다.
+
+최종 변경 대조: 부모 v1-Test의 보상 50/−10, 관측 66D+64D, Phase/압착 없음, Reach, Scene·Action·reset 함수·목표 거리·RED·로봇 설정·Termination·Curriculum·PPO는 그대로 상속한다. 실제 파생 클래스 AST를 추출하여 CPU의 최소 부모 대역 위에서 post-init을 실행했고, event params 차이가 excluded_x_half_angle 한 개뿐이고 v1의 30° 및 부모 보상 값이 보존됨을 검사했다. 실제 등록 loop도 대역 registry로 실행하여 ID·runtime·Cfg·runner 연결을 확인했고, runner는 experiment_name 하나만 선언함을 확인했다. 세 수정 Python 구문 검사를 통과했다. 기준 전체 설정은 직전 `/tmp/sweep_only_v1_cfg.json`을 참조했다.
+
+결과 `CPU_ONLY_STATIC_CONTRACT_PASS`. Python 표준 라이브러리만 사용했으며 torch·Isaac Sim·CUDA를 import하거나 실행하지 않았다. 실제 Isaac 설정 인스턴스·GPU reset/step·학습 성능은 검증하지 않았다. 해당 검증을 통과했다고 해석하지 않는다.

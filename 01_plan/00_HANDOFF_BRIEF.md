@@ -1,5 +1,23 @@
 # 현재 개발 인계
 
+2026-11-20 후속: `Inspire-Sweep-Only-v2-Test-ActionPenalty-LinearReach` 추가. v2-Test-ActionPenalty 직접 상속, Reach만 weight0.8·10cm plateau·45cm에서0인 선형식으로 교체했다. 초기 거리·episode 길이 배율 제거, Sweep50/−10/count÷20·Deadzone0°·ActionPenalty·나머지 구성 유지. 로그 `inspire_sweep_only_v2_test_action_penalty_linear_reach`. CPU108개·RTX3090 GPU4환경8step·부분reset/추가step 통과, 학습 미실행. [계약](../02_implementation/environments/SWEEP_ONLY_FAMILY.md#linearreach-파생-환경) · [개발·검증](../02_implementation/logs/2026-11-20_sweep_only_v2_test_action_penalty_linear_reach.md).
+
+2026-11-20: `Inspire-Sweep-Only-v1-ActionPenalty` 추가. v0 직접 상속, 물체 옆 IK·Reach 없음·Deadzone30° 유지, Sweep50/−10/count÷20과 공통 ActionPenalty 적용. 로그 `inspire_sweep_only_v1_action_penalty`. 기존 ID·서버별 학습 현황은 그대로다. [변경·검증](../02_implementation/logs/2026-11-20_sweep_only_v1_ik_action_penalty.md).
+
+2026-11-20 최종 학습 배치: **`.250`은 `Inspire-Sweep-Only-v2-Test-ActionPenalty`, `.180`은 `Inspire-Sweep-Only-v1-Test-ActionPenalty` 학습 중, `.30`은 학습 없음**. 계수·카운트 변경(v1_2)의 효과가 없다고 잠정 가정하고 두 실행 모두 progress50·retreat−10·count/20을 사용한다. 효과 부재의 확정이나 새 성공률 보고는 아니다. [최신 상태](../02_implementation/environments/SWEEP_ONLY_FAMILY.md#현재-학습-현황-2026-11-20-사용자-보고).
+
+2026-11-20 이전 사용자 학습 보고(후속 배치로 갱신): **`.180` v1_2-Test는 중단 없이 성공률20% 미만, `.250` v2-Test는 약10k에서50% 수준을 기록했으나 중단, `.30` v1-Test는 약5k에서20% 수준을 기록했으나 중단**. v1의 추가 상승은 사용자 기대이며 미검증이다. 기존 환경 실행 결과이며 새 ActionPenalty의 결과가 아니다. 기존11월19일 실행 중 기록보다 이 상태가 우선한다. [관찰·원인 가설·검증 경계](../02_implementation/logs/2026-11-20_sweep_only_training_status.md).
+
+2026-11-20: Sweep Only 기존 6종 각각에 `-ActionPenalty` 직접 파생 환경을 추가했다. 원본 ID 보존, wrapper clip 해제 후 팔 ±π/2·손 URDF 한계는 Action term에서 실행 제한한다. 원본 출력의 팔/손 범위 초과 비용 각 −0.03 추가, 기존 Action 변화 L2는 원본 이력으로 계산한다. Last Action 관측은 기존 ±π/2 유지, 모델·IsaacLab·Sweep 보상·Deadzone 불변. [변경·검증](../02_implementation/logs/2026-11-20_sweep_only_action_penalty.md).
+
+2026-11-19 최종 사용자 학습 현황: **`.30`에서 v1-Test, `.180`에서 v1_2-Test, `.250`에서 v2-Test를 모두 학습 중**이다. v2는 처음 실패한 것으로 판단했으나 약 2000 iteration부터 성공률 상승 경향이 보여 컴퓨터를 바꿔 시도 중이다. 이전 Deadzone 제거 실험 보류 방침과 v1_2 학습 예정 상태는 이 보고로 갱신한다. v1의 약 20%는 이전 보고값이며 최신 수치는 미보고다. 원격 로그 재검증이나 실행 없이 사용자 보고로 기록했다. [계열·버전·학습 현황 안내](../02_implementation/environments/SWEEP_ONLY_FAMILY.md).
+
+2026-11-19: `Inspire-Sweep-Only-v2_2-Test`는 v1_2-Test 직접 자식으로 Deadzone만 **0° 고정**이다. 보상 100/−25·원시 접촉 카운트와 나머지 조건 유지, 로그 `inspire_sweep_only_v2_2_test`. GPU·Isaac Sim 없이 표준 라이브러리 기반 코드 검사를 통과했다.
+
+2026-11-19: `Inspire-Sweep-Only-v1_2-Test`는 v1-Test 직접 자식이다. 접촉 카운트 정규화를 끄고 정방향 100·역방향 −25로 설정하여 동일 상태에서 v1 대비 정방향 40배·역방향 2.5배다. Deadzone 30°와 나머지 조건은 유지하며 로그 이름은 `inspire_sweep_only_v1_2_test`다. CPU 코드 검사만 수행했고 GPU·Isaac Sim·학습은 실행하지 않았다.
+
+2026-11-19: `Inspire-Sweep-Only-v2-Test`는 v1-Test 직접 자식으로 목표 방향 Deadzone만 **0° 고정**이다. 보상 50/−10 및 나머지 구성 유지, 로그 `inspire_sweep_only_v2_test`. 학습 중인 GPU 보호 요청에 따라 GPU·Isaac Sim 실행 없이 CPU 정적 검사만 수행했다.
+
 2026-11-19 후속: `--heavy-occlusion`으로 거의 가려진 물체가 있는 정면 사진24장을 `outputs/shelf_front_heavy_24`에 추가했다. 각 장면에2개씩 총48개 물체의 가시 면적이0.55–7.72%(92.28–99.45% 가림)임을 실제 mask로 확인했다. 기존48장은 보존했다. [강한 가림 검증](../02_implementation/logs/2026-11-19_shelf_front_photography.md#후속-거의-보이지-않는-강한-가림24장).
 
 2026-11-19 후속: `photograph_shelf_front.py --occlusion`으로 물체8개의 부분 가림 정면 이미지24장을 `outputs/shelf_front_occluded_24`에 추가했다. 장면마다 실제 mask로2–4쌍의 부분 가림을 확인했으며 기존 무가림24장은 보존했다. [후속 검증](../02_implementation/logs/2026-11-19_shelf_front_photography.md#후속-부분-가림-사진24장-추가).
