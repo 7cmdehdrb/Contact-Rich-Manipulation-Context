@@ -1,5 +1,11 @@
 # 현재 개발 인계
 
+2026-11-20: `Inspire-Sweep-Only-v1-ActionPenalty` 추가. v0 직접 상속, 물체 옆 IK·Reach 없음·Deadzone30° 유지, Sweep50/−10/count÷20과 공통 ActionPenalty 적용. 로그 `inspire_sweep_only_v1_action_penalty`. 기존 ID·서버별 학습 현황은 그대로다. [변경·검증](../02_implementation/logs/2026-11-20_sweep_only_v1_ik_action_penalty.md).
+
+2026-11-20 최종 학습 배치: **`.250`은 `Inspire-Sweep-Only-v2-Test-ActionPenalty`, `.180`은 `Inspire-Sweep-Only-v1-Test-ActionPenalty` 학습 중, `.30`은 학습 없음**. 계수·카운트 변경(v1_2)의 효과가 없다고 잠정 가정하고 두 실행 모두 progress50·retreat−10·count/20을 사용한다. 효과 부재의 확정이나 새 성공률 보고는 아니다. [최신 상태](../02_implementation/environments/SWEEP_ONLY_FAMILY.md#현재-학습-현황-2026-11-20-사용자-보고).
+
+2026-11-20 이전 사용자 학습 보고(후속 배치로 갱신): **`.180` v1_2-Test는 중단 없이 성공률20% 미만, `.250` v2-Test는 약10k에서50% 수준을 기록했으나 중단, `.30` v1-Test는 약5k에서20% 수준을 기록했으나 중단**. v1의 추가 상승은 사용자 기대이며 미검증이다. 기존 환경 실행 결과이며 새 ActionPenalty의 결과가 아니다. 기존11월19일 실행 중 기록보다 이 상태가 우선한다. [관찰·원인 가설·검증 경계](../02_implementation/logs/2026-11-20_sweep_only_training_status.md).
+
 2026-11-20: Sweep Only 기존 6종 각각에 `-ActionPenalty` 직접 파생 환경을 추가했다. 원본 ID 보존, wrapper clip 해제 후 팔 ±π/2·손 URDF 한계는 Action term에서 실행 제한한다. 원본 출력의 팔/손 범위 초과 비용 각 −0.03 추가, 기존 Action 변화 L2는 원본 이력으로 계산한다. Last Action 관측은 기존 ±π/2 유지, 모델·IsaacLab·Sweep 보상·Deadzone 불변. [변경·검증](../02_implementation/logs/2026-11-20_sweep_only_action_penalty.md).
 
 2026-11-19 최종 사용자 학습 현황: **`.30`에서 v1-Test, `.180`에서 v1_2-Test, `.250`에서 v2-Test를 모두 학습 중**이다. v2는 처음 실패한 것으로 판단했으나 약 2000 iteration부터 성공률 상승 경향이 보여 컴퓨터를 바꿔 시도 중이다. 이전 Deadzone 제거 실험 보류 방침과 v1_2 학습 예정 상태는 이 보고로 갱신한다. v1의 약 20%는 이전 보고값이며 최신 수치는 미보고다. 원격 로그 재검증이나 실행 없이 사용자 보고로 기록했다. [계열·버전·학습 현황 안내](../02_implementation/environments/SWEEP_ONLY_FAMILY.md).

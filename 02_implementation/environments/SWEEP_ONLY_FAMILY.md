@@ -1,10 +1,36 @@
 # Inspire-Sweep-Only 계열: 환경 구성·버전 차이·학습 현황
 
-2026-11-20: 기존 6종을 각각 직접 상속하는 `-ActionPenalty` 파생 환경을 추가했다. 아래의 11월 19일 서버별 상태는 당시 보고이며, 이후 사용자는 v1-Test·v2-Test 학습 중단을 보고했다. 신규 환경의 구성과 검증은 [ActionPenalty 파생 환경](#actionpenalty-파생-환경)을 따른다. 기존 ID는 수정하지 않았다.
+2026-11-20: 기존 6종을 각각 직접 상속하는 `-ActionPenalty` 파생 환경을 추가했다. 서버별 최신 상태는 아래 11월 20일 사용자 보고에 기록했으며, 11월 19일 기록도 과거 이력으로 보존했다. 신규 환경의 구성과 검증은 [ActionPenalty 파생 환경](#actionpenalty-파생-환경)을 따른다. 기존 ID는 수정하지 않았다.
 
-2026-11-19 기준. 환경 구성은 현재 코드에서 확인한 내용이며, 서버별 성공률과 학습 계획은 같은 날 사용자가 전달한 관찰이다. 원격 서버의 로그를 새로 읽거나 학습을 시작한 기록은 아니다. 세부 물리·센서·초기화 구현은 [Sweep Only 상세 설명](SWEEP_ONLY.md)을 참고한다.
+2026-11-20 갱신. 환경 구성은 코드에서 확인한 내용이며, 서버별 성공률과 기대는 아래 날짜별 사용자 관찰이다. 원격 서버의 로그를 새로 읽거나 학습을 시작한 기록은 아니다. 세부 물리·센서·초기화 구현은 [Sweep Only 상세 설명](SWEEP_ONLY.md)을 참고한다.
 
-## 현재 학습 현황과 경위
+## 현재 학습 현황: 2026-11-20 사용자 보고
+
+최신 후속 보고에 따라 **보상 계수·접촉 카운트 변경(v1_2)이 효과 없다고 잠정 가정**하고, progress50·retreat−10·count/20 조합의 ActionPenalty 두 환경을 학습 중이다. 이는 실험 진행을 위한 가정이며 변경 효과가 없다는 통계적 결론은 아니다.
+
+| 서버 | 현재 Task ID | 로그 experiment name | 상태 | Deadzone |
+| --- | --- | --- | --- | --- |
+| `.250` | `Inspire-Sweep-Only-v2-Test-ActionPenalty` | `inspire_sweep_only_v2_test_action_penalty` | 학습 중 | 0° |
+| `.180` | `Inspire-Sweep-Only-v1-Test-ActionPenalty` | `inspire_sweep_only_v1_test_action_penalty` | 학습 중 | 30° |
+| `.30` | 해당 없음 | 해당 없음 | 학습 없음 | 해당 없음 |
+
+두 실행의 iteration·성공률·seed·새 학습/재개 여부는 미보고다. 원격 실행을 확인하거나 시작한 것이 아니라 사용자 보고를 기록했다. 아래 원본 환경의 결과는 과거 이력이며 현재 서버 배치와 구분한다.
+
+## 과거 이력: 2026-11-20 원본 환경 결과
+
+| 서버 | 로그 experiment name | 중단 여부 | 성공률·진행량 | 해석 경계 |
+| --- | --- | --- | --- | --- |
+| `.180` | `inspire_sweep_only_v1_2_test` | 중단되지 않음 | 성공률 20% 미만; iteration 미보고 | 높은 보상 설정의 성능이 아직 낮다는 관찰; 수치적 안정성 보장 아님 |
+| `.250` | `inspire_sweep_only_v2_test` | 학습 중단 | 약 10k iteration에서 성공률 약 50% | 성능 향상과 학습 중단이 함께 발생 |
+| `.30` | `inspire_sweep_only_v1_test` | 학습 중단 | 약 5k iteration에서 성공률 약 20% | 더 상승할 수 있다는 사용자의 기대; 이후 상승은 미검증 |
+
+위 수치는 사용자 보고값이며 이번 문서 갱신에서 원격 로그를 재측정하지 않았다. 성공률 집계 구간·정확한 tag·seed와 v1_2의 진행량은 이번 보고에서 특정되지 않았다. 앞서 로컬 `logs/TEMP/wr6` 진단에서 확인한 마지막 `Metrics/timeout_success_rate` 약28.7%(v1)·67.5%(v2)는 다른 시점/집계일 수 있으므로 위 약20%·50%를 대체하지 않는다. 사용자 보고값과 진단값이 동일한 시점·지표라는 가정으로 비교하지 않는다.
+
+이번 세 실행은 기존 ID의 결과다. 새 `-ActionPenalty` 환경의 학습 성과로 해석하지 않는다. v1과 v2는 각각5k·10k라서 Deadzone만의 효과를 분리할 수 없고, v1_2는 정방향 보상이 v1 대비40배인 반면 후퇴 비용은2.5배여서 접근과 이탈의 상대 균형이 크게 다르다. 가능한 설명과 미확인 사항은 [분석 기록](../logs/2026-11-20_sweep_only_training_status.md)에 구분한다.
+
+## 과거 이력: 2026-11-19 학습 현황과 경위
+
+아래는 당시 보고를 보존한 기록이며 현재 중단 여부는 위 11월 20일 표가 우선한다.
 
 2026-11-19 최종 사용자 보고를 반영했다. 현재 `.30`의 v1-Test, `.180`의 v1_2-Test, `.250`의 v2-Test가 모두 학습 중이다.
 
@@ -144,11 +170,24 @@ v1_2·v2_2 추가 때 수행한 코드·CPU 검사와, 사용자가 별도 서�
 | 신규 Task ID | 직접 부모 Task ID | 로그 experiment name |
 | --- | --- | --- |
 | `Inspire-Sweep-Only-v0-ActionPenalty` | `Inspire-Sweep-Only-v0` | `inspire_sweep_only_v0_action_penalty` |
+| `Inspire-Sweep-Only-v1-ActionPenalty` | `Inspire-Sweep-Only-v0` | `inspire_sweep_only_v1_action_penalty` |
 | `Inspire-Sweep-Only-v0-Test-ActionPenalty` | `Inspire-Sweep-Only-v0-Test` | `inspire_sweep_only_v0_test_action_penalty` |
 | `Inspire-Sweep-Only-v1-Test-ActionPenalty` | `Inspire-Sweep-Only-v1-Test` | `inspire_sweep_only_v1_test_action_penalty` |
 | `Inspire-Sweep-Only-v1_2-Test-ActionPenalty` | `Inspire-Sweep-Only-v1_2-Test` | `inspire_sweep_only_v1_2_test_action_penalty` |
 | `Inspire-Sweep-Only-v2-Test-ActionPenalty` | `Inspire-Sweep-Only-v2-Test` | `inspire_sweep_only_v2_test_action_penalty` |
 | `Inspire-Sweep-Only-v2_2-Test-ActionPenalty` | `Inspire-Sweep-Only-v2_2-Test` | `inspire_sweep_only_v2_2_test_action_penalty` |
+
+### 물체 옆 IK와 v1 보상: v1-ActionPenalty
+
+2026-11-20 후속 요청으로 `Inspire-Sweep-Only-v1-ActionPenalty`를 추가했다. `Inspire-Sweep-Only-v0`를 직접 상속하여 물체 옆 IK·충돌 검사·스폰 제외 공간을 유지하고, Sweep 계수만 v1의 **progress50 / retreat−10 / count÷20**으로 맞췄다. Deadzone은30°다. 아래 공통 ActionPenalty 처리도 적용한다. PPO runner는 v0 runner를 직접 상속하고 clip_actions=None·독립 experiment name만 변경한다.
+
+`Inspire-Sweep-Only-v1-Test-ActionPenalty`와의 전체 설정 차이는 **일반 물체 옆 초기화 Event 구성, Reach 없음, 대표점 GUI 마커 기본 비활성**이다. 물체 옆 시작에는 Reach를 사용하지 않는 기존 원칙을 유지한다. 따라서 초기화 이외에 Reach·마커 차이도 있음을 구분한다. 나머지 관측·제어·Sweep 보상·종료·curriculum·모델은 같다. 별도의 `Inspire-Sweep-Only-v1` ID는 만들지 않았다.
+
+```bash
+/home/min/miniconda3/envs/env_isaaclab/bin/python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Only-v1-ActionPenalty --num_envs 2048 --headless
+```
+
+이번 추가는 특정 서버에서 학습을 시작했다는 보고가 아니다. [개발·검증 기록](../logs/2026-11-20_sweep_only_v1_ik_action_penalty.md)을 참고한다.
 
 ### 액션·보상 계약
 
