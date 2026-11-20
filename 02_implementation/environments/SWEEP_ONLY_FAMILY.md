@@ -1,5 +1,7 @@
 # Inspire-Sweep-Only 계열: 환경 구성·버전 차이·학습 현황
 
+2026-11-20 후속: `Inspire-Sweep-Only-v2-Test-ActionPenalty-LinearReach`는 v2-Test-ActionPenalty를 직접 상속하고 Reach만 선형 근접식으로 바꾼다. [LinearReach 구성·실행](#linearreach-파생-환경)을 참고한다. 기존 서버별 학습 현황은 아래 사용자 보고를 유지한다.
+
 2026-11-20: 기존 6종을 각각 직접 상속하는 `-ActionPenalty` 파생 환경을 추가했다. 서버별 최신 상태는 아래 11월 20일 사용자 보고에 기록했으며, 11월 19일 기록도 과거 이력으로 보존했다. 신규 환경의 구성과 검증은 [ActionPenalty 파생 환경](#actionpenalty-파생-환경)을 따른다. 기존 ID는 수정하지 않았다.
 
 2026-11-20 갱신. 환경 구성은 코드에서 확인한 내용이며, 서버별 성공률과 기대는 아래 날짜별 사용자 관찰이다. 원격 서버의 로그를 새로 읽거나 학습을 시작한 기록은 아니다. 세부 물리·센서·초기화 구현은 [Sweep Only 상세 설명](SWEEP_ONLY.md)을 참고한다.
@@ -165,6 +167,8 @@ v1_2·v2_2 추가 때 수행한 코드·CPU 검사와, 사용자가 별도 서�
 
 ## ActionPenalty 파생 환경
 
+`inspire_sweep_only_v1_test_action_penalty`의 15개 보상·페널티와 학습 일정은 [v1-Test-ActionPenalty 보상 상세](SWEEP_ONLY_V1_TEST_ACTION_PENALTY_REWARDS.md)에 정리했다. 해당 문서는 사용자 요청에 따라 시간 간격을 제외하고 각 항을 step t의 식으로 표기한다.
+
 2026-11-20 추가. 기존 환경을 보존하고 실행 액션의 제한 위치와 페널티 입력만 분리한다. 각 EnvCfg와 PPORunnerCfg는 해당 원본을 직접 상속하며 runtime은 공통 `SweepOnlyEnv`다.
 
 | 신규 Task ID | 직접 부모 Task ID | 로그 experiment name |
@@ -176,6 +180,44 @@ v1_2·v2_2 추가 때 수행한 코드·CPU 검사와, 사용자가 별도 서�
 | `Inspire-Sweep-Only-v1_2-Test-ActionPenalty` | `Inspire-Sweep-Only-v1_2-Test` | `inspire_sweep_only_v1_2_test_action_penalty` |
 | `Inspire-Sweep-Only-v2-Test-ActionPenalty` | `Inspire-Sweep-Only-v2-Test` | `inspire_sweep_only_v2_test_action_penalty` |
 | `Inspire-Sweep-Only-v2_2-Test-ActionPenalty` | `Inspire-Sweep-Only-v2_2-Test` | `inspire_sweep_only_v2_2_test_action_penalty` |
+
+### LinearReach 파생 환경
+
+`Inspire-Sweep-Only-v2-Test-ActionPenalty-LinearReach`는 **`Inspire-Sweep-Only-v2-Test-ActionPenalty`를 직접 상속**한다. EnvCfg는 `SweepOnlyV2TestActionPenaltyLinearReachEnvCfg`, PPO runner는 `SweepOnlyV2TestActionPenaltyLinearReachPPORunnerCfg`, runtime은 기존 `SweepOnlyEnv`다. 로그 이름은 `inspire_sweep_only_v2_test_action_penalty_linear_reach`다.
+
+현재 실제 EEF 위치를 $\mathbf{e}_t$, 실제 타겟 bounds 중심을 $\mathbf{p}_t$로 두면, 요청에 따라 시간 간격을 생략한 Reach는 다음과 같다.
+
+```math
+\rho_t=\lVert\mathbf{e}_t-\mathbf{p}_t\rVert_2,
+\qquad
+r_{\mathrm{reach},t}
+=0.8\max\left(1-\frac{\max(\rho_t-0.10,0)}{0.35},0\right).
+```
+
+10cm 이내에서는 가중값0.8, 10–45cm에서는 선형 감소, 45cm 이상에서는0이다. `linear_reach` 함수는0–1 근접도를 반환하며 `reaching.weight=0.8`, `near_radius=0.10`, `decay_distance=0.35`, `frame_name='ee_frame'`를 사용한다. 초기 root 거리·episode 길이에 따른 배율과 reset 이력을 사용하지 않는다. 현재 bounds 중심을 사용하므로 물체가 움직이면 거리가 갱신된다.
+
+실행에서는 부모와 같이 RewardManager가 policy 시간 간격0.02초를 한 번 곱한다. 따라서 Reach term의 실제 최대 step 기여는0.016이다. 위 식은 앞선 보상 문서·그래프와 동일한 시간 간격 생략 표기다. 거리 증분 보상처럼 새 함수가 시간 간격을 나누는 처리를 추가하지 않는다.
+
+| 항목 | 부모 v2-Test-ActionPenalty | LinearReach 자식 |
+| --- | --- | --- |
+| Reach 함수 | `InverseDistanceReach` | `linear_reach` |
+| Reach weight | 30 | 0.8 |
+| 거리 배율 | `distance_scale=0.10`의 역거리 | `decay_distance=0.35`의 선형 감소 |
+| 근접 반경·좌표 | 10cm·현재 타겟 bounds 중심 | 동일 |
+| 초기 거리·episode 길이 배율 | 사용 | 제거 |
+| 다른 보상·ActionPenalty·관측·reset·종료·curriculum | 부모 구성 | 동일 |
+| Sweep·Deadzone | 50/−10·count/20·0° | 동일 |
+| PPO | 부모 구성 | experiment name만 변경 |
+
+학습은 workspace 루트에서 실행한다.
+
+```bash
+python src/inspire_sweep_baseline/scripts/train.py \
+  --task Inspire-Sweep-Only-v2-Test-ActionPenalty-LinearReach \
+  --num_envs 2048 --headless
+```
+
+이번 추가로 새 학습을 시작하거나 기존 서버 실행을 바꾸지는 않았다. 실제 전체 설정 대조·CPU·GPU smoke 결과와 미검증 범위는 [개발 로그](../logs/2026-11-20_sweep_only_v2_test_action_penalty_linear_reach.md)에 기록한다.
 
 ### 물체 옆 IK와 v1 보상: v1-ActionPenalty
 

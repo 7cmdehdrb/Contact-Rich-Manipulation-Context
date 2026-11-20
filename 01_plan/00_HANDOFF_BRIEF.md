@@ -1,5 +1,7 @@
 # 현재 개발 인계
 
+2026-11-20 후속: `Inspire-Sweep-Only-v2-Test-ActionPenalty-LinearReach` 추가. v2-Test-ActionPenalty 직접 상속, Reach만 weight0.8·10cm plateau·45cm에서0인 선형식으로 교체했다. 초기 거리·episode 길이 배율 제거, Sweep50/−10/count÷20·Deadzone0°·ActionPenalty·나머지 구성 유지. 로그 `inspire_sweep_only_v2_test_action_penalty_linear_reach`. CPU108개·RTX3090 GPU4환경8step·부분reset/추가step 통과, 학습 미실행. [계약](../02_implementation/environments/SWEEP_ONLY_FAMILY.md#linearreach-파생-환경) · [개발·검증](../02_implementation/logs/2026-11-20_sweep_only_v2_test_action_penalty_linear_reach.md).
+
 2026-11-20: `Inspire-Sweep-Only-v1-ActionPenalty` 추가. v0 직접 상속, 물체 옆 IK·Reach 없음·Deadzone30° 유지, Sweep50/−10/count÷20과 공통 ActionPenalty 적용. 로그 `inspire_sweep_only_v1_action_penalty`. 기존 ID·서버별 학습 현황은 그대로다. [변경·검증](../02_implementation/logs/2026-11-20_sweep_only_v1_ik_action_penalty.md).
 
 2026-11-20 최종 학습 배치: **`.250`은 `Inspire-Sweep-Only-v2-Test-ActionPenalty`, `.180`은 `Inspire-Sweep-Only-v1-Test-ActionPenalty` 학습 중, `.30`은 학습 없음**. 계수·카운트 변경(v1_2)의 효과가 없다고 잠정 가정하고 두 실행 모두 progress50·retreat−10·count/20을 사용한다. 효과 부재의 확정이나 새 성공률 보고는 아니다. [최신 상태](../02_implementation/environments/SWEEP_ONLY_FAMILY.md#현재-학습-현황-2026-11-20-사용자-보고).

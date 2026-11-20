@@ -1,5 +1,7 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-20 후속: `Inspire-Sweep-Only-v2-Test-ActionPenalty-LinearReach`는 v2-Test-ActionPenalty 직접 자식이다. Reach만 weight0.8·근접10cm·선형 감소 폭35cm로 교체하고 초기 거리·episode 길이 배율을 제거했다. 부모 전체 설정에서 Reach만, PPO에서는 로그 이름만 다름을 확인했다. CPU108개·GPU4환경8step·부분reset/추가step 통과, 장기 학습 미실행. [구성·실행](environments/SWEEP_ONLY_FAMILY.md#linearreach-파생-환경) · [개발 로그](logs/2026-11-20_sweep_only_v2_test_action_penalty_linear_reach.md).
+
 2026-11-20: `Inspire-Sweep-Only-v1-ActionPenalty` 추가. v0 직접 상속, 물체 옆 IK·Reach 없음·Deadzone30° 유지, Sweep50/−10/count÷20과 공통 ActionPenalty 적용. 로그 `inspire_sweep_only_v1_action_penalty`. 기존 ID·서버별 학습 현황은 그대로다. [변경·검증](logs/2026-11-20_sweep_only_v1_ik_action_penalty.md).
 
 2026-11-20 최종 학습 배치: **`.250`은 `Inspire-Sweep-Only-v2-Test-ActionPenalty`, `.180`은 `Inspire-Sweep-Only-v1-Test-ActionPenalty` 학습 중, `.30`은 학습 없음**. 계수·카운트 변경(v1_2)의 효과가 없다고 잠정 가정하고 두 실행 모두 progress50·retreat−10·count/20을 사용한다. 효과 부재의 확정이나 새 성공률 보고는 아니다. [최신 상태](environments/SWEEP_ONLY_FAMILY.md#현재-학습-현황-2026-11-20-사용자-보고).
