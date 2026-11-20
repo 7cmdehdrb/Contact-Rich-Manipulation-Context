@@ -1,5 +1,7 @@
 # Inspire-Sweep-Only 계열: 환경 구성·버전 차이·학습 현황
 
+2026-11-20: 이 계열의 v2-Test-ActionPenalty-LinearReach를 기능 기준으로 **별도 독립 계통 `Inspire-Sweep-v0`**를 추가했다. 기존 계열은 보존하며 새 EnvCfg/PPO를 직접 선언한다. 접촉면별 Sweep 선호·고정 비용·관측 F/T 정규화는 [Sweep v0 계약](SWEEP_V0.md)을 따른다.
+
 2026-11-20 후속: `Inspire-Sweep-Only-v2-Test-ActionPenalty-LinearReach`는 v2-Test-ActionPenalty를 직접 상속하고 Reach만 선형 근접식으로 바꾼다. [LinearReach 구성·실행](#linearreach-파생-환경)을 참고한다. 기존 서버별 학습 현황은 아래 사용자 보고를 유지한다.
 
 2026-11-20: 기존 6종을 각각 직접 상속하는 `-ActionPenalty` 파생 환경을 추가했다. 서버별 최신 상태는 아래 11월 20일 사용자 보고에 기록했으며, 11월 19일 기록도 과거 이력으로 보존했다. 신규 환경의 구성과 검증은 [ActionPenalty 파생 환경](#actionpenalty-파생-환경)을 따른다. 기존 ID는 수정하지 않았다.
