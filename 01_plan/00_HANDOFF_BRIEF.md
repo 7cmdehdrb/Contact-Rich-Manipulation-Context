@@ -20,6 +20,14 @@
 
 2026-11-19: `Inspire-Sweep-Only-v2-Test`는 v1-Test 직접 자식으로 목표 방향 Deadzone만 **0° 고정**이다. 보상 50/−10 및 나머지 구성 유지, 로그 `inspire_sweep_only_v2_test`. 학습 중인 GPU 보호 요청에 따라 GPU·Isaac Sim 실행 없이 CPU 정적 검사만 수행했다.
 
+2026-11-19 후속: `--heavy-occlusion`으로 거의 가려진 물체가 있는 정면 사진24장을 `outputs/shelf_front_heavy_24`에 추가했다. 각 장면에2개씩 총48개 물체의 가시 면적이0.55–7.72%(92.28–99.45% 가림)임을 실제 mask로 확인했다. 기존48장은 보존했다. [강한 가림 검증](../02_implementation/logs/2026-11-19_shelf_front_photography.md#후속-거의-보이지-않는-강한-가림24장).
+
+2026-11-19 후속: `photograph_shelf_front.py --occlusion`으로 물체8개의 부분 가림 정면 이미지24장을 `outputs/shelf_front_occluded_24`에 추가했다. 장면마다 실제 mask로2–4쌍의 부분 가림을 확인했으며 기존 무가림24장은 보존했다. [후속 검증](../02_implementation/logs/2026-11-19_shelf_front_photography.md#후속-부분-가림-사진24장-추가).
+
+2026-11-19: 로봇 없는 선반·물체8개 정면 사진24장을 `outputs/shelf_front_24`에 생성했다. 현재 source8종·scale 범위를 재사용하고 촬영용 가림 방지 배치·수평 직교 카메라를 사용한다. 기존 학습 환경은 변경하지 않았다. [촬영 실행기·검증](../02_implementation/logs/2026-11-19_shelf_front_photography.md).
+
+2026-11-19: UR5e–Axia80–오른손 RH56E2의 비학습 촬영 실행기 `scripts/photograph_robot.py`를 추가했다. Sweep Only와 같은 로봇 factory를 재사용하며5개 PNG 구도·수동 뷰포트 촬영·정적 USD를 제공한다. 기존 학습 환경은 유지한다. [실행·검증 기록](../02_implementation/logs/2026-11-19_robot_photography.md).
+
 2026-11-19: `Inspire-Sweep-Only-v1-Test`를 `Inspire-Sweep-Only-v0-Test` 직접 자식으로 추가했다. `sweep_progress=50`, `sweep_retreat=−10`만 변경하며 로그 이름은 `inspire_sweep_only_v1_test`다. 부모의 30/−20과 나머지 환경은 유지한다.
 
 2026-11-19 후속: Sweep Only 일반·Test의 `sweep_retreat` weight를 −38.91에서 **−20**으로 변경했다. 정방향 weight 30과 거리 식은 유지하고 Stabilize 두 환경은 기존 −38.91을 유지한다.
