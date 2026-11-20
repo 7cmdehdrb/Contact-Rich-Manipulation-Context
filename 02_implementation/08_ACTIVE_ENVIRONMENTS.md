@@ -1,6 +1,8 @@
 # Revision · Holding · Final 환경 안내
 
-2026-11-19: [Inspire-Sweep-Only 계열 안내](environments/SWEEP_ONLY_FAMILY.md)에 일반 v0와 Test 5개 버전의 상속·보상·Deadzone·공통 구성 및 서버별 학습 현황을 정리했다. 사용자 보고 기준 v1은 `.30`에서 약 20%로 학습 지속 예정, Deadzone 제거 실험은 보류하고 v1_2를 `.180`에서 학습 예정이다.
+2026-11-20: Sweep Only 기존 6종 각각에 `-ActionPenalty` 직접 파생 환경을 추가했다. 원본 ID 보존, wrapper clip 해제 후 팔 ±π/2·손 URDF 한계는 Action term에서 실행 제한한다. 원본 출력의 팔/손 범위 초과 비용 각 −0.03 추가, 기존 Action 변화 L2는 원본 이력으로 계산한다. Last Action 관측은 기존 ±π/2 유지, 모델·IsaacLab·Sweep 보상·Deadzone 불변. [변경·검증](logs/2026-11-20_sweep_only_action_penalty.md).
+
+2026-11-19 최종 사용자 보고: [Inspire-Sweep-Only 계열 안내](environments/SWEEP_ONLY_FAMILY.md)의 현재 학습 배치는 **`.30`: v1-Test, `.180`: v1_2-Test, `.250`: v2-Test**이며 모두 학습 중이다. v2는 약 2000 iteration부터 성공률 상승 경향이 보여 컴퓨터를 바꿔 실험 중이므로 이전 Deadzone 제거 보류 판단을 갱신했다. 환경 코드·계수·상속은 변경하지 않았다.
 
 2026-11-19: `Inspire-Sweep-Only-v2_2-Test`는 v1_2-Test 직접 자식으로 Deadzone만 **0° 고정**이다. 보상 100/−25·원시 접촉 카운트와 나머지 조건 유지, 로그 `inspire_sweep_only_v2_2_test`. GPU·Isaac Sim 없이 표준 라이브러리 기반 코드 검사를 통과했다.
 

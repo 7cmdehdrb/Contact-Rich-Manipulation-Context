@@ -1,20 +1,26 @@
 # Inspire-Sweep-Only 계열: 환경 구성·버전 차이·학습 현황
 
+2026-11-20: 기존 6종을 각각 직접 상속하는 `-ActionPenalty` 파생 환경을 추가했다. 아래의 11월 19일 서버별 상태는 당시 보고이며, 이후 사용자는 v1-Test·v2-Test 학습 중단을 보고했다. 신규 환경의 구성과 검증은 [ActionPenalty 파생 환경](#actionpenalty-파생-환경)을 따른다. 기존 ID는 수정하지 않았다.
+
 2026-11-19 기준. 환경 구성은 현재 코드에서 확인한 내용이며, 서버별 성공률과 학습 계획은 같은 날 사용자가 전달한 관찰이다. 원격 서버의 로그를 새로 읽거나 학습을 시작한 기록은 아니다. 세부 물리·센서·초기화 구현은 [Sweep Only 상세 설명](SWEEP_ONLY.md)을 참고한다.
 
-## 현재 학습 현황과 다음 실험
+## 현재 학습 현황과 경위
 
-| 로그 experiment name | 서버 표기 | 사용자 관찰 | 결정·계획 |
+2026-11-19 최종 사용자 보고를 반영했다. 현재 `.30`의 v1-Test, `.180`의 v1_2-Test, `.250`의 v2-Test가 모두 학습 중이다.
+
+| 로그 experiment name | 현재 서버 표기 | 상태 | 사용자 관찰·경위 |
 | --- | --- | --- | --- |
-| `inspire_sweep_only_v0_test` | `.250` | 학습했으나 성공률이 10%를 넘지 못함 | 보상 계수를 조정한 v1을 추가 |
-| `inspire_sweep_only_v1_test` | `.30` | 학습 중이며 성공률이 약 20%까지 상승 | 학습 지속 예정 |
-| `inspire_sweep_only_v2_test` | `.180` | 학습했으나 성공률 상승이 관찰되지 않음 | Deadzone 제거 실험을 잠시 보류 |
-| `inspire_sweep_only_v1_2_test` | `.180` | 이번 보고에서는 아직 학습 예정 | Deadzone 30°를 유지하고 강화한 보상으로 학습 예정 |
-| `inspire_sweep_only_v2_2_test` | 미지정 | 구현된 비교 환경; 학습 결과 보고 없음 | Deadzone 제거 실험 보류 방침에 따라 현재 우선 실행 대상이 아님 |
+| `inspire_sweep_only_v1_test` | `.30` | **학습 중** | 이전 보고에서 성공률 약 20%까지 상승; 학습 계속 진행 |
+| `inspire_sweep_only_v1_2_test` | `.180` | **학습 중** | 이전의 학습 예정 상태에서 실제 학습 진행으로 갱신; 최신 성공률 수치는 미보고 |
+| `inspire_sweep_only_v2_test` | `.250` | **학습 중** | 초기에는 실패한 것으로 판단했으나 약 2000 iteration부터 성공률 상승 경향을 관찰하여 컴퓨터를 바꿔 시도 중 |
+| `inspire_sweep_only_v0_test` | 과거 `.250` | 과거 비교 실행 | 성공률이 10%를 넘지 못해 v1 보상 조정의 계기가 됨; 현재 실행 상태는 별도 보고 없음 |
+| `inspire_sweep_only_v2_2_test` | 미지정 | 학습 상태 미보고 | 구현된 비교 환경이며 이번 갱신에서 실행·성능 보고 없음 |
 
-`.250`, `.30`, `.180`은 사용자가 준 서버 식별 표기를 그대로 사용했다. 전체 IP·run 디렉터리·checkpoint·seed·관측 iteration 및 성공률 집계 창은 이번 보고에 포함되지 않았다. v2의 “상승 없음”은 정확히 0%라는 뜻으로 바꾸지 않는다. v1_2의 “학습 예정”도 학습 개시나 성능 확인으로 기록하지 않는다.
+이전 보고에서는 `.180`의 v2-Test 성공률이 오르지 않는 것으로 보여 Deadzone 제거 실험을 잠시 보류하려 했다. 이후 **약 2000 iteration부터 성공률이 올라가는 경향**이 확인되어, 현재는 `.250`으로 컴퓨터를 바꿔 v2-Test를 학습 중이다. 따라서 “Deadzone 제거 실험 보류”는 현재 방침이 아니라 이전 판단이다. v2-Test는 Deadzone 0°·정방향 50·역방향 −10·정규화 접촉 카운트 구성을 그대로 사용한다.
 
-현재 방향은 **`.30`에서 v1 학습을 계속하고, `.180`에서 v1_2를 학습하여 Deadzone 30° 조건의 보상 강화를 먼저 살펴보는 것**이다. v2와 v2_2 환경은 코드에 남아 있지만 Deadzone 제거 실험은 잠시 미룬다. 이 관찰만으로 보상이나 Deadzone이 성공률 변화의 유일한 원인이라고 확정하지 않는다.
+`.250`, `.30`, `.180`은 사용자가 준 서버 식별 표기를 그대로 사용했다. 전체 IP·run 디렉터리·checkpoint·seed·현재 iteration·성공률 집계 창은 이번 보고에 포함되지 않았다. v2의 상승 시작 시점 약 2000 iteration은 사용자 관찰이며 현재 iteration이나 최신 성공률을 뜻하지 않는다. 서버를 바꾼 실행이 새 학습인지 checkpoint 재개인지는 특정하지 않았다.
+
+현재는 Deadzone 30°의 v1·v1_2 보상 비교와 Deadzone 0°의 v2 실험이 함께 진행 중이다. v1의 약 20%는 이전 보고값이며 이번 갱신에서 새 수치를 측정하지 않았다. 이 관찰만으로 보상·Deadzone·컴퓨터 변경이 성공률 변화의 유일한 원인이라고 확정하지 않는다.
 
 ## 환경 목록과 버전별 차이
 
@@ -118,7 +124,7 @@ Test의 Reaching은 모든 버전에서 동일하게 Weight 30을 사용하고 �
 
 ## 실행과 현재 검증 범위
 
-`.180`에서 예정한 환경의 실행 명령은 다음과 같다. 이 문서 작성 중에는 실행하지 않았다.
+현재 `.180`에서 학습 중인 v1_2-Test의 실행 명령 예시는 다음과 같다. 기존 학습을 중복 실행하라는 뜻이 아니며, 이번 문서 갱신 중에는 실행하지 않았다.
 
 ```bash
 conda activate env_isaaclab
@@ -126,6 +132,42 @@ python src/inspire_sweep_baseline/scripts/train.py \
   --task Inspire-Sweep-Only-v1_2-Test --num_envs 2048 --headless
 ```
 
-v1의 학습 지속은 사용자가 운영 중인 `.30` 실행에 대한 계획이다. 이 문서가 새 v1 프로세스를 시작하거나 checkpoint 재개 방법을 지정한 것은 아니다.
+현재 `.30`의 v1-Test, `.180`의 v1_2-Test, `.250`의 v2-Test가 학습 중이라는 상태를 사용자 보고로 기록했다. 이 문서 갱신에서 프로세스를 시작·중단하거나 checkpoint 재개 방법을 지정하지 않았다.
 
 v1_2·v2_2 추가 때 수행한 코드·CPU 검사와, 사용자가 별도 서버에서 관찰한 학습 결과를 구분한다. 이번 작업은 문서 작성과 코드 대조만 수행했다. GPU·Isaac Sim·원격 서버·학습 로그·학습 프로세스는 변경하지 않았다. 관련 변경 기록은 [v1_2](../logs/2026-11-19_sweep_only_v1_2_test.md), [v2_2](../logs/2026-11-19_sweep_only_v2_2_test.md), [이번 문서화](../logs/2026-11-19_sweep_only_family_documentation.md)에 있다.
+
+
+## ActionPenalty 파생 환경
+
+2026-11-20 추가. 기존 환경을 보존하고 실행 액션의 제한 위치와 페널티 입력만 분리한다. 각 EnvCfg와 PPORunnerCfg는 해당 원본을 직접 상속하며 runtime은 공통 `SweepOnlyEnv`다.
+
+| 신규 Task ID | 직접 부모 Task ID | 로그 experiment name |
+| --- | --- | --- |
+| `Inspire-Sweep-Only-v0-ActionPenalty` | `Inspire-Sweep-Only-v0` | `inspire_sweep_only_v0_action_penalty` |
+| `Inspire-Sweep-Only-v0-Test-ActionPenalty` | `Inspire-Sweep-Only-v0-Test` | `inspire_sweep_only_v0_test_action_penalty` |
+| `Inspire-Sweep-Only-v1-Test-ActionPenalty` | `Inspire-Sweep-Only-v1-Test` | `inspire_sweep_only_v1_test_action_penalty` |
+| `Inspire-Sweep-Only-v1_2-Test-ActionPenalty` | `Inspire-Sweep-Only-v1_2-Test` | `inspire_sweep_only_v1_2_test_action_penalty` |
+| `Inspire-Sweep-Only-v2-Test-ActionPenalty` | `Inspire-Sweep-Only-v2-Test` | `inspire_sweep_only_v2_test_action_penalty` |
+| `Inspire-Sweep-Only-v2_2-Test-ActionPenalty` | `Inspire-Sweep-Only-v2_2-Test` | `inspire_sweep_only_v2_2_test_action_penalty` |
+
+### 액션·보상 계약
+
+Runner의 `clip_actions=None`으로 원본 12D 출력을 ActionManager에 전달한다. Manager의 현재·이전 액션은 원본을 보관하며, 실행 직전에 팔 6D만 `[-π/2, π/2]`로 제한한 뒤 기존 OSC의 위치 0.03·회전 0.15 scale을 적용한다. 손 6D는 기존 `FingerJointPositionAction`에서 `[0, URDF 상한]`으로 제한한다. 상한은 엄지 굽힘·검지·중지·약지·소지·엄지 대립 순서로 `[0.5864, 1.4381, 1.4381, 1.4381, 1.4381, 1.1641] rad`이며 follower mimic·구동기 설정은 그대로다. 모든 손 상한이 π/2 미만이므로 같은 유한 정책 액션에 대한 실제 실행 명령은 부모와 같다.
+
+신규 `arm_action_limit`, `hand_action_limit`는 각각 허용 구간 밖으로 나간 양을 구간 전체 폭으로 나눈 뒤 6채널의 제곱평균을 계산한다. 팔 폭은 π, 손 폭은 각 관절 상한이다. 내부와 경계에서는 0이며, 초과량이 두 배면 비용은 네 배다. 각 weight는 **−0.03**으로 시작하며 RewardManager가 policy dt=0.02를 한 번 곱한다. 예를 들어 한 그룹의 모든 채널이 전체 구간 폭만큼 초과하면 해당 term의 step 기여는 −0.0006이다. 계수는 기존 Action 비용을 참고한 초기 실험값이며 장기 안정성이 검증된 값이 아니다.
+
+기존 `arm_action_rate`, `hand_action_rate`는 각각 `sum((a_t - a_prev)^2)`와 weight **−0.03**을 유지하되, 두 액션 모두 **클리핑 전** Manager 이력을 사용한다. 기존 환경에는 별도의 액션 크기 L2 항이 없으며, 이번에도 그 항을 새로 추가하지 않는다. 부분 reset 시 선택된 행의 현재·이전 액션은 기존 Manager reset에 따라 0으로 초기화한다.
+
+Last Action 관측만 기존처럼 원본의 `[-π/2, π/2]` 클리핑값을 반환한다. 원본 출력 확대가 관측으로 그대로 되먹임되지 않도록 기존 의미를 보존한 것이다. 이는 손의 최종 관절 목표각 관측이 아니다. 관측 차원, 표면점, F/T, 촉각, Actor/Critic 구조·분포, entropy coefficient, 학습률, 수치 오류 검사, Sweep/Reach 계수, Deadzone, reset, 종료 및 curriculum은 모두 부모와 같다. IsaacLab과 모델 코드는 수정하지 않았다.
+
+### 학습과 검증
+
+workspace 루트에서 다음과 같이 새 학습을 시작한다. 각 부모의 Task ID 뒤에 `-ActionPenalty`를 붙이면 된다.
+
+```bash
+/home/min/miniconda3/envs/env_isaaclab/bin/python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Only-v1-Test-ActionPenalty --num_envs 2048 --headless
+```
+
+과도한 원본 출력을 가진 중단 직전 checkpoint를 그대로 재개하면 새 페널티와 Action 변화 비용이 매우 커질 수 있다. 신규 설정은 출력의 수학적 상한이나 학습 발산 방지를 보장하지 않는다. 장기 학습·2048환경 collection time·성공률은 이번 검증 대상이 아니다.
+
+전체 부모/자식 설정 대조, CPU 회귀, 실제 wrapper·reset·step·부분 reset 결과는 [개발 로그](../logs/2026-11-20_sweep_only_action_penalty.md)에 기록한다.
