@@ -1,5 +1,13 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-19 후속: `--heavy-occlusion`에 실제 mask 피드백을 적용해 뒤 물체가 거의 가려진 정면 사진24장을 생성했다. 각 장면2개 물체의 가시 면적0.55–7.72% 확인, 물체8개와 기존48장 유지. [강한 가림 촬영](logs/2026-11-19_shelf_front_photography.md#후속-거의-보이지-않는-강한-가림24장).
+
+2026-11-19 후속: 정면 촬영에 `--occlusion`을 추가했다. 물체8개를 유지하며 앞뒤 부분 가림 장면24장을 별도 폴더에 저장하고 실제 segmentation mask 비교·bounds 비관통을 검사한다. [부분 가림 촬영](logs/2026-11-19_shelf_front_photography.md#후속-부분-가림-사진24장-추가).
+
+2026-11-19: `scripts/photograph_shelf_front.py`에 로봇 없는 선반·8종 물체의 정면 촬영을 추가했다. 물체의 크기·yaw·위치·순서를 바꾼1920×800 PNG24장, 전체 미리보기와 첫 장면 USD를 생성한다. 학습 task 등록·reset은 유지한다. [촬영용 분포와 검증](logs/2026-11-19_shelf_front_photography.md).
+
+2026-11-19: 로봇만 사용하는 비학습 촬영 실행기 `scripts/photograph_robot.py`를 추가했다. Sweep Only/Finger의 오른손 RH56E2·Axia80 조립 구성을 재사용하며 preset PNG·수동 촬영 GUI·정적 USD를 제공한다. Gym 등록과 학습 환경 계약은 변경하지 않는다. [촬영 환경·검증](logs/2026-11-19_robot_photography.md).
+
 2026-11-19: `Inspire-Sweep-Only-v1-Test`를 `Inspire-Sweep-Only-v0-Test` 직접 자식으로 추가했다. `sweep_progress=50`, `sweep_retreat=−10`만 변경하며 로그 이름은 `inspire_sweep_only_v1_test`다. 부모의 30/−20과 나머지 환경은 유지한다.
 
 2026-11-19 후속: Sweep Only 일반·Test의 `sweep_retreat` weight를 −38.91에서 **−20**으로 변경했다. 정방향 weight 30과 거리 식은 유지하고 Stabilize 두 환경은 기존 −38.91을 유지한다.
