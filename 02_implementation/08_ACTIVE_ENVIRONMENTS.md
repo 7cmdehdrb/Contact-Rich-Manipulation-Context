@@ -1,5 +1,7 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-20 최신 Sweep 계통: **`.180`에서 Sweep-v0, `.250`에서 Single-Contact-v0 학습 중**(사용자 보고). 기존 환경의 Pull/Push 난도와 손등 편향을 배경으로 방향별 접촉면 선호를 구현했다. [계통 설명·환경 비교·현재 현황](environments/SWEEP_FAMILY.md)과 [Sweep-v0 상세 설명](environments/SWEEP_V0.md)을 분리해 관리한다. 새 환경의 장기 성능·편향 개선은 아직 정량 보고되지 않았다.
+
 2026-11-20 후속: `Inspire-Sweep-Single-Contact-v0`는 Sweep v0의 접촉 누적만 이진화한 직접 자식이다. 최근3스텝 중2회 접촉 인정 여부는 boolean, 보상 계수는1/0이다. contact_count 필드는 없다. 부모는 누적 방식 유지, 새 로그 `inspire_sweep_single_contact_v0`. CPU110개·GPU4환경8step/부분reset 검증, 학습 미실행. [계약](environments/SWEEP_V0.md#single-contact-파생-환경) · [검증](logs/2026-11-20_sweep_single_contact.md).
 
 2026-11-20 후속: **새 Sweep 계통 `Inspire-Sweep-v0`** / `inspire_sweep_v0`. 기존 EnvCfg 상속 없이 별도 선언, 공통 Scene/MDP/runtime 부품 재사용. v2 LinearReach 기준에 접촉면 Sweep 선호1.5/0.7·고정 비용·관측 전용 F/T 정규화를 적용했다. Deadzone0°, 12시/6시 구역 각60°·좌우 각120°. CPU116개·GPU4환경8step/부분reset 통과, 장기 학습 미실행. [환경 계약](environments/SWEEP_V0.md) · [검증](logs/2026-11-20_sweep_v0.md).

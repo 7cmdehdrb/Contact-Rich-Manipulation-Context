@@ -1,5 +1,7 @@
 # Inspire-Sweep-Only 계열: 환경 구성·버전 차이·학습 현황
 
+2026-11-20 최신 사용자 학습 배치는 새 [Sweep 계통 문서](SWEEP_FAMILY.md#현재-학습-현황)를 따른다: `.180`=Inspire-Sweep-v0, `.250`=Inspire-Sweep-Single-Contact-v0. 아래 Sweep Only 서버 현황은 이전 배치의 기록으로 보존한다. 기존 환경의 Pull/Push 외 성공과 손등 편향 관찰·새 선호도 설계의 목적도 새 계통 문서에 정리했다.
+
 2026-11-20: 이 계열의 v2-Test-ActionPenalty-LinearReach를 기능 기준으로 **별도 독립 계통 `Inspire-Sweep-v0`**를 추가했다. 기존 계열은 보존하며 새 EnvCfg/PPO를 직접 선언한다. 접촉면별 Sweep 선호·고정 비용·관측 F/T 정규화는 [Sweep v0 계약](SWEEP_V0.md)을 따른다.
 
 2026-11-20 후속: `Inspire-Sweep-Only-v2-Test-ActionPenalty-LinearReach`는 v2-Test-ActionPenalty를 직접 상속하고 Reach만 선형 근접식으로 바꾼다. [LinearReach 구성·실행](#linearreach-파생-환경)을 참고한다. 기존 서버별 학습 현황은 아래 사용자 보고를 유지한다.
