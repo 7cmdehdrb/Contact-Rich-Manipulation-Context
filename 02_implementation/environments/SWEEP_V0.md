@@ -118,3 +118,25 @@ python src/inspire_sweep_baseline/scripts/train.py \
 ```
 
 [개발·검증 기록](../logs/2026-11-20_sweep_single_contact.md): CPU110개, GPU4환경 reset·8step·부분reset·추가1step·직접 이력 probe 통과. 장기 학습은 실행하지 않았다.
+
+## Single Contact v1
+
+`Inspire-Sweep-Single-Contact-v1`는 Single Contact v0를 직접 상속한다. EnvCfg/runtime/state/PPO는 각각 기존 역할별 파일의 `SweepSingleContactV1EnvCfg`, `SweepSingleContactV1Env`, `SingleContactV1SweepState`, `SweepSingleContactV1PPORunnerCfg`다. 학습 로그 이름은 `inspire_sweep_single_contact_v1`이다. [확정 명세](../../01_plan/environments/2026-11-21_SINGLE_CONTACT_V1_SPEC.md)의 식과 부호·reset 계약을 구현했으며 부모는 보존했다.
+
+| 변경 | 실제 동작 |
+| --- | --- |
+| Reaching | 현재 EEF에서 이동 접근점까지3D 거리의5cm 초과분 감소/증가에 대칭 보상/비용. weight4.9, 반환값은 거리 변화/policy dt |
+| 접근점 | scaled local bounds의 직립XY 외접 원, 반경과 선반 기준 방향은 reset 때 고정. 물체 중심의 병진만 추종 |
+| 구역 | 구역1/2/4는 초기 밀기 반대편. 구역3 전체는12시에서 시계방향+15° 단일점. 물체 회전 독립 |
+| Sweep | 수평 힘 각도에30°/p4 signed 지수 함수. 기존 접촉/높이/1N gate 유지. 양수에만 면 계수1.5/0.7/중립1 적용, 음수는 배율1 |
+| Joint 비용 | 기존 `arm_joint_velocity` 종료의 실제 boolean을 읽어 마지막 step에만−3. 기존1rad/s 초과 종료·속도L2 비용 유지 |
+| 나머지 | 원래15개 보상 순서 보존, 새 비용을16번째로 추가. 관측66+64D·action12D·reset/물성·10초·성공 엄격히3cm 미만·모든 종료·빈 커리큘럼 유지. PPO는 로그 이름만 변경 |
+
+기하와 초기 Reach 오차는 부모의 최종 배치·Command reset 뒤 저장한다. 부분 reset은 해당 행만 바꾸며 step cache로 중복 조회와 면 하중 중복 질의를 막는다. 부모 physics capture/step 루프를 복제하지 않는다. 거리별 혼합·감속·손끝 비용·주먹 강제·관측 GT 추가는 없다. 기존 Sweep50/−10 비대칭에 따른 왕복 이득 가능성은 보류된 문제로 남는다.
+
+```powershell
+python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Single-Contact-v1 --num_envs 2048 --headless
+python src/inspire_sweep_baseline/scripts/check_sweep_single_contact_v1.py --headless
+```
+
+CPU196개와 GPU4환경 reset/11step/부분reset/팔 종료·정상 timeout 자동reset, `train.py`의16환경·36step rollout·PPO1회 업데이트를 통과했다. 부모 Cfg 전체와 비교해 요청한3개 보상 차이만 확인했다. [개발 로그·정확한 명령·한계](../logs/2026-11-21_single_contact_v1_implementation.md). 장기 학습이나 행동 개선의 검증 결과는 아니다.

@@ -1,5 +1,7 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-21: **`Inspire-Sweep-Single-Contact-v1` 구현·등록**. Single Contact v0 직접 상속, 이동 접근점5cm 초과 거리의 대칭 증분 Reach4.9·구역3 고정+15°점·signed 수평 힘 방향30°/p4·팔 속도 종료 일회−3. 관측·행동·reset·성공·종료·면 선호·기타 보상 보존, PPO는 로그 `inspire_sweep_single_contact_v1`만 변경. CPU196개·GPU4환경11step·부분/자동reset·16환경 PPO1회 업데이트 검증. 장기 성능 미검증. [계약](environments/SWEEP_V0.md#single-contact-v1) · [개발·검증](logs/2026-11-21_single_contact_v1_implementation.md).
+
 2026-11-20 후속: `Inspire-Sweep-Single-Contact-v0`는 Sweep v0의 접촉 누적만 이진화한 직접 자식이다. 최근3스텝 중2회 접촉 인정 여부는 boolean, 보상 계수는1/0이다. contact_count 필드는 없다. 부모는 누적 방식 유지, 새 로그 `inspire_sweep_single_contact_v0`. CPU110개·GPU4환경8step/부분reset 검증, 학습 미실행. [계약](environments/SWEEP_V0.md#single-contact-파생-환경) · [검증](logs/2026-11-20_sweep_single_contact.md).
 
 2026-11-20 후속: **새 Sweep 계통 `Inspire-Sweep-v0`** / `inspire_sweep_v0`. 기존 EnvCfg 상속 없이 별도 선언, 공통 Scene/MDP/runtime 부품 재사용. v2 LinearReach 기준에 접촉면 Sweep 선호1.5/0.7·고정 비용·관측 전용 F/T 정규화를 적용했다. Deadzone0°, 12시/6시 구역 각60°·좌우 각120°. CPU116개·GPU4환경8step/부분reset 통과, 장기 학습 미실행. [환경 계약](environments/SWEEP_V0.md) · [검증](logs/2026-11-20_sweep_v0.md).
