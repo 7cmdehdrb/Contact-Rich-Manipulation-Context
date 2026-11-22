@@ -1,5 +1,7 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-22: **Sweep v0·Single Contact v0/v1 공통 action 안정화**. `SweepEnvCfg`에서만 손6D를 [0,1] 비율(0펼침·1굽힘)로 매핑, 손 속도 weight −0.01→−0.03, Arm/Hand action-rate raw cap100, action-limit weight −3.0·raw cap10을 적용했다. 계통 밖 기본 동작·PPO는 보존한다. 기존 rad 출력 checkpoint와 손 의미가 달라 새 학습 기준이다. [계약](environments/SWEEP_V0.md#행동과-제어) · [변경·검증](logs/2026-11-22_sweep_action_stability.md).
+
 2026-11-21: **`Inspire-Sweep-Single-Contact-v1` 구현·등록**. Single Contact v0 직접 상속, 이동 접근점5cm 초과 거리의 대칭 증분 Reach4.9·구역3 고정+15°점·signed 수평 힘 방향30°/p4·팔 속도 종료 일회−3. 관측·행동·reset·성공·종료·면 선호·기타 보상 보존, PPO는 로그 `inspire_sweep_single_contact_v1`만 변경. CPU196개·GPU4환경11step·부분/자동reset·16환경 PPO1회 업데이트 검증. 장기 성능 미검증. [계약](environments/SWEEP_V0.md#single-contact-v1) · [개발·검증](logs/2026-11-21_single_contact_v1_implementation.md).
 
 2026-11-20 최신 Sweep 계통: **`.180`에서 Sweep-v0, `.250`에서 Single-Contact-v0 학습 중**(사용자 보고). 기존 환경의 Pull/Push 난도와 손등 편향을 배경으로 방향별 접촉면 선호를 구현했다. [계통 설명·환경 비교·현재 현황](environments/SWEEP_FAMILY.md)과 [Sweep-v0 상세 설명](environments/SWEEP_V0.md)을 분리해 관리한다. 새 환경의 장기 성능·편향 개선은 아직 정량 보고되지 않았다.

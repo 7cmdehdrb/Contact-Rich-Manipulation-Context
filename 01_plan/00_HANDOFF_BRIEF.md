@@ -1,5 +1,7 @@
 # 현재 개발 인계
 
+2026-11-22: **Sweep v0·Single Contact v0/v1 공통 action 안정화**. `SweepEnvCfg`에서만 손6D를 [0,1] 비율(0펼침·1굽힘)로 매핑, 손 속도 weight −0.01→−0.03, Arm/Hand action-rate raw cap100, action-limit weight −3.0·raw cap10을 적용했다. 계통 밖 기본 동작·PPO는 보존한다. 기존 rad 출력 checkpoint와 손 의미가 달라 새 학습 기준이다. [계약](../02_implementation/environments/SWEEP_V0.md#행동과-제어) · [변경·검증](../02_implementation/logs/2026-11-22_sweep_action_stability.md).
+
 2026-11-21 후속 **Single Contact v1 구현·등록 완료**. 아래 명세 작성 당시의 미구현 상태를 갱신한다. `Inspire-Sweep-Single-Contact-v1`는 v0 직접 자식이며 Reach5cm/4.9·구역3 +15° 고정점·수평 signed 방향30°/p4·팔 종료−3을 구현했다. 기존 물리 step 루프·부모 함수19개 정의·기존 등록 보존, 전체 Cfg 대조에서 요청한 보상3개 외 차이 없음. CPU196개·RTX4070 GPU4환경11step·부분/자동reset·16환경 PPO1회 업데이트 통과. trace/초기 world pose/모델은 `outputs/sweep_single_contact_v1`, 기존 `logs/rsl_rl` 불변. 성공률·장기 학습 개선은 미검증. [구현 계약](../02_implementation/environments/SWEEP_V0.md#single-contact-v1) · [개발·검증·실행](../02_implementation/logs/2026-11-21_single_contact_v1_implementation.md).
 
 2026-11-21 **Single Contact v1 개발 명세만 작성, 미구현**. v0 직접 상속 예정. 최신 정정으로 Reaching은 이동 접근점까지**5cm** 초과 거리의 대칭 변화·weight**4.9**(기존 성공82개 재계산 약29.84:70.16), 일반 구역1/2/4 접근점은 외접 원 반대편이다. **예외는 구역3(당기기) 전체이며,12시에서 시계방향+15도 단일점을 사용한다. 구역1 예외가 아니다. 접근 방향/반경은 물체 회전에 영향받지 않고 중심 이동만 따라간다.** 면 계수1.5/0.7/중립1 유지, signed 방향30도/p4, Joint 종료 일회-3.0. 거리별 결합·감속·주먹 강제는 제외. [최종 명세](environments/2026-11-21_SINGLE_CONTACT_V1_SPEC.md) · [산정·검증 한계](../02_implementation/logs/2026-11-21_single_contact_v1_spec.md). 환경 등록·소스 수정·학습은 하지 않았다.

@@ -60,9 +60,15 @@ Actor와 Critic은 같은 `policy`66D 및 `obstacles`64D를 입력으로 사용�
 
 ## 행동과 제어
 
-액션은 팔6D OSC 상대 pose 명령과 손6D 절대 관절 위치 명령이다. 팔은 실행 직전에 각 축을±π/2로 제한하고 위치 scale0.03·회전 scale0.15를 적용한다. OSC는 고정 impedance, 관성 결합 해제와 중력 보상을 사용한다. 손은 URDF 범위로 제한하고 follower 관절은 기존 mimic 관계를 따른다.
+2026-11-22부터 이 절의 공통 변경은 Sweep v0·Single Contact v0·Single Contact v1 세 환경에 적용된다. Sweep Only·Stabilize·Simple 계열에는 적용하지 않는다. [변경·검증 기록](../logs/2026-11-22_sweep_action_stability.md).
 
-손6축 상한은 `[0.5864,1.4381,1.4381,1.4381,1.4381,1.1641] rad`, 하한은0이다. Runner의 `clip_actions=None`이므로 ActionManager에는 원시12D 명령이 보존된다. 실제 실행은 제한되지만 action-rate와 action-limit 비용은 제한 전 명령으로 계산한다. 두 비용에는 추가 상한을 적용하지 않는다.
+액션은 팔6D OSC 상대 pose 명령과 손6D 정규화 구동 명령이다. 팔은 실행 직전에 각 축을±π/2로 제한하고 위치 scale0.03·회전 scale0.15를 적용한다. OSC의 고정 impedance·관성 결합 해제·중력 보상은 유지한다. 손은 각 입력을 [0,1]로 clamp한 뒤 각 구동 관절의 URDF 상한을 곱한다. **0=완전 펼침, 1=최대 굽힘**이며, 범위 밖은 음수→0, 1 초과→1로 처리한다. follower 관절은 기존 mimic 관계를 따른다.
+
+손6축의 물리 상한은 `[0.5864,1.4381,1.4381,1.4381,1.4381,1.1641] rad`로 유지된다. 예를 들어 입력0.5는 각 구동 관절의 절반 각도다. `NormalizedFingerJointPositionAction`의 raw 값은 정규화 정책 단위, processed 값과 joint target은 물리 rad 단위다. reset은0으로 완전 펼침을 유지한다. 실제 손 관절 위치 관측은 여전히 rad이고 Last Action 관측의 기존 ±π/2 압축은 보존한다.
+
+Runner의 `clip_actions=None`이므로 ActionManager에는 제한 전 원본12D 명령이 보존된다. action-rate는 팔/손 각6D 원본 차이 제곱합을 계산한 뒤 raw cost100으로 제한한다. weight -0.03·dt0.02에서 각 항은 step당 최저 -0.06이다. action-limit는 팔 전체 폭π, 손 정규화 폭1을 기준으로 초과량 제곱평균을 구하고 raw cost10으로 제한한다. weight -3.0·dt0.02에서 각 항은 step당 최저 -0.6이다. 네 action 비용의 합은 step당 [-1.32,0]이다. 계수 강화는 초기 보정값이며 장기 학습에서 최적이라고 검증한 값은 아니다.
+
+손 action 의미가 기존 직접 rad에서 정규화 비율로 바뀌었다. 정책 입출력 차원은 같아도 기존 체크포인트를 그대로 resume/play하면 손 명령의 의미가 달라진다. 새 학습을 기준으로 사용하며 기존 모델의 자동 변환은 제공하지 않는다.
 
 근거: [Action Cfg](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/actions/stabilize_sweep.py), [실행 직전 팔 제한](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/action_functions/wrench_refactor.py), [손 관절 제어](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/action_functions/sweep_simple.py).
 
@@ -134,18 +140,18 @@ c_t=\frac{1.5L_{*,t}+0.7(L_{p,t}+L_{b,t}-L_{*,t})}
 | `sweep_progress` | +50 | 거리 감소량 × 누적 접촉 계수 × 힘 정렬 × 접촉면 계수; dt 상쇄 |
 | `sweep_retreat` | -10 | 목표와의 XY 거리 증가량; dt 상쇄 |
 | `reaching` | +0.8 | EEF–현재 타겟 bounds 중심 3D 거리, 10cm plateau·45cm cutoff |
-| `arm_action_rate` | -0.03 | 원시 팔 명령의 스텝 간 차이 제곱합 |
-| `hand_action_rate` | -0.03 | 원시 손6축 명령의 스텝 간 차이 제곱합 |
+| `arm_action_rate` | -0.03 | 원시 팔 명령의 스텝 간 차이 제곱합, raw cost 상한100 |
+| `hand_action_rate` | -0.03 | 정규화된 원본 손6축 명령 차이 제곱합, raw cost 상한100 |
 | `arm_joint_velocity` | -0.03 | 팔 실제 속도 제곱합, raw cost 상한100 |
-| `hand_joint_velocity` | -0.01 | 손 실제 관절 속도 제곱합, raw cost 상한100 |
+| `hand_joint_velocity` | -0.03 | 손 실제 관절 속도 제곱합, raw cost 상한100 |
 | `shelf_collision` | -0.5 | 기존 선반 접촉/간섭 비용 |
 | `shelf_failure` | -3 | 선반 속도·손목 clearance의 기존 충돌 predicate 사건 비용; dt 상쇄 |
 | `obstacle_contact` | -0.04 | 타겟 제외 장애물–손 합력의50N 초과 비용, raw cost 상한100 |
 | `wrench_change` | -0.1 | 힘 크기 변화30N·모멘트 크기 변화3Nm 초과 비용 |
 | `object_tilt` | -30 | 모든 활성 물체, 5°까지0·0.9rad에서 물체별 최대 비용 |
 | `obstacle_displacement` | -150 | 활성 주변 물체의 초기 대비3D 변위 제곱합, 총 상한0.04 |
-| `arm_action_limit` | -0.03 | 팔 실행 범위 초과량을 전체 폭π로 나눈 제곱평균 |
-| `hand_action_limit` | -0.03 | 손 실행 범위 초과량을 각 URDF 상한으로 나눈 제곱평균 |
+| `arm_action_limit` | -3.0 | 팔 실행 범위 초과량을 전체 폭π로 나눈 제곱평균, raw cost 상한10 |
+| `hand_action_limit` | -3.0 | 정규화 [0,1] 범위 초과량의 제곱평균, raw cost 상한10 |
 
 물체 현재 중심과 EEF 사이 거리 $
 ho_t$에 대한 Reach 원점수는 다음과 같다.
@@ -172,7 +178,7 @@ F/T 변화 비용은 `abs(norm(current)-norm(previous))`를 사용한다. 방향
 | `wrench_free_moment_change` | 3 Nm |
 | `wrench_weight` | -0.1 |
 
-일정 갱신에 의해 나중에 값이 덮어써지지 않는다. 장애물 비용 cap·wrench 지수형 곡선/포화 비율·원시 액션 비용은 기준 환경과 같다.
+일정 갱신에 의해 나중에 값이 덮어써지지 않는다. 장애물 비용 cap·wrench 지수형 곡선/포화 비율은 기준 환경과 같다. 원시 action 비용의 계수·상한은 위의2026-11-22 공통 변경을 적용한다.
 
 ## 관측 전용 F/T 정규화
 
