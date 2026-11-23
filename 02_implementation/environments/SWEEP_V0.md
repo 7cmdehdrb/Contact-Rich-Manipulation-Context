@@ -258,6 +258,33 @@ python src/inspire_sweep_baseline/scripts/train.py \
 
 [개발·검증 기록](../logs/2026-11-20_sweep_single_contact.md): CPU110개, GPU4환경 reset·8step·부분reset·추가1step·직접 이력 probe 통과. 이 결과는 개발 시점의 smoke 검사이며, 현재 사용자 보고로는 `.250`에서 학습 중이다. [현재 학습 현황](SWEEP_FAMILY.md#현재-학습-현황)을 참조한다.
 
+## Single Contact Zone3 v0
+
+`Inspire-Sweep-Single-Contact-Zone3-v0`는 **Single Contact v0 직접 자식**이며 v1의 변경은 사용하지 않는다. 다른 방향 학습이 당기기 학습을 방해하는지 살펴보기 위한 방향 제한 실험이다. 사용자의 추가 요청에 따라 진행·후퇴 가중치도 함께 두 배 적용했다. 두 조건을 함께 바꾸므로 성능 변화만으로 방향 간 간섭의 인과 효과를 분리해 확정할 수는 없다.
+
+| 항목 | Single Contact v0 | Single Contact Zone3 v0 |
+| --- | --- | --- |
+| EnvCfg | `SweepSingleContactEnvCfg` | `SweepSingleContactZone3EnvCfg`, 부모 직접 상속 |
+| Runtime/state | `SweepSingleContactEnv` / `SingleContactSweepState` | 동일 클래스 재사용 |
+| 목표 방향 | 전 방향 | Zone3만: 선반 +X/6시 중심 ±30°, 총60° |
+| 초기화 연결 | 기본 `CircleResetLayout` | `object_geometry.params.layout_class`에 `SingleContactZone3ResetLayout` 지정 |
+| 타겟·목표 거리 | 초기 XY 반지름2cm 원판, 목표6–12cm 및 기존 선반 경계 제한 | 동일. 각도만 `atan2(Y,X)` 기준 `[-π/6,π/6]`에서 균등 추출 |
+| Sweep 진행 weight | 50 | 100 |
+| Sweep 후퇴 weight | −10 | −20 |
+| Reach·면 선호·접촉 | 중심 거리 LinearReach0.8, Zone3 손바닥1.5/손등0.7, boolean 접촉 | 동일 |
+| 나머지 환경·PPO | 부모 설정 | 동일, PPO experiment name만 `inspire_sweep_single_contact_zone3_v0` |
+
+[목표 샘플러](../../../../src/inspire_sweep_baseline/inspire_sweep_baseline/mdp/common/sweep_v0_layout.py)는 기존 원형 배치 클래스의 `sample_commands`만 재정의하고, 기존 순수 Torch 목표 샘플러의 `goal_angle_range`를 사용한다. 물체 초기 위치의 난수·목표 거리·선반 경계 규칙과 난수 소비량을 유지한다. 부모의 obstacle 배치, 단일 Warp IK, surface snapshot·접촉 이력·부분 reset·물리 step·관측·Action·성공/종료·커리큘럼을 교체하지 않는다. 목표 방향에 의존하는 장애물 배치 및 IK 결과 자체는 새 방향에 따라 달라질 수 있다. 기존 부모 환경은 변경하지 않는다.
+
+workspace 루트에서 기존 Isaac Lab 환경을 활성화한 뒤 실행한다. 아래는 학습 명령 안내이며 이번 작업에서 실행하지 않았다.
+
+```bash
+python src/inspire_sweep_baseline/scripts/train.py \
+  --task Inspire-Sweep-Single-Contact-Zone3-v0 --num_envs 2048 --headless
+```
+
+학습 로그는 `logs/rsl_rl/inspire_sweep_single_contact_zone3_v0`다. CPU66개 검사에서6,144개 방향 샘플·±30° 경계·부모 타겟 분포/난수 소비 보존·부분 ID의 실제 원형 장애물 배치·전체 Cfg/PPO 차이·기존 계열 회귀를 확인했다. 사용자 요청으로 GPU·Isaac Sim·학습은 실행하지 않았다. 실제 물리 reset·IK 성공·당기기 학습 성능은 미검증이다. [개발·검증 기록](../logs/2026-11-23_single_contact_zone3_v0.md).
+
 ## Single Contact v1
 
 `Inspire-Sweep-Single-Contact-v1`는 Single Contact v0를 직접 상속한다. EnvCfg/runtime/state/PPO는 각각 기존 역할별 파일의 `SweepSingleContactV1EnvCfg`, `SweepSingleContactV1Env`, `SingleContactV1SweepState`, `SweepSingleContactV1PPORunnerCfg`다. 학습 로그 이름은 `inspire_sweep_single_contact_v1`이다. [확정 명세](../../01_plan/environments/2026-11-21_SINGLE_CONTACT_V1_SPEC.md)의 식과 부호·reset 계약을 구현했으며 부모는 보존했다.

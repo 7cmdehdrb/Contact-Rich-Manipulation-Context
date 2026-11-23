@@ -1,5 +1,7 @@
 # 현재 개발 인계
 
+2026-11-23: **Single Contact Zone3 v0 추가**. `Inspire-Sweep-Single-Contact-Zone3-v0`는 Single Contact v0 직접 자식이다. 목표 방향만 Zone3(선반 +X/6시 ±30°)로 제한하고 Sweep 진행50→100·후퇴−10→−20을 적용했다. 초기 타겟 원판·거리6–12cm·배치/IK·접촉·중심 Reach·관측·제어·종료·PPO는 부모 보존, 로그 `inspire_sweep_single_contact_zone3_v0`. CPU66개·전체 설정 대조·기존 정의/등록 AST 보존 검사 통과. 사용자 요청으로 GPU·Isaac Sim·학습 미실행, 실제 reset/장기 성능 미검증. [환경 계약](../02_implementation/environments/SWEEP_V0.md#single-contact-zone3-v0) · [개발·검증](../02_implementation/logs/2026-11-23_single_contact_zone3_v0.md).
+
 2026-11-22: **Sweep v0·Single Contact v0/v1 공통 action 안정화**. `SweepEnvCfg`에서만 손6D를 [0,1] 비율(0펼침·1굽힘)로 매핑, 손 속도 weight −0.01→−0.03, Arm/Hand action-rate raw cap100, action-limit weight −3.0·raw cap10을 적용했다. 계통 밖 기본 동작·PPO는 보존한다. 기존 rad 출력 checkpoint와 손 의미가 달라 새 학습 기준이다. [계약](../02_implementation/environments/SWEEP_V0.md#행동과-제어) · [변경·검증](../02_implementation/logs/2026-11-22_sweep_action_stability.md).
 
 2026-11-21 후속 **Single Contact v1 구현·등록 완료**. 아래 명세 작성 당시의 미구현 상태를 갱신한다. `Inspire-Sweep-Single-Contact-v1`는 v0 직접 자식이며 Reach5cm/4.9·구역3 +15° 고정점·수평 signed 방향30°/p4·팔 종료−3을 구현했다. 기존 물리 step 루프·부모 함수19개 정의·기존 등록 보존, 전체 Cfg 대조에서 요청한 보상3개 외 차이 없음. CPU196개·RTX4070 GPU4환경11step·부분/자동reset·16환경 PPO1회 업데이트 통과. trace/초기 world pose/모델은 `outputs/sweep_single_contact_v1`, 기존 `logs/rsl_rl` 불변. 성공률·장기 학습 개선은 미검증. [구현 계약](../02_implementation/environments/SWEEP_V0.md#single-contact-v1) · [개발·검증·실행](../02_implementation/logs/2026-11-21_single_contact_v1_implementation.md).

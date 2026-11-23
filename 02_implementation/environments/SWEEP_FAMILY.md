@@ -16,12 +16,14 @@
 flowchart TD
     A["Sweep Only v2 Test ActionPenalty LinearReach"] -. "기능 기준; EnvCfg 상속 없음" .-> B["Inspire-Sweep-v0"]
     B -->|"직접 상속; 접촉 계수만 변경"| C["Inspire-Sweep-Single-Contact-v0"]
+    C -->|"Zone3만; Sweep/후퇴 두 배"| D["Inspire-Sweep-Single-Contact-Zone3-v0"]
 ```
 
 | 환경 | 주된 목적 | 접촉 계수 | 로그 experiment name |
 | --- | --- | --- | --- |
 | `Inspire-Sweep-v0` | 방향별 손바닥·손등 선호를 학습 | 이력 인정 × 누적 count/20 | `inspire_sweep_v0` |
 | `Inspire-Sweep-Single-Contact-v0` | 같은 선호도 환경에서 누적 접촉 강화를 제거 | 이력 인정 여부의 boolean을1/0으로 변환 | `inspire_sweep_single_contact_v0` |
+| `Inspire-Sweep-Single-Contact-Zone3-v0` | 당기기만 학습하는 방향 제한 실험, Sweep/후퇴100/−20 | Single Contact v0와 동일 | `inspire_sweep_single_contact_zone3_v0` |
 
 이 문서에서 사용자가 말한 **`Contact-v0`는 `Inspire-Sweep-Single-Contact-v0`의 약칭**으로 정리한다. 별도의 `Inspire-Contact-v0` task를 추가했다는 뜻은 아니다. 공통 과업·관측·제어·보상·PPO 수치의 기준은 [Sweep-v0 상세 문서](SWEEP_V0.md)다.
 
