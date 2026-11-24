@@ -74,3 +74,30 @@ python src/inspire_sweep_baseline/scripts/train.py \
 ```
 
 2026-11-24 사용자 지시로 GPU·Isaac Sim·학습을 실행하지 않았다. 표준 라이브러리 AST/해시 대조에서 부모 직접 상속·단일 field override·동일 runtime·기존 코드 보존·등록 경로를 확인했다. 위 명령은 실행 예시이며 이 자식의 collection 시간이나 학습 결과를 검증한 기록이 아니다.
+
+## Prof Revision v1
+
+`Inspire-Sweep-Prof-Revision-v1`은 `ProfRevisionV1EnvCfg(ProfRevisionEnvCfg)`의 직접 자식이다. `ProfRevisionV1RewardsCfg(ProfRevisionRewardsCfg)`는 기존16개 term의 상대 순서를 유지하면서 `contact_formation`을 변경하고 마지막에 `arm_joint_failure`를 추가한다. 최종17개 term이며 runtime은 부모 `ProfRevisionEnv`를 재사용한다. `ProfRevisionV1PPORunnerCfg(ProfRevisionPPORunnerCfg)`는 `experiment_name=inspire_sweep_prof_revision_v1`만 변경한다.
+
+팔 종료 사건 비용은 기존 `arm_joint_failure(env)`로 `termination_manager.get_term('arm_joint_velocity') / step_dt`를 읽고 weight−3.0을 적용하여 실제 종료 step에 일회−3.0이다. 팔 속도 종료 임계값1.0rad/s 초과와 연속 속도 비용−0.03·cap100은 보존한다.
+
+Formation은 지문 패드 대표점에서 현재 추적 가시 OBB까지 부모와 같은 외부 거리 `d_i`를 사용한다. 지문 패드 local +Z Normal과 각 패드→현재 추적 OBB 중심 방향을 EEF 좌표계에서 비교한다.
+
+```math
+F_{v1}=\sum_{i=1}^{5}\frac{0.05}{0.05+d_i}\cos^2\theta_i,\qquad
+\Delta r_{\mathrm{formation},t}=0.3675F_{v1,t}\Delta t.
+```
+
+0°/180°는1·±90°는0으로 지문/손등을 모두 인정한다. raw 범위0–5, weight0.3675이며 평균화하지 않는다. 최대 보상률1.8375/s·policy step0.02s에서 최대0.03675로 전체 이론적 최대는 부모의7.5배다. 방향/Normal norm이1e−8 이하이면 그 손가락 각도 점수는0이다. 실제 접촉·힘·이동 gate와 감싸기 분산항은 추가하지 않았다.
+
+v1만 `formation_mode='distance_angle_sum'`을 선언한다. 공유 기하 함수는 해당 모드에서만 새 식을 사용하고, 필드가 없는 부모·Reach5cm는 원래 계산을 유지한다. Reach10cm·성공3cm·기존 손바닥/손등 면 선호·관측108/176D·Scene/reset·제어·PPO 수치는 부모와 같다. 현재 물체 상태를 Actor/Critic 입력에 추가하지 않는다.
+
+```bash
+python src/inspire_sweep_baseline/scripts/train.py \
+  --task Inspire-Sweep-Prof-Revision-v1 --num_envs 2048 --headless
+python src/inspire_sweep_baseline/scripts/check_prof_revision.py \
+  --task Inspire-Sweep-Prof-Revision-v1 --num-envs 4 --headless \
+  --output outputs/prof_revision_v1_validation/smoke.json
+```
+
+CPU58개·GPU4환경 smoke·16환경PPO1회 업데이트 검증을 통과했다. 별도 v0 고정 정책을 사용한 실제 팔 속도 종료4건에서 일회−3.0을 확인했다. 부모/v1 전체 설정 및 PPO 대조, Reach5cm 보존, 부분/자동reset·frozen Actor OBB·현재 OBB 추적·보상 합계·JIT export를 검증했다. 장기 자세/성공률 개선·2048환경 collection은 미검증이다. [정확한 명세](../../01_plan/environments/2026-11-24_PROF_REVISION_V1_SPEC.md) · [실행·검증 기록](../logs/2026-11-24_prof_revision_v1_implementation.md).
