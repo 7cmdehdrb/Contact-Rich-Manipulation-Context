@@ -101,3 +101,21 @@ python src/inspire_sweep_baseline/scripts/check_prof_revision.py \
 ```
 
 CPU58개·GPU4환경 smoke·16환경PPO1회 업데이트 검증을 통과했다. 별도 v0 고정 정책을 사용한 실제 팔 속도 종료4건에서 일회−3.0을 확인했다. 부모/v1 전체 설정 및 PPO 대조, Reach5cm 보존, 부분/자동reset·frozen Actor OBB·현재 OBB 추적·보상 합계·JIT export를 검증했다. 장기 자세/성공률 개선·2048환경 collection은 미검증이다. [정확한 명세](../../01_plan/environments/2026-11-24_PROF_REVISION_V1_SPEC.md) · [실행·검증 기록](../logs/2026-11-24_prof_revision_v1_implementation.md).
+
+## Prof Revision v0_1
+
+`Inspire-Sweep-Prof-Revision-v0_1`은 `ProfRevisionV0_1EnvCfg(ProfRevisionEnvCfg)`의 직접 자식이다. **유일한 환경 동작 차이는 `arm_joint_failure` 사건 비용의 추가**다. `ProfRevisionV0_1RewardsCfg(ProfRevisionRewardsCfg)`는 부모16개 reward를 그대로 상속하고 마지막에 기존 callable `arm_joint_failure`·weight−3.0을 추가한다. 실제 팔 속도 종료 transition에 일회−3.0이 지급되며, callable의 dt 나눗셈과 RewardManager dt가 상쇄된다. 종료 boolean은 기존 `arm_joint_velocity`를 읽고 속도 임계값1.0rad/s 초과는 유지한다.
+
+Formation은 부모의 `0.05/(0.05+sum(d_i))`·weight0.245 그대로다. `formation_mode`를 추가하지 않는다. Reach10cm·Sweep100/−20·면 선호·관측108/176D·Scene/reset·물리·제어·성공/종료·빈 curriculum·PPO 수치도 부모와 같다. v1의 손가락 각도 보상은 상속하지 않으며 부모 v0·Reach5cm v0·v1을 보존한다.
+
+Runtime은 기존 `ProfRevisionEnv`이고 `ProfRevisionV0_1PPORunnerCfg(ProfRevisionPPORunnerCfg)`는 로그 분리를 위해 `experiment_name=inspire_sweep_prof_revision_v0_1`만 변경한다. 선언은 기존 역할별 `prof_revision` 파일에 추가했다.
+
+```bash
+python src/inspire_sweep_baseline/scripts/train.py \
+  --task Inspire-Sweep-Prof-Revision-v0_1 --num_envs 2048 --headless
+python src/inspire_sweep_baseline/scripts/check_prof_revision.py \
+  --task Inspire-Sweep-Prof-Revision-v0_1 --num-envs 4 --headless \
+  --output outputs/prof_revision_v0_1_validation/smoke.json
+```
+
+정확한 실행 결과와 미검증 범위는 [개발·검증 기록](../logs/2026-11-24_prof_revision_v0_1_implementation.md)을 따른다.

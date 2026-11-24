@@ -1,5 +1,7 @@
 # 현재 개발 인계
 
+2026-11-24 후속: **Prof Revision v0_1 추가**. `Inspire-Sweep-Prof-Revision-v0_1`은 v0 직접 자식으로 `arm_joint_failure` 일회−3.0만 추가한다. Formation 식·weight0.245·Reach10cm·관측·제어·종료·PPO 수치를 보존한다. 로그 `inspire_sweep_prof_revision_v0_1`. [계약·실행](../02_implementation/environments/PROF_REVISION_V0.md#prof-revision-v0_1) · [검증 기록](../02_implementation/logs/2026-11-24_prof_revision_v0_1_implementation.md).
+
 2026-11-24 후속: **Prof Revision v1 구현·등록 완료**. Prof Revision v0 직접 자식으로 팔 속도 종료 사건 비용 `arm_joint_failure` 일회−3.0을 추가하고, Formation을 손가락별 거리 점수×지문 Normal의 양방향 코사인 제곱의 합으로 변경했다. weight0.245→0.3675, raw 범위0–5이며 평균화하지 않는다. Reach10cm·기존 면 선호·관측·종료·물리·PPO 보존. CPU58개·GPU4환경 smoke·16환경 PPO1회 업데이트 통과, 실제 팔 속도 종료4건에서 각각−3.0 확인. 장기 자세·종료율·성공률 개선과2048환경 collection은 미검증이다. [개발 명세](environments/2026-11-24_PROF_REVISION_V1_SPEC.md) · [구현·검증](../02_implementation/logs/2026-11-24_prof_revision_v1_implementation.md).
 
 2026-11-24: **`Inspire-Sweep-Prof-Revision-Reach5cm-v0` 추가**. Prof Revision v0 직접 자식으로 `reach_near_radius`만0.10→0.05m로 변경했다. Reach식·weight4.9·목표점·관측·Formation·Sweep·종료·물리·제어·PPO 수치를 모두 상속한다. PPO 로그 이름만 분리했으며 부모 코드와 기존 등록은 보존했다. 사용자 요청으로 GPU·Isaac Sim·학습 없이 표준 라이브러리 정적 검사만 수행했다. [계약](../02_implementation/environments/PROF_REVISION_V0.md#reach5cm-v0) · [기록](../02_implementation/logs/2026-11-23_prof_revision_v0_implementation.md).

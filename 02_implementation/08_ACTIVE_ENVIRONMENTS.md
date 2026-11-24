@@ -1,5 +1,7 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-24 후속: **`Inspire-Sweep-Prof-Revision-v0_1` 추가**. Prof Revision v0 직접 상속, `arm_joint_failure` 일회−3.0만 추가한다. 부모 Formation·Reach10cm·관측·물리·제어·종료·PPO 수치는 동일하다. [계약·실행](environments/PROF_REVISION_V0.md#prof-revision-v0_1) · [개발·검증](logs/2026-11-24_prof_revision_v0_1_implementation.md).
+
 2026-11-24 후속: **`Inspire-Sweep-Prof-Revision-v1` 구현·등록 완료**. Prof Revision v0 직접 상속, 팔 속도 종료 일회−3.0 및 손가락별 거리×양방향 각도 유사도 합산·weight0.3675를 적용했다. Reach10cm·면 선호·관측·물리·제어·종료·PPO 수치를 보존한다. CPU58개·GPU4환경 smoke·16환경 PPO1회 업데이트 통과, 장기 행동 개선은 미검증이다. [계약·실행](environments/PROF_REVISION_V0.md#prof-revision-v1) · [개발 명세](../01_plan/environments/2026-11-24_PROF_REVISION_V1_SPEC.md) · [구현 기록](logs/2026-11-24_prof_revision_v1_implementation.md).
 
 2026-11-24: **`Inspire-Sweep-Prof-Revision-Reach5cm-v0` 추가**. Prof Revision v0 직접 자식으로 `reach_near_radius`만0.10→0.05m로 변경했다. Reach식·weight4.9·목표점·관측·Formation·Sweep·종료·물리·제어·PPO 수치를 모두 상속한다. PPO 로그 이름만 분리했으며 부모 코드와 기존 등록은 보존했다. 사용자 요청으로 GPU·Isaac Sim·학습 없이 표준 라이브러리 정적 검사만 수행했다. [계약](environments/PROF_REVISION_V0.md#reach5cm-v0) · [기록](logs/2026-11-23_prof_revision_v0_implementation.md).
