@@ -1,5 +1,7 @@
 # Prof Revision v0 학습 환경
 
+[계통 비교·학습 위치·결과 메모](PROF_REVISION_FAMILY.md)
+
 `Inspire-Sweep-Prof-Revision-v0`는 Single Contact v0을 기능 기준으로 만든 독립 환경이다. 초기 정면 가시 OBB, 손끝 Pose, 증분 Reaching과 Contact Formation을 사용한다. 초기 시각 이후 Actor와 Critic은 고정 OBB snapshot을 현재 EEF로만 변환하고, 촉각·손목 F/T와 현재 로봇 상태를 관측한다. 보상·성공은 같은 초기 가시 조각을 물체에 고정해 추적한다.
 
 개발 계약의 수식·모든 보존 조건은 [개발 명세](../../01_plan/environments/2026-11-23_PROF_REVISION_V0_SPEC.md), 실제 실행 결과와 명세 해석은 [개발 로그](../logs/2026-11-23_prof_revision_v0_implementation.md)를 따른다.
@@ -119,3 +121,41 @@ python src/inspire_sweep_baseline/scripts/check_prof_revision.py \
 ```
 
 정확한 실행 결과와 미검증 범위는 [개발·검증 기록](../logs/2026-11-24_prof_revision_v0_1_implementation.md)을 따른다.
+
+
+## Prof Revision v0_2
+
+`Inspire-Sweep-Prof-Revision-v0_2`는 `ProfRevisionV0_2EnvCfg(ProfRevisionEnvCfg)`로 v0을 직접 상속한다. runtime은 기존 `ProfRevisionEnv`를 재사용하며 `ProfRevisionV0_2RewardsCfg`와 `ProfRevisionV0_2PPORunnerCfg`를 사용한다. 로그 이름은 `inspire_sweep_prof_revision_v0_2`다.
+
+- Sweep 진행은 기존 순수 `sweep_progress`로 교체한다. 손바닥·손등·구역에 무관하게 면 계수1, weight100이다. 기존 접촉 인정·목표 방향 힘 정렬·후퇴 비용을 보존한다.
+- `arm_joint_velocity_margin`: 팔6관절 실제 절대 속도 최댓값 v에 대해 `clamp((v−0.8)/0.2,0,1)^2`, weight−3.0이다. RewardManager가 dt를 곱하는 연속 비용이다.
+- `arm_joint_failure`: 기존 팔 속도 종료 flag를 읽고 `/dt`를 반환, weight−3.0으로 종료 시 일회−3이다. margin과 합산되어 dt0.02에서는 종료 transition에 새 두 항 합−3.06이다.
+
+활성 보상은18개다. 기존 관절 속도 L2 비용도 유지한다. 속도 종료는 기존대로 **팔 관절 하나라도 절대 속도 >1.0 rad/s**이며 정확히1.0에서는 종료하지 않는다. Formation은 부모 거리 합 식·weight0.245이고 v1 각도 식은 사용하지 않는다. 관측·배치·자산·제어·성공3cm·10초 episode·빈 curriculum·PPO 수치를 모두 상속한다. PPO에서는 실험명만 변경한다.
+
+[개발 명세](../../01_plan/environments/2026-11-24_PROF_REVISION_V0_2_SPEC.md) · [실제 검증과 한계](../logs/2026-11-24_prof_revision_v0_2_implementation.md).
+
+```bash
+python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Prof-Revision-v0_2 --num_envs 2048 --headless
+python src/inspire_sweep_baseline/scripts/play.py --task Inspire-Sweep-Prof-Revision-v0_2 --checkpoint /absolute/path/to/model.pt --num_envs 1 --real-time
+```
+
+
+## Prof Revision v0_3
+
+`Inspire-Sweep-Prof-Revision-v0_3`는 `ProfRevisionV0_3EnvCfg(ProfRevisionEnvCfg)`로 v0을 직접 상속한다. `ProfRevisionV0_3RewardsCfg`·`ProfRevisionV0_3TerminationsCfg`를 사용하고 runtime은 기존 `ProfRevisionEnv`다. `ProfRevisionV0_3PPORunnerCfg`는 실험명만 `inspire_sweep_prof_revision_v0_3`으로 변경한다.
+
+Sweep 진행은 순수 `sweep_progress`, weight100으로 손바닥·손등·구역의 면 계수를1로 통일한다. 접촉 인정과 목표 방향 힘 정렬은 유지한다. 기존 `arm_joint_velocity` 종료는 None으로 제거하고 `tcp_linear_velocity` 실패 종료를 추가한다.
+
+**TCP는 UR5e 마지막 링크 `wrist_3_link`의 원점**이다. 이 원점의 월드3D 선속도 크기 `norm(body_link_lin_vel_w)`가 **4.0 m/s 이상(>=)**이면 policy step 끝에서 종료한다. 손 쪽 EEF offset, `axia80_link`, 질량중심 속도, 각속도나 개별 축 속도를 사용하지 않는다. Isaac Lab의 `body_link_vel_w` 구현은 COM 속도를 링크 원점으로 보정한다. `body_link_lin_vel_w`의 짧은 docstring에는 COM 표현이 남아 있지만 실제 반환 값은 이 보정된 링크 속도다.
+
+성공은 부모의10초 timeout·목표 XY3cm 이내 조건이며, 같은 step의 낙하/전도·선반·TCP 속도 실패를 제외한다. 상속된 Manager 순서상 success가 새 TCP term보다 먼저 평가될 수 있어, v0_3 전용 성공 함수는 TCP term의 설정된 predicate를 현재 상태에 직접 적용한다. 이전 step flag를 읽거나 삭제된 관절 종료를 참조하지 않는다.
+
+보상16개를 유지하고 새 종료 사건 비용이나0.8 rad/s margin은 추가하지 않는다. 기존 관절 속도 L2 비용은 유지한다. Formation 거리 합 식/weight0.245·관측108/176D·제어·자산·reset·물리·목표3cm·episode10초·빈 curriculum·PPO 수치를 부모에서 상속한다. v0_2와 다른 실험 분기다.
+
+[구현·검증 기록](../logs/2026-11-24_prof_revision_v0_3_implementation.md).
+
+```bash
+python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Prof-Revision-v0_3 --num_envs 2048 --headless
+python src/inspire_sweep_baseline/scripts/play.py --task Inspire-Sweep-Prof-Revision-v0_3 --checkpoint /absolute/path/to/model.pt --num_envs 1 --real-time
+```

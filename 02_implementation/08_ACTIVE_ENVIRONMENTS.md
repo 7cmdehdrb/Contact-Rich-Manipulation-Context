@@ -1,5 +1,13 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-24 **최신 사용자 학습 현황**: 현재 `.30`=v0_3, `.180`=v0_2, `.250`=v0_1만 학습 중이며 나머지는 사용자가 직접 종료했다. v0은 약6000iter에 우회 Joint 종료 원인 조사로 중단, Reach5cm는 v0과 결과 차이가 없어 같은 이유로 중단·향후 사용 안 함. v0_1은 매우 느리지만 성공률 조금씩 상승(사용자는 경험상 실패 가능성을 높게 평가). v1은 예상보다 학습이 양호했으나 Joint 문제 우선 해결을 위해 중단했다. 이전 v1 학습 중 보고를 대체하며 원격 프로세스 확인은 하지 않았다. [계통·서버·결과](environments/PROF_REVISION_FAMILY.md).
+
+[Prof Revision 계통 비교·학습 위치·결과 메모](environments/PROF_REVISION_FAMILY.md)
+
+2026-11-24 후속: **Prof Revision v0_3** 추가. v0 직접 자식, 면 계수1 통일·팔 관절 속도 종료 제거·UR5e 마지막 링크 `wrist_3_link` 원점의 선속도 >=4m/s 실패 종료. EEF offset 속도와 구분하며 새로운 비용은 추가하지 않는다. 나머지 부모 구성 보존. [계약](environments/PROF_REVISION_V0.md#prof-revision-v0_3) · [검증](logs/2026-11-24_prof_revision_v0_3_implementation.md).
+
+2026-11-24 후속: **Prof Revision v0_2 구현·등록 완료**. v0 직접 자식으로 면 계수1 통일·팔 속도0.8 초과 연속 제곱 비용·속도 종료 사건−3을 적용한다. Formation·종료·관측·제어·PPO 수치 보존. 장기 행동 개선은 미검증. [계약](environments/PROF_REVISION_V0.md#prof-revision-v0_2) · [구현·검증](logs/2026-11-24_prof_revision_v0_2_implementation.md).
+
 2026-11-24 후속: **`Inspire-Sweep-Prof-Revision-v0_1` 추가**. Prof Revision v0 직접 상속, `arm_joint_failure` 일회−3.0만 추가한다. 부모 Formation·Reach10cm·관측·물리·제어·종료·PPO 수치는 동일하다. [계약·실행](environments/PROF_REVISION_V0.md#prof-revision-v0_1) · [개발·검증](logs/2026-11-24_prof_revision_v0_1_implementation.md).
 
 2026-11-24 후속: **`Inspire-Sweep-Prof-Revision-v1` 구현·등록 완료**. Prof Revision v0 직접 상속, 팔 속도 종료 일회−3.0 및 손가락별 거리×양방향 각도 유사도 합산·weight0.3675를 적용했다. Reach10cm·면 선호·관측·물리·제어·종료·PPO 수치를 보존한다. CPU58개·GPU4환경 smoke·16환경 PPO1회 업데이트 통과, 장기 행동 개선은 미검증이다. [계약·실행](environments/PROF_REVISION_V0.md#prof-revision-v1) · [개발 명세](../01_plan/environments/2026-11-24_PROF_REVISION_V1_SPEC.md) · [구현 기록](logs/2026-11-24_prof_revision_v1_implementation.md).
