@@ -1,0 +1,116 @@
+{
+  "versions": {
+    "torch": "2.7.0+cu128",
+    "rsl-rl-lib": "5.0.1",
+    "isaacsim": "5.1.0.0"
+  },
+  "installed_ppo_path": "C:\\Users\\3cmde\\miniconda3\\envs\\env_isaaclab\\Lib\\site-packages\\rsl_rl\\algorithms\\ppo.py",
+  "installed_ppo_sha256": "a2d35e7ad7b884c80b7434e7d2ce785a6da1e18d93c96f1179fbd3a208669f8c",
+  "gamma": 0.98,
+  "lam": 0.95,
+  "gae_direct_decay_per_step": 0.9309999999999999,
+  "discounted_half_life_s": 0.6861923698304129,
+  "gae_direct_half_life_s": 0.19389816605948515,
+  "formation_max_rate_v0": 0.245,
+  "formation_max_rate_v1": 1.8375,
+  "formation_max_10s_v0": 2.45,
+  "formation_max_10s_v1": 18.375,
+  "checkpoint_parameters": {
+    "v0": {
+      "iter": 6100,
+      "action_std": [
+        0.3845032751560211,
+        0.4115648865699768,
+        0.3788951635360718,
+        0.8094120025634766,
+        0.4407835900783539,
+        0.25925296545028687,
+        0.51813805103302,
+        0.5237339735031128,
+        0.2199472039937973,
+        0.5060330629348755,
+        0.48766037821769714,
+        0.5622422695159912
+      ],
+      "arm_std_mean": 0.4474020004272461,
+      "hand_std_mean": 0.4696258306503296,
+      "all_actor_parameters_finite": true
+    },
+    "v0_1": {
+      "iter": 1750,
+      "action_std": [
+        0.6266987323760986,
+        0.35075893998146057,
+        0.48732924461364746,
+        0.7103330492973328,
+        0.619614839553833,
+        0.430564284324646,
+        0.389849454164505,
+        0.40386244654655457,
+        0.4028759300708771,
+        0.39962172508239746,
+        0.3751203119754791,
+        0.41096851229667664
+      ],
+      "arm_std_mean": 0.5375497937202454,
+      "hand_std_mean": 0.3970496952533722,
+      "all_actor_parameters_finite": true
+    },
+    "v1": {
+      "iter": 6600,
+      "action_std": [
+        0.5138773322105408,
+        0.6168448328971863,
+        0.483198881149292,
+        0.7367698550224304,
+        0.6409835815429688,
+        0.4453706443309784,
+        0.2623383104801178,
+        0.4199715554714203,
+        0.38643595576286316,
+        0.4242684543132782,
+        0.4169597625732422,
+        0.4282941520214081
+      ],
+      "arm_std_mean": 0.5728408694267273,
+      "hand_std_mean": 0.3897113800048828,
+      "all_actor_parameters_finite": true
+    }
+  },
+  "fixed_trajectories": {
+    "v0_latest": {
+      "reward_total": 8.13907771538652,
+      "discounted": 2.8565738752876753,
+      "v0_1_objective_return": 5.1449370846249,
+      "v0_1_objective_discounted": 2.0232527104756457,
+      "v1_objective_return": 5.591192134603176,
+      "v1_objective_discounted": 2.226064301198119,
+      "without_joint_penalty": 8.13907771199274,
+      "discounted_without_joint": 2.8565738752876753,
+      "discounted_joint_indicator": 0.2777737212540279
+    },
+    "v0_1_latest": {
+      "reward_total": -0.013419876137049869,
+      "discounted": 0.43353553234554715,
+      "v0_1_objective_return": -0.01341988805572214,
+      "v0_1_objective_discounted": 0.433535531375821,
+      "v1_objective_return": 0.6488268804083432,
+      "v1_objective_discounted": 0.522998154598911,
+      "without_joint_penalty": 0.3264238772680983,
+      "discounted_without_joint": 0.4612012486096406,
+      "discounted_joint_indicator": 0.009221905421364507
+    },
+    "v1_latest": {
+      "reward_total": 12.11377956578508,
+      "discounted": 1.7785850937670598,
+      "v0_1_objective_return": 3.475472135074483,
+      "v0_1_objective_discounted": 1.3664800674755588,
+      "v1_objective_return": 12.113779599204946,
+      "v1_objective_discounted": 1.7785850968877717,
+      "without_joint_penalty": 12.213388937554555,
+      "discounted_without_joint": 1.8386833220142424,
+      "discounted_joint_indicator": 0.02003274274906089
+    },
+    "interpretation": "Same saved physical trajectories re-scored, no retraining or causal estimate. Discounted sums omit PPO timeout value bootstrap."
+  }
+}

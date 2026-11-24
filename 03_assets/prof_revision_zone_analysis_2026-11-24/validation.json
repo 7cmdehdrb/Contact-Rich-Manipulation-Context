@@ -1,0 +1,239 @@
+{
+  "v0": {
+    "42": {
+      "reaching": 2.942979335784912e-07,
+      "sweep_progress": 3.5762786865234375e-07,
+      "sweep_retreat": 2.2351741790771484e-08,
+      "contact_formation": 5.820766091346741e-10,
+      "gap_m": 8.940696716308594e-08,
+      "total": 2.384185791015625e-07,
+      "contact_gate_mismatches": 0,
+      "finite_rewards": true,
+      "valid_contact_fraction": 1.0,
+      "sensor_fresh_fraction": 1.0,
+      "config_differences": [
+        [
+          "/scene/robot/spawn/usd_path",
+          "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/assets/data/wrench_right_hand/ur5e_inspire_right.usda",
+          "C:\\python\\Contact-Rich-Manipulation\\src\\inspire_sweep_baseline\\inspire_sweep_baseline\\assets\\data\\wrench_right_hand\\ur5e_inspire_right.usda"
+        ],
+        [
+          "/scene/num_envs",
+          "2048",
+          "256"
+        ],
+        [
+          "/log_dir",
+          "/home/min/7cmdehdrb/grad/logs/rsl_rl/inspire_sweep_prof_revision_v0/2026-11-24_00-27-46",
+          "C:\\python\\Contact-Rich-Manipulation\\outputs\\prof_revision_zone_analysis_20261124\\v0_seed42"
+        ],
+        [
+          "/sim/physx/gpu_found_lost_aggregate_pairs_capacity",
+          "33554432",
+          "2097152"
+        ]
+      ],
+      "initial_hashes": {
+        "target": "74575410551cb697abda0e1de6c57b9e0e0860a4f524f73528f09f23bbd4d66f",
+        "target_quat": "1af9fc2f420234cb4acda1114ccfc143216d5b70a8a70c04272fb24f4fb19e67",
+        "target_size": "be82849961e4fa516d505007a263f6d4acca022ca24bf04d4f438672155dc99c",
+        "goal": "b3191663b2b4de953a91d65a637fd7d0320ceccac7bacdf61107d22353e0d732",
+        "reach_excess": "030e7a6a1a180dfd6142b1249bccd6e06409ec343c94e8db6f1f8a2368f219dc",
+        "reach_distance": "071b9795b350d929aada163282da8ff8347548c0aa23a1fb617ca94c81b7aa5e",
+        "finger_gap": "05c8ed968590a9739ea9a5457aa5cdeb72516e3738bbf3badecc4c49d975d312",
+        "formation": "85241e6aa5dee58b3fb65b4ff16a466ca41df6415da020348f8b23cad7983f08",
+        "joint_pos": "4a9b86088564e4c08962635ff8ced5ced8d60cc7751b6eeb1d216570ecf8785a",
+        "object_state": "a09d18011e9af982189764ebb7d99703d8e1e559f955e1ea3bd0bd43659a64b6",
+        "sweep_dir": "1f81b06a56903f3f4079e9dceb4d37f7d84b9dc5b4f8b1fa675f2f3e0ee14ed2",
+        "region": "724c3482ab62840d1df02a8c49d838efb023243d0d7f78d2871b2c3901c70c44"
+      },
+      "trace_sha256": "187b57a7961cf265a2b5f4dce15a7e49616f98cf8f8e9765995dc750150ac753"
+    },
+    "43": {
+      "reaching": 2.980232238769531e-07,
+      "sweep_progress": 2.384185791015625e-07,
+      "sweep_retreat": 1.4901161193847656e-08,
+      "contact_formation": 5.820766091346741e-10,
+      "gap_m": 7.450580596923828e-08,
+      "total": 2.384185791015625e-07,
+      "contact_gate_mismatches": 0,
+      "finite_rewards": true,
+      "valid_contact_fraction": 1.0,
+      "sensor_fresh_fraction": 1.0,
+      "config_differences": [
+        [
+          "/scene/robot/spawn/usd_path",
+          "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/assets/data/wrench_right_hand/ur5e_inspire_right.usda",
+          "C:\\python\\Contact-Rich-Manipulation\\src\\inspire_sweep_baseline\\inspire_sweep_baseline\\assets\\data\\wrench_right_hand\\ur5e_inspire_right.usda"
+        ],
+        [
+          "/scene/num_envs",
+          "2048",
+          "256"
+        ],
+        [
+          "/seed",
+          "42",
+          "43"
+        ],
+        [
+          "/log_dir",
+          "/home/min/7cmdehdrb/grad/logs/rsl_rl/inspire_sweep_prof_revision_v0/2026-11-24_00-27-46",
+          "C:\\python\\Contact-Rich-Manipulation\\outputs\\prof_revision_zone_analysis_20261124\\v0_seed43"
+        ],
+        [
+          "/sim/physx/gpu_found_lost_aggregate_pairs_capacity",
+          "33554432",
+          "2097152"
+        ]
+      ],
+      "initial_hashes": {
+        "target": "28cd7c7aa3062539b9a5bd8627bed7f1d7e2edc93798cea418879062e0c92ddd",
+        "target_quat": "1af9fc2f420234cb4acda1114ccfc143216d5b70a8a70c04272fb24f4fb19e67",
+        "target_size": "64616e0222ee875feb5b79c18f43d0c83af21f6a5083a6f9594afe9a1c5dd9fd",
+        "goal": "5c6d62fa8e134515ff5e66a663b85615f04ae318c18d8ec33dad76a345e1c62f",
+        "reach_excess": "bbc8f234b291ff77f9928e00c0ad96da6754c1a6c283ccbb85eede055b7891dd",
+        "reach_distance": "b30b8676c1aae277f34db29c27e0d6f0892b1819afe34af5f133e5172f8a9758",
+        "finger_gap": "79f33c650e15fd095e62d8394de019ed0de6fcc8e084e722a027f36890899213",
+        "formation": "61a43694a305b4acfc7e6447f2f878abb167f6079e4252a0aa5b734d0c0235a3",
+        "joint_pos": "4ef15ca2b66e7cfaf29c9f9dfb7141b20fba5ce8646b19d5cc517fdd02299500",
+        "object_state": "cf2e082ca912a7e3885e3b298e52ee4efcc62ddc641dca68d4b34b1b9377ead4",
+        "sweep_dir": "59fb8a480c92e03c7117f478f29bfee4a2c600cc5bac0f349d8a5ca1519788a8",
+        "region": "051b983c6b96f41bc5580698e1ada9c24c1c05307c09bc48486ccb6d86553ccd"
+      },
+      "trace_sha256": "3f66ae9b3274c285fde850ac935bfe64ed3af36c0982156d9b340eef376121ab"
+    }
+  },
+  "reach5": {
+    "42": {
+      "reaching": 2.942979335784912e-07,
+      "sweep_progress": 2.384185791015625e-07,
+      "sweep_retreat": 1.4901161193847656e-08,
+      "contact_formation": 4.656612873077393e-10,
+      "gap_m": 8.940696716308594e-08,
+      "total": 2.384185791015625e-07,
+      "contact_gate_mismatches": 0,
+      "finite_rewards": true,
+      "valid_contact_fraction": 1.0,
+      "sensor_fresh_fraction": 1.0,
+      "config_differences": [
+        [
+          "/scene/robot/spawn/usd_path",
+          "/home/irol/Contact-Rich-Manipulation/src/inspire_sweep_baseline/inspire_sweep_baseline/assets/data/wrench_right_hand/ur5e_inspire_right.usda",
+          "C:\\python\\Contact-Rich-Manipulation\\src\\inspire_sweep_baseline\\inspire_sweep_baseline\\assets\\data\\wrench_right_hand\\ur5e_inspire_right.usda"
+        ],
+        [
+          "/scene/num_envs",
+          "2048",
+          "256"
+        ],
+        [
+          "/log_dir",
+          "/home/irol/Contact-Rich-Manipulation/logs/rsl_rl/inspire_sweep_prof_revision_reach5cm_v0/2026-11-24_01-06-28",
+          "C:\\python\\Contact-Rich-Manipulation\\outputs\\prof_revision_zone_analysis_20261124\\reach5_seed42"
+        ],
+        [
+          "/sim/physx/gpu_found_lost_aggregate_pairs_capacity",
+          "33554432",
+          "2097152"
+        ]
+      ],
+      "initial_hashes": {
+        "target": "74575410551cb697abda0e1de6c57b9e0e0860a4f524f73528f09f23bbd4d66f",
+        "target_quat": "1af9fc2f420234cb4acda1114ccfc143216d5b70a8a70c04272fb24f4fb19e67",
+        "target_size": "be82849961e4fa516d505007a263f6d4acca022ca24bf04d4f438672155dc99c",
+        "goal": "b3191663b2b4de953a91d65a637fd7d0320ceccac7bacdf61107d22353e0d732",
+        "reach_excess": "a50523d1bb2643fc60fa91381a558dc162fa26ec413f1f07e2259a891889b88d",
+        "reach_distance": "071b9795b350d929aada163282da8ff8347548c0aa23a1fb617ca94c81b7aa5e",
+        "finger_gap": "05c8ed968590a9739ea9a5457aa5cdeb72516e3738bbf3badecc4c49d975d312",
+        "formation": "85241e6aa5dee58b3fb65b4ff16a466ca41df6415da020348f8b23cad7983f08",
+        "joint_pos": "4a9b86088564e4c08962635ff8ced5ced8d60cc7751b6eeb1d216570ecf8785a",
+        "object_state": "a09d18011e9af982189764ebb7d99703d8e1e559f955e1ea3bd0bd43659a64b6",
+        "sweep_dir": "1f81b06a56903f3f4079e9dceb4d37f7d84b9dc5b4f8b1fa675f2f3e0ee14ed2",
+        "region": "724c3482ab62840d1df02a8c49d838efb023243d0d7f78d2871b2c3901c70c44"
+      },
+      "trace_sha256": "fe18ee62efbcb46b0e6565658c77cc0593b8544f8f7f1102f40849f517b23b34"
+    },
+    "43": {
+      "reaching": 2.942979335784912e-07,
+      "sweep_progress": 2.384185791015625e-07,
+      "sweep_retreat": 2.2351741790771484e-08,
+      "contact_formation": 5.820766091346741e-10,
+      "gap_m": 8.940696716308594e-08,
+      "total": 3.5762786865234375e-07,
+      "contact_gate_mismatches": 0,
+      "finite_rewards": true,
+      "valid_contact_fraction": 1.0,
+      "sensor_fresh_fraction": 1.0,
+      "config_differences": [
+        [
+          "/scene/robot/spawn/usd_path",
+          "/home/irol/Contact-Rich-Manipulation/src/inspire_sweep_baseline/inspire_sweep_baseline/assets/data/wrench_right_hand/ur5e_inspire_right.usda",
+          "C:\\python\\Contact-Rich-Manipulation\\src\\inspire_sweep_baseline\\inspire_sweep_baseline\\assets\\data\\wrench_right_hand\\ur5e_inspire_right.usda"
+        ],
+        [
+          "/scene/num_envs",
+          "2048",
+          "256"
+        ],
+        [
+          "/seed",
+          "42",
+          "43"
+        ],
+        [
+          "/log_dir",
+          "/home/irol/Contact-Rich-Manipulation/logs/rsl_rl/inspire_sweep_prof_revision_reach5cm_v0/2026-11-24_01-06-28",
+          "C:\\python\\Contact-Rich-Manipulation\\outputs\\prof_revision_zone_analysis_20261124\\reach5_seed43"
+        ],
+        [
+          "/sim/physx/gpu_found_lost_aggregate_pairs_capacity",
+          "33554432",
+          "2097152"
+        ]
+      ],
+      "initial_hashes": {
+        "target": "28cd7c7aa3062539b9a5bd8627bed7f1d7e2edc93798cea418879062e0c92ddd",
+        "target_quat": "1af9fc2f420234cb4acda1114ccfc143216d5b70a8a70c04272fb24f4fb19e67",
+        "target_size": "64616e0222ee875feb5b79c18f43d0c83af21f6a5083a6f9594afe9a1c5dd9fd",
+        "goal": "5c6d62fa8e134515ff5e66a663b85615f04ae318c18d8ec33dad76a345e1c62f",
+        "reach_excess": "d4826a417b4851fa60e7258a427ad20258b6bb647896303a22e196b2295cafde",
+        "reach_distance": "b30b8676c1aae277f34db29c27e0d6f0892b1819afe34af5f133e5172f8a9758",
+        "finger_gap": "79f33c650e15fd095e62d8394de019ed0de6fcc8e084e722a027f36890899213",
+        "formation": "61a43694a305b4acfc7e6447f2f878abb167f6079e4252a0aa5b734d0c0235a3",
+        "joint_pos": "4ef15ca2b66e7cfaf29c9f9dfb7141b20fba5ce8646b19d5cc517fdd02299500",
+        "object_state": "cf2e082ca912a7e3885e3b298e52ee4efcc62ddc641dca68d4b34b1b9377ead4",
+        "sweep_dir": "59fb8a480c92e03c7117f478f29bfee4a2c600cc5bac0f349d8a5ca1519788a8",
+        "region": "051b983c6b96f41bc5580698e1ada9c24c1c05307c09bc48486ccb6d86553ccd"
+      },
+      "trace_sha256": "f02d80bb911c46fbb977fc3226592b53b3181a18a86458eab133a4bab55a3bb4"
+    }
+  },
+  "initial_scene_match_42": {
+    "target": true,
+    "target_quat": true,
+    "target_size": true,
+    "goal": true,
+    "reach_distance": true,
+    "finger_gap": true,
+    "formation": true,
+    "joint_pos": true,
+    "object_state": true,
+    "sweep_dir": true,
+    "region": true
+  },
+  "initial_scene_match_43": {
+    "target": true,
+    "target_quat": true,
+    "target_size": true,
+    "goal": true,
+    "reach_distance": true,
+    "finger_gap": true,
+    "formation": true,
+    "joint_pos": true,
+    "object_state": true,
+    "sweep_dir": true,
+    "region": true
+  },
+  "input_hashes_unchanged": true
+}

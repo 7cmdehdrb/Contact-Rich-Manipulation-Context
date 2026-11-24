@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "analyze.py": "f1003933550a7c16798fbbf16b232db33e922b67899da1139fec23349ddfb9c6",
+    "collect.py": "b2f5668273ca270c355435f06c66fbe222e65264c88fe0e548a09e7db84bd670",
+    "extra.py": "2e5311bc41e3eb786860ad9ae5d2259d5d5644d3084171792ead4515385712ad",
+    "polish.py": "9de12b2079c3ca5d833cad0f682b5cd938984123ddb357f65546129e05a21403",
+    "report.py": "89f17db1c5e8e846e99e93acb3fbc35574c20ee84ffab16cbdb94f4a163fd7cb",
+    "training.py": "228f3e150e0fdecbf8d23c792c747165a54b8f496a27a02ceadeee8c20fba868"
+  },
+  "local_assets_current": {
+    "src\\inspire_sweep_baseline\\inspire_sweep_baseline\\assets\\data\\wrench_right_hand\\tactile_regions.json": "8da69690f6895c8c988e2b2cab774a5aee00f662f02edadcebaed77e1e80b463",
+    "src\\inspire_sweep_baseline\\inspire_sweep_baseline\\assets\\data\\wrench_right_hand\\ur5e_inspire_right.usda": "7d0f9252a05488a020501c071505542776307c92308f2d933f85355d60a95e4d"
+  }
+}

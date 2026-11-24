@@ -1,0 +1,98 @@
+{
+  "reach5": {
+    "env": [
+      [
+        "/scene/robot/spawn/usd_path",
+        "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/assets/data/wrench_right_hand/ur5e_inspire_right.usda",
+        "/home/irol/Contact-Rich-Manipulation/src/inspire_sweep_baseline/inspire_sweep_baseline/assets/data/wrench_right_hand/ur5e_inspire_right.usda"
+      ],
+      [
+        "/reach_near_radius",
+        "0.1",
+        "0.05"
+      ],
+      [
+        "/log_dir",
+        "/home/min/7cmdehdrb/grad/logs/rsl_rl/inspire_sweep_prof_revision_v0/2026-11-24_00-27-46",
+        "/home/irol/Contact-Rich-Manipulation/logs/rsl_rl/inspire_sweep_prof_revision_reach5cm_v0/2026-11-24_01-06-28"
+      ]
+    ],
+    "agent": [
+      [
+        "/experiment_name",
+        "inspire_sweep_prof_revision_v0",
+        "inspire_sweep_prof_revision_reach5cm_v0"
+      ]
+    ]
+  },
+  "v0_1": {
+    "env": [
+      [
+        "/rewards/arm_joint_failure",
+        "missing",
+        {
+          "func": "inspire_sweep_baseline.mdp.reward_functions.stabilize_sweep:arm_joint_failure",
+          "params": {},
+          "weight": "-3.0"
+        }
+      ],
+      [
+        "/scene/robot/spawn/usd_path",
+        "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/assets/data/wrench_right_hand/ur5e_inspire_right.usda",
+        "/home/irol/Contact-Rich-Manipulation/src/inspire_sweep_baseline/inspire_sweep_baseline/assets/data/wrench_right_hand/ur5e_inspire_right.usda"
+      ],
+      [
+        "/log_dir",
+        "/home/min/7cmdehdrb/grad/logs/rsl_rl/inspire_sweep_prof_revision_v0/2026-11-24_00-27-46",
+        "/home/irol/Contact-Rich-Manipulation/logs/rsl_rl/inspire_sweep_prof_revision_v0_1/2026-11-24_18-45-33"
+      ]
+    ],
+    "agent": [
+      [
+        "/experiment_name",
+        "inspire_sweep_prof_revision_v0",
+        "inspire_sweep_prof_revision_v0_1"
+      ]
+    ]
+  },
+  "v1": {
+    "env": [
+      [
+        "/rewards/arm_joint_failure",
+        "missing",
+        {
+          "func": "inspire_sweep_baseline.mdp.reward_functions.stabilize_sweep:arm_joint_failure",
+          "params": {},
+          "weight": "-3.0"
+        }
+      ],
+      [
+        "/rewards/contact_formation/weight",
+        "0.245",
+        "0.3675"
+      ],
+      [
+        "/scene/robot/spawn/usd_path",
+        "/home/min/7cmdehdrb/grad/src/inspire_sweep_baseline/inspire_sweep_baseline/assets/data/wrench_right_hand/ur5e_inspire_right.usda",
+        "/home/ssu/Desktop/Contact-Rich-Manipulation/src/inspire_sweep_baseline/inspire_sweep_baseline/assets/data/wrench_right_hand/ur5e_inspire_right.usda"
+      ],
+      [
+        "/formation_mode",
+        "missing",
+        "distance_angle_sum"
+      ],
+      [
+        "/log_dir",
+        "/home/min/7cmdehdrb/grad/logs/rsl_rl/inspire_sweep_prof_revision_v0/2026-11-24_00-27-46",
+        "/home/ssu/Desktop/Contact-Rich-Manipulation/logs/rsl_rl/inspire_sweep_prof_revision_v1/2026-11-24_14-22-20"
+      ]
+    ],
+    "agent": [
+      [
+        "/experiment_name",
+        "inspire_sweep_prof_revision_v0",
+        "inspire_sweep_prof_revision_v1"
+      ]
+    ]
+  }
+}

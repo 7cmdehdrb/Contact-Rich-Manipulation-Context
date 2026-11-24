@@ -1,0 +1,66 @@
+[
+  {
+    "model": "v0",
+    "zone": 1,
+    "seed": 43,
+    "env": 151,
+    "step": 45,
+    "selection": "median episode-average push gap among goal-reaching episodes; middle effective pre-goal contact"
+  },
+  {
+    "model": "v0",
+    "zone": 2,
+    "seed": 42,
+    "env": 177,
+    "step": 49,
+    "selection": "median episode-average push gap among goal-reaching episodes; middle effective pre-goal contact"
+  },
+  {
+    "model": "v0",
+    "zone": 3,
+    "seed": 43,
+    "env": 140,
+    "step": 68,
+    "selection": "median episode-average push gap among goal-reaching episodes; middle effective pre-goal contact"
+  },
+  {
+    "model": "v0",
+    "zone": 4,
+    "seed": 42,
+    "env": 184,
+    "step": 68,
+    "selection": "median episode-average push gap among goal-reaching episodes; middle effective pre-goal contact"
+  },
+  {
+    "model": "reach5",
+    "zone": 1,
+    "seed": 42,
+    "env": 206,
+    "step": 44,
+    "selection": "median episode-average push gap among goal-reaching episodes; middle effective pre-goal contact"
+  },
+  {
+    "model": "reach5",
+    "zone": 2,
+    "seed": 42,
+    "env": 246,
+    "step": 47,
+    "selection": "median episode-average push gap among goal-reaching episodes; middle effective pre-goal contact"
+  },
+  {
+    "model": "reach5",
+    "zone": 3,
+    "seed": 43,
+    "env": 14,
+    "step": 68,
+    "selection": "median episode-average push gap among goal-reaching episodes; middle effective pre-goal contact"
+  },
+  {
+    "model": "reach5",
+    "zone": 4,
+    "seed": 42,
+    "env": 129,
+    "step": 65,
+    "selection": "median episode-average push gap among goal-reaching episodes; middle effective pre-goal contact"
+  }
+]
