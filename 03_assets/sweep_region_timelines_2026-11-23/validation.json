@@ -1,0 +1,121 @@
+{
+  "checks": [
+    {
+      "model": "sweep_v0",
+      "seed": 42,
+      "reward_sum_error": 8.940696716308594e-08,
+      "sensor_fresh_fraction": 1.0,
+      "contact_valid_fraction": 1.0,
+      "checkpoint_sha256": "5aa3cbe36d524a568756e26135483ce81f8f0b8a6f38110bff07e8372e3bf304",
+      "trace_sha256": "f21541d8c4ebe33c90de295612689b49e946c3d51a4c4418da4bfe7cd6b96cff"
+    },
+    {
+      "model": "sweep_v0",
+      "seed": 43,
+      "reward_sum_error": 5.960464477539063e-08,
+      "sensor_fresh_fraction": 1.0,
+      "contact_valid_fraction": 1.0,
+      "checkpoint_sha256": "5aa3cbe36d524a568756e26135483ce81f8f0b8a6f38110bff07e8372e3bf304",
+      "trace_sha256": "675d88bb2885400eab83cee3dd19974433ee19b118cb0d5d9166963498627c05"
+    },
+    {
+      "model": "single_v0",
+      "seed": 42,
+      "reward_sum_error": 8.940696716308594e-08,
+      "sensor_fresh_fraction": 1.0,
+      "contact_valid_fraction": 1.0,
+      "checkpoint_sha256": "e6b929f9432ce8493a5384c5315b9a0dfa9afef90b4138f7bdd076a220ff85f8",
+      "trace_sha256": "897966286952fa3cac40f8014894e67f9aa68a1b8e80d1a923c2f27a6600a35d"
+    },
+    {
+      "model": "single_v0",
+      "seed": 43,
+      "reward_sum_error": 8.940696716308594e-08,
+      "sensor_fresh_fraction": 1.0,
+      "contact_valid_fraction": 1.0,
+      "checkpoint_sha256": "e6b929f9432ce8493a5384c5315b9a0dfa9afef90b4138f7bdd076a220ff85f8",
+      "trace_sha256": "0e1bf2b9666a12895ee0a6b557732096b857bdf924c8a80c034347bd678befed"
+    },
+    {
+      "model": "single_v1",
+      "seed": 42,
+      "reward_sum_error": 2.384185791015625e-07,
+      "sensor_fresh_fraction": 1.0,
+      "contact_valid_fraction": 1.0,
+      "checkpoint_sha256": "c5267a389a8e51c7beb65854a9181ccefba109075680e20bb3cc03b23b4cf2bc",
+      "trace_sha256": "a561f74bcb0ec4bd31645aa3adeeb13d063b23b0255c85968af94e0900085cce"
+    },
+    {
+      "model": "single_v1",
+      "seed": 43,
+      "reward_sum_error": 2.384185791015625e-07,
+      "sensor_fresh_fraction": 1.0,
+      "contact_valid_fraction": 1.0,
+      "checkpoint_sha256": "c5267a389a8e51c7beb65854a9181ccefba109075680e20bb3cc03b23b4cf2bc",
+      "trace_sha256": "4d7a6a54912b59c8585d59990cff52ba444b8c3847efef6c769cd0877d4832c1"
+    }
+  ],
+  "paired_initial_scenes": {
+    "42": {
+      "joint_pos": true,
+      "object_state": true,
+      "goal": true,
+      "sweep_dir": true,
+      "bounds": true,
+      "active_objects": true
+    },
+    "43": {
+      "joint_pos": true,
+      "object_state": true,
+      "goal": true,
+      "sweep_dir": true,
+      "bounds": true,
+      "active_objects": true
+    }
+  },
+  "trained_config_comparison": {
+    "sweep_v0": {
+      "actions": true,
+      "rewards": true,
+      "observations": true,
+      "commands": true,
+      "terminations": true,
+      "events": true,
+      "curriculum": true,
+      "episode_length_s": true,
+      "decimation": true,
+      "goal_success_radius": true,
+      "wrist_wrench_observation_limits": true
+    },
+    "single_v0": {
+      "actions": true,
+      "rewards": true,
+      "observations": true,
+      "commands": true,
+      "terminations": true,
+      "events": true,
+      "curriculum": true,
+      "episode_length_s": true,
+      "decimation": true,
+      "goal_success_radius": true,
+      "wrist_wrench_observation_limits": true
+    },
+    "single_v1": {
+      "actions": true,
+      "rewards": true,
+      "observations": true,
+      "commands": true,
+      "terminations": true,
+      "events": true,
+      "curriculum": true,
+      "episode_length_s": true,
+      "decimation": true,
+      "goal_success_radius": true,
+      "wrist_wrench_observation_limits": true
+    }
+  },
+  "script_sha256": {
+    "collect_sweep_region_timelines.py": "9b19736050a037a751c6ddfed263d4bb43d7d866a7a06db882874b171db8e748",
+    "report_sweep_region_timelines.py": "c7db1e13c95b0151dcaca8067ee4de55da7e7ba67417b5a468ee1445c53d7bd7"
+  }
+}

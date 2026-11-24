@@ -1,0 +1,185 @@
+﻿model,region,term,mean_episode_return
+Sweep v0,1,sweep_progress,2.451923131942749
+Sweep v0,1,sweep_retreat,-0.10445664077997208
+Sweep v0,1,reaching,7.369555950164795
+Sweep v0,1,arm_action_rate,-0.05087048560380936
+Sweep v0,1,hand_action_rate,-0.004512479528784752
+Sweep v0,1,arm_joint_velocity,-0.06681162118911743
+Sweep v0,1,hand_joint_velocity,-0.18847577273845673
+Sweep v0,1,shelf_collision,-0.1709890514612198
+Sweep v0,1,shelf_failure,0.0
+Sweep v0,1,obstacle_contact,0.0
+Sweep v0,1,wrench_change,0.0
+Sweep v0,1,object_tilt,-0.027913739904761314
+Sweep v0,1,obstacle_displacement,-0.006290697026997805
+Sweep v0,1,arm_action_limit,-0.025142569094896317
+Sweep v0,1,hand_action_limit,-0.28620702028274536
+Single Contact v0,1,sweep_progress,2.807248830795288
+Single Contact v0,1,sweep_retreat,-0.10526741296052933
+Single Contact v0,1,reaching,7.406255722045898
+Single Contact v0,1,arm_action_rate,-0.04695768281817436
+Single Contact v0,1,hand_action_rate,-0.006656923331320286
+Single Contact v0,1,arm_joint_velocity,-0.050423409789800644
+Single Contact v0,1,hand_joint_velocity,-0.14670495688915253
+Single Contact v0,1,shelf_collision,-0.1895948201417923
+Single Contact v0,1,shelf_failure,0.0
+Single Contact v0,1,obstacle_contact,0.0
+Single Contact v0,1,wrench_change,-2.751989541138755e-06
+Single Contact v0,1,object_tilt,-3.3691045246087015e-05
+Single Contact v0,1,obstacle_displacement,-0.00017771613784134388
+Single Contact v0,1,arm_action_limit,-0.03505176305770874
+Single Contact v0,1,hand_action_limit,-0.34471359848976135
+Single Contact v1,1,sweep_progress,2.6169488430023193
+Single Contact v1,1,sweep_retreat,-0.022917937487363815
+Single Contact v1,1,reaching,1.124416708946228
+Single Contact v1,1,arm_action_rate,-0.06286999583244324
+Single Contact v1,1,hand_action_rate,-0.008042066358029842
+Single Contact v1,1,arm_joint_velocity,-0.05780133605003357
+Single Contact v1,1,hand_joint_velocity,-0.8890129923820496
+Single Contact v1,1,shelf_collision,-0.1919873058795929
+Single Contact v1,1,shelf_failure,0.0
+Single Contact v1,1,obstacle_contact,0.0
+Single Contact v1,1,wrench_change,0.0
+Single Contact v1,1,object_tilt,-5.765988134953659e-06
+Single Contact v1,1,obstacle_displacement,-0.0001493385643698275
+Single Contact v1,1,arm_action_limit,-0.05248713120818138
+Single Contact v1,1,hand_action_limit,-0.016575593501329422
+Single Contact v1,1,arm_joint_failure,-0.2068965584039688
+Sweep v0,2,sweep_progress,3.8103315830230713
+Sweep v0,2,sweep_retreat,-0.054085832089185715
+Sweep v0,2,reaching,7.239439010620117
+Sweep v0,2,arm_action_rate,-0.03710324689745903
+Sweep v0,2,hand_action_rate,-0.002586249727755785
+Sweep v0,2,arm_joint_velocity,-0.05255674570798874
+Sweep v0,2,hand_joint_velocity,-0.20201990008354187
+Sweep v0,2,shelf_collision,-0.12581767141819
+Sweep v0,2,shelf_failure,0.0
+Sweep v0,2,obstacle_contact,0.0
+Sweep v0,2,wrench_change,0.0
+Sweep v0,2,object_tilt,0.0
+Sweep v0,2,obstacle_displacement,-0.000670538458507508
+Sweep v0,2,arm_action_limit,-0.05295681953430176
+Sweep v0,2,hand_action_limit,-0.26471999287605286
+Single Contact v0,2,sweep_progress,3.9686765670776367
+Single Contact v0,2,sweep_retreat,-0.05278196930885315
+Single Contact v0,2,reaching,7.219627857208252
+Single Contact v0,2,arm_action_rate,-0.05141531676054001
+Single Contact v0,2,hand_action_rate,-0.005586919840425253
+Single Contact v0,2,arm_joint_velocity,-0.05583617091178894
+Single Contact v0,2,hand_joint_velocity,-0.13152644038200378
+Single Contact v0,2,shelf_collision,-0.11183799803256989
+Single Contact v0,2,shelf_failure,0.0
+Single Contact v0,2,obstacle_contact,0.0
+Single Contact v0,2,wrench_change,0.0
+Single Contact v0,2,object_tilt,0.0
+Single Contact v0,2,obstacle_displacement,-0.002089870860800147
+Single Contact v0,2,arm_action_limit,-0.05108117312192917
+Single Contact v0,2,hand_action_limit,-0.37471553683280945
+Single Contact v1,2,sweep_progress,2.677194595336914
+Single Contact v1,2,sweep_retreat,-0.03949896618723869
+Single Contact v1,2,reaching,1.3076086044311523
+Single Contact v1,2,arm_action_rate,-0.05315132439136505
+Single Contact v1,2,hand_action_rate,-0.00799101684242487
+Single Contact v1,2,arm_joint_velocity,-0.054296862334012985
+Single Contact v1,2,hand_joint_velocity,-0.6480951309204102
+Single Contact v1,2,shelf_collision,-0.11530794948339462
+Single Contact v1,2,shelf_failure,0.0
+Single Contact v1,2,obstacle_contact,0.0
+Single Contact v1,2,wrench_change,0.0
+Single Contact v1,2,object_tilt,-8.43580437503988e-06
+Single Contact v1,2,obstacle_displacement,-0.02217947691679001
+Single Contact v1,2,arm_action_limit,-0.09528308361768723
+Single Contact v1,2,hand_action_limit,-0.12871594727039337
+Single Contact v1,2,arm_joint_failure,-0.28070175647735596
+Sweep v0,3,sweep_progress,1.008061170578003
+Sweep v0,3,sweep_retreat,-0.012644931674003601
+Sweep v0,3,reaching,7.193603515625
+Sweep v0,3,arm_action_rate,-0.023708833381533623
+Sweep v0,3,hand_action_rate,-0.0013221942353993654
+Sweep v0,3,arm_joint_velocity,-0.0731351226568222
+Sweep v0,3,hand_joint_velocity,-0.11827985942363739
+Sweep v0,3,shelf_collision,-0.14784488081932068
+Sweep v0,3,shelf_failure,0.0
+Sweep v0,3,obstacle_contact,0.0
+Sweep v0,3,wrench_change,0.0
+Sweep v0,3,object_tilt,-0.00035017990740016103
+Sweep v0,3,obstacle_displacement,-0.012791533954441547
+Sweep v0,3,arm_action_limit,-0.025707144290208817
+Sweep v0,3,hand_action_limit,-0.2697408199310303
+Single Contact v0,3,sweep_progress,1.4748451709747314
+Single Contact v0,3,sweep_retreat,-0.01984391175210476
+Single Contact v0,3,reaching,6.599546909332275
+Single Contact v0,3,arm_action_rate,-0.042076557874679565
+Single Contact v0,3,hand_action_rate,-0.0016222673002630472
+Single Contact v0,3,arm_joint_velocity,-0.07273737341165543
+Single Contact v0,3,hand_joint_velocity,-0.11554255336523056
+Single Contact v0,3,shelf_collision,-0.14736869931221008
+Single Contact v0,3,shelf_failure,0.0
+Single Contact v0,3,obstacle_contact,0.0
+Single Contact v0,3,wrench_change,0.0
+Single Contact v0,3,object_tilt,0.0
+Single Contact v0,3,obstacle_displacement,-0.13090594112873077
+Single Contact v0,3,arm_action_limit,-0.04197763651609421
+Single Contact v0,3,hand_action_limit,-0.31009140610694885
+Single Contact v1,3,sweep_progress,1.0343624353408813
+Single Contact v1,3,sweep_retreat,-0.044704653322696686
+Single Contact v1,3,reaching,1.3919414281845093
+Single Contact v1,3,arm_action_rate,-0.05483643338084221
+Single Contact v1,3,hand_action_rate,-0.006323599722236395
+Single Contact v1,3,arm_joint_velocity,-0.05873944237828255
+Single Contact v1,3,hand_joint_velocity,-0.6637651920318604
+Single Contact v1,3,shelf_collision,-0.10709488391876221
+Single Contact v1,3,shelf_failure,0.0
+Single Contact v1,3,obstacle_contact,0.0
+Single Contact v1,3,wrench_change,0.0
+Single Contact v1,3,object_tilt,-0.07200299203395844
+Single Contact v1,3,obstacle_displacement,-0.006553560495376587
+Single Contact v1,3,arm_action_limit,-0.048969484865665436
+Single Contact v1,3,hand_action_limit,-0.02470036968588829
+Single Contact v1,3,arm_joint_failure,-0.1875
+Sweep v0,4,sweep_progress,3.618553400039673
+Sweep v0,4,sweep_retreat,-0.057108331471681595
+Sweep v0,4,reaching,7.263423442840576
+Sweep v0,4,arm_action_rate,-0.041023146361112595
+Sweep v0,4,hand_action_rate,-0.0027593786362558603
+Sweep v0,4,arm_joint_velocity,-0.07503244280815125
+Sweep v0,4,hand_joint_velocity,-0.09797030687332153
+Sweep v0,4,shelf_collision,-0.14343662559986115
+Sweep v0,4,shelf_failure,0.0
+Sweep v0,4,obstacle_contact,0.0
+Sweep v0,4,wrench_change,0.0
+Sweep v0,4,object_tilt,-0.01313116867095232
+Sweep v0,4,obstacle_displacement,-0.0659165307879448
+Sweep v0,4,arm_action_limit,-0.04381624609231949
+Sweep v0,4,hand_action_limit,-0.3470909595489502
+Single Contact v0,4,sweep_progress,3.9740264415740967
+Single Contact v0,4,sweep_retreat,-0.08066779375076294
+Single Contact v0,4,reaching,7.274713039398193
+Single Contact v0,4,arm_action_rate,-0.05250098183751106
+Single Contact v0,4,hand_action_rate,-0.004490136634558439
+Single Contact v0,4,arm_joint_velocity,-0.06021915003657341
+Single Contact v0,4,hand_joint_velocity,-0.13772611320018768
+Single Contact v0,4,shelf_collision,-0.18399447202682495
+Single Contact v0,4,shelf_failure,0.0
+Single Contact v0,4,obstacle_contact,0.0
+Single Contact v0,4,wrench_change,0.0
+Single Contact v0,4,object_tilt,-0.014731137081980705
+Single Contact v0,4,obstacle_displacement,-0.059929560869932175
+Single Contact v0,4,arm_action_limit,-0.07312533259391785
+Single Contact v0,4,hand_action_limit,-0.37380626797676086
+Single Contact v1,4,sweep_progress,0.16918478906154633
+Single Contact v1,4,sweep_retreat,-0.01732233725488186
+Single Contact v1,4,reaching,1.158423900604248
+Single Contact v1,4,arm_action_rate,-0.0763828307390213
+Single Contact v1,4,hand_action_rate,-0.007442985661327839
+Single Contact v1,4,arm_joint_velocity,-0.04471450299024582
+Single Contact v1,4,hand_joint_velocity,-1.0785911083221436
+Single Contact v1,4,shelf_collision,-0.11879755556583405
+Single Contact v1,4,shelf_failure,0.0
+Single Contact v1,4,obstacle_contact,0.0
+Single Contact v1,4,wrench_change,-1.0937243359876447e-06
+Single Contact v1,4,object_tilt,-3.595601810957305e-05
+Single Contact v1,4,obstacle_displacement,-0.0022084165830165148
+Single Contact v1,4,arm_action_limit,-0.004589493852108717
+Single Contact v1,4,hand_action_limit,-0.0001741003943607211
+Single Contact v1,4,arm_joint_failure,-0.0517241396009922
