@@ -1,5 +1,7 @@
 # Prof Revision v0 학습 환경
 
+2026-11-25: **[Hard v0_3](#prof-revision-hard-v0_3)** 추가. `v0_3` 직접 상속으로 목표 최소5cm·선반 경계까지, 장애물0–10개, 타겟8종을 사용한다.
+
 [계통 비교·학습 위치·결과 메모](PROF_REVISION_FAMILY.md)
 
 `Inspire-Sweep-Prof-Revision-v0`는 Single Contact v0을 기능 기준으로 만든 독립 환경이다. 초기 정면 가시 OBB, 손끝 Pose, 증분 Reaching과 Contact Formation을 사용한다. 초기 시각 이후 Actor와 Critic은 고정 OBB snapshot을 현재 EEF로만 변환하고, 촉각·손목 F/T와 현재 로봇 상태를 관측한다. 보상·성공은 같은 초기 가시 조각을 물체에 고정해 추적한다.
@@ -155,7 +157,52 @@ Sweep 진행은 순수 `sweep_progress`, weight100으로 손바닥·손등·구�
 
 [구현·검증 기록](../logs/2026-11-24_prof_revision_v0_3_implementation.md).
 
+2026-11-25 `model_7650` 실제 Play512회는389회 성공(75.98%), 구역3은39.33%였다. 이동 접촉96.60%이나 Sweep 보상99.86%가 초기2초에 집중되고 목표 진입 후 최종 실패62회가 확인됐다. 약지 중심 자세이며 다지 Formation의 충분성은 입증되지 않았다. 동일 seed 추가 재생에서 큰 접촉력과 거의0인 보정 F/T의 불일치가 재현돼 센서의 물리적 충실도는 미검증이다. 환경·보상·모델은 수정하지 않았다. [정량 보고서·그래프·원시 데이터](../experiments/2026-11-25_prof_revision_v0_3_play_analysis.md) · [계측·검증 기록](../logs/2026-11-25_prof_revision_v0_3_play_analysis.md).
+
 ```bash
 python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Prof-Revision-v0_3 --num_envs 2048 --headless
 python src/inspire_sweep_baseline/scripts/play.py --task Inspire-Sweep-Prof-Revision-v0_3 --checkpoint /absolute/path/to/model.pt --num_envs 1 --real-time
 ```
+
+
+## Prof Revision Hard v0_3
+
+`Inspire-Sweep-Prof-Revision-Hard-v0_3`는 `ProfRevisionHardV0_3EnvCfg(ProfRevisionV0_3EnvCfg)`의 직접 자식이다. 보상·종료·초기 시각 snapshot·촉각/F/T·관측108/176D·행동12D·물리·PPO는 v0_3를 상속한다. 다음 과업 분포만 확장했다.
+
+| 항목 | Hard 동작 |
+| --- | --- |
+| 목표 거리 | 타겟 root XY에서 최소5cm. 인위적 최대 거리 없음. 전 방향 각도 균등, 방향별 shape-safe 선반 경계까지 거리 균등 |
+| 안전 영역 | 선반 XY `[-.2,.2]×[-.5,.5]m`, 실제 형상·scale·reset yaw·중심 offset을 고려하고 목표 벽 여유2cm 유지 |
+| 장애물 | 매 reset 정수0–10개 균등,16개 고정 후보 중 중복 없이 선택 |
+| 저비용 배치 | 4,000개 캐시 셀, 큰 box부터 경계 방향 채움, 셀 내부 jitter. 상호·벽1cm 여유와 기존 +X 압출 접근·밀기 경로 보존 |
+| 장애물 자세 | Hard의 밀집 배치에 맞춰 수직축0/90/180/270도에서 선택. 원통·곡면도 실제 bounds box로 보수적 검사 |
+| 타겟 종 | cylinder·cube·mug·bottle·003_cracker_box·004_sugar_box·005_tomato_soup_can·002_master_chef_can |
+| 형상 수명 | 환경 생성 시 종·scale0.9–1.1 선택, reset에는 pose만 변경. 재선택·recooking 비용 없음 |
+| 가시성 | 타겟1 + 장애물10개를 정확한 정면 가림 계산에 포함. 관측16슬롯 초과 시 가장 넓은16조각 유지, 물리 장애물 수 보존 |
+
+Runtime `ProfRevisionEnv`와 물리 풀17개를 그대로 사용한다. `ProfRevisionHardSceneCfg`·`ProfRevisionHardEventsCfg` 및 공통 `ProfRevisionHardLayout`이 Hard 차이를 담당한다. PPO 자식은 `experiment_name=inspire_sweep_prof_revision_hard_v0_3`만 변경한다. 원래 v0_3의 목표6–12cm·원통·장애물0–6개는 유지된다.
+
+Windows11의 프로젝트 루트에서 기존 Isaac Lab 환경을 활성화한 뒤 실행한다.
+
+```powershell
+python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Prof-Revision-Hard-v0_3 --num_envs 2048 --headless
+python src/inspire_sweep_baseline/scripts/check_prof_revision_hard.py --headless --num-envs 64
+```
+
+36개 관련 자동 검사·부모4환경 live 회귀·Hard64환경20회 reset/510step·204,800개 sampler stress를 통과했다. 실제 목표 표본은5.00–47.07cm,2048행 sampler 중앙값은 부모16.36ms/Hard2.46ms였다. 이 값은 배치 helper 실행 시간이며 전체 학습 시간과 구분한다. 상세 설정 대조·검증 수치·제약은 [개발 로그](../logs/2026-11-25_prof_revision_hard_v0_3_implementation.md)를 따른다. Hard의 장기 성공률은 아직 검증하지 않았다.
+
+
+## Prof Revision v0_3_1
+
+`Inspire-Sweep-Prof-Revision-v0_3_1`는 `ProfRevisionV0_3_1EnvCfg(ProfRevisionV0_3EnvCfg)`의 직접 자식이다. **유일한 환경 설정 차이는 `formation_mode='distance_angle_sum'`**이다. 실제 등록된 Prof Revision v1의 손가락별 거리 점수 × pad normal과 타겟 중심 방향의 양방향 `cos²` 정렬 점수를5개 손가락에 대해 합산한다. 평균화하지 않는다.
+
+Formation 거리 scale0.05m와 weight0.245를 부모에서 유지한다. raw 범위는0–5이며 policy dt0.02s에서 최대 step 기여는0.0245다. v1의 weight0.3675·관절 속도 종료 사건 비용은 가져오지 않는다. 기존 v0_3의 TCP4m/s 종료·성공·전체16개 보상·관측108/176D·행동12D·Scene/reset·목표6–12cm·원통 타겟·장애물0–6개·물리·빈 curriculum·PPO를 모두 상속한다. Hard의 과업 분포는 사용하지 않는다.
+
+사용자가 언급한 `Inspire-Sweep-Prof-Revision-Hard-v1`은 현재 저장소에 없으며, 설명에 맞는 `Inspire-Sweep-Prof-Revision-v1`의 손가락 보상식만 재사용했다. 원래 v0_3 및 Hard v0_3는 보존한다. PPO 자식은 `ProfRevisionV0_3_1PPORunnerCfg(ProfRevisionV0_3PPORunnerCfg)`, 로그 이름은 `inspire_sweep_prof_revision_v0_3_1`이다.
+
+```powershell
+python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Prof-Revision-v0_3_1 --num_envs 2048 --headless
+python src/inspire_sweep_baseline/scripts/check_prof_revision.py --task Inspire-Sweep-Prof-Revision-v0_3_1 --headless --num-envs 4 --output outputs/prof_revision_v0_3_1_validation/smoke.json
+```
+
+관련 검사32개·새 환경4개 실제 reset/step·전체 Manager/PPO 대조·부모 변경 전후 대조·16환경 PPO1회 업데이트를 통과했다. 장기 자세 개선과 성공률은 미검증이다. [상세 수식·구현·검증](../logs/2026-11-25_prof_revision_v0_3_1_implementation.md).

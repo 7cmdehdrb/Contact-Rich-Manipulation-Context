@@ -1,6 +1,12 @@
 # Revision · Holding · Final 환경 안내
 
-2026-11-24 **최신 사용자 학습 현황**: 현재 `.30`=v0_3, `.180`=v0_2, `.250`=v0_1만 학습 중이며 나머지는 사용자가 직접 종료했다. v0은 약6000iter에 우회 Joint 종료 원인 조사로 중단, Reach5cm는 v0과 결과 차이가 없어 같은 이유로 중단·향후 사용 안 함. v0_1은 매우 느리지만 성공률 조금씩 상승(사용자는 경험상 실패 가능성을 높게 평가). v1은 예상보다 학습이 양호했으나 Joint 문제 우선 해결을 위해 중단했다. 이전 v1 학습 중 보고를 대체하며 원격 프로세스 확인은 하지 않았다. [계통·서버·결과](environments/PROF_REVISION_FAMILY.md).
+2026-11-25 **최신 학습 상태·연구 방침 확정**: v0_1은 당기는 동작 부재, v0_2는 접촉 시 Joint 급증을 피하는 물체 옆 접근·정지·순간 급이동 반복으로 원하는 수준에 미달하여 사용자 의도적으로 학습 중단. **v0_3는 학습 지속**하며 Joint Velocity 강제 종료 대신 EEF/TCP 선속도 종료로 전환하기로 확정했다. v0_3를 계승해 **Hard-v0_3는 고난도에서 기본 구성의 유효성**, **v0_3_1은 손가락 자세 개선**을 각각 검증한다. 사용자 보고이며 원격 프로세스 확인은 하지 않았다. [최신 계통·학습 기록](environments/PROF_REVISION_FAMILY.md).
+
+2026-11-25: **Prof Revision v0_3_1 추가**. `Inspire-Sweep-Prof-Revision-v0_3_1`는 v0_3 직접 자식으로 손가락 거리·양방향 각도 합산 mode만 추가했다. Formation weight0.245 및 부모 전체 Manager·Scene·PPO 보존, 추가 관절 사건 비용 없음. [계약·실행](environments/PROF_REVISION_V0.md#prof-revision-v0_3_1) · [검증](logs/2026-11-25_prof_revision_v0_3_1_implementation.md).
+
+2026-11-25: **Prof Revision Hard v0_3 추가**. `Inspire-Sweep-Prof-Revision-Hard-v0_3`는 v0_3 직접 자식으로 목표 최소5cm·선반 내부까지 상한 해제, 장애물0–10개,8종 타겟을 사용한다. 부모 Manager·물리·관측·PPO 보존,17개 고정 바디 재사용. [계약·실행](environments/PROF_REVISION_V0.md#prof-revision-hard-v0_3) · [구현·검증](logs/2026-11-25_prof_revision_hard_v0_3_implementation.md).
+
+2026-11-24 **과거 학습 현황(위2026-11-25 보고로 대체)**: 현재 `.30`=v0_3, `.180`=v0_2, `.250`=v0_1만 학습 중이며 나머지는 사용자가 직접 종료했다. v0은 약6000iter에 우회 Joint 종료 원인 조사로 중단, Reach5cm는 v0과 결과 차이가 없어 같은 이유로 중단·향후 사용 안 함. v0_1은 매우 느리지만 성공률 조금씩 상승(사용자는 경험상 실패 가능성을 높게 평가). v1은 예상보다 학습이 양호했으나 Joint 문제 우선 해결을 위해 중단했다. 당시에는 이전 v1 학습 중 보고를 대체했으며 원격 프로세스 확인은 하지 않았다. [계통·서버·결과](environments/PROF_REVISION_FAMILY.md).
 
 [Prof Revision 계통 비교·학습 위치·결과 메모](environments/PROF_REVISION_FAMILY.md)
 

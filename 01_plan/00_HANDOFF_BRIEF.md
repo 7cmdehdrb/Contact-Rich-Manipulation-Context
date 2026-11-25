@@ -1,8 +1,16 @@
 # 현재 개발 인계
 
-2026-11-24 **최신 사용자 학습 현황**: 현재 `.30`=v0_3, `.180`=v0_2, `.250`=v0_1만 학습 중이며 나머지는 사용자가 직접 종료했다. v0은 약6000iter에 우회 Joint 종료 원인 조사로 중단, Reach5cm는 v0과 결과 차이가 없어 같은 이유로 중단·향후 사용 안 함. v0_1은 매우 느리지만 성공률 조금씩 상승(사용자는 경험상 실패 가능성을 높게 평가). v1은 예상보다 학습이 양호했으나 Joint 문제 우선 해결을 위해 중단했다. 이전 v1 학습 중 보고를 대체하며 원격 프로세스 확인은 하지 않았다. [계통·서버·결과](../02_implementation/environments/PROF_REVISION_FAMILY.md).
+2026-11-25 **최신 학습 상태·연구 방침 확정**: v0_1은 당기는 동작 부재, v0_2는 접촉 시 Joint 급증을 피하는 물체 옆 접근·정지·순간 급이동 반복으로 원하는 수준에 미달하여 사용자 의도적으로 학습 중단. **v0_3는 학습 지속**하며 Joint Velocity 강제 종료 대신 EEF/TCP 선속도 종료로 전환하기로 확정했다. v0_3를 계승해 **Hard-v0_3는 고난도에서 기본 구성의 유효성**, **v0_3_1은 손가락 자세 개선**을 각각 검증한다. 사용자 보고이며 원격 프로세스 확인은 하지 않았다. [최신 계통·학습 기록](../02_implementation/environments/PROF_REVISION_FAMILY.md).
 
-[Prof Revision 계통 설명·학습 위치·결과 메모](../02_implementation/environments/PROF_REVISION_FAMILY.md) — v0와 직접 자식5개의 구성 및 실험 기록 진입점.
+2026-11-25 **Prof Revision v0_3_1 추가**. v0_3 직접 상속, 실제 v1의 손가락별 거리×양방향 cos² 합산만 활성화했다. weight0.245 유지, v1 관절 종료 사건 비용·weight0.3675 미도입. 원통·목표6–12cm·장애물0–6개·TCP4m/s·나머지 부모 전체 보존.32개 검사·4환경 live·16환경 PPO1회 업데이트 통과, 장기 개선 미검증. [계약](../02_implementation/environments/PROF_REVISION_V0.md#prof-revision-v0_3_1) · [검증](../02_implementation/logs/2026-11-25_prof_revision_v0_3_1_implementation.md).
+
+2026-11-25 **Prof Revision Hard v0_3 구현·검증 완료**. v0_3 직접 상속, 목표 최소5cm·인위적 상한 제거, 장애물0–10개, 환경 생성 시8종 타겟 선택. 부모 전체 구성·PPO 대조,36개 자동 검사·64환경20회 reset/510step·204,800개 sampler stress 통과.2048행 sampler 중앙값 부모16.36ms/Hard2.46ms. 타겟 형상은 reset 때 바꾸지 않으며 장기 학습 성공률은 미검증. [계약·실행](../02_implementation/environments/PROF_REVISION_V0.md#prof-revision-hard-v0_3) · [기록](../02_implementation/logs/2026-11-25_prof_revision_hard_v0_3_implementation.md).
+
+2026-11-25 **Prof Revision v0_3 `model_7650` 실제 Play 분석 완료**: seed42·43/64환경/첫4episode,389/512성공(75.98%), 구역3은39.33%. 이동 접촉96.60%지만 Sweep99.86%가 초기2초에 집중·목표 진입 후 최종 실패62회·약지 중심 자세. 동일 trajectory에서 target3.37kN/whole-hand normal3.29kN인데 raw mount9.73N/pure F/T거의0인 사례 재현. **F/T 물리적 충실도와 raw incoming-joint-wrench 경로는 미해결**이며 원인 확정·환경 수정은 하지 않았다. 보상·성공 수식 일치와 센서 물리 검증을 구분한다. [최종 보고서·전체 데이터](../02_implementation/experiments/2026-11-25_prof_revision_v0_3_play_analysis.md) · [계측·검증](../02_implementation/logs/2026-11-25_prof_revision_v0_3_play_analysis.md). 아래 학습 현황은 마지막 사용자 보고이며 이번 평가로 원격 학습 상태를 확인한 것은 아니다.
+
+2026-11-24 **과거 학습 현황(위2026-11-25 보고로 대체)**: 현재 `.30`=v0_3, `.180`=v0_2, `.250`=v0_1만 학습 중이며 나머지는 사용자가 직접 종료했다. v0은 약6000iter에 우회 Joint 종료 원인 조사로 중단, Reach5cm는 v0과 결과 차이가 없어 같은 이유로 중단·향후 사용 안 함. v0_1은 매우 느리지만 성공률 조금씩 상승(사용자는 경험상 실패 가능성을 높게 평가). v1은 예상보다 학습이 양호했으나 Joint 문제 우선 해결을 위해 중단했다. 당시에는 이전 v1 학습 중 보고를 대체했으며 원격 프로세스 확인은 하지 않았다. [계통·서버·결과](../02_implementation/environments/PROF_REVISION_FAMILY.md).
+
+[Prof Revision 계통 설명·학습 위치·결과 메모](../02_implementation/environments/PROF_REVISION_FAMILY.md) — v0와 직접 자식5개·Hard 및 v0_3_1 파생의 구성 및 실험 기록 진입점.
 
 2026-11-24 후속: **Prof Revision v0_3** 추가. v0 직접 자식, 면 계수1 통일·팔 관절 속도 종료 제거·UR5e 마지막 링크 `wrist_3_link` 원점의 선속도 >=4m/s 실패 종료. EEF offset 속도와 구분하며 새로운 비용은 추가하지 않는다. 나머지 부모 구성 보존. [계약](../02_implementation/environments/PROF_REVISION_V0.md#prof-revision-v0_3) · [검증](../02_implementation/logs/2026-11-24_prof_revision_v0_3_implementation.md).
 
