@@ -1,5 +1,9 @@
 # 현재 개발 인계
 
+2026-11-25 후속: **Hard-v0_3 배치 편향 수정**. 사용자가 지적한 코너·바둑판/일렬 패턴은 한 방향 극값부터 채우는 점수에서 재현했다. 객체별 무작위 셀 우선순위로 변경, 밀기 최소 공간·상호/벽1cm·0–10개·목표·yaw·형상·보상·PPO 보존. 실제 형상 전후 각각206,848배치 실패0, sparse 내부 비율0→77.8%,2048행2.72→2.74ms.37개 검사·64환경20reset/100step 통과. [비교 그림·현재 계약](../02_implementation/environments/PROF_REVISION_V0.md#prof-revision-hard-v0_3) · [최종 대조·검증](../02_implementation/logs/2026-11-25_prof_revision_hard_v0_3_implementation.md#후속-장애물-분산-배치-수정).
+
+2026-11-25 **Prof Revision 3개 checkpoint의 장애물 변위 비용 분석 완료**: v0_1/13850·v0_2/15200·v0_3/7650을 새로 headless Play 각256episode(총768)·학습 로그 대조. v0_3에서1cm 이상 이동25/224건 중13성공.1–5cm 구간은 평균 비용−0.452/양의 보상+6.070(7.45%)인 반면5cm 이상5건은−10.189/+4.887. 현재 제곱 변위×시간 비용은 큰 지속 이탈에 강하지만 작은·짧은·늦은 이동에 약하다. 수식 재계산 오차≤6.23e−9, cap 도달0, 손–장애물 접촉 비용도 새 Play에서0. 즉시 최대 이탈 증가 비용 보완을 권고했으며 **환경·보상 계수는 변경하지 않았다**. [최종 보고서·timeline·원시 근거](../02_implementation/experiments/2026-11-25_prof_revision_obstacle_displacement_analysis.md) · [수집·검증 기록](../02_implementation/logs/2026-11-25_prof_revision_obstacle_displacement_analysis.md).
+
 2026-11-25 **최신 학습 상태·연구 방침 확정**: v0_1은 당기는 동작 부재, v0_2는 접촉 시 Joint 급증을 피하는 물체 옆 접근·정지·순간 급이동 반복으로 원하는 수준에 미달하여 사용자 의도적으로 학습 중단. **v0_3는 학습 지속**하며 Joint Velocity 강제 종료 대신 EEF/TCP 선속도 종료로 전환하기로 확정했다. v0_3를 계승해 **Hard-v0_3는 고난도에서 기본 구성의 유효성**, **v0_3_1은 손가락 자세 개선**을 각각 검증한다. 사용자 보고이며 원격 프로세스 확인은 하지 않았다. [최신 계통·학습 기록](../02_implementation/environments/PROF_REVISION_FAMILY.md).
 
 2026-11-25 **Prof Revision v0_3_1 추가**. v0_3 직접 상속, 실제 v1의 손가락별 거리×양방향 cos² 합산만 활성화했다. weight0.245 유지, v1 관절 종료 사건 비용·weight0.3675 미도입. 원통·목표6–12cm·장애물0–6개·TCP4m/s·나머지 부모 전체 보존.32개 검사·4환경 live·16환경 PPO1회 업데이트 통과, 장기 개선 미검증. [계약](../02_implementation/environments/PROF_REVISION_V0.md#prof-revision-v0_3_1) · [검증](../02_implementation/logs/2026-11-25_prof_revision_v0_3_1_implementation.md).

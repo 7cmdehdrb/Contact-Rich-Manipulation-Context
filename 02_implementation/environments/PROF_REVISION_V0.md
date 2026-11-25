@@ -174,7 +174,7 @@ python src/inspire_sweep_baseline/scripts/play.py --task Inspire-Sweep-Prof-Revi
 | 목표 거리 | 타겟 root XY에서 최소5cm. 인위적 최대 거리 없음. 전 방향 각도 균등, 방향별 shape-safe 선반 경계까지 거리 균등 |
 | 안전 영역 | 선반 XY `[-.2,.2]×[-.5,.5]m`, 실제 형상·scale·reset yaw·중심 offset을 고려하고 목표 벽 여유2cm 유지 |
 | 장애물 | 매 reset 정수0–10개 균등,16개 고정 후보 중 중복 없이 선택 |
-| 저비용 배치 | 4,000개 캐시 셀, 큰 box부터 경계 방향 채움, 셀 내부 jitter. 상호·벽1cm 여유와 기존 +X 압출 접근·밀기 경로 보존 |
+| 저비용 배치 | 4,000개 캐시 셀, 큰 box 우선 삽입·객체별 무작위 셀 우선순위, 셀 전체 범위의 연속 jitter. 유효 빈 영역에 분산하며 상호·벽1cm 여유와 기존 +X 압출 접근·밀기 경로 보존 |
 | 장애물 자세 | Hard의 밀집 배치에 맞춰 수직축0/90/180/270도에서 선택. 원통·곡면도 실제 bounds box로 보수적 검사 |
 | 타겟 종 | cylinder·cube·mug·bottle·003_cracker_box·004_sugar_box·005_tomato_soup_can·002_master_chef_can |
 | 형상 수명 | 환경 생성 시 종·scale0.9–1.1 선택, reset에는 pose만 변경. 재선택·recooking 비용 없음 |
@@ -189,7 +189,9 @@ python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Prof-Rev
 python src/inspire_sweep_baseline/scripts/check_prof_revision_hard.py --headless --num-envs 64
 ```
 
-36개 관련 자동 검사·부모4환경 live 회귀·Hard64환경20회 reset/510step·204,800개 sampler stress를 통과했다. 실제 목표 표본은5.00–47.07cm,2048행 sampler 중앙값은 부모16.36ms/Hard2.46ms였다. 이 값은 배치 helper 실행 시간이며 전체 학습 시간과 구분한다. 상세 설정 대조·검증 수치·제약은 [개발 로그](../logs/2026-11-25_prof_revision_hard_v0_3_implementation.md)를 따른다. Hard의 장기 성공률은 아직 검증하지 않았다.
+초기 구현은36개 관련 자동 검사·부모4환경 live 회귀·Hard64환경20회 reset/510step·204,800개 sampler stress를 통과했다. 실제 목표 표본은5.00–47.07cm,2048행 sampler 중앙값은 부모16.36ms/Hard2.46ms였다. 이 값은 배치 helper 실행 시간이며 전체 학습 시간과 구분한다.
+
+2026-11-25 후속 사용자 관찰에 따라 경계 방향 채움으로 생기던 코너·일렬 편향을 수정했다. 캐시 셀은 충돌 검사 가속용으로 유지하고, 각 객체가 공간 방향과 무관한 무작위 셀 우선순위를 사용한다. 요청 개수·물체 선택·yaw·목표 분포·밀기 공간·여유·최대8회 재시도는 보존한다. 실제 자산으로 수정 전·후 각각206,848개 배치 검사에서 실패 없이 개수를 유지했고,2048행 중앙값은2.72→2.74ms였다.37개 관련 검사·64환경20회 reset/100step도 통과했다. [배치 전후 그림](../../../../outputs/prof_revision_hard_scatter_20261125/before_after.png) · [후속 수정·전체 계약 대조](../logs/2026-11-25_prof_revision_hard_v0_3_implementation.md#후속-장애물-분산-배치-수정). Hard의 장기 성공률은 아직 검증하지 않았다.
 
 
 ## Prof Revision v0_3_1

@@ -61,3 +61,64 @@ Windows11·RTX4070 12GB·`env_isaaclab` Python·Isaac Sim5.1 D3D12 headless에�
 초기 CPU native observer 검사는 Windows Warp의 기존 `fmin/fmax` 선언 문제로 컴파일되지 않았다. 새 observer의 검증은 CUDA 실행 결과를 독립 CPU polygon 구현과 대조하는 방식으로 수행했다. 초기 실행 중 검사 코드의 argsort 호출 및 configclass의 staticmethod 직렬화 문제를 수정했고, 최종 부모 전체 구성 대조에서는 capacity helper를 일반 instance 메서드로 유지한다.
 
 장기 학습 성공률·새 checkpoint의 행동 품질·2048개 실제 물리 환경 collection 성능은 이 로그의 sampler 검증으로 대체하지 않는다. 기존 `logs/rsl_rl`과 사용자 변경·서브모듈 커밋은 보존한다.
+
+## 후속 장애물 분산 배치 수정
+
+2026-11-25 후속 사용자 요청: Hard-v0_3가 바둑판/일렬 배치처럼 보이며 Poisson Disk 언급의 의도는 배치 가속이었다. 기존 환경 ID를 직접 수정해 물체를 유효 빈 영역에 흩뿌리되 **밀기 최소 공간 확보 로직은 유지**한다. 위 초기 구현의 경계 방향 밀집 채움 설명은 이 절의 수정 전 동작이다.
+
+시작 workspace HEAD는 `faed7d7ec2003c7445be80f68bd1a04136f69b24`, 문서 HEAD는 `36bf0bb5abde92460b669c0a898a831d1c8f5a75`였다. 앞선 장애물 비용 분석의 신규 scripts·실험 문서·인계/계통 문서 변경 및 기존 IsaacLab untracked 상태를 보존했다. 이 작업은 배치 분포 수정이며 비용 분석에서 제안한 보상 변경을 적용하지 않는다.
+
+### 재현·원인
+
+`diagnosing-bugs` 절차에 따라 실제 sampler를 호출하는 회귀 검사를 먼저 추가했다. 넉넉한 내부 공간을 가진 장애물1개 장면에서도 내부 배치 비율이0%인 것을 재현했다.
+
+```powershell
+python -m pytest src/inspire_sweep_baseline/tests/test_prof_revision_hard.py::test_sparse_layouts_use_free_area_instead_of_packing_into_corners -q
+```
+
+수정 전 결과는 `AssertionError: Only 0.0% of sparse scenes use the free interior`였다. 회귀 검사는 장애물 표면과 가장 가까운 벽 사이 여유가4cm를 넘는 배치 비율을 검사하며, 다중 장애물의 최근접 이웃이 같은 X/Y축 줄에 몰리는지도 검사한다.
+
+가설은 방향 점수에 의한 코너 채움, 작은 셀 jitter에 의한 격자 흔적, 밀기 공간에 따른 가용 영역 축소 순으로 확인했다. 기존 점수 `ux*x+uy*y`를 최소화하면 매 삽입이 같은 방향의 극값을 선택해 코너·외곽부터 줄을 채운다. **충돌 검사·공간 제외·jitter를 고정하고 점수만 바꾼 대조**에서 분포가 개선됐으므로, 주된 원인은 경계 채움 점수였다.
+
+### 수정 전후·전체 계약 대조
+
+| 항목 | 이전 | 이후 |
+| --- | --- | --- |
+| 셀 선택 점수 | 장면별 한 방향의 선형 투영 극값 | 객체별 난수와 cell ID의 정수 hash로 공간 방향과 무관한 우선순위 |
+| 위치 분포 | 코너·외곽부터 순차 채움 | 유효한 빈 셀에 무작위 분산·기존 셀 전체 범위 연속 jitter |
+| 목표·요청 개수·물체·yaw | 기존 Hard 규칙 | 변경 없음. 동일 RNG draw 수, 같은 seed 입력의 목표·개수·자산/yaw 일치 확인 |
+| 최소 밀기 공간 | 타겟 footprint를 포함한 target→goal 선분의 선반 +X 방향 전체 압출 영역 제외 | native kernel의 같은 SAT 유효성 조건 유지. 접근측과 이동 중 전 구간 검사 |
+| 기타 여유 | 장애물 box 상호·벽1cm, 셀 jitter margin, 목표 벽2cm | 변경 없음 |
+| 계산·실패 처리 | 4,000캐시 셀·큰 box 우선·128threads·실패 행 최대8재시도 | 변경 없음. 조용한 개수 감소·목표 재추출·경계 채움 fallback 없음 |
+| 등록·EnvCfg·Scene·runtime·Command/Event·관측·Action·Reward·Termination·Curriculum·PPO | 기존 Hard 및 부모 구성 | 구성 파일 변경0. actual live에서 기존 부모 대비7개 허용 차이만 재확인, 부모 HEAD 대조·PPO 동등성 통과 |
+
+활성 패키지 실행 코드 수정은 `mdp/common/prof_revision_layout.py`의 설명과 native 선택 점수에 한정했다. `sample`·`sample_commands`·geometry SAT·wall/pair clearance·재시도·yaw/jitter·타겟 형상 수명은 그대로다. 이 helper의 운영 호출자는 Hard Events의 `layout_class`뿐이므로 부모 v0_3·v0_3_1·기타 환경의 sampler는 변경하지 않았다. 기존 디렉토리·상속·Gym ID를 유지했다.
+
+### 분포·안전 공간·속도 검증
+
+자산 bounds64행을2048행으로 반복하고 seed987에서 수정 전·후 각각101배치=206,848장면을 생성했다. 첫 배치를 저장하고 나머지100배치에서 CUDA synchronize 후 시간을 측정했다. 두 버전 모두 요청한0–10개를 그대로 배치했고 실패0, 최대 재시도는 이전0/수정1이었다. 아래 분포 수치는 저장된 같은 목표·개수·자산·yaw의2,048장면 대조다.
+
+| 측정 | 이전 | 수정 |
+| --- | ---: | ---: |
+| 장애물1개 장면의 내부 배치 비율(벽과 표면 사이>4cm,185건) | 0.00% | 77.84% |
+| 장애물≥3개 장면의 최근접 이웃 축 정렬 비율(X 또는 Y 차이<1cm) | 51.75% | 13.29% |
+| 장애물 표면의 가장 가까운 벽 여유 평균 | 4.04cm | 7.17cm |
+| 2048행 helper 중앙값 | 2.716ms | 2.741ms |
+| 2048행 helper P95 | 3.023ms | 3.066ms |
+
+모든 장면이 수학적으로 균일한 완성 배치 분포라는 주장은 하지 않는다. 형상·남은 공간·개수·큰 물체 우선 삽입에 따른 제약은 유지한다.0–10개의 개별 위치를 검증하는 sampler 시간이며 전체 학습 속도나 성공률이 아니다.
+
+독립 NumPy/SciPy ConvexHull/SAT로 수정 전·후 각2048장면의 **타겟 전체 압출 접근·밀기 영역과 각 장애물 사이≥1cm**, 장애물끼리·벽≥1cm를 확인했다. 타겟·목표 끝점만 확인한 검사가 아니다. [전후 배치 그림](../../../../outputs/prof_revision_hard_scatter_20261125/before_after.png)을 실제로 열어 코너/줄 편향 감소와 밀기 공간을 확인했다.
+
+```powershell
+python -m pytest src/inspire_sweep_baseline/tests/test_prof_revision_hard.py src/inspire_sweep_baseline/tests/test_prof_revision.py -q
+python src/inspire_sweep_baseline/scripts/check_prof_revision_hard.py --headless --num-envs 64 --resets 20 --steps 100 --output outputs/prof_revision_hard_scatter_20261125/live.json
+```
+
+RTX4070·Windows11·Isaac Sim5.1·env_isaaclab에서 **37개 검사 통과**, actual64환경20회 전체 reset·부분 reset 비대상 rigid state 보존·100step 통과했다. 관측108/176D·보상·모든 관측 유한,8종 타겟 출현, 목표5.0009–47.0686cm를 확인했다. zero action100step에서 완료 episode0으로 성공률이나 장기 동작 개선을 평가한 실행은 아니다. ONNX 기존 API 폐기 예정 경고1건이 있었고 검사 실패는 없다. 새로운 학습·checkpoint 변경·로그 정리는 하지 않았다.
+
+근거는 [benchmark.json](../../../../outputs/prof_revision_hard_scatter_20261125/benchmark.json), [분포·기하 검사](../../../../outputs/prof_revision_hard_scatter_20261125/distribution.json), [live.json](../../../../outputs/prof_revision_hard_scatter_20261125/live.json), [pytest.log](../../../../outputs/prof_revision_hard_scatter_20261125/pytest.log)다. 같은 폴더에 수정 전 source·원시 before/after NPZ·재현 helper를 검증 자료로 보존했으며 실행 경로에는 연결하지 않았다.
+
+추가 [계약 소스 대조](../../../../outputs/prof_revision_hard_scatter_20261125/contract_comparison.json)에서 `sample`·`sample_commands`·초기화·selector wrapper의 Python AST와 native 기하·여유 검사 텍스트가 수정 전과 같음을 확인했다. 활성 패키지의 Git 변경 파일도 Hard layout1개뿐이다.
+
+완료 검사: 변경 Markdown6개 수식 검사와 workspace/문서 저장소 `git diff --check` 통과. 변경 문서의 새 링크는 유효하다. 전체 README 링크 검사에서는 기존 `FINAL_GOAL_ACCURACY_V0_2_ENVIRONMENT.md` 누락 링크1건이 나왔으며 HEAD에도 같은 경로가 있어 이번 수정과 구분해 보존했다. 나머지 변경 문서5개의 링크 검사는 별도로 확인했다. 기존 checkpoint의 바뀐 배치 분포에 대한 정책 성능·장기 재학습·2048개 실제 물리 환경 collection 성능은 이번 범위에서 미검증이다.
