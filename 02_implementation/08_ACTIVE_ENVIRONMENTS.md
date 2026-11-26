@@ -1,5 +1,11 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-26: **Prof Revision Hard v0_3_3 추가**. v0_3_3 직접 상속, 보상 전체(역방향−120)·관측·제어·종료·PPO 수치 보존. 기존 Hard v0_3의 타겟8종·목표최소5cm/선반 내부까지·장애물0–10개·배치/reset 조건만 재사용. [계약·학습](environments/PROF_REVISION_V0.md#prof-revision-hard-v0_3_3) · [검증](logs/2026-11-26_prof_revision_hard_v0_3_3_implementation.md).
+
+2026-11-26: **Prof Revision v0_3_3 추가**. v0_3_2 직접 상속, 역방향 `sweep_retreat` weight만 −40→−120. 진행+100·나머지 전체 구성·runtime·PPO 수치 보존, 실험명 `inspire_sweep_prof_revision_v0_3_3`. [계약·학습](environments/PROF_REVISION_V0.md#prof-revision-v0_3_3) · [변경·검증](logs/2026-11-26_prof_revision_v0_3_3_implementation.md).
+
+2026-11-26: **Contact Formation 사진 환경** 추가. v0_3_2 로봇 자산을 사용하는 standalone 정적 스튜디오이며 Gym 학습 환경은 변경하지 않는다. [실행·차이·검증](logs/2026-11-26_contact_formation_photography.md). 후속: 위·옆 접근 × 가까움·6cm 추가 이격의4개 자세를 버튼으로 선택한다(`--pose`, `--retreat-cm`).
+
 2026-11-26: **Prof Revision v0_3_2 추가**. v0_3_1 직접 상속,3–6cm 힘 방향 완화·중심 최대2배 거리 민감도, Sweep100/이탈−40·Reach9.8·Formation0.1715·장애물변위−300(raw cap0.04 유지). 성공3cm·기존TCP 종료·관측·과업·PPO를 상속한다. [계약·실행](environments/PROF_REVISION_V0.md#prof-revision-v0_3_2) · [실제 검증·한계](logs/2026-11-26_prof_revision_v0_3_2_implementation.md).
 
 2026-11-25 후속: **Hard-v0_3 장애물 분산 배치 수정**. 코너·일렬 채움을 객체별 무작위 셀 우선순위로 교체했다. 기존 접근·밀기 공간 전체·상호/벽1cm 여유·0–10개·목표·물체 형상과 부모 전체 구성을 유지한다. 수정 전후 각각206,848배치 실패0·2048행 중앙값2.72→2.74ms,37개 검사·64환경 live 통과. [계약·배치 비교](environments/PROF_REVISION_V0.md#prof-revision-hard-v0_3) · [수정 기록](logs/2026-11-25_prof_revision_hard_v0_3_implementation.md#후속-장애물-분산-배치-수정).

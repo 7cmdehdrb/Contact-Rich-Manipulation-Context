@@ -1,5 +1,7 @@
 # Prof Revision v0 학습 환경
 
+2026-11-26: **Contact Formation 사진 환경**은 [별도 standalone 실행 파일](../logs/2026-11-26_contact_formation_photography.md)로 제공한다. v0_3_2 학습 설정·리워드·Gym 등록은 변경하지 않는다. 후속: 위·옆 접근 × 가까움·6cm 추가 이격의4개 자세를 버튼으로 선택한다(`--pose`, `--retreat-cm`).
+
 2026-11-26: **[v0_3_2](#prof-revision-v0_3_2)** 추가. v0_3_1 직접 상속, 거리 기반 힘 방향 완화·정밀 거리 증분·보상 비중 변경을 적용한다.
 
 2026-11-25: **[Hard v0_3](#prof-revision-hard-v0_3)** 추가. `v0_3` 직접 상속으로 목표 최소5cm·선반 경계까지, 장애물0–10개, 타겟8종을 사용한다.
@@ -248,3 +250,31 @@ H의 미분은 중심2·3cm1.5·6cm 이상1이며, 중심까지 거리 개선·�
 python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Prof-Revision-v0_3_2 --num_envs 2048 --headless
 python src/inspire_sweep_baseline/scripts/check_prof_revision_precision.py --headless --num-envs 16
 ```
+
+## Prof Revision v0_3_3
+
+`Inspire-Sweep-Prof-Revision-v0_3_3`은 `ProfRevisionV0_3_3EnvCfg(ProfRevisionV0_3_2EnvCfg)`로 직접 상속한다. 목표 근처 왕복으로 진행 보상을 반복 획득하는 행동을 억제하도록 `ProfRevisionV0_3_3RewardsCfg(ProfRevisionV0_3_2RewardsCfg)`에서 `sweep_retreat` weight만 −40에서 −120으로 높인다. 함수 `precision_sweep_retreat`와 params는 그대로다.
+
+동일한 가중 거리 H를 왕복할 때 Sweep 두 항의 합은 최대 `(100−120)×ΔH = −20×ΔH`다. 이는 Sweep 왕복 이익 제거이며 Formation 등 다른 보상을 포함한 전체 수익이나 실제 정책의 흔들림 완전 제거를 보장하지 않는다. 장기학습 행동 개선은 미검증이다.
+
+Scene·Command·Event/reset·Observation·Action·나머지15개 Reward·Termination·빈 Curriculum·정밀 거리/접촉/힘 gate·성공 XY 3cm·TCP4m/s 종료·telemetry를 모두 보존한다. Runtime은 부모의 `ProfRevisionV0_3_2Env`를 그대로 사용한다. PPO는 `ProfRevisionV0_3_3PPORunnerCfg(ProfRevisionV0_3_2PPORunnerCfg)`이며 실험명만 `inspire_sweep_prof_revision_v0_3_3`이다.
+
+```powershell
+python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Prof-Revision-v0_3_3 --num_envs 2048 --headless
+```
+
+[변경 근거·최종 계약·검증 범위](../logs/2026-11-26_prof_revision_v0_3_3_implementation.md).
+
+## Prof Revision Hard v0_3_3
+
+`Inspire-Sweep-Prof-Revision-Hard-v0_3_3`은 `ProfRevisionHardV0_3_3EnvCfg(ProfRevisionV0_3_3EnvCfg)`다. 이미 존재하는 일반 v0_3_3과 구분하여 Hard 이름을 사용한다. 보상은 일반 v0_3_3과 전체 동일하며 역방향−120·진행+100·Reach9.8·Formation0.1715·장애물변위−300(cap0.04)이다.
+
+Scene 생성 조건만 기존 `ProfRevisionHardV0_3EnvCfg`에서 재사용한다. `ProfRevisionHardSceneCfg`로 타겟8종을 선택하고 `ProfRevisionHardEventsCfg`의 reset/geometry 초기화를 적용한다. 목표 최소5cm·상한 없음(선반 유효 영역 안), 장애물0–10개, 배치 격자1cm와 capacity10을 사용한다. 기존17개 물리 바디/16개 장애물 관측 슬롯은 유지된다. Hard의 초기화 및 reset 이벤트는 Scene 분포 구현에 필수이며 보상 변경이 아니다.
+
+관측·행동·물리·정밀 상태·성공3cm·TCP4m/s 종료·커리큘럼·runtime은 일반 v0_3_3 그대로다. runtime `ProfRevisionV0_3_2Env`를 재사용한다. PPO는 `ProfRevisionHardV0_3_3PPORunnerCfg(ProfRevisionV0_3_3PPORunnerCfg)`이며 실험명만 `inspire_sweep_prof_revision_hard_v0_3_3`이다. 장기학습 성능은 미검증이다.
+
+```powershell
+python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Prof-Revision-Hard-v0_3_3 --num_envs 2048 --headless
+```
+
+[최종 대조·검증](../logs/2026-11-26_prof_revision_hard_v0_3_3_implementation.md).

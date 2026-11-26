@@ -1,5 +1,11 @@
 # 현재 개발 인계
 
+2026-11-26: **Prof Revision Hard v0_3_3 추가**. v0_3_3 직접 상속, 보상 전체(역방향−120)·관측·제어·종료·PPO 수치 보존. 기존 Hard v0_3의 타겟8종·목표최소5cm/선반 내부까지·장애물0–10개·배치/reset 조건만 재사용. [계약·학습](../02_implementation/environments/PROF_REVISION_V0.md#prof-revision-hard-v0_3_3) · [검증](../02_implementation/logs/2026-11-26_prof_revision_hard_v0_3_3_implementation.md).
+
+2026-11-26: **Prof Revision v0_3_3 추가**. v0_3_2 직접 상속, 역방향 `sweep_retreat` weight만 −40→−120. 진행+100·나머지 전체 구성·runtime·PPO 수치 보존, 실험명 `inspire_sweep_prof_revision_v0_3_3`. [계약·학습](../02_implementation/environments/PROF_REVISION_V0.md#prof-revision-v0_3_3) · [변경·검증](../02_implementation/logs/2026-11-26_prof_revision_v0_3_3_implementation.md).
+
+2026-11-26: **Contact Formation 사진 환경** 추가. `src/inspire_sweep_baseline/scripts/photograph_contact_formation.py`는 v0_3_2 손 자산·손가락별 OBB 거리 정의를 사용해 지문면이 물체를 향하는 감싸쥐기 직전 정적 자세를 만든다. 사용자가 뷰포트를 조작해 직접 캡처한다. 기존 RL 환경·학습 로그 변경 없음. [실행·검증](../02_implementation/logs/2026-11-26_contact_formation_photography.md). 후속: 위·옆 접근 × 가까움·6cm 추가 이격의4개 자세를 버튼으로 선택한다(`--pose`, `--retreat-cm`).
+
 2026-11-26 **Prof Revision v0_3_2 구현·등록 완료**: v0_3_1 직접 상속, 힘 영향3–6cm smoothstep 완화·H 거리 민감도 중심 최대2배, Sweep100/이탈−40·Reach9.8·Formation0.1715·장애물변위−300(raw cap0.04). 성공3cm·TCP4m/s·관측·과업·PPO 보존. CPU60개, 실제16환경101step/부모model15550·보상 독립 검산·부분reset/terminal 로그,16환경PPO1회·checkpoint132개 tensor finite 통과. 기존8개 환경 전체Cfg/PPO·등록/정의 보존 확인. 장기 행동 개선 미검증. [계약·학습 명령](../02_implementation/environments/PROF_REVISION_V0.md#prof-revision-v0_3_2) · [검증·미검증 범위](../02_implementation/logs/2026-11-26_prof_revision_v0_3_2_implementation.md). 아래 명세 작성 단계의 '구현 전'은 이력이다.
 
 2026-11-26 **정밀 도달 개발명세 후속 수정**: v0_3_1 상속 새 환경·성공3cm 유지·이름v0_3_2 제안. 거리 전환/H는 유지하되 최신 사용자 지시에 따라 Reach4.9→9.8,Formation0.245→0.1715,이탈−20→−40(이전 제안−100 폐기). 장애물 원시cap0.04에254,165step 중 도달0·최대21%여서weight−150→−300,cap유지. 최신512episode 순보상12.477→13.549,진입 후 실패도11.801→12.215. +100/−40은왕복 합≤0 보장 없음. **환경 구현·새 학습 전**. [최신 개발명세·cap 조사](environments/2026-11-26_PROF_REVISION_V0_3_2_SPEC.md) · [변경 이력·검증](../02_implementation/logs/2026-11-26_prof_revision_precision_spec.md).
