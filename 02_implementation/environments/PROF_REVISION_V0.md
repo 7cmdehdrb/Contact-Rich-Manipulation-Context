@@ -278,3 +278,21 @@ python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Prof-Rev
 ```
 
 [최종 대조·검증](../logs/2026-11-26_prof_revision_hard_v0_3_3_implementation.md).
+
+## Prof Revision v0_3_3-IK
+
+`Inspire-Sweep-Prof-Revision-v0_3_3-IK`은 `ProfRevisionV0_3_3IKEnvCfg(ProfRevisionV0_3_3EnvCfg)`다. 일반 v0_3_3을 직접 상속하며 Hard 분포를 가져오지 않는다. 변경은 시작 팔 관절 상태의 선택뿐이다. 손가락 초기값·EEF 방향·높이 범위·원통 타겟·목표6–12cm·장애물0–6개·보상 전체(역방향−120 포함)·관측·행동·종료·커리큘럼·PPO 수치를 보존한다.
+
+2026-11-26 그림 확인 후 사용자 지시에 따라 기존 RED/외부 IK의 두 좁은 영역을 섞던 방식에서 **선반 전면 안팎의 연속 영역**으로 직접 수정했다. EEF의 shelf-local Y는 선반 전체 폭 `[-0.5,0.5]m`, X는 `min(타겟 시작X, 목표X)`부터 `max(로봇 base_link의 shelf-local X,0.30m)`까지다. 현재 기본 배치에서 베이스 X는0.7m다. 이전 그림의 RED 내부 위치와 기존 외부 IK 범위를 모두 포함하며 두 영역 사이와 좌우 양쪽도 샘플링한다. 높이와 손 방향은 그대로다. 이는 명시된 전면 영역 안에서 유효한 위치를 선택하는 것이며 로봇의 전체3D 도달 공간을 완전히 열거하는 것은 아니다.
+
+`initial_pose_mode=front_area`, `front_y_bounds=(-0.5,0.5)`를 사용한다. 50:50 우선 선택은 제거했다. 넓은 영역에서24개를 병렬 생성해 EEF 예비 경로 검사 후4개를 기존 외부2개와 함께 Warp IK에 보낸다. 넓은 영역의 유효 후보를 우선하고, 없으면 안전한 기존 외부 IK로 대체한다. 새 영역은 훨씬 넓으므로 이전 RED 근처의 실제 선택 빈도는 낮아질 수 있다.
+
+시작점·목표·장애물은 재추첨하지 않는다. 후보 생성과 FK/충돌 검사는 GPU batch로 계산하며 실제 USD 로봇 충돌 상자와 관절 변환을 최초1회 cache한다. 타겟·활성 장애물·선반과 겹치는 팔/손 후보를 보수적으로 거절한다. 시작→목표 구간은 타겟 반경·손 전체 충돌 상자의 XY 크기를 고려해 모든 후보(대체 후보 포함)에서 제외한다. 수렴한 관절 상태만 물리에 기록하고 추가 물리 step은 없다. 기본6후보와 필요한 행의8모서리 recovery 예산을 모두 소진하면 안전하지 않은 자세를 쓰지 않고 오류를 보고한다. 별도 RNG로 기존 물체/목표 추첨을 보존한다.
+
+runtime은 부모 `ProfRevisionV0_3_2Env`를 사용한다. PPO는 `ProfRevisionV0_3_3IKPPORunnerCfg(ProfRevisionV0_3_3PPORunnerCfg)`이며 실험명만 `inspire_sweep_prof_revision_v0_3_3_ik`다. `Reset/front_selected_fraction`, `legacy_fallback_fraction`, `red_selected_fraction`, `pose_candidates`, `pose_recovery_fraction`, `pose_collision_rejected_fraction`, `ik_attempts`로 선택과 예산을 추적한다. `red_selected_fraction`은 넓힌 영역의 후보 종류가 아니라 실제 기존 RED polygon에 들어간 EEF의 비율이다.
+
+```powershell
+python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Prof-Revision-v0_3_3-IK --num_envs 2048 --headless
+```
+
+[구현 근거·변경 이력·새 성능 비교·그림·미검증 범위](../logs/2026-11-26_prof_revision_v0_3_3_ik_implementation.md).
