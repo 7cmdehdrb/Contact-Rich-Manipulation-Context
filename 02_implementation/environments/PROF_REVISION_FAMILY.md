@@ -1,6 +1,8 @@
 # Prof Revision 환경 계통과 학습 기록
 
-구성·연구 방침 기준일: **2026-11-25**. 대상은 `src/inspire_sweep_baseline`의 Prof Revision 8개 환경이다. 학습 상태·행동 관찰·후속 결정은 최신 사용자 보고를 반영하고, 구현 구성은 실제 EnvCfg·RewardsCfg·TerminationsCfg·PPOCfg를 기준으로 정리했다. 상세 구현 계약은 [Prof Revision v0와 파생 환경](PROF_REVISION_V0.md)을 따른다.
+구성 기준일: **2026-11-26**, 학습 상태 사용자 보고 기준일:2026-11-25. 대상은 `src/inspire_sweep_baseline`의 Prof Revision 9개 환경이다. 학습 상태·행동 관찰·후속 결정은 최신 사용자 보고를 반영하고, 구현 구성은 실제 EnvCfg·RewardsCfg·TerminationsCfg·PPOCfg를 기준으로 정리했다. 상세 구현 계약은 [Prof Revision v0와 파생 환경](PROF_REVISION_V0.md)을 따른다.
+
+2026-11-26: **v0_3_2 추가**. v0_3_1을 직접 상속하여 거리 기반 힘 영향 완화·중심 정밀도·보상 비율 변경을 적용한다. 성공3cm·기존TCP 종료·관측·제어·과업 분포·PPO 수치는 보존한다. [상세 계약](PROF_REVISION_V0.md#prof-revision-v0_3_2) · [최종 대조·검증](../logs/2026-11-26_prof_revision_v0_3_2_implementation.md). 아래 기존8개 환경의 학습 상태 보고를 새 환경의 장기 학습 결과로 해석하지 않는다.
 
 ## 현재 학습 현황 — 2026-11-25 최신 사용자 보고
 
@@ -34,13 +36,14 @@ flowchart TD
     B --> C[v0_2: 면 선호 제거 + 관절 속도 위험 비용 + 사건 비용]
     B --> D[v0_3: 면 선호 제거 + TCP 속도 종료]
     D --> F[v0_3_1: 손가락 거리와 각도 합산만 추가]
+    F --> P[v0_3_2: 거리 정밀도와 힘 영향 완화 + 보상 비율 변경]
     D --> H[Hard-v0_3: 긴 목표 + 장애물 0-10 + 8종 타겟]
     B --> E[v1: 손가락 거리와 각도 결합 + 관절 종료 사건 비용]
 ```
 
 **Reach5cm-v0, v0_1, v0_2, v0_3, v1은 모두 v0의 직접 자식**이다. 버전 번호가 순서대로 이어져도 v0_3이 v0_2를 상속하거나 v1이 v0_1을 상속하는 구조가 아니다. 예를 들어 v0_3에는 v0_2의 margin 비용과 종료 사건 비용이 들어가지 않는다.
 
-베이스 `ProfRevisionEnvCfg`는 Isaac Lab의 `ManagerBasedRLEnvCfg`를 직접 상속한다. Single Contact를 기능 기준으로 삼았지만 해당 EnvCfg를 Python 부모로 두지 않는다. 8개 환경 모두 실행 클래스 `runtime.prof_revision:ProfRevisionEnv`를 재사용한다.
+베이스 `ProfRevisionEnvCfg`는 Isaac Lab의 `ManagerBasedRLEnvCfg`를 직접 상속한다. Single Contact를 기능 기준으로 삼았지만 해당 EnvCfg를 Python 부모로 두지 않는다. 기존8개 환경은 실행 클래스 `runtime.prof_revision:ProfRevisionEnv`를 재사용한다. v0_3_2만 그 직접 자식인 `ProfRevisionV0_3_2Env`에서 상태 생성·추가telemetry를 확장한다.
 
 | 환경 | 전체 Gym task ID | EnvCfg 클래스 | 직접 부모 |
 | --- | --- | --- | --- |
@@ -50,6 +53,7 @@ flowchart TD
 | v0_2 | `Inspire-Sweep-Prof-Revision-v0_2` | `ProfRevisionV0_2EnvCfg` | `ProfRevisionEnvCfg` |
 | v0_3 | `Inspire-Sweep-Prof-Revision-v0_3` | `ProfRevisionV0_3EnvCfg` | `ProfRevisionEnvCfg` |
 | v0_3_1 | `Inspire-Sweep-Prof-Revision-v0_3_1` | `ProfRevisionV0_3_1EnvCfg` | `ProfRevisionV0_3EnvCfg` |
+| v0_3_2 | `Inspire-Sweep-Prof-Revision-v0_3_2` | `ProfRevisionV0_3_2EnvCfg` | `ProfRevisionV0_3_1EnvCfg` |
 | Hard-v0_3 | `Inspire-Sweep-Prof-Revision-Hard-v0_3` | `ProfRevisionHardV0_3EnvCfg` | `ProfRevisionV0_3EnvCfg` |
 | v1 | `Inspire-Sweep-Prof-Revision-v1` | `ProfRevisionV1EnvCfg` | `ProfRevisionEnvCfg` |
 
@@ -144,9 +148,10 @@ PPO는 rollout36step, gamma0.98, lambda0.95,8epochs/4mini-batches, 학습률0.00
 | v0_3 | 부모 | **모든 면1** | 부모 | **TCP >=4m/s로 교체** | 없음 | 없음 | 16 |
 | Hard-v0_3 | v0_3 | v0_3 | v0_3 | v0_3 | 없음 | 없음 | 16 |
 | v0_3_1 | v0_3 | v0_3 | **손가락별 거리×각도 합,0.245** | v0_3 | 없음 | 없음 | 16 |
+| v0_3_2 | v0_3_1 | v0_3_1 | **같은 식,0.1715** | v0_3_1 | 없음 | 없음 | 16 |
 | v1 | 부모 | 부모 | **손가락별 거리×각도 합,0.3675** | 부모 | 없음 | **팔 종료−3** | 17 |
 
-표의 “새 비용 없음”은 기존 관절 속도 L2·다른 비용까지 없다는 의미가 아니다. 초기5개 파생 환경은 표의 차이 외 관측·자산·물리·행동·reset·성공 반경·episode 길이·PPO 수치를 v0에서 상속한다. Hard-v0_3·v0_3_1의 부모는 v0_3이며, Hard만 목표 거리·활성 장애물 수·타겟 종류·배치 기하를 확장한다.
+표의 “새 비용 없음”은 기존 관절 속도 L2·다른 비용까지 없다는 의미가 아니다. 초기5개 파생 환경은 표의 차이 외 관측·자산·물리·행동·reset·성공 반경·episode 길이·PPO 수치를 v0에서 상속한다. Hard-v0_3·v0_3_1의 부모는 v0_3이며, Hard만 목표 거리·활성 장애물 수·타겟 종류·배치 기하를 확장한다. v0_3_2는v0_3_1 직접 자식으로Sweep를거리 기반 힘 완화·가중 거리H로 바꾸고,weight는진행100·이탈−40·Reach9.8·Formation0.1715·장애물변위−300으로 조정한다. 장애물cap0.04는 유지한다.
 
 ### Reach5cm-v0 — 접근 허용 반경만 축소
 
@@ -258,6 +263,7 @@ v1에서 추가한 것은 누락된 **종료 사건 페널티**다. v0에도 Joi
 | v0_3 | `inspire_sweep_prof_revision_v0_3` |
 | Hard-v0_3 | `inspire_sweep_prof_revision_hard_v0_3` |
 | v0_3_1 | `inspire_sweep_prof_revision_v0_3_1` |
+| v0_3_2 | `inspire_sweep_prof_revision_v0_3_2` |
 | v1 | `inspire_sweep_prof_revision_v1` |
 
 기본 학습 로그는 `logs/rsl_rl/<experiment_name>/<run>/` 계열이다. 실제 저장 위치는 실행 옵션·복사/보관 위치에 따라 달라질 수 있으므로 아래 기록에는 실제 경로를 적는다. workspace 루트에서 예를 들어 다음과 같이 실행한다.
@@ -280,6 +286,7 @@ python src/inspire_sweep_baseline/scripts/play.py --task Inspire-Sweep-Prof-Revi
 | v0_3 | `.30`에서 마지막 보고 | **학습 지속 중**, 최신 iteration 미보고 | TCP 선속도 종료를 채택한 후속 계승 기준 | 별도 Play 결과와 현재 학습 진행을 구분 |
 | Hard-v0_3 | 미보고 | 구현·단기 검증 완료, 장기 학습 시작 여부 미보고 | 고난도 조건의 기본 구성 유효성 검증 | v0_3 직접 자식, 손가락 보상 변경 없음 |
 | v0_3_1 | 미보고 | 구현·단기 검증 완료, 장기 학습 시작 여부 미보고 | 손가락 자세 개선 | v0_3 직접 자식, 거리·각도 합산만 추가 |
+| v0_3_2 | 로컬 검증만 | 구현·등록 완료, 장기 학습 미실행 | 감속 방해 완화·중심 정밀도·보상 비중 | v0_3_1 직접 자식, 원통/목표/장애물 분포 유지 |
 | v1 | `.180`에서 과거 학습 | **사용자 직접 종료** | 기존 전체 run 재개 대신 손가락 보상식만 v0_3_1에 재사용 | 당시 학습이 예상보다 양호했다는 기존 사용자 보고 보존 |
 
 서버 위치와 학습 상태를 갱신할 때는 날짜·작성자를 함께 남긴다. 신규 run은 행을 복제하고 실제 로그 경로·checkpoint·코드 버전을 run별 상세 메모에 연결한다.
@@ -327,6 +334,8 @@ v0 중단 시점은 사용자 보고의 약6000 iter로 기록하고, 기존 평
 
 v0_3의 별도 checkpoint Play 결과와 센서 검증 한계는 [2026-11-25 정량 보고서](../experiments/2026-11-25_prof_revision_v0_3_play_analysis.md)를 따른다. 특정 checkpoint의 평가와 현재 학습 지속 상태·종료 방식 채택 결정은 별개다.
 
+v0_3_1/model_15550의 [2026-11-26 방향별 Play 보고서](../experiments/2026-11-26_prof_revision_v0_3_1_play_analysis.md)는512episode에서334성공(65.23%)·목표 진입 후 최종 실패157건을 확인했다. Formation 수식은 일치했으나 양의 예산46.2%·비접촉 지급22.3%로 실제 접촉 자세·최종 성공을 대신하지 않는다. 부모의 다른 checkpoint와 학습 iteration이 다르므로 자세 개선의 인과 대조나 장기 최종 평가로 해석하지 않는다.
+
 세 체크포인트 v0_1/13850·v0_2/15200·v0_3/7650의 [장애물 변위 비용 분석](../experiments/2026-11-25_prof_revision_obstacle_displacement_analysis.md)은 학습 로그와 새 headless Play768episode를 대조했다. v0_3의 최대 변위1cm 이상·5cm 미만20건은 평균 비용−0.452/양의 보상+6.070이었고,5cm 이상5건은−10.189/+4.887이었다. 작은·짧은 이동과 큰 지속 이탈을 구분해야 하며, 해당 분석은 환경·weight를 변경하지 않은 관찰과 고정 trajectory 민감도다.
 
 ### 구현 검증과 학습 성능의 구분
@@ -340,6 +349,7 @@ v0_3의 별도 checkpoint Play 결과와 센서 검증 한계는 [2026-11-25 정
 | v0_3 | [CPU62·GPU4환경·PPO1회](../logs/2026-11-24_prof_revision_v0_3_implementation.md), [별도 Play 분석](../experiments/2026-11-25_prof_revision_v0_3_play_analysis.md) | 학습 지속, 후속 계승 기준. checkpoint 평가와 장기 최종 성능을 구분 |
 | Hard-v0_3 | [36개 검사·64환경 reset/step·sampler stress·PPO1회](../logs/2026-11-25_prof_revision_hard_v0_3_implementation.md) | 고난도 유효성·장기 학습 결과 미검증 |
 | v0_3_1 | [32개 검사·4환경 reset/step·16환경 PPO1회](../logs/2026-11-25_prof_revision_v0_3_1_implementation.md) | 손가락 자세 개선·장기 성공률 미검증 |
+| v0_3_2 | [최신 CPU·GPU·PPO 검증](../logs/2026-11-26_prof_revision_v0_3_2_implementation.md) | 정밀 정착·장기 성공률 개선 미검증 |
 | v1 | [CPU58·GPU4환경·PPO1회](../logs/2026-11-24_prof_revision_v1_implementation.md) | 사용자 보고: 예상보다 양호한 학습, Joint 문제 우선 해결을 위해 직접 종료 |
 
 CPU 개수는 해당 구현 당시 수행한 검증 묶음이다. 테스트 수·짧은 PPO 성공은 정책의 과업 성공률이 아니다. v0_3의 TCP4m/s 경계 검증은 sampled velocity 주입이며 실제4m/s 궤적 재현과 구분한다.

@@ -1,5 +1,7 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-26: **Prof Revision v0_3_2 추가**. v0_3_1 직접 상속,3–6cm 힘 방향 완화·중심 최대2배 거리 민감도, Sweep100/이탈−40·Reach9.8·Formation0.1715·장애물변위−300(raw cap0.04 유지). 성공3cm·기존TCP 종료·관측·과업·PPO를 상속한다. [계약·실행](environments/PROF_REVISION_V0.md#prof-revision-v0_3_2) · [실제 검증·한계](logs/2026-11-26_prof_revision_v0_3_2_implementation.md).
+
 2026-11-25 후속: **Hard-v0_3 장애물 분산 배치 수정**. 코너·일렬 채움을 객체별 무작위 셀 우선순위로 교체했다. 기존 접근·밀기 공간 전체·상호/벽1cm 여유·0–10개·목표·물체 형상과 부모 전체 구성을 유지한다. 수정 전후 각각206,848배치 실패0·2048행 중앙값2.72→2.74ms,37개 검사·64환경 live 통과. [계약·배치 비교](environments/PROF_REVISION_V0.md#prof-revision-hard-v0_3) · [수정 기록](logs/2026-11-25_prof_revision_hard_v0_3_implementation.md#후속-장애물-분산-배치-수정).
 
 2026-11-25 **최신 학습 상태·연구 방침 확정**: v0_1은 당기는 동작 부재, v0_2는 접촉 시 Joint 급증을 피하는 물체 옆 접근·정지·순간 급이동 반복으로 원하는 수준에 미달하여 사용자 의도적으로 학습 중단. **v0_3는 학습 지속**하며 Joint Velocity 강제 종료 대신 EEF/TCP 선속도 종료로 전환하기로 확정했다. v0_3를 계승해 **Hard-v0_3는 고난도에서 기본 구성의 유효성**, **v0_3_1은 손가락 자세 개선**을 각각 검증한다. 사용자 보고이며 원격 프로세스 확인은 하지 않았다. [최신 계통·학습 기록](environments/PROF_REVISION_FAMILY.md).

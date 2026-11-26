@@ -1,5 +1,7 @@
 # Prof Revision v0 학습 환경
 
+2026-11-26: **[v0_3_2](#prof-revision-v0_3_2)** 추가. v0_3_1 직접 상속, 거리 기반 힘 방향 완화·정밀 거리 증분·보상 비중 변경을 적용한다.
+
 2026-11-25: **[Hard v0_3](#prof-revision-hard-v0_3)** 추가. `v0_3` 직접 상속으로 목표 최소5cm·선반 경계까지, 장애물0–10개, 타겟8종을 사용한다.
 
 [계통 비교·학습 위치·결과 메모](PROF_REVISION_FAMILY.md)
@@ -207,4 +209,42 @@ python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Prof-Rev
 python src/inspire_sweep_baseline/scripts/check_prof_revision.py --task Inspire-Sweep-Prof-Revision-v0_3_1 --headless --num-envs 4 --output outputs/prof_revision_v0_3_1_validation/smoke.json
 ```
 
-관련 검사32개·새 환경4개 실제 reset/step·전체 Manager/PPO 대조·부모 변경 전후 대조·16환경 PPO1회 업데이트를 통과했다. 장기 자세 개선과 성공률은 미검증이다. [상세 수식·구현·검증](../logs/2026-11-25_prof_revision_v0_3_1_implementation.md).
+초기 구현 시 관련 검사32개·새 환경4개 실제 reset/step·전체 Manager/PPO 대조·부모 변경 전후 대조·16환경 PPO1회 업데이트를 통과했다. [상세 수식·구현·검증](../logs/2026-11-25_prof_revision_v0_3_1_implementation.md).
+
+2026-11-26 `model_15550`을 seed42·43/64환경/첫4완료episode로 평가했다.334/512성공(65.23%),491건 목표 진입 중157건 최종 실패였다. 방향별 성공률은−X83.87%·+Y73.01%·+X51.11%·−Y54.82%다. 거리×각도 합산 수식은 일치하지만 Formation이 양의 예산46.2%·비접촉 지급22.3%를 차지해 실제 손가락 접촉·최종 정착과 구분해야 한다. 환경/weight는 바꾸지 않았다. [방향별 최종 위치·접촉·16항·손가락 보고서](../experiments/2026-11-26_prof_revision_v0_3_1_play_analysis.md) · [검증](../logs/2026-11-26_prof_revision_v0_3_1_play_analysis.md). 장기 최종 성능과 부모 대비 개선은 이 특정 checkpoint 평가로 확정하지 않는다.
+
+## Prof Revision v0_3_2
+
+`Inspire-Sweep-Prof-Revision-v0_3_2`는 `ProfRevisionV0_3_2EnvCfg(ProfRevisionV0_3_1EnvCfg)`로 직접 상속한다. Runtime은 `ProfRevisionV0_3_2Env(ProfRevisionEnv)`, 상태는 `ProfRevisionPrecisionState(ProfRevisionState)`다. 원통 타겟·목표6–12cm·장애물0–6개·기존 배치·초기 관측·108/176D 입력·12D 행동·물리·성공3cm·10초episode·TCP4m/s 종료와 PPO 수치를 보존한다.
+
+| 보상 항 | weight | 변경 |
+| --- | ---: | --- |
+| sweep_progress | +100 | 가중 거리H 개선×유효 현재 접촉×최근2/3접촉×B |
+| sweep_retreat | −40 | 동일H 증가; 접촉·힘과 무관 |
+| reaching | +9.8 | 기존 signed 거리 증분 함수·params 유지 |
+| contact_formation | +0.1715 | 부모 손가락별 거리×양방향cos² 합 유지 |
+| obstacle_displacement | −300 | 기존 reset 대비3D 제곱변위 합·raw cap0.04m² 유지 |
+
+나머지11개 보상과 빈curriculum은 부모 그대로다. `S(u)=3u²−2u³`와clip을 이용해 현재 목표 XY 거리3–6cm 사이에서 힘 정렬 비중을1→0으로 낮춘다. `B=1−alpha+alpha*A`,3cm 이하B=1,6cm 이상B=A다. 힘이 반대여도 가까워지는 실제 이동·유효 접촉이 있어야 양의 보상을 받는다.
+
+```math
+u=\mathrm{clip}(d/0.06,0,1),\qquad
+H(d)=d+0.06\left(u-u^3+\frac{u^4}{2}\right),\qquad
+\Delta H=H(d_{t-1})-H(d_t)
+```
+
+```math
+r_{\mathrm{progress}}=100\max(\Delta H,0)CB,\qquad
+r_{\mathrm{retreat}}=-40\max(-\Delta H,0)
+```
+
+H의 미분은 중심2·3cm1.5·6cm 이상1이며, 중심까지 거리 개선·이탈 민감도가 연속적으로 변한다. 위 식은dt 적용 후의step 보상이고, callable은 거리 증분을dt로 나눈다. +100/−40은 비대칭이므로 닫힌 왕복 무이익을 보장하지 않는다. 정지 자체의 양의 보상은 추가하지 않는다.
+
+기존 거리·힘 정렬 로그를 보존하고 `ProfRevisionPrecision/`에alpha·거리 민감도·B·정밀 진행/이탈·거리 구간 비중·설정값을 추가했다. 자동reset 전 terminal 값을 기록한다. PPO는v0_3_1 직접 자식인 `ProfRevisionV0_3_2PPORunnerCfg`로 실험명만 `inspire_sweep_prof_revision_v0_3_2`다.
+
+[개발명세·cap 조사](../../01_plan/environments/2026-11-26_PROF_REVISION_V0_3_2_SPEC.md) · [최종 대조·실행 검증](../logs/2026-11-26_prof_revision_v0_3_2_implementation.md). 장기 성공률·감속/정착 개선은 미검증이다.
+
+```powershell
+python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Prof-Revision-v0_3_2 --num_envs 2048 --headless
+python src/inspire_sweep_baseline/scripts/check_prof_revision_precision.py --headless --num-envs 16
+```
