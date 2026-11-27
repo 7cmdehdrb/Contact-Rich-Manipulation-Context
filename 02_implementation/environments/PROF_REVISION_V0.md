@@ -296,3 +296,21 @@ python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Prof-Rev
 ```
 
 [구현 근거·변경 이력·새 성능 비교·그림·미검증 범위](../logs/2026-11-26_prof_revision_v0_3_3_ik_implementation.md).
+
+## Prof Revision v0_3_3-IK-v1
+
+`ProfRevisionV0_3_3IKV1EnvCfg(ProfRevisionV0_3_3EnvCfg)`는 일반 v0_3_3 직접 자식이다. 기존 v0_3_3-IK의 넓은 전면 영역은 보존하고, 사용자 승인 그림의 선반 내부 중심 영역만 새 환경에 적용했다. 타겟 원통·목표6–12cm·장애물0–6개·108/176D 입력·12D 행동·물리·성공 XY3cm·TCP4m/s 종료·전체 Reward/Termination/Curriculum·PPO 수치는 v0_3_3 그대로다. 진행+100·역방향−120·Reach9.8·Formation0.1715·장애물변위−300(raw cap0.04)와 나머지11개 보상 및 순서를 유지한다.
+
+EEF 후보는 shelf-local **X=[−0.20,+0.30]m, Y=[−0.25,+0.25]m**다. 선반 전면 X=+0.20m부터 기존 시작위치까지10cm의 진입 구간을 포함한다. 높이 범위·손가락 초기값·손 방향은 부모와 같다. `initial_pose_mode=shelf_area_v1`, `initial_x_bounds=(-0.2,0.3)`, `front_y_bounds=(-0.25,0.25)`만 reset IK params에 추가한다. 위치 오차 허용0.5mm를 고려해 사각창 안쪽1mm를 여유로 두며 외부 대체/복구 후보에도 동일 범위를 적용한다.
+
+기존 cache된 실제 로봇 collision box·전체링크 FK·Warp IK를 재사용한다. 기본6후보(창 내부4+기존 위치2), 기본 후보가 모두 탈락한 행만8모서리 recovery를 한 번 더 검사한다. 팔/손과 타겟·활성장애물·선반의 겹침 및 물체 시작→목표 구간을 피한다. 물체/목표 분포를 다시 뽑지 않고 선택된 최종 관절만 쓰며 추가 physics step은 없다. 후보창 전체의 도달가능성을 보장하는 것은 아니며 유효 후보만 선택한다.
+
+Gym은 기존 미버전 이름 `...-IK`와 같은 계열의 `...-IK-v1`을 동시에 일반 등록할 수 없으므로 **새 환경에만 namespace**를 둔다. 실제 task ID는 아래 명령과 같이 `inspire_sweep_baseline/`을 포함한다. 기존 ID는 그대로 보존하며 기존 IK를 새 버전으로 자동 치환하지 않는다. train/play의 CLI helper는 namespace 경로를 Hydra config group으로 등록하는 호환 처리를 한다. namespace 없는 모든 기존 task는 Isaac Lab의 원래 decorator 경로 그대로다.
+
+runtime은 기존 `ProfRevisionV0_3_2Env`, PPO는 `ProfRevisionV0_3_3IKV1PPORunnerCfg(ProfRevisionV0_3_3PPORunnerCfg)`이며 실험명만 `inspire_sweep_prof_revision_v0_3_3_ik_v1`이다.
+
+```powershell
+python src/inspire_sweep_baseline/scripts/train.py --task inspire_sweep_baseline/Inspire-Sweep-Prof-Revision-v0_3_3-IK-v1 --num_envs 2048 --headless
+```
+
+[전체 계약·기존환경 보존·실제범위·성능·미검증](../logs/2026-11-27_prof_revision_v0_3_3_ik_v1_implementation.md).
