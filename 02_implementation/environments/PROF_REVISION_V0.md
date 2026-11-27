@@ -303,7 +303,7 @@ python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Prof-Rev
 
 EEF 후보는 shelf-local **X=[−0.20,+0.30]m, Y=[−0.25,+0.25]m**다. 선반 전면 X=+0.20m부터 기존 시작위치까지10cm의 진입 구간을 포함한다. 높이 범위·손가락 초기값·손 방향은 부모와 같다. `initial_pose_mode=shelf_area_v1`, `initial_x_bounds=(-0.2,0.3)`, `front_y_bounds=(-0.25,0.25)`만 reset IK params에 추가한다. 위치 오차 허용0.5mm를 고려해 사각창 안쪽1mm를 여유로 두며 외부 대체/복구 후보에도 동일 범위를 적용한다.
 
-기존 cache된 실제 로봇 collision box·전체링크 FK·Warp IK를 재사용한다. 기본6후보(창 내부4+기존 위치2), 기본 후보가 모두 탈락한 행만8모서리 recovery를 한 번 더 검사한다. 팔/손과 타겟·활성장애물·선반의 겹침 및 물체 시작→목표 구간을 피한다. 물체/목표 분포를 다시 뽑지 않고 선택된 최종 관절만 쓰며 추가 physics step은 없다. 후보창 전체의 도달가능성을 보장하는 것은 아니며 유효 후보만 선택한다.
+기존 cache된 실제 로봇 collision box·전체링크 FK·Warp IK를 재사용한다. 기본6후보(창 내부4+기존 위치2), 기본 후보가 모두 탈락한 행만8모서리 recovery를 검사한다. 2026-11-27 학습1438 iter 이후 후보 소진 오류를 재현해 현 IK-v1에 직접 복구를 추가했다. 앞선14개가 모두 탈락한 행만 승인된 동일 XY창·기존 높이 구간의9×9×3 결정적 격자를 검사한다. 최대3회×81후보 batch로 미해결 행만 처리하며 성공 행은 다음 batch에서 제외한다. 모든 단계에서 동일한 IK 오차·전체링크 충돌·이동 경로 검사를 통과해야 한다. 최종 격자도 모두 실패하면 오류로 종료한다. 일반 후보 선택과 기존033-IK 경로는 유지한다. `Reset/pose_grid_recovery_fraction`으로 추가 복구 비율을 기록하고 `pose_candidates`/`ik_attempts`에도 실제 추가 계산량을 포함한다. 팔/손과 타겟·활성장애물·선반의 겹침 및 물체 시작→목표 구간을 피한다. 물체/목표 분포를 다시 뽑지 않고 선택된 최종 관절만 쓰며 추가 physics step은 없다. 후보창 전체의 도달가능성을 보장하는 것은 아니며 유효 후보만 선택한다.
 
 Gym은 기존 미버전 이름 `...-IK`와 같은 계열의 `...-IK-v1`을 동시에 일반 등록할 수 없으므로 **새 환경에만 namespace**를 둔다. 실제 task ID는 아래 명령과 같이 `inspire_sweep_baseline/`을 포함한다. 기존 ID는 그대로 보존하며 기존 IK를 새 버전으로 자동 치환하지 않는다. train/play의 CLI helper는 namespace 경로를 Hydra config group으로 등록하는 호환 처리를 한다. namespace 없는 모든 기존 task는 Isaac Lab의 원래 decorator 경로 그대로다.
 
