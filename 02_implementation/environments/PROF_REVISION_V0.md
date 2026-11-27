@@ -1,5 +1,7 @@
 # Prof Revision v0 학습 환경
 
+2026-11-27: **[v0_3_4](#prof-revision-v0_3_4)** 추가. 일반 v0_3_3 상속, retreat−100·팔/손 비용 통합·접촉과 방향 판정 통일·허용 접촉5N/손목 변화5N·0.3Nm.
+
 2026-11-26: **Contact Formation 사진 환경**은 [별도 standalone 실행 파일](../logs/2026-11-26_contact_formation_photography.md)로 제공한다. v0_3_2 학습 설정·리워드·Gym 등록은 변경하지 않는다. 후속: 위·옆 접근 × 가까움·6cm 추가 이격의4개 자세를 버튼으로 선택한다(`--pose`, `--retreat-cm`).
 
 2026-11-26: **[v0_3_2](#prof-revision-v0_3_2)** 추가. v0_3_1 직접 상속, 거리 기반 힘 방향 완화·정밀 거리 증분·보상 비중 변경을 적용한다.
@@ -314,3 +316,38 @@ python src/inspire_sweep_baseline/scripts/train.py --task inspire_sweep_baseline
 ```
 
 [전체 계약·기존환경 보존·실제범위·성능·미검증](../logs/2026-11-27_prof_revision_v0_3_3_ik_v1_implementation.md).
+
+## Prof Revision v0_3_4
+
+`Inspire-Sweep-Prof-Revision-v0_3_4`는 일반 `ProfRevisionV0_3_3EnvCfg`를 직접 상속한다. Runtime `ProfRevisionV0_3_4Env`는 부모가 사용하던 `ProfRevisionV0_3_2Env`를 상속하고 상태 생성만 교체한다. 원통 타겟·장애물0–6개·목표6–12cm·기존 reset·108/176D 관측·12D 행동·물리dt0.01s/정책dt0.02s·10초episode·성공XY거리≤3cm·TCP4m/s 종료를 보존한다. IK/Hard 변형은 도입하지 않는다.
+
+| 보상 이름 | 의미 | weight |
+| --- | --- | ---: |
+| sweep_progress | 가중 거리H 개선×현재 유효 접촉×최근2/3접촉×거리별 힘 방향 계수 | +100 |
+| sweep_retreat | 같은H의 증가; 접촉·힘과 무관 | −100 |
+| reaching | EEF와 현재 추적OBB 중심 사이10cm 초과 거리의 signed 감소량 | +9.8 |
+| action_rate | 팔·손 명령 변화량 제곱합; 각 그룹cap100 후 합산 | −0.03 |
+| joint_velocity | 팔6·손12관절 속도 제곱합; 각 그룹cap100 후 합산 | −0.03 |
+| shelf_collision | 선반 움직임·손가락/손목의 선반 접근 비용 | −0.5 |
+| shelf_failure | 기존 선반 충돌 실패 조건 사건 비용 | −3 |
+| obstacle_contact | 비타겟 장애물에 대한 손 합력의5N 초과 지수 비용; raw cap100 | −0.04 |
+| wrench_change | 손목 힘 크기 변화5N/모멘트 크기 변화0.3Nm 초과; raw cap1 | −0.1 |
+| object_tilt | 타겟·활성 장애물의5° 초과 기울기 | −30 |
+| obstacle_displacement | 활성 비타겟의reset 대비3D 제곱변위 합; raw cap0.04m² | −300 |
+| arm_action_limit | 팔 원본 명령의 실행 한계 초과량 | −3 |
+| hand_action_limit | 손 원본 명령의 실행 한계 초과량 | −3 |
+| contact_formation | 5개 패드의OBB 근접도×양방향cos² 합 | +0.1715 |
+
+부모의 팔/손 action-rate2개를 `action_rate`1개, 팔/손 joint-velocity2개를 `joint_velocity`1개로 합쳤다. 두 종류는 명령 변화량과 실제 속도로 의미가 달라 각각 유지한다. 그룹별cap100을 보존하므로 각 통합raw 최대200이고 기존 총 비용을 유지한다. 로그도4개에서2개로 통합한다. 빈curriculum·나머지 보상 함수와 수치·PPO 모델/알고리즘은 동일하다.
+
+접촉은 기존 physics substep의 타겟 법선 하중 합≥0.01N 및 유효성으로 판정한다. 방향 계산의 별도 평균 수평 합력≥1N 조건을 제거하고 그 현재 접촉 마스크를 사용한다. 평균 합력은 상쇄·substep 평균으로0.01N 미만일 수 있어 별도0.01N 문턱도 두지 않는다. 합력0은 정렬0, 반대 방향도 정렬0이며, 기존3–6cm 힘 방향 완화와 최근2/3접촉 조건을 유지한다.
+
+손목 허용량은 벡터 차이 크기가 아닌 `abs(norm(current)-norm(previous))`다. 정책dt20ms 기준5N·0.3Nm이며, 기존saturation_ratio2.5에 따라12.5N·0.75Nm에서raw1에 도달한다. 장애물 접촉·손목 보상 weight와 장애물 이동 비용은 부모 값 그대로다.
+
+PPO는 `ProfRevisionV0_3_4PPORunnerCfg(ProfRevisionV0_3_3PPORunnerCfg)`이고 실험명만 `inspire_sweep_prof_revision_v0_3_4`로 분리했다.
+
+```powershell
+python src/inspire_sweep_baseline/scripts/train.py --task Inspire-Sweep-Prof-Revision-v0_3_4 --num_envs 2048 --headless
+```
+
+장기 학습 결과는 미검증이다. [전체 변경 대조·검증·한계](../logs/2026-11-27_prof_revision_v0_3_4_implementation.md).

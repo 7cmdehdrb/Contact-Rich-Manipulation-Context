@@ -1,5 +1,7 @@
 # Revision · Holding · Final 환경 안내
 
+2026-11-27: **Prof Revision v0_3_4 추가**. 일반 v0_3_3 직접 상속, retreat −100·팔/손 action-rate 및 joint-velocity 각각 통합·현재 유효 접촉에 맞춘 방향 gate·장애물 허용5N·손목 변화 허용5N/0.3Nm. 기존 그룹별 cap·나머지 Manager·Scene/reset·PPO 수치를 유지한다. [계약·학습](environments/PROF_REVISION_V0.md#prof-revision-v0_3_4) · [변경·검증](logs/2026-11-27_prof_revision_v0_3_4_implementation.md).
+
 2026-11-27 후속: **Prof Revision IK-v1 reset 후보 소진 수정**. 기존14후보가 모두 충돌할 때만 승인된 동일 범위의 양측9×9×3 격자를 최대3회 batch로 검사한다. 보상·Scene·EEF 범위와 기존IK 보존. 재현 회귀·2,097,152장면 후보 검사·실제128환경 검증 통과. [원인·수정·검증](logs/2026-11-27_prof_revision_v0_3_3_ik_v1_implementation.md).
 
 2026-11-27: **Prof Revision v0_3_3-IK-v1 추가**. 일반 v0_3_3 직접 상속, 승인된 EEF 시작창 X−0.20~+0.30m/Y±0.25m의 reset만 변경. Reward 전체·Scene·관측·제어·종료·PPO 수치와 기존IK 보존. Gym 이름 충돌을 피하는 전체ID는 `inspire_sweep_baseline/Inspire-Sweep-Prof-Revision-v0_3_3-IK-v1`. [계약·실행](environments/PROF_REVISION_V0.md#prof-revision-v0_3_3-ik-v1) · [검증·성능](logs/2026-11-27_prof_revision_v0_3_3_ik_v1_implementation.md).
